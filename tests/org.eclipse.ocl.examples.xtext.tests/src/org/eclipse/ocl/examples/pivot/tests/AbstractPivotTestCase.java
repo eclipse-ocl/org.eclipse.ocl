@@ -441,11 +441,32 @@ public class AbstractPivotTestCase extends TestCase
 		return true;
 	}
 
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
-		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
+	public static @NonNull List<Diagnostic> assertLazyValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
+		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		ResourceSet resourceSet = resource.getResourceSet();
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		validationContext.put(EnvironmentFactory.class, PivotUtilInternal.getEnvironmentFactory(null));
-		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
+	//	ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
+		List<Diagnostic> diagnostics = assertValidationDiagnostics(prefix, resource, validationContext, messages);
+		ThreadLocalExecutor.reset();
+		if (savedEnvironmentFactory != null) {
+			ThreadLocalExecutor.attachEnvironmentFactory(savedEnvironmentFactory);
+		}
+		return diagnostics;
+	}
+
+	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
+		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		ResourceSet resourceSet = resource.getResourceSet();
+		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
+		ValidationContext validationContext = new ValidationContext(validationRegistry);
+		ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
+		List<Diagnostic> diagnostics = assertValidationDiagnostics(prefix, resource, validationContext, messages);
+		ThreadLocalExecutor.reset();
+		if (savedEnvironmentFactory != null) {
+			ThreadLocalExecutor.attachEnvironmentFactory(savedEnvironmentFactory);
+		}
+		return diagnostics;
 	}
 
 	/* qvtd variant
