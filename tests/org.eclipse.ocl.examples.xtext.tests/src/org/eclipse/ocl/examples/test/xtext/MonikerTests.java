@@ -19,16 +19,22 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
+import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource.OCLCSResourceLoad;
+import org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibCSResource.OCLstdlibCSResourceLoadFactory;
 
 /**
  * Tests.
@@ -170,10 +176,12 @@ public class MonikerTests extends XtextTestCase
 		//	Load the CS resource and check for load failures
 		//
 		String pivotName = inputURI.trimFileExtension().lastSegment() + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+		String xmiName = inputURI.trimFileExtension().lastSegment() + "." + PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION;
 		URI pivotURI = getTestFileURI(pivotName);
+		URI xmiOutputURI = getTestFileURI(xmiName);
 		BaseCSResource csResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
-		JavaClassScope.getAdapter(csResource, getClass().getClassLoader());
-		csResource.load(null);;
+	//	JavaClassScope.getAdapter(csResource, getClass().getClassLoader());
+		csResource.load(null);
 		assertNoResourceErrors("Load failed", csResource);
 		assertNoUnresolvedProxies("Unresolved proxies", csResource);
 		assertNoValidationErrors("CS validation problems", csResource);
@@ -230,7 +238,34 @@ public class MonikerTests extends XtextTestCase
 			}
 		} */
 		//		assertEquals(csMonikerMap.size(), pivotMonikerMap.size());
+		CSResource xmiResource = csResource.saveAsXMI(xmiOutputURI);
+	//	OCLstdlibCSResourceSaveImpl xmiResource = new OCLstdlibCSResourceSaveImpl(xmiOutputURI, OCLASResourceFactory.getInstance(), csResource);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		csResource.setURI(xmiOutputURI);
+		xmiResource.save(null);
+		assertNoResourceErrors("Saving CS as XMI", xmiResource);
 		ocl.dispose();
+
+		doCheckCSXMIReload(xmiOutputURI);
+	}
+
+	/**
+	 * Check that xmiURI is loadable as regular XMI.
+	 */
+	protected void doCheckCSXMIReload(@NonNull URI xmiURI) {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+		Resource xmiResource = resourceSet.getResource(xmiURI, true);
+		assertEquals(XMIResourceImpl.class, xmiResource.getClass());
+		assertNoResourceErrors("Loading CS from XMI", xmiResource);
+	//	assertNoUnresolvedProxies("Loading CS from XMI", xmiResource);
+	//	xmiResource.unload();
+		resourceSet.getResources().clear();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCLSTDLIB_CS_FILE_EXTENSION, new OCLstdlibCSResourceLoadFactory());
+		Resource csxmiResource = resourceSet.getResource(xmiURI, true);
+		assertEquals(OCLCSResourceLoad.class, csxmiResource.getClass());
+		assertNoResourceErrors("Loading CS from csXMI", csxmiResource);
+		assertNoUnresolvedProxies("Loading CS from csXMI", csxmiResource);
 	}
 
 	public void testMoniker_Ecore_ecore() throws IOException, InterruptedException {
