@@ -546,6 +546,15 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static <T extends NamedElement> @NonNull T createNamedElement(@NonNull T asNamedElement) {
+		@SuppressWarnings("unchecked") T asClone = (T)PivotFactory.eINSTANCE.create(asNamedElement.eClass());
+		asClone.setName(asNamedElement.getName());
+		return asClone;
+	}
+
+	/**
 	 * @since 1.1
 	 * @deprecated Use PivotHelper.createNavigationCallExp to specialize return types.
 	 */
