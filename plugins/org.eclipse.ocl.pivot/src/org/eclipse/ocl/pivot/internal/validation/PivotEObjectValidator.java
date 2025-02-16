@@ -160,6 +160,7 @@ public class PivotEObjectValidator implements EValidator
 	 * Return the user's ResourceSet, preferably as a data element of the diagnostics, corresponding to
 	 * the original validation context, else from the object else from the eClassifier.
 	 */
+	@Deprecated /*( @deprecated no longer used - use ValidationContext.getEnvironmentFactory(Object) */
 	public static @Nullable ResourceSet getResourceSet(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics) {
 		ResourceSet resourceSet = null;
 		if (diagnostics instanceof BasicDiagnostic) {
