@@ -25,6 +25,17 @@ import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 
 public class CompleteOCLCSResource extends EssentialOCLCSResource
 {
+	/**
+	 * A CompleteOCLCSResourceLoadFactory supports creation of a BaseCSXMIResource that supports persistence of the CS model directly as XMI
+	 * rather than exploiting Xtext to serialize to / parse from a text file.
+	 */
+	public static class CompleteOCLCSResourceLoadFactory extends OCLCSResourceLoadFactory
+	{
+		public CompleteOCLCSResourceLoadFactory() {
+			super(CompleteOCLASResourceFactory.getInstance());
+		}
+	}
+
 	@Override
 	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
 			@NonNull EnvironmentFactoryInternal environmentFactory) {

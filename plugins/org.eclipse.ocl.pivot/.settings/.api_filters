@@ -175,7 +175,7 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource">
-        <filter id="403804204">
+        <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
                 <message_argument value="createCS2AS(EnvironmentFactoryInternal, ASResource)"/>
@@ -197,6 +197,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
                 <message_argument value="isDerived()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
+                <message_argument value="reloadIn(EnvironmentFactory)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">
