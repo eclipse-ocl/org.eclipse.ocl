@@ -157,7 +157,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			assert !environmentFactory.isDisposed() : "Use of ToStringVisitor while disposed";
-			assert !environmentFactory.isDisposing() : "Use of ToStringVisitor while disposing";	// See Bug 583347
+			assert !environmentFactory.isDisposing() || (environmentFactory.getMetamodelManager() != null) : "Use of ToStringVisitor while disposing";	// See Bug 583347
 		}
 		Resource resource = asElement.eResource();
 		if (resource instanceof ASResource) {
