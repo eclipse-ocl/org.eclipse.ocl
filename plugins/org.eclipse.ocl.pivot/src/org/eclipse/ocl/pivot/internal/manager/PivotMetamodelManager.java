@@ -650,8 +650,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();
-		for (@NonNull Resource asResource : new ArrayList<>(asResources)) {
+		List<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.unload();
+		}
+		for (@NonNull Resource asResource : asResourcesCopy) {
 			asResource.eAdapters().clear();
 		}
 		asResources.clear();
@@ -812,7 +815,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 *
 	 * @deprecated use CompleteModel.getAllCompleteInvariants()
 	 */
-	@Override
+	@Override @Deprecated
 	public @NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType) {
 		List<Constraint> knownInvariants = new ArrayList<>();
 		for (CompleteClass superType : getAllSuperCompleteClasses(pivotType)) {
@@ -1103,7 +1106,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
-		completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
+		CompleteClass completeClass = completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if (thisModel == thatModel) {
 			return thatClass;
@@ -1114,7 +1117,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		String className = PivotUtil.getName(thatClass);
 		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
 		if (thisClass == null) {
-			thisClass = PivotUtil.createClass(className);
+			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
+			thisClass = PivotUtil.createNamedElement(asClass);
 			theseClasses.add(thisClass);
 		}
 		return thisClass;
@@ -1841,6 +1845,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		assert thisModel != null;
 		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
+		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
 		thisOppositeClass.getOwnedProperties().add(newOpposite);
 		newOpposite.setOpposite(thisProperty);
 		thisProperty.setOpposite(newOpposite);
@@ -2153,29 +2158,36 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 								External2AS external2as2 = external2asMap.get(packageURI);
 								if (external2as2 != null) {
 									Resource knownResource = external2as2.getResource();
-									if ((knownResource != null) && (knownResource != resource)) {
+									if ((knownResource != null) && (knownResource != resource)) {			// isCompatible
 										for (EObject eContent : resource.getContents()) {
 											if (eContent instanceof Pivotable) {
 												Element pivot = ((Pivotable)firstContent).getPivot();
-												if (pivot instanceof Model) {
+												if (pivot instanceof Model) {				// XXX straight to get(0)
 													Model root = (Model)pivot;
-													completeModel.getPartialModels().remove(root);
+													return root;
+												/*	completeModel.getPartialModels().remove(root);
 													ASResource asResource = (ASResource) root.eResource();
 													if (asResource != null) {
+														assert false;				// XXX
 														boolean wasUpdating = asResource.setUpdating(true);
 														asResourceSet.getResources().remove(asResource);
 														asResource.unload();
 														asResource.setUpdating(wasUpdating);
-													}
+														break;	// XXX No point iterating the proxies
+													} */
 												}
 											}
 										}
-										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {
+										if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {				// XXX
 											logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
 										}
+										return PivotUtil.getModel(resource);
+									//	if (!resourceFactory.getASResourceFactory().isCompatibleResource(resource, knownResource)) {				// XXX
+									//		logger.error("Resource '" + resource.getURI() + "' already loaded as '" + knownResource.getURI() + "'");
+									//	}
 										//											resource.unload();
-										resource.getResourceSet().getResources().remove(resource);
-										resource = knownResource;
+									//	resource.getResourceSet().getResources().remove(resource);
+									//	resource = knownResource;
 									}
 								}
 								break;
