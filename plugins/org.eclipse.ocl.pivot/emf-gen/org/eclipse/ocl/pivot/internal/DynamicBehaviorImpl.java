@@ -580,6 +580,9 @@ public class DynamicBehaviorImpl extends BehaviorImpl implements DynamicBehavior
 		return visitor.visitDynamicBehavior(this);
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	@Override
 	public @Nullable Object getReloadableEObjectOrURI() {
 		return null;
