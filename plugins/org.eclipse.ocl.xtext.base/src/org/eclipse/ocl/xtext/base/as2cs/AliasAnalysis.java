@@ -120,8 +120,8 @@ public class AliasAnalysis extends AdapterImpl
 				String alias = computeCandidateAlias(localCompletePackage);
 				String old = allAliases.put(localCompletePackage, alias);
 				assert old == null;
-				}
 			}
+		}
 		for (@NonNull CompletePackage otherCompletePackage : otherCompletePackages) {
 			String alias = computeCandidateAlias(otherCompletePackage);
 			String old = allAliases.put(otherCompletePackage, alias);
