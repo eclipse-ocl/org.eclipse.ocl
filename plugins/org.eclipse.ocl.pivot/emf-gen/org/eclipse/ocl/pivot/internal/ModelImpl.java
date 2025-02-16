@@ -515,7 +515,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	@Override
 	public @NonNull URI getReloadableEObjectOrURI() {

@@ -78,7 +78,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * If SET_PROXY is set active, the proxification of the PivotEObjectImpl.esObject is traced.
 	 *
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static final TracingOption SET_PROXY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/set-proxy"); //$NON-NLS-1$
 

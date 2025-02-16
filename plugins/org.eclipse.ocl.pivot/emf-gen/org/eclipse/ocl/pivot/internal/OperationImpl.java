@@ -1672,14 +1672,14 @@ implements Operation {
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public boolean isIsImplicit() {
 		return implementation instanceof JavaCompareToOperation;			// FIXME Promote to Feature
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	@Override
 	protected @Nullable EObject resolveESNotifier(@NonNull CompleteModel completeModel) {

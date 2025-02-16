@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
  * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource.
@@ -52,7 +53,9 @@ public interface CSResource extends Resource
 	 * Create the CS2AS converter for the asResource conversions using environmentFactory.
 	 * @since 1.24
 	 */
-	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+	default @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+		throw new UnsupportedOperationException();		// XXX
+	}
 
 	/**
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
@@ -78,12 +81,13 @@ public interface CSResource extends Resource
 	 * @since 1.24
 	 */
 	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	/**
 	 * @since 1.15
 	 */
+	@Deprecated /* @deprecated use PivotUtilInternal.getEnvironmentFactory */
 	default @NonNull EnvironmentFactory getEnvironmentFactory() {
 		throw new UnsupportedOperationException();
 	}
@@ -104,6 +108,13 @@ public interface CSResource extends Resource
 	@Deprecated /* @deprecated only for BaseCSResource */
 	default boolean isDerived() {
 		return false;
+	}
+
+	/**
+	 * @since 1.24
+	 */
+	default ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) throws SemanticException {			// XXX
+		throw new UnsupportedOperationException();
 	}
 
 	/**

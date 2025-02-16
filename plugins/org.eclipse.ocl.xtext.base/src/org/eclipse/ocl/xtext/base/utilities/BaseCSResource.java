@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.utilities;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -106,6 +107,11 @@ public interface BaseCSResource extends CSResource, CSResource.CSResourceExtensi
 	 * Return a uri against the URI of this CS resource.
 	 */
 	@NonNull URI resolve(@NonNull URI uri);
+
+	/**
+	 * Save this CS Resource by creating and returning a variant resource that uses XMI serialization.
+	 */
+	@NonNull CSResource saveAsXMI(@NonNull URI xmiOutputURI) throws IOException;
 
 	/**
 	 * Set whether this BaseCSResource is derived from an ASResource.

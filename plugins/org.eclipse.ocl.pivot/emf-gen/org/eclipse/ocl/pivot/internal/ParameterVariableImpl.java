@@ -184,7 +184,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	@Override
 	public @Nullable Object getReloadableEObjectOrURI() {

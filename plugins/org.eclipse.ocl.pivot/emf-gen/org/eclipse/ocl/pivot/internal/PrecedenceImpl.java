@@ -339,7 +339,7 @@ public class PrecedenceImpl
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	@Override
 	public @NonNull URI getReloadableEObjectOrURI() {			// XXX enums are missing from oclstdlib.ecore
