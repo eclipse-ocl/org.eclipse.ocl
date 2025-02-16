@@ -875,6 +875,9 @@ implements Constraint {
 		return null;
 	}
 
+	/**
+	 * @since 1.23
+	 */
 	@Override
 	public @Nullable Object getReloadableEObjectOrURI() {
 		return null;
