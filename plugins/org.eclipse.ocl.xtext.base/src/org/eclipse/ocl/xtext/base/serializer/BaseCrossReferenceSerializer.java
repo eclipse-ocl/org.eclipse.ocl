@@ -21,7 +21,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -75,27 +77,6 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 			}
 		}
 
-		protected @Nullable String convert(List<String> segments, String ruleName) {
-			int iMax = segments.size();
-			String[] converted = new String[iMax];
-			String unconverted = null;
-			try {
-				for (int i = 0; i < iMax; i++) {
-					unconverted = segments.get(i);
-					if ((i > 0) && "UnrestrictedName".equals(ruleName)) {
-						converted[i] = valueConverter.toString(unconverted, "UnreservedName");
-					}
-					else {
-						converted[i] = valueConverter.toString(unconverted, ruleName);
-					}
-				}
-				return qualifiedNameConverter.toString(new QualifiedName(converted) {});
-			} catch (ValueConverterException e) {
-				record(unconverted, e);
-				return null;
-			}
-		}
-
 		protected void record(String unconverted, @NonNull ValueConverterException e) {
 			if (errors != null) {
 				List<ISerializationDiagnostic> recordedErrors2 = recordedErrors;
@@ -143,6 +124,19 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 				String uri = pathElementWithURICS.getUri();
 				if (uri != null) {
 					String converted = helper.convert(uri, ruleName);
+					if (converted != null) {
+						return converted;
+					}
+				}
+			}
+			if (target instanceof PivotObjectImpl) {
+				URI uri = ((PivotObjectImpl)target).getReloadableURI();
+				if (uri != null) {
+					assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+					URI baseURI = semanticObject.eResource().getURI();
+					URI deresolvedURI = URIUtil.deresolve(uri, baseURI);
+					String unconverted = deresolvedURI.toString();
+					String converted = helper.convert(unconverted, ruleName);
 					if (converted != null) {
 						return converted;
 					}
