@@ -1249,7 +1249,7 @@ public class DelegateInstaller
 				eAnnotations.remove(annotation3);
 			}
 		}
-		EAnnotation annotation4 = eModelElement.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
+		EAnnotation annotation4 = eModelElement.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC);
 		if (annotation4 != null) {
 			if (PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(exportDelegateURI)) {
 				oclAnnotation = annotation4;
