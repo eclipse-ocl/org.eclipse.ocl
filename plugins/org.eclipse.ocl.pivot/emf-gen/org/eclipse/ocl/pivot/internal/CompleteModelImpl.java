@@ -104,7 +104,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 1.23
 	 */
 	protected static final class ConstraintExecutabilityComparator implements Comparator<@NonNull Constraint>
-{
+	{
 		public static final @NonNull ConstraintExecutabilityComparator INSTANCE = new ConstraintExecutabilityComparator();
 
 		@Override
