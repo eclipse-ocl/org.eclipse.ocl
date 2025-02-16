@@ -14,7 +14,10 @@ library lib : lib = 'http://minimal.oclstdlib'
 	}
 	type OclElement conformsTo OclAny {}	
 	abstract type OclEnumeration conformsTo OclType {}
-	type OclInvalid : InvalidType conformsTo OclVoid {}
+	type OclInvalid : InvalidType conformsTo OclVoid {
+		operation oclBadOperation() : OclAny[?];
+		property oclBadProperty : OclAny[?];
+	}
 	type OclLambda conformsTo OclAny {}	
 	type OclSelf : SelfType conformsTo OclAny {}
 	type OclTuple conformsTo OclAny {}	
