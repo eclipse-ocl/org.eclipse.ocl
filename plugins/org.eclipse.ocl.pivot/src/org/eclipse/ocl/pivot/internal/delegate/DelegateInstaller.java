@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2021 Willink Transformations and others.
+ * Copyright (c) 2011, 2024 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -91,6 +91,10 @@ import org.eclipse.ocl.pivot.validation.ValidationContext;
 
 import com.google.common.collect.Lists;
 
+/**
+ * A DelegateInstaller supports installation of Ecore delegates to implement functionality defined by OCL expressions emdedded
+ * in AS Constraints, Operations and Properties.
+ */
 public class DelegateInstaller
 {
 	/**
@@ -626,7 +630,7 @@ public class DelegateInstaller
 	public static final @NonNull String OPTION_BOOLEAN_INVARIANTS = "booleanInvariants";
 
 	/**
-	 * True to omit the setting delegates declaration. Useful for matching UML2Ecore behaviour.
+	 * True to omit the setting delegates declaration. Useful for matching UML2Ecore behavior.
 	 */
 	public static final @NonNull String OPTION_OMIT_SETTING_DELEGATES = "omitSettingDelegates";
 
@@ -866,8 +870,7 @@ public class DelegateInstaller
 
 	public DelegateInstaller(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Map<String, Object> options) {
 		this.environmentFactory = environmentFactory;
-		//		this.metamodelManager = metamodelManager;
-		this.options = options != null ? options : new HashMap<String,Object>();
+		this.options = options != null ? options : new HashMap<>();
 		this.exportDelegateURI = getExportDelegateURI(this.options);
 	}
 
@@ -1189,17 +1192,17 @@ public class DelegateInstaller
 				}
 			}
 		}
-		EAnnotation eAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
+		EAnnotation constraintNamesAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
 		if (s != null) {
-			if (eAnnotation == null) {
-				eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(EcorePackage.eNS_URI);
-				eClassifier.getEAnnotations().add(/*0,*/ eAnnotation);
+			if (constraintNamesAnnotation == null) {
+				constraintNamesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				constraintNamesAnnotation.setSource(EcorePackage.eNS_URI);
+				eClassifier.getEAnnotations().add(/*0,*/ constraintNamesAnnotation);
 			}
-			eAnnotation.getDetails().put("constraints", s.toString());
+			constraintNamesAnnotation.getDetails().put(CONSTRAINTS_KEY, s.toString());
 		}
 		else {
-			eClassifier.getEAnnotations().remove(eAnnotation);
+			eClassifier.getEAnnotations().remove(constraintNamesAnnotation);
 		}
 	}
 
@@ -1248,7 +1251,16 @@ public class DelegateInstaller
 		}
 		EAnnotation annotation4 = eModelElement.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
 		if (annotation4 != null) {
-			eAnnotations.remove(annotation4);
+			if (PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(exportDelegateURI)) {
+				oclAnnotation = annotation4;
+			}
+			else {
+				eAnnotations.remove(annotation4);
+			}
+		}
+		EAnnotation annotation5 = eModelElement.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
+		if (annotation5 != null) {
+			eAnnotations.remove(annotation5);
 		}
 		return oclAnnotation;
 	}
