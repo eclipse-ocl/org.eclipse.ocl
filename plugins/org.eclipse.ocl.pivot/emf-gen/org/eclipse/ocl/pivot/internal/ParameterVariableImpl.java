@@ -172,14 +172,6 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	public @Nullable EObject getESObject() {
 		EObject esObject = super.getESObject();
 		assert esObject == null;
-	/*	Parameter asParameter = getRepresentedParameter();
-		if (asParameter != null) {
-			return asParameter.getESObject();		// XXX else cs
-		}
-		assert eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		return getType().getESObject();
-	//	}
-	//	getContextVar */
 		return esObject;
 	}
 
@@ -197,42 +189,4 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		assert (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) || (eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
 		return ((PivotObjectImpl)getType()).getReloadableEObjectOrURI();
 	}
-
-	/**
-	 * @since 1.22
-	 *
-	@Override
-	protected boolean setReloadableProxy() {
-		assert super.getESObject() == null;
-		EReference eContainmentFeature = eContainmentFeature();
-		if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) {
-		//	assert representedParameter == null;		-- null for OCL self, non-null for QVTd this
-			eSetProxyURI(NO_UNLOAD_PROXY_URI);
-			return false;
-		}
-		else if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
-			assert representedParameter == null;
-			eSetProxyURI(NO_UNLOAD_PROXY_URI);
-			return false;
-		}
-		else if (eContainmentFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
-			assert representedParameter != null;
-			Notifier esProxyTarget = ((PivotObjectImpl)representedParameter).getReloadableNotifier();		// XXX else cs
-			if (esProxyTarget instanceof EObject) {
-				URI uri = EcoreUtil.getURI((EObject)esProxyTarget);
-				eSetProxyURI(uri);
-				return true;
-			}
-			else {
-				assert false;			// XXX
-				eSetProxyURI(NO_UNLOAD_PROXY_URI);
-				return false;
-			}
-		}
-		else {
-			assert false;			// XXX
-			eSetProxyURI(NO_UNLOAD_PROXY_URI);
-			return false;
-		}
-	} */
 } //ParameterVariableImpl

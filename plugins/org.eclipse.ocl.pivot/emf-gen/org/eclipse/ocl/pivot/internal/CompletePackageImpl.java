@@ -502,7 +502,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -585,6 +584,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		CompleteClasses ownedCompleteClasses2 = ownedCompleteClasses;
 		if (ownedCompleteClasses2 == null)
 		{
+			assert !getCompleteModel().getEnvironmentFactory().isDisposed() && !getCompleteModel().getEnvironmentFactory().isDisposing();
 			ownedCompleteClasses = ownedCompleteClasses2 = new CompleteClasses(this);
 		}
 		return ownedCompleteClasses2;
@@ -601,6 +601,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		NestedCompletePackages ownedCompletePackages2 = ownedCompletePackages;
 		if (ownedCompletePackages2 == null)
 		{
+			assert !getCompleteModel().getEnvironmentFactory().isDisposed() && !getCompleteModel().getEnvironmentFactory().isDisposing();
 			ownedCompletePackages = ownedCompletePackages2 = new NestedCompletePackages(this);
 		}
 		return ownedCompletePackages2;
