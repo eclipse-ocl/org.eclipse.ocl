@@ -128,6 +128,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -645,6 +646,20 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public void dispose() {
+		EnvironmentFactoryInternal threadEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if ((threadEnvironmentFactory != environmentFactory) && (threadEnvironmentFactory != null)) {		// XXX
+			Thread thread = Thread.currentThread();
+			String threadName = thread.getName();
+			if (!"Finalizer".equals(threadName)) {
+				System.out.println("[" + threadName + "] environmentFactory = " + NameUtil.debugSimpleName(environmentFactory));
+				System.out.println("[" + threadName + "] ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(threadEnvironmentFactory));
+			}
+		}
+		assert (threadEnvironmentFactory == null) || (threadEnvironmentFactory == environmentFactory) : "Cannot dispose() a foreign EnvironmentFactory";
+	//	if (environmentFactory != ThreadLocalExecutor.basicGetEnvironmentFactory()) {
+	//		System.err.println("Correcting current EnvironmentFactory to facilitate dispose()");
+	//		environmentFactory.activate();
+	//	}
 		//		System.out.println("[" + Thread.currentThread().getName() + "] dispose AS " + NameUtil.debugSimpleName(asResourceSet));
 		asResourceSet.eAdapters().remove(this);
 		List<@NonNull Resource> asResources = asResourceSet.getResources();

@@ -472,10 +472,11 @@ public class ThreadLocalExecutor implements Nameable
 	 * @since 1.20
 	 */
 	public @Nullable EnvironmentFactoryInternal localBasicGetEnvironmentFactory() {
+		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
 		if (concurrentEnvironmentFactories) {
-			assert environmentFactory == null;
+			assert environmentFactory2 == null;
 		}
-		return (environmentFactory != null) && !environmentFactory.isDisposed() ? environmentFactory : null;
+		return (environmentFactory2 != null) && (environmentFactory2.isDisposing() || !environmentFactory2.isDisposed()) ? environmentFactory2 : null;
 	}
 
 	/**
@@ -577,11 +578,9 @@ public class ThreadLocalExecutor implements Nameable
 			if (executor instanceof PivotExecutorManager) {
 				localAttachEnvironmentFactory((EnvironmentFactoryInternal) ((PivotExecutorManager)executor).getEnvironmentFactory());
 			}
-		//	else {
-				if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-					THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Set " + toString());
-				}
-		//	}
+			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Set " + toString());
+			}
 		}
 		else {
 			this.executor = null;
@@ -598,15 +597,19 @@ public class ThreadLocalExecutor implements Nameable
 	public void setEnvironmentFactory(@Nullable EnvironmentFactoryInternal newEnvironmentFactory) {
 		EnvironmentFactoryInternal oldEnvironmentFactory = this.environmentFactory;
 		if (newEnvironmentFactory != oldEnvironmentFactory) {
-			if ((oldEnvironmentFactory != null) && !oldEnvironmentFactory.isDisposed()) {
-			//	this.environmentFactory = null;
-				oldEnvironmentFactory.detach(this);
-				this.environmentFactory = null;
-				if (usesFinalizer) {
-				//	System.out.println(getThreadName() + " setEnvironmentFactory() gc()");
-					this.executor = null;
-					System.gc();
-					usesFinalizer = false;
+			if (oldEnvironmentFactory != null) {
+				if (!oldEnvironmentFactory.isDisposed()) {
+					oldEnvironmentFactory.detach(this);
+					this.environmentFactory = null;
+					if (usesFinalizer) {
+					//	System.out.println(getThreadName() + " setEnvironmentFactory() gc()");
+						this.executor = null;
+						System.gc();
+						usesFinalizer = false;
+					}
+				}
+				else {
+					this.environmentFactory = null;
 				}
 			}
 			if ((newEnvironmentFactory != null) && !newEnvironmentFactory.isDisposed()) {
