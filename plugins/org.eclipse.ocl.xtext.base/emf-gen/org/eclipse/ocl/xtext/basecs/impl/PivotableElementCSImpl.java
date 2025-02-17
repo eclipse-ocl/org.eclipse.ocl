@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.basecs.impl;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
@@ -40,15 +38,6 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	 * @ordered
 	 */
 	public static final int PIVOTABLE_ELEMENT_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
-	/**
-	 * The cached value of the '{@link #getPivot() <em>Pivot</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPivot()
-	 * @generated
-	 * @ordered
-	 */
-	protected Element pivot;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -72,28 +61,40 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	}
 
 	/**
+	 * The cached value of the '{@link #getPivot() <em>Pivot</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @see #getPivot()
+	 * @generated NOT
+	 * @ordered
+	 */
+	private Element pivot;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	@Override
 	public Element getPivot()
 	{
+		if ((pivot != null) && pivot.eIsProxy()) {
+			pivot = null;
+		}
 		return pivot;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setPivot(Element newPivot)
 	{
-		Element oldPivot = pivot;
+//		System.out.println("setPivot " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(newPivot));
+		assert (newPivot == null) || !newPivot.eIsProxy();			// XXX
 		pivot = newPivot;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPivot, pivot));
 	}
 
 	/**
@@ -157,7 +158,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		switch (featureID)
 		{
 			case 2:
-				return pivot != null;
+				return getPivot() != null;
 		}
 		return super.eIsSet(featureID);
 	}
