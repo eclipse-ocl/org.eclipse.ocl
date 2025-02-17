@@ -27,7 +27,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMIException;
@@ -42,14 +41,18 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.ElementImpl;
+import org.eclipse.ocl.pivot.internal.ModelImpl;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -299,7 +302,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * Creates an instance of the resource.
 	 */
-	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
+	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) { // XXX add EnvironmentFactory
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
 		//	assert PivotUtilInternal.isASURI(uri);
@@ -393,6 +396,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
+			preUnload(PivotUtilInternal.getEnvironmentFactory(resourceSet));
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -554,7 +558,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 *
 	 * @since 1.23
 	 */
-	@Override
 	public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
 //		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
@@ -562,18 +565,12 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = new HashMap<>();
 			for (TreeIterator<EObject> tit = getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
-				if (eObject instanceof Element) {
-					Element asElement = (Element)eObject;
-					URI eProxyURI = ((BasicEObjectImpl)asElement).eProxyURI();
-					if (eProxyURI == null) {
-						URI uri = asElement.getReloadableURI(environmentFactory);
-						if (uri != null) {
-							if (uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION)) {
-								asElement.getReloadableURI(environmentFactory);		// XXX debugging
-							}
-							assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
-							asElement2reloadableURI2.put(asElement, uri);
-						}
+				if (eObject instanceof ElementImpl) {
+					ElementImpl asElement = (ElementImpl)eObject;
+					URI uri = asElement.getReloadableURI(environmentFactory);		// Make sure it's a reloadable one
+					if (uri != null) {
+						assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
+						asElement2reloadableURI2.put(asElement, uri);
 					}
 				}
 			}
@@ -678,17 +675,25 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	protected void unloaded(InternalEObject internalEObject) {
-		//	assert resourceSet != null: "ResourceSet required";			// XXX
-		URI eProxyURI = internalEObject.eProxyURI();
-		if (eProxyURI == null) {
-			URI uri = null;
-			if (asElement2reloadableURI != null) {
-				uri = asElement2reloadableURI.get(internalEObject);
+		assert resourceSet != null: "ResourceSet required";			// XXX
+		if ((internalEObject instanceof ModelImpl)) {
+			ModelImpl asModel = (ModelImpl)internalEObject;
+			ThreadLocalExecutor.getEnvironmentFactory().getCompleteModel().getPartialModels().remove(asModel);
+		}
+		Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = asElement2reloadableURI;
+		if (asElement2reloadableURI2 != null) {
+			URI eProxyURI = internalEObject.eProxyURI();
+			if ((eProxyURI == null) && (internalEObject instanceof Element)) {
+				Element asElement = (Element)internalEObject;
+				URI uri = asElement2reloadableURI2.get(asElement);
 				if (uri != null) {
 					internalEObject.eSetProxyURI(uri);
+					internalEObject.eAdapters().clear();
+					return;
 				}
 			}
 		}
+//		super.unloaded(internalEObject);		// Nothing to set for e.g unimplemented Ecore Constraint
 //		super.unloaded(internalEObject);
 //	    if (!internalEObject.eIsProxy())
 //	    {

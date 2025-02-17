@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisit
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
@@ -823,8 +824,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			if (i >= savedSize) {			// Observed to happen in testQVTiInterpreter_HSV2HSL when OCLmetaModel not eagerly loaded.
 				logger.warn("Additional AS resource appeared during preUnload : '" + asResource.getURI() + "'");
 			}
-			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResource)) {			// Ignore built-in resources
-				((ASResource)asResource).preUnload(this);
+			if ((asResource.getResourceSet() != null) && (asResource instanceof ASResourceImpl)) {			// Ignore built-in resources
+				((ASResourceImpl)asResource).preUnload(this);
 			}
 		}
 		disposeInternal();

@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.LUSSIDs;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -139,16 +138,7 @@ public interface ASResource extends XMIResource
 	boolean isSaveable();
 
 	/**
-	 * Populate an AS element to proxy URI mapping with proxy URIs for all referencable elements.
-	 * This should be invoked before unload to ensure that the full AS context is available.
-	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
-	 *
-	 * @since 1.23
-	 */
-	default void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
-
-	/**
-	 * Reset the Locally Unique Senantically Sensitive IDs that form the basic of xmi:id allocation.
+	 * Reset the Locally Unique Semantically Sensitive IDs that form the basic of xmi:id allocation.
 	 * This may be necessary to re-save a Resource that has been modified after a previous save.
 	 *
 	 * @since 1.5
