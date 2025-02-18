@@ -14,6 +14,5 @@ package org.eclipse.ocl.xtext.oclstdlib.scoping;
 
 import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScopeProvider;
 
-@Deprecated /* @deprecated not used */
 public abstract class AbstractOCLstdlibScopeProvider extends EssentialOCLScopeProvider {
 }
