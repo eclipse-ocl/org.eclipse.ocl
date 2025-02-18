@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.serializer;
 
+import com.google.inject.Inject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.serializer.AbstractSerializationMetaData;
@@ -39,8 +40,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.service.GrammarProvider;
-
-import com.google.inject.Inject;
 
 /******* This file is 100% auto-generated - do not edit it *******/
 

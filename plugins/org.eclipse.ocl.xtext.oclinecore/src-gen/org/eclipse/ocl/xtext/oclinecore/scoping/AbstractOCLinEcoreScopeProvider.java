@@ -14,6 +14,5 @@ package org.eclipse.ocl.xtext.oclinecore.scoping;
 
 import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScopeProvider;
 
-@Deprecated /* @deprecated not used */
 public abstract class AbstractOCLinEcoreScopeProvider extends EssentialOCLScopeProvider {
 }
