@@ -20,7 +20,6 @@ import org.eclipse.ocl.pivot.Model;
  *
  * <!-- begin-model-doc -->
  * A QueryModel aggregates multiple QueryResults as a saveable model
- * @since 1.18
  * <!-- end-model-doc -->
  *
  * <p>
