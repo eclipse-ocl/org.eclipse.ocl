@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * <!-- begin-user-doc -->
@@ -133,7 +132,6 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public void setBody(String newBody)
 	{
-		assert !PivotConstants.DUMMY_COMPLETE_OCL_BODY.equals(newBody);
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())

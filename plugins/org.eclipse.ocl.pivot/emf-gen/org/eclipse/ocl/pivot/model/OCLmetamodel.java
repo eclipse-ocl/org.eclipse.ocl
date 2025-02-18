@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Willink Transformations and others.
+ * Copyright (c) 2010, 2025 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -30,20 +30,25 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -52,7 +57,12 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -146,16 +156,32 @@ public class OCLmetamodel extends ASResourceImpl
 		INSTANCE = null;
 	}
 
-	protected OCLmetamodel(@NonNull URI uri) {
-		super(uri, OCLASResourceFactory.getInstance());
-	}
-
 	protected static class LibraryContents extends AbstractContents
 	{
 		protected final @NonNull Package standardLibrary;
+		private final @NonNull Class booleanType;
+		private final @NonNull Class stringType;
 
 		protected LibraryContents(@NonNull Package standardLibrary) {
 			this.standardLibrary = standardLibrary;
+			this.booleanType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("Boolean"));
+			this.stringType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("String"));
+		}
+
+		/**
+		 * @since 1.23
+		 */
+		protected @NonNull Constraint createInvariant(@NonNull String name, @NonNull String body) {
+			Constraint constraint = PivotFactory.eINSTANCE.createConstraint();
+			ExpressionInOCL expressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+			StringLiteralExp stringLiteral = PivotFactory.eINSTANCE.createStringLiteralExp();
+			stringLiteral.setStringSymbol(body);
+			stringLiteral.setType(stringType);
+			expressionInOCL.setOwnedBody(stringLiteral);
+			expressionInOCL.setType(booleanType);
+			constraint.setName(name);
+			constraint.setOwnedSpecification(expressionInOCL);
+			return constraint;
 		}
 	}
 
@@ -257,6 +283,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installCollectionTypes();
 			installOperations();
 			installProperties();
+			installInvariants();
 			installTemplateBindings();
 			installComments();
 		}
@@ -4560,6 +4587,288 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_TemplateParameterSubstitution_ownedWildcard);
 		}
 
+		private final @NonNull Constraint iv_BooleanLiteralExp_TypeIsBoolean = createInvariant("TypeIsBoolean", "self.type = Boolean");
+		private final @NonNull Constraint iv_CallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree");
+		private final @NonNull Constraint iv_CallExp_SafeSourceCannotBeMap = createInvariant("SafeSourceCannotBeMap", "isSafe implies let sourceType = ownedSource?.type in sourceType <> null implies not sourceType.oclIsKindOf(MapType)");
+		private final @NonNull Constraint iv_CallExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Class_NameIsNotNull = createInvariant("NameIsNotNull", "name <> null");
+		private final @NonNull Constraint iv_Class_UniqueInvariantName = createInvariant("UniqueInvariantName", "ownedInvariants->isUnique(name)");
+		private final @NonNull Constraint iv_CollectionItem_TypeIsItemType = createInvariant("TypeIsItemType", "type = ownedItem.type");
+		private final @NonNull Constraint iv_CollectionLiteralExp_BagKindIsBag = createInvariant("BagKindIsBag", "kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)");
+		private final @NonNull Constraint iv_CollectionLiteralExp_CollectionKindIsConcrete = createInvariant("CollectionKindIsConcrete", "kind <> CollectionKind::Collection");
+		private final @NonNull Constraint iv_CollectionLiteralExp_OrderedSetKindIsOrderedSet = createInvariant("OrderedSetKindIsOrderedSet", "kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)");
+		private final @NonNull Constraint iv_CollectionLiteralExp_SequenceKindIsSequence = createInvariant("SequenceKindIsSequence", "kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)");
+		private final @NonNull Constraint iv_CollectionLiteralExp_SetKindIsSet = createInvariant("SetKindIsSet", "kind = CollectionKind::Set implies type.oclIsKindOf(SetType)");
+		private final @NonNull Constraint iv_CollectionLiteralPart_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Constraint_BooleanValued = createInvariant("BooleanValued", "ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid");
+		private final @NonNull Constraint iv_Constraint_UniqueName = createInvariant("UniqueName", "true");
+		private final @NonNull Constraint iv_DataType_BehavioralClassHasDistinctName = createInvariant("BehavioralClassHasDistinctName", "behavioralClass <> null implies superClasses->closure(superClasses)->forAll(b | b.name <> name)");
+		private final @NonNull Constraint iv_DataType_BehavioralClassIsPrimitiveType = createInvariant("BehavioralClassIsPrimitiveType", "behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)");
+		private final @NonNull Constraint iv_DataType_BehavioralClassIsSuperClass = createInvariant("BehavioralClassIsSuperClass", "behavioralClass <> null implies superClasses->includes(behavioralClass)");
+		private final @NonNull Constraint iv_EnumLiteralExp_TypeIsEnumerationType = createInvariant("TypeIsEnumerationType", "self.type = referredLiteral?.owningEnumeration");
+		private final @NonNull Constraint iv_Feature_NameIsNotNull = createInvariant("NameIsNotNull", "name <> null");
+		private final @NonNull Constraint iv_Feature_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Feature_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_IfExp_ConditionTypeIsBoolean = createInvariant("ConditionTypeIsBoolean", "self.ownedCondition.type = Boolean");
+		private final @NonNull Constraint iv_IfExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_IntegerLiteralExp_TypeIsInteger = createInvariant("TypeIsInteger", "self.type = Integer");
+		private final @NonNull Constraint iv_IterateExp_BodyTypeConformsToResultType = createInvariant("BodyTypeConformsToResultType", "true");
+		private final @NonNull Constraint iv_IterateExp_OneInitializer = createInvariant("OneInitializer", "true");
+		private final @NonNull Constraint iv_IterateExp_SafeIteratorIsRequired = createInvariant("SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
+		private final @NonNull Constraint iv_IterateExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IterateExp_TypeIsResultType = createInvariant("TypeIsResultType", "true");
+		private final @NonNull Constraint iv_IterateExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IteratorExp_AnyBodyTypeIsBoolean = createInvariant("AnyBodyTypeIsBoolean", "true");
+		private final @NonNull Constraint iv_IteratorExp_AnyHasOneIterator = createInvariant("AnyHasOneIterator", "true");
+		private final @NonNull Constraint iv_IteratorExp_AnyTypeIsSourceElementType = createInvariant("AnyTypeIsSourceElementType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureBodyElementTypeIsIteratorType = createInvariant("ClosureBodyElementTypeIsIteratorType", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)");
+		private final @NonNull Constraint iv_IteratorExp_ClosureBodyTypeIsConformanttoIteratorType = createInvariant("ClosureBodyTypeIsConformanttoIteratorType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureElementTypeIsSourceElementType = createInvariant("ClosureElementTypeIsSourceElementType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureHasOneIterator = createInvariant("ClosureHasOneIterator", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureResultElementTypeIsIteratorType = createInvariant("ClosureResultElementTypeIsIteratorType", "name = \'closure\' implies\n\t\tlet resultElementType = type.oclAsType(CollectionType).elementType in \n\t\tlet iteratorType = ownedIterators->at(1).type in\n\t\titeratorType?.conformsTo(resultElementType)");
+		private final @NonNull Constraint iv_IteratorExp_ClosureSourceElementTypeIsBodyElementType = createInvariant("ClosureSourceElementTypeIsBodyElementType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureTypeIsUniqueCollection = createInvariant("ClosureTypeIsUniqueCollection", "name = \'closure\' implies\nif ownedSource?.type?.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then\ntype.oclIsKindOf(OrderedSetType)\nelse\ntype.oclIsKindOf(SetType)\nendif");
+		private final @NonNull Constraint iv_IteratorExp_CollectElementTypeIsFlattenedBodyType = createInvariant("CollectElementTypeIsFlattenedBodyType", "name = \'collect\' implies\ntype.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()");
+		private final @NonNull Constraint iv_IteratorExp_CollectTypeIsUnordered = createInvariant("CollectTypeIsUnordered", "name = \'collect\' implies\nif ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then\ntype.oclIsKindOf(SequenceType)\nelse\ntype.oclIsKindOf(BagType)\nendif");
+		private final @NonNull Constraint iv_IteratorExp_IteratorTypeIsSourceElementType = createInvariant("IteratorTypeIsSourceElementType", "let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies\n    let sourceElementType = sourceType.oclAsType(CollectionType).elementType in\n    self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))");
+		private final @NonNull Constraint iv_IteratorExp_IteratorTypeIsSourceKeyType = createInvariant("IteratorTypeIsSourceKeyType", "let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies\n    let sourceKeyType = sourceType.oclAsType(MapType).keyType in\n    self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))");
+		private final @NonNull Constraint iv_IteratorExp_SafeIteratorIsRequired = createInvariant("SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
+		private final @NonNull Constraint iv_IteratorExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IteratorExp_SortedByElementTypeIsSourceElementType = createInvariant("SortedByElementTypeIsSourceElementType", "name = \'sortedBy\' implies\ntype.oclAsType(CollectionType).elementType =\nownedSource?.type.oclAsType(CollectionType).elementType");
+		private final @NonNull Constraint iv_IteratorExp_SortedByIsOrderedIfSourceIsOrdered = createInvariant("SortedByIsOrderedIfSourceIsOrdered", "name = \'sortedBy\' implies\nif ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(BagType) then\ntype.oclIsKindOf(SequenceType)\nelse\ntype.oclIsKindOf(OrderedSetType)\nendif");
+		private final @NonNull Constraint iv_IteratorExp_SortedByIteratorTypeIsComparable = createInvariant("SortedByIteratorTypeIsComparable", "true");
+		private final @NonNull Constraint iv_IteratorExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IteratorVariable_HasNoInitializer = createInvariant("HasNoInitializer", "ownedInit = null");
+		private final @NonNull Constraint iv_LetExp_CompatibleNullityForIn = createInvariant("CompatibleNullityForIn", "isRequired = ownedIn.isRequired");
+		private final @NonNull Constraint iv_LetExp_TypeIsInType = createInvariant("TypeIsInType", "type = ownedIn.type");
+		private final @NonNull Constraint iv_LetExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_LetVariable_CompatibleNullityForInitializer = createInvariant("CompatibleNullityForInitializer", "ownedInit?.isRequired = isRequired");
+		private final @NonNull Constraint iv_LetVariable_CompatibleTypeForInitializer = createInvariant("CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
+		private final @NonNull Constraint iv_LetVariable_HasInitializer = createInvariant("HasInitializer", "ownedInit <> null");
+		private final @NonNull Constraint iv_LoopExp_MatchingMapCoIterators = createInvariant("MatchingMapCoIterators", "ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())");
+		private final @NonNull Constraint iv_LoopExp_MatchingOrderedCollectionCoIterators = createInvariant("MatchingOrderedCollectionCoIterators", "(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())");
+		private final @NonNull Constraint iv_LoopExp_NoCoInitializers = createInvariant("NoCoInitializers", "self.ownedCoIterators?->forAll(ownedInit->isEmpty())");
+		private final @NonNull Constraint iv_LoopExp_NoInitializers = createInvariant("NoInitializers", "self.ownedIterators->forAll(ownedInit->isEmpty())");
+		private final @NonNull Constraint iv_LoopExp_NoNotOrderedCollectionCoIterators = createInvariant("NoNotOrderedCollectionCoIterators", "(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()");
+		private final @NonNull Constraint iv_LoopExp_SourceIsCollection = createInvariant("SourceIsCollection", "true");
+		private final @NonNull Constraint iv_LoopExp_SourceIsIterable = createInvariant("SourceIsIterable", "ownedSource?.type.oclIsKindOf(IterableType)");
+		private final @NonNull Constraint iv_MessageExp_OneCallOrOneSend = createInvariant("OneCallOrOneSend", "ownedCalledOperation->size() + ownedSentSignal->size() = 1");
+		private final @NonNull Constraint iv_MessageExp_TargetIsNotACollection = createInvariant("TargetIsNotACollection", "not ownedTarget.type.oclIsKindOf(CollectionType)");
+		private final @NonNull Constraint iv_OCLExpression_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_Operation_CompatibleReturn = createInvariant("CompatibleReturn", "bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)");
+		private final @NonNull Constraint iv_Operation_LoadableImplementation = createInvariant("LoadableImplementation", "true");
+		private final @NonNull Constraint iv_Operation_UniquePostconditionName = createInvariant("UniquePostconditionName", "ownedPostconditions->isUnique(name)");
+		private final @NonNull Constraint iv_Operation_UniquePreconditionName = createInvariant("UniquePreconditionName", "ownedPreconditions->isUnique(name)");
+		private final @NonNull Constraint iv_OperationCallExp_ArgumentCount = createInvariant("ArgumentCount", "ownedArguments->size() = referredOperation?.ownedParameters?->size()");
+		private final @NonNull Constraint iv_OperationCallExp_ArgumentTypeIsConformant = createInvariant("ArgumentTypeIsConformant", "let operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tlet selfType : Type = operation?.owningClass in\n\tSequence{1..ownedArguments->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\targument.type?.conformsTo(requiredType))");
+		private final @NonNull Constraint iv_OperationCallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_OperationCallExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())");
+		private final @NonNull Constraint iv_OppositePropertyCallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_OppositePropertyCallExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_ParameterVariable_HasNoInitializer = createInvariant("HasNoInitializer", "ownedInit = null");
+		private final @NonNull Constraint iv_Property_CompatibleDefaultExpression = createInvariant("CompatibleDefaultExpression", "ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)");
+		private final @NonNull Constraint iv_PropertyCallExp_CompatibleResultType = createInvariant("CompatibleResultType", "type = getSpecializedReferredPropertyType()");
+		private final @NonNull Constraint iv_PropertyCallExp_NonStaticSourceTypeIsConformant = createInvariant("NonStaticSourceTypeIsConformant", "not referredProperty?.isStatic implies \n\townedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())");
+		private final @NonNull Constraint iv_PropertyCallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_PropertyCallExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_ResultVariable_CompatibleNullityForInitializer = createInvariant("CompatibleNullityForInitializer", "not ownedInit?.isRequired implies not isRequired");
+		private final @NonNull Constraint iv_ResultVariable_CompatibleTypeForInitializer = createInvariant("CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
+		private final @NonNull Constraint iv_ResultVariable_HasInitializer = createInvariant("HasInitializer", "ownedInit <> null");
+		private final @NonNull Constraint iv_ShadowExp_ClassHasNoStringValueInitializer = createInvariant("ClassHasNoStringValueInitializer", "true");
+		private final @NonNull Constraint iv_ShadowExp_DataTypeHasNoPartInitializers = createInvariant("DataTypeHasNoPartInitializers", "true");
+		private final @NonNull Constraint iv_ShadowExp_DataTypeHasOnePartInitializer = createInvariant("DataTypeHasOnePartInitializer", "type.oclIsKindOf(DataType) implies ownedParts->size() = 1");
+		private final @NonNull Constraint iv_ShadowExp_DataTypeHasStringValueInitializer = createInvariant("DataTypeHasStringValueInitializer", "true");
+		private final @NonNull Constraint iv_ShadowExp_InitializesAllClassProperties = createInvariant("InitializesAllClassProperties", "if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status else \n\tlet partProperties = ownedParts.referredProperty->asSet() in\n\tlet allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in\n\tlet classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith(\'ocl\')) in\n\tlet requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in\n\tlet extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in\n\tlet missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in\n\tif extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String=\'Unexpected initializers:\'|acc +\' \' + p.name)}.status\n\telse if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String=\'Missing initializers:\'|acc +\' \' + p.name)}.status\n\telse Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status\n\tendif endif endif");
+		private final @NonNull Constraint iv_ShadowExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_ShadowPart_CompatibleInitialiserType = createInvariant("CompatibleInitialiserType", "ownedInit.type?.conformsTo(type)");
+		private final @NonNull Constraint iv_ShadowPart_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_ShadowPart_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_StateExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_TupleLiteralPart_CompatibleInitialiserType = createInvariant("CompatibleInitialiserType", "ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)");
+		private final @NonNull Constraint iv_TupleLiteralPart_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Variable_CompatibleInitialiserType = createInvariant("CompatibleInitialiserType", "true");
+		private final @NonNull Constraint iv_VariableDeclaration_NameIsNotNull = createInvariant("NameIsNotNull", "name <> null");
+		private final @NonNull Constraint iv_VariableDeclaration_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_VariableDeclaration_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_VariableExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+
+		private void installInvariants() {
+			List<Constraint> ownedInvariants;
+			Constraint constraint;
+
+			ownedInvariants = _BooleanLiteralExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_BooleanLiteralExp_TypeIsBoolean);
+
+			ownedInvariants = _CallExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_CallExp_SafeSourceCanBeNull);
+			ownedInvariants.add(constraint = iv_CallExp_SafeSourceCannotBeMap);
+			ownedInvariants.add(constraint = iv_CallExp_TypeIsNotInvalid);
+
+			ownedInvariants = _Class.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_Class_NameIsNotNull);
+			ownedInvariants.add(constraint = iv_Class_UniqueInvariantName);
+
+			ownedInvariants = _CollectionItem.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_CollectionItem_TypeIsItemType);
+
+			ownedInvariants = _CollectionLiteralExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_CollectionLiteralExp_BagKindIsBag);
+			ownedInvariants.add(constraint = iv_CollectionLiteralExp_CollectionKindIsConcrete);
+			ownedInvariants.add(constraint = iv_CollectionLiteralExp_OrderedSetKindIsOrderedSet);
+			ownedInvariants.add(constraint = iv_CollectionLiteralExp_SequenceKindIsSequence);
+			ownedInvariants.add(constraint = iv_CollectionLiteralExp_SetKindIsSet);
+
+			ownedInvariants = _CollectionLiteralPart.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_CollectionLiteralPart_TypeIsNotInvalid);
+
+			ownedInvariants = _Constraint.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_Constraint_BooleanValued);
+			ownedInvariants.add(constraint = iv_Constraint_UniqueName);
+
+			ownedInvariants = _DataType.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_DataType_BehavioralClassHasDistinctName);
+			ownedInvariants.add(constraint = iv_DataType_BehavioralClassIsPrimitiveType);
+			ownedInvariants.add(constraint = iv_DataType_BehavioralClassIsSuperClass);
+
+			ownedInvariants = _EnumLiteralExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_EnumLiteralExp_TypeIsEnumerationType);
+
+			ownedInvariants = _Feature.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_Feature_NameIsNotNull);
+			ownedInvariants.add(constraint = iv_Feature_TypeIsNotInvalid);
+			ownedInvariants.add(constraint = iv_Feature_TypeIsNotNull);
+
+			ownedInvariants = _IfExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_IfExp_ConditionTypeIsBoolean);
+			ownedInvariants.add(constraint = iv_IfExp_TypeIsNotInvalid);
+
+			ownedInvariants = _IntegerLiteralExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_IntegerLiteralExp_TypeIsInteger);
+
+			ownedInvariants = _IterateExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_IterateExp_BodyTypeConformsToResultType);
+			ownedInvariants.add(constraint = iv_IterateExp_OneInitializer);
+			ownedInvariants.add(constraint = iv_IterateExp_SafeIteratorIsRequired);
+			ownedInvariants.add(constraint = iv_IterateExp_SafeSourceCanBeNull);
+			ownedInvariants.add(constraint = iv_IterateExp_TypeIsResultType);
+			ownedInvariants.add(constraint = iv_IterateExp_UnsafeSourceCanNotBeNull);
+
+			ownedInvariants = _IteratorExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_IteratorExp_AnyBodyTypeIsBoolean);
+			ownedInvariants.add(constraint = iv_IteratorExp_AnyHasOneIterator);
+			ownedInvariants.add(constraint = iv_IteratorExp_AnyTypeIsSourceElementType);
+			ownedInvariants.add(constraint = iv_IteratorExp_ClosureBodyElementTypeIsIteratorType);
+			ownedInvariants.add(constraint = iv_IteratorExp_ClosureBodyTypeIsConformanttoIteratorType);
+			ownedInvariants.add(constraint = iv_IteratorExp_ClosureElementTypeIsSourceElementType);
+			ownedInvariants.add(constraint = iv_IteratorExp_ClosureHasOneIterator);
+			ownedInvariants.add(constraint = iv_IteratorExp_ClosureResultElementTypeIsIteratorType);
+			ownedInvariants.add(constraint = iv_IteratorExp_ClosureSourceElementTypeIsBodyElementType);
+			ownedInvariants.add(constraint = iv_IteratorExp_ClosureTypeIsUniqueCollection);
+			ownedInvariants.add(constraint = iv_IteratorExp_CollectElementTypeIsFlattenedBodyType);
+			ownedInvariants.add(constraint = iv_IteratorExp_CollectTypeIsUnordered);
+			ownedInvariants.add(constraint = iv_IteratorExp_IteratorTypeIsSourceElementType);
+			ownedInvariants.add(constraint = iv_IteratorExp_IteratorTypeIsSourceKeyType);
+			ownedInvariants.add(constraint = iv_IteratorExp_SafeIteratorIsRequired);
+			ownedInvariants.add(constraint = iv_IteratorExp_SafeSourceCanBeNull);
+			ownedInvariants.add(constraint = iv_IteratorExp_SortedByElementTypeIsSourceElementType);
+			ownedInvariants.add(constraint = iv_IteratorExp_SortedByIsOrderedIfSourceIsOrdered);
+			ownedInvariants.add(constraint = iv_IteratorExp_SortedByIteratorTypeIsComparable);
+			ownedInvariants.add(constraint = iv_IteratorExp_UnsafeSourceCanNotBeNull);
+
+			ownedInvariants = _IteratorVariable.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_IteratorVariable_HasNoInitializer);
+
+			ownedInvariants = _LetExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_LetExp_CompatibleNullityForIn);
+			ownedInvariants.add(constraint = iv_LetExp_TypeIsInType);
+			ownedInvariants.add(constraint = iv_LetExp_TypeIsNotInvalid);
+
+			ownedInvariants = _LetVariable.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_LetVariable_CompatibleNullityForInitializer);
+			ownedInvariants.add(constraint = iv_LetVariable_CompatibleTypeForInitializer);
+			ownedInvariants.add(constraint = iv_LetVariable_HasInitializer);
+
+			ownedInvariants = _LoopExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_LoopExp_MatchingMapCoIterators);
+			ownedInvariants.add(constraint = iv_LoopExp_MatchingOrderedCollectionCoIterators);
+			ownedInvariants.add(constraint = iv_LoopExp_NoCoInitializers);
+			ownedInvariants.add(constraint = iv_LoopExp_NoInitializers);
+			ownedInvariants.add(constraint = iv_LoopExp_NoNotOrderedCollectionCoIterators);
+			ownedInvariants.add(constraint = iv_LoopExp_SourceIsCollection);
+			ownedInvariants.add(constraint = iv_LoopExp_SourceIsIterable);
+
+			ownedInvariants = _MessageExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_MessageExp_OneCallOrOneSend);
+			ownedInvariants.add(constraint = iv_MessageExp_TargetIsNotACollection);
+
+			ownedInvariants = _OCLExpression.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_OCLExpression_TypeIsNotNull);
+
+			ownedInvariants = _Operation.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_Operation_CompatibleReturn);
+			ownedInvariants.add(constraint = iv_Operation_LoadableImplementation);
+			ownedInvariants.add(constraint = iv_Operation_UniquePostconditionName);
+			ownedInvariants.add(constraint = iv_Operation_UniquePreconditionName);
+
+			ownedInvariants = _OperationCallExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_OperationCallExp_ArgumentCount);
+			ownedInvariants.add(constraint = iv_OperationCallExp_ArgumentTypeIsConformant);
+			ownedInvariants.add(constraint = iv_OperationCallExp_SafeSourceCanBeNull);
+			ownedInvariants.add(constraint = iv_OperationCallExp_UnsafeSourceCanNotBeNull);
+
+			ownedInvariants = _OppositePropertyCallExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_OppositePropertyCallExp_SafeSourceCanBeNull);
+			ownedInvariants.add(constraint = iv_OppositePropertyCallExp_UnsafeSourceCanNotBeNull);
+
+			ownedInvariants = _ParameterVariable.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_ParameterVariable_HasNoInitializer);
+
+			ownedInvariants = _Property.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_Property_CompatibleDefaultExpression);
+
+			ownedInvariants = _PropertyCallExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_PropertyCallExp_CompatibleResultType);
+			ownedInvariants.add(constraint = iv_PropertyCallExp_NonStaticSourceTypeIsConformant);
+			ownedInvariants.add(constraint = iv_PropertyCallExp_SafeSourceCanBeNull);
+			ownedInvariants.add(constraint = iv_PropertyCallExp_UnsafeSourceCanNotBeNull);
+
+			ownedInvariants = _ResultVariable.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_ResultVariable_CompatibleNullityForInitializer);
+			ownedInvariants.add(constraint = iv_ResultVariable_CompatibleTypeForInitializer);
+			ownedInvariants.add(constraint = iv_ResultVariable_HasInitializer);
+
+			ownedInvariants = _ShadowExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_ShadowExp_ClassHasNoStringValueInitializer);
+			ownedInvariants.add(constraint = iv_ShadowExp_DataTypeHasNoPartInitializers);
+			ownedInvariants.add(constraint = iv_ShadowExp_DataTypeHasOnePartInitializer);
+			ownedInvariants.add(constraint = iv_ShadowExp_DataTypeHasStringValueInitializer);
+			ownedInvariants.add(constraint = iv_ShadowExp_InitializesAllClassProperties);
+			ownedInvariants.add(constraint = iv_ShadowExp_TypeIsNotInvalid);
+
+			ownedInvariants = _ShadowPart.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_ShadowPart_CompatibleInitialiserType);
+			ownedInvariants.add(constraint = iv_ShadowPart_TypeIsNotInvalid);
+			ownedInvariants.add(constraint = iv_ShadowPart_TypeIsNotNull);
+
+			ownedInvariants = _StateExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_StateExp_TypeIsNotInvalid);
+
+			ownedInvariants = _TupleLiteralPart.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_TupleLiteralPart_CompatibleInitialiserType);
+			ownedInvariants.add(constraint = iv_TupleLiteralPart_TypeIsNotInvalid);
+
+			ownedInvariants = _Variable.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_Variable_CompatibleInitialiserType);
+
+			ownedInvariants = _VariableDeclaration.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_VariableDeclaration_NameIsNotNull);
+			ownedInvariants.add(constraint = iv_VariableDeclaration_TypeIsNotInvalid);
+			ownedInvariants.add(constraint = iv_VariableDeclaration_TypeIsNotNull);
+
+			ownedInvariants = _VariableExp.getOwnedInvariants();
+			ownedInvariants.add(constraint = iv_VariableExp_TypeIsNotInvalid);
+		}
+
 		private void installTemplateBindings() {
 			addBinding(_Bag_Annotation_F, _Annotation);
 			addBinding(_Bag_AssociationClassCallExp_F, _AssociationClassCallExp);
@@ -4790,12 +5099,18 @@ public class OCLmetamodel extends ASResourceImpl
 		private void installComments() {
 			installComment(_AssociationClass, "A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.\n\nA model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers.");
 			installComment(_Behavior, "Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution.");
+			installComment(iv_BooleanLiteralExp_TypeIsBoolean, "The type of a boolean Literal expression is the type Boolean.");
+			installComment(iv_CallExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source collection is null-free.");
+			installComment(iv_CallExp_SafeSourceCannotBeMap, "Safe navigation is not supported when the source collection is a Map.");
 			installComment(_Class, "A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.\n\nA Classifier represents a classification of instances according to their Features.\n\nStructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.");
 			installComment(pr_Class_isAbstract, "If true, the Class does not provide a complete declaration and cannot be instantiated. An abstract Class is typically used as a target of Associations or Generalizations.\n\nIf true, the Classifier can only be instantiated by instantiating one of its specializations. An abstract Classifier is intended to be used by other Classifiers e.g., as the target of Associations or Generalizations.");
 			installComment(pr_Class_isActive, "Determines whether an object specified by this Class is active or not. If true, then the owning Class is referred to as an active Class. If false, then such a Class is referred to as a passive Class.");
 			installComment(pr_Class_ownedBehaviors, "Behaviors owned by a BehavioredClassifier.");
 			installComment(pr_Class_ownedOperations, "The Operations owned by the Class.");
 			installComment(pr_Class_ownedProperties, "The Properties owned by the StructuredClassifier.\n\nThe attributes (i.e., the Properties) owned by the Class.");
+			installComment(iv_CollectionItem_TypeIsItemType, "The type of a CollectionItem is the type of the item expression.");
+			installComment(iv_CollectionLiteralExp_CollectionKindIsConcrete, "\'Collection\' is an abstract class on the M1 level and has no M0 instances.");
+			installComment(iv_CollectionLiteralExp_SetKindIsSet, "The type of a collection literal expression is determined by the collection kind selection and the common\nsupertype of all elements. Note that the definition below defines only an upper bound on the elementType. The usage of\nthe CollectionLiteralExp defines a lower bound. If the elementType is not explicitly specified, the elementType must be\nchosen to ensure the well-formedness of the elements of the CollectionLiteralExp and the usage of the\nCollectionLiteralExp.\n\nFor instance in\nacc : Set(Real) = Set{1}->excluding(-1)\nSet{1} is well formed for any type Set(T) where T \u2264 UnlimitedNatural. Well-formedness of the excluding operation call\nrequires T \u2264 Integer, and well-formedness of the initializer requires Real \u2264 T. The overall expression is therefore only\nwell-formed if Real \u2264 T \u2264 Integer. Either Set(Real) or Set(Integer) are well-formed. The most general type, Set(Real), is\nrecommended since it minimizes type conversions and can often be easily deduced by considering the result type.");
 			installComment(_Comment, "A Comment is a textual annotation that can be attached to a set of Elements.");
 			installComment(pr_Comment_annotatedElements, "References the Element(s) being commented.");
 			installComment(pr_Comment_body, "Specifies a string that is the comment.");
@@ -4808,11 +5123,15 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Constraint_ownedSpecification, "A condition that must be true when evaluated in order for the Constraint to be satisfied.");
 			installComment(_DataType, "A DataType is a type whose instances are identified only by their value.");
 			installComment(pr_DataType_behavioralClass, "An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior.");
+			installComment(iv_DataType_BehavioralClassHasDistinctName, "A behavioral class must be distinctly named to avoid the risk of conformance loops.\nFIXME relax this once CompleteClasses are eliminated.");
+			installComment(iv_DataType_BehavioralClassIsPrimitiveType, "A behavioral class must be a PrimitiveType, specifically Integer or Real.\nFIXME relax this once behavioralClass is re-typed to PrimitiveType..");
+			installComment(iv_DataType_BehavioralClassIsSuperClass, "The behavioral class must be a superClass to ensure that its conformance provides the beahvioral functionaality., specifically Integer or Real.");
 			installComment(pr_DataType_value, "The value pseudo-property accesses a String-valued representation of the DataType.");
 			installComment(_Element, "An Element is a constituent of a model. As such, it has the capability of owning other Elements.");
 			installComment(op_Element_allOwnedElements, "The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.");
 			installComment(pr_Element_ownedComments, "The Comments owned by this Element.");
 			installComment(pr_ElementLiteralExp_referredElement, "This is an Object to avoid injecting a confusing opposite into EObject");
+			installComment(iv_EnumLiteralExp_TypeIsEnumerationType, "The type of an enum Literal expression is the type of the referred literal.");
 			installComment(_Enumeration, "An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals.");
 			installComment(pr_Enumeration_ownedLiterals, "The ordered set of literals owned by this Enumeration.");
 			installComment(_EnumerationLiteral, "An EnumerationLiteral is a user-defined data value for an Enumeration.");
@@ -4820,12 +5139,48 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_Feature, "A Feature declares a behavioral or structural characteristic of Classifiers.");
 			installComment(pr_Feature_isStatic, "Specifies whether this Feature characterizes individual instances classified by the Classifier (false) or the Classifier itself (true).");
 			installComment(_FinalState, "A special kind of State, which, when entered, signifies that the enclosing Region has completed. If the enclosing Region is directly contained in a StateMachine and all other Regions in that StateMachine also are completed, then it means that the entire StateMachine behavior is completed.");
+			installComment(iv_IfExp_ConditionTypeIsBoolean, "The type of the condition of an if expression must be Boolean.");
 			installComment(pr_IfExp_isElseIf, "True if this IfExp corresponds to an \'elseif\' in the OCL source, false if it corresponds to an \'if\'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer.");
 			installComment(_InstanceSpecification, "An InstanceSpecification is a model element that represents an instance in a modeled system. An InstanceSpecification can act as a DeploymentTarget in a Deployment relationship, in the case that it represents an instance of a Node. It can also act as a DeployedArtifact, if it represents an instance of an Artifact.");
 			installComment(pr_InstanceSpecification_classes, "The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them.");
 			installComment(pr_InstanceSpecification_ownedSlots, "A Slot giving the value or values of a StructuralFeature of the instance. An InstanceSpecification can have one Slot per StructuralFeature of its Classifiers, including inherited features. It is not necessary to model a Slot for every StructuralFeature, in which case the InstanceSpecification is a partial description.");
 			installComment(pr_InstanceSpecification_ownedSpecification, "A specification of how to compute, derive, or construct the instance.");
+			installComment(iv_IntegerLiteralExp_TypeIsInteger, "The type of an integer Literal expression is the type Integer.");
+			installComment(iv_IterateExp_BodyTypeConformsToResultType, "The type of the body expression must conform to the declared type of the result variable.");
+			installComment(iv_IterateExp_OneInitializer, "A result variable must have an init expression.");
+			installComment(iv_IterateExp_SafeIteratorIsRequired, "Safe navigation is not necessary when an iterator can be null.");
+			installComment(iv_IterateExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source collection is null-free.");
+			installComment(iv_IterateExp_TypeIsResultType, "The type of the iterate is the type of the result variable.");
+			installComment(iv_IterateExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free.");
+			installComment(iv_IteratorExp_ClosureBodyElementTypeIsIteratorType, "The result element type is the same as type of the body elements or element.");
+			installComment(iv_IteratorExp_ClosureElementTypeIsSourceElementType, "The element type is the same as the source element type.");
+			installComment(iv_IteratorExp_ClosureResultElementTypeIsIteratorType, "Each body element is assignable to the iterator.");
+			installComment(iv_IteratorExp_ClosureTypeIsUniqueCollection, "The collection type for an OrderedSet or a Sequence source type is OrderedSet.\nFor any other source the collection type is Set.");
+			installComment(iv_IteratorExp_CollectElementTypeIsFlattenedBodyType, "The element type is the flattened type of the body elements.");
+			installComment(iv_IteratorExp_CollectTypeIsUnordered, "The collection type for an OrderedSet or a Sequence type is a Sequence,\nthe result type for any other collection type is a Bag.");
+			installComment(iv_IteratorExp_IteratorTypeIsSourceElementType, "The type of each collection iterator variable must be the type of the elements of the source collection.");
+			installComment(iv_IteratorExp_IteratorTypeIsSourceKeyType, "The type of each map iterator variable must be the type of the keys of the source map.");
+			installComment(iv_IteratorExp_SafeIteratorIsRequired, "Safe navigation is not necessary when an iterator can be null.");
+			installComment(iv_IteratorExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source collection is null-free.");
+			installComment(iv_IteratorExp_SortedByElementTypeIsSourceElementType, "The element type is the type of the body elements.");
+			installComment(iv_IteratorExp_SortedByIsOrderedIfSourceIsOrdered, "The collection type for an OrderedSet or a Sequence type is a Sequence, the result type for any other collection type is Bag.");
+			installComment(iv_IteratorExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free.");
+			installComment(iv_IteratorVariable_HasNoInitializer, "Iterator variable has no initializer.");
+			installComment(iv_LetExp_CompatibleNullityForIn, "The nullity of a Let expression is the nullity of the in expression.");
+			installComment(iv_LetExp_TypeIsInType, "The type of a Let expression is the type of the in expression.");
+			installComment(iv_LetVariable_CompatibleNullityForInitializer, "The nullity of a Let variable initializer expression is the nullity of the Let variable.");
+			installComment(iv_LetVariable_CompatibleTypeForInitializer, "The type of a Let variable initializer expression conforms to the type of the Let variable.");
+			installComment(iv_LetVariable_HasInitializer, "Let variable has an initializer.");
+			installComment(iv_LoopExp_MatchingMapCoIterators, "A Map must have the no co-iterators or the same number of iterators and co-iterators.");
+			installComment(iv_LoopExp_MatchingOrderedCollectionCoIterators, "An Ordered Collection must have the no co-iterators or the same number of iterators and co-iterators.");
+			installComment(iv_LoopExp_NoCoInitializers, "The loop variable of an iterator expression has no init expression.");
+			installComment(iv_LoopExp_NoInitializers, "The loop variable of an iterator expression has no init expression.");
+			installComment(iv_LoopExp_NoNotOrderedCollectionCoIterators, "A not-Ordered Collection must have no co-iterators.");
+			installComment(iv_LoopExp_SourceIsCollection, "Obsolete constraint replaced by SourceIsIterable.");
+			installComment(iv_LoopExp_SourceIsIterable, "The type of the source expression must be a collection or map.");
 			installComment(pr_MapType_entryClass, "A type for an entry that may allow an external syntax serialization as a set-of-entryClass.");
+			installComment(iv_MessageExp_OneCallOrOneSend, "An OCL message has either a called operation or a sent signal.");
+			installComment(iv_MessageExp_TargetIsNotACollection, "The target of an OCL message cannot be a collection.");
 			installComment(_Model, "A model captures a view of a physical system. It is an abstraction of the physical system, with a certain purpose. This purpose determines what is to be included in the model and what is irrelevant. Thus the model completely describes those aspects of the physical system that are relevant to the purpose of the model, at the appropriate level of detail.");
 			installComment(_NamedElement, "A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.");
 			installComment(pr_NamedElement_name, "The name of the NamedElement.");
@@ -4841,6 +5196,12 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Operation_owningClass, "The Class that owns this operation, if any.");
 			installComment(pr_Operation_raisedExceptions, "The Types representing exceptions that may be raised during an invocation of this BehavioralFeature.\n\nThe Types representing exceptions that may be raised during an invocation of this operation.");
 			installComment(pr_Operation_redefinedOperations, "The Operations that are redefined by this Operation.");
+			installComment(iv_OperationCallExp_ArgumentCount, "There must be exactly as many arguments as the referred operation has parameters.");
+			installComment(iv_OperationCallExp_ArgumentTypeIsConformant, "All the arguments must conform to the parameters of the referred operation.");
+			installComment(iv_OperationCallExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source cannot be null.");
+			installComment(iv_OperationCallExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload");
+			installComment(iv_OppositePropertyCallExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source cannot be null.");
+			installComment(iv_OppositePropertyCallExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when the source could be null.");
 			installComment(_Package, "A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.\nPackage specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.\nA package is used to group elements, and provides a namespace for the grouped elements.");
 			installComment(pr_Package_URI, "Provides an identifier for the package that can be used for many purposes. A URI is the universally unique identification of the package following the IETF URI specification, RFC 2396 http://www.ietf.org/rfc/rfc2396.txt and it must comply with those syntax rules.");
 			installComment(pr_Package_ownedClasses, "References the packaged elements that are Types.");
@@ -4850,6 +5211,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Package_owningPackage, "References the Package that owns this Package.");
 			installComment(_Parameter, "A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations.");
 			installComment(pr_Parameter_owningOperation, "The Operation owning this parameter.");
+			installComment(iv_ParameterVariable_HasNoInitializer, "Parameter variable has no initializer.");
 			installComment(_PrimitiveType, "A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically.");
 			installComment(_Profile, "A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain.");
 			installComment(_ProfileApplication, "A profile application is used to show which profiles have been applied to a package.");
@@ -4864,6 +5226,10 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Property_owningClass, "The Class that owns this Property, if any.");
 			installComment(pr_Property_redefinedProperties, "The properties that are redefined by this property, if any.");
 			installComment(pr_Property_subsettedProperty, "The properties of which this Property is constrained to be a subset, if any.");
+			installComment(iv_PropertyCallExp_CompatibleResultType, "The type of the call expression is the type of the referred property.");
+			installComment(iv_PropertyCallExp_NonStaticSourceTypeIsConformant, "The type of the source conforms to the owning type of the property.");
+			installComment(iv_PropertyCallExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source cannot be null.");
+			installComment(iv_PropertyCallExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when the source could be null.");
 			installComment(_Pseudostate, "A Pseudostate is an abstraction that encompasses different types of transient Vertices in the StateMachine graph. A StateMachine instance never comes to rest in a Pseudostate, instead, it will exit and enter the Pseudostate within a single run-to-completion step.");
 			installComment(pr_Pseudostate_kind, "Determines the precise type of the Pseudostate and can be one of: entryPoint, exitPoint, initial, deepHistory, shallowHistory, join, fork, junction, terminate or choice.");
 			installComment(pr_Pseudostate_owningState, "The State that owns this Pseudostate and in which it appears.");
@@ -4875,6 +5241,9 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Region_ownedTransitions, "The set of Transitions owned by the Region.");
 			installComment(pr_Region_owningState, "The State that owns the Region. If a Region is owned by a State, then it cannot also be owned by a StateMachine.");
 			installComment(pr_Region_owningStateMachine, "The StateMachine that owns the Region. If a Region is owned by a StateMachine, then it cannot also be owned by a State.");
+			installComment(iv_ResultVariable_CompatibleNullityForInitializer, "A nullable expression cannot initialize a not-nullable Result variable.");
+			installComment(iv_ResultVariable_CompatibleTypeForInitializer, "The type of a Result variable initializer expression conforms to the type of the Result variable.");
+			installComment(iv_ResultVariable_HasInitializer, "Result variable has an initializer.");
 			installComment(_Signal, "A Signal is a specification of a kind of communication between objects in which a reaction is asynchronously triggered in the receiver without a reply.");
 			installComment(_Slot, "A Slot designates that an entity modeled by an InstanceSpecification has a value or values for a specific StructuralFeature.");
 			installComment(pr_Slot_definingProperty, "The StructuralFeature that specifies the values that may be held by the Slot.");
@@ -4946,5 +5315,9 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_Vertex_outgoingTransitions, "Specifies the Transitions departing from this Vertex.");
 			installComment(pr_Vertex_owningRegion, "The Region that contains this Vertex.");
 		}
+	}
+
+	protected OCLmetamodel(@NonNull URI uri) {
+		super(uri, OCLASResourceFactory.getInstance());
 	}
 }
