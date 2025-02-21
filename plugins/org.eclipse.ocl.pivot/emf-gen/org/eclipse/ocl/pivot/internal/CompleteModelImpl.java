@@ -561,11 +561,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completeEnvironment;
 	}
 
-	/**
-	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
-	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constriant> rather than just a Constraint.
-	 * The multiples are most-executable first. Returns null for none.
-	 */
 	@Override
 	public @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) {
 		List<@NonNull Object> knownInvariantOrInvariants = null;
@@ -587,6 +582,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						}
 						else if (invariantOrInvariants instanceof Constraint) {
 							invariantOrInvariants = Lists.newArrayList((Constraint)invariantOrInvariants, asInvariant);
+							assert invariantOrInvariants != null;
 							name2invariantOrInvariants.put(name, invariantOrInvariants);
 						}
 						else {

@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
@@ -91,11 +92,10 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  */
 public class EcoreOCLEValidator implements EValidator
 {
-	private static final @NonNull String CONSTRAINTS_KEY = "constraints";
 	public static final @NonNull String UNKNOWN_DETAIL = "Unknown ''{0}'' detail for ''{1}''";
 	public static final @NonNull String MISSING_DELEGATE = "Missing ''{0}'' delegate for ''{1}''";
-	public static final @NonNull String EXTRA_CONSTRAINTS_ANNOTATION_ENTRY = "Extra ''" + CONSTRAINTS_KEY + "'' annotation entry for {0} ''{1}::{2}''";
-	public static final @NonNull String MISSING_CONSTRAINTS_ANNOTATION_ENTRY = "Missing ''" + CONSTRAINTS_KEY + "'' annotation entry for {0} ''{1}::{2}''";
+	public static final @NonNull String EXTRA_CONSTRAINTS_ANNOTATION_ENTRY = "Extra ''" + DelegateInstaller.CONSTRAINTS_KEY + "'' annotation entry for {0} ''{1}::{2}''";
+	public static final @NonNull String MISSING_CONSTRAINTS_ANNOTATION_ENTRY = "Missing ''" + DelegateInstaller.CONSTRAINTS_KEY + "'' annotation entry for {0} ''{1}::{2}''";
 	public static final @NonNull String MISSING_CONSTRAINTS = "Missing ''{0}::{1}'' annotation for ''{2}''";
 	public static final @NonNull String PARSING_ERROR_2 = "Parsing error ''{0}'' for ''{1}'' ''{2}''";
 	public static final @NonNull String PARSING_ERROR_1 = "Parsing error ''{0}'' for ''{1}''";
@@ -643,10 +643,10 @@ public class EcoreOCLEValidator implements EValidator
 		if (ecoreAnnotation != null) {
 			eContext = ecoreAnnotation;
 			EMap<String, String> details = ecoreAnnotation.getDetails();
-			int index = details.indexOfKey(CONSTRAINTS_KEY);
+			int index = details.indexOfKey(DelegateInstaller.CONSTRAINTS_KEY);
 			if (index >= 0) {
 				eContext = details.get(index);
-				constraintsAnnotation = details.get(CONSTRAINTS_KEY);
+				constraintsAnnotation = details.get(DelegateInstaller.CONSTRAINTS_KEY);
 			}
 		}
 		EAnnotation pivotAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
@@ -655,7 +655,7 @@ public class EcoreOCLEValidator implements EValidator
 			allOk = false;
 			if (diagnostics != null) {
 				String objectLabel = EObjectValidator.getObjectLabel(eClassifier, context);
-				String message = StringUtil.bind(MISSING_CONSTRAINTS, EcorePackage.eNS_URI, CONSTRAINTS_KEY, objectLabel);
+				String message = StringUtil.bind(MISSING_CONSTRAINTS, EcorePackage.eNS_URI, DelegateInstaller.CONSTRAINTS_KEY, objectLabel);
 				diagnostics.add(new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE,
 					0, message,  new Object[] { eClassifier }));
 			}
@@ -759,7 +759,7 @@ public class EcoreOCLEValidator implements EValidator
 			return true;
 		}
 		OCL ocl = PivotDiagnostician.getOCL(context, eOperation);		// Shares a weak reference that garbage collects
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();		// XXX Use ValidationContext.getEnvironmentFactory()
 		NamedElement asElement = getASOf(environmentFactory, NamedElement.class, eOperation, diagnostics, context);
 		if (asElement == null) {
 			return false;
@@ -837,7 +837,7 @@ public class EcoreOCLEValidator implements EValidator
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
 					String message = StringUtil.bind(DOUBLE_PROPERTY_KEY, objectLabel);
 					diagnostics.add(new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE,
-						0, message,  new Object[] { eStructuralFeature }));
+						0, message, new Object[] { eStructuralFeature }));
 				}
 				else {
 					allOk = false;
@@ -848,7 +848,7 @@ public class EcoreOCLEValidator implements EValidator
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
 					String message = StringUtil.bind(EXTRA_PROPERTY_KEY, objectLabel);
 					diagnostics.add(new BasicDiagnostic(Math.min(severity, Diagnostic.WARNING), EcoreValidator.DIAGNOSTIC_SOURCE,
-						0, message,  new Object[] { eStructuralFeature }));
+						0, message, new Object[] { eStructuralFeature }));
 				}
 				else {
 					allOk = false;

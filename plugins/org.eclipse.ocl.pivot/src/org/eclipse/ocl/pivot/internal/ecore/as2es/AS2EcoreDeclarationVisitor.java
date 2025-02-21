@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -218,24 +219,35 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 	}
 
+	@Deprecated /* @deprecated not used */
 	protected @Nullable EAnnotation copyConstraint(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint) {
+		EStringToStringMapEntryImpl eDetail = copyConstraintDetail(eModelElement, pivotConstraint);
+		return eDetail != null ? (EAnnotation)eDetail.eContainer() : null;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	protected @Nullable EStringToStringMapEntryImpl copyConstraintDetail(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint) {
 		EStructuralFeature eContainingFeature = pivotConstraint.eContainingFeature();
-		EAnnotation eAnnotation = delegateInstaller.createConstraintDelegate(eModelElement, pivotConstraint, context.getEcoreURI());
-		if (eAnnotation != null) {
+		EStringToStringMapEntryImpl eDetail = delegateInstaller.createConstraintDelegateDetail(eModelElement, pivotConstraint, context.getEcoreURI());
+		if (eDetail != null) {
+			EAnnotation eAnnotation = (EAnnotation)eDetail.eContainer();
+			assert eAnnotation != null;
 			if (eModelElement instanceof EOperation) {
 				if (eContainingFeature != PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
-					AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
+					AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);			// XXX eDetail
 				}
 				assert (pivotConstraint.getESObject() == null) || (pivotConstraint.getESObject().eClass() == eModelElement.eClass());
 				((ElementImpl)pivotConstraint).setESObject(eModelElement);
 			}
 			else {
-				AS2Ecore.copyCommentsAndDocumentation(eAnnotation, pivotConstraint);
-				assert (pivotConstraint.getESObject() == null) || (pivotConstraint.getESObject().eClass() == eAnnotation.eClass());
-				((ElementImpl)pivotConstraint).setESObject(eAnnotation);
+				AS2Ecore.copyCommentsAndDocumentation(eAnnotation, pivotConstraint);	// XXX eDetail
+				assert (pivotConstraint.getESObject() == null) || (pivotConstraint.getESObject().eClass() == eDetail.eClass());
+				((ElementImpl)pivotConstraint).setESObject(eDetail);
 			}
 		}
-		return eAnnotation;
+		return eDetail;
 	}
 
 	protected void copyDataTypeOrEnum(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
@@ -249,6 +261,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		safeVisitAll(eAnnotations, pivotAnnotation.getOwnedAnnotations());
 		EAnnotationConverter eAnnotationConverter = EAnnotationConverter.getEAnnotationConverter(pivotAnnotation.getName());
 		for (Detail asDetail : pivotAnnotation.getOwnedDetails()) {
+			assert asDetail != null;
 			eAnnotationConverter.convertDetail(asDetail, eAnnotation);
 		}
 	}
@@ -364,12 +377,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		eClass.setInterface(pivotClass.isIsInterface());
 		context.defer(pivotClass);		// Defer superclass resolution
 		@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
-		@NonNull Iterable<Constraint> nonDuplicateConstraints = Iterables.filter(pivotClass.getOwnedInvariants(), nonDuplicateConstraintsFilter);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Constraint> nonDuplicateConstraints = Iterables.filter(pivotClass.getOwnedInvariants(), nonDuplicateConstraintsFilter);
 		//		safeVisitAll(eOperations, nonDuplicateConstraints);
-		@NonNull Iterable<Operation> nonDuplicateOperations = Iterables.filter(pivotClass.getOwnedOperations(), nonDuplicateOperationsFilter);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotClass.getOwnedOperations(), nonDuplicateOperationsFilter);
 		safeVisitAll(eOperations, nonDuplicateOperations);
 		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-		@NonNull Iterable<Property> nonDuplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), nonDuplicatePropertiesFilter);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
 		Map<@NonNull String, @Nullable Object> options = context.getOptions();
 		String invariantPrefix = AS2Ecore.getInvariantPrefix(options);
@@ -382,40 +395,40 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				EOperation eOperation = AS2Ecore.createConstraintEOperation(pivotInvariant, name, options);
 				eOperations.add(eOperation);
 				context.putCreated(pivotInvariant, eOperation);
-				copyConstraint(eOperation, pivotInvariant);
+				copyConstraintDetail(eOperation, pivotInvariant);
 			}
 		}
 		if (!context.isSuppressDuplicates()) {
 			List<ETypedElement> eDuplicates = null;
-			@NonNull Iterable<Constraint> duplicateConstraints = Iterables.filter(pivotClass.getOwnedInvariants(), duplicateConstraintsFilter);
+			@SuppressWarnings("null")@NonNull Iterable<@NonNull Constraint> duplicateConstraints = Iterables.filter(pivotClass.getOwnedInvariants(), duplicateConstraintsFilter);
 			for (Constraint asConstraint : duplicateConstraints) {
 				if (eDuplicates == null) {
-					eDuplicates = new ArrayList<ETypedElement>();
+					eDuplicates = new ArrayList<>();
 				}
 				//				Object eOperation = safeVisit(asConstraint);
 				if (asConstraint.isIsCallable()) {
 					EOperation eOperation = AS2Ecore.createConstraintEOperation(asConstraint, PivotUtil.getName(asConstraint), options);
 					eOperations.add(eOperation);
 					context.putCreated(asConstraint, eOperation);
-					copyConstraint(eOperation, asConstraint);
+					copyConstraintDetail(eOperation, asConstraint);
 					eDuplicates.add(eOperation);
 					context.defer(asConstraint);		// Defer references
 				}
 			}
-			@NonNull Iterable<Operation> duplicateOperations = Iterables.filter(pivotClass.getOwnedOperations(), duplicateOperationsFilter);
+			@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> duplicateOperations = Iterables.filter(pivotClass.getOwnedOperations(), duplicateOperationsFilter);
 			for (Operation asOperation : duplicateOperations) {
 				if (eDuplicates == null) {
-					eDuplicates = new ArrayList<ETypedElement>();
+					eDuplicates = new ArrayList<>();
 				}
 				Object eOperation = safeVisit(asOperation);
 				if (eOperation instanceof EOperation) {
 					eDuplicates.add((EOperation)eOperation);
 				}
 			}
-			@NonNull Iterable<Property> duplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), duplicatePropertiesFilter);
+			@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> duplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), duplicatePropertiesFilter);
 			for (Property asProperty : duplicateProperties) {
 				if (eDuplicates == null) {
-					eDuplicates = new ArrayList<ETypedElement>();
+					eDuplicates = new ArrayList<>();
 				}
 				Object eStructuralFeature = safeVisit(asProperty);
 				if (eStructuralFeature instanceof EStructuralFeature) {
@@ -467,7 +480,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			instanceClass = Collection.class;
 		}
 		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-		@NonNull Iterable<Property> nonDuplicateProperties = Iterables.filter(pivotCollectionType.getOwnedProperties(), nonDuplicatePropertiesFilter);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotCollectionType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
 		eClass.setInstanceClass(instanceClass);
 		eClass.setAbstract(true);
@@ -482,7 +495,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (eContainer != null) {
 			EModelElement eModelElement = context.getCreated(EModelElement.class, eContainer);
 			if (eModelElement != null) {
-				copyConstraint(eModelElement, pivotConstraint);
+				copyConstraintDetail(eModelElement, pivotConstraint);
 				return null;
 			}
 		}
@@ -545,7 +558,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		copyClassifier(eClass, pivotMapType);
 		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-		@NonNull Iterable<Property> nonDuplicateProperties = Iterables.filter(pivotMapType.getOwnedProperties(), nonDuplicatePropertiesFilter);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotMapType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
 		eClass.setInstanceClass(Map.class);
 		eClass.setAbstract(true);
@@ -557,7 +570,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	@Override
 	public Object visitModel(@NonNull Model pivotModel) {
 		EModelElement firstElement = null;
-		List<EObject> outputObjects = new ArrayList<EObject>();
+		List<EObject> outputObjects = new ArrayList<>();
 		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package pivotObject : pivotModel.getOwnedPackages()) {
 			if (!Orphanage.isOrphanage(pivotObject) && !PivotUtilInternal.isImplicitPackage(pivotObject)) {
 				Object ecoreObject = safeVisit(pivotObject);
@@ -569,10 +582,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				}
 			}
 		}
-		List<Import> imports = pivotModel.getOwnedImports();
+		@SuppressWarnings("null") List<@NonNull Import> imports = pivotModel.getOwnedImports();
 		if (imports.size() > 0) {
 			if (imports.size() > 0) {
-				imports = new ArrayList<Import>(imports);
+				imports = new ArrayList<>(imports);
 				Collections.sort(imports, new Comparator<Import>()
 				{
 					@Override
@@ -599,6 +612,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 			if (firstElement != null)  {
 				for (Import anImport : imports) {
+					assert anImport != null;
 					OCL_Import_EAnnotationConverter.getInstance().convertAnnotations(anImport, ecoreURI, noNames, firstElement);
 				}
 			}

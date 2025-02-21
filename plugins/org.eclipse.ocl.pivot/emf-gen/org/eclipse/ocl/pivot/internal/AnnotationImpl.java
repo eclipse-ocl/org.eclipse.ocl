@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -333,13 +332,5 @@ public class AnnotationImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitAnnotation(this);
-	}
-
-	@Override
-	public void setName(String newName) {
-		if (PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(newName)) {
-			getClass();			// XXX
-		}
-		super.setName(newName);
 	}
 } //AnnotationImpl

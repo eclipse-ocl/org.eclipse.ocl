@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
-import org.eclipse.ocl.pivot.internal.ecore.annotations.UML_EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator.Registry;
@@ -111,7 +110,7 @@ public class UMLStandaloneSetup //implements ISetup
 	 * @since 1.23
 	 */
 	public static void initEAnnotationConverters() {
-		UML_EAnnotationConverter.getInstance();
+	//	UML_EAnnotationConverter.getInstance();		-- in generic pivot
 		EAnnotationConverter.addDefaultEAnnotationConverter(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
 		EAnnotationConverter.addDefaultEAnnotationConverter(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 		EAnnotationConverter.addDefaultEAnnotationConverter(PivotConstantsInternal.SUBSETS_ANNOTATION_SOURCE);

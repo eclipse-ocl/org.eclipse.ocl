@@ -113,16 +113,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 
 	/**
 	 * Register extraResourceSet as an additional external ResourceSet for which OCL validation may be applied.
-<<<<<<< ewillink/2285rework4
 	 * @since 1.24
-=======
-	 *
-	 * @since 1.23
->>>>>>> 67b3dde [576375] Phase out EnvironmentFactoryAdapter use new AbstractEnvironmentFactory externalResourceSet
 	 */
 	default void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {}
 
 	/**
+=======
+>>>>>>> a4add7e [583353] Use the EAnnotation.detail as the Constraint.esObject
 	 * Creates a new evaluation environment to track the values of variables in
 	 * an OCL expression as it is evaluated.
 	 *
@@ -239,6 +236,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * Return the (OCL) Standard Library that provides the build-in language facilities such as the OclAny and Set types.
 	 */
 	@NonNull StandardLibrary getStandardLibrary();
+
+	/**
+	 * Return the ResourceSet provided by the user for referencing by this EnvironmentFactory.
+	 *
+	 * @since 1.24
+	 */
+	@NonNull ResourceSet getUserResourceSet();
 
 	/**
 	 * Return true if this EnvironmentFactory's life cycle has completed.

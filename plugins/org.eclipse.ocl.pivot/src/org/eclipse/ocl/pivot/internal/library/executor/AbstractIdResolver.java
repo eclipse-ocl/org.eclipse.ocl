@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -1368,7 +1369,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		boolean thisIsValue = thisObject instanceof Value;
 		boolean thatIsValue = thatObject instanceof Value;
 		if (thisIsValue && thatIsValue) {
-			return ((Value)thisObject).equals(thatObject);
+			return thisObject.equals(thatObject);
 		}
 		boolean thisIsOCLValue = thisObject instanceof OCLValue;
 		boolean thatIsOCLValue = thatObject instanceof OCLValue;
@@ -1525,7 +1526,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return ((OCLValue)anObject).oclHashCode();
 		}
 		if (anObject instanceof Value) {
-			return ((Value)anObject).hashCode();
+			return anObject.hashCode();
 		}
 		if (anObject instanceof Collection<?>) {
 			return ValueUtil.computeCollectionHashCode(isOrdered(anObject), isUnique(anObject), (Iterable<?>)anObject);
@@ -1668,7 +1669,12 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		assert parentPackage != null;
 		Type nestedType = environment.getNestedType(parentPackage, id.getName());
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
+			CompletePackage asParentCompletePackage = environment.getOwnedCompleteModel().getCompletePackage(parentPackage);
+			CompleteClass nestedCompleteType = (CompleteClass) asParentCompletePackage.getType(id.getName());
+			nestedType = nestedCompleteType.getPrimaryClass();
+		//	environment.getOwnedCompleteModel().ge
+
+			nestedType = environment.getNestedType(parentPackage, id.getName());		// XXX debugging
 			throw new UnsupportedOperationException();
 		}
 		return nestedType;

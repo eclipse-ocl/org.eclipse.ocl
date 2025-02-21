@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
-import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCLLoaderWithLog;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
@@ -203,14 +202,6 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/ExtraUMLValidation.ocl");
 		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
-		CompleteOCLLoader helper2 = new CompleteOCLLoader(ocl.getEnvironmentFactory()) {
-
-			@Override
-			protected boolean error(@NonNull String primaryMessage,
-					@Nullable String detailMessage) {
-				// TODO Auto-generated method stub
-				return false;
-			} };
 		EnvironmentFactoryInternal environmentFactory = helper.getEnvironmentFactory();
 	//	environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
 		ProjectManager projectMap = environmentFactory.getProjectManager();
@@ -235,8 +226,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		//
 		helper.unloadDocument(oclURI);
 		disposeResourceSet(resourceSet);
-		helper.dispose();
-		ocl.dispose();
+		helper.dispose();			// does ocl.dispose()
+	//	ocl.dispose();
 	}
 
 	public void test_umlValidation_404882() {

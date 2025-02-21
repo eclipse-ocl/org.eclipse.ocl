@@ -165,7 +165,9 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		//	Load the model from OCLinEcore and Save as Ecore.
 		//
-		OCL ocl = createOCL();
+//		OCL ocl = createOCL();
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		OCL ocl = OCL.newInstance(getProjectMap(), testResourceSet);
 		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 		URI inputURI = getTestFile("Simple.oclinecore", ocl, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
 		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
@@ -174,7 +176,6 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		//	Create an instance of Simple.
 		//
-		ResourceSet testResourceSet = new ResourceSetImpl();
 		Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
 		EObject testInstance = eCreate(simplePackage, "Simple");
 		testResource.getContents().add(testInstance);
@@ -188,7 +189,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Load Simple.ocl using the already loaded Simple.oclinecore.
 		//
 		URI oclURI = getTestFile("Simple.ocl", ocl, getTestModelURI("models/oclinecore/Simple.ocl")).getFileURI();
-		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(environmentFactory, testResourceSet);
+		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(environmentFactory);
 		String problems = helper.installDocuments(oclURI);
 		assertNull("Failed to load " + oclURI, problems);
 		//
