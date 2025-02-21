@@ -135,6 +135,10 @@ public interface CompleteModel extends NamedElement
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	/**
+	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
+	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constraint> rather than just a Constraint.
+	 * The multiples are most-executable first. Returns null for none.
+	 *
 	 * @since 1.23
 	 */
 	default @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return null; }

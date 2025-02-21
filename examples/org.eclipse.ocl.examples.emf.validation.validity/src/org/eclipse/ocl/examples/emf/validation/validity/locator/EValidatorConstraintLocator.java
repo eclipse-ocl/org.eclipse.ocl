@@ -40,7 +40,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.Severity;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
-import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller.ExtendedEObjectValidator;
+import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidator;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 

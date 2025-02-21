@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -62,8 +61,8 @@ public abstract class CompleteOCLLoader
 	{
 		StringBuilder s = new StringBuilder();
 
-		public CompleteOCLLoaderWithLog(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet... extraResourceSets) {
-			super(environmentFactory, extraResourceSets);
+		public CompleteOCLLoaderWithLog(@NonNull EnvironmentFactory environmentFactory) {
+			super(environmentFactory);
 		}
 
 		@Override
@@ -85,19 +84,15 @@ public abstract class CompleteOCLLoader
 	 * The prevailing OCL context.
 	 */
 	protected final @NonNull OCLInternal ocl;
+
 	/**
 	 * The currently loaded Complete OCL AS models that a distinct PivotEObjectValidator (e.g. UML but not Ecore).
 	 */
 	protected final @NonNull List<@NonNull Model> oclModels = new ArrayList<>();
 	protected final @NonNull Map<@NonNull EPackage, @NonNull CompletePackage> mmPackage2completePackage = new HashMap<>();
 
-	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet... extraResourceSets) {
+	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
 		this.ocl = OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
-		if (extraResourceSets != null) {
-			for (ResourceSet extraResourceSet : extraResourceSets) {
-				environmentFactory.addExtraResourceSet(extraResourceSet);
-			}
-		}
 	}
 
 	public void dispose() {
@@ -216,8 +211,7 @@ public abstract class CompleteOCLLoader
 		//
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		ValidationRegistryAdapter localValidationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
-		PivotEObjectValidator extraEValidator = null;
+		@SuppressWarnings("unused") ValidationRegistryAdapter localValidationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		for (@NonNull EPackage mmPackage : mmPackage2completePackage.keySet()) {
 			CompletePackage completePackage = mmPackage2completePackage.get(mmPackage);
 			assert completePackage != null;
@@ -327,9 +321,9 @@ public abstract class CompleteOCLLoader
 				assert errors != null;
 				message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 				if (message2 == null) {
-					DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
+					DelegateInstaller delegateInstaller = new DelegateInstaller( environmentFactory, null);
 					try {
-						delegateInstaller.installCompleteOCLDelegates(asResource);
+						delegateInstaller.installCompleteOCLDelegates(environmentFactory.getUserResourceSet(), asResource);
 						return asResource;
 					} catch (SemanticException e) {
 						// XXX Auto-generated catch block
@@ -375,7 +369,7 @@ public abstract class CompleteOCLLoader
 		ASResource asResource = iCSI2ASMapping.getASResource(csResource);
 		assert asResource != null;
 		DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
-		delegateInstaller.uninstallCompleteOCLDelegates(asResource);
+		delegateInstaller.uninstallCompleteOCLDelegates(environmentFactory.getUserResourceSet(), asResource);
 		//
 		//	XXX Identify the packages which the Complete OCL document complements.
 		//
