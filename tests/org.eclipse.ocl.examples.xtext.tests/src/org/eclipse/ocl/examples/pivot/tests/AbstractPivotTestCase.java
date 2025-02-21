@@ -50,7 +50,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
+import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidator;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -189,8 +189,8 @@ public class AbstractPivotTestCase extends TestCase
 	 */
 	public static final class TestCompleteOCLLoader extends CompleteOCLLoader
 	{
-		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet... extraResourceSets) {
-			super(environmentFactory, extraResourceSets);
+		public TestCompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
+			super(environmentFactory);
 		}
 
 		@Override
@@ -794,7 +794,7 @@ public class AbstractPivotTestCase extends TestCase
 			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
 			//		}
 			ThreadLocalExecutor.reset();
-			DelegateInstaller.ExtendedEObjectValidator.reset();
+			ExtendedEObjectValidator.reset();
 			if (DEBUG_GC) {
 				testHelper.doTearDown();
 				makeCopyOfGlobalState.restoreGlobalState();

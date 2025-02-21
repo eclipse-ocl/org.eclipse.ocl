@@ -122,7 +122,7 @@ public class UniqueList<E> extends ArrayList<E> implements Set<E>
 
 	@Override
 	public boolean remove(Object o) {
-		if ((set != null)  && !set.remove(o)) {
+		if ((set != null) && !set.remove(o)) {
 			return false;
 		}
 		return super.remove(o);
@@ -130,6 +130,13 @@ public class UniqueList<E> extends ArrayList<E> implements Set<E>
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
+		if (c == this) {
+			if (size() > 0) {
+				clear();
+				return true;
+			}
+			return false;
+		}
 		boolean isChanged = false;
 		for (Object aT : c) {
 			if (remove(aT)) {

@@ -47,8 +47,8 @@ public abstract class AbstractEAnnotationConverter implements EAnnotationConvert
 	/*package*/ static final String NESTED_SOURCE = "«nested»";
 
 	/*package*/ static void addEAnnotationConverter(@Nullable String source, @NonNull EAnnotationConverter eAnnotationConverter) {
-		EAnnotationConverter old = source2handler.put(source,  eAnnotationConverter);
-		assert (old == null) || (old == eAnnotationConverter);
+		EAnnotationConverter old = source2handler.put(source, eAnnotationConverter);
+		assert (old == null) || (old == eAnnotationConverter) : "Conflicting EAnnotationConverter for '" + source + "'";
 	}
 
 	/*package*/ static EAnnotationConverter basicGetEAnnotationConverter(/*@NonNull*/ String source) {
@@ -155,6 +155,7 @@ public abstract class AbstractEAnnotationConverter implements EAnnotationConvert
 		OCL_Import_EAnnotationConverter.getInstance();
 		OCL_ASMetamodel_EAnnotationConverter.getInstance();
 		OCL_Pivot_Operation_EAnnotationConverter.getInstance();
+		UML_EAnnotationConverter.getInstance();					// validateXXX has XXX as an originalName
 
 		EAnnotationConverter.addDefaultEAnnotationConverter(NESTED_SOURCE);
 		//
