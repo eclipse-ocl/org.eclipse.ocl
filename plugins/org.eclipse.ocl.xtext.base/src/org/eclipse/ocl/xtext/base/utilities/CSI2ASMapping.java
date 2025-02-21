@@ -545,7 +545,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 				}
 			}
 		}
-		return modelElementCS;
+		return ((modelElementCS != null) && !modelElementCS.eIsProxy()) ? modelElementCS :  null;
 	}
 
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {

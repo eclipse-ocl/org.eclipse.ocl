@@ -1835,7 +1835,7 @@ extends EObjectValidator {
 	 */
 	public boolean validatePivotable(Pivotable pivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)pivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(pivotable, diagnostics, context);
 	}
 
 	/**
@@ -2680,7 +2680,7 @@ extends EObjectValidator {
 				if (diagnostics != null) {
 					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
 						e.getLocalizedMessage(),
-						new Object[] {expressionInOCL}));
+						new Object[] {expressionInOCL, e}));
 				}
 				return false;
 			} finally {	// See Bug 577928 - must manually recurse if parsed lazily
@@ -3921,7 +3921,7 @@ extends EObjectValidator {
 	 */
 	public boolean validateMorePivotable(MorePivotable morePivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)morePivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(morePivotable, diagnostics, context);
 	}
 
 	/**
