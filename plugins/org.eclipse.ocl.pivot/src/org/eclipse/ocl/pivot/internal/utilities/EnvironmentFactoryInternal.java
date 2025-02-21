@@ -94,12 +94,6 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	void attach(@NonNull Object attachOwner);
 
 	/**
-	 * Return true if resourceSet has been declared as an extraRsourceSet that this EnvironmentFactory can validate.
-	 * @since 1.23
-	 */
-	default boolean canValidate(@NonNull ResourceSet resourceSet) { return false; }
-
-	/**
 	 * Configure the PackageRegistry associated with the (external) ResourceSet to use a load strategy that uses whichever of
 	 * the namespace or platform URI is first encountered and which suppresses diagnostics about subsequent use of the
 	 * other form of URI.

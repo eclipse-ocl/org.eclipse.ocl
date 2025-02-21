@@ -134,8 +134,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	private boolean traceEvaluation;
 	protected final @NonNull ProjectManager projectManager;
+	private final @Nullable ResourceSet userResourceSet;			// XXX may be multiple ResourceSets
 	protected final @NonNull ResourceSet externalResourceSet;
-	private @Nullable List<@NonNull ResourceSet> extraResourceSets = null;
 	private final @NonNull ResourceSet asResourceSet;
 	@Deprecated /* @deprecated no longer used */
 	protected final boolean externalResourceSetWasNull = false;
@@ -209,6 +209,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}
 		this.projectManager = projectManager;
+		this.userResourceSet = userResourceSet;
+	//	assert userResourceSet != null;
 		this.asResourceSet = createASResourceSet();
 		this.externalResourceSet = createExternalResourceSet(userResourceSet);
 		ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
@@ -343,18 +345,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 	}
 
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	public void addExtraResourceSet(@NonNull ResourceSet extraResourceSet) {
-		List<@NonNull ResourceSet> extraResourceSets2 = extraResourceSets;
-		if (extraResourceSets2 == null) {
-			extraResourceSets = extraResourceSets2 = new UniqueList<>();
-		}
-		extraResourceSets2.add(extraResourceSet);
-	}
-
 	@Override
 	public void analyzeExpressions(@NonNull EObject eRootObject,
 			@NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {
@@ -414,11 +404,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
 		return metamodelManager;
-	}
-
-	@Override
-	public boolean canValidate(@NonNull ResourceSet resourceSet) {
-		return (extraResourceSets != null) && extraResourceSets.contains(resourceSet);
 	}
 
 	@Override
@@ -1070,6 +1055,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull Technology getTechnology() {
 		return technology;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull ResourceSet getUserResourceSet() {
+		return userResourceSet != null ? userResourceSet : externalResourceSet;
 	}
 
 	@Override

@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIException;
@@ -89,6 +90,7 @@ import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -564,7 +566,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			value = eAnnotation.getDetails().get("body");
 		}
 		ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
-		constraint.setOwnedSpecification(specification);
+		constraint.setOwnedSpecification(specification);		// TODO Change Constraint.ownedSpecification to optional
 		if (value != null) {
 		//	specification.setBody(value);
 		}
@@ -810,8 +812,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
 		if ((oclAnnotation != null) && !PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(oclAnnotation.getSource())) {
 			oclAnnotationDetails = oclAnnotation.getDetails();
-			for (Map.Entry<String,String> entry : oclAnnotationDetails) {
-				String invariantName = entry.getKey();
+			for (Map.Entry<String,String> eDetail : oclAnnotationDetails) {
+				String invariantName = eDetail.getKey();
 				if (invariantName == null) {
 					invariantName = "";
 				}
@@ -827,7 +829,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 						invariant = PivotFactory.eINSTANCE.createConstraint();
 						invariant.setName(invariantName);
 						// XXX XXX	((ExpressionInOCLImpl)specification).setESObject(oclAnnotation);
-						((ConstraintImpl)invariant).setESObject(oclAnnotation);
+					//	((ConstraintImpl)invariant).setESObject((EObject)eDetail);
+						converter.addMapping((EStringToStringMapEntryImpl)eDetail, invariant);
 					}
 					else {
 						specification = invariant.getOwnedSpecification();
@@ -846,7 +849,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 						contextVariable.setIsRequired(contextVariable.isIsRequired());
 						expression.setOwnedContext(contextVariable);
 					}
-					String value = entry.getValue();
+					String value = eDetail.getValue();
 					// Rescue any deprecated format message expressions
 					String message = oclAnnotationDetails.get(invariantName + messageAnnotationDetailSuffix);
 					if ((value != null) && (message != null)) {
@@ -876,7 +879,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		 */
 		EAnnotation ecoreAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
 		if (ecoreAnnotation != null) {
-			String invariantNameList = ecoreAnnotation.getDetails().get("constraints");
+			String invariantNameList = ecoreAnnotation.getDetails().get(DelegateInstaller.CONSTRAINTS_KEY);
 			if (invariantNameList != null) {
 				String[] invariantNames = invariantNameList.split(" ");
 				for (String invariantName : invariantNames) {
@@ -888,8 +891,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 						if (invariant == null) {
 							invariant = PivotFactory.eINSTANCE.createConstraint();
 							invariant.setName(invariantName);
+							((ConstraintImpl)invariant).setESObject(ecoreAnnotation);
 						}
-						ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
+						ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();		// TODO Change Constraint.ownedSpecification to optional
 						invariant.setOwnedSpecification(specification);
 						if (newInvariants == null) {
 							newInvariants = new ArrayList<>();

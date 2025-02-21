@@ -19,15 +19,21 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -45,6 +51,8 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -216,6 +224,7 @@ implements Constraint {
 	@Override
 	public void setOwnedSpecification(LanguageExpression newOwnedSpecification)
 	{
+		String s = String.valueOf(newOwnedSpecification);				// XXX
 		if (newOwnedSpecification != ownedSpecification)
 		{
 			NotificationChain msgs = null;
@@ -893,5 +902,81 @@ implements Constraint {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		EObject esObject = getESObject();
+		if ((esObject instanceof EStringToStringMapEntryImpl) && (esObject.eContainer() instanceof EAnnotation) && OCLCommon.isDelegateURI(((EAnnotation)esObject.eContainer()).getSource())) {
+			// Look for a specific CS
+			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+			if (csi2asMapping != null) {
+				EObject csElement = csi2asMapping.getCSElement(this);
+				if (csElement != null) {		// If a CS Element references that AS Element
+					return csElement;
+				}
+			}
+			// Look for alternate ES
+			EObject esObject2 = getReloadableEObjectFromCompleteAS(environmentFactory);
+			if (esObject2 != null) {
+				return esObject2;
+			}
+			return esObject;
+		}
+		if (esObject == null) {
+			EObject asContainer = eContainer();
+			if (asContainer instanceof org.eclipse.ocl.pivot.Class) {
+				EObject esContainerObject = ((org.eclipse.ocl.pivot.Class)asContainer).getESObject();
+				if (esContainerObject instanceof EClassifier) {
+					EAnnotation eAnnotation = ((EClassifier)esContainerObject).getEAnnotation(EcorePackage.eNS_URI);
+					if (eAnnotation != null) {
+						return eAnnotation;		// Return the EClass annotation for Java implemented invariants
+					}
+				}
+			}
+		}
+		else if (esObject instanceof EAnnotation) {
+			EAnnotation eAnnotation = (EAnnotation)esObject;
+			assert EcorePackage.eNS_URI.equals(eAnnotation.getSource());
+			return eAnnotation;
+		}
+		else if (esObject instanceof EStringToStringMapEntryImpl) {
+			EStringToStringMapEntryImpl eDetail = (EStringToStringMapEntryImpl)esObject;
+			EAnnotation eAnnotation = (EAnnotation)eDetail.eContainer();
+			assert OCLCommon.isDelegateURI(eAnnotation.getSource());
+			// Look for a specific CS
+			ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();		// cf ElementUtil.getCsElement
+			if (csi2asMapping != null) {
+				EObject csElement = csi2asMapping.getCSElement(this);
+				if (csElement != null) {		// If a CS Element references that AS Element
+					return csElement;
+				}
+			}
+			// Look for alternate ES
+			esObject = getReloadableEObjectFromCompleteAS(environmentFactory);
+			if (esObject != null) {
+				return esObject;
+			}
+			return null;
+		}
+		return super.getReloadableEObject(environmentFactory);
+	}
+
+	@Override
+	public void setName(String newName) {
+		if ("BehavioralClassHasDistinctName".equals(newName)) {
+			getClass();			// XXX
+		}
+		super.setName(newName);
+	}
+
+	@Override
+	public void setESObject(@NonNull EObject newTarget) {
+		assert ((newTarget instanceof EStringToStringMapEntryImpl) && OCLCommon.isDelegateURI(((EAnnotation)newTarget.eContainer()).getSource()))
+			|| ((newTarget instanceof EAnnotation) && EcorePackage.eNS_URI.equals(((EAnnotation)newTarget).getSource()))
+			|| ((newTarget instanceof EOperation) /*&& has body */)
+			|| "org.eclipse.uml2.uml.internal.impl.ConstraintImpl".equals(newTarget.getClass().getName())
+			: "Unexpected " + newTarget.getClass().getName() + " for ConstraintImpl.setESObject()";
+		super.setESObject(newTarget);
 	}
 } //ConstraintImpl
