@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -329,6 +330,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_Bug354336() throws Exception {
+		EAnnotationConverter.addDefaultEAnnotationConverter(null);
 		doSerialize(getTestModelURI("models/ecore/Bug354336.ecore"), getTestModelURI("models/ecore/Bug354336.ecore"), DEFAULT_HELPER);		// FIXME Model check suppressed because of Bug 354621
 	}
 

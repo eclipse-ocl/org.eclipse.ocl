@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
@@ -87,7 +88,14 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		metamodelManager.removeExternalResource(this);
 	}
 
-	public abstract void error(@NonNull String message);
+	public void error(@NonNull String message) {
+		error(new XMIException(message));
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public abstract void error(@NonNull XMIException e);
 
 	/**
 	 * Return true if eClassifier is annotated to indicate that it is a Map Entry class that is required in
