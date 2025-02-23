@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -186,6 +187,11 @@ public class DebuggerTests extends XtextTestCase
 	}
 
 	public void testDebugger_Launch() throws Exception {
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.eclipse.org/OCL/1.0.0/body");
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.eclipse.org/OCL/1.0.0/derive");
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.eclipse.org/OCL/1.0.0/init");
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.eclipse.org/OCL/1.0.0/post");
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.eclipse.org/OCL/1.0.0/pre");
 		TestUIUtil.closeIntro();
 		TestUIUtil.enableSwitchToDebugPerspectivePreference();
 		//

@@ -668,7 +668,10 @@ public class DelegateInstaller
 	 */
 	public static final @NonNull String OPTION_OMIT_SETTING_DELEGATES = "omitSettingDelegates";
 
-	private static final @NonNull String CONSTRAINTS_KEY = "constraints";
+	/**
+	 * @since 1.23
+	 */
+	public static final @NonNull String CONSTRAINTS_KEY = "constraints";
 
 	/**
 	 * ValidationContext entry that may be set true when validating an EObject whose ResourceSet lacks an ExtendedEObjectValidatorAdapter.

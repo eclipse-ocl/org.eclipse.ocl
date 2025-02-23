@@ -157,7 +157,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		boolean isNullFree;
 		EAnnotation eAnnotation = eObject.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
-			isNullFree = Boolean.valueOf(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
+			isNullFree = Boolean.parseBoolean(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
 		}
 		else {
 			EObject eContainer = eObject.eContainer();
@@ -341,11 +341,11 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
-	public void error(@Nullable String message) {
+	public void error(@NonNull XMIException e) {
 		if (errors == null) {
 			errors = new ArrayList<>();
 		}
-		errors.add(new XMIException(message));
+		errors.add(e);
 	}
 
 	public <T extends Element> T getASElement(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
@@ -768,9 +768,9 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		EAnnotation importAnnotation = ePackage.getEAnnotation(PivotConstants.IMPORT_ANNOTATION_SOURCE);
 		if (importAnnotation != null) {
-			EMap<String, String> details = importAnnotation.getDetails();
-			for (String key : details.keySet()) {
-				String value = details.get(key);
+			for (Map.Entry<String, String> detail : importAnnotation.getDetails()) {
+				String key = detail.getKey();
+				String value = detail.getValue();
 				if (value == null) {
 					value = key;
 					key = "";
