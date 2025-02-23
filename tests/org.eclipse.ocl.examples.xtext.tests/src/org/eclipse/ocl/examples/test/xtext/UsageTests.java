@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.internal.dynamic.ExplicitClassLoader;
 import org.eclipse.ocl.pivot.internal.dynamic.JavaClasspath;
 import org.eclipse.ocl.pivot.internal.dynamic.JavaFileUtil;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
@@ -83,6 +84,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -1089,6 +1091,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
 	public void testBug570717_uml() throws Throwable {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1135,6 +1138,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
 	public void testBug570717a_uml() throws Throwable {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1199,6 +1203,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570891.uml model can be generated and compiled.
 	 */
 	public void testBug570891_uml() throws Throwable {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		if (OCLGenModelUtil.INSTANCE.hasDoubleOverrideBug547424()) {				// Avoid UML BUG 547424
 			System.err.println(getName() + " has been disabled -see UML Bug 547424");
 			return;
@@ -1241,6 +1246,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * and that the 570892.uml model can then validate.
 	 */
 	public void testBug570892_uml() throws Throwable {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1291,6 +1297,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * and that the Bug570894.uml model can then validate.
 	 */
 	public void testBug570894_uml() throws Throwable {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1356,6 +1363,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug571407.profile.uml model can be generated and compiled.
 	 */
 	public void testBug571407_uml() throws Throwable {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1955,6 +1963,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	public void testSysML_QUDV() throws Throwable {
 		assertBadBundlesAreNotOnClasspath(new @NonNull String[]{"__OCL_UsageTests__testSysML_QUDV"});
+		UMLStandaloneSetup.initEAnnotationConverters();
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.omg.org/spec/SMSC");
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.jpl.nasa.gov/imce/OntologicalModeling");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -2086,6 +2097,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * @throws Throwable
 	 */
 	public void testOpen_Bug469251_uml() throws Throwable {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		try {
 			doTestRunnable(new TestRunnable() {
 				@Override

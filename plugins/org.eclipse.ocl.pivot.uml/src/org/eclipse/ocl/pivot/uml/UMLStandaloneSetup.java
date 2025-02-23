@@ -20,6 +20,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.UML_EAnnotationConverter;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator.Registry;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -100,7 +103,22 @@ public class UMLStandaloneSetup //implements ISetup
 			URI baseURI = getBaseOCLResourceURI();
 			mapUMLResourceURIs(URIConverter.URI_MAP, PROFILES_PATHMAP, baseURI.appendSegment("model")); //$NON-NLS-1$
 			initializeLabelGenerators(ILabelGenerator.Registry.INSTANCE);
+			initEAnnotationConverters();
 		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static void initEAnnotationConverters() {
+		UML_EAnnotationConverter.getInstance();
+		EAnnotationConverter.addDefaultEAnnotationConverter(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
+		EAnnotationConverter.addDefaultEAnnotationConverter(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
+		EAnnotationConverter.addDefaultEAnnotationConverter(PivotConstantsInternal.SUBSETS_ANNOTATION_SOURCE);
+		EAnnotationConverter.addDefaultEAnnotationConverter("union");
+
+		EAnnotationConverter.addDefaultEAnnotationConverter("org.eclipse.papyrus");
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.omg.org/spec/SysML");
 	}
 
 	/**

@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -63,7 +62,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -248,9 +246,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					String newUpperBound = null;
 					Type newType = null;
 					boolean changedType = false;
-					EMap<String, String> details = eAnnotation.getDetails();
-					for (String key : details.keySet()) {
-						Object value = details.get(key);
+					for (Map.Entry<String, String> detail : eAnnotation.getDetails()) {
+						String key = detail.getKey();
+						Object value = detail.getValue();
 						if (value != null) {
 							if ("lowerBound".equals(key)) {
 								newLowerBound = value.toString();
@@ -319,7 +317,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						Type pivotType;
 						if (type != null) {
 							pivotType = type;
-							if (((NumberValue)upperValue).equals(ValueUtil.ONE_VALUE)) {
+							if (upperValue.equals(ValueUtil.ONE_VALUE)) {
 								isRequired = lowerValue.equals(ValueUtil.ONE_VALUE);
 							}
 							else {
@@ -410,7 +408,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						}
 						else {
 							if (eClassifier instanceof EDataType) {
-								Class<?> instanceClass = ((EDataType)eClassifier).getInstanceClass();
+								Class<?> instanceClass = eClassifier.getInstanceClass();
 								if ((instanceClass == Boolean.class) && (pivotType.getESObject() == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
 									pivotType = standardLibrary.getBooleanType();		// Correct Ecore's BooleanObject but not UML's BooleanObject
 								}

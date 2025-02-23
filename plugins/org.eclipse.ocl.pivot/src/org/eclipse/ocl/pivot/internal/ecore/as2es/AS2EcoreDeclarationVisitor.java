@@ -40,8 +40,6 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -74,6 +72,9 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.OCL_Import_EAnnotationConverter;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.OCL_Pivot_Operation_EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -81,10 +82,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 
@@ -249,13 +247,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		copyModelElement(eAnnotation, pivotAnnotation);
 		@SuppressWarnings("null")@NonNull List<EAnnotation> eAnnotations = eAnnotation.getEAnnotations();
 		safeVisitAll(eAnnotations, pivotAnnotation.getOwnedAnnotations());
-		for (Detail pivotDetail : pivotAnnotation.getOwnedDetails()) {
-			String name = pivotDetail.getName();
-			if (!PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY.equals(name)		// Documentation and comments are merged by comment handling
-					|| !PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(pivotAnnotation.getName())) {
-				String value = StringUtil.splice(pivotDetail.getValues(), "");
-				eAnnotation.getDetails().put(name, value);
-			}
+		EAnnotationConverter eAnnotationConverter = EAnnotationConverter.getEAnnotationConverter(pivotAnnotation.getName());
+		for (Detail asDetail : pivotAnnotation.getOwnedDetails()) {
+			eAnnotationConverter.convertDetail(asDetail, eAnnotation);
 		}
 	}
 
@@ -592,7 +586,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				}
 						);
 			}
-			EAnnotation importAnnotation = null;
 			URI ecoreURI = context.getEcoreURI();
 			int noNames = 0;
 			for (Import anImport : imports) {
@@ -604,51 +597,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 					}
 				}
 			}
-			for (Import anImport : imports) {
-				Namespace importedNamespace = anImport.getImportedNamespace();
-				if (importedNamespace != null) {
-					if (importAnnotation == null) {
-						importAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-						importAnnotation.setSource(PivotConstants.IMPORT_ANNOTATION_SOURCE);
-					}
-					String value;
-					if (importedNamespace instanceof Model) {
-						value = ((Model)importedNamespace).getExternalURI();
-					}
-					else {
-						EObject eTarget = importedNamespace.getESObject();
-						if (eTarget != null) {
-							URI uri = null;
-							Resource eResource = eTarget.eResource();
-							if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eResource)) {
-								uri = eResource.getURI();
-							}
-							if (uri == null) {
-								uri = EcoreUtil.getURI(eTarget);
-							}
-							URI uri2 = URIUtil.deresolve(uri, ecoreURI, true, true, true);
-							value = uri2.toString();
-						}
-						else if (importedNamespace instanceof org.eclipse.ocl.pivot.Package) {
-							value = ((org.eclipse.ocl.pivot.Package)importedNamespace).getURI();
-						}
-						else {
-							value = importedNamespace.toString();
-						}
-					}
-					String key = anImport.getName();
-					if ((noNames > 1) && ((key == null) || "".equals(key))) {
-						key = value;
-						value = null;
-					}
-					String oldValue = importAnnotation.getDetails().put(key, value);
-					if (oldValue != null) {
-						System.out.println("Conflicting " + PivotConstants.IMPORT_ANNOTATION_SOURCE + " for \"" + key + "\" => \"" + oldValue + "\" / \"" + value + "\"");
-					}
+			if (firstElement != null)  {
+				for (Import anImport : imports) {
+					OCL_Import_EAnnotationConverter.getInstance().convertAnnotations(anImport, ecoreURI, noNames, firstElement);
 				}
-			}
-			if ((firstElement != null) && (importAnnotation != null)) {
-				firstElement.getEAnnotations().add(importAnnotation);
 			}
 		}
 		return outputObjects;
@@ -680,13 +632,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		for (Constraint pivotConstraint : pivotOperation.getOwnedPostconditions()) {
 			safeVisit(pivotConstraint);		// Results are inserted directly
 		}
-		if (pivotOperation.isIsTransient()) {
-			EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			eAnnotation.setSource(PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE);
-			EMap<String, String> details = eAnnotation.getDetails();
-			details.put(PivotConstantsInternal.OPERATION_IS_TRANSIENT, "true");
-			eOperation.getEAnnotations().add(eAnnotation);
-		}
+		OCL_Pivot_Operation_EAnnotationConverter.getInstance().convertAnnotations(pivotOperation, eOperation);
 		return eOperation;
 	}
 

@@ -380,8 +380,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
-		public void error(@NonNull String message) {
-			root.error(message);
+		public void error(@NonNull XMIException e) {
+			root.error(e);
 		}
 
 		@Override
@@ -590,11 +590,11 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
-		public void error(@NonNull String message) {
+		public void error(@NonNull XMIException e) {
 			if (errors == null) {
 				errors = new ArrayList<>();
 			}
-			errors.add(new XMIException(message));
+			errors.add(e);
 		}
 
 		/*		protected org.eclipse.uml2.uml.Property getOtherEnd(org.eclipse.uml2.uml.@NonNull Property umlProperty) {
@@ -1087,8 +1087,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 		return PivotUtilInternal.getASURI(uri);
 	}
 
-	@Override
-	public abstract void error(@NonNull String message);
+//	@Override
+//	public abstract void error(@NonNull String message);
 
 	public abstract @Nullable Type getASType(@NonNull EObject eObject);
 

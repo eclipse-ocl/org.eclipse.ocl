@@ -96,7 +96,8 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 			EAnnotation eAnnotation = eModelElement.getEAnnotation(eAnnotationValidator.getAnnotationSource());
 			if (eAnnotation != null) {		// Should never be null.
 				refreshDynamicEClass(eAnnotation);
-				for (String key : eAnnotation.getDetails().keySet()) {
+				for (Map.Entry<String, String> detail : eAnnotation.getDetails()) {
+					String key = detail.getKey();
 					properties.put(key, dynamicAnnotationClass.getEStructuralFeature(key));
 				}
 			}
@@ -226,8 +227,8 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 		Map<String, EStructuralFeature> properties = new HashMap<String, EStructuralFeature>();
 		EAnnotation eAnnotation = eModelElement.getEAnnotation(annotationSource);
 		if (eAnnotation != null) {		// Should never be null.
-			for (String key : eAnnotation.getDetails().keySet()) {
-				properties.put(key,  null);
+			for (Map.Entry<String, String> detail : eAnnotation.getDetails()) {
+				properties.put(detail.getKey(), null);
 			}
 		}
 		return properties;
