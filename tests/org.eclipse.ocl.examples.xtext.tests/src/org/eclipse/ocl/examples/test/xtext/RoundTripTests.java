@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -401,6 +402,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testBug426927_oclinecore() throws IOException, InterruptedException {
+		EAnnotationConverter.addDefaultEAnnotationConverter(null);
 		String testFileContents =
 				"package any : any = 'http:/any'\n" +
 						"{\n" +
@@ -448,6 +450,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testAnnotationsRoundTrip_480635() throws IOException, InterruptedException {
+		EAnnotationConverter.addDefaultEAnnotationConverter("documentation");
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
@@ -757,16 +760,19 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testOCLRoundTrip() throws IOException, InterruptedException, ParserException {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 		options.put(AS2Ecore.OPTION_ADD_INVARIANT_COMMENTS, true);
 		doRoundTripFromEcore(getTestModelURI("models/ecore/OCL.ecore"), getTestModelURI("models/ecore/OCL.ecore"), options); // "OCL.reference");
 	}
 
 	public void testOCLCSTRoundTrip() throws IOException, InterruptedException, ParserException {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		doRoundTripFromEcore(getTestModelURI("models/ecore/OCLCST.ecore"));
 	}
 
 	public void testOCLEcoreRoundTrip() throws IOException, InterruptedException, ParserException {
+		UMLStandaloneSetup.initEAnnotationConverters();
 		doRoundTripFromEcore(getTestModelURI("models/ecore/OCLEcore.ecore"));
 	}
 

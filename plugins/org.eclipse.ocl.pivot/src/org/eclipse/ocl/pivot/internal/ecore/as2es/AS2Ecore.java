@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EGenericType;
@@ -36,17 +35,16 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
-import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EMF_GenModel_EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -59,7 +57,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 public class AS2Ecore extends AbstractConversion
@@ -207,7 +204,7 @@ public class AS2Ecore extends AbstractConversion
 	 */
 	@Deprecated
 	public static void copyComments(@NonNull EModelElement eModelElement, @NonNull Element pivotElement) {
-		copyCommentsAndDocumentation(eModelElement, pivotElement);
+		EMF_GenModel_EAnnotationConverter.getInstance().convertAnnotations(pivotElement, eModelElement);
 	}
 
 	/**
@@ -218,43 +215,7 @@ public class AS2Ecore extends AbstractConversion
 	 * @since 1.3
 	 */
 	public static void copyCommentsAndDocumentation(@NonNull EModelElement eModelElement, @NonNull Element pivotElement) {
-		List<String> newComments = null;
-		for (Comment comment : pivotElement.getOwnedComments()) {
-			if (newComments == null) {
-				newComments = new ArrayList<>();
-			}
-			newComments.add(comment.getBody());
-		}
-		for (Element element : pivotElement.getOwnedAnnotations()) {
-			if (element instanceof Annotation) {
-				Annotation pivotAnnotation = (Annotation)element;
-				if (PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(pivotAnnotation.getName())) {
-					Detail detail = NameUtil.getNameable(pivotAnnotation.getOwnedDetails(), PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
-					if (detail != null) {
-						List<String> values = detail.getValues();
-						if (newComments == null) {
-							newComments = new ArrayList<>();
-						}
-						newComments.addAll(values);
-					}
-				}
-			}
-		}
-		EAnnotation eAnnotation = eModelElement.getEAnnotation(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
-		if (newComments != null) {
-			if (eAnnotation == null) {
-				eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
-				eModelElement.getEAnnotations().add(eAnnotation);
-			}
-			String value = StringUtil.splice(newComments, "");
-			eAnnotation.getDetails().put(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY, value);
-		}
-		else {
-			if (eAnnotation != null) {
-				eAnnotation.getDetails().removeKey(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
-			}
-		}
+		EMF_GenModel_EAnnotationConverter.getInstance().convertAnnotations(pivotElement, eModelElement);
 	}
 
 	public static @NonNull EOperation createConstraintEOperation(@NonNull Constraint pivotConstraint, @NonNull String operationName, @Nullable Map<@NonNull String, @Nullable Object> options) {
@@ -276,7 +237,7 @@ public class AS2Ecore extends AbstractConversion
 			eOperation.getEParameters().add(firstParameter);
 			if (addInvariantComments) {
 				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(GenModelPackage.eNS_URI);
+				eAnnotation.setSource(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 				eAnnotation.getDetails().put("documentation", "The chain of diagnostics to which problems are to be appended.");
 				firstParameter.getEAnnotations().add(eAnnotation);
 			}
@@ -296,7 +257,7 @@ public class AS2Ecore extends AbstractConversion
 			eOperation.getEParameters().add(secondParameter);
 			if (addInvariantComments) {
 				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(GenModelPackage.eNS_URI);
+				eAnnotation.setSource(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 				eAnnotation.getDetails().put("documentation", "The cache of context-specific information.");
 				secondParameter.getEAnnotations().add(eAnnotation);
 			}

@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
@@ -972,6 +973,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_oclstdlib_oclstdlib() throws IOException, InterruptedException {
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.omg.org/ocl");
 		OCL ocl = createOCLWithProjectMap();
 		//		StandardLibraryContribution.REGISTRY.put(MetamodelManager.DEFAULT_OCL_STDLIB_URI, StandardLibraryContribution.NULL);
 		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
