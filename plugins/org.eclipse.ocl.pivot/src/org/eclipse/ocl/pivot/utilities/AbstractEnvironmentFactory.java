@@ -215,7 +215,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet) + ", " + NameUtil.debugSimpleName(asResourceSet));
 		}
-		adapt(externalResourceSet);
+//		adapt(externalResourceSet);
 		this.completeEnvironment = createCompleteEnvironment();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();

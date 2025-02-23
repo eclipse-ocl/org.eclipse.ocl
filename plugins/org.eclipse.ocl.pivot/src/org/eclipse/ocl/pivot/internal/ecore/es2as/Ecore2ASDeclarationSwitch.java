@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +41,7 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -89,9 +89,8 @@ import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
-import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
+import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -99,7 +98,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -109,15 +107,18 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 {
+	@Deprecated /* @deprecated not used */
 	public static boolean hasDocumentationKey(@Nullable String source, @NonNull EMap<String, String> details) {
 		return (details.size() == 1) && PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(source)
 				&& details.containsKey(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
 	}
 
-	public static boolean hasImportKey(@Nullable String source, @NonNull EMap<String, String> details) {
+	@Deprecated /* @deprecated not used */
+	public static boolean hasImportKey(@Nullable String source, @NonNull EMap<String, String> details) {		// XXX details at least obsolete
 		return PivotConstants.IMPORT_ANNOTATION_SOURCE.equals(source);
 	}
 
+	@Deprecated /* @deprecated not used */
 	public static boolean isDocumentationKey(@Nullable String source, @Nullable String key) {
 		return PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(source)
 				&& PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY.equals(key);
@@ -137,24 +138,27 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	public Object caseEAnnotation(EAnnotation eObject) {
 		String source = eObject.getSource();
 		EMap<String, String> details = eObject.getDetails();
-		Annotation pivotElement = PivotFactory.eINSTANCE.createAnnotation();
-		pivotElement.setName(source);
-		converter.addMapping(eObject, pivotElement);
-		copyAnnotatedElement(pivotElement, eObject, null);
-		doSwitchAll(pivotElement.getOwnedContents(), eObject.getContents());
-		for (Map.Entry<String, String> entry : details) {
-			String key = entry.getKey();
-			if ((details.size() != 1) || !isDocumentationKey(source, key)) {
-				Detail pivotDetail = PivotFactory.eINSTANCE.createDetail();
-				pivotDetail.setName(key);
-				pivotDetail.getValues().add(entry.getValue());
-				pivotElement.getOwnedDetails().add(pivotDetail);	// FIXME refreshList
+		assert details != null;
+		Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();			// XXX skip if just documentation
+		asAnnotation.setName(source);
+		converter.addMapping(eObject, asAnnotation);
+		copyAnnotatedElement(asAnnotation, eObject, null);
+		doSwitchAll(asAnnotation.getOwnedContents(), eObject.getContents());
+		if (details.size() > 0) {
+			EAnnotationConverter eAnnotationConverter = EAnnotationConverter.getEAnnotationConverter(eObject);
+			List<Detail> asDetails = asAnnotation.getOwnedDetails();
+			for (Map.Entry<String, String> entry : details) {
+				assert entry != null;
+				Detail asDetail = eAnnotationConverter.convertEDetail(entry);
+				if (asDetail != null) {
+					asDetails.add(asDetail);	// FIXME refreshList
+				}
 			}
 		}
 		if (!eObject.getReferences().isEmpty()) {
 			converter.queueReference(eObject);
 		}
-		return pivotElement;
+		return asAnnotation;
 	}
 
 	@Override
@@ -222,18 +226,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		pivotElement.setName(newName);
-		List<EAnnotation> excludedAnnotations = null;
 		EAnnotation duplicatesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
-		if (duplicatesAnnotation != null) {
-			excludedAnnotations = new ArrayList<>();
-			excludedAnnotations.add(duplicatesAnnotation);
-		}
 		EAnnotation redefinesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-		if (redefinesAnnotation != null) {
-			excludedAnnotations = new ArrayList<>();
-			excludedAnnotations.add(redefinesAnnotation);
-		}
-		copyClassifier(pivotElement, eClass, excludedAnnotations);
+		copyClassifier(pivotElement, eClass, null);
 		pivotElement.setIsAbstract(eClass.isAbstract());
 		pivotElement.setIsInterface(eClass.isInterface());
 		doSwitchAll(eClass.getEGenericSuperTypes());
@@ -489,17 +484,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				adapter.getAliasMap().put(ePackage, moniker);
 			}
 		}
-		List<EAnnotation> exclusions = new ArrayList<>();
-		EAnnotation eAnnotation = ePackage.getEAnnotation(EcorePackage.eNS_URI);
-		if (eAnnotation != null) {
-			exclusions.add(eAnnotation);
-		}
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-			exclusions.add(ClassUtil.getMetamodelAnnotation(ePackage));
-		}
 		converter.addMapping(ePackage, pivotElement);
 		//		copyNamedElement(pivotElement, eObject2);
-		copyAnnotatedElement(pivotElement, ePackage, exclusions);
+		copyAnnotatedElement(pivotElement, ePackage, null);
 		doSwitchAll(pivotElement.getOwnedPackages(), ePackage.getESubpackages());
 		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
@@ -526,24 +513,15 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	public Object caseEReference(EReference eObject) {
 		@SuppressWarnings("null") @NonNull EReference eObject2 = eObject;
 		Property pivotElement = converter.refreshNamedElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
-		List<EAnnotation> excludedAnnotations = null;
 		EAnnotation oppositeRole = eObject2.getEAnnotation(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0);
-		if (oppositeRole != null) {
-			excludedAnnotations = new ArrayList<>();
-			excludedAnnotations.add(oppositeRole);
+		if (oppositeRole == null) {
+			oppositeRole = eObject2.getEAnnotation(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
 		}
-		oppositeRole = eObject2.getEAnnotation(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
-		if (oppositeRole != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oppositeRole);
-		}
-		copyStructuralFeature(pivotElement, eObject2, excludedAnnotations);
+		copyStructuralFeature(pivotElement, eObject2, null);
 		pivotElement.setIsComposite(eObject2.isContainment());
 		pivotElement.setIsResolveProxies(eObject2.isResolveProxies());
 		if ((eObject2.getEOpposite() != null)
-				|| (excludedAnnotations != null)
+				|| (oppositeRole != null)
 				|| !eObject2.getEKeys().isEmpty()) {
 			converter.queueReference(eObject2);	// Defer
 		}
@@ -586,27 +564,23 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			value = eAnnotation.getDetails().get("body");
 		}
 		ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
+		constraint.setOwnedSpecification(specification);
 		if (value != null) {
-			specification.setBody(value);
+		//	specification.setBody(value);
 		}
 		if (eAnnotation != null) {
 			specification.setESObject(eAnnotation);
 		}
-		constraint.setOwnedSpecification(specification);
-		String commentBody = EcoreUtil.getAnnotation(eOperation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
-		if (commentBody != null) {
-			Comment pivotComment = PivotFactory.eINSTANCE.createComment();
-			pivotComment.setBody(commentBody.replaceAll("\\r", ""));
-			constraint.getOwnedComments().add(pivotComment);
-		}
 		converter.addMapping(eOperation, constraint);
+		copyAnnotatedElement(constraint, eOperation, null);
 		return constraint;
 	}
 
 	protected @NonNull Operation convertEOperation2Operation(@NonNull EOperation eOperation) {
 		Operation pivotElement = converter.refreshNamedElement(Operation.class, PivotPackage.Literals.OPERATION, eOperation);
-		List<EAnnotation> excludedAnnotations = convertEOperationEAnnotations(pivotElement, eOperation);
-		copyTypedElement(pivotElement, eOperation, excludedAnnotations);
+//		List<EAnnotation> zzexcludedAnnotations = convertEOperationEAnnotations(pivotElement, eOperation);
+//		assert zzexcludedAnnotations == null;
+		copyTypedElement(pivotElement, eOperation, null);
 		doSwitchAll(pivotElement.getOwnedParameters(), eOperation.getEParameters());
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateSignature(pivotElement,eTypeParameters);
@@ -615,27 +589,13 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		return pivotElement;
 	}
 
+	@Deprecated /* @deprecated not used */
 	protected @Nullable List<EAnnotation> convertEOperationEAnnotations(@NonNull Operation pivotElement, @NonNull EOperation eOperation) {
-		List<EAnnotation> excludedAnnotations = null;
-		EAnnotation redefinesAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-		if (redefinesAnnotation != null) {
-			//			if (excludedAnnotations == null) {
-			excludedAnnotations = new ArrayList<>();
-			//			}
-			excludedAnnotations.add(redefinesAnnotation);
-		}
+		throw new UnsupportedOperationException();
+		/* assert eOperation.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_2_0_NS_URI) == null;		// XXX why handled -- historical typo ??
+		assert eOperation.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI) == null;		// XXX why handled -- historical typo ??
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eOperation);
-		if (oclAnnotation == null) {
-			oclAnnotation = eOperation.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_2_0_NS_URI);
-		}
-		if (oclAnnotation == null) {
-			oclAnnotation = eOperation.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
-		}
 		if (oclAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oclAnnotation);
 			for (Iterator<Map.Entry<String,String>> it = oclAnnotation.getDetails().listIterator(); it.hasNext(); ) {
 				Map.Entry<String,String> entry = it.next();
 				String bodyName = null;
@@ -693,22 +653,15 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				}
 			}
 		}
-		EAnnotation isTransientAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE);
-		if (isTransientAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(isTransientAnnotation);
-			String isTransientString = isTransientAnnotation.getDetails().get(PivotConstantsInternal.OPERATION_IS_TRANSIENT);
-			pivotElement.setIsTransient((isTransientString != null) && Boolean.parseBoolean(isTransientString));
-		}
-		return excludedAnnotations;
+		return null; */
 	}
 
-	protected void copyClassifier(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier, @Nullable List<EAnnotation> excludedAnnotations) {
-		excludedAnnotations = refreshTypeConstraints(pivotElement, eClassifier, excludedAnnotations);
+	protected void copyClassifier(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier, @Nullable List<EAnnotation> zzexcludedAnnotations) {
+		assert zzexcludedAnnotations == null;
+		zzexcludedAnnotations = refreshTypeConstraints(pivotElement, eClassifier, null);
+		assert zzexcludedAnnotations == null;
 		copyNamedElement(pivotElement, eClassifier);
-		copyAnnotatedElement(pivotElement, eClassifier, excludedAnnotations);
+		copyAnnotatedElement(pivotElement, eClassifier, null);
 		if (eClassifier.eIsSet(EcorePackage.Literals.ECLASSIFIER__INSTANCE_CLASS_NAME)) {
 			String instanceClassName = eClassifier.getInstanceClassName();
 			pivotElement.setInstanceClassName(instanceClassName);
@@ -734,48 +687,42 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	/**
-	 * Convert all eModelElement EAnnotations to pivotElement Annotations except specifically excludedAnnotations.
+	 * Convert all eModelElement EAnnotations to pivotElement Annotations.
 	 * Documentation EAnnotations are converted to Comments rather than Annotations.
 	 * Import EAnnotations are excluded here and processed at the root.
 	 */
 	protected void copyAnnotatedElement(@NonNull NamedElement pivotElement,
-			@NonNull EModelElement eModelElement, List<EAnnotation> excludedAnnotations) {
-		List<Element> pivotAnnotations = pivotElement.getOwnedAnnotations();
+			@NonNull EModelElement eModelElement, List<EAnnotation> zzexcludedAnnotations) {
+		assert zzexcludedAnnotations == null;
+		List<Element> asAnnotations = pivotElement.getOwnedAnnotations();
 		for (EAnnotation eAnnotation : eModelElement.getEAnnotations()) {
-			if ((excludedAnnotations == null) || !excludedAnnotations.contains(eAnnotation)) {
-				String source = eAnnotation.getSource();
-				@SuppressWarnings("null")@NonNull EMap<String, String> details = eAnnotation.getDetails();
-				if (hasDocumentationKey(source, details)) {
-					Comment pivotComment = PivotFactory.eINSTANCE.createComment();
-					pivotComment.setBody(details.get(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY));
-					pivotElement.getOwnedComments().add(pivotComment);
+			EAnnotationConverter eAnnotationConverter = EAnnotationConverter.getEAnnotationConverter(eAnnotation);
+			try {
+				if (eAnnotationConverter.convertEAnnotationDetails(eAnnotation, pivotElement)) {
+					Annotation asAnnotation = (Annotation)doSwitch(eAnnotation);
+					asAnnotations.add(asAnnotation);
 				}
-				else if (hasImportKey(source, details)) {
-				}
-				else /*if (!eAnnotation.getContents().isEmpty()
-				 || !eAnnotation.getReferences().isEmpty()
-				 || (details.size() > 1)
-				 || ((details.size() == 1) && !hasDocumentationKey(source, details)))*/ {
-					Annotation pivotAnnotation = (Annotation) doSwitch(eAnnotation);
-					pivotAnnotations.add(pivotAnnotation);
-				}
+			} catch (XMIException e) {
+				converter.error(e);
 			}
 		}
 	}
 
 	/**
-	 * Convert all eModelElement EAnnotations to pivotElement Annotations except specifically excludedAnnotations.
+	 * Convert all eModelElement EAnnotations to pivotElement Annotations.
 	 * Documentation EAnnotations are converted to Comments rather than Annotations.
 	 * Import EAnnotations are excluded here and processed at the root.
 	 */
+	@Deprecated /* @deprecated not used */
 	protected void copyAnnotationComment(@NonNull Constraint pivotElement, @NonNull EAnnotation eModelElement, @NonNull String key) {
-		pivotElement.getOwnedComments().clear();
+		throw new UnsupportedOperationException();
+	/*	pivotElement.getOwnedComments().clear();
 		String comment = EcoreUtil.getAnnotation(eModelElement, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, key);
 		if (comment != null) {
 			Comment pivotComment = PivotFactory.eINSTANCE.createComment();
 			pivotComment.setBody(comment);
 			pivotElement.getOwnedComments().add(pivotComment);
-		}
+		} */
 	}
 
 	protected void copyNamedElement(@NonNull NamedElement pivotElement, @NonNull ENamedElement eNamedElement) {
@@ -784,51 +731,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setName(name);
 	}
 
-	protected void copyStructuralFeature(@NonNull Property pivotElement, @NonNull EStructuralFeature eObject, List<EAnnotation> excludedAnnotations) {
-		EAnnotation redefinesAnnotation = eObject.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-		if (redefinesAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(redefinesAnnotation);
-		}
-		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eObject);
-		if (oclAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oclAnnotation);
-			Map.Entry<String,String> bestEntry = null;
-			for (Map.Entry<String,String> entry : oclAnnotation.getDetails().entrySet()) {
-				String key = entry.getKey();
-				if (key.equals(SettingBehavior.DERIVATION_CONSTRAINT_KEY)) {
-					bestEntry = entry;
-				}
-				else if (key.equals(SettingBehavior.INITIAL_CONSTRAINT_KEY)) {
-					if (bestEntry == null) {
-						bestEntry = entry;
-					}
-				}
-				else if (key.equals("get")) {
-					if (bestEntry == null) {
-						bestEntry = entry;
-					}
-				}
-				else
-				{
-					converter.error("Unsupported feature constraint " + key);
-				}
-			}
-			if (bestEntry != null) {
-				String value = bestEntry.getValue();
-				ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
-				specification.setESObject(oclAnnotation);
-				specification.setBody(value);
-				pivotElement.setOwnedExpression(specification);
-			}
-			pivotElement.setImplementation(null);			// Computed lazily with more context.
-		}
-		copyTypedElement(pivotElement, eObject, excludedAnnotations);
+	protected void copyStructuralFeature(@NonNull Property pivotElement, @NonNull EStructuralFeature eObject, List<EAnnotation> zzexcludedAnnotations) {
+		assert zzexcludedAnnotations == null;
+		copyTypedElement(pivotElement, eObject, null);
 		pivotElement.setIsReadOnly(!eObject.isChangeable());
 		pivotElement.setIsDerived(eObject.isDerived());
 		pivotElement.setIsTransient(eObject.isTransient());
@@ -836,15 +741,10 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setIsVolatile(eObject.isVolatile());
 	}
 
-	protected void copyTypedElement(@NonNull TypedElement pivotElement, @NonNull ETypedElement eTypedElement, List<EAnnotation> excludedAnnotations) {
+	protected void copyTypedElement(@NonNull TypedElement pivotElement, @NonNull ETypedElement eTypedElement, List<EAnnotation> zzexcludedAnnotations) {
+		assert zzexcludedAnnotations == null;
 		copyNamedElement(pivotElement, eTypedElement);
-		List<EAnnotation> excludedAnnotations2 = excludedAnnotations;
-		EAnnotation eAnnotation = eTypedElement.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
-		if (eAnnotation != null) {
-			excludedAnnotations2 = excludedAnnotations != null ? new ArrayList<>(excludedAnnotations) : new ArrayList<>();
-			excludedAnnotations2.add(eAnnotation);
-		}
-		copyAnnotatedElement(pivotElement, eTypedElement, excludedAnnotations2);
+		copyAnnotatedElement(pivotElement, eTypedElement, null);
 		int lower = eTypedElement.getLowerBound();
 		if ((lower == 0) && converter.cannotBeOptional(eTypedElement)) {
 			Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
@@ -891,7 +791,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 	}
 
-	protected List<EAnnotation> refreshTypeConstraints(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier, @Nullable List<EAnnotation> excludedAnnotations) {
+	protected List<EAnnotation> refreshTypeConstraints(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier, @Nullable List<EAnnotation> zzexcludedAnnotations) {
+		assert zzexcludedAnnotations == null;
 		EMap<String, String> oclAnnotationDetails = null;
 		Map<String, Constraint> newConstraintMap = null;
 		Map<String, Constraint> oldInvariantMap = null;
@@ -908,13 +809,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		 */
 		EAnnotation oclAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
 		if ((oclAnnotation != null) && !PivotConstants.OCL_DELEGATE_URI_PIVOT_DYNAMIC.equals(oclAnnotation.getSource())) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(oclAnnotation);
 			oclAnnotationDetails = oclAnnotation.getDetails();
-			for (Iterator<Map.Entry<String,String>> it = oclAnnotationDetails.listIterator(); it.hasNext(); ) {
-				Map.Entry<String,String> entry = it.next();
+			for (Map.Entry<String,String> entry : oclAnnotationDetails) {
 				String invariantName = entry.getKey();
 				if (invariantName == null) {
 					invariantName = "";
@@ -965,7 +861,13 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 						newConstraintMap = new HashMap<>();
 					}
 					newConstraintMap.put(invariantName, invariant);
-					copyAnnotationComment(invariant, oclAnnotation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
+					invariant.getOwnedComments().clear();
+					String comment = EcoreUtil.getAnnotation(oclAnnotation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
+					if (comment != null) {
+						Comment pivotComment = PivotFactory.eINSTANCE.createComment();
+						pivotComment.setBody(comment);
+						invariant.getOwnedComments().add(pivotComment);
+					}
 				}
 			}
 		}
@@ -974,10 +876,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		 */
 		EAnnotation ecoreAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
 		if (ecoreAnnotation != null) {
-			if (excludedAnnotations == null) {
-				excludedAnnotations = new ArrayList<>();
-			}
-			excludedAnnotations.add(ecoreAnnotation);
 			String invariantNameList = ecoreAnnotation.getDetails().get("constraints");
 			if (invariantNameList != null) {
 				String[] invariantNames = invariantNameList.split(" ");
@@ -1011,6 +909,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		else {
 			oldInvariants.clear();
 		}
-		return excludedAnnotations;
+		return null;
 	}
 }
