@@ -182,8 +182,9 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		log.info("Loading Pivot Model '" + inputURI);
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
-			ResourceSet asResourceSet = metamodelManager.getASResourceSet();
-			Resource ecoreResource = ClassUtil.nonNullState(asResourceSet.getResource(inputURI, true));
+		//	ResourceSet asResourceSet = metamodelManager.getASResourceSet();
+			ResourceSet externalResourceSet = ocl.getEnvironmentFactory().getResourceSet();
+			Resource ecoreResource = ClassUtil.nonNullState(externalResourceSet.getResource(inputURI, true));
 			String ecoreErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(ecoreResource.getErrors()), "Loading " + inputURI, "\n");
 			if (ecoreErrorsString != null) {
 				issues.addError(this, ecoreErrorsString, null, null, null);

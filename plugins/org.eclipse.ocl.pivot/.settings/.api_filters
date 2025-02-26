@@ -22,6 +22,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel">
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.model.OCLmetamodel.LibraryContents"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/NumberValue.java" type="org.eclipse.ocl.pivot.values.NumberValue">
         <filter id="404000815">
             <message_arguments>
