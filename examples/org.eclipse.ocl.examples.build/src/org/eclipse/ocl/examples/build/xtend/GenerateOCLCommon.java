@@ -802,6 +802,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected @NonNull String getNameLiteral(@NonNull Constraint constraint) {
+		if (constraint.getESObject() != null) { // && !isExcluded(constraint.getOwningClass())) {
+			return nameQueries.getEcoreLiteral(constraint);
+		}
 		return '"' + constraint.getName() + '"';
 	}
 

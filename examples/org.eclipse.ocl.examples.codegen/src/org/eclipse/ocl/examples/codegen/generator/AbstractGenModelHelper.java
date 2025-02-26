@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -50,6 +51,7 @@ import org.eclipse.ocl.pivot.library.LibraryTernaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractGenModelHelper implements GenModelHelper
 {
@@ -472,6 +474,46 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		}
 		return null;
 	} */
+
+	@Override
+	public @NonNull GenOperation getGenOperation(@NonNull Constraint constraint) throws GenModelException {
+		org.eclipse.ocl.pivot.Class owningType = (org.eclipse.ocl.pivot.Class)PivotUtil.getContainingType(constraint);
+		if (owningType != null) {
+			GenClass genClass = getGenClass(owningType);
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				if (genOperation.getEcoreOperation() == constraint.getESObject()) {
+					return genOperation;
+				}
+			}
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				if (genOperation.getEcoreOperation() == constraint.getESObject()) {
+					return genOperation;
+				}
+			}
+		}
+	/*	Operation baseOperation = operation;
+		for ( ; baseOperation.getRedefinedOperations().size() > 0; baseOperation = baseOperation.getRedefinedOperations().get(0)) {
+			;
+		}
+		org.eclipse.ocl.pivot.Class owningType = baseOperation.getOwningClass();
+		if (owningType != null) {
+			GenClass genClass = getGenClass(owningType);
+			String name = operation.getName();
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				String operationName = getName(genOperation.getEcoreOperation());
+				if (name.equals(operationName)) {
+					// FIXME parameters
+					return genOperation;
+				}
+			}
+		}
+		Operation baseOperation2 = operation;
+		for ( ; baseOperation2.getRedefinedOperations().size() > 0; baseOperation2 = baseOperation2.getRedefinedOperations().get(0)) {
+			;
+		}
+		throw new GenModelException("No GenFeature for " + baseOperation); */
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public @NonNull GenOperation getGenOperation(@NonNull Operation operation) throws GenModelException {

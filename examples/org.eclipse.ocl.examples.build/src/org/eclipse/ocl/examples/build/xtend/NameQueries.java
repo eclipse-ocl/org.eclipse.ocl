@@ -25,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.EcoreGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
@@ -97,6 +98,37 @@ public class NameQueries
 	public static String encodeName(@NonNull NamedElement element) {
 		return AbstractGenModelHelper.encodeName(element);
 	} */
+
+	public @NonNull String getEcoreLiteral(@NonNull Constraint constraint) {
+		org.eclipse.ocl.pivot.Class type = (org.eclipse.ocl.pivot.Class)PivotUtil.getContainingType(constraint);
+		assert type != null;
+		String nsURI = ClassUtil.nonNullModel(type.getOwningPackage().getURI());
+		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		if (genPackage != null) {
+			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
+			assert genClass != null;
+			GenOperation genOperation = genModelHelper.getGenOperation(constraint);
+			assert genOperation != null;
+			String operationID = genClass.getOperationID(genOperation, false);
+			StringBuilder s = new StringBuilder();
+			s.append(/*genPackage.getInterfacePackageName() +*/genPackage.getPackageInterfaceName());
+			s.append(".Literals.");
+			s.append(operationID);
+		/*	s.append(CodeGenUtil.upperName(type.getName()));
+			s.append("___");
+			s.append(CodeGenUtil.upperName(operation.getName()));
+			Iterable<@NonNull Parameter> ownedParameters = PivotUtil.getOwnedParameters(operation);
+			if (!Iterables.isEmpty(ownedParameters)) {
+				s.append("_");
+				for (@NonNull Parameter parameter : ownedParameters) {
+					s.append("_");
+					s.append(parameter.getType().getName().toUpperCase(Locale.getDefault()));
+				}
+			} */
+			return s.toString();
+		}
+		return "\"" + constraint.getName() + "\"";
+	}
 
 	public @NonNull String getEcoreLiteral(@NonNull EnumerationLiteral enumerationLiteral) {
 		Enumeration enumeration = enumerationLiteral.getOwningEnumeration();
