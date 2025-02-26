@@ -301,7 +301,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			«FOR pkge : sortedPackages»
 				«FOR constraint : ClassUtil.nullFree(pkge2constraints.get(pkge))»
-				private final @NonNull Constraint «constraint.getPrefixedSymbolName("iv_" + constraint.partialName())» = createInvariant(«constraint.getNameLiteral()», "«constraint.ownedSpecification.javaString()»");
+				private final @NonNull Constraint «constraint.getPrefixedSymbolName("iv_" + constraint.partialName())» = createInvariant(«constraint.getNameLiteral()», "«constraint.getName()»", "«constraint.ownedSpecification.javaString()»");
 				«ENDFOR»
 			«ENDFOR»
 
