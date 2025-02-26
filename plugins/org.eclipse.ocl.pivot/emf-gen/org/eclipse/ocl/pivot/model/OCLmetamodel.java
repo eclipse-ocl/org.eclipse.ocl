@@ -30,25 +30,21 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -57,12 +53,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -156,35 +147,6 @@ public class OCLmetamodel extends ASResourceImpl
 		INSTANCE = null;
 	}
 
-	protected static class LibraryContents extends AbstractContents
-	{
-		protected final @NonNull Package standardLibrary;
-		private final @NonNull Class booleanType;
-		private final @NonNull Class stringType;
-
-		protected LibraryContents(@NonNull Package standardLibrary) {
-			this.standardLibrary = standardLibrary;
-			this.booleanType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("Boolean"));
-			this.stringType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("String"));
-		}
-
-		/**
-		 * @since 1.23
-		 */
-		protected @NonNull Constraint createInvariant(@NonNull String name, @NonNull String body) {
-			Constraint constraint = PivotFactory.eINSTANCE.createConstraint();
-			ExpressionInOCL expressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-			StringLiteralExp stringLiteral = PivotFactory.eINSTANCE.createStringLiteralExp();
-			stringLiteral.setStringSymbol(body);
-			stringLiteral.setType(stringType);
-			expressionInOCL.setOwnedBody(stringLiteral);
-			expressionInOCL.setType(booleanType);
-			constraint.setName(name);
-			constraint.setOwnedSpecification(expressionInOCL);
-			return constraint;
-		}
-	}
-
 	/**
 	 * The Loader shares the metamodel instance whenever this default metamodel
 	 * is loaded from the registry of known pivot metamodels.
@@ -266,7 +228,7 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 	}
 
-	private static class Contents extends LibraryContents
+	private static class Contents extends AbstractContents.AbstractMetamodelContents
 	{
 		private final @NonNull Model root;
 		private final @NonNull Package pivot;
@@ -4587,110 +4549,110 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_TemplateParameterSubstitution_ownedWildcard);
 		}
 
-		private final @NonNull Constraint iv_BooleanLiteralExp_TypeIsBoolean = createInvariant("TypeIsBoolean", "self.type = Boolean");
-		private final @NonNull Constraint iv_CallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree");
-		private final @NonNull Constraint iv_CallExp_SafeSourceCannotBeMap = createInvariant("SafeSourceCannotBeMap", "isSafe implies let sourceType = ownedSource?.type in sourceType <> null implies not sourceType.oclIsKindOf(MapType)");
-		private final @NonNull Constraint iv_CallExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_Class_NameIsNotNull = createInvariant("NameIsNotNull", "name <> null");
-		private final @NonNull Constraint iv_Class_UniqueInvariantName = createInvariant("UniqueInvariantName", "ownedInvariants->isUnique(name)");
-		private final @NonNull Constraint iv_CollectionItem_TypeIsItemType = createInvariant("TypeIsItemType", "type = ownedItem.type");
-		private final @NonNull Constraint iv_CollectionLiteralExp_BagKindIsBag = createInvariant("BagKindIsBag", "kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)");
-		private final @NonNull Constraint iv_CollectionLiteralExp_CollectionKindIsConcrete = createInvariant("CollectionKindIsConcrete", "kind <> CollectionKind::Collection");
-		private final @NonNull Constraint iv_CollectionLiteralExp_OrderedSetKindIsOrderedSet = createInvariant("OrderedSetKindIsOrderedSet", "kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)");
-		private final @NonNull Constraint iv_CollectionLiteralExp_SequenceKindIsSequence = createInvariant("SequenceKindIsSequence", "kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)");
-		private final @NonNull Constraint iv_CollectionLiteralExp_SetKindIsSet = createInvariant("SetKindIsSet", "kind = CollectionKind::Set implies type.oclIsKindOf(SetType)");
-		private final @NonNull Constraint iv_CollectionLiteralPart_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_Constraint_BooleanValued = createInvariant("BooleanValued", "ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid");
-		private final @NonNull Constraint iv_Constraint_UniqueName = createInvariant("UniqueName", "true");
-		private final @NonNull Constraint iv_DataType_BehavioralClassHasDistinctName = createInvariant("BehavioralClassHasDistinctName", "behavioralClass <> null implies superClasses->closure(superClasses)->forAll(b | b.name <> name)");
-		private final @NonNull Constraint iv_DataType_BehavioralClassIsPrimitiveType = createInvariant("BehavioralClassIsPrimitiveType", "behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)");
-		private final @NonNull Constraint iv_DataType_BehavioralClassIsSuperClass = createInvariant("BehavioralClassIsSuperClass", "behavioralClass <> null implies superClasses->includes(behavioralClass)");
-		private final @NonNull Constraint iv_EnumLiteralExp_TypeIsEnumerationType = createInvariant("TypeIsEnumerationType", "self.type = referredLiteral?.owningEnumeration");
-		private final @NonNull Constraint iv_Feature_NameIsNotNull = createInvariant("NameIsNotNull", "name <> null");
-		private final @NonNull Constraint iv_Feature_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_Feature_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
-		private final @NonNull Constraint iv_IfExp_ConditionTypeIsBoolean = createInvariant("ConditionTypeIsBoolean", "self.ownedCondition.type = Boolean");
-		private final @NonNull Constraint iv_IfExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_IntegerLiteralExp_TypeIsInteger = createInvariant("TypeIsInteger", "self.type = Integer");
-		private final @NonNull Constraint iv_IterateExp_BodyTypeConformsToResultType = createInvariant("BodyTypeConformsToResultType", "true");
-		private final @NonNull Constraint iv_IterateExp_OneInitializer = createInvariant("OneInitializer", "true");
-		private final @NonNull Constraint iv_IterateExp_SafeIteratorIsRequired = createInvariant("SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
-		private final @NonNull Constraint iv_IterateExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
-		private final @NonNull Constraint iv_IterateExp_TypeIsResultType = createInvariant("TypeIsResultType", "true");
-		private final @NonNull Constraint iv_IterateExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
-		private final @NonNull Constraint iv_IteratorExp_AnyBodyTypeIsBoolean = createInvariant("AnyBodyTypeIsBoolean", "true");
-		private final @NonNull Constraint iv_IteratorExp_AnyHasOneIterator = createInvariant("AnyHasOneIterator", "true");
-		private final @NonNull Constraint iv_IteratorExp_AnyTypeIsSourceElementType = createInvariant("AnyTypeIsSourceElementType", "true");
-		private final @NonNull Constraint iv_IteratorExp_ClosureBodyElementTypeIsIteratorType = createInvariant("ClosureBodyElementTypeIsIteratorType", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)");
-		private final @NonNull Constraint iv_IteratorExp_ClosureBodyTypeIsConformanttoIteratorType = createInvariant("ClosureBodyTypeIsConformanttoIteratorType", "true");
-		private final @NonNull Constraint iv_IteratorExp_ClosureElementTypeIsSourceElementType = createInvariant("ClosureElementTypeIsSourceElementType", "true");
-		private final @NonNull Constraint iv_IteratorExp_ClosureHasOneIterator = createInvariant("ClosureHasOneIterator", "true");
-		private final @NonNull Constraint iv_IteratorExp_ClosureResultElementTypeIsIteratorType = createInvariant("ClosureResultElementTypeIsIteratorType", "name = \'closure\' implies\n\t\tlet resultElementType = type.oclAsType(CollectionType).elementType in \n\t\tlet iteratorType = ownedIterators->at(1).type in\n\t\titeratorType?.conformsTo(resultElementType)");
-		private final @NonNull Constraint iv_IteratorExp_ClosureSourceElementTypeIsBodyElementType = createInvariant("ClosureSourceElementTypeIsBodyElementType", "true");
-		private final @NonNull Constraint iv_IteratorExp_ClosureTypeIsUniqueCollection = createInvariant("ClosureTypeIsUniqueCollection", "name = \'closure\' implies\nif ownedSource?.type?.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then\ntype.oclIsKindOf(OrderedSetType)\nelse\ntype.oclIsKindOf(SetType)\nendif");
-		private final @NonNull Constraint iv_IteratorExp_CollectElementTypeIsFlattenedBodyType = createInvariant("CollectElementTypeIsFlattenedBodyType", "name = \'collect\' implies\ntype.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()");
-		private final @NonNull Constraint iv_IteratorExp_CollectTypeIsUnordered = createInvariant("CollectTypeIsUnordered", "name = \'collect\' implies\nif ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then\ntype.oclIsKindOf(SequenceType)\nelse\ntype.oclIsKindOf(BagType)\nendif");
-		private final @NonNull Constraint iv_IteratorExp_IteratorTypeIsSourceElementType = createInvariant("IteratorTypeIsSourceElementType", "let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies\n    let sourceElementType = sourceType.oclAsType(CollectionType).elementType in\n    self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))");
-		private final @NonNull Constraint iv_IteratorExp_IteratorTypeIsSourceKeyType = createInvariant("IteratorTypeIsSourceKeyType", "let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies\n    let sourceKeyType = sourceType.oclAsType(MapType).keyType in\n    self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))");
-		private final @NonNull Constraint iv_IteratorExp_SafeIteratorIsRequired = createInvariant("SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
-		private final @NonNull Constraint iv_IteratorExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
-		private final @NonNull Constraint iv_IteratorExp_SortedByElementTypeIsSourceElementType = createInvariant("SortedByElementTypeIsSourceElementType", "name = \'sortedBy\' implies\ntype.oclAsType(CollectionType).elementType =\nownedSource?.type.oclAsType(CollectionType).elementType");
-		private final @NonNull Constraint iv_IteratorExp_SortedByIsOrderedIfSourceIsOrdered = createInvariant("SortedByIsOrderedIfSourceIsOrdered", "name = \'sortedBy\' implies\nif ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(BagType) then\ntype.oclIsKindOf(SequenceType)\nelse\ntype.oclIsKindOf(OrderedSetType)\nendif");
-		private final @NonNull Constraint iv_IteratorExp_SortedByIteratorTypeIsComparable = createInvariant("SortedByIteratorTypeIsComparable", "true");
-		private final @NonNull Constraint iv_IteratorExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
-		private final @NonNull Constraint iv_IteratorVariable_HasNoInitializer = createInvariant("HasNoInitializer", "ownedInit = null");
-		private final @NonNull Constraint iv_LetExp_CompatibleNullityForIn = createInvariant("CompatibleNullityForIn", "isRequired = ownedIn.isRequired");
-		private final @NonNull Constraint iv_LetExp_TypeIsInType = createInvariant("TypeIsInType", "type = ownedIn.type");
-		private final @NonNull Constraint iv_LetExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_LetVariable_CompatibleNullityForInitializer = createInvariant("CompatibleNullityForInitializer", "ownedInit?.isRequired = isRequired");
-		private final @NonNull Constraint iv_LetVariable_CompatibleTypeForInitializer = createInvariant("CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
-		private final @NonNull Constraint iv_LetVariable_HasInitializer = createInvariant("HasInitializer", "ownedInit <> null");
-		private final @NonNull Constraint iv_LoopExp_MatchingMapCoIterators = createInvariant("MatchingMapCoIterators", "ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())");
-		private final @NonNull Constraint iv_LoopExp_MatchingOrderedCollectionCoIterators = createInvariant("MatchingOrderedCollectionCoIterators", "(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())");
-		private final @NonNull Constraint iv_LoopExp_NoCoInitializers = createInvariant("NoCoInitializers", "self.ownedCoIterators?->forAll(ownedInit->isEmpty())");
-		private final @NonNull Constraint iv_LoopExp_NoInitializers = createInvariant("NoInitializers", "self.ownedIterators->forAll(ownedInit->isEmpty())");
-		private final @NonNull Constraint iv_LoopExp_NoNotOrderedCollectionCoIterators = createInvariant("NoNotOrderedCollectionCoIterators", "(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()");
-		private final @NonNull Constraint iv_LoopExp_SourceIsCollection = createInvariant("SourceIsCollection", "true");
-		private final @NonNull Constraint iv_LoopExp_SourceIsIterable = createInvariant("SourceIsIterable", "ownedSource?.type.oclIsKindOf(IterableType)");
-		private final @NonNull Constraint iv_MessageExp_OneCallOrOneSend = createInvariant("OneCallOrOneSend", "ownedCalledOperation->size() + ownedSentSignal->size() = 1");
-		private final @NonNull Constraint iv_MessageExp_TargetIsNotACollection = createInvariant("TargetIsNotACollection", "not ownedTarget.type.oclIsKindOf(CollectionType)");
-		private final @NonNull Constraint iv_OCLExpression_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
-		private final @NonNull Constraint iv_Operation_CompatibleReturn = createInvariant("CompatibleReturn", "bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)");
-		private final @NonNull Constraint iv_Operation_LoadableImplementation = createInvariant("LoadableImplementation", "true");
-		private final @NonNull Constraint iv_Operation_UniquePostconditionName = createInvariant("UniquePostconditionName", "ownedPostconditions->isUnique(name)");
-		private final @NonNull Constraint iv_Operation_UniquePreconditionName = createInvariant("UniquePreconditionName", "ownedPreconditions->isUnique(name)");
-		private final @NonNull Constraint iv_OperationCallExp_ArgumentCount = createInvariant("ArgumentCount", "ownedArguments->size() = referredOperation?.ownedParameters?->size()");
-		private final @NonNull Constraint iv_OperationCallExp_ArgumentTypeIsConformant = createInvariant("ArgumentTypeIsConformant", "let operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tlet selfType : Type = operation?.owningClass in\n\tSequence{1..ownedArguments->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\targument.type?.conformsTo(requiredType))");
-		private final @NonNull Constraint iv_OperationCallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
-		private final @NonNull Constraint iv_OperationCallExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())");
-		private final @NonNull Constraint iv_OppositePropertyCallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
-		private final @NonNull Constraint iv_OppositePropertyCallExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()");
-		private final @NonNull Constraint iv_ParameterVariable_HasNoInitializer = createInvariant("HasNoInitializer", "ownedInit = null");
-		private final @NonNull Constraint iv_Property_CompatibleDefaultExpression = createInvariant("CompatibleDefaultExpression", "ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)");
-		private final @NonNull Constraint iv_PropertyCallExp_CompatibleResultType = createInvariant("CompatibleResultType", "type = getSpecializedReferredPropertyType()");
-		private final @NonNull Constraint iv_PropertyCallExp_NonStaticSourceTypeIsConformant = createInvariant("NonStaticSourceTypeIsConformant", "not referredProperty?.isStatic implies \n\townedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())");
-		private final @NonNull Constraint iv_PropertyCallExp_SafeSourceCanBeNull = createInvariant("SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
-		private final @NonNull Constraint iv_PropertyCallExp_UnsafeSourceCanNotBeNull = createInvariant("UnsafeSourceCanNotBeNull", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()");
-		private final @NonNull Constraint iv_ResultVariable_CompatibleNullityForInitializer = createInvariant("CompatibleNullityForInitializer", "not ownedInit?.isRequired implies not isRequired");
-		private final @NonNull Constraint iv_ResultVariable_CompatibleTypeForInitializer = createInvariant("CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
-		private final @NonNull Constraint iv_ResultVariable_HasInitializer = createInvariant("HasInitializer", "ownedInit <> null");
-		private final @NonNull Constraint iv_ShadowExp_ClassHasNoStringValueInitializer = createInvariant("ClassHasNoStringValueInitializer", "true");
-		private final @NonNull Constraint iv_ShadowExp_DataTypeHasNoPartInitializers = createInvariant("DataTypeHasNoPartInitializers", "true");
-		private final @NonNull Constraint iv_ShadowExp_DataTypeHasOnePartInitializer = createInvariant("DataTypeHasOnePartInitializer", "type.oclIsKindOf(DataType) implies ownedParts->size() = 1");
-		private final @NonNull Constraint iv_ShadowExp_DataTypeHasStringValueInitializer = createInvariant("DataTypeHasStringValueInitializer", "true");
-		private final @NonNull Constraint iv_ShadowExp_InitializesAllClassProperties = createInvariant("InitializesAllClassProperties", "if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status else \n\tlet partProperties = ownedParts.referredProperty->asSet() in\n\tlet allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in\n\tlet classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith(\'ocl\')) in\n\tlet requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in\n\tlet extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in\n\tlet missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in\n\tif extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String=\'Unexpected initializers:\'|acc +\' \' + p.name)}.status\n\telse if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String=\'Missing initializers:\'|acc +\' \' + p.name)}.status\n\telse Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status\n\tendif endif endif");
-		private final @NonNull Constraint iv_ShadowExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_ShadowPart_CompatibleInitialiserType = createInvariant("CompatibleInitialiserType", "ownedInit.type?.conformsTo(type)");
-		private final @NonNull Constraint iv_ShadowPart_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_ShadowPart_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
-		private final @NonNull Constraint iv_StateExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_TupleLiteralPart_CompatibleInitialiserType = createInvariant("CompatibleInitialiserType", "ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)");
-		private final @NonNull Constraint iv_TupleLiteralPart_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_Variable_CompatibleInitialiserType = createInvariant("CompatibleInitialiserType", "true");
-		private final @NonNull Constraint iv_VariableDeclaration_NameIsNotNull = createInvariant("NameIsNotNull", "name <> null");
-		private final @NonNull Constraint iv_VariableDeclaration_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_VariableDeclaration_TypeIsNotNull = createInvariant("TypeIsNotNull", "type <> null");
-		private final @NonNull Constraint iv_VariableExp_TypeIsNotInvalid = createInvariant("TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_BooleanLiteralExp_TypeIsBoolean = createInvariant(PivotPackage.Literals.BOOLEAN_LITERAL_EXP___VALIDATE_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP, "TypeIsBoolean", "self.type = Boolean");
+		private final @NonNull Constraint iv_CallExp_SafeSourceCanBeNull = createInvariant(PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree");
+		private final @NonNull Constraint iv_CallExp_SafeSourceCannotBeMap = createInvariant(PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CANNOT_BE_MAP__DIAGNOSTICCHAIN_MAP, "SafeSourceCannotBeMap", "isSafe implies let sourceType = ownedSource?.type in sourceType <> null implies not sourceType.oclIsKindOf(MapType)");
+		private final @NonNull Constraint iv_CallExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Class_NameIsNotNull = createInvariant(PivotPackage.Literals.CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "NameIsNotNull", "name <> null");
+		private final @NonNull Constraint iv_Class_UniqueInvariantName = createInvariant(PivotPackage.Literals.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP, "UniqueInvariantName", "ownedInvariants->isUnique(name)");
+		private final @NonNull Constraint iv_CollectionItem_TypeIsItemType = createInvariant(PivotPackage.Literals.COLLECTION_ITEM___VALIDATE_TYPE_IS_ITEM_TYPE__DIAGNOSTICCHAIN_MAP, "TypeIsItemType", "type = ownedItem.type");
+		private final @NonNull Constraint iv_CollectionLiteralExp_BagKindIsBag = createInvariant(PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_BAG_KIND_IS_BAG__DIAGNOSTICCHAIN_MAP, "BagKindIsBag", "kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)");
+		private final @NonNull Constraint iv_CollectionLiteralExp_CollectionKindIsConcrete = createInvariant(PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_COLLECTION_KIND_IS_CONCRETE__DIAGNOSTICCHAIN_MAP, "CollectionKindIsConcrete", "kind <> CollectionKind::Collection");
+		private final @NonNull Constraint iv_CollectionLiteralExp_OrderedSetKindIsOrderedSet = createInvariant(PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_ORDERED_SET_KIND_IS_ORDERED_SET__DIAGNOSTICCHAIN_MAP, "OrderedSetKindIsOrderedSet", "kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)");
+		private final @NonNull Constraint iv_CollectionLiteralExp_SequenceKindIsSequence = createInvariant(PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_SEQUENCE_KIND_IS_SEQUENCE__DIAGNOSTICCHAIN_MAP, "SequenceKindIsSequence", "kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)");
+		private final @NonNull Constraint iv_CollectionLiteralExp_SetKindIsSet = createInvariant(PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_SET_KIND_IS_SET__DIAGNOSTICCHAIN_MAP, "SetKindIsSet", "kind = CollectionKind::Set implies type.oclIsKindOf(SetType)");
+		private final @NonNull Constraint iv_CollectionLiteralPart_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.COLLECTION_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Constraint_BooleanValued = createInvariant(PivotPackage.Literals.CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP, "BooleanValued", "ownedSpecification <> null and ownedSpecification.type <> null implies ownedSpecification.type = Boolean or ownedSpecification.type = OclVoid");
+		private final @NonNull Constraint iv_Constraint_UniqueName = createInvariant(PivotPackage.Literals.CONSTRAINT___VALIDATE_UNIQUE_NAME__DIAGNOSTICCHAIN_MAP, "UniqueName", "true");
+		private final @NonNull Constraint iv_DataType_BehavioralClassHasDistinctName = createInvariant(PivotPackage.Literals.DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_HAS_DISTINCT_NAME__DIAGNOSTICCHAIN_MAP, "BehavioralClassHasDistinctName", "behavioralClass <> null implies superClasses->closure(superClasses)->forAll(b | b.name <> name)");
+		private final @NonNull Constraint iv_DataType_BehavioralClassIsPrimitiveType = createInvariant(PivotPackage.Literals.DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_IS_PRIMITIVE_TYPE__DIAGNOSTICCHAIN_MAP, "BehavioralClassIsPrimitiveType", "behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)");
+		private final @NonNull Constraint iv_DataType_BehavioralClassIsSuperClass = createInvariant(PivotPackage.Literals.DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_IS_SUPER_CLASS__DIAGNOSTICCHAIN_MAP, "BehavioralClassIsSuperClass", "behavioralClass <> null implies superClasses->includes(behavioralClass)");
+		private final @NonNull Constraint iv_EnumLiteralExp_TypeIsEnumerationType = createInvariant(PivotPackage.Literals.ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_ENUMERATION_TYPE__DIAGNOSTICCHAIN_MAP, "TypeIsEnumerationType", "self.type = referredLiteral?.owningEnumeration");
+		private final @NonNull Constraint iv_Feature_NameIsNotNull = createInvariant(PivotPackage.Literals.FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "NameIsNotNull", "name <> null");
+		private final @NonNull Constraint iv_Feature_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.FEATURE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Feature_TypeIsNotNull = createInvariant(PivotPackage.Literals.FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_IfExp_ConditionTypeIsBoolean = createInvariant(PivotPackage.Literals.IF_EXP___VALIDATE_CONDITION_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP, "ConditionTypeIsBoolean", "self.ownedCondition.type = Boolean");
+		private final @NonNull Constraint iv_IfExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.IF_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_IntegerLiteralExp_TypeIsInteger = createInvariant(PivotPackage.Literals.INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_INTEGER__DIAGNOSTICCHAIN_MAP, "TypeIsInteger", "self.type = Integer");
+		private final @NonNull Constraint iv_IterateExp_BodyTypeConformsToResultType = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE__DIAGNOSTICCHAIN_MAP, "BodyTypeConformsToResultType", "true");
+		private final @NonNull Constraint iv_IterateExp_OneInitializer = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_ONE_INITIALIZER__DIAGNOSTICCHAIN_MAP, "OneInitializer", "true");
+		private final @NonNull Constraint iv_IterateExp_SafeIteratorIsRequired = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, "SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
+		private final @NonNull Constraint iv_IterateExp_SafeSourceCanBeNull = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IterateExp_TypeIsResultType = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_TYPE_IS_RESULT_TYPE__DIAGNOSTICCHAIN_MAP, "TypeIsResultType", "true");
+		private final @NonNull Constraint iv_IterateExp_UnsafeSourceCanNotBeNull = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, "UnsafeSourceCanNotBeNull", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IteratorExp_AnyBodyTypeIsBoolean = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP, "AnyBodyTypeIsBoolean", "true");
+		private final @NonNull Constraint iv_IteratorExp_AnyHasOneIterator = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP, "AnyHasOneIterator", "true");
+		private final @NonNull Constraint iv_IteratorExp_AnyTypeIsSourceElementType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "AnyTypeIsSourceElementType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureBodyElementTypeIsIteratorType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureBodyElementTypeIsIteratorType", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)");
+		private final @NonNull Constraint iv_IteratorExp_ClosureBodyTypeIsConformanttoIteratorType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureBodyTypeIsConformanttoIteratorType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureElementTypeIsSourceElementType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureElementTypeIsSourceElementType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureHasOneIterator = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP, "ClosureHasOneIterator", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureResultElementTypeIsIteratorType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_RESULT_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureResultElementTypeIsIteratorType", "name = \'closure\' implies\n\t\tlet resultElementType = type.oclAsType(CollectionType).elementType in \n\t\tlet iteratorType = ownedIterators->at(1).type in\n\t\titeratorType?.conformsTo(resultElementType)");
+		private final @NonNull Constraint iv_IteratorExp_ClosureSourceElementTypeIsBodyElementType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureSourceElementTypeIsBodyElementType", "true");
+		private final @NonNull Constraint iv_IteratorExp_ClosureTypeIsUniqueCollection = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION__DIAGNOSTICCHAIN_MAP, "ClosureTypeIsUniqueCollection", "name = \'closure\' implies\nif ownedSource?.type?.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then\ntype.oclIsKindOf(OrderedSetType)\nelse\ntype.oclIsKindOf(SetType)\nendif");
+		private final @NonNull Constraint iv_IteratorExp_CollectElementTypeIsFlattenedBodyType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE__DIAGNOSTICCHAIN_MAP, "CollectElementTypeIsFlattenedBodyType", "name = \'collect\' implies\ntype.oclAsType(CollectionType).elementType = ownedBody.type?.flattenedType()");
+		private final @NonNull Constraint iv_IteratorExp_CollectTypeIsUnordered = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_COLLECT_TYPE_IS_UNORDERED__DIAGNOSTICCHAIN_MAP, "CollectTypeIsUnordered", "name = \'collect\' implies\nif ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then\ntype.oclIsKindOf(SequenceType)\nelse\ntype.oclIsKindOf(BagType)\nendif");
+		private final @NonNull Constraint iv_IteratorExp_IteratorTypeIsSourceElementType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "IteratorTypeIsSourceElementType", "let sourceType = ownedSource?.type in sourceType.oclIsKindOf(CollectionType) implies\n    let sourceElementType = sourceType.oclAsType(CollectionType).elementType in\n    self.ownedIterators->forAll(p | sourceElementType.conformsTo(p.type))");
+		private final @NonNull Constraint iv_IteratorExp_IteratorTypeIsSourceKeyType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_KEY_TYPE__DIAGNOSTICCHAIN_MAP, "IteratorTypeIsSourceKeyType", "let sourceType = ownedSource?.type in sourceType.oclIsKindOf(MapType) implies\n    let sourceKeyType = sourceType.oclAsType(MapType).keyType in\n    self.ownedIterators->forAll(p | sourceKeyType.conformsTo(p.type))");
+		private final @NonNull Constraint iv_IteratorExp_SafeIteratorIsRequired = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, "SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
+		private final @NonNull Constraint iv_IteratorExp_SafeSourceCanBeNull = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IteratorExp_SortedByElementTypeIsSourceElementType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "SortedByElementTypeIsSourceElementType", "name = \'sortedBy\' implies\ntype.oclAsType(CollectionType).elementType =\nownedSource?.type.oclAsType(CollectionType).elementType");
+		private final @NonNull Constraint iv_IteratorExp_SortedByIsOrderedIfSourceIsOrdered = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP, "SortedByIsOrderedIfSourceIsOrdered", "name = \'sortedBy\' implies\nif ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(BagType) then\ntype.oclIsKindOf(SequenceType)\nelse\ntype.oclIsKindOf(OrderedSetType)\nendif");
+		private final @NonNull Constraint iv_IteratorExp_SortedByIteratorTypeIsComparable = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP, "SortedByIteratorTypeIsComparable", "true");
+		private final @NonNull Constraint iv_IteratorExp_UnsafeSourceCanNotBeNull = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, "UnsafeSourceCanNotBeNull", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
+		private final @NonNull Constraint iv_IteratorVariable_HasNoInitializer = createInvariant(PivotPackage.Literals.ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP, "HasNoInitializer", "ownedInit = null");
+		private final @NonNull Constraint iv_LetExp_CompatibleNullityForIn = createInvariant(PivotPackage.Literals.LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForIn", "isRequired = ownedIn.isRequired");
+		private final @NonNull Constraint iv_LetExp_TypeIsInType = createInvariant(PivotPackage.Literals.LET_EXP___VALIDATE_TYPE_IS_IN_TYPE__DIAGNOSTICCHAIN_MAP, "TypeIsInType", "type = ownedIn.type");
+		private final @NonNull Constraint iv_LetExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.LET_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_LetVariable_CompatibleNullityForInitializer = createInvariant(PivotPackage.Literals.LET_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForInitializer", "ownedInit?.isRequired = isRequired");
+		private final @NonNull Constraint iv_LetVariable_CompatibleTypeForInitializer = createInvariant(PivotPackage.Literals.LET_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
+		private final @NonNull Constraint iv_LetVariable_HasInitializer = createInvariant(PivotPackage.Literals.LET_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP, "HasInitializer", "ownedInit <> null");
+		private final @NonNull Constraint iv_LoopExp_MatchingMapCoIterators = createInvariant(PivotPackage.Literals.LOOP_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP, "MatchingMapCoIterators", "ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())");
+		private final @NonNull Constraint iv_LoopExp_MatchingOrderedCollectionCoIterators = createInvariant(PivotPackage.Literals.LOOP_EXP___VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP, "MatchingOrderedCollectionCoIterators", "(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())");
+		private final @NonNull Constraint iv_LoopExp_NoCoInitializers = createInvariant(PivotPackage.Literals.LOOP_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP, "NoCoInitializers", "self.ownedCoIterators?->forAll(ownedInit->isEmpty())");
+		private final @NonNull Constraint iv_LoopExp_NoInitializers = createInvariant(PivotPackage.Literals.LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP, "NoInitializers", "self.ownedIterators->forAll(ownedInit->isEmpty())");
+		private final @NonNull Constraint iv_LoopExp_NoNotOrderedCollectionCoIterators = createInvariant(PivotPackage.Literals.LOOP_EXP___VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP, "NoNotOrderedCollectionCoIterators", "(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()");
+		private final @NonNull Constraint iv_LoopExp_SourceIsCollection = createInvariant(PivotPackage.Literals.LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP, "SourceIsCollection", "true");
+		private final @NonNull Constraint iv_LoopExp_SourceIsIterable = createInvariant(PivotPackage.Literals.LOOP_EXP___VALIDATE_SOURCE_IS_ITERABLE__DIAGNOSTICCHAIN_MAP, "SourceIsIterable", "ownedSource?.type.oclIsKindOf(IterableType)");
+		private final @NonNull Constraint iv_MessageExp_OneCallOrOneSend = createInvariant(PivotPackage.Literals.MESSAGE_EXP___VALIDATE_ONE_CALL_OR_ONE_SEND__DIAGNOSTICCHAIN_MAP, "OneCallOrOneSend", "ownedCalledOperation->size() + ownedSentSignal->size() = 1");
+		private final @NonNull Constraint iv_MessageExp_TargetIsNotACollection = createInvariant(PivotPackage.Literals.MESSAGE_EXP___VALIDATE_TARGET_IS_NOT_ACOLLECTION__DIAGNOSTICCHAIN_MAP, "TargetIsNotACollection", "not ownedTarget.type.oclIsKindOf(CollectionType)");
+		private final @NonNull Constraint iv_OCLExpression_TypeIsNotNull = createInvariant(PivotPackage.Literals.OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_Operation_CompatibleReturn = createInvariant(PivotPackage.Literals.OPERATION___VALIDATE_COMPATIBLE_RETURN__DIAGNOSTICCHAIN_MAP, "CompatibleReturn", "bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)");
+		private final @NonNull Constraint iv_Operation_LoadableImplementation = createInvariant(PivotPackage.Literals.OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP, "LoadableImplementation", "true");
+		private final @NonNull Constraint iv_Operation_UniquePostconditionName = createInvariant(PivotPackage.Literals.OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP, "UniquePostconditionName", "ownedPostconditions->isUnique(name)");
+		private final @NonNull Constraint iv_Operation_UniquePreconditionName = createInvariant(PivotPackage.Literals.OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP, "UniquePreconditionName", "ownedPreconditions->isUnique(name)");
+		private final @NonNull Constraint iv_OperationCallExp_ArgumentCount = createInvariant(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP, "ArgumentCount", "ownedArguments->size() = referredOperation?.ownedParameters?->size()");
+		private final @NonNull Constraint iv_OperationCallExp_ArgumentTypeIsConformant = createInvariant(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP, "ArgumentTypeIsConformant", "let operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tlet selfType : Type = operation?.owningClass in\n\tSequence{1..ownedArguments->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\targument.type?.conformsTo(requiredType))");
+		private final @NonNull Constraint iv_OperationCallExp_SafeSourceCanBeNull = createInvariant(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_OperationCallExp_UnsafeSourceCanNotBeNull = createInvariant(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, "UnsafeSourceCanNotBeNull", "(not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())");
+		private final @NonNull Constraint iv_OppositePropertyCallExp_SafeSourceCanBeNull = createInvariant(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_OppositePropertyCallExp_UnsafeSourceCanNotBeNull = createInvariant(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, "UnsafeSourceCanNotBeNull", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_ParameterVariable_HasNoInitializer = createInvariant(PivotPackage.Literals.PARAMETER_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP, "HasNoInitializer", "ownedInit = null");
+		private final @NonNull Constraint iv_Property_CompatibleDefaultExpression = createInvariant(PivotPackage.Literals.PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP, "CompatibleDefaultExpression", "ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)");
+		private final @NonNull Constraint iv_PropertyCallExp_CompatibleResultType = createInvariant(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_COMPATIBLE_RESULT_TYPE__DIAGNOSTICCHAIN_MAP, "CompatibleResultType", "type = getSpecializedReferredPropertyType()");
+		private final @NonNull Constraint iv_PropertyCallExp_NonStaticSourceTypeIsConformant = createInvariant(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP, "NonStaticSourceTypeIsConformant", "not referredProperty?.isStatic implies \n\townedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())");
+		private final @NonNull Constraint iv_PropertyCallExp_SafeSourceCanBeNull = createInvariant(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_PropertyCallExp_UnsafeSourceCanNotBeNull = createInvariant(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, "UnsafeSourceCanNotBeNull", "(ownedSource <> null) and not isSafe implies ownedSource.isNonNull()");
+		private final @NonNull Constraint iv_ResultVariable_CompatibleNullityForInitializer = createInvariant(PivotPackage.Literals.RESULT_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForInitializer", "not ownedInit?.isRequired implies not isRequired");
+		private final @NonNull Constraint iv_ResultVariable_CompatibleTypeForInitializer = createInvariant(PivotPackage.Literals.RESULT_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
+		private final @NonNull Constraint iv_ResultVariable_HasInitializer = createInvariant(PivotPackage.Literals.RESULT_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP, "HasInitializer", "ownedInit <> null");
+		private final @NonNull Constraint iv_ShadowExp_ClassHasNoStringValueInitializer = createInvariant(PivotPackage.Literals.SHADOW_EXP___VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP, "ClassHasNoStringValueInitializer", "true");
+		private final @NonNull Constraint iv_ShadowExp_DataTypeHasNoPartInitializers = createInvariant(PivotPackage.Literals.SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP, "DataTypeHasNoPartInitializers", "true");
+		private final @NonNull Constraint iv_ShadowExp_DataTypeHasOnePartInitializer = createInvariant(PivotPackage.Literals.SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP, "DataTypeHasOnePartInitializer", "type.oclIsKindOf(DataType) implies ownedParts->size() = 1");
+		private final @NonNull Constraint iv_ShadowExp_DataTypeHasStringValueInitializer = createInvariant(PivotPackage.Literals.SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP, "DataTypeHasStringValueInitializer", "true");
+		private final @NonNull Constraint iv_ShadowExp_InitializesAllClassProperties = createInvariant(PivotPackage.Literals.SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP, "InitializesAllClassProperties", "if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status else \n\tlet partProperties = ownedParts.referredProperty->asSet() in\n\tlet allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in\n\tlet classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith(\'ocl\')) in\n\tlet requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in\n\tlet extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in\n\tlet missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in\n\tif extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String=\'Unexpected initializers:\'|acc +\' \' + p.name)}.status\n\telse if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String=\'Missing initializers:\'|acc +\' \' + p.name)}.status\n\telse Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status\n\tendif endif endif");
+		private final @NonNull Constraint iv_ShadowExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_ShadowPart_CompatibleInitialiserType = createInvariant(PivotPackage.Literals.SHADOW_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP, "CompatibleInitialiserType", "ownedInit.type?.conformsTo(type)");
+		private final @NonNull Constraint iv_ShadowPart_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_ShadowPart_TypeIsNotNull = createInvariant(PivotPackage.Literals.SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_StateExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.STATE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_TupleLiteralPart_CompatibleInitialiserType = createInvariant(PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP, "CompatibleInitialiserType", "ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)");
+		private final @NonNull Constraint iv_TupleLiteralPart_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_Variable_CompatibleInitialiserType = createInvariant(PivotPackage.Literals.VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP, "CompatibleInitialiserType", "true");
+		private final @NonNull Constraint iv_VariableDeclaration_NameIsNotNull = createInvariant(PivotPackage.Literals.VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "NameIsNotNull", "name <> null");
+		private final @NonNull Constraint iv_VariableDeclaration_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
+		private final @NonNull Constraint iv_VariableDeclaration_TypeIsNotNull = createInvariant(PivotPackage.Literals.VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "TypeIsNotNull", "type <> null");
+		private final @NonNull Constraint iv_VariableExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.VARIABLE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
 
 		private void installInvariants() {
 			List<Constraint> ownedInvariants;

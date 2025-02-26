@@ -13,6 +13,7 @@ package	org.eclipse.ocl.pivot.internal.utilities;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -20,8 +21,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
@@ -33,12 +36,14 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -47,6 +52,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.LibraryImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
@@ -60,6 +66,37 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 
 public abstract class AbstractContents extends PivotUtil
 {
+	/**
+	 * @since 1.23
+	 */
+	public static abstract class AbstractMetamodelContents extends AbstractContents
+	{
+		protected final @NonNull Package standardLibrary;
+		private final @NonNull Class booleanType;
+		private final @NonNull Class stringType;
+
+		protected AbstractMetamodelContents(@NonNull Package standardLibrary) {
+			this.standardLibrary = standardLibrary;
+			this.booleanType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("Boolean"));
+			this.stringType = ClassUtil.nonNullState(standardLibrary.getOwnedClass("String"));
+		}
+
+		protected @NonNull Constraint createInvariant(/*@NonNull*/ EOperation esObject, @NonNull String name, @NonNull String body) {
+			assert esObject != null;
+			ConstraintImpl constraint = (ConstraintImpl)PivotFactory.eINSTANCE.createConstraint();
+			ExpressionInOCL expressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+			StringLiteralExp stringLiteral = PivotFactory.eINSTANCE.createStringLiteralExp();
+			stringLiteral.setStringSymbol(body);
+			stringLiteral.setType(stringType);
+			expressionInOCL.setOwnedBody(stringLiteral);
+			expressionInOCL.setType(booleanType);
+			constraint.setName(name);
+			constraint.setOwnedSpecification(expressionInOCL);
+			constraint.setESObject(esObject);
+			return constraint;
+		}
+	}
+
 	/**
 	 * @since 1.4
 	 */
