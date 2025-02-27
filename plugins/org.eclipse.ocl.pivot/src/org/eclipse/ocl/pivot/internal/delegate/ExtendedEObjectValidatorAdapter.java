@@ -50,6 +50,21 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
 public class ExtendedEObjectValidatorAdapter implements Adapter
 {
 	/**
+	 * Return an ExtendedEObjectValidatorAdapter for this resourceSet.
+	 */
+	public static @Nullable ExtendedEObjectValidatorAdapter basicGetAdapter(@NonNull ResourceSet resourceSet) {
+		synchronized (resourceSet) {
+			List<Adapter> eAdapters = resourceSet.eAdapters();
+			for (Adapter adapter : eAdapters) {
+				if (adapter instanceof ExtendedEObjectValidatorAdapter) {
+					return (ExtendedEObjectValidatorAdapter)adapter;
+				}
+			}
+			return null;
+		}
+	}
+
+	/**
 	 * The user ResourceSet for which validation is installed.
 	 */
 	private @Nullable ResourceSet resourceSet;
@@ -58,6 +73,11 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 	 * The per EClass list of the URIs of constraints realized by delegates.
 	 */
 	private @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull URI>> eClass2delegateURIs = new HashMap<>();
+
+	/**
+	 * The cached list of all the non-fragment URIs of constraints realized by delegates.
+	 */
+	private @Nullable UniqueList<@NonNull URI> delegateURIs = null;
 
 	public ExtendedEObjectValidatorAdapter(@NonNull ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
@@ -73,9 +93,24 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 					allDelegateURIs = new UniqueList<>();
 					eClass2delegateURIs.put(eClass, allDelegateURIs);
 				}
-				allDelegateURIs.addAll(localDelegateURIs);
+				for (URI localDelegateURI : localDelegateURIs) {
+					allDelegateURIs.add(localDelegateURI);
+				}
 			}
 		}
+	}
+
+	public @NonNull UniqueList<@NonNull URI> getDelegateURIs() {
+		UniqueList<@NonNull URI> delegateURIs2 = delegateURIs;
+		if (delegateURIs2 == null) {
+			delegateURIs = delegateURIs2 = new UniqueList<>();
+			for (@NonNull UniqueList<@NonNull URI> someDelegateURIs : eClass2delegateURIs.values()) {
+				for (URI delegateURI : someDelegateURIs) {
+					delegateURIs2.add(delegateURI.trimFragment());
+				}
+			}
+		}
+		return delegateURIs2;
 	}
 
 	@Override
@@ -105,6 +140,8 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 				}
 			}
 		}
+		// XXX recompute
+		delegateURIs = null;
 	//	for (EClass eClass : eClassesToRemove) {
 	//		eClass2delegateURIs.remove(eClass);
 	//	}
