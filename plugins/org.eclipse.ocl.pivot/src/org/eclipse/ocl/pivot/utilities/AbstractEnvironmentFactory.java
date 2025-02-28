@@ -886,6 +886,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			projectManager.unload(asResourceSet);
 			projectManager.unload(externalResourceSet);
 		}
+		catch (Throwable e) {
+			e.printStackTrace();
+		}
 		finally {
 			attachCount = -1;		// Wait in isDisposing() state while unload proxifies
 			ThreadLocalExecutor.detachEnvironmentFactory(this);
