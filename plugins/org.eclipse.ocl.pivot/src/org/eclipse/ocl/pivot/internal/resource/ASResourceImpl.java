@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -399,7 +398,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
-			preUnload(PivotUtilInternal.getEnvironmentFactory(resourceSet));
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {		// Reset may have set environmentFactory null before finalization/dispose/unload
+				preUnload(environmentFactory);
+			}
 			super.doUnload();
 			if (lussids != null) {
 				resetLUSSIDs();
@@ -681,7 +683,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		assert resourceSet != null: "ResourceSet required";			// XXX
 		if ((internalEObject instanceof ModelImpl)) {
 			ModelImpl asModel = (ModelImpl)internalEObject;
-			ThreadLocalExecutor.getEnvironmentFactory().getCompleteModel().getPartialModels().remove(asModel);
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				environmentFactory.getCompleteModel().getPartialModels().remove(asModel);
+			}
 		}
 		Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = asElement2reloadableURI;
 		if (asElement2reloadableURI2 != null) {
