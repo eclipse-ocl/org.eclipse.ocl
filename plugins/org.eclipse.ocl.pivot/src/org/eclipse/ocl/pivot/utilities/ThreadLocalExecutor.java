@@ -404,8 +404,7 @@ public class ThreadLocalExecutor implements Nameable
 			localReset();
 		}
 		else {
-			assert environmentFactory == null;
-			if (environmentFactory != null) {
+			if (environmentFactory != null) {		// Reset may have set environmentFactory null before finalization
 				localReset();
 			}
 		}
