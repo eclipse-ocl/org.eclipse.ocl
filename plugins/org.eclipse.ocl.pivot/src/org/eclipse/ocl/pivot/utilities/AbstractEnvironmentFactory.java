@@ -210,14 +210,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		this.projectManager = projectManager;
 		this.userResourceSet = userResourceSet;
-	//	assert userResourceSet != null;
 		this.asResourceSet = createASResourceSet();
 		this.externalResourceSet = createExternalResourceSet(userResourceSet);
 		ASResourceFactoryRegistry.INSTANCE.configureResourceSets(asResourceSet, externalResourceSet);
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet) + ", " + NameUtil.debugSimpleName(asResourceSet));
 		}
-		adapt(externalResourceSet);
+	//	adapt(externalResourceSet);
 		this.completeEnvironment = createCompleteEnvironment();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
