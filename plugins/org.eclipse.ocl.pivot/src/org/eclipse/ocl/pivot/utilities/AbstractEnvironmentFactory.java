@@ -543,6 +543,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		Resource.Factory.Registry externalResourceFactoryRegistry = externalResourceSet.getResourceFactoryRegistry();
 		if (userResourceSet != null) {
 			externalResourceSet.setURIConverter(userResourceSet.getURIConverter());
+			externalResourceSet.getPackageRegistry().putAll(userResourceSet.getPackageRegistry());
 			Resource.Factory.Registry userResourceFactoryRegistry = userResourceSet.getResourceFactoryRegistry();
 			externalResourceFactoryRegistry.getContentTypeToFactoryMap().putAll(userResourceFactoryRegistry.getContentTypeToFactoryMap());
 			externalResourceFactoryRegistry.getExtensionToFactoryMap().putAll(userResourceFactoryRegistry.getExtensionToFactoryMap());

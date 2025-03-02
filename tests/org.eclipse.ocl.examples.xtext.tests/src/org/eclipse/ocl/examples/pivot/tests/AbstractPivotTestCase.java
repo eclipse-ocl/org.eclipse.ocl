@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -35,11 +36,14 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreAnnotationValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UnresolvedProxyCrossReferencer;
+import org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
@@ -142,6 +146,11 @@ public class AbstractPivotTestCase extends TestCase
 		}
 
 		public void restoreGlobalState() {
+			for (String nsURI : EPackage.Registry.INSTANCE.keySet()) {
+				if (!epackageReg.containsKey(nsURI)) {
+					System.err.println("Memento restore corrupts the " + nsURI + " INSTANCE installation");
+				}
+			}
 			clearGlobalRegistries();
 			EValidator.Registry.INSTANCE.putAll(validatorReg);
 			EPackage.Registry.INSTANCE.putAll(epackageReg);
@@ -702,6 +711,8 @@ public class AbstractPivotTestCase extends TestCase
 
 	@Rule public TestName testName = new TestName();
 
+	private @Nullable List<EPackage> registeredEPackages = null;
+
 	private GlobalStateMemento makeCopyOfGlobalState = null;
 
 	protected AbstractPivotTestCase(@NonNull TestHelper testHelper) {
@@ -754,6 +765,20 @@ public class AbstractPivotTestCase extends TestCase
 		return methodName != null ? methodName : "<unnamed>";
 	}
 
+	/**
+	 * Register the temporary use of EPackage by the test, ensuring correctr installation and de-instalation for
+	 * repeated usage and defeating the missing registration check in restoreMemento.
+	 */
+	protected void registerEPackage(EPackage ePackage) {
+		List<EPackage> registeredEPackages2 = registeredEPackages;
+		if (registeredEPackages2 == null) {
+			registeredEPackages = registeredEPackages2 = new ArrayList<>();
+		}
+		registeredEPackages2.add(ePackage);
+		Object old = EPackageRegistryImpl.INSTANCE.put(ePackage.getNsURI(), ePackage);
+		assert (old == null) || (old == ePackage) || (old instanceof EPackage.Descriptor);
+	}
+
 	private static @Nullable String SETUP_TEST_NAME = null;		// Debug flag to detect enforcement of init before memento
 
 	@Override
@@ -772,7 +797,14 @@ public class AbstractPivotTestCase extends TestCase
 		PivotUtilInternal.DEBUG_DEPRECATIONS.setState(true);
 		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
 		if (DEBUG_GC) {
+			//
+			//	Ensure that widely used built-in models are regfistered before saving the global state.
+			//
 			XMLNamespacePackage.eINSTANCE.getClass();
+			GenModelPackage.eINSTANCE.getName();
+			org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE.getName();
+			EcoreAnnotationValidator.INSTANCE.getClass();
+			ExtendedMetaDataAnnotationValidator.INSTANCE.getClass();
 			testHelper.doStartUp();					// Ensure all plugins are started before saving global state
 			makeCopyOfGlobalState = new GlobalStateMemento();
 		}
@@ -797,6 +829,12 @@ public class AbstractPivotTestCase extends TestCase
 			//		if (DEBUG_ID) {
 			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
 			//		}
+			List<EPackage> registeredEPackages2 = registeredEPackages;
+			if (registeredEPackages2 != null) {
+				for (EPackage ePackage : registeredEPackages2) {
+					EPackageRegistryImpl.INSTANCE.remove(ePackage.getNsURI());
+				}
+			}
 			ThreadLocalExecutor.reset();
 			ExtendedEObjectValidator.reset();
 			if (DEBUG_GC) {

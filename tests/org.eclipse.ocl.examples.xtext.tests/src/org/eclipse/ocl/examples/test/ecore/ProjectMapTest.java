@@ -88,6 +88,7 @@ public class ProjectMapTest extends AbstractProjectMapTest
 	}
 
 	public void testProjectMap_JavaVMTypes_LoadBoth() {					// Almost certainly a workspace project; always a project on Hudson
+		registerEPackage(org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		EPackage.Registry.INSTANCE.put(org.eclipse.xtext.common.types.TypesPackage.eNS_URI, org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		String project = "org.eclipse.xtext.common.types";
 		String modelPath = project + "/model/JavaVMTypes.ecore";
@@ -95,6 +96,7 @@ public class ProjectMapTest extends AbstractProjectMapTest
 	}
 
 	public void testProjectMap_JavaVMTypes_LoadDefault() {					// Almost certainly a workspace project; always a project on Hudson
+		registerEPackage(org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		EPackage.Registry.INSTANCE.put(org.eclipse.xtext.common.types.TypesPackage.eNS_URI, org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		String project = "org.eclipse.xtext.common.types";
 		String modelPath = project + "/model/JavaVMTypes.ecore";
@@ -102,6 +104,7 @@ public class ProjectMapTest extends AbstractProjectMapTest
 	}
 
 	public void testProjectMap_JavaVMTypes_LoadEPackage() {					// Almost certainly a workspace project; always a project on Hudson
+		registerEPackage(org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		EPackage.Registry.INSTANCE.put(org.eclipse.xtext.common.types.TypesPackage.eNS_URI, org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		String project = "org.eclipse.xtext.common.types";
 		String modelPath = project + "/model/JavaVMTypes.ecore";
@@ -109,6 +112,7 @@ public class ProjectMapTest extends AbstractProjectMapTest
 	}
 
 	public void testProjectMap_JavaVMTypes_LoadFirst() {					// Almost certainly a workspace project; always a project on Hudson
+		registerEPackage(org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		EPackage.Registry.INSTANCE.put(org.eclipse.xtext.common.types.TypesPackage.eNS_URI, org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		String project = "org.eclipse.xtext.common.types";
 		String modelPath = project + "/model/JavaVMTypes.ecore";
@@ -116,6 +120,7 @@ public class ProjectMapTest extends AbstractProjectMapTest
 	}
 
 	public void testProjectMap_JavaVMTypes_LoadModel() {					// Almost certainly a workspace project; always a project on Hudson
+		registerEPackage(org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		EPackage.Registry.INSTANCE.put(org.eclipse.xtext.common.types.TypesPackage.eNS_URI, org.eclipse.xtext.common.types.TypesPackage.eINSTANCE);
 		String project = "org.eclipse.xtext.common.types";
 		String modelPath = project + "/model/JavaVMTypes.ecore";

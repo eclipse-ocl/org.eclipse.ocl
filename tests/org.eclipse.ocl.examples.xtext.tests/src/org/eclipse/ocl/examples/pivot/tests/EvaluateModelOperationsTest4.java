@@ -440,6 +440,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	 * Tests that boxed Enumerations are navigable
 	 */
 	@Test public void test_enumeration_navigation() throws Exception {
+		registerEPackage(CompanyPackage.eINSTANCE);
 		TestOCL ocl = createOCL();
 		if (!useCodeGen) {			// FIXME BUG 458359
 			ocl.assertQueryResults(CompanyPackage.Literals.COMPANY_SIZE_KIND, "Sequence{'small','medium','large'}", "self.eLiterals.name");
