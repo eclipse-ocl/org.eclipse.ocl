@@ -441,6 +441,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_enumeration_navigation() throws Exception {
 		assertBadBundlesAreNotOnClasspath(new @NonNull String[]{"__OCL_UsageTests__testCodegenCompany"});
+		registerEPackage(CompanyPackage.eINSTANCE);
 		TestOCL ocl = createOCL();
 		if (!useCodeGen) {			// FIXME BUG 458359
 			ocl.assertQueryResults(CompanyPackage.Literals.COMPANY_SIZE_KIND, "Sequence{'small','medium','large'}", "self.eLiterals.name");

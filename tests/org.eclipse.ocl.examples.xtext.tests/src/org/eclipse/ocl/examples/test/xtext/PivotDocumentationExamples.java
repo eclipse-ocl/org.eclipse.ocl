@@ -104,6 +104,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 	 * in org.eclipse.ocl.doc/doc/6310-pivot-parsing-constraints.textile
 	 */
 	public void test_parsingConstraintsExample() throws IOException, ParserException {
+		registerEPackage(EXTLibraryPackage.eINSTANCE);
 		{
 
 			// create an OCL instance exploiting an externally supplied ResourceSet
@@ -150,6 +151,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		ocl.dispose();
 
 		if ((body == derive) && (invariant == query) && (resourceSet != null)) { /* Suppress the unused variable markers */ }
+		EPackage.Registry.INSTANCE.remove(EXTLibraryPackage.eINSTANCE);
 	}
 
 
@@ -158,6 +160,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 	 * in org.eclipse.ocl.doc/doc/6315-pivot-evaluating-constraints.textile
 	 */
 	public void test_evaluatingConstraintsExample() throws IOException, ParserException {
+		registerEPackage(EXTLibraryPackage.eINSTANCE);
 		OCL ocl = OCL.newInstance(OCL.CLASS_PATH);
 		ResourceSet resourceSet = ocl.getResourceSet();
 
@@ -211,6 +214,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 	 * in org.eclipse.ocl.doc/doc/6320-pivot-parsing-documents.textile
 	 */
 	public void test_parsingDocumentsExample() throws IOException, ParserException {
+		registerEPackage(EXTLibraryPackage.eINSTANCE);
 		OCL ocl1 = OCL.newInstance(OCL.CLASS_PATH);
 		ocl1.dispose();
 		//-------------------------------------------------------------------------

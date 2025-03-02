@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.common.internal.preferences.CommonPreferenceInitializer;
+import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -145,6 +146,8 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_tutorial_umlValidation_with_lpg_408990() {
+		registerEPackage(EcorePackage.eINSTANCE);
+		registerEPackage(org.eclipse.ocl.ecore.internal.OCLStandardLibraryImpl.OCLstdlibPackageImpl.eINSTANCE);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLConstants.OCL_DELEGATE_URI_LPG);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();

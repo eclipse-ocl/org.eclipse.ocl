@@ -873,6 +873,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void test_constraintValidation_codeGenerated() throws Throwable {
+	//	registerEPackage(CompanyPackage.eINSTANCE);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
@@ -1386,6 +1387,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void test_queryExecution_registered() throws Throwable {
+		registerEPackage(NoreflectioncompanyPackage.eINSTANCE);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
@@ -1456,6 +1458,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	 * @throws Throwable
 	 */
 	public void test_queryExecution_Bug353171() throws Throwable {
+		registerEPackage(EXTLibraryPackage.eINSTANCE);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
