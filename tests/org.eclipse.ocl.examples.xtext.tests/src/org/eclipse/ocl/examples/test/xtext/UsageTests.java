@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.presentation.EcoreEditor;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -61,6 +62,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
@@ -88,6 +90,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.eclipse.ocl.pivot.values.ValuesPackage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -97,6 +100,9 @@ import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.ecore.importer.UMLImporter;
 import org.eclipse.uml2.uml.editor.presentation.UMLEditor;
+import org.eclipse.uml2.uml.resource.UML212UMLResource;
+import org.eclipse.uml2.uml.resource.UML302UMLResource;
+import org.eclipse.uml2.uml.resource.UML402UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.eclipse.xtext.diagnostics.ExceptionDiagnostic;
 import org.eclipse.xtext.util.EmfFormatter;
@@ -207,6 +213,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUtil.doOCLinEcoreSetup();
+		CGModelPackage.eINSTANCE.getClass();
 		super.setUp();
 		log = Logger.getLogger(UsageTests.class);
 		// AcceleoNature.class.getName(); // Pull in the plugin for Hudson
@@ -646,6 +653,29 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return umlProfileResource;
 	}
 
+	protected void setupUMLusage() {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			UMLStandaloneSetup.initEAnnotationConverters();
+			org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+			registerEPackage(org.eclipse.uml2.uml.profile.standard.StandardPackage.eINSTANCE);
+			registerEPackage(org.eclipse.uml2.types.TypesPackage.eINSTANCE);
+			registerEPackage(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+		}
+	}
+
+	protected void teardownUMLusage() {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			EPackageRegistryImpl.INSTANCE.remove(UMLResourcesUtil.UML2_TYPES_PACKAGE_4_0_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UMLResourcesUtil.UML2_UML_PACKAGE_2_0_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML212UMLResource.UML_METAMODEL_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML302UMLResource.UML_METAMODEL_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.UML_METAMODEL_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML212UMLResource.STANDARD_PROFILE_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.STANDARD_L2_PROFILE_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.STANDARD_L3_PROFILE_NS_URI);
+		}
+	}
+
 	protected @NonNull Resource validateUmlModel(@NonNull URI umlModelURI, @NonNull String qualifiedPackageClassName, @NonNull String pathMapName, @Nullable Map<URI, URI> extraUriMap) throws Exception, IllegalAccessException {
 		File projectFile = getTestProject().getFile();
 		File explicitClassPath = new File(projectFile, "test-bin");
@@ -745,6 +775,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://bug409650");
 	}
 
 	public void testBug415782() throws Throwable {
@@ -1034,6 +1065,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://bug567919");
 	}
 
 /*	FIXME Bug 569113
@@ -1065,7 +1097,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
 	public void testBug570717_uml() throws Throwable {
-		UMLStandaloneSetup.initEAnnotationConverters();
+		setupUMLusage();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1106,13 +1138,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				}
 			}
 		});
+		teardownUMLusage();
 	}
 
 	/**
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
 	public void testBug570717a_uml() throws Throwable {
-		UMLStandaloneSetup.initEAnnotationConverters();
+		setupUMLusage();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1142,6 +1175,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		teardownUMLusage();
 	}
 
 	public void testBug570802() throws Throwable {
@@ -1177,7 +1211,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570891.uml model can be generated and compiled.
 	 */
 	public void testBug570891_uml() throws Throwable {
-		UMLStandaloneSetup.initEAnnotationConverters();
+		setupUMLusage();
 		if (OCLGenModelUtil.INSTANCE.hasDoubleOverrideBug547424()) {				// Avoid UML BUG 547424
 			System.err.println(getName() + " has been disabled -see UML Bug 547424");
 			return;
@@ -1213,6 +1247,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			((StandaloneProjectMap)testProjectManager).reset();
 			testProjectManager = null;
 		}
+		teardownUMLusage();
 	}
 
 	/**
@@ -1220,7 +1255,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * and that the 570892.uml model can then validate.
 	 */
 	public void testBug570892_uml() throws Throwable {
-		UMLStandaloneSetup.initEAnnotationConverters();
+		setupUMLusage();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1264,6 +1299,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl2.dispose();
 			}
 		});
+		teardownUMLusage();
 	}
 
 	/**
@@ -1271,7 +1307,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * and that the Bug570894.uml model can then validate.
 	 */
 	public void testBug570894_uml() throws Throwable {
-		UMLStandaloneSetup.initEAnnotationConverters();
+		setupUMLusage();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1331,13 +1367,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl2.dispose();
 			}
 		});
+		teardownUMLusage();
 	}
 
 	/**
 	 * Verify that the static profile in Bug571407.profile.uml model can be generated and compiled.
 	 */
 	public void testBug571407_uml() throws Throwable {
-		UMLStandaloneSetup.initEAnnotationConverters();
+		setupUMLusage();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1397,6 +1434,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl2.dispose();
 			}
 		});
+		teardownUMLusage();
 	}
 
 	public void testCSE() throws Throwable {
@@ -1448,6 +1486,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://cses");
 	}
 
 	public void testCodegenCompany() throws Throwable {
@@ -1631,6 +1670,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				}
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://bug570717");
 	}
 
 	public void testEcoreTypes412736() throws Throwable {
@@ -1710,6 +1750,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://bug412736");
 	}
 
 	public void testEnumTypes412685() throws Throwable {
@@ -1758,6 +1799,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://bug412685");
 	}
 
 	public void testEvaluators() throws Throwable {
@@ -1806,6 +1848,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://evaluators");
 	}
 
 	public void testSysML_QUDV() throws Throwable {
@@ -1872,9 +1915,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				}
 			}
 		});
+		EPackageRegistryImpl.INSTANCE.remove("http://www.omg.org/spec/SysML/20131220/QUDV");
+		EPackageRegistryImpl.INSTANCE.remove("http://www.omg.org/spec/SysML/20131220/PrimitiveValueTypes");
+		EPackageRegistryImpl.INSTANCE.remove("http://www.omg.org/spec/SysML/20131220/UnitAndQuantityKind");
+		EPackageRegistryImpl.INSTANCE.remove("http://www.omg.org/spec/SysML/20131220/SysML_ValueTypes_QUDV");
 	}
 
 	public void testInitStatics() throws Throwable {
+		registerEPackage(ValuesPackage.eINSTANCE);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
