@@ -111,6 +111,21 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		codeGenerator = analyzer.getCodeGenerator();
 	}
 
+	protected boolean hasOclInvalidOperation(@NonNull OperationId operationId) {
+		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
+		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclInvalidType());
+		Operation memberOperation = completeClass.getOperation(operationId);
+		if (memberOperation == null) {
+			return false;
+		}
+		org.eclipse.ocl.pivot.Class owningType = memberOperation.getOwningClass();
+		if (owningType == null) {
+			return false;
+		}
+		CompleteClass owningCompleteClass = metamodelManager.getCompleteClass(owningType);
+		return completeClass == owningCompleteClass;
+	}
+
 	protected boolean hasOclVoidOperation(@NonNull OperationId operationId) {
 		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
 		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
@@ -490,8 +505,15 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		super.visitCGLibraryOperationCallExp(cgElement);
 		Operation referredOperation = cgElement.getReferredOperation();
 		OperationId operationId = referredOperation.getOperationId();
-		boolean sourceMayBeNull = hasOclVoidOperation(operationId);
+		boolean sourceMayBeInvalid = hasOclInvalidOperation(operationId);
 		CGValuedElement cgSource = cgElement.getSource();
+		if (!sourceMayBeInvalid) {
+			if (cgSource.isInvalid()) {
+				CGUtil.replace(cgElement, cgSource);
+				return null;
+			}
+		}
+		boolean sourceMayBeNull = hasOclVoidOperation(operationId);
 		if (!sourceMayBeNull) {
 			if (cgSource.isNull()) {
 //				CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
