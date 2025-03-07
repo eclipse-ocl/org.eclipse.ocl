@@ -40,7 +40,7 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterable
 	 * @since 1.18
 	 */
 	public EvaluatorMultipleIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, TypedElement... referredIterators) {
+			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,  @NonNull TypedElement  @NonNull ... referredIterators) {
 		this(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue, referredIterators, null);
 	}
 
@@ -54,7 +54,8 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterable
 		CollectionValueIterator[] iterators = new CollectionValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {
 			TypedElement referredIterator = referredIterators[i];
-			CollectionValueIterator valueIterator = new CollectionValueIterator(executor, collectionValue, referredIterator, coIterators != null ? coIterators[i] : null);
+			TypedElement referredCoIterator = (coIterators != null) && (i < coIterators.length) ? coIterators[i] : null;
+			CollectionValueIterator valueIterator = new CollectionValueIterator(executor, collectionValue, referredIterator, referredCoIterator);
 			if (!valueIterator.hasCurrent()) {
 				this.iterators = null;
 				this.hasCurrent = false;
