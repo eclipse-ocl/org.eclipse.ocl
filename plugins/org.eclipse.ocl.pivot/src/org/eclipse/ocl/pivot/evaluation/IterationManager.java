@@ -93,7 +93,8 @@ public interface IterationManager
 	@Nullable Object get();
 
 	/**
-	 * Get the current state of the accumulator.
+	 * Get the current state of the accumulator. This is a non-null value for any reasonable
+	 * iteration, but a strange form of iterate() could manipulate null values.
 	 */
 	@Nullable Object getAccumulatorValue();
 

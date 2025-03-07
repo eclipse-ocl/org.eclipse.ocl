@@ -34,7 +34,7 @@ public class OnlyIteration extends AbstractIteration
 	public @NonNull Object createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -42,7 +42,7 @@ public class OnlyIteration extends AbstractIteration
 	public @NonNull Object createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return new MutableObject(null);
 	}
-	
+
 	@Override
 	protected @NonNull Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 		MutableObject accumulatorValue = (MutableObject)iterationManager.getAccumulatorValue();
@@ -55,10 +55,10 @@ public class OnlyIteration extends AbstractIteration
 			throw new InvalidValueException("No matching content for 'only'"); //$NON-NLS-1$
 		}
 	}
-	
+
 	@Override
     protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		if (bodyVal == null) {
 			throw new InvalidValueException(PivotMessages.UndefinedBody, "only"); 	// Null body is invalid //$NON-NLS-1$
 		}
@@ -76,7 +76,7 @@ public class OnlyIteration extends AbstractIteration
 				throw new InvalidValueException("Multiple matching content for 'only'"); //$NON-NLS-1$
 			}
 			else {
-				Object value = iterationManager.get();		
+				Object value = iterationManager.get();
 				accumulatorValue.set(value);
 				return CARRY_ON;									// Carry on after first find
 			}
