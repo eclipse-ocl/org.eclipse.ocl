@@ -52,6 +52,9 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 			this.iteratorVariable = iteratorVariable;
 		}
 
+		/**
+		 * @since 1.23
+		 */
 		protected @NonNull Iterator<@Nullable Object> createJavaIterator() {
 			return iterableValue.iterator();
 		}
@@ -110,6 +113,14 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		private Object currentValue;
 		private int currentIndex = 0;
 
+		@Deprecated /* @deprecated no longer used */
+		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement keyVariable) {
+			this(executor, collectionValue, keyVariable, null);
+		}
+
+		/**
+		 * @since 1.23
+		 */
 		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement iteratorVariable, @Nullable TypedElement coIteratorVariable) {
 			super(executor, collectionValue, iteratorVariable);
 			reset();
