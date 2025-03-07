@@ -440,7 +440,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					iterationManager = new EvaluatorSingleIterationManager(context, iterateExp, body, (CollectionValue)sourceValue, accumulatorVariable, initValue, firstIterator, null);
 				}
 				else {
-					VariableDeclaration[] variables = new VariableDeclaration[iSize];
+					@NonNull VariableDeclaration[] variables = new @NonNull VariableDeclaration[iSize];
 					for (int i = 0; i < iSize; i++) {
 						variables[i] = iterators.get(i);
 					}
@@ -525,7 +525,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					VariableDeclaration keyIterator = ClassUtil.nonNullModel(iterators.get(0));
 					VariableDeclaration valueIterator = coIterators.size() >= 1 ? coIterators.get(0) : null;
 					iterationManager = new EvaluatorSingleMapIterationManager(context, iteratorExp, body, (MapValue)sourceValue, null, accumulatorValue, keyIterator, valueIterator);
-
 				}
 				else {
 					@NonNull VariableDeclaration[] keyIterators = new @NonNull VariableDeclaration[iSize];
