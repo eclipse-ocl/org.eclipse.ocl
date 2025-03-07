@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.values.IterableValue;
  * EvaluatorSingleIterationManager supervises a single iterator collection iteration evaluation for which the iteration context is
  * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
  */
-public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationManager
+public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIterationManager<CollectionValue>
 {
 	class Nested extends EvaluatorSingleIterationManager
 	{
@@ -56,7 +56,7 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 	}
 
 	protected final @NonNull TypedElement referredIterator;
-	protected final @NonNull ValueIterator iterator;
+	protected final @NonNull CollectionValueIterator iterator;
 
 	/** @deprecated supply a callExp */
 	@Deprecated
@@ -88,13 +88,13 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 			@NonNull TypedElement referredIterator, @Nullable TypedElement coIterator) {
 		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
 		this.referredIterator = referredIterator;
-		this.iterator = new ValueIterator(executor, collectionValue, referredIterator, coIterator);
+		this.iterator = new CollectionValueIterator(executor, collectionValue, referredIterator, coIterator);
 	}
 
-	protected EvaluatorSingleIterationManager(@NonNull EvaluatorSingleIterationManager iterationManager, @NonNull CollectionValue value) {
-		super(iterationManager, value);
+	protected EvaluatorSingleIterationManager(@NonNull EvaluatorSingleIterationManager iterationManager, @NonNull CollectionValue collectionValue) {
+		super(iterationManager, collectionValue);
 		this.referredIterator = iterationManager.referredIterator;
-		this.iterator = new ValueIterator(executor, collectionValue, referredIterator, null);		// FIXME
+		this.iterator = new CollectionValueIterator(executor, collectionValue, referredIterator, null);		// FIXME
 	}
 
 	@Override
