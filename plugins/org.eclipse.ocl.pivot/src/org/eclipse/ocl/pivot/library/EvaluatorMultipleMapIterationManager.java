@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.values.MapValue;
  *
  * @since 1.6
  */
-public class EvaluatorMultipleMapIterationManager extends AbstractEvaluatorIterableIterationManager<MapValue>
+public class EvaluatorMultipleMapIterationManager extends AbstractEvaluatorIterableIterationManager<@NonNull MapValue>
 {
 	protected final MapValueIterator[] iterators;
 	protected boolean hasCurrent;

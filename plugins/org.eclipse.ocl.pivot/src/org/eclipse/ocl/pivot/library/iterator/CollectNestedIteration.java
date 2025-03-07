@@ -35,7 +35,7 @@ public class CollectNestedIteration extends AbstractIteration
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -43,10 +43,10 @@ public class CollectNestedIteration extends AbstractIteration
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createCollectionAccumulatorValue((CollectionTypeId) accumulatorTypeId);
 	}
-	
+
 	@Override
     protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		assert !(bodyVal instanceof InvalidValueException);
 		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
