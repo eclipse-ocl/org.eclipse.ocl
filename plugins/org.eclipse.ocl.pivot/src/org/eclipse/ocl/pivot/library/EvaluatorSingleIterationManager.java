@@ -94,7 +94,7 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIt
 	protected EvaluatorSingleIterationManager(@NonNull EvaluatorSingleIterationManager iterationManager, @NonNull CollectionValue collectionValue) {
 		super(iterationManager, collectionValue);
 		this.referredIterator = iterationManager.referredIterator;
-		this.iterator = new CollectionValueIterator(executor, collectionValue, referredIterator, null);		// FIXME
+		this.iterator = new CollectionValueIterator(executor, collectionValue, referredIterator, null);
 	}
 
 	@Override
