@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
@@ -78,15 +79,37 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		}
 	}
 
-	protected static class CollectionValueIterator extends AbstractValueIterator<CollectionValue>
+	protected static class CollectionValueIterator extends AbstractValueIterator<@NonNull CollectionValue>
 	{
-		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement keyVariable) {
-			super(executor, collectionValue, keyVariable);
+		private final @Nullable TypedElement iteratorCoVariable;
+		private int coIndex = 1;
+
+		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement iteratorVariable, @Nullable TypedElement iteratorCoVariable) {
+			super(executor, collectionValue, iteratorVariable);
+			this.iteratorCoVariable = iteratorCoVariable;
 			reset();
+		}
+
+		@Override
+		public @Nullable Object next() {
+			Object nextValue = super.next();
+			if (nextValue != this) {
+				TypedElement coVariable2 = iteratorCoVariable;
+				if (coVariable2 != null) {
+					evaluationEnvironment.replace(coVariable2, ValueUtil.integerValueOf(coIndex++));
+				}
+			}
+			return nextValue;
+		}
+
+		@Override
+		public Object reset() {
+			coIndex = 1;
+			return super.reset();
 		}
 	}
 
-	protected static class MapValueIterator extends AbstractValueIterator<MapValue>
+	protected static class MapValueIterator extends AbstractValueIterator<@NonNull MapValue>
 	{
 		private final @Nullable TypedElement valueVariable;
 
