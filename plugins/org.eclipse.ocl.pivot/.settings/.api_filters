@@ -238,6 +238,32 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/EvaluatorMultipleIterationManager.java" type="org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager">
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager"/>
+                <message_argument value="iterators"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/EvaluatorSingleIterationManager.java" type="org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager">
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager"/>
+                <message_argument value="iterator"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/messages/PivotMessages.java" type="org.eclipse.ocl.pivot.messages.PivotMessages">
         <filter id="336658481">
             <message_arguments>
