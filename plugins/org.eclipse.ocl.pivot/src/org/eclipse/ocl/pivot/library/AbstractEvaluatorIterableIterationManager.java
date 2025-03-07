@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot.library;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -19,6 +21,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.utilities.DelegatedValue;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
@@ -35,7 +38,7 @@ import org.eclipse.ocl.pivot.values.MapValue;
  */
 public abstract class AbstractEvaluatorIterableIterationManager<IV extends IterableValue> extends AbstractIterationManager
 {
-	protected static abstract class AbstractValueIterator<IV extends IterableValue>
+	protected static abstract class AbstractValueIterator<IV extends IterableValue> implements DelegatedValue
 	{
 		protected final EvaluationEnvironment evaluationEnvironment;
 		protected final @NonNull IV iterableValue;
@@ -49,6 +52,11 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 			this.iteratorVariable = iteratorVariable;
 		}
 
+		protected @NonNull Iterator<@Nullable Object> createJavaIterator() {
+			return iterableValue.iterator();
+		}
+
+		@Override
 		public @Nullable Object get() {
 			return iteratorValue;
 		}
@@ -63,13 +71,12 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 			}
 			else {
 				iteratorValue = javaIter.next();
-				evaluationEnvironment.replace(iteratorVariable, iteratorValue);
 			}
 			return iteratorValue;
 		}
 
 		public Object reset() {
-			javaIter = iterableValue.iterator();
+			javaIter = createJavaIterator();
 			return next();
 		}
 
@@ -81,53 +88,101 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 
 	protected static class CollectionValueIterator extends AbstractValueIterator<@NonNull CollectionValue>
 	{
-		private final @Nullable TypedElement iteratorCoVariable;
-		private int coIndex = 1;
+		private class CollectionCoValue implements DelegatedValue
+		{
+			@Override
+			public @NonNull Object get() {
+				return ValueUtil.integerValueOf(currentIndex);
+			}
 
-		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement iteratorVariable, @Nullable TypedElement iteratorCoVariable) {
+			@Override
+			public @NonNull String toString() {
+				return String.valueOf(currentValue) + " @ " + String.valueOf(currentIndex);
+			}
+		}
+
+		private Object currentValue;
+		private int currentIndex = 0;
+
+		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement iteratorVariable, @Nullable TypedElement coIteratorVariable) {
 			super(executor, collectionValue, iteratorVariable);
-			this.iteratorCoVariable = iteratorCoVariable;
 			reset();
+			executor.add(iteratorVariable, this);
+			if (coIteratorVariable != null) {
+				executor.add(coIteratorVariable, new CollectionCoValue());
+			}
 		}
 
 		@Override
 		public @Nullable Object next() {
-			Object nextValue = super.next();
-			if (nextValue != this) {
-				TypedElement coVariable2 = iteratorCoVariable;
-				if (coVariable2 != null) {
-					evaluationEnvironment.replace(coVariable2, ValueUtil.integerValueOf(coIndex++));
-				}
-			}
-			return nextValue;
+			currentValue = super.next();
+			currentIndex++;
+			return currentValue;
 		}
 
 		@Override
 		public Object reset() {
-			coIndex = 1;
+			currentIndex = 0;
 			return super.reset();
 		}
 	}
 
 	protected static class MapValueIterator extends AbstractValueIterator<@NonNull MapValue>
 	{
-		private final @Nullable TypedElement valueVariable;
+		private class MapCoValue implements DelegatedValue
+		{
+			@Override
+			public @Nullable Object get() {
+				return valueValue;
+			}
+
+			@Override
+			public @NonNull String toString() {
+				return String.valueOf(valueValue) + " @ " + String.valueOf(keyValue);
+			}
+		}
+
+		private final boolean hasCoValues;
+		private @Nullable Object keyValue;
+		private @Nullable Object valueValue;
 
 		public MapValueIterator(@NonNull Executor executor, @NonNull MapValue mapValue, @NonNull TypedElement keyVariable, @Nullable TypedElement valueVariable) {
 			super(executor, mapValue, keyVariable);
-			this.valueVariable = valueVariable;
+			this.hasCoValues = valueVariable != null;
 			reset();
+			executor.add(keyVariable, this);
+			if (hasCoValues) {
+				assert valueVariable != null;
+				executor.add(valueVariable, new MapCoValue());
+			}
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> createJavaIterator() {
+			Set<?> iterable = hasCoValues ? iterableValue.entrySet() : iterableValue.keySet();
+			@SuppressWarnings("unchecked") @NonNull Iterator<@Nullable Object> iterator = (Iterator<@Nullable Object>)iterable.iterator();
+			return iterator;
+		}
+
+		@Override
+		public @Nullable Object get() {
+			return keyValue;
 		}
 
 		@Override
 		public @Nullable Object next() {
-			Object keyValue = super.next();
-			if (keyValue != this) {
-				TypedElement valueVariable2 = valueVariable;
-				if (valueVariable2 != null) {
-					Object valueValue = iterableValue.at(keyValue);
-					evaluationEnvironment.replace(valueVariable2, valueValue);
-				}
+			Object nextValue = super.next();
+			if (nextValue == this) {
+				return this;
+			}
+			else if (hasCoValues) {
+				Map.Entry<?,?> entry = (Map.Entry<?,?>)nextValue;
+				assert entry != null;
+				keyValue = entry.getKey();
+				valueValue = entry.getValue();
+			}
+			else {
+				keyValue = nextValue;
 			}
 			return keyValue;
 		}
