@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -24,6 +25,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.DelegatedValue;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Option;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -118,6 +120,9 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
+		if (referredVariable instanceof IteratorVariable) {
+			assert value instanceof DelegatedValue;
+		}
 		if (variableValues.containsKey(referredVariable)) {
 			Object oldValue = variableValues.get(referredVariable);
 			if ((oldValue != value) && ((oldValue == null) || !oldValue.equals(value))) {
@@ -217,20 +222,21 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
-		Object object = variableValues.get(referredVariable);
-		if (object == null) {
-			if (!variableValues.containsKey(referredVariable)) {
-				EvaluationEnvironment parent2 = parent;
-				if (parent2 != null) {
-					object = parent2.getValueOf(referredVariable);
-				}
-				else {
-					for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
-						System.out.println(stackTraceElement.getClassName() + " " + stackTraceElement.getMethodName());
-					}
-					throw new InvalidValueException("Undefined Variable " + referredVariable);
-				}
+		Object object = variableValues.getOrDefault(referredVariable, variableValues);
+		if (object == variableValues) {
+			EvaluationEnvironment parent2 = parent;
+			if (parent2 != null) {
+				object = parent2.getValueOf(referredVariable);
 			}
+			else {
+				for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
+					System.out.println(stackTraceElement.getClassName() + " " + stackTraceElement.getMethodName());
+				}
+				throw new InvalidValueException("Undefined Variable " + referredVariable);
+			}
+		}
+		else if (object instanceof DelegatedValue) {
+			object = ((DelegatedValue)object).get();
 		}
 		return object;
 	}
@@ -263,6 +269,9 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
+		if (referredVariable instanceof IteratorVariable) {
+			assert value instanceof DelegatedValue;
+		}
 		variableValues.put(referredVariable, value);
 	}
 
