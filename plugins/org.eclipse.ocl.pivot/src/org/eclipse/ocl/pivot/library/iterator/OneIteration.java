@@ -26,14 +26,14 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public class OneIteration extends AbstractIteration
 {
-	public static class MutableBoolean 
+	public static class MutableBoolean
 	{
 		private boolean value = false;
-		
+
 		public boolean isSet() {
 			return value;
 		}
-		
+
 		public void set() {
 			this.value = true;
 		}
@@ -47,7 +47,7 @@ public class OneIteration extends AbstractIteration
 	public @NonNull MutableBoolean createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -60,13 +60,13 @@ public class OneIteration extends AbstractIteration
 	protected @NonNull
 	Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 		MutableBoolean accumulatorValue = (MutableBoolean) iterationManager.getAccumulatorValue();
-		assert accumulatorValue != null;
+	assert accumulatorValue != null;
 		return accumulatorValue.isSet() != false;			// FIXME redundant test to suppress warning
 	}
 
 	@Override
     protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		if (bodyVal == null) {
 			throw new InvalidValueException(PivotMessages.UndefinedBody, "one"); 	// Null body is invalid //$NON-NLS-1$
 		}
