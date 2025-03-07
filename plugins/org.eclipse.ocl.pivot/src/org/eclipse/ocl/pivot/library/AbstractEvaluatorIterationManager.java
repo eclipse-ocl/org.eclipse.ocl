@@ -31,8 +31,10 @@ import org.eclipse.ocl.pivot.values.IterableValue;
  * As soon as the API ripple is acceptable, this collection-only variant of AbstractEvaluatorIterableIterationManager
  * should be replaced by the generic collection/map capability.
  */
+@Deprecated /* @deprecated no longer used */
 public abstract class AbstractEvaluatorIterationManager extends AbstractIterationManager
 {
+	@Deprecated /* @deprecated not used */
 	protected static class ValueIterator
 	{
 		private final EvaluationEnvironment evaluationEnvironment;
@@ -105,7 +107,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	}
 
 	/** @deprecated use Executor */
-	@Deprecated
+	@Deprecated /* @deprecated not used */
 	protected static @NonNull ValueIterator @Nullable [] createIterators(@NonNull TypedElement @NonNull [] referredIterators, @NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue) {
 		return createIterators(referredIterators, ValueUtil.getExecutor(evaluator), collectionValue);
 	}
@@ -113,6 +115,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	/**
 	 * @since 1.1
 	 */
+	@Deprecated /* @deprecated not used */
 	protected static @NonNull ValueIterator @Nullable [] createIterators(@NonNull TypedElement @NonNull [] referredIterators, @NonNull Executor executor, @NonNull CollectionValue collectionValue) {
 		int iMax = referredIterators.length;
 		@NonNull ValueIterator @Nullable [] iterators = new @NonNull ValueIterator[iMax];

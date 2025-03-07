@@ -24,9 +24,9 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  * EvaluatorMultipleIterationManager supervises a multiple iterator collection iteration evaluation for which the iteration context is
  * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
  */
-public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterationManager
+public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterableIterationManager<CollectionValue>
 {
-	protected final ValueIterator[] iterators;
+	protected final CollectionValueIterator[] iterators;
 	protected boolean hasCurrent;
 
 	/** @deprecated supply a callExp */
@@ -51,18 +51,16 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, @NonNull TypedElement @NonNull [] referredIterators, @Nullable TypedElement @Nullable[] coIterators) {
 		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
 		int iMax = referredIterators.length;
-		ValueIterator[] iterators = new ValueIterator[iMax];
+		CollectionValueIterator[] iterators = new CollectionValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {
 			TypedElement referredIterator = referredIterators[i];
-			if (referredIterator != null) {
-				ValueIterator valueIterator = new ValueIterator(executor, collectionValue, referredIterator, coIterators != null ? coIterators[i] : null);
-				if (!valueIterator.hasCurrent()) {
-					this.iterators = null;
-					this.hasCurrent = false;
-					return;
-				}
-				iterators[i] = valueIterator;
+			CollectionValueIterator valueIterator = new CollectionValueIterator(executor, collectionValue, referredIterator, coIterators != null ? coIterators[i] : null);
+			if (!valueIterator.hasCurrent()) {
+				this.iterators = null;
+				this.hasCurrent = false;
+				return;
 			}
+			iterators[i] = valueIterator;
 		}
 		this.iterators = iterators;
 		this.hasCurrent = true;
@@ -71,10 +69,10 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 	@Override
 	public boolean advanceIterators() {
 		if (hasCurrent) {
-			for (ValueIterator advancingIterator : iterators) {
+			for (CollectionValueIterator advancingIterator : iterators) {
 				advancingIterator.next();
 				if (advancingIterator.hasCurrent()) {
-					for (ValueIterator previousIterator : iterators) {
+					for (CollectionValueIterator previousIterator : iterators) {
 						if (previousIterator == advancingIterator) {
 							return true;
 						}
