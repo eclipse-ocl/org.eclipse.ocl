@@ -86,8 +86,14 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		}
 	}
 
+	/**
+	 * CollectionValue makes the evolving collection value iterator of an iteration available via the EvaluationEnvironment.
+	 */
 	protected static class CollectionValueIterator extends AbstractValueIterator<@NonNull CollectionValue>
 	{
+		/**
+		 * CollectionCoValue makes the evolving collection index co-iterator of an iteration available via the EvaluationEnvironment.
+		 */
 		private class CollectionCoValue implements DelegatedValue
 		{
 			@Override
@@ -127,8 +133,14 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		}
 	}
 
+	/**
+	 * MapCoValue makes the evolving map key iterator of an iteration available via the EvaluationEnvironment.
+	 */
 	protected static class MapValueIterator extends AbstractValueIterator<@NonNull MapValue>
 	{
+		/**
+		 * MapCoValue makes the evolving map value co-iterator of an iteration available via the EvaluationEnvironment.
+		 */
 		private class MapCoValue implements DelegatedValue
 		{
 			@Override
@@ -188,11 +200,40 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		}
 	}
 
+	/**
+	 * AccumulatorValue makes the evolving accumulator value of an iteration available via the EvaluationEnvironment.
+	 */
+	private class AccumulatorValue implements DelegatedValue
+	{
+		private @Nullable Object accumulatorValue;		// Non-null for well-behaved iterations, Might be null for a weird iterate().
+
+		protected AccumulatorValue(@NonNull Executor executor, @Nullable Object accumulatorValue, @Nullable TypedElement accumulatorVariable) {
+			this.accumulatorValue = accumulatorValue;
+			if (accumulatorVariable != null) {
+				executor.add(accumulatorVariable, this);
+			}
+		}
+
+		@Override
+		public @Nullable Object get() {
+			return accumulatorValue;
+		}
+
+		public void set(@Nullable Object accumulatorValue) {
+			this.accumulatorValue = accumulatorValue;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return String.valueOf(accumulatorValue);
+		}
+	}
+
 	protected final @NonNull IV iterableValue;
 	protected final /*@NonNull*/ CallExp callExp;		// Null at root or when calling context unknown
 	protected final @NonNull OCLExpression body;
 	protected final @Nullable TypedElement accumulatorVariable;
-	private @Nullable Object accumulatorValue;
+	private @NonNull AccumulatorValue accumulatorValue;
 
 	protected AbstractEvaluatorIterableIterationManager(@NonNull Executor executor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull IV iterableValue,
 			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
@@ -201,10 +242,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		this.callExp = callExp;
 		this.body = body;
 		this.accumulatorVariable = accumulatorVariable;
-		this.accumulatorValue = accumulatorValue;
-		if (accumulatorVariable != null) {
-			getEvaluationEnvironment().add(accumulatorVariable, accumulatorValue);
-		}
+		this.accumulatorValue = new AccumulatorValue(executor, accumulatorValue, accumulatorVariable);
 		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
 	}
 
@@ -230,7 +268,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 
 	@Override
 	public @Nullable Object getAccumulatorValue() {
-		return accumulatorValue;
+		return accumulatorValue.get();
 	}
 
 	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
@@ -255,11 +293,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 
 	@Override
 	public @Nullable Object updateAccumulator(Object newValue) {
-		this.accumulatorValue = newValue;
-		TypedElement accumulatorVariable2 = accumulatorVariable;
-		if (accumulatorVariable2 != null) {
-			getEvaluationEnvironment().replace(accumulatorVariable2, accumulatorValue);
-		}
+		accumulatorValue.set(newValue);
 		return null;					// carry on
 	}
 }
