@@ -62,7 +62,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
@@ -213,7 +212,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUtil.doOCLinEcoreSetup();
-		CGModelPackage.eINSTANCE.getClass();
 		super.setUp();
 		log = Logger.getLogger(UsageTests.class);
 		// AcceleoNature.class.getName(); // Pull in the plugin for Hudson

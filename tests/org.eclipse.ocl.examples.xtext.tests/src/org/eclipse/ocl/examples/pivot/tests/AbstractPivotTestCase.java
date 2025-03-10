@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
@@ -766,7 +767,7 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	/**
-	 * Register the temporary use of EPackage by the test, ensuring correctr installation and de-instalation for
+	 * Register the temporary use of EPackage by the test, ensuring correct installation and de-instalation for
 	 * repeated usage and defeating the missing registration check in restoreMemento.
 	 */
 	protected void registerEPackage(EPackage ePackage) {
@@ -803,6 +804,7 @@ public class AbstractPivotTestCase extends TestCase
 			XMLNamespacePackage.eINSTANCE.getClass();
 			GenModelPackage.eINSTANCE.getName();
 			org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE.getName();
+			CGModelPackage.eINSTANCE.getClass();
 			EcoreAnnotationValidator.INSTANCE.getClass();
 			ExtendedMetaDataAnnotationValidator.INSTANCE.getClass();
 			testHelper.doStartUp();					// Ensure all plugins are started before saving global state

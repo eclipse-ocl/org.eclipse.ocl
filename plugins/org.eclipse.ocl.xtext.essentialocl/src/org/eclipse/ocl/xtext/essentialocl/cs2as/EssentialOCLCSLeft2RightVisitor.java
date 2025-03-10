@@ -1045,11 +1045,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 			}
 		}
-		if (pivotBodies.size() != 1) {
-			expression.setOwnedBody(context.addBadExpressionError(csNameExp, "Iteration ''{0}'' must have exactly one body", csNameExp.getOwnedPathName()));
+		int asParametersSize = asParameters.size();
+		if (pivotBodies.size() != asParametersSize) {
+			expression.setOwnedBody(context.addBadExpressionError(csNameExp, "Iteration ''{0}'' must have exactly " + asParametersSize + " bod" + (asParametersSize != 1 ? "ies" : "y"), csNameExp.getOwnedPathName()));
 		}
 		else {
-			expression.setOwnedBody(pivotBodies.get(0));
+			expression.setOwnedBody(pivotBodies.get(0));			// Multiple bodies
 		}
 	}
 

@@ -299,7 +299,61 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="_2_W"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="_3_W"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Bag__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Bag__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__search_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__search_W"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__gather_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__search_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__search_W"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -311,13 +365,31 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__OrderedSet__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Sequence__closure_E"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Sequence__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Set__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Set__gather_V"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -327,7 +399,52 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="_2_W"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_3_W"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Bag__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Bag__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__search_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__search_W"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__gather_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__search_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__search_W"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -337,12 +454,27 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="__OrderedSet__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Sequence__closure_E"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="__Sequence__gather_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Set__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Set__gather_V"/>
             </message_arguments>
         </filter>
     </resource>
