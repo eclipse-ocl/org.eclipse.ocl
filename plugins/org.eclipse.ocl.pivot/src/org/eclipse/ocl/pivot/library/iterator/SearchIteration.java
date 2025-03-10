@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2018 Willink Transformations and others.
+ * Copyright (c) 2025 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -41,6 +41,13 @@ public class SearchIteration extends AbstractIteration
 	@Override
 	public @NonNull Object createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		throw new UnsupportedOperationException();		// Never used since values are assigned directly as the accumulator
+	}
+
+	@Override
+	protected @Nullable Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
+	//	return ((IterationManagerExtension)iterationManager).getExecutor().evaluate(body);
+		// TODO Auto-generated method stub
+		return super.resolveTerminalValue(iterationManager);
 	}
 
 	@Override

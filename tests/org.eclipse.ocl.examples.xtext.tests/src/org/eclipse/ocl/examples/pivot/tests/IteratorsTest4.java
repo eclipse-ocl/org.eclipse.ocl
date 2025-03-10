@@ -70,6 +70,7 @@ import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2ASMessages;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
+import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -405,6 +406,7 @@ public class IteratorsTest4 extends PivotTestSuite
 
 	@SuppressWarnings("unchecked")
 	@Test public void test_closure_recursions_401302() throws IOException {
+		registerEPackage(OCLinEcoreCSPackage.eINSTANCE);
 		MyOCL ocl = createOCL();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();
@@ -865,7 +867,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
 		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->gather(oclAsType(String)).size()");
@@ -1077,6 +1079,26 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
 				"Bag{1, 2, 3}->reject(null.oclAsType(Boolean))");
 		ocl.dispose();
+	}
+
+	/**
+	 * Tests the one() iterator.
+	 */
+	@Test public void test_search_one() {
+		MyOCL ocl = createOCL();
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->search(e; acc : Integer = 0 | e = 'c', acc < 2, acc = 1)");
+
+/*		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->one(e | e = 'c')");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->one(e | e = 'c')");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a'}->one(true)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Map{}->one(k with v | k = v)");
+		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->one(k with v | k = v)");
+		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->one(k with v | k <> v)");
+		ocl.assertQueryFalse(ocl.pkg1, "Map{'a' with 'a', 'b' with 'b' }->one(k with v | k <> v)");
+*/		ocl.dispose();
 	}
 
 	/**
