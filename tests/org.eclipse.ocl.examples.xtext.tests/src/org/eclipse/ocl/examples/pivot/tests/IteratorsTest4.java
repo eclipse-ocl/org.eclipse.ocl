@@ -859,6 +859,42 @@ public class IteratorsTest4 extends PivotTestSuite
 	}
 
 	/**
+	 * Tests the gather() iterator.
+	 */
+	@Test public void test_gather() {
+		MyOCL ocl = createOCL();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		IdResolver idResolver = ocl.getIdResolver();
+		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
+		CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedId(packageType.getTypeId());
+		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->gather(oclAsType(String)).size()");
+//
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->gather(p : ocl::Package | p.name)");
+
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->gather(p | p.name)");
+
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->gather(name)");
+
+		// nested collections not flattened
+		Set<org.eclipse.ocl.pivot.Package> e1 = Collections.singleton(ocl.jim);
+		Set<?> e2 = Collections.EMPTY_SET;
+		HashSet<Object> e3 = new HashSet<Object>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
+		CollectionValue expected2 = idResolver.createBagOfEach(typeId, e1, e2, e3);
+
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->gather(ownedPackages)");
+		// Bug 423489 - ensure return is collection of body type not source type
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->gather(oclAsType(String)).size()");
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{Sequence{1,2},Sequence{3,4}}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc','dddd'}} in s->gather(oclAsType(Sequence(String)))->gather(s | s.size())");
+		// Bug 423490 - ensure nested iteration uses iterator as implicit source
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{2,1}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc'}} in s->gather(size())");
+		ocl.dispose();
+	}
+
+	/**
 	 * Tests that when the body of an iterator results in invalid, the
 	 * isUnique iterator expression treats it like any other value.
 	 */

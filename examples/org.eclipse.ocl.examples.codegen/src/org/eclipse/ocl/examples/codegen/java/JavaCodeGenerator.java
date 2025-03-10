@@ -50,10 +50,12 @@ import org.eclipse.ocl.examples.codegen.java.iteration.CollectIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.CollectNestedIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.ExistsIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.ForAllIteration2Java;
+import org.eclipse.ocl.examples.codegen.java.iteration.GatherIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.IsUniqueIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.IterateIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.OneIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.RejectIteration2Java;
+import org.eclipse.ocl.examples.codegen.java.iteration.SearchIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.SelectIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.types.BoxedDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
@@ -74,10 +76,12 @@ import org.eclipse.ocl.pivot.library.iterator.CollectIteration;
 import org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
+import org.eclipse.ocl.pivot.library.iterator.GatherIteration;
 import org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
 import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
+import org.eclipse.ocl.pivot.library.iterator.SearchIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -366,6 +370,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		else if (libraryIteration instanceof ForAllIteration) {
 			return ForAllIteration2Java.INSTANCE;
 		}
+		else if (libraryIteration instanceof GatherIteration) {
+			return GatherIteration2Java.INSTANCE;
+		}
 		else if (libraryIteration instanceof IsUniqueIteration) {
 			return IsUniqueIteration2Java.INSTANCE;
 		}
@@ -377,6 +384,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		else if (libraryIteration instanceof RejectIteration) {
 			return RejectIteration2Java.INSTANCE;
+		}
+		else if (libraryIteration instanceof SearchIteration) {
+			return SearchIteration2Java.INSTANCE;
 		}
 		else if (libraryIteration instanceof SelectIteration) {
 			return SelectIteration2Java.INSTANCE;
