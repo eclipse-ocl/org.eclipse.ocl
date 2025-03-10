@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CallExpImpl#isIsImplicit <em>Is Implicit</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CallExpImpl#isIsSafe <em>Is Safe</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.CallExpImpl#getOwnedInlinedBody <em>Owned Inlined Body</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CallExpImpl#getOwnedSource <em>Owned Source</em>}</li>
  * </ul>
  *
@@ -75,7 +76,7 @@ public abstract class CallExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CALL_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 3;
+	public static final int CALL_EXP_FEATURE_COUNT = OCLExpressionImpl.OCL_EXPRESSION_FEATURE_COUNT + 4;
 	/**
 	 * The number of operations of the '<em>Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -120,6 +121,15 @@ public abstract class CallExpImpl
 	 * @ordered
 	 */
 	protected static final int IS_SAFE_EFLAG = 1 << 10;
+	/**
+	 * The cached value of the '{@link #getOwnedInlinedBody() <em>Owned Inlined Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedInlinedBody()
+	 * @generated
+	 * @ordered
+	 */
+	protected OCLExpression ownedInlinedBody;
 	/**
 	 * The cached value of the '{@link #getOwnedSource() <em>Owned Source</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -180,7 +190,7 @@ public abstract class CallExpImpl
 		ownedSource = newOwnedSource;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldOwnedSource, newOwnedSource);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldOwnedSource, newOwnedSource);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -197,14 +207,14 @@ public abstract class CallExpImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSource != null)
-				msgs = ((InternalEObject)ownedSource).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
+				msgs = ((InternalEObject)ownedSource).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			if (newOwnedSource != null)
-				msgs = ((InternalEObject)newOwnedSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
+				msgs = ((InternalEObject)newOwnedSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
 			msgs = basicSetOwnedSource(newOwnedSource, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedSource, newOwnedSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwnedSource, newOwnedSource));
 	}
 
 	/**
@@ -578,6 +588,56 @@ public abstract class CallExpImpl
 	 * @generated
 	 */
 	@Override
+	public OCLExpression getOwnedInlinedBody()
+	{
+		return ownedInlinedBody;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedInlinedBody(OCLExpression newOwnedInlinedBody, NotificationChain msgs)
+	{
+		OCLExpression oldOwnedInlinedBody = ownedInlinedBody;
+		ownedInlinedBody = newOwnedInlinedBody;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldOwnedInlinedBody, newOwnedInlinedBody);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedInlinedBody(OCLExpression newOwnedInlinedBody)
+	{
+		if (newOwnedInlinedBody != ownedInlinedBody)
+		{
+			NotificationChain msgs = null;
+			if (ownedInlinedBody != null)
+				msgs = ((InternalEObject)ownedInlinedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
+			if (newOwnedInlinedBody != null)
+				msgs = ((InternalEObject)newOwnedInlinedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
+			msgs = basicSetOwnedInlinedBody(newOwnedInlinedBody, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedInlinedBody, newOwnedInlinedBody));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
@@ -591,6 +651,8 @@ public abstract class CallExpImpl
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
+				return basicSetOwnedInlinedBody(null, msgs);
+			case 12:
 				return basicSetOwnedSource(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -629,6 +691,8 @@ public abstract class CallExpImpl
 			case 10:
 				return isIsSafe();
 			case 11:
+				return getOwnedInlinedBody();
+			case 12:
 				return getOwnedSource();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -679,6 +743,9 @@ public abstract class CallExpImpl
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
+				setOwnedInlinedBody((OCLExpression)newValue);
+				return;
+			case 12:
 				setOwnedSource((OCLExpression)newValue);
 				return;
 		}
@@ -725,6 +792,9 @@ public abstract class CallExpImpl
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
+				setOwnedInlinedBody((OCLExpression)null);
+				return;
+			case 12:
 				setOwnedSource((OCLExpression)null);
 				return;
 		}
@@ -763,6 +833,8 @@ public abstract class CallExpImpl
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
+				return ownedInlinedBody != null;
+			case 12:
 				return ownedSource != null;
 		}
 		return eDynamicIsSet(featureID);

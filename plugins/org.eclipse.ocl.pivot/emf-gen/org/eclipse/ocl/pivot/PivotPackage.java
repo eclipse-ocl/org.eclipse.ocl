@@ -1277,6 +1277,28 @@ extends EPackage
 	EClass getIterateExp();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.IterateExp#getOwnedBodies <em>Owned Bodies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Bodies</em>'.
+	 * @see org.eclipse.ocl.pivot.IterateExp#getOwnedBodies()
+	 * @see #getIterateExp()
+	 * @generated
+	 */
+	EReference getIterateExp_OwnedBodies();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.IterateExp#getOwnedBody <em>Owned Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Body</em>'.
+	 * @see org.eclipse.ocl.pivot.IterateExp#getOwnedBody()
+	 * @see #getIterateExp()
+	 * @generated
+	 */
+	EReference getIterateExp_OwnedBody();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.IterateExp#getOwnedResult <em>Owned Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1388,6 +1410,17 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getIteratorExp();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.IteratorExp#getOwnedBody <em>Owned Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Body</em>'.
+	 * @see org.eclipse.ocl.pivot.IteratorExp#getOwnedBody()
+	 * @see #getIteratorExp()
+	 * @generated
+	 */
+	EReference getIteratorExp_OwnedBody();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateClosureBodyTypeIsConformanttoIteratorType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Closure Body Type Is Conformantto Iterator Type</em>}' operation.
@@ -1829,17 +1862,6 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getLoopExp();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.LoopExp#getOwnedBody <em>Owned Body</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Owned Body</em>'.
-	 * @see org.eclipse.ocl.pivot.LoopExp#getOwnedBody()
-	 * @see #getLoopExp()
-	 * @generated
-	 */
-	EReference getLoopExp_OwnedBody();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.LoopExp#getOwnedCoIterators <em>Owned Co Iterators</em>}'.
@@ -5694,6 +5716,17 @@ extends EPackage
 	EAttribute getCallExp_IsSafe();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.CallExp#getOwnedInlinedBody <em>Owned Inlined Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Inlined Body</em>'.
+	 * @see org.eclipse.ocl.pivot.CallExp#getOwnedInlinedBody()
+	 * @see #getCallExp()
+	 * @generated
+	 */
+	EReference getCallExp_OwnedInlinedBody();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.CallExp#getOwnedSource <em>Owned Source</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6897,6 +6930,22 @@ extends EPackage
 		EClass ITERATE_EXP = eINSTANCE.getIterateExp();
 
 		/**
+		 * The meta object literal for the '<em><b>Owned Bodies</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ITERATE_EXP__OWNED_BODIES = eINSTANCE.getIterateExp_OwnedBodies();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ITERATE_EXP__OWNED_BODY = eINSTANCE.getIterateExp_OwnedBody();
+
+		/**
 		 * The meta object literal for the '<em><b>Owned Result</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6987,6 +7036,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass ITERATOR_EXP = eINSTANCE.getIteratorExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ITERATOR_EXP__OWNED_BODY = eINSTANCE.getIteratorExp_OwnedBody();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Closure Body Type Is Conformantto Iterator Type</b></em>' operation.
@@ -7347,14 +7404,6 @@ extends EPackage
 		 * @generated
 		 */
 		EClass LOOP_EXP = eINSTANCE.getLoopExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Owned Body</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LOOP_EXP__OWNED_BODY = eINSTANCE.getLoopExp_OwnedBody();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Co Iterators</b></em>' containment reference list feature.
@@ -10451,6 +10500,14 @@ extends EPackage
 		 * @generated
 		 */
 		EAttribute CALL_EXP__IS_SAFE = eINSTANCE.getCallExp_IsSafe();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Inlined Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CALL_EXP__OWNED_INLINED_BODY = eINSTANCE.getCallExp_OwnedInlinedBody();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Source</b></em>' containment reference feature.

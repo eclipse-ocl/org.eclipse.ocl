@@ -593,6 +593,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull OrderedSetType _OrderedSet_IteratorVariable_F = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_MapLiteralPart_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_OCLExpression_T = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_OCLExpression_T_L1 = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Operation_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Parameter_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Precedence_T = createOrderedSetType(_OrderedSet);
@@ -1915,6 +1916,13 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_OrderedCollection_OCLExpression_F);
 			superClasses.add(_UniqueCollection_OCLExpression_F);
 			ownedClasses.add(type);
+			type = _OrderedSet_OCLExpression_T_L1;
+			type.setLower(1);
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OrderedCollection_OCLExpression_F);
+			superClasses.add(_UniqueCollection_OCLExpression_F);
+			ownedClasses.add(type);
 			type = _OrderedSet_Operation_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -2431,6 +2439,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_BooleanLiteralExp_booleanSymbol = createProperty(PivotPackage.Literals.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL, _Boolean);
 		private final @NonNull Property pr_CallExp_isImplicit = createProperty(PivotPackage.Literals.CALL_EXP__IS_IMPLICIT, _Boolean);
 		private final @NonNull Property pr_CallExp_isSafe = createProperty(PivotPackage.Literals.CALL_EXP__IS_SAFE, _Boolean);
+		private final @NonNull Property pr_CallExp_ownedInlinedBody = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_INLINED_BODY, _OCLExpression);
 		private final @NonNull Property pr_CallExp_ownedSource = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_SOURCE, _OCLExpression);
 		private final @NonNull Property pr_CallOperationAction_operation = createProperty(PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION, _Operation);
 		private final @NonNull Property pr_CallOperationAction_MessageExp_ownedCalledOperation = createProperty("MessageExp", _MessageExp);
@@ -2543,10 +2552,13 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_InstanceSpecification_ownedSpecification = createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, _LanguageExpression);
 		private final @NonNull Property pr_InstanceSpecification_owningPackage = createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNING_PACKAGE, _Package);
 		private final @NonNull Property pr_IntegerLiteralExp_integerSymbol = createProperty(PivotPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL, _Integer);
+		private final @NonNull Property pr_IterateExp_ownedBodies = createProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, _OrderedSet_OCLExpression_T_L1);
+		private final @NonNull Property pr_IterateExp_ownedBody = createProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_BODY, _OCLExpression);
 		private final @NonNull Property pr_IterateExp_ownedResult = createProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT, _Variable);
 		private final @NonNull Property pr_Iteration_ownedAccumulators = createProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATORS, _OrderedSet_Parameter_T);
 		private final @NonNull Property pr_Iteration_ownedIterators = createProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, _OrderedSet_Parameter_T);
 		private final @NonNull Property pr_Iteration_LoopExp_referredIteration = createProperty("LoopExp", _Bag_LoopExp_F);
+		private final @NonNull Property pr_IteratorExp_ownedBody = createProperty(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, _OCLExpression);
 		private final @NonNull Property pr_IteratorVariable_LoopExp_ownedCoIterators = createProperty("LoopExp", _LoopExp);
 		private final @NonNull Property pr_LambdaType_contextType = createProperty(PivotPackage.Literals.LAMBDA_TYPE__CONTEXT_TYPE, _Type);
 		private final @NonNull Property pr_LambdaType_parameterType = createProperty(PivotPackage.Literals.LAMBDA_TYPE__PARAMETER_TYPE, _Sequence_Type_T);
@@ -2560,7 +2572,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_LetExp_ownedIn = createProperty(PivotPackage.Literals.LET_EXP__OWNED_IN, _OCLExpression);
 		private final @NonNull Property pr_LetExp_ownedVariable = createProperty(PivotPackage.Literals.LET_EXP__OWNED_VARIABLE, _Variable);
 		private final @NonNull Property pr_Library_ownedPrecedences = createProperty(PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, _OrderedSet_Precedence_T);
-		private final @NonNull Property pr_LoopExp_ownedBody = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_BODY, _OCLExpression);
 		private final @NonNull Property pr_LoopExp_ownedCoIterators = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, _OrderedSet_IteratorVariable_F);
 		private final @NonNull Property pr_LoopExp_ownedIterators = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, _OrderedSet_Variable_T);
 		private final @NonNull Property pr_LoopExp_referredIteration = createProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, _Iteration);
@@ -2591,6 +2602,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_NavigationCallExp_navigationSource = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE, _Property);
 		private final @NonNull Property pr_NavigationCallExp_qualifiers = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, _OrderedSet_OCLExpression_T);
 		private final @NonNull Property pr_OCLExpression_typeValue = createProperty(PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE, _Type);
+		private final @NonNull Property pr_OCLExpression_CallExp_ownedInlinedBody = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_OCLExpression_CallExp_ownedSource = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_OCLExpression_CollectionItem_ownedItem = createProperty("CollectionItem", _CollectionItem);
 		private final @NonNull Property pr_OCLExpression_CollectionRange_ownedFirst = createProperty("CollectionRange", _CollectionRange);
@@ -2599,8 +2611,10 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_OCLExpression_IfExp_ownedCondition = createProperty("IfExp", _IfExp);
 		private final @NonNull Property pr_OCLExpression_IfExp_ownedElse = createProperty("IfExp", _IfExp);
 		private final @NonNull Property pr_OCLExpression_IfExp_ownedThen = createProperty("IfExp", _IfExp);
+		private final @NonNull Property pr_OCLExpression_IterateExp_ownedBodies = createProperty("IterateExp", _IterateExp);
+		private final @NonNull Property pr_OCLExpression_IterateExp_ownedBody = createProperty("IterateExp", _IterateExp);
+		private final @NonNull Property pr_OCLExpression_IteratorExp_ownedBody = createProperty("IteratorExp", _IteratorExp);
 		private final @NonNull Property pr_OCLExpression_LetExp_ownedIn = createProperty("LetExp", _LetExp);
-		private final @NonNull Property pr_OCLExpression_LoopExp_ownedBody = createProperty("LoopExp", _LoopExp);
 		private final @NonNull Property pr_OCLExpression_MapLiteralPart_ownedKey = createProperty("MapLiteralPart", _MapLiteralPart);
 		private final @NonNull Property pr_OCLExpression_MapLiteralPart_ownedValue = createProperty("MapLiteralPart", _MapLiteralPart);
 		private final @NonNull Property pr_OCLExpression_MessageExp_ownedArguments = createProperty("MessageExp", _MessageExp);
@@ -2882,6 +2896,12 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_CallExp_isSafe);
 			property.setIsResolveProxies(true);
 			property.setDefaultValueString("false");
+			ownedProperties.add(property = pr_CallExp_ownedInlinedBody);
+			property.setIsComposite(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setIsTransient(true);
+			property.setOpposite(pr_OCLExpression_CallExp_ownedInlinedBody);
 			ownedProperties.add(property = pr_CallExp_ownedSource);
 			property.setIsComposite(true);
 			property.setIsRequired(false);
@@ -3377,6 +3397,16 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _IterateExp.getOwnedProperties();
+			ownedProperties.add(property = pr_IterateExp_ownedBodies);
+			property.setIsComposite(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_OCLExpression_IterateExp_ownedBodies);
+			ownedProperties.add(property = pr_IterateExp_ownedBody);
+			property.setIsComposite(true);
+			property.setIsDerived(true);
+			property.setIsTransient(true);
+			property.setIsVolatile(true);
+			property.setOpposite(pr_OCLExpression_IterateExp_ownedBody);
 			ownedProperties.add(property = pr_IterateExp_ownedResult);
 			property.setIsComposite(true);
 			property.setIsRequired(false);
@@ -3396,6 +3426,12 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_LoopExp_referredIteration);
+
+			ownedProperties = _IteratorExp.getOwnedProperties();
+			ownedProperties.add(property = pr_IteratorExp_ownedBody);
+			property.setIsComposite(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_OCLExpression_IteratorExp_ownedBody);
 
 			ownedProperties = _IteratorVariable.getOwnedProperties();
 			ownedProperties.add(property = pr_IteratorVariable_LoopExp_ownedCoIterators);
@@ -3462,10 +3498,6 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_Precedence_Library_ownedPrecedences);
 
 			ownedProperties = _LoopExp.getOwnedProperties();
-			ownedProperties.add(property = pr_LoopExp_ownedBody);
-			property.setIsComposite(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_OCLExpression_LoopExp_ownedBody);
 			ownedProperties.add(property = pr_LoopExp_ownedCoIterators);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
@@ -3605,6 +3637,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsTransient(true);
 			property.setOpposite(pr_Type_OCLExpression_typeValue);
+			ownedProperties.add(property = pr_OCLExpression_CallExp_ownedInlinedBody);
+			property.setIsImplicit(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_CallExp_ownedInlinedBody);
 			ownedProperties.add(property = pr_OCLExpression_CallExp_ownedSource);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
@@ -3645,16 +3682,26 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_IfExp_ownedThen);
+			ownedProperties.add(property = pr_OCLExpression_IterateExp_ownedBodies);
+			property.setIsImplicit(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_IterateExp_ownedBodies);
+			ownedProperties.add(property = pr_OCLExpression_IterateExp_ownedBody);
+			property.setIsImplicit(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_IterateExp_ownedBody);
+			ownedProperties.add(property = pr_OCLExpression_IteratorExp_ownedBody);
+			property.setIsImplicit(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_IteratorExp_ownedBody);
 			ownedProperties.add(property = pr_OCLExpression_LetExp_ownedIn);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_LetExp_ownedIn);
-			ownedProperties.add(property = pr_OCLExpression_LoopExp_ownedBody);
-			property.setIsImplicit(true);
-			property.setIsRequired(false);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_LoopExp_ownedBody);
 			ownedProperties.add(property = pr_OCLExpression_MapLiteralPart_ownedKey);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
@@ -5002,6 +5049,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_OrderedSet_IteratorVariable_F, _IteratorVariable);
 			addBinding(_OrderedSet_MapLiteralPart_T, _MapLiteralPart);
 			addBinding(_OrderedSet_OCLExpression_T, _OCLExpression);
+			addBinding(_OrderedSet_OCLExpression_T_L1, _OCLExpression);
 			addBinding(_OrderedSet_Operation_T, _Operation);
 			addBinding(_OrderedSet_Parameter_T, _Parameter);
 			addBinding(_OrderedSet_Precedence_T, _Precedence);

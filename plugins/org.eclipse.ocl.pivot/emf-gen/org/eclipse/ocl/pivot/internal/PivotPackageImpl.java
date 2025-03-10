@@ -2509,9 +2509,31 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getIterateExp_OwnedResult()
+	public EReference getIterateExp_OwnedBodies()
 	{
 		return (EReference)iterateExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getIterateExp_OwnedBody()
+	{
+		return (EReference)iterateExpEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getIterateExp_OwnedResult()
+	{
+		return (EReference)iterateExpEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2622,6 +2644,17 @@ implements PivotPackage  {
 	public EClass getIteratorExp()
 	{
 		return iteratorExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getIteratorExp_OwnedBody()
+	{
+		return (EReference)iteratorExpEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3103,7 +3136,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getLoopExp_OwnedBody()
+	public EReference getLoopExp_OwnedCoIterators()
 	{
 		return (EReference)loopExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -3114,7 +3147,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getLoopExp_OwnedCoIterators()
+	public EReference getLoopExp_OwnedIterators()
 	{
 		return (EReference)loopExpEClass.getEStructuralFeatures().get(1);
 	}
@@ -3125,20 +3158,9 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getLoopExp_OwnedIterators()
-	{
-		return (EReference)loopExpEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getLoopExp_ReferredIteration()
 	{
-		return (EReference)loopExpEClass.getEStructuralFeatures().get(3);
+		return (EReference)loopExpEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -7040,9 +7062,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getCallExp_OwnedSource()
+	public EReference getCallExp_OwnedInlinedBody()
 	{
 		return (EReference)callExpEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getCallExp_OwnedSource()
+	{
+		return (EReference)callExpEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -7265,7 +7298,7 @@ implements PivotPackage  {
 		createEReference(associationClassEClass, 20);
 
 		associationClassCallExpEClass = createEClass(3);
-		createEReference(associationClassCallExpEClass, 15);
+		createEReference(associationClassCallExpEClass, 16);
 
 		bagTypeEClass = createEClass(4);
 
@@ -7282,6 +7315,7 @@ implements PivotPackage  {
 		createEAttribute(callExpEClass, 9);
 		createEAttribute(callExpEClass, 10);
 		createEReference(callExpEClass, 11);
+		createEReference(callExpEClass, 12);
 		createEOperation(callExpEClass, 6);
 		createEOperation(callExpEClass, 7);
 		createEOperation(callExpEClass, 8);
@@ -7449,7 +7483,7 @@ implements PivotPackage  {
 		createEOperation(featureEClass, 5);
 
 		featureCallExpEClass = createEClass(39);
-		createEAttribute(featureCallExpEClass, 12);
+		createEAttribute(featureCallExpEClass, 13);
 
 		finalStateEClass = createEClass(40);
 
@@ -7483,6 +7517,8 @@ implements PivotPackage  {
 
 		iterateExpEClass = createEClass(48);
 		createEReference(iterateExpEClass, 16);
+		createEReference(iterateExpEClass, 17);
+		createEReference(iterateExpEClass, 18);
 		createEOperation(iterateExpEClass, 17);
 		createEOperation(iterateExpEClass, 18);
 		createEOperation(iterateExpEClass, 19);
@@ -7495,6 +7531,7 @@ implements PivotPackage  {
 		createEReference(iterationEClass, 28);
 
 		iteratorExpEClass = createEClass(50);
+		createEReference(iteratorExpEClass, 16);
 		createEOperation(iteratorExpEClass, 17);
 		createEOperation(iteratorExpEClass, 18);
 		createEOperation(iteratorExpEClass, 19);
@@ -7547,7 +7584,6 @@ implements PivotPackage  {
 		literalExpEClass = createEClass(57);
 
 		loopExpEClass = createEClass(58);
-		createEReference(loopExpEClass, 12);
 		createEReference(loopExpEClass, 13);
 		createEReference(loopExpEClass, 14);
 		createEReference(loopExpEClass, 15);
@@ -7602,8 +7638,8 @@ implements PivotPackage  {
 		createEReference(namespaceEClass, 5);
 
 		navigationCallExpEClass = createEClass(69);
-		createEReference(navigationCallExpEClass, 13);
 		createEReference(navigationCallExpEClass, 14);
+		createEReference(navigationCallExpEClass, 15);
 
 		nullLiteralExpEClass = createEClass(70);
 
@@ -7634,9 +7670,9 @@ implements PivotPackage  {
 		createEOperation(operationEClass, 9);
 
 		operationCallExpEClass = createEClass(74);
-		createEAttribute(operationCallExpEClass, 13);
-		createEReference(operationCallExpEClass, 14);
+		createEAttribute(operationCallExpEClass, 14);
 		createEReference(operationCallExpEClass, 15);
+		createEReference(operationCallExpEClass, 16);
 		createEOperation(operationCallExpEClass, 10);
 		createEOperation(operationCallExpEClass, 11);
 		createEOperation(operationCallExpEClass, 12);
@@ -7644,7 +7680,7 @@ implements PivotPackage  {
 		createEOperation(operationCallExpEClass, 14);
 
 		oppositePropertyCallExpEClass = createEClass(75);
-		createEReference(oppositePropertyCallExpEClass, 15);
+		createEReference(oppositePropertyCallExpEClass, 16);
 		createEOperation(oppositePropertyCallExpEClass, 9);
 		createEOperation(oppositePropertyCallExpEClass, 10);
 
@@ -7714,7 +7750,7 @@ implements PivotPackage  {
 		createEOperation(propertyEClass, 7);
 
 		propertyCallExpEClass = createEClass(89);
-		createEReference(propertyCallExpEClass, 15);
+		createEReference(propertyCallExpEClass, 16);
 		createEOperation(propertyCallExpEClass, 10);
 		createEOperation(propertyCallExpEClass, 11);
 		createEOperation(propertyCallExpEClass, 12);
@@ -8149,6 +8185,7 @@ implements PivotPackage  {
 		initEClass(callExpEClass, CallExp.class, "CallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getCallExp_IsImplicit(), this.getBoolean(), "isImplicit", "false", 1, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(getCallExp_IsSafe(), this.getBoolean(), "isSafe", "false", 1, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getCallExp_OwnedInlinedBody(), this.getOCLExpression(), null, "ownedInlinedBody", null, 0, 1, CallExp.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getCallExp_OwnedSource(), this.getOCLExpression(), null, "ownedSource", null, 0, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateSafeSourceCanBeNull", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -8550,6 +8587,8 @@ implements PivotPackage  {
 		initEClass(iterableTypeEClass, IterableType.class, "IterableType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(iterateExpEClass, IterateExp.class, "IterateExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getIterateExp_OwnedBodies(), this.getOCLExpression(), null, "ownedBodies", null, 1, -1, IterateExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIterateExp_OwnedBody(), this.getOCLExpression(), null, "ownedBody", null, 1, 1, IterateExp.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIterateExp_OwnedResult(), this.getVariable(), null, "ownedResult", null, 0, 1, IterateExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getIterateExp__ValidateBodyTypeConformsToResultType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBodyTypeConformsToResultType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -8611,6 +8650,7 @@ implements PivotPackage  {
 		initEReference(getIteration_OwnedIterators(), this.getParameter(), null, "ownedIterators", null, 0, -1, Iteration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(iteratorExpEClass, IteratorExp.class, "IteratorExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getIteratorExp_OwnedBody(), this.getOCLExpression(), null, "ownedBody", null, 1, 1, IteratorExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getIteratorExp__ValidateAnyBodyTypeIsBoolean__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateAnyBodyTypeIsBoolean", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -8879,7 +8919,6 @@ implements PivotPackage  {
 		initEClass(literalExpEClass, LiteralExp.class, "LiteralExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(loopExpEClass, LoopExp.class, "LoopExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getLoopExp_OwnedBody(), this.getOCLExpression(), null, "ownedBody", null, 1, 1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getLoopExp_OwnedCoIterators(), this.getIteratorVariable(), null, "ownedCoIterators", null, 0, -1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getLoopExp_OwnedIterators(), this.getVariable(), null, "ownedIterators", null, 0, -1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getLoopExp_ReferredIteration(), this.getIteration(), null, "referredIteration", null, 0, 1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

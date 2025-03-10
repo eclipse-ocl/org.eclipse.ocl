@@ -62,6 +62,8 @@
       </ownedInvariants>
       <ownedProperties xmi:id="Xbbpj" defaultValueString="false" name="isImplicit" type="#ZuwnB"/>
       <ownedProperties xmi:id=",1h8l" defaultValueString="false" name="isSafe" type="#ZuwnB"/>
+      <ownedProperties xmi:id="w7X0p" isComposite="true" isRequired="false" isTransient="true" name="ownedInlinedBody" opposite="#MCITi"
+          type="#BFtK4"/>
       <ownedProperties xmi:id="IjXu4" isComposite="true" isRequired="false" name="ownedSource" opposite="#0VFpK" type="#BFtK4"/>
     </ownedClasses>
     <ownedClasses xmi:id="wuJTT" name="CallOperationAction" superClasses="#0kVqz">
@@ -434,6 +436,9 @@
         <ownedComments body="Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free."/>
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(not isSafe and ownedIterators->exists(isRequired)) implies&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedProperties xmi:id="Bi7+u" isComposite="true" name="ownedBodies" opposite="#bGV2J" type="#Cuslp"/>
+      <ownedProperties xmi:id="jWc1," isComposite="true" isDerived="true" isResolveProxies="false" isTransient="true" isVolatile="true"
+          name="ownedBody" opposite="#J26z," type="#BFtK4"/>
       <ownedProperties xmi:id="eb1wJ" isComposite="true" isRequired="false" name="ownedResult" opposite="#i9Axv" type="#t4j6T"/>
     </ownedClasses>
     <ownedClasses xmi:id="OZhAb" name="Iteration" superClasses="#Yz,F1">
@@ -515,6 +520,7 @@
         <ownedComments body="Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free."/>
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(not isSafe and ownedIterators->exists(isRequired)) implies&#xA;&#x9;let sourceType = ownedSource?.type in&#xA;&#x9;if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedProperties xmi:id=",+Ooa" isComposite="true" name="ownedBody" opposite="#VTwqw" type="#BFtK4"/>
     </ownedClasses>
     <ownedClasses xmi:id="7yjCF" name="IteratorVariable" superClasses="#t4j6T">
       <ownedInvariants xmi:id="uHopO" isCallable="true" name="HasNoInitializer">
@@ -600,7 +606,6 @@
         <ownedComments body="The type of the source expression must be a collection or map."/>
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(IterableType)"/>
       </ownedInvariants>
-      <ownedProperties xmi:id="h2RKw" isComposite="true" name="ownedBody" opposite="#fLwep" type="#BFtK4"/>
       <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" opposite="#sbNVd" type="#qjyQj"/>
       <ownedProperties xmi:id="aRrs3" isComposite="true" name="ownedIterators" opposite="#qs4sI" type="#Rl6IP"/>
       <ownedProperties xmi:id="G2e3S" isRequired="false" name="referredIteration" opposite="#7bx+Q" type="#OZhAb"/>
@@ -684,6 +689,7 @@
           type="#rrwsa">
         <ownedComments body="When oclType() returns a Class value with a known actual type, the typeValue propagates the known type."/>
       </ownedProperties>
+      <ownedProperties xmi:id="MCITi" isImplicit="true" isRequired="false" name="CallExp" opposite="#w7X0p" type="#QJrde"/>
       <ownedProperties xmi:id="0VFpK" isImplicit="true" isRequired="false" name="CallExp" opposite="#IjXu4" type="#QJrde"/>
       <ownedProperties xmi:id="ucQSI" isImplicit="true" isRequired="false" name="CollectionItem" opposite="#qB57w" type="#CKfVx"/>
       <ownedProperties xmi:id="BdVOq" isImplicit="true" isRequired="false" name="CollectionRange" opposite="#TGoSr" type="#wy8kd"/>
@@ -692,8 +698,10 @@
       <ownedProperties xmi:id="vgW3D" isImplicit="true" isRequired="false" name="IfExp" opposite="#77VwY" type="#xsyve"/>
       <ownedProperties xmi:id="n7Lp1" isImplicit="true" isRequired="false" name="IfExp" opposite="#DSLlN" type="#xsyve"/>
       <ownedProperties xmi:id="jUA11" isImplicit="true" isRequired="false" name="IfExp" opposite="#nV3mN" type="#xsyve"/>
+      <ownedProperties xmi:id="bGV2J" isImplicit="true" isRequired="false" name="IterateExp" opposite="#Bi7+u" type="#0L28o"/>
+      <ownedProperties xmi:id="J26z," isImplicit="true" isRequired="false" name="IterateExp" opposite="#jWc1," type="#0L28o"/>
+      <ownedProperties xmi:id="VTwqw" isImplicit="true" isRequired="false" name="IteratorExp" opposite="#,+Ooa" type="#AprzZ"/>
       <ownedProperties xmi:id="dm5C," isImplicit="true" isRequired="false" name="LetExp" opposite="#p48qJ" type="#zmGAi"/>
-      <ownedProperties xmi:id="fLwep" isImplicit="true" isRequired="false" name="LoopExp" opposite="#h2RKw" type="#KhrnS"/>
       <ownedProperties xmi:id="RWsed" isImplicit="true" isRequired="false" name="MapLiteralPart" opposite="#tAq1Y" type="#33CoS"/>
       <ownedProperties xmi:id="P,eVl" isImplicit="true" isRequired="false" name="MapLiteralPart" opposite="#,hDi+" type="#33CoS"/>
       <ownedProperties xmi:id="ibbyn" isImplicit="true" isRequired="false" name="MessageExp" opposite="#0f9IF" type="#HRils"/>
@@ -2112,6 +2120,11 @@
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Ftslp" isNullFree="true" name="OrderedSet" superClasses="#2VPxK #aAKWE">
+      <ownedBindings>
+        <ownedSubstitutions actual="#BFtK4" formal="&_0;#53+C2"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Cuslp" isNullFree="true" lower="1" name="OrderedSet" superClasses="#2VPxK #aAKWE">
       <ownedBindings>
         <ownedSubstitutions actual="#BFtK4" formal="&_0;#53+C2"/>
       </ownedBindings>

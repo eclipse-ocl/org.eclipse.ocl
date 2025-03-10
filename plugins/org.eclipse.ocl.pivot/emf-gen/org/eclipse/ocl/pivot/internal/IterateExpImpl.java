@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -66,6 +67,8 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.IterateExpImpl#getOwnedBodies <em>Owned Bodies</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.IterateExpImpl#getOwnedBody <em>Owned Body</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.IterateExpImpl#getOwnedResult <em>Owned Result</em>}</li>
  * </ul>
  *
@@ -80,7 +83,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ITERATE_EXP_FEATURE_COUNT = LoopExpImpl.LOOP_EXP_FEATURE_COUNT + 1;
+	public static final int ITERATE_EXP_FEATURE_COUNT = LoopExpImpl.LOOP_EXP_FEATURE_COUNT + 3;
 	/**
 	 * The number of operations of the '<em>Iterate Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -89,6 +92,15 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	 * @ordered
 	 */
 	public static final int ITERATE_EXP_OPERATION_COUNT = LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 7;
+	/**
+	 * The cached value of the '{@link #getOwnedBodies() <em>Owned Bodies</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedBodies()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<OCLExpression> ownedBodies;
 	/**
 	 * The cached value of the '{@link #getOwnedResult() <em>Owned Result</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -125,6 +137,53 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	 * @generated
 	 */
 	@Override
+	public List<OCLExpression> getOwnedBodies()
+	{
+		if (ownedBodies == null)
+		{
+			ownedBodies = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, 16);
+		}
+		return ownedBodies;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public OCLExpression getOwnedBody()
+	{
+		return getOwnedBodies().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public NotificationChain basicSetOwnedBody(OCLExpression newOwnedBody, NotificationChain msgs)
+	{
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public void setOwnedBody(OCLExpression newOwnedBody)
+	{
+		getOwnedBodies().set(0, newOwnedBody);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Variable getOwnedResult()
 	{
 		return ownedResult;
@@ -141,7 +200,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		ownedResult = newOwnedResult;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 16, oldOwnedResult, newOwnedResult);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 18, oldOwnedResult, newOwnedResult);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -159,14 +218,14 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		{
 			NotificationChain msgs = null;
 			if (ownedResult != null)
-				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
+				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (18), null, msgs);
 			if (newOwnedResult != null)
-				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
+				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (18), null, msgs);
 			msgs = basicSetOwnedResult(newOwnedResult, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 16, newOwnedResult, newOwnedResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, 18, newOwnedResult, newOwnedResult));
 	}
 
 	/**
@@ -188,14 +247,18 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
-				return basicSetOwnedSource(null, msgs);
+				return basicSetOwnedInlinedBody(null, msgs);
 			case 12:
-				return basicSetOwnedBody(null, msgs);
+				return basicSetOwnedSource(null, msgs);
 			case 13:
 				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
 			case 14:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 			case 16:
+				return ((InternalEList<?>)getOwnedBodies()).basicRemove(otherEnd, msgs);
+			case 17:
+				return basicSetOwnedBody(null, msgs);
+			case 18:
 				return basicSetOwnedResult(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -235,9 +298,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 10:
 				return isIsSafe();
 			case 11:
-				return getOwnedSource();
+				return getOwnedInlinedBody();
 			case 12:
-				return getOwnedBody();
+				return getOwnedSource();
 			case 13:
 				return getOwnedCoIterators();
 			case 14:
@@ -246,6 +309,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				if (resolve) return getReferredIteration();
 				return basicGetReferredIteration();
 			case 16:
+				return getOwnedBodies();
+			case 17:
+				return getOwnedBody();
+			case 18:
 				return getOwnedResult();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -297,10 +364,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)newValue);
+				setOwnedInlinedBody((OCLExpression)newValue);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)newValue);
+				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -314,6 +381,13 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setReferredIteration((Iteration)newValue);
 				return;
 			case 16:
+				getOwnedBodies().clear();
+				getOwnedBodies().addAll((Collection<? extends OCLExpression>)newValue);
+				return;
+			case 17:
+				setOwnedBody((OCLExpression)newValue);
+				return;
+			case 18:
 				setOwnedResult((Variable)newValue);
 				return;
 		}
@@ -361,10 +435,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)null);
+				setOwnedInlinedBody((OCLExpression)null);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)null);
+				setOwnedSource((OCLExpression)null);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -376,6 +450,12 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setReferredIteration((Iteration)null);
 				return;
 			case 16:
+				getOwnedBodies().clear();
+				return;
+			case 17:
+				setOwnedBody((OCLExpression)null);
+				return;
+			case 18:
 				setOwnedResult((Variable)null);
 				return;
 		}
@@ -415,9 +495,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
-				return ownedSource != null;
+				return ownedInlinedBody != null;
 			case 12:
-				return ownedBody != null;
+				return ownedSource != null;
 			case 13:
 				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
 			case 14:
@@ -425,6 +505,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 15:
 				return referredIteration != null;
 			case 16:
+				return ownedBodies != null && !ownedBodies.isEmpty();
+			case 17:
+				return getOwnedBody() != null;
+			case 18:
 				return ownedResult != null;
 		}
 		return eDynamicIsSet(featureID);

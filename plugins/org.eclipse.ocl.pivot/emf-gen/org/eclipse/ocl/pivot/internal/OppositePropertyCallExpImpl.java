@@ -121,7 +121,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			if (referredProperty != oldReferredProperty)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 15, oldReferredProperty, referredProperty));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 16, oldReferredProperty, referredProperty));
 			}
 		}
 		return referredProperty;
@@ -148,7 +148,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 16, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -425,15 +425,17 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			case 10:
 				return isIsSafe();
 			case 11:
-				return getOwnedSource();
+				return getOwnedInlinedBody();
 			case 12:
-				return isIsPre();
+				return getOwnedSource();
 			case 13:
+				return isIsPre();
+			case 14:
 				if (resolve) return getNavigationSource();
 				return basicGetNavigationSource();
-			case 14:
-				return getQualifiers();
 			case 15:
+				return getQualifiers();
+			case 16:
 				if (resolve) return getReferredProperty();
 				return basicGetReferredProperty();
 		}
@@ -486,19 +488,22 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)newValue);
+				setOwnedInlinedBody((OCLExpression)newValue);
 				return;
 			case 12:
-				setIsPre((Boolean)newValue);
+				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 13:
-				setNavigationSource((Property)newValue);
+				setIsPre((Boolean)newValue);
 				return;
 			case 14:
+				setNavigationSource((Property)newValue);
+				return;
+			case 15:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case 15:
+			case 16:
 				setReferredProperty((Property)newValue);
 				return;
 		}
@@ -546,18 +551,21 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)null);
+				setOwnedInlinedBody((OCLExpression)null);
 				return;
 			case 12:
-				setIsPre(IS_PRE_EDEFAULT);
+				setOwnedSource((OCLExpression)null);
 				return;
 			case 13:
-				setNavigationSource((Property)null);
+				setIsPre(IS_PRE_EDEFAULT);
 				return;
 			case 14:
-				getQualifiers().clear();
+				setNavigationSource((Property)null);
 				return;
 			case 15:
+				getQualifiers().clear();
+				return;
+			case 16:
 				setReferredProperty((Property)null);
 				return;
 		}
@@ -597,14 +605,16 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
-				return ownedSource != null;
+				return ownedInlinedBody != null;
 			case 12:
-				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
+				return ownedSource != null;
 			case 13:
-				return navigationSource != null;
+				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
 			case 14:
-				return qualifiers != null && !qualifiers.isEmpty();
+				return navigationSource != null;
 			case 15:
+				return qualifiers != null && !qualifiers.isEmpty();
+			case 16:
 				return referredProperty != null;
 		}
 		return eDynamicIsSet(featureID);

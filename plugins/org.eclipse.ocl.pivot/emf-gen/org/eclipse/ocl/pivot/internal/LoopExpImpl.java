@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getOwnedBody <em>Owned Body</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getOwnedCoIterators <em>Owned Co Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getOwnedIterators <em>Owned Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getReferredIteration <em>Referred Iteration</em>}</li>
@@ -86,7 +85,7 @@ implements LoopExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int LOOP_EXP_FEATURE_COUNT = CallExpImpl.CALL_EXP_FEATURE_COUNT + 4;
+	public static final int LOOP_EXP_FEATURE_COUNT = CallExpImpl.CALL_EXP_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Loop Exp</em>' class.
@@ -96,16 +95,6 @@ implements LoopExp {
 	 * @ordered
 	 */
 	public static final int LOOP_EXP_OPERATION_COUNT = CallExpImpl.CALL_EXP_OPERATION_COUNT + 7;
-
-	/**
-	 * The cached value of the '{@link #getOwnedBody() <em>Owned Body</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedBody()
-	 * @generated
-	 * @ordered
-	 */
-	protected OCLExpression ownedBody;
 
 	/**
 	 * The cached value of the '{@link #getOwnedCoIterators() <em>Owned Co Iterators</em>}' containment reference list.
@@ -155,54 +144,6 @@ implements LoopExp {
 	@Override
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.LOOP_EXP;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public OCLExpression getOwnedBody() {
-		return ownedBody;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwnedBody(OCLExpression newOwnedBody, NotificationChain msgs)
-	{
-		OCLExpression oldOwnedBody = ownedBody;
-		ownedBody = newOwnedBody;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldOwnedBody, newOwnedBody);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedBody(OCLExpression newOwnedBody) {
-		if (newOwnedBody != ownedBody)
-		{
-			NotificationChain msgs = null;
-			if (ownedBody != null)
-				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
-			if (newOwnedBody != null)
-				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
-			msgs = basicSetOwnedBody(newOwnedBody, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwnedBody, newOwnedBody));
 	}
 
 	/**
@@ -988,9 +929,9 @@ implements LoopExp {
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
-				return basicSetOwnedSource(null, msgs);
+				return basicSetOwnedInlinedBody(null, msgs);
 			case 12:
-				return basicSetOwnedBody(null, msgs);
+				return basicSetOwnedSource(null, msgs);
 			case 13:
 				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
 			case 14:
@@ -1032,9 +973,9 @@ implements LoopExp {
 			case 10:
 				return isIsSafe();
 			case 11:
-				return getOwnedSource();
+				return getOwnedInlinedBody();
 			case 12:
-				return getOwnedBody();
+				return getOwnedSource();
 			case 13:
 				return getOwnedCoIterators();
 			case 14:
@@ -1091,10 +1032,10 @@ implements LoopExp {
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)newValue);
+				setOwnedInlinedBody((OCLExpression)newValue);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)newValue);
+				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -1151,10 +1092,10 @@ implements LoopExp {
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)null);
+				setOwnedInlinedBody((OCLExpression)null);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)null);
+				setOwnedSource((OCLExpression)null);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -1201,9 +1142,9 @@ implements LoopExp {
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
-				return ownedSource != null;
+				return ownedInlinedBody != null;
 			case 12:
-				return ownedBody != null;
+				return ownedSource != null;
 			case 13:
 				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
 			case 14:

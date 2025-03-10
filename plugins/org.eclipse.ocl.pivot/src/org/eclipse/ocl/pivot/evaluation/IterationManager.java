@@ -85,6 +85,8 @@ public interface IterationManager
 	 */
 	@Nullable Object evaluateBody();
 
+	@Nullable Object evaluateBody(int bodyIndex);
+
 	/**
 	 * Get the current state of the iterator.
 	 * <br>
