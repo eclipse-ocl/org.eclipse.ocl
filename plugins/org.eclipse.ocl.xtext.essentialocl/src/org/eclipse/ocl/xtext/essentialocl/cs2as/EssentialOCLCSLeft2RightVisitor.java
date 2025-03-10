@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -972,6 +973,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected void resolveIterationBody(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		List<@NonNull OCLExpression> pivotBodies = new ArrayList<>();
+		Iteration asIteration = expression.getReferredIteration();
+		List<Parameter> asParameters = asIteration.getOwnedParameters();
 		boolean hasIteratorOrAccumulator = false;
 		for (NavigatingArgCS csArgument : csRoundBracketedClause.getOwnedArguments()) {
 			if (csArgument.getRole() == NavigationRole.ITERATOR) {
@@ -993,8 +996,20 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression exp = !hasIteratorOrAccumulator ? PivotUtil.getPivot(OCLExpression.class, csArgument) : context.visitLeft2Right(OCLExpression.class, name);
 				//				context.installPivotElement(csArgument, exp);
 				if (exp != null) {
-					context.installPivotUsage(csArgument, exp);
-					pivotBodies.add(exp);
+					Parameter asParameter = asParameters.get(pivotBodies.size());
+					Type asParameterType = asParameter.getType();
+					if (asParameterType instanceof LambdaType) {
+						asParameterType = ((LambdaType)asParameterType).getResultType();
+					}
+					Type expType = exp.getType();
+					if (expType.conformsTo(standardLibrary, asParameterType)) {
+						context.installPivotUsage(csArgument, exp);
+						pivotBodies.add(exp);
+					}
+					else {
+						pivotBodies.add(context.addBadExpressionError(csArgument, PivotMessages.ExpectedArgumentType,
+							csNameExp.getOwnedPathName(), pivotBodies.size()+1, asParameterType, expType));
+					}
 				}
 				else {
 					pivotBodies.add(context.addBadExpressionError(csArgument, "Invalid ''{0}'' iteration body", csNameExp.getOwnedPathName()));
