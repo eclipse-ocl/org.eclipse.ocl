@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
+ * from: E:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
@@ -320,6 +320,12 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 							createKeyword("{"),
 							setCardinality("*", createAlternatives(
 								createAssignment("ownedAnnotations", "+=", createRuleCall(PR_AnnotationElementCS)),
+								createGroup(
+									createKeyword("body"),
+									setCardinality("?", createRuleCall(_EssentialOCL.PR_UnrestrictedName)),
+									createKeyword(":"),
+									createAssignment("ownedBodyExpressions", "+=", createRuleCall(PR_SpecificationCS)),
+									createKeyword(";")),
 								createAssignment("ownedPreconditions", "+=", createRuleCall(PR_PostCS)),
 								createAssignment("ownedPostconditions", "+=", createRuleCall(PR_PreCS)))),
 							createKeyword("}")),
