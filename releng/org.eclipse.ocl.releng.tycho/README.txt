@@ -102,3 +102,8 @@ Publish JUnit test report: tests/*.test*/target/surefire-reports/*.xml,tests/*.t
 Archive the artefacts: releng/org.eclipse.ocl.releng.build-site/target/*.zip,releng/org.eclipse.ocl.releng.build-site/target/publisher.properties,releng/org.eclipse.ocl.releng.build-site/target/downloads.sh,releng/org.eclipse.ocl.releng.build-site/target/updates.sh
 
 Trigger Promoter when table using releng/org.eclipse.ocl.releng.build-site/target/publisher.properties
+
+
+
+
+ git log --pretty=oneline --abbrev-commit ewillink/583353 ^master
