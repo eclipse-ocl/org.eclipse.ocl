@@ -39,6 +39,10 @@ public class PivotMessages
 	public static String EObjectRequired;
 	public static String EmptyCollection;
 	/**
+	 * @since 1.24
+	 */
+	public static String ExpectedArgumentType;
+	/**
 	 * @since 1.18
 	 */
 	public static String IllegalCoIterator;
