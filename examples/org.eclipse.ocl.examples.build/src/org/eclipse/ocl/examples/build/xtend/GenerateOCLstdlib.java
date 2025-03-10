@@ -56,9 +56,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
@@ -183,22 +180,11 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				if (libraryNsPrefix != null) {
 					ePackage.setNsPrefix(libraryNsPrefix);
 				}
-				// FIXME EClass instanceClassNames are correct because they were loaded correct.
-				// FIXME EClass setInstanceClassName trashes EClasses that are set explicitly
-				//				setInstanceClassName(ePackage, "Bag", Bag.class, null);
-				setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class, null);
-				//				setInstanceClassName(ePackage, "Collection", Collection.class, null);
-				setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class, null);
-				//				setInstanceClassName(ePackage, "OclAny", Object.class, "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTRue functionality is only available once converted to a Pivot model.");
-				//			setInstanceClassName(ePackage, "OclInvalid", InvalidValue.class, null);
-				//			setInstanceClassName(ePackage, "OclVoid", NullValue.class, null);
-				//				setInstanceClassName(ePackage, "OrderedSet", OrderedSet.class, null);
-				setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class, null);
-				//				setInstanceClassName(ePackage, "Sequence", List.class, null);
-				//				setInstanceClassName(ePackage, "Set", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class, null);
-				//				setInstanceClassName(ePackage, "UniqueCollection", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class, null);
+				checkInstanceClassName(ePackage, TypeId.BOOLEAN_NAME);
+				checkInstanceClassName(ePackage, TypeId.INTEGER_NAME);
+				checkInstanceClassName(ePackage, TypeId.REAL_NAME);
+				checkInstanceClassName(ePackage, TypeId.STRING_NAME);
+				checkInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME);
 				EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
 				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ANY_NAME);
 				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ELEMENT_NAME);
@@ -317,26 +303,16 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		return excludedEClassifierNames.contains(asClass.getName());
 	}
 
-	private void setInstanceClassName(@NonNull EPackage ePackage, String typeName, Class<?> javaClass, @Nullable String comment) {
+	private void checkInstanceClassName(@NonNull EPackage ePackage, String typeName) {
 		EClassifier eClassifier = ePackage.getEClassifier(typeName);
 		if (eClassifier != null) {
 			if (eClassifier instanceof EClass) {
-				//				assert false;
+				assert false;
 				String name = eClassifier.getName();
 				ePackage.getEClassifiers().remove(eClassifier);
 				eClassifier = EcoreFactory.eINSTANCE.createEDataType();
 				eClassifier.setName(name);
 				ePackage.getEClassifiers().add(eClassifier);
-			}
-			if (!javaClass.getName().equals(eClassifier.getInstanceClassName())) {
-				log.error("Wrong " + typeName + "::instanceClassName - " + eClassifier.getInstanceClassName() + " rather than " + javaClass.getName());
-			}
-		//	eClassifier.setInstanceClassName(javaClass.getName());
-			if (comment != null) {
-				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(GenModelPackage.eNS_URI);
-				eAnnotation.getDetails().put("body", comment);
-				eClassifier.getEAnnotations().add(eAnnotation);
 			}
 		}
 	}
