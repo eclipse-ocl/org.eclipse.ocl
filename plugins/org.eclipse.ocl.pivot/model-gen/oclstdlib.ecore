@@ -10,6 +10,7 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="CoCollection" instanceClassName="org.eclipse.ocl.pivot.values.CoCollectionValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>

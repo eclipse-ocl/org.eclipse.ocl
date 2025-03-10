@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CoCollectionType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
@@ -328,6 +329,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		private final @NonNull Class _BooleanType = createClass("BooleanType");
 		private final @NonNull Class _Class = createClass("Class");
+		private final @NonNull CoCollectionType _CoCollection = createCoCollectionType(OCLstdlibPackage.Literals.CO_COLLECTION);
 		private final @NonNull Class _CollectionType = createClass("CollectionType");
 		private final @NonNull Class _Enumeration = createClass("Enumeration");
 		private final @NonNull Class _EnumerationLiteral = createClass("EnumerationLiteral");
@@ -603,6 +605,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
 			type = _Class;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclElement);
+			ownedClasses.add(type);
+			type = _CoCollection;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.values.CoCollectionValue");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
@@ -1816,12 +1823,14 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Bag_selectByType = createOperation("selectByType", _Bag_Bag_selectByType_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Bag_selectByType_TT);
 		private final @NonNull Operation op_BooleanType_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Class_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		private final @NonNull Operation op_CoCollection_count = createOperation("count", _Integer, "org.eclipse.ocl.pivot.library.collection.CoCollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CoCollectionCountOperation.INSTANCE);
 		private final @NonNull Operation op_Collection__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Collection__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asBag = createOperation("asBag", _Bag_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asOrderedSet = createOperation("asOrderedSet", _OrderedSet_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asSequence = createOperation("asSequence", _Sequence_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asSet = createOperation("asSet", _Set_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
+		private final @NonNull Operation op_Collection_coCollection = createOperation("coCollection", _CoCollection, "org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_count = createOperation("count", _Integer, "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_excludes = createOperation("excludes", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_excludesAll = createOperation("excludesAll", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE, tp_Collection_excludesAll_T2);
@@ -1849,6 +1858,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Map__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map_at = createOperation("at", tp_Map_V, "org.eclipse.ocl.pivot.library.map.MapAtOperation", org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
+		private final @NonNull Operation op_Map_coCollection = createOperation("coCollection", _CoCollection, "org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation.INSTANCE);
 		private final @NonNull Operation op_Map_excludes = createOperation("excludes", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesOperation", org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
 		private final @NonNull Operation op_Map_excludes_1 = createOperation("excludes", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation.INSTANCE);
 		private final @NonNull Operation op_Map_excludesAll = createOperation("excludesAll", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE, tp_Map_excludesAll_K2);
@@ -2279,6 +2289,11 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations = _Class.getOwnedOperations();
 			ownedOperations.add(operation = op_Class_allInstances);
 
+			ownedOperations = _CoCollection.getOwnedOperations();
+			ownedOperations.add(operation = op_CoCollection_count);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
+
 			ownedOperations = _Collection_Collection_T.getOwnedOperations();
 			ownedOperations.add(operation = op_Collection__lt__gt_);
 			ownedParameters = operation.getOwnedParameters();
@@ -2290,6 +2305,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Collection_asOrderedSet);
 			ownedOperations.add(operation = op_Collection_asSequence);
 			ownedOperations.add(operation = op_Collection_asSet);
+			ownedOperations.add(operation = op_Collection_coCollection);
 			ownedOperations.add(operation = op_Collection_count);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
@@ -2363,6 +2379,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
+			ownedOperations.add(operation = op_Map_coCollection);
 			ownedOperations.add(operation = op_Map_excludes);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", tp_Map_K, false));
@@ -3751,7 +3768,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(pr_CollectionType_elementType, "Evaluates to the type of the collection elements.");
 			installComment(pr_CollectionType_lower, "Evaluates to the lower bound on the number of collection elements.");
 			installComment(pr_CollectionType_upper, "Evaluates to the upper bound on the number of collection elements.");
-			installComment(_Collection_Collection_T, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
+			installComment(_Collection_Collection_T, "*\nCollection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
 			installComment(op_Collection__lt__gt_, "True if c is not equal to oclText[self].");
 			installComment(op_Collection__eq_, "True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,\nin the case of an ordered collection type.");
 			installComment(it_Collection_any, "Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any element,\notherwise if there are one or more elements for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the result is oclText[null].\n\nlet source : Collection(T) = ..., body : Lambda T() : Boolean = ... in\nsource->any(iterator | body) = source->select(iterator | body)->asSequence()->first()");

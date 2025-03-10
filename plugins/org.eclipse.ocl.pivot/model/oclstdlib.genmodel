@@ -18,6 +18,7 @@
   <genPackages prefix="OCLstdlib" basePackage="org.eclipse.ocl.pivot" disposableProviderFactory="true"
       ecorePackage="../model-gen/oclstdlib.ecore#/">
     <genDataTypes ecoreDataType="../model-gen/oclstdlib.ecore#//Boolean"/>
+    <genDataTypes ecoreDataType="../model-gen/oclstdlib.ecore#//CoCollection"/>
     <genDataTypes ecoreDataType="../model-gen/oclstdlib.ecore#//Integer"/>
     <genDataTypes ecoreDataType="../model-gen/oclstdlib.ecore#//Real"/>
     <genDataTypes ecoreDataType="../model-gen/oclstdlib.ecore#//String"/>

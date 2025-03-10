@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -92,12 +93,14 @@ public class OCLstdlibFactory extends EFactoryImpl {
 			case 22:
 				return createBooleanFromString(eDataType, initialValue);
 			case 23:
-				return createIntegerFromString(eDataType, initialValue);
+				return createCoCollectionFromString(eDataType, initialValue);
 			case 24:
-				return createRealFromString(eDataType, initialValue);
+				return createIntegerFromString(eDataType, initialValue);
 			case 25:
-				return createStringFromString(eDataType, initialValue);
+				return createRealFromString(eDataType, initialValue);
 			case 26:
+				return createStringFromString(eDataType, initialValue);
+			case 27:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -115,12 +118,14 @@ public class OCLstdlibFactory extends EFactoryImpl {
 			case 22:
 				return convertBooleanToString(eDataType, instanceValue);
 			case 23:
-				return convertIntegerToString(eDataType, instanceValue);
+				return convertCoCollectionToString(eDataType, instanceValue);
 			case 24:
-				return convertRealToString(eDataType, instanceValue);
+				return convertIntegerToString(eDataType, instanceValue);
 			case 25:
-				return convertStringToString(eDataType, instanceValue);
+				return convertRealToString(eDataType, instanceValue);
 			case 26:
+				return convertStringToString(eDataType, instanceValue);
+			case 27:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -142,6 +147,24 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	 * @generated
 	 */
 	public String convertBooleanToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CoCollectionValue createCoCollectionFromString(EDataType eDataType, String initialValue) {
+		return (CoCollectionValue)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertCoCollectionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

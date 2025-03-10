@@ -403,7 +403,7 @@ implements PivotFactory {
 	 * @generated
 	 */
 	@Override
-	public CoCollectionType createCoCollectionType()
+	public @NonNull CoCollectionType createCoCollectionType()
 	{
 		CoCollectionTypeImpl coCollectionType = new CoCollectionTypeImpl();
 		return coCollectionType;

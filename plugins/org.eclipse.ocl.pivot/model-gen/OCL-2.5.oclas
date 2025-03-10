@@ -527,6 +527,13 @@
         <ownedComments body="&#xA;Return a set of all instances of the type and derived types of self.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CoCollectionType" xmi:id="ZFBzm" instanceClassName="org.eclipse.ocl.pivot.values.CoCollectionValue"
+        name="CoCollection" superClasses="#zfDWR">
+      <ownedOperations xmi:id="SrMm1" implementationClass="org.eclipse.ocl.pivot.library.collection.CoCollectionCountOperation" name="count"
+          type="#tYtCd">
+        <ownedParameters xmi:id="mkNpS" isRequired="false" name="value" type="#jbMkR"/>
+      </ownedOperations>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IgEJU" instanceClassName="java.util.Collection" isAbstract="true" name="Collection"
         superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -534,7 +541,7 @@
           <values>Collection</values>
         </ownedDetails>
       </ownedAnnotations>
-      <ownedComments body="&#xA;Collection is the abstract supertype of all collection types in the OCL Standard Library.&#xA;Each occurrence of an object in a collection is called an element.&#xA;If an object occurs twice in a collection, there are two elements.&#xA;&#xA;This sub clause defines the properties on Collections that have identical semantics for all collection subtypes.&#xA;Some operations may be defined within the subtype as well,&#xA;which means that there is an additional postcondition or a more specialized return value.&#xA;Collection is itself an instance of the metatype CollectionType.&#xA;&#xA;The definition of several common operations is different for each subtype.&#xA;These operations are not mentioned in this sub clause.&#xA;&#xA;The semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.&#xA;The semantics of those constructs is defined in Clause 10 (“Semantics Described using UML”).&#xA;In several cases the postcondition refers to other collection operations,&#xA;which in turn are defined in terms of the IterateExp or IteratorExp constructs.&#xA;&#xA;Well-formedness rules&#xA;&#xA;[1] A collection cannot contain oclText[invalid] values.&#xA;&#xA;context Collection&#xA;inv: self->forAll(not oclIsInvalid())&#xA;"/>
+      <ownedComments body="*&#xA;Collection is the abstract supertype of all collection types in the OCL Standard Library.&#xA;Each occurrence of an object in a collection is called an element.&#xA;If an object occurs twice in a collection, there are two elements.&#xA;&#xA;This sub clause defines the properties on Collections that have identical semantics for all collection subtypes.&#xA;Some operations may be defined within the subtype as well,&#xA;which means that there is an additional postcondition or a more specialized return value.&#xA;Collection is itself an instance of the metatype CollectionType.&#xA;&#xA;The definition of several common operations is different for each subtype.&#xA;These operations are not mentioned in this sub clause.&#xA;&#xA;The semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.&#xA;The semantics of those constructs is defined in Clause 10 (“Semantics Described using UML”).&#xA;In several cases the postcondition refers to other collection operations,&#xA;which in turn are defined in terms of the IterateExp or IteratorExp constructs.&#xA;&#xA;Well-formedness rules&#xA;&#xA;[1] A collection cannot contain oclText[invalid] values.&#xA;&#xA;context Collection&#xA;inv: self->forAll(not oclIsInvalid())&#xA;"/>
       <ownedOperations xmi:id="o3vBs" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" name="&lt;>"
           precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;True if c is not equal to oclText[self].&#xA;"/>
@@ -567,6 +574,8 @@
           type="#zyYl9">
         <ownedComments body="&#xA;The Set containing all the elements from oclText[self], with duplicates removed.&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="HZxtu" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation" name="coCollection"
+          type="#ZFBzm"/>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="oenaP" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#Be91P">
         <ownedComments body="&#xA;The Collection of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
@@ -947,6 +956,8 @@
         <ownedComments body="&#xA;The value of the map at oclText[key].&#xA;"/>
         <ownedParameters xmi:id="SbsaH" isRequired="false" name="key" type="#8dAuH"/>
       </ownedOperations>
+      <ownedOperations xmi:id="+tzUC" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation" name="coCollection"
+          type="#ZFBzm"/>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="fzpBj" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#Txm0H">
         <ownedComments body="&#xA;The Map of key and values that results from applying body to every value of the source map.&#xA;The result is flattened.&#xA;"/>

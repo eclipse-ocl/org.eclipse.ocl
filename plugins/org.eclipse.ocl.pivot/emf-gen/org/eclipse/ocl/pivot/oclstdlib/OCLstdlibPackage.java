@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.RealValue;
@@ -241,6 +242,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	private EDataType booleanEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType coCollectionEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -584,6 +592,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.CoCollectionValue <em>Co Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Co Collection</em>'.
+	 * @see org.eclipse.ocl.pivot.values.CoCollectionValue
+	 * @generated
+	 */
+	public EDataType getCoCollection() {
+		return coCollectionEDataType;
+	}
+
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -870,10 +891,11 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		// Create data types
 		booleanEDataType = createEDataType(22);
-		integerEDataType = createEDataType(23);
-		realEDataType = createEDataType(24);
-		stringEDataType = createEDataType(25);
-		unlimitedNaturalEDataType = createEDataType(26);
+		coCollectionEDataType = createEDataType(23);
+		integerEDataType = createEDataType(24);
+		realEDataType = createEDataType(25);
+		stringEDataType = createEDataType(26);
+		unlimitedNaturalEDataType = createEDataType(27);
 	}
 
 	/**
@@ -1013,6 +1035,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		// Initialize data types
 		initEDataType(booleanEDataType, Boolean.class, "Boolean", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(coCollectionEDataType, CoCollectionValue.class, "CoCollection", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(integerEDataType, IntegerValue.class, "Integer", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(realEDataType, RealValue.class, "Real", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(stringEDataType, String.class, "String", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1241,6 +1264,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EDataType BOOLEAN = eINSTANCE.getBoolean();
+
+		/**
+		 * The meta object literal for the '<em>Co Collection</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.values.CoCollectionValue
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getCoCollection()
+		 * @generated
+		 */
+		public static final EDataType CO_COLLECTION = eINSTANCE.getCoCollection();
 
 		/**
 		 * The meta object literal for the '<em>Integer</em>' data type.
