@@ -185,6 +185,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«IF type.isAbstract»
 				type.setIsAbstract(true);
 				«ENDIF»
+				«IF type.instanceClassName !== null»
+				type.setInstanceClassName("«type.instanceClassName»");
+				«ENDIF»
 				«IF !(type instanceof AnyType)»
 					«type.emitSuperClasses("type")»
 				«ENDIF»
@@ -217,6 +220,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						type = «type.getSymbolName()»;
 						«IF type.isAbstract»
 						type.setIsAbstract(true);
+						«ENDIF»
+						«IF type.instanceClassName !== null»
+						type.setInstanceClassName("«type.instanceClassName»");
 						«ENDIF»
 						«IF type.lower.intValue() != 0»
 						type.setLower(«type.lower.intValue()»);
@@ -443,6 +449,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
+						«IF type.instanceClassName !== null»
+						type.setInstanceClassName("«type.instanceClassName»");
+						«ENDIF»
 						«IF !type.keysAreNullFree»
 						type.setKeysAreNullFree(false);
 						«ENDIF»
@@ -587,6 +596,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
 						«var superClasses = type.getSuperclassesInPackage()»
 						type = «type.getSymbolNameWithoutNormalization()»;
+						«IF type.instanceClassName !== null»
+						type.setInstanceClassName("«type.instanceClassName»");
+						«ENDIF»
 						«FOR superClass : superClasses»
 							type.getSuperClasses().add(«superClass.getSymbolName()»);
 						«ENDFOR»
@@ -715,6 +727,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				List<Class> superClasses;
 				«FOR type : allTupleTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);
+					«IF type.instanceClassName !== null»
+					type.setInstanceClassName("«type.instanceClassName»");
+					«ENDIF»
 					«FOR property : type.getSortedProperties()»
 						«IF property.implementationClass !== null»
 							«property.getSymbolName()».setImplementationClass("«property.implementationClass»");

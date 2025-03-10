@@ -239,7 +239,7 @@ public abstract class AbstractContents extends PivotUtil
 		return asImport;
 	}
 
-	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
+	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
 		Iteration pivotIteration = createIteration(name, type, implementationClass, implementation);
 		initTemplateParameters(pivotIteration, templateParameters);
 		return pivotIteration;
