@@ -215,8 +215,8 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_any_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any('true')");		// Bug 415669
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any(2)");			// Bug 415669
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->any('true')", PivotMessages.ExpectedArgumentType, "any", 1, "Boolean", "String");
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->any(2)", PivotMessages.ExpectedArgumentType, "any", 1, "Boolean", "Integer");
 
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
 				"let b:Boolean = null in Bag{1, 2, 3}->any(b and b)");
@@ -705,8 +705,8 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_exists_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->exists('true')");		// Bug 415669
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->exists(2)");			// Bug 415669
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->exists('true')", PivotMessages.ExpectedArgumentType, "exists", 1, "Boolean", "String");
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->exists(2)", PivotMessages.ExpectedArgumentType, "exists", 1, "Boolean", "Integer");
 
 		ocl.assertQueryNull(EcorePackage.eINSTANCE,
 				"let b:Boolean = null in Bag{1, 2, 3}->exists(b and b)");
@@ -815,8 +815,8 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_forAll_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->forAll('true')");		// Bug 415669
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->forAll(2)");			// Bug 415669
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->forAll('true')", PivotMessages.ExpectedArgumentType, "forAll", 1, "Boolean", "String");
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->forAll(2)", PivotMessages.ExpectedArgumentType, "forAll", 1, "Boolean", "Integer");
 
 		ocl.assertQueryNull(EcorePackage.eINSTANCE,
 				"let b:Boolean = null in Bag{1, 2, 3}->forAll(b and b)");
@@ -978,8 +978,8 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_one_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->one('true')");		// Bug 415669
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->one(2)");			// Bug 415669
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->one('true')", PivotMessages.ExpectedArgumentType, "one", 1, "Boolean", "String");
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->one(2)", PivotMessages.ExpectedArgumentType, "one", 1, "Boolean", "Integer");
 
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
 				"let b:Boolean = null in Bag{1, 2, 3}->one(b and b)");
@@ -1024,8 +1024,8 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_reject_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->reject('true')");		// Bug 415669
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->reject(2)");			// Bug 415669
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->reject('true')", PivotMessages.ExpectedArgumentType, "reject", 1, "Boolean", "String");
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->reject(2)", PivotMessages.ExpectedArgumentType, "reject", 1, "Boolean", "Integer");
 
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
 				"let b:Boolean = null in Bag{1, 2, 3}->reject(b and b)");
@@ -1062,6 +1062,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Map{2 with 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k with v | k = 2)");
 		ocl.assertQueryResults(null, "Map{2 with 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k with v | v = 4)");
 
+		ocl.assertSemanticErrorQuery(null, "Sequence{'a', 'b', 'c', 'd', 'e'}->select(5)", PivotMessages.ExpectedArgumentType, "select", 1, "Boolean", "Integer");
 
 		ocl.dispose();
 	}
@@ -1072,8 +1073,8 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_select_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->select('true')");		// Bug 415669
-		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->select(2)");			// Bug 415669
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->select('true')", PivotMessages.ExpectedArgumentType, "select", 1, "Boolean", "String");
+		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->select(2)", PivotMessages.ExpectedArgumentType, "select", 1, "Boolean", "Integer");
 
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
 				"let b:Boolean = null in Bag{1, 2, 3}->select(b and b)");
