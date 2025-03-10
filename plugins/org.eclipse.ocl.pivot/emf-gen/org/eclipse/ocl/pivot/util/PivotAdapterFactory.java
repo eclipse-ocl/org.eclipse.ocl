@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CallOperationAction;
+import org.eclipse.ocl.pivot.CoCollectionType;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -261,6 +262,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseClass(org.eclipse.ocl.pivot.Class object)
 			{
 				return createClassAdapter();
+			}
+			@Override
+			public Adapter caseCoCollectionType(CoCollectionType object)
+			{
+				return createCoCollectionTypeAdapter();
 			}
 			@Override
 			public Adapter caseCollectionItem(CollectionItem object)
@@ -2201,6 +2207,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createClassAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CoCollectionType <em>Co Collection Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.CoCollectionType
+	 * @generated
+	 */
+	public Adapter createCoCollectionTypeAdapter()
+	{
 		return null;
 	}
 

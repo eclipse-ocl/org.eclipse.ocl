@@ -93,6 +93,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitCoCollectionType(org.eclipse.ocl.pivot.@NonNull CoCollectionType object) {
+		return visitDataType(object);
+	}
+
+	@Override
 	public R visitCollectionItem(org.eclipse.ocl.pivot.@NonNull CollectionItem object) {
 		return visitCollectionLiteralPart(object);
 	}

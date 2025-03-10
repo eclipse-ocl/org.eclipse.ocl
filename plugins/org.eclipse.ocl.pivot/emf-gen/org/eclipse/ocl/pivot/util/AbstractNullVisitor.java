@@ -93,6 +93,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCoCollectionType(org.eclipse.ocl.pivot.@NonNull CoCollectionType object) {
+		return null;
+	}
+
+	@Override
 	public R visitCollectionItem(org.eclipse.ocl.pivot.@NonNull CollectionItem object) {
 		return null;
 	}

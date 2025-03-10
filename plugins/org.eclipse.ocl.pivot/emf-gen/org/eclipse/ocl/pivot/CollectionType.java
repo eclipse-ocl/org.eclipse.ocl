@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -25,6 +26,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.CollectionType#getCoCollection <em>Co Collection</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CollectionType#getElementType <em>Element Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CollectionType#isIsNullFree <em>Is Null Free</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CollectionType#getLower <em>Lower</em>}</li>
@@ -35,6 +37,31 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * @generated
  */
 public interface CollectionType extends IterableType {
+
+	/**
+	 * Returns the value of the '<em><b>Co Collection</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Co Collection</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Co Collection</em>' attribute.
+	 * @see #setCoCollection(CoCollectionValue)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getCollectionType_CoCollection()
+	 * @generated
+	 */
+	CoCollectionValue getCoCollection();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CollectionType#getCoCollection <em>Co Collection</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Co Collection</em>' attribute.
+	 * @see #getCoCollection()
+	 * @generated
+	 */
+	void setCoCollection(CoCollectionValue value);
 
 	/**
 	 * Returns the value of the '<em><b>Element Type</b></em>' reference.

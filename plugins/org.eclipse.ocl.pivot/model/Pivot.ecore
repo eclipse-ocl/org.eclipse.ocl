@@ -17,6 +17,8 @@
       <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
     </eAnnotations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-CoCollection" name="CoCollection"
+      instanceClassName="org.eclipse.ocl.pivot.values.CoCollectionValue" serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-EcoreObject" name="EcoreObject"
       instanceClassName="org.eclipse.emf.ecore.EObject"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Integer" name="Integer"
@@ -298,6 +300,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-superClasses"
         name="superClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CoCollectionType" name="CoCollectionType"
+      eSuperTypes="#T-pivot-DataType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionItem" name="CollectionItem"
       eSuperTypes="#T-pivot-CollectionLiteralPart">
     <eOperations name="validateTypeIsItemType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -436,6 +440,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionType" name="CollectionType"
       eSuperTypes="#T-pivot-IterableType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CollectionType-coCollection"
+        name="coCollection" eType="#T-pivot-CoCollection" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CollectionType-elementType"
         name="elementType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>

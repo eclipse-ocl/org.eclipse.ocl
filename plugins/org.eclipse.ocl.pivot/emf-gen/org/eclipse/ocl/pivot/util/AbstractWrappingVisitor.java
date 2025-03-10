@@ -214,6 +214,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
+	public R visitCoCollectionType(org.eclipse.ocl.pivot.@NonNull CoCollectionType object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitCoCollectionType(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
 	public R visitCollectionItem(org.eclipse.ocl.pivot.@NonNull CollectionItem object) {
 		@Nullable P prologue = preVisit(object);
 		try {

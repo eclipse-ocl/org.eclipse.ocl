@@ -60,6 +60,7 @@
       <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#L-pivot-TransitionKind-external"/>
     </genEnums>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Boolean"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-CoCollection"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-EcoreObject"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Integer"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-LibraryFeature"/>
@@ -133,6 +134,7 @@
         <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/context"/>
       </genOperations>
     </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-CoCollectionType"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-CollectionItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-CollectionItem-ownedItem"/>
       <genOperations ecoreOperation="Pivot.ecore#//CollectionItem/validateTypeIsItemType">
@@ -175,6 +177,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-CollectionRange-ownedLast"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-CollectionType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-CollectionType-coCollection"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-CollectionType-elementType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-CollectionType-isNullFree"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-CollectionType-lower"/>

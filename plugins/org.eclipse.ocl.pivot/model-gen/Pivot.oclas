@@ -104,6 +104,9 @@
       <ownedProperties xmi:id="9Vw0e" isImplicit="true" name="MapType" opposite="#J5GM0" type="#JK5PO"/>
       <ownedProperties xmi:id="Jh7cO" isImplicit="true" name="TemplateParameter" opposite="#zfRXZ" type="#6yjmF"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:DataType" xmi:id="bvlO8" instanceClassName="org.eclipse.ocl.pivot.values.CoCollectionValue" isSerializable="false"
+        name="CoCollection" superClasses="&_0;#jbMkR"/>
+    <ownedClasses xmi:id="1oyqw" name="CoCollectionType" superClasses="#1mHCJ"/>
     <ownedClasses xmi:id="CKfVx" name="CollectionItem" superClasses="#1s6I1">
       <ownedInvariants xmi:id="D3ZRY" isCallable="true" name="TypeIsItemType">
         <ownedComments body="The type of a CollectionItem is the type of the item expression."/>
@@ -150,6 +153,7 @@
       <ownedProperties xmi:id="jF9nj" isComposite="true" name="ownedLast" opposite="#xXoj0" type="#BFtK4"/>
     </ownedClasses>
     <ownedClasses xmi:id="pawWx" name="CollectionType" superClasses="#9ppvF">
+      <ownedProperties xmi:id="Hje0c" isDerived="true" isRequired="false" isTransient="true" name="coCollection" type="#bvlO8"/>
       <ownedProperties xmi:id="zzSGt" isDerived="true" isResolveProxies="false" isTransient="true" isVolatile="true" name="elementType"
           opposite="#JFc9Y" type="#rrwsa"/>
       <ownedProperties xmi:id="6Rs,j" defaultValueString="false" name="isNullFree" type="#ZuwnB"/>

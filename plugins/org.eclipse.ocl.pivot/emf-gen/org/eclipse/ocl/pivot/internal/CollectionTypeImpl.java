@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -58,6 +59,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.CollectionTypeImpl#getCoCollection <em>Co Collection</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CollectionTypeImpl#getElementType <em>Element Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CollectionTypeImpl#isIsNullFree <em>Is Null Free</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CollectionTypeImpl#getLower <em>Lower</em>}</li>
@@ -77,7 +79,7 @@ implements CollectionType {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int COLLECTION_TYPE_FEATURE_COUNT = IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 4;
+	public static final int COLLECTION_TYPE_FEATURE_COUNT = IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Collection Type</em>' class.
@@ -87,6 +89,26 @@ implements CollectionType {
 	 * @ordered
 	 */
 	public static final int COLLECTION_TYPE_OPERATION_COUNT = IterableTypeImpl.ITERABLE_TYPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The default value of the '{@link #getCoCollection() <em>Co Collection</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCoCollection()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final CoCollectionValue CO_COLLECTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCoCollection() <em>Co Collection</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCoCollection()
+	 * @generated
+	 * @ordered
+	 */
+	protected CoCollectionValue coCollection = CO_COLLECTION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isIsNullFree() <em>Is Null Free</em>}' attribute.
@@ -169,6 +191,31 @@ implements CollectionType {
 	 * @generated
 	 */
 	@Override
+	public CoCollectionValue getCoCollection()
+	{
+		return coCollection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCoCollection(CoCollectionValue newCoCollection)
+	{
+		CoCollectionValue oldCoCollection = coCollection;
+		coCollection = newCoCollection;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 23, oldCoCollection, coCollection));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public boolean isIsNullFree()
 	{
 		return (eFlags & IS_NULL_FREE_EFLAG) != 0;
@@ -185,7 +232,7 @@ implements CollectionType {
 		boolean oldIsNullFree = (eFlags & IS_NULL_FREE_EFLAG) != 0;
 		if (newIsNullFree) eFlags |= IS_NULL_FREE_EFLAG; else eFlags &= ~IS_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 24, oldIsNullFree, newIsNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldIsNullFree, newIsNullFree));
 	}
 
 	/**
@@ -210,7 +257,7 @@ implements CollectionType {
 		Number oldLower = lower;
 		lower = newLower;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldLower, lower));
+			eNotify(new ENotificationImpl(this, Notification.SET, 26, oldLower, lower));
 	}
 
 	/**
@@ -235,7 +282,7 @@ implements CollectionType {
 		Number oldUpper = upper;
 		upper = newUpper;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 26, oldUpper, upper));
+			eNotify(new ENotificationImpl(this, Notification.SET, 27, oldUpper, upper));
 	}
 
 	/**
@@ -295,12 +342,14 @@ implements CollectionType {
 			case 22:
 				return getValue();
 			case 23:
-				return getElementType();
+				return getCoCollection();
 			case 24:
-				return isIsNullFree();
+				return getElementType();
 			case 25:
-				return getLower();
+				return isIsNullFree();
 			case 26:
+				return getLower();
+			case 27:
 				return getUpper();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -395,15 +444,18 @@ implements CollectionType {
 				setIsSerializable((Boolean)newValue);
 				return;
 			case 23:
-				setElementType((Type)newValue);
+				setCoCollection((CoCollectionValue)newValue);
 				return;
 			case 24:
-				setIsNullFree((Boolean)newValue);
+				setElementType((Type)newValue);
 				return;
 			case 25:
-				setLower((Number)newValue);
+				setIsNullFree((Boolean)newValue);
 				return;
 			case 26:
+				setLower((Number)newValue);
+				return;
+			case 27:
 				setUpper((Number)newValue);
 				return;
 		}
@@ -486,15 +538,18 @@ implements CollectionType {
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
 			case 23:
-				setElementType((Type)null);
+				setCoCollection(CO_COLLECTION_EDEFAULT);
 				return;
 			case 24:
-				setIsNullFree(IS_NULL_FREE_EDEFAULT);
+				setElementType((Type)null);
 				return;
 			case 25:
-				setLower(LOWER_EDEFAULT);
+				setIsNullFree(IS_NULL_FREE_EDEFAULT);
 				return;
 			case 26:
+				setLower(LOWER_EDEFAULT);
+				return;
+			case 27:
 				setUpper(UPPER_EDEFAULT);
 				return;
 		}
@@ -557,12 +612,14 @@ implements CollectionType {
 			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case 23:
-				return getElementType() != null;
+				return CO_COLLECTION_EDEFAULT == null ? coCollection != null : !CO_COLLECTION_EDEFAULT.equals(coCollection);
 			case 24:
-				return ((eFlags & IS_NULL_FREE_EFLAG) != 0) != IS_NULL_FREE_EDEFAULT;
+				return getElementType() != null;
 			case 25:
-				return LOWER_EDEFAULT == null ? lower != null : !LOWER_EDEFAULT.equals(lower);
+				return ((eFlags & IS_NULL_FREE_EFLAG) != 0) != IS_NULL_FREE_EDEFAULT;
 			case 26:
+				return LOWER_EDEFAULT == null ? lower != null : !LOWER_EDEFAULT.equals(lower);
+			case 27:
 				return UPPER_EDEFAULT == null ? upper != null : !UPPER_EDEFAULT.equals(upper);
 		}
 		return eDynamicIsSet(featureID);
