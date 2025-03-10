@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CoCollectionType;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -395,6 +396,16 @@ public class PivotUtil
 	public static org.eclipse.ocl.pivot.@NonNull Class createClass(@NonNull String name) {
 		org.eclipse.ocl.pivot.Class pivotType = PivotFactory.eINSTANCE.createClass();
 		pivotType.setName(name);
+		return pivotType;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull CoCollectionType createCoCollectionType(/*@NonNull*/ EDataType eCoCollectionType) {
+		CoCollectionType pivotType = PivotFactory.eINSTANCE.createCoCollectionType();
+		pivotType.setName(eCoCollectionType.getName());
+		((PivotObjectImpl)pivotType).setESObject(eCoCollectionType);
 		return pivotType;
 	}
 

@@ -148,6 +148,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/StandardLibrary.java" type="org.eclipse.ocl.pivot.StandardLibrary">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.StandardLibrary"/>
+                <message_argument value="getCoCollectionType()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
         <filter id="388194388">
             <message_arguments>
@@ -346,11 +354,39 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/CollectionValue.java" type="org.eclipse.ocl.pivot.values.CollectionValue">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.CollectionValue"/>
+                <message_argument value="getCoCollection()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/NumberValue.java" type="org.eclipse.ocl.pivot.values.NumberValue">
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.NumberValue"/>
                 <message_argument value="asNumber()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="CO_COLLECTION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="CO_COLLECTION_NAME"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="CO_COLLECTION_TYPE_NAME"/>
             </message_arguments>
         </filter>
     </resource>

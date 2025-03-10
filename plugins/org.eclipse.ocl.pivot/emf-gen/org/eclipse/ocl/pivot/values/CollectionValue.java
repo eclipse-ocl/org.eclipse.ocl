@@ -96,6 +96,12 @@ public interface CollectionValue extends IterableValue {
 
 	/**
 	 * @generated NOT
+	 * @since 1.23
+	 */
+	@NonNull CoCollectionValue getCoCollection();
+
+	/**
+	 * @generated NOT
 	 */
 	@NonNull Collection<? extends Object> getElements();
 

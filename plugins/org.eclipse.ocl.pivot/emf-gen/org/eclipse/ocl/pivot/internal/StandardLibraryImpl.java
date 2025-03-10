@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.CoCollectionType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
@@ -377,6 +378,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	private @Nullable BagType bagType = null;
 	private @Nullable PrimitiveType booleanType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class classType = null;
+	private @Nullable CoCollectionType coCollectionType = null;
 	private @Nullable CollectionType collectionType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class enumerationType = null;
 	private @Nullable PrimitiveType integerType = null;
@@ -509,6 +511,18 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			classType2 = classType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.CLASS_NAME);
 		}
 		return classType2;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull CoCollectionType getCoCollectionType() {
+		CoCollectionType coCollectionType2 = coCollectionType;
+		if (coCollectionType2 == null) {
+			coCollectionType2 = coCollectionType = resolveRequiredSimpleType(CoCollectionType.class, TypeId.CO_COLLECTION_NAME);
+		}
+		return coCollectionType2;
 	}
 
 	@Override

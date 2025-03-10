@@ -84,6 +84,7 @@ import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -178,6 +179,18 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, "Class", getTypeName(value));
+		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull CoCollectionValue asCoCollectionValue(@Nullable Object value) {
+		if (value instanceof CoCollectionValue) {
+			return (CoCollectionValue)value;
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.CO_COLLECTION_NAME, getTypeName(value));
 		}
 	}
 
@@ -1251,7 +1264,7 @@ public abstract class ValueUtil
 			stringValue = NULL_STRING;
 		}
 		else if (aValue instanceof Value) {							// Needed for Iterable Values such as CollectionValue
-			stringValue = ((Value)aValue).toString();
+			stringValue = aValue.toString();
 		}
 		else if (aValue instanceof String) {
 			stringValue = "'" + StringUtil.convertToOCLString((String)aValue) + "'";

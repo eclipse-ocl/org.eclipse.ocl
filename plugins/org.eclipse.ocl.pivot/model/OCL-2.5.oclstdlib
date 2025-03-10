@@ -336,7 +336,12 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	}
 }
 
-/*
+type CoCollection : CoCollectionType => 'org.eclipse.ocl.pivot.values.CoCollectionValue'
+{
+	operation count(value : OclAny[?]) : Integer => 'org.eclipse.ocl.pivot.library.collection.CoCollectionCountOperation';
+}
+
+/**
 Collection is the abstract supertype of all collection types in the OCL Standard Library.
 Each occurrence of an object in a collection is called an element.
 If an object occurs twice in a collection, there are two elements.
@@ -596,6 +601,8 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	@Deprecated Use regular CollectionType property
 	*/
 	static property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
+
+	operation coCollection() : CoCollection => 'org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation';
 }
 
 /*
@@ -848,6 +855,8 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	@Deprecated Use regular MapType property
 	*/
 	static property valueType : V[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
+
+	operation coCollection() : CoCollection => 'org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation';
 }
 
 	/*
