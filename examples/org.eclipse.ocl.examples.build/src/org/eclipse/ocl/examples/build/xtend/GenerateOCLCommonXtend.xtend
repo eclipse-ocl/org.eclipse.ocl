@@ -363,6 +363,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF iteration.isValidating»
 						iteration.setIsValidating(true);
 					«ENDIF»
+					«IF iteration.bodyExpression !== null»
+						createBodyExpression(iteration, «iteration.owningClass.getSymbolName()», "«iteration.bodyExpression.javaString()»", «iteration.type.getSymbolName()»);
+					«ENDIF»
 					«IF iteration.ownedIterators.size() > 0»
 						ownedParameters = iteration.getOwnedIterators();
 						«FOR parameter : iteration.ownedIterators»

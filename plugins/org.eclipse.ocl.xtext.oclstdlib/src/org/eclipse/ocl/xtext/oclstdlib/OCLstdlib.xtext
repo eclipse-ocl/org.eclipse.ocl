@@ -149,6 +149,7 @@ LibIterationCS returns LibIterationCS:
 	(isValidating?='validating')?
 	('=>' implementation=[base::JavaClassCS|SINGLE_QUOTED_STRING])?
 	(('{' (ownedAnnotations+=AnnotationElementCS
+	     | ('body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS ';')
 	     | ownedPreconditions+=PostCS
 	     | ownedPostconditions+=PreCS)* '}')
 	|';'
