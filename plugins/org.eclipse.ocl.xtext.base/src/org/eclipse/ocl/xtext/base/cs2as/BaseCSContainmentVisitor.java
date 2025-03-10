@@ -148,6 +148,13 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	}
 
 	protected Type refreshClassifier(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull ClassCS csElement) {
+		refreshInstanceClassName(pivotElement, csElement);
+		context.refreshTemplateSignature(csElement, pivotElement);
+		context.refreshPivotList(Constraint.class, pivotElement.getOwnedInvariants(), csElement.getOwnedConstraints());
+		return pivotElement;
+	}
+
+	protected void refreshInstanceClassName(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull ClassCS csElement) {
 		if (csElement.eIsSet(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME)) {
 			pivotElement.setInstanceClassName(csElement.getInstanceClassName());
 		}
@@ -159,9 +166,6 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		if ((newInstanceClassName != oldInstanceClassName) && ((newInstanceClassName == null) || !newInstanceClassName.equals(oldInstanceClassName))) {
 			pivotElement.setInstanceClassName(newInstanceClassName);
 		}
-		context.refreshTemplateSignature(csElement, pivotElement);
-		context.refreshPivotList(Constraint.class, pivotElement.getOwnedInvariants(), csElement.getOwnedConstraints());
-		return pivotElement;
 	}
 
 	protected @NonNull <T extends NamedElement> T refreshNamedElement(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull NamedElementCS csElement) {

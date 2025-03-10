@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
+import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
@@ -72,6 +73,30 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 			return IdManager.METAMODEL;
 		}
 		return super.getPackageId(csElement);
+	}
+
+	@Override
+	protected void refreshInstanceClassName(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull ClassCS csElement) {
+	//	if (csElement.eIsSet(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME)) {
+	//		pivotElement.setInstanceClassName(csElement.getInstanceClassName());
+	//	}
+	//	else {
+	//		pivotElement.eUnset(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME);
+	//	}
+		String newInstanceClassName = csElement.getInstanceClassName();
+		if (newInstanceClassName == null) {
+			JavaClassCS implementation = ((LibClassCS)csElement).getImplementation();
+			if (implementation != null) {
+				newInstanceClassName = implementation.getName();
+			}
+		}
+		String oldInstanceClassName = pivotElement.getInstanceClassName();
+		if ((newInstanceClassName != oldInstanceClassName) && ((newInstanceClassName == null) || !newInstanceClassName.equals(oldInstanceClassName))) {
+			pivotElement.setInstanceClassName(newInstanceClassName);
+		}
+		else if (newInstanceClassName == null) {
+			pivotElement.eUnset(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME);
+		}
 	}
 
 	@Override
