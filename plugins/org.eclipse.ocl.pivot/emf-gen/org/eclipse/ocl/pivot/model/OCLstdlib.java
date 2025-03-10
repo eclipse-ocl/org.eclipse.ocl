@@ -628,6 +628,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _OclAny;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.AnyType");
 			ownedClasses.add(type);
 			type = _OclComparable;
 			type.setIsAbstract(true);
@@ -646,6 +647,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _OclInvalid;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.InvalidType");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclVoid);
 			ownedClasses.add(type);
@@ -661,6 +663,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _OclSelf;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.SelfType");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -691,6 +694,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _OclVoid;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.VoidType");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -718,20 +722,25 @@ public class OCLstdlib extends ASResourceImpl
 
 			ownedClasses = ocl.getOwnedClasses();
 			type = _Boolean;
+			type.setInstanceClassName("java.lang.Boolean");
 			type.getSuperClasses().add(_OclAny);
 			ownedClasses.add(type);
 			type = _Integer;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.values.IntegerValue");
 			type.getSuperClasses().add(_Real);
 			ownedClasses.add(type);
 			type = _Real;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.values.RealValue");
 			type.getSuperClasses().add(_OclComparable);
 			type.getSuperClasses().add(_OclSummable);
 			ownedClasses.add(type);
 			type = _String;
+			type.setInstanceClassName("java.lang.String");
 			type.getSuperClasses().add(_OclComparable);
 			type.getSuperClasses().add(_OclSummable);
 			ownedClasses.add(type);
 			type = _UnlimitedNatural;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.values.UnlimitedNaturalValue");
 			type.getSuperClasses().add(_OclComparable);
 			ownedClasses.add(type);
 		}
@@ -743,34 +752,41 @@ public class OCLstdlib extends ASResourceImpl
 
 			ownedClasses = ocl.getOwnedClasses();
 			type = _Bag_Bag_T;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.values.Bag");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Bag_T_T);
 			ownedClasses.add(type);
 			type = _Collection_Collection_T;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("java.util.Collection");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 			type = _OrderedCollection_OrderedCollection_T;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("java.util.Collection");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OrderedCollection_T_T);
 			ownedClasses.add(type);
 			type = _OrderedSet_OrderedSet_T;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.values.OrderedSet");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OrderedCollection_OrderedSet_T_T);
 			superClasses.add(_UniqueCollection_OrderedSet_T_T);
 			ownedClasses.add(type);
 			type = _Sequence_Sequence_T;
+			type.setInstanceClassName("java.util.List");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OrderedCollection_Sequence_T_T);
 			ownedClasses.add(type);
 			type = _Set_Set_T;
+			type.setInstanceClassName("java.util.Set");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_Set_T_T);
 			ownedClasses.add(type);
 			type = _UniqueCollection_UniqueCollection_T;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("java.util.Collection");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_UniqueCollection_T_T);
 			ownedClasses.add(type);
@@ -1455,6 +1471,7 @@ public class OCLstdlib extends ASResourceImpl
 
 			ownedClasses = ocl.getOwnedClasses();
 			type = _Map_Map_K_Map_V;
+			type.setInstanceClassName("java.util.Map");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
