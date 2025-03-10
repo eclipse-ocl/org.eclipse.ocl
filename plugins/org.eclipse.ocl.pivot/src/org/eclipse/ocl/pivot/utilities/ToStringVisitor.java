@@ -835,7 +835,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		append("; ");
 		safeVisit(callExp.getOwnedResult());
 		append(" | ");
-		safeVisit(callExp.getOwnedBody());
+		isFirst = true;
+		for (OCLExpression body : callExp.getOwnedBodies()) {
+			if (!isFirst) {
+				append(", ");
+			}
+			safeVisit(body);
+			isFirst = false;
+		}
 		append(")");//$NON-NLS-1$
 		return null;
 	}

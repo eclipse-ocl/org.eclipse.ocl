@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.CallExp#isIsImplicit <em>Is Implicit</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CallExp#isIsSafe <em>Is Safe</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.CallExp#getOwnedInlinedBody <em>Owned Inlined Body</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CallExp#getOwnedSource <em>Owned Source</em>}</li>
  * </ul>
  *
@@ -135,5 +136,30 @@ public interface CallExp extends OCLExpression {
 	 * @generated
 	 */
 	void setIsSafe(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Owned Inlined Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Inlined Body</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Inlined Body</em>' containment reference.
+	 * @see #setOwnedInlinedBody(OCLExpression)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getCallExp_OwnedInlinedBody()
+	 * @generated
+	 */
+	OCLExpression getOwnedInlinedBody();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CallExp#getOwnedInlinedBody <em>Owned Inlined Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owned Inlined Body</em>' containment reference.
+	 * @see #getOwnedInlinedBody()
+	 * @generated
+	 */
+	void setOwnedInlinedBody(OCLExpression value);
 
 } // CallExp

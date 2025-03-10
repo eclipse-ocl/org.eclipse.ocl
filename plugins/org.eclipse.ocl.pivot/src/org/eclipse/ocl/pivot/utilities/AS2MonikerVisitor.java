@@ -109,7 +109,8 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	public static void initialize() {
 		if (!initialized) {
 			initialized = true;
-			roleNames.put(PivotPackage.Literals.LOOP_EXP__OWNED_BODY, "argument");
+			roleNames.put(PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, "arguments");
+			roleNames.put(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, "argument");
 			//			roleNames.put(PivotPackage.Literals.EXPRESSION_IN_OCL__BODY_EXPRESSION, "ownedExpression");
 
 			/*		roleNames.put(PivotPackage.Literals.CALL_EXP__SOURCE, "s");

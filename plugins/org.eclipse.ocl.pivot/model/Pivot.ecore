@@ -210,6 +210,8 @@
         name="isImplicit" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CallExp-isSafe"
         name="isSafe" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedInlinedBody"
+        name="ownedInlinedBody" eType="#T-pivot-OCLExpression" transient="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedSource"
         name="ownedSource" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
@@ -1123,6 +1125,12 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-IterateExp-ownedBodies"
+        name="ownedBodies" lowerBound="1" upperBound="-1" eType="#T-pivot-OCLExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-IterateExp-ownedBody"
+        name="ownedBody" lowerBound="1" eType="#T-pivot-OCLExpression" volatile="true"
+        transient="true" derived="true" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-IterateExp-ownedResult"
         name="ownedResult" eType="#T-pivot-Variable" containment="true"/>
   </eClassifiers>
@@ -1474,6 +1482,8 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-IteratorExp-ownedBody"
+        name="ownedBody" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IteratorVariable" name="IteratorVariable"
       eSuperTypes="#T-pivot-Variable">
@@ -1763,8 +1773,6 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedBody"
-        name="ownedBody" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedCoIterators"
         name="ownedCoIterators" upperBound="-1" eType="#T-pivot-IteratorVariable"
         containment="true">

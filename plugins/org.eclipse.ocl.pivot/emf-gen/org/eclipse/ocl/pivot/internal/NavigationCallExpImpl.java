@@ -116,7 +116,7 @@ public abstract class NavigationCallExpImpl
 	{
 		if (qualifiers == null)
 		{
-			qualifiers = new EObjectResolvingEList<OCLExpression>(OCLExpression.class, this, 14);
+			qualifiers = new EObjectResolvingEList<OCLExpression>(OCLExpression.class, this, 15);
 		}
 		return qualifiers;
 	}
@@ -135,7 +135,7 @@ public abstract class NavigationCallExpImpl
 			if (navigationSource != oldNavigationSource)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 13, oldNavigationSource, navigationSource));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 14, oldNavigationSource, navigationSource));
 			}
 		}
 		return navigationSource;
@@ -160,7 +160,7 @@ public abstract class NavigationCallExpImpl
 		Property oldNavigationSource = navigationSource;
 		navigationSource = newNavigationSource;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldNavigationSource, navigationSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldNavigationSource, navigationSource));
 	}
 
 	/**
@@ -196,13 +196,15 @@ public abstract class NavigationCallExpImpl
 			case 10:
 				return isIsSafe();
 			case 11:
-				return getOwnedSource();
+				return getOwnedInlinedBody();
 			case 12:
-				return isIsPre();
+				return getOwnedSource();
 			case 13:
+				return isIsPre();
+			case 14:
 				if (resolve) return getNavigationSource();
 				return basicGetNavigationSource();
-			case 14:
+			case 15:
 				return getQualifiers();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -253,15 +255,18 @@ public abstract class NavigationCallExpImpl
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)newValue);
+				setOwnedInlinedBody((OCLExpression)newValue);
 				return;
 			case 12:
-				setIsPre((Boolean)newValue);
+				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 13:
-				setNavigationSource((Property)newValue);
+				setIsPre((Boolean)newValue);
 				return;
 			case 14:
+				setNavigationSource((Property)newValue);
+				return;
+			case 15:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
@@ -309,15 +314,18 @@ public abstract class NavigationCallExpImpl
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)null);
+				setOwnedInlinedBody((OCLExpression)null);
 				return;
 			case 12:
-				setIsPre(IS_PRE_EDEFAULT);
+				setOwnedSource((OCLExpression)null);
 				return;
 			case 13:
-				setNavigationSource((Property)null);
+				setIsPre(IS_PRE_EDEFAULT);
 				return;
 			case 14:
+				setNavigationSource((Property)null);
+				return;
+			case 15:
 				getQualifiers().clear();
 				return;
 		}
@@ -356,12 +364,14 @@ public abstract class NavigationCallExpImpl
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
-				return ownedSource != null;
+				return ownedInlinedBody != null;
 			case 12:
-				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
+				return ownedSource != null;
 			case 13:
-				return navigationSource != null;
+				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
 			case 14:
+				return navigationSource != null;
+			case 15:
 				return qualifiers != null && !qualifiers.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

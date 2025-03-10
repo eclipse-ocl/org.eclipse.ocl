@@ -185,7 +185,7 @@ implements OperationCallExp {
 		boolean oldIsVirtual = (eFlags & IS_VIRTUAL_EFLAG) != 0;
 		if (newIsVirtual) eFlags |= IS_VIRTUAL_EFLAG; else eFlags &= ~IS_VIRTUAL_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldIsVirtual, newIsVirtual));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldIsVirtual, newIsVirtual));
 	}
 
 	/**
@@ -199,7 +199,7 @@ implements OperationCallExp {
 	{
 		if (ownedArguments == null)
 		{
-			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, 14);
+			ownedArguments = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, 15);
 		}
 		return ownedArguments;
 	}
@@ -218,7 +218,7 @@ implements OperationCallExp {
 			if (referredOperation != oldReferredOperation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 15, oldReferredOperation, referredOperation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 16, oldReferredOperation, referredOperation));
 			}
 		}
 		return referredOperation;
@@ -243,7 +243,7 @@ implements OperationCallExp {
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 16, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -265,8 +265,10 @@ implements OperationCallExp {
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
+				return basicSetOwnedInlinedBody(null, msgs);
+			case 12:
 				return basicSetOwnedSource(null, msgs);
-			case 14:
+			case 15:
 				return ((InternalEList<?>)getOwnedArguments()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -305,14 +307,16 @@ implements OperationCallExp {
 			case 10:
 				return isIsSafe();
 			case 11:
-				return getOwnedSource();
+				return getOwnedInlinedBody();
 			case 12:
-				return isIsPre();
+				return getOwnedSource();
 			case 13:
-				return isIsVirtual();
+				return isIsPre();
 			case 14:
-				return getOwnedArguments();
+				return isIsVirtual();
 			case 15:
+				return getOwnedArguments();
+			case 16:
 				if (resolve) return getReferredOperation();
 				return basicGetReferredOperation();
 		}
@@ -364,19 +368,22 @@ implements OperationCallExp {
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)newValue);
+				setOwnedInlinedBody((OCLExpression)newValue);
 				return;
 			case 12:
-				setIsPre((Boolean)newValue);
+				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 13:
-				setIsVirtual((Boolean)newValue);
+				setIsPre((Boolean)newValue);
 				return;
 			case 14:
+				setIsVirtual((Boolean)newValue);
+				return;
+			case 15:
 				getOwnedArguments().clear();
 				getOwnedArguments().addAll((Collection<? extends OCLExpression>)newValue);
 				return;
-			case 15:
+			case 16:
 				setReferredOperation((Operation)newValue);
 				return;
 		}
@@ -423,18 +430,21 @@ implements OperationCallExp {
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedSource((OCLExpression)null);
+				setOwnedInlinedBody((OCLExpression)null);
 				return;
 			case 12:
-				setIsPre(IS_PRE_EDEFAULT);
+				setOwnedSource((OCLExpression)null);
 				return;
 			case 13:
-				setIsVirtual(IS_VIRTUAL_EDEFAULT);
+				setIsPre(IS_PRE_EDEFAULT);
 				return;
 			case 14:
-				getOwnedArguments().clear();
+				setIsVirtual(IS_VIRTUAL_EDEFAULT);
 				return;
 			case 15:
+				getOwnedArguments().clear();
+				return;
+			case 16:
 				setReferredOperation((Operation)null);
 				return;
 		}
@@ -473,14 +483,16 @@ implements OperationCallExp {
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
-				return ownedSource != null;
+				return ownedInlinedBody != null;
 			case 12:
-				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
+				return ownedSource != null;
 			case 13:
-				return ((eFlags & IS_VIRTUAL_EFLAG) != 0) != IS_VIRTUAL_EDEFAULT;
+				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
 			case 14:
-				return ownedArguments != null && !ownedArguments.isEmpty();
+				return ((eFlags & IS_VIRTUAL_EFLAG) != 0) != IS_VIRTUAL_EDEFAULT;
 			case 15:
+				return ownedArguments != null && !ownedArguments.isEmpty();
+			case 16:
 				return referredOperation != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -661,7 +673,7 @@ implements OperationCallExp {
 						safe_owningClass_source = owningClass_0;
 					}
 					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression_0, ownedArguments);
 					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
 					final /*@NonInvalid*/ @NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
 					final /*@NonInvalid*/ @NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
@@ -1118,7 +1130,7 @@ implements OperationCallExp {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression_0, ownedArguments);
 					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
 					final /*@NonInvalid*/ @Nullable Operation referredOperation = this.getReferredOperation();
 					final /*@NonInvalid*/ @NonNull Object ownedParameters = referredOperation == null;

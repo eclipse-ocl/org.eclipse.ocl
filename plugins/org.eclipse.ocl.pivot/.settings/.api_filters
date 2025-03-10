@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CallExp.java" type="org.eclipse.ocl.pivot.CallExp">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.CallExp"/>
+                <message_argument value="getOwnedInlinedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.CallExp"/>
+                <message_argument value="setOwnedInlinedBody(OCLExpression)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedInlinedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setOwnedInlinedBody(OCLExpression)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/CollectionType.java" type="org.eclipse.ocl.pivot.CollectionType">
         <filter id="403804204">
             <message_arguments>
@@ -46,6 +70,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/IterateExp.java" type="org.eclipse.ocl.pivot.IterateExp">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedBodies()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
         <filter id="403804204">
             <message_arguments>
@@ -80,6 +111,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getCallExp_OwnedInlinedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getCoCollection()"/>
             </message_arguments>
         </filter>
@@ -93,8 +129,34 @@
                 <message_argument value="getCollectionType_CoCollection()"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIterateExp_OwnedBodies()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIterateExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="LOOP_EXP__OWNED_BODY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="CALL_EXP__OWNED_INLINED_BODY"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="COLLECTION_TYPE__CO_COLLECTION"/>
@@ -110,6 +172,21 @@
                 <message_argument value="CO_COLLECTION_TYPE"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATE_EXP__OWNED_BODIES"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATE_EXP__OWNED_BODY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP__OWNED_BODY"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
         <filter id="336658481">
@@ -118,9 +195,34 @@
                 <message_argument value="DATAid_CoCollection"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="ORD_CLSSid_OCLExpression_0"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="DATAid_CoCollection"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORD_CLSSid_OCLExpression_0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Properties">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
+                <message_argument value="_LoopExp__ownedBody"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
+                <message_argument value="_OCLExpression__LoopExp__ownedBody"/>
             </message_arguments>
         </filter>
     </resource>
@@ -156,12 +258,46 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/AssociationClassCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.AssociationClassCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.AssociationClassCallExpImpl"/>
+                <message_argument value="ASSOCIATION_CLASS_CALL_EXP_FEATURE_COUNT"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.BagTypeImpl"/>
                 <message_argument value="BAG_TYPE_FEATURE_COUNT"/>
                 <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CallExpImpl.java" type="org.eclipse.ocl.pivot.internal.CallExpImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.CallExpImpl"/>
+                <message_argument value="ownedInlinedBody"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.CallExpImpl"/>
+                <message_argument value="CALL_EXP_FEATURE_COUNT"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicSetOwnedInlinedBody(OCLExpression, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedInlinedBody"/>
             </message_arguments>
         </filter>
     </resource>
@@ -203,12 +339,105 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/FeatureCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.FeatureCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.FeatureCallExpImpl"/>
+                <message_argument value="FEATURE_CALL_EXP_FEATURE_COUNT"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterateExpImpl.java" type="org.eclipse.ocl.pivot.internal.IterateExpImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IterateExpImpl"/>
+                <message_argument value="ownedBodies"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IterateExpImpl"/>
+                <message_argument value="ITERATE_EXP_FEATURE_COUNT"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedBodies"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IteratorExpImpl.java" type="org.eclipse.ocl.pivot.internal.IteratorExpImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IteratorExpImpl"/>
+                <message_argument value="ownedBody"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IteratorExpImpl"/>
+                <message_argument value="ITERATOR_EXP_FEATURE_COUNT"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedBody"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LoopExpImpl.java" type="org.eclipse.ocl.pivot.internal.LoopExpImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LoopExpImpl"/>
+                <message_argument value="ownedBody"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NavigationCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.NavigationCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.NavigationCallExpImpl"/>
+                <message_argument value="NAVIGATION_CALL_EXP_FEATURE_COUNT"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OperationCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.OperationCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OperationCallExpImpl"/>
+                <message_argument value="OPERATION_CALL_EXP_FEATURE_COUNT"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OppositePropertyCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.OppositePropertyCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OppositePropertyCallExpImpl"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP_FEATURE_COUNT"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OrderedSetTypeImpl.java" type="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl"/>
                 <message_argument value="ORDERED_SET_TYPE_FEATURE_COUNT"/>
                 <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PropertyCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.PropertyCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.PropertyCallExpImpl"/>
+                <message_argument value="PROPERTY_CALL_EXP_FEATURE_COUNT"/>
+                <message_argument value="16"/>
             </message_arguments>
         </filter>
     </resource>

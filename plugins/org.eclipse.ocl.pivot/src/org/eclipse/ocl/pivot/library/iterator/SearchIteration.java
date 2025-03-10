@@ -45,15 +45,13 @@ public class SearchIteration extends AbstractIteration
 
 	@Override
 	protected @Nullable Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
-	//	return ((IterationManagerExtension)iterationManager).getExecutor().evaluate(body);
-		// TODO Auto-generated method stub
-		return super.resolveTerminalValue(iterationManager);
+		return iterationManager.evaluateBody(2);
 	}
 
 	@Override
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
 		Object bodyValue = iterationManager.evaluateBody();
 		iterationManager.updateAccumulator(bodyValue);
-		return CARRY_ON;
+		return iterationManager.evaluateBody(1) == ValueUtil.TRUE_VALUE ? CARRY_ON : null;
 	}
 }
