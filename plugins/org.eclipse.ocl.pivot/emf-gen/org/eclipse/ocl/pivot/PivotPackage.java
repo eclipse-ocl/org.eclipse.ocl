@@ -333,6 +333,17 @@ extends EPackage
 	EClass getCollectionType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.CollectionType#getCoCollection <em>Co Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Co Collection</em>'.
+	 * @see org.eclipse.ocl.pivot.CollectionType#getCoCollection()
+	 * @see #getCollectionType()
+	 * @generated
+	 */
+	EAttribute getCollectionType_CoCollection();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.CollectionType#getElementType <em>Element Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3726,6 +3737,16 @@ extends EPackage
 	EOperation getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CoCollectionType <em>Co Collection Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Co Collection Type</em>'.
+	 * @see org.eclipse.ocl.pivot.CoCollectionType
+	 * @generated
+	 */
+	EClass getCoCollectionType();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Class#isIsInterface <em>Is Interface</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5766,6 +5787,16 @@ extends EPackage
 	EDataType getBoolean();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.CoCollectionValue <em>Co Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Co Collection</em>'.
+	 * @see org.eclipse.ocl.pivot.values.CoCollectionValue
+	 * @generated
+	 */
+	EDataType getCoCollection();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.ecore.EObject <em>Ecore Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6132,6 +6163,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass COLLECTION_TYPE = eINSTANCE.getCollectionType();
+
+		/**
+		 * The meta object literal for the '<em><b>Co Collection</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COLLECTION_TYPE__CO_COLLECTION = eINSTANCE.getCollectionType_CoCollection();
 
 		/**
 		 * The meta object literal for the '<em><b>Element Type</b></em>' reference feature.
@@ -8856,6 +8895,16 @@ extends EPackage
 		EOperation CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = eINSTANCE.getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CoCollectionTypeImpl <em>Co Collection Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.CoCollectionTypeImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCoCollectionType()
+		 * @generated
+		 */
+		EClass CO_COLLECTION_TYPE = eINSTANCE.getCoCollectionType();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Interface</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -10483,6 +10532,16 @@ extends EPackage
 		 * @generated
 		 */
 		EDataType BOOLEAN = eINSTANCE.getBoolean();
+
+		/**
+		 * The meta object literal for the '<em>Co Collection</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.values.CoCollectionValue
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCoCollection()
+		 * @generated
+		 */
+		EDataType CO_COLLECTION = eINSTANCE.getCoCollection();
 
 		/**
 		 * The meta object literal for the '<em>Ecore Object</em>' data type.

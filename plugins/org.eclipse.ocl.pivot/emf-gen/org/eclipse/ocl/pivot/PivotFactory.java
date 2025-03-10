@@ -51,6 +51,15 @@ extends EFactory {
 	@NonNull Class createClass();
 
 	/**
+	 * Returns a new object of class '<em>Co Collection Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Co Collection Type</em>'.
+	 * @generated
+	 */
+	CoCollectionType createCoCollectionType();
+
+	/**
 	 * Returns a new object of class '<em>Template Binding</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

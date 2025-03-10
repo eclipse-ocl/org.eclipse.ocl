@@ -52,6 +52,7 @@ public interface Visitor<R>
 	R visitCallExp(org.eclipse.ocl.pivot.@NonNull CallExp object);
 	R visitCallOperationAction(org.eclipse.ocl.pivot.@NonNull CallOperationAction object);
 	R visitClass(org.eclipse.ocl.pivot.@NonNull Class object);
+	R visitCoCollectionType(org.eclipse.ocl.pivot.@NonNull CoCollectionType object);
 	R visitCollectionItem(org.eclipse.ocl.pivot.@NonNull CollectionItem object);
 	R visitCollectionLiteralExp(org.eclipse.ocl.pivot.@NonNull CollectionLiteralExp object);
 	R visitCollectionLiteralPart(org.eclipse.ocl.pivot.@NonNull CollectionLiteralPart object);

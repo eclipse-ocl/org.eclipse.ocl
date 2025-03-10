@@ -299,6 +299,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _CallExp = createClass(PivotPackage.Literals.CALL_EXP);
 		private final @NonNull Class _CallOperationAction = createClass(PivotPackage.Literals.CALL_OPERATION_ACTION);
 		private final @NonNull Class _Class = createClass(PivotPackage.Literals.CLASS);
+		private final @NonNull DataType _CoCollection = createDataType(PivotPackage.Literals.CO_COLLECTION);
+		private final @NonNull Class _CoCollectionType = createClass(PivotPackage.Literals.CO_COLLECTION_TYPE);
 		private final @NonNull Class _CollectionItem = createClass(PivotPackage.Literals.COLLECTION_ITEM);
 		private final @NonNull Class _CollectionLiteralExp = createClass(PivotPackage.Literals.COLLECTION_LITERAL_EXP);
 		private final @NonNull Class _CollectionLiteralPart = createClass(PivotPackage.Literals.COLLECTION_LITERAL_PART);
@@ -728,6 +730,15 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Type);
 			superClasses.add(_Namespace);
 			superClasses.add(_TemplateableElement);
+			ownedClasses.add(type);
+			type = _CoCollection;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.values.CoCollectionValue");
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
+			type = _CoCollectionType;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_DataType);
 			ownedClasses.add(type);
 			type = _CollectionItem;
 			superClasses = type.getSuperClasses();
@@ -2446,6 +2457,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_CollectionLiteralPart_CollectionLiteralExp_ownedParts = createProperty("CollectionLiteralExp", _CollectionLiteralExp);
 		private final @NonNull Property pr_CollectionRange_ownedFirst = createProperty(PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST, _OCLExpression);
 		private final @NonNull Property pr_CollectionRange_ownedLast = createProperty(PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST, _OCLExpression);
+		private final @NonNull Property pr_CollectionType_coCollection = createProperty(PivotPackage.Literals.COLLECTION_TYPE__CO_COLLECTION, _CoCollection);
 		private final @NonNull Property pr_CollectionType_elementType = createProperty(PivotPackage.Literals.COLLECTION_TYPE__ELEMENT_TYPE, _Type);
 		private final @NonNull Property pr_CollectionType_isNullFree = createProperty(PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE, _Boolean);
 		private final @NonNull Property pr_CollectionType_lower = createProperty(PivotPackage.Literals.COLLECTION_TYPE__LOWER, _Integer);
@@ -2982,6 +2994,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_OCLExpression_CollectionRange_ownedLast);
 
 			ownedProperties = _CollectionType.getOwnedProperties();
+			ownedProperties.add(property = pr_CollectionType_coCollection);
+			property.setIsDerived(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setIsTransient(true);
 			ownedProperties.add(property = pr_CollectionType_elementType);
 			property.setIsDerived(true);
 			property.setIsTransient(true);

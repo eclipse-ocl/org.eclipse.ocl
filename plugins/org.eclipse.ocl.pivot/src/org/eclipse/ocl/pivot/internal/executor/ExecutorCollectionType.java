@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -35,6 +36,7 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 	protected final @NonNull IntegerValue lower;
 	protected final @NonNull UnlimitedNaturalValue upper;
 	protected final @NonNull CollectionTypeId typeId;
+	private /*@LazyNonNull*/ CoCollectionValue coCollection = null;
 
 	public ExecutorCollectionType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
 			@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
@@ -55,6 +57,14 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 			return false;
 		}
 		return TypeUtil.conformsToCollectionType(standardLibrary, this, (CollectionType)type);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public CoCollectionValue getCoCollection() {
+		return coCollection;
 	}
 
 	@Override
@@ -161,6 +171,14 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 	@Override
 	public boolean isIsNullFree() {
 		return isNullFree;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public void setCoCollection(CoCollectionValue newCoCollection) {
+		coCollection = newCoCollection;
 	}
 
 	@Override

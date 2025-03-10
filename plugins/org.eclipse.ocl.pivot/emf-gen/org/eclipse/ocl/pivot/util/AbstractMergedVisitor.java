@@ -85,6 +85,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitCoCollectionType(org.eclipse.ocl.pivot.@NonNull CoCollectionType object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitCollectionItem(org.eclipse.ocl.pivot.@NonNull CollectionItem object) {
 		return visiting(object);
 	}
