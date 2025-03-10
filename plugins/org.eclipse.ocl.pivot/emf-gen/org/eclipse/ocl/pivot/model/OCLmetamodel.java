@@ -53,7 +53,11 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -805,6 +809,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_ValueSpecification);
 			ownedClasses.add(type);
 			type = _EcoreObject;
+			type.setInstanceClassName("org.eclipse.emf.ecore.EObject");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -920,6 +925,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Package);
 			ownedClasses.add(type);
 			type = _LibraryFeature;
+			type.setInstanceClassName("org.eclipse.ocl.pivot.library.LibraryFeature");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -959,11 +965,13 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _MorePivotable;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.utilities.MorePivotable");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
 			type = _Nameable;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.utilities.Nameable");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
@@ -997,6 +1005,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_TypedElement);
 			ownedClasses.add(type);
 			type = _Object;
+			type.setInstanceClassName("java.lang.Object");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -1037,6 +1046,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _Pivotable;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.utilities.Pivotable");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
@@ -1178,6 +1188,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Element);
 			ownedClasses.add(type);
 			type = _Throwable;
+			type.setInstanceClassName("java.lang.Throwable");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -1250,6 +1261,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _Visitable;
 			type.setIsAbstract(true);
+			type.setInstanceClassName("org.eclipse.ocl.pivot.util.Visitable");
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
