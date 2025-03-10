@@ -1118,7 +1118,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		MapType mapType = null;
 		List</*@Nullable*/ IteratorVariable> pivotCoIterators = null;
 		Type rawSourceElementType = null;
-		Type sourceType = csNameExp.getSourceType();
+		Type sourceType = source.getType();				// csNameExp.getSourceType();
 		if (sourceType instanceof CollectionType) {
 			isCollection = true;
 			CollectionType sourceCollectionType = (CollectionType)sourceType;
