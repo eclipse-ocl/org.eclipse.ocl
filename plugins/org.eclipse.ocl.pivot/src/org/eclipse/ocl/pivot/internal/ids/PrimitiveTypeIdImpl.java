@@ -78,6 +78,9 @@ public class PrimitiveTypeIdImpl extends UnscopedId implements PrimitiveTypeId
 		if (this == TypeId.BOOLEAN) {
 			return "BOOLEAN";
 		}
+		else if (this == TypeId.CO_COLLECTION) {
+			return "CO_COLLECTION";
+		}
 		else if (this == TypeId.INTEGER) {
 			return "INTEGER";
 		}

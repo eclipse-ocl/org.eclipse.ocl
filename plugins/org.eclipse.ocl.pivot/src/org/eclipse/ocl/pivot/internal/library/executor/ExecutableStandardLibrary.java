@@ -118,6 +118,11 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCoCollectionType() {
+		return OCLstdlibTables.Types._CoCollection;
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType() {
 		return OCLstdlibTables.Types._Collection;
 	}

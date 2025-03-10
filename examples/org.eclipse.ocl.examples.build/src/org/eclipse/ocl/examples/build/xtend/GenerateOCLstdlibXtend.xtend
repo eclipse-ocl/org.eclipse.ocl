@@ -109,6 +109,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.AssociativityKind;
 			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.Class;
+			import org.eclipse.ocl.pivot.CoCollectionType;
 			import org.eclipse.ocl.pivot.CollectionType;
 			import org.eclipse.ocl.pivot.InvalidType;
 			import org.eclipse.ocl.pivot.Iteration;

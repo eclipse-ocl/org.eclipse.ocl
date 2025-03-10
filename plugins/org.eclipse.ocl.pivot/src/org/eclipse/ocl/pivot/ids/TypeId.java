@@ -44,6 +44,14 @@ public interface TypeId extends ElementId
 	 */
 	public static final @NonNull String BOOLEAN_TYPE_NAME = "BooleanType";
 	public static final @NonNull String CLASS_NAME = "Class";
+	/**
+	 * @since 1.23
+	 */
+	public static final @NonNull String CO_COLLECTION_NAME = "CoCollection";
+	/**
+	 * @since 1.23
+	 */
+	public static final @NonNull String CO_COLLECTION_TYPE_NAME = "CoCollectionType";
 	public static final @NonNull String COLLECTION_NAME = "Collection";
 	public static final @NonNull String COLLECTION_TYPE_NAME = "CollectionType";
 	public static final @NonNull String DATA_TYPE_NAME = "DataType";
@@ -131,6 +139,10 @@ public interface TypeId extends ElementId
 	public static final @NonNull String VOID_TYPE_NAME = "VoidType";
 
 	public static final @NonNull PrimitiveTypeId BOOLEAN = IdManager.getPrimitiveTypeId(BOOLEAN_NAME);
+	/**
+	 * @since 1.23
+	 */
+	public static final @NonNull PrimitiveTypeId CO_COLLECTION = IdManager.getPrimitiveTypeId(CO_COLLECTION_NAME);
 	public static final @NonNull PrimitiveTypeId INTEGER = IdManager.getPrimitiveTypeId(INTEGER_NAME);
 
 	/**

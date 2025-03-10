@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.ComparableValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -370,6 +371,14 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @NonNull NullValue floor() {
 		return toInvalidValue();
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull CoCollectionValue getCoCollection() {
+		throw new InvalidValueException("bad getCoCollection()");
 	}
 
 	public Type getElement() {

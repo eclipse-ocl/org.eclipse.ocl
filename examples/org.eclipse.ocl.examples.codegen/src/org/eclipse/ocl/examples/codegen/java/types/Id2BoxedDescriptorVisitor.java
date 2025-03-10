@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -397,6 +398,9 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		}
 		else if (id == TypeId.BOOLEAN) {
 			return new BooleanObjectDescriptor(id);
+		}
+		else if (id == TypeId.CO_COLLECTION) {
+			return new SimpleValueDescriptor(id, CoCollectionValue.class);
 		}
 		else if (id == TypeId.INTEGER) {
 			return new IntegerValueDescriptor(id);

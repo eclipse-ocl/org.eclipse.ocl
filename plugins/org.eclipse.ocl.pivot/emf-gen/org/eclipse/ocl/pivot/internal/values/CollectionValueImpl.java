@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CoCollectionValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -227,6 +228,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	protected final @NonNull CollectionTypeId typeId;
 	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	private int hashCode = 0;
+	private /*@LazyNonNull*/ CoCollectionValue coCollection = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -515,6 +517,15 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	public @NonNull TypeId getElementTypeId() {
 		return getTypeId().getElementTypeId();
+	}
+
+	@Override
+	public @NonNull CoCollectionValue getCoCollection() {
+		CoCollectionValue coCollection2 = coCollection;
+		if (coCollection2 == null) {
+			coCollection = coCollection2 = new CoCollectionValueImpl(this);
+		}
+		return coCollection2;
 	}
 
 	@Override

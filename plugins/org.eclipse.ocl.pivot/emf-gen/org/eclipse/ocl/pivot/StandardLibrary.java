@@ -105,6 +105,15 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getClassType();
 
 	/**
+	 * Obtains the single instance of the org.eclipse.ocl.pivot.CoCollectionType metatype, named
+	 * <tt>CoCollection</tt>.
+	 *
+	 * @return the <tt>Class</tt> type (an instance of Class)
+	 * @since 1.23
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getCoCollectionType();
+
+	/**
 	 * Obtains the generic instance of the CollectionType metatype, named
 	 * <tt>Collection(T)</tt>.
 	 *
