@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Pair;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -80,23 +81,31 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		return visitor;
 	}
 
-	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @NonNull Operation candidateOperation) {
+	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type zzsourceTypeValue, @NonNull Operation candidateOperation) {
 		// assert sourceTypeValue == null;			// Bug 580791  Enforcing redundant argument
+		if (!hasTemplateParameters(candidateOperation)) {
+			return TemplateParameterSubstitutions.EMPTY;
+		}
 		TemplateParameterSubstitutionVisitor visitor = createVisitor(candidateOperation, environmentFactory, sourceType, null);
 		visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);
-		for (EObject eObject = candidateOperation; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof TemplateableElement) {
-				TemplateSignature templateSignature = ((TemplateableElement)eObject).getOwnedSignature();
-				if (templateSignature != null) {
-					List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-					int iSize = templateParameters.size();
-					if (iSize > 0) {
-						return visitor;
-					}
-				}
-			}
+		return visitor;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @NonNull Operation asOperation, @NonNull List<@NonNull Pair<@NonNull Type, @NonNull Type>> formal2actuals) {
+		if (!hasTemplateParameters(asOperation)) {
+			return TemplateParameterSubstitutions.EMPTY;
 		}
-		return TemplateParameterSubstitutions.EMPTY;
+		TemplateParameterSubstitutionVisitor visitor = createVisitor(asOperation, environmentFactory, sourceType, null);
+		visitor.analyzeType(asOperation.getOwningClass(), sourceType);
+		for (@NonNull Pair<@NonNull Type, @NonNull Type> formal2actual : formal2actuals) {
+			Type formalType = formal2actual.getKey();
+			Type actualType = formal2actual.getValue();
+			visitor.analyzeType(formalType, actualType);
+		}
+		return visitor;
 	}
 
 	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
@@ -105,12 +114,35 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		if (environmentFactory instanceof EnvironmentFactoryInternalExtension) {
 			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, null);
 		}
-		else if (resource instanceof ASResource) {				// This used to be thefirst choice; now it should never happen
+		else if (resource instanceof ASResource) {				// This used to be the first choice; now it should never happen
 			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType, null);
 		}
 		else {													// This too should never happen
 			return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType, null);
 		}
+	}
+
+	/**
+	 * Return true if asElement has template parameters.
+	 *
+	 * @since 1.23
+	 */
+	public static boolean hasTemplateParameters(@NonNull Element asElement) {
+		boolean hasTemplateParameters = false;
+		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof TemplateableElement) {
+				TemplateSignature templateSignature = ((TemplateableElement)eObject).getOwnedSignature();
+				if (templateSignature != null) {
+					List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+					int iSize = templateParameters.size();
+					if (iSize > 0) {
+						hasTemplateParameters = true;
+						break;
+					}
+				}
+			}
+		}
+		return hasTemplateParameters;
 	}
 
 	/**
