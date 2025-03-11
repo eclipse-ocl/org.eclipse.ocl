@@ -248,6 +248,7 @@ public class ClassUtil
 	 * Return aT, throwing an IllegalStateException if null.
 	 * @since 1.1
 	 */
+	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
 	public static @NonNull <T> T nonNull(@Nullable T aT) {
 		assert aT != null;
 		return aT;
@@ -256,6 +257,7 @@ public class ClassUtil
 	/**
 	 * Return aT, checking the assertion that this call would not be necessary if EMF had comprehensive @NonNull annotations.
 	 */
+	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
 	public static @NonNull <T> T nonNullEMF(@Nullable T aT) {// FIXME remove once EMF guarantees non-null
 		assert aT != null;
 		return aT;
@@ -267,6 +269,7 @@ public class ClassUtil
 	 *<p>
 	 * Return aT, checking the assertion that this call would not be necessary if the Ecore model was guaranteed to be valid.
 	 */
+	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
 	public static @NonNull <T> T nonNullModel(@Nullable T aT) {
 		assert aT != null;			// FIXME Change to InvalidModelException
 		return aT;
@@ -275,6 +278,7 @@ public class ClassUtil
 	/**
 	 * Return aT, checking the assertion that this call would not be necessary if the Pivot model was guaranteed to be valid.
 	 */
+	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
 	public static @NonNull <T> T nonNullPivot(@Nullable T aT) {
 		assert aT != null;			// FIXME Change to InvalidModelException
 		return aT;
@@ -289,6 +293,7 @@ public class ClassUtil
 	 * <p>
 	 * Return aT, throwing an IllegalStateException if null.
 	 */
+	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
 	public static @NonNull <T> T nonNullState(@Nullable T aT) {
 		if (aT == null) {
 			throw new IllegalStateException();
@@ -345,6 +350,7 @@ public class ClassUtil
 	 * @return <code>true</code> if <code>object</code> equals
 	 *         <code>otherObject</code>; <code>false</code> otherwise.
 	 */
+	@Deprecated /* @deprecated Use java.util.Objects.equals since we are now past Java 7 */
 	public static boolean safeEquals(@Nullable Object object, @Nullable Object otherObject) {
 		return object == null
 				? otherObject == null

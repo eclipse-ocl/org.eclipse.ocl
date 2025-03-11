@@ -92,10 +92,12 @@ import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.iterator.ClosureIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Pair;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -974,6 +976,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		List<@NonNull OCLExpression> pivotBodies = new ArrayList<>();
 		Iteration asIteration = expression.getReferredIteration();
+		List<Parameter> asIterators = asIteration.getOwnedIterators();
 		List<Parameter> asParameters = asIteration.getOwnedParameters();
 		boolean hasIteratorOrAccumulator = false;
 		for (NavigatingArgCS csArgument : csRoundBracketedClause.getOwnedArguments()) {
@@ -999,11 +1002,37 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					Parameter asParameter = asParameters.get(pivotBodies.size());
 					Type asParameterType = asParameter.getType();
 					if (asParameterType instanceof LambdaType) {
-						asParameterType = ((LambdaType)asParameterType).getResultType();
+						Type sourceType = expression.getOwnedSource().getType();
+
+						List<Pair<@NonNull Type, @NonNull Type>> formal2actuals = new ArrayList<>();
+						formal2actuals.add(new Pair<>(asIteration.getOwningClass(), sourceType));
+						List<Variable> iteratorVariables = expression.getOwnedIterators();
+						int iMax = Math.max(asIterators.size(), iteratorVariables.size());
+						for (int i = 0; i < iMax; i++) {
+							formal2actuals.add(new Pair<>(asIterators.get(i).getType(), iteratorVariables.get(i).getType()));
+						}
+						List<OCLExpression> expressionBodies;
+					//	if (expression instanceof IterateExp) {
+					//		expressionBodies = ((IterateExp)expression).getOwnedBodies();
+					//	}
+						expressionBodies = Collections.singletonList(exp);
+						iMax = Math.max(asParameters.size(), expressionBodies.size());
+						for (int i = 0; i < iMax; i++) {
+							formal2actuals.add(new Pair<>(asParameters.get(i).getType(), expressionBodies.get(i).getType()));
+						}
+
+						TemplateParameterSubstitutions templateParameterSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, asIteration, formal2actuals);
+						LambdaType specializedLambdaType = (LambdaType)environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
+			//			specializedLambdaType.toString();			// XXX
+						asParameterType = specializedLambdaType.getResultType();
 					}
 					Type expType = exp.getType();
 					if (expType.conformsTo(standardLibrary, asParameterType)) {
 						context.installPivotUsage(csArgument, exp);
+						pivotBodies.add(exp);
+					}
+					else if ((asIteration.getImplementation() == ClosureIteration.INSTANCE) && expType.conformsTo(standardLibrary, ((CollectionType)asParameterType).getElementType())) {
+						context.installPivotUsage(csArgument, exp);			// XXX need implicit oclAsSet
 						pivotBodies.add(exp);
 					}
 					else {

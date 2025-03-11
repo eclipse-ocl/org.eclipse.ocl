@@ -22,6 +22,42 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.BagTypeImpl"/>
+                <message_argument value="BAG_TYPE_FEATURE_COUNT"/>
+                <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OrderedSetTypeImpl.java" type="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl"/>
+                <message_argument value="ORDERED_SET_TYPE_FEATURE_COUNT"/>
+                <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/SequenceTypeImpl.java" type="org.eclipse.ocl.pivot.internal.SequenceTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.SequenceTypeImpl"/>
+                <message_argument value="SEQUENCE_TYPE_FEATURE_COUNT"/>
+                <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/SetTypeImpl.java" type="org.eclipse.ocl.pivot.internal.SetTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.SetTypeImpl"/>
+                <message_argument value="SET_TYPE_FEATURE_COUNT"/>
+                <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel">
         <filter id="338886760">
             <message_arguments>
