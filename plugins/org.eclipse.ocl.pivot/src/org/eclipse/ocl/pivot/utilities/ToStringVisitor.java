@@ -422,13 +422,20 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	protected void appendType(Type type) {
-		if ((type != null)
-				&& (type.eClass() == PivotPackage.Literals.CLASS)	// i.e. by pass AnyType, PrimitiveType, ...
-				&& (type.eContainer() instanceof NamedElement)) {
-			appendQualifiedName((NamedElement) type.eContainer());
-			append("::");
+		if (type != null) {
+			if ((type.eClass() == PivotPackage.Literals.CLASS)	// i.e. by pass AnyType, PrimitiveType, ...
+			 && (type.eContainer() instanceof NamedElement)) {
+				appendQualifiedName((NamedElement) type.eContainer());
+				append("::");
+			}
+			type.accept(this);
 		}
-		appendName(type);
+//		appendName(type);
+//		if (type instanceof TemplateableElement) {
+//			TemplateableElement templateableType = (TemplateableElement)type;
+//			appendTemplateBindings(templateableType.getOwnedBindings(), templateableType);
+//			appendTemplateSignature(templateableType.getOwnedSignature());
+//		}
 	}
 
 	/**
