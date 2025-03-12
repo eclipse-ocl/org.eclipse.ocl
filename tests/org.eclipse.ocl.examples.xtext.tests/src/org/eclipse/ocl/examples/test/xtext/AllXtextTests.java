@@ -18,6 +18,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.ocl.examples.pivot.tests.AbstractPivotTestCase;
 import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
@@ -100,14 +101,13 @@ extends TestCase {
 		result.addTestSuite(ImportTests.class);
 		result.addTestSuite(LeakTests.class);
 		result.addTestSuite(UMLValidateTest.class);
+		result.addTestSuite(LoadTests.class);
+		result.addTestSuite(UMLLoadTests.class);
 		ResourceSet resourceSet = new ResourceSetImpl();
 		UML2AS.initializeUML(resourceSet);
-		LoadTests.getProjectMap().initializeResourceSet(resourceSet);
+		AbstractPivotTestCase.getProjectMap().initializeResourceSet(resourceSet);
 		if (resourceSet.getURIConverter().exists(URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/", true), null)) {
 			result.addTestSuite(UML25LoadTests.class);
-		}
-		else {
-			result.addTestSuite(LoadTests.class);
 		}
 		result.addTestSuite(PrettyPrinterTest.class);
 		result.addTestSuite(TestPrettyPrinter.class);
