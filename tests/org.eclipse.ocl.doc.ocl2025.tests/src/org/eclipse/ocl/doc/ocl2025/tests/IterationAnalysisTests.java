@@ -29,5 +29,9 @@ public class IterationAnalysisTests extends AbstractUMLLoadTests
 		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("UML.xmi");
 		//XXX	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		Model asModel = doLoadUML(null, modelURI, false, true, null, null);		// FIXME BUG 419132 eliminate last argument; always true
+		Statistics statistics = new Statistics();
+		StatisticsVisitor statisticsVisitor = new StatisticsVisitor(statistics);
+		asModel.accept(statisticsVisitor);
+		statistics.printOut();
 	}
 }
