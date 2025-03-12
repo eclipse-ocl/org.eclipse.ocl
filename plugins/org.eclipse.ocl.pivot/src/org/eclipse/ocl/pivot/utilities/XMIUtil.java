@@ -390,8 +390,7 @@ public class XMIUtil
 	 * NB These preferences must not be used when saving a standard resource such as a *.ecore
 	 * to avoid incompatibilities between rival savers. See Bug 573923.
 	 *
-	 * @deprecated supply resurce argument so that custom resources use their cu
-	 * +stom save options.
+	 * @deprecated supply resource argument so that custom resources use their custom save options.
 	 */
 	@Deprecated
 	public static @NonNull Map<Object, Object> createSaveOptions() {
@@ -411,11 +410,26 @@ public class XMIUtil
 	 */
 	public static @NonNull Map<Object, Object> createSaveOptions(@NonNull XMLResource aResource) {
 		Class<?> resourceClass = aResource.getClass();
-		if ((resourceClass == XMIResourceImpl.class) || (resourceClass == XMLResourceImpl.class)) {
+		if ((resourceClass == XMIResourceImpl.class) || (resourceClass == XMLResourceImpl.class)) {		// XXX Typo ???
 			return createSaveOptions();
 		}
 		else {
 			return new HashMap<>(aResource.getDefaultSaveOptions());
+		}
+	}
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull Map<Object, Object> createSaveOptions(@NonNull Resource aResource) {
+		Class<?> resourceClass = aResource.getClass();
+		if ((resourceClass == XMIResourceImpl.class) || (resourceClass == XMLResourceImpl.class)) {		// XXX Typo ???
+			return createSaveOptions();
+		}
+		else if (aResource instanceof XMLResource) {
+			return new HashMap<>(((XMLResource)aResource).getDefaultSaveOptions());
+		}
+		else {
+			return createSaveOptions();
 		}
 	}
 
