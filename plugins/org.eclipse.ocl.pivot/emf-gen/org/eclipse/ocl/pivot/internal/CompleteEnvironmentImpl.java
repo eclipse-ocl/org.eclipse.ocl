@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -467,8 +468,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 	//	firstType = firstCompleteClass.getPrimaryClass();
 		Type behavioralClass = secondCompleteClass.getBehavioralClass();
-		if (behavioralClass != secondType) {
-			secondCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 for disussion of this dodgy downcast
+		if ((behavioralClass != null) && (behavioralClass != secondType)) {
+			secondCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 / Issue 2190 for discussion of this dodgy downcast
 			secondType = behavioralClass;
 		}
 		//
@@ -741,12 +742,12 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull CompleteModelInternal getOwnedCompleteModel() {
-		return ClassUtil.nonNullState(ownedCompleteModel);
+		return Objects.requireNonNull(ownedCompleteModel);
 	}
 
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return ClassUtil.nonNullState(environmentFactory);
+		return Objects.requireNonNull(environmentFactory);
 	}
 
 	public @NonNull LambdaTypeManager getLambdaManager() {
@@ -897,6 +898,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		else if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
+			Type elementType = getSpecializedType(Objects.requireNonNull(collectionType.getElementType()), substitutions);
+		//	Type boundType = substitutions.get(elementType);
+			return getCollectionType(unspecializedType, elementType, null, null);
+		/*	org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
 			if (!substitutions.isEmpty()) {
 				TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 				Type templateArgument = substitutions.get(templateParameter);
@@ -907,18 +912,18 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 					return getCollectionType(unspecializedType, templateArgument, null, null);
 				}
 			}
-			return collectionType;
+			return collectionType; */
 		}
 		else if (type instanceof TupleType) {
 			return getTupleManager().getTupleType((TupleType) type, substitutions);
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
-			String typeName = ClassUtil.nonNullModel(lambdaType.getName());
-			Type contextType = ClassUtil.nonNullModel(lambdaType.getContextType());
-			@NonNull List<@NonNull Type> parameterType = PivotUtil.getParameterType(lambdaType);
-			Type resultType = ClassUtil.nonNullModel(lambdaType.getResultType());
-			return getLambdaManager().getLambdaType(typeName, contextType, parameterType, resultType, substitutions);
+			String typeName = Objects.requireNonNull(lambdaType.getName());
+			Type contextType = Objects.requireNonNull(lambdaType.getContextType());
+			@NonNull List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(lambdaType);
+			Type resultType = Objects.requireNonNull(lambdaType.getResultType());
+			return getLambdaManager().getLambdaType(typeName, contextType, parameterTypes, resultType, substitutions);
 		}
 		else if (type instanceof org.eclipse.ocl.pivot.Class) {
 			//
@@ -945,7 +950,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull StandardLibraryInternal getOwnedStandardLibrary() {
-		return ClassUtil.nonNullState(ownedStandardLibrary);
+		return Objects.requireNonNull(ownedStandardLibrary);
 	}
 
 	@Override
