@@ -86,6 +86,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ExecutorTypeParameter _0_K = new ExecutorTypeParameter(0, "K");
 		public static final @NonNull ExecutorTypeParameter _0_T = new ExecutorTypeParameter(0, "T");
 		public static final @NonNull ExecutorTypeParameter _0_TT = new ExecutorTypeParameter(0, "TT");
+		public static final @NonNull ExecutorTypeParameter _1_E = new ExecutorTypeParameter(1, "E");
 		public static final @NonNull ExecutorTypeParameter _1_T2 = new ExecutorTypeParameter(1, "T2");
 		public static final @NonNull ExecutorTypeParameter _1_TT = new ExecutorTypeParameter(1, "TT");
 		public static final @NonNull ExecutorTypeParameter _1_Tacc = new ExecutorTypeParameter(1, "Tacc");
@@ -96,6 +97,8 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ExecutorTypeParameter _3_V2 = new ExecutorTypeParameter(3, "V2");
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter _Bag_T = _0_T;
+		@Deprecated /* @deprecated use normalized name */
+		public static final @NonNull ExecutorTypeParameter __Bag__closure_E = _1_E;
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter __Bag__collect_V = _1_V;
 		@Deprecated /* @deprecated use normalized name */
@@ -173,6 +176,8 @@ public class OCLstdlibTables extends AbstractTables
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter _OrderedSet_T = _0_T;
 		@Deprecated /* @deprecated use normalized name */
+		public static final @NonNull ExecutorTypeParameter __OrderedSet__closure_E = _1_E;
+		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter __OrderedSet__collect_V = _1_V;
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter __OrderedSet__collectNested_V = _1_V;
@@ -185,6 +190,8 @@ public class OCLstdlibTables extends AbstractTables
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter _Sequence_T = _0_T;
 		@Deprecated /* @deprecated use normalized name */
+		public static final @NonNull ExecutorTypeParameter __Sequence__closure_E = _1_E;
+		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter __Sequence__collect_V = _1_V;
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter __Sequence__collectNested_V = _1_V;
@@ -196,6 +203,8 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ExecutorTypeParameter __Sequence__selectByType_TT = _1_TT;
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter _Set_T = _0_T;
+		@Deprecated /* @deprecated use normalized name */
+		public static final @NonNull ExecutorTypeParameter __Set__closure_E = _1_E;
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter __Set__collect_V = _1_V;
 		@Deprecated /* @deprecated use normalized name */
@@ -461,10 +470,8 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ParameterTypes _Lambda_0_T_1_V = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._0_T));
 		public static final @NonNull ParameterTypes _Lambda_0_T_Boolean = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._0_T));
 		public static final @NonNull ParameterTypes _Lambda_0_T_OclAny = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _Lambda_0_T_OrderedSet = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _Lambda_0_T_OrderedSet__0_T__ = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _Lambda_0_T_Set = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _Lambda_0_T_Set__0_T__ = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._0_T));
+		public static final @NonNull ParameterTypes _Lambda_1_E_Collection__1_E__ = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._1_E));
+		public static final @NonNull ParameterTypes _Lambda_1_E_OrderedCollection__1_E__ = TypeUtil.createParameterTypes(new ExecutorLambdaType("Lambda", TypeParameters._1_E));
 		public static final @NonNull ParameterTypes _Map__2_K2_3_V2__ = TypeUtil.createParameterTypes(new ExecutorSpecializedType(TypeId.MAP, TypeParameters._2_K2, TypeParameters._3_V2));
 		public static final @NonNull ParameterTypes _OclSelf = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclSelf);
 		public static final @NonNull ParameterTypes _OclState = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclState);
@@ -593,8 +600,8 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Bag___eq_ = new ExecutorOperation("=", Parameters._OclSelf, Types._Bag,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Bag__closure = new ExecutorOperation("closure", Parameters._Lambda_0_T_Set__0_T__, Types._Bag,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _Bag__closure = new ExecutorOperation("closure", Parameters._Lambda_1_E_Collection__1_E__, Types._Bag,
+			2, TypeUtil.createTemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Bag__collect = new ExecutorOperation("collect", Parameters._Lambda_0_T_1_V, Types._Bag,
 			3, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Bag__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Bag,
@@ -1026,8 +1033,8 @@ public class OCLstdlibTables extends AbstractTables
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OrderedSet__appendAll = new ExecutorOperation("appendAll", Parameters._OrderedCollection__0_T__, Types._OrderedSet,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OrderedSet__closure = new ExecutorOperation("closure", Parameters._Lambda_0_T_OrderedSet, Types._OrderedSet,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _OrderedSet__closure = new ExecutorOperation("closure", Parameters._Lambda_1_E_OrderedCollection__1_E__, Types._OrderedSet,
+			5, TypeUtil.createTemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _OrderedSet__collect = new ExecutorOperation("collect", Parameters._Lambda_0_T_1_V, Types._OrderedSet,
 			6, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _OrderedSet__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._OrderedSet,
@@ -1098,8 +1105,8 @@ public class OCLstdlibTables extends AbstractTables
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__appendAll = new ExecutorOperation("appendAll", Parameters._OrderedCollection__0_T__, Types._Sequence,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Sequence__closure = new ExecutorOperation("closure", Parameters._Lambda_0_T_OrderedSet__0_T__, Types._Sequence,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _Sequence__closure = new ExecutorOperation("closure", Parameters._Lambda_1_E_OrderedCollection__1_E__, Types._Sequence,
+			4, TypeUtil.createTemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__collect = new ExecutorOperation("collect", Parameters._Lambda_0_T_1_V, Types._Sequence,
 			5, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Sequence,
@@ -1141,8 +1148,8 @@ public class OCLstdlibTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Set___eq_ = new ExecutorOperation("=", Parameters._OclSelf, Types._Set,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Set__closure = new ExecutorOperation("closure", Parameters._Lambda_0_T_Set, Types._Set,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+		public static final @NonNull ExecutorOperation _Set__closure = new ExecutorOperation("closure", Parameters._Lambda_1_E_Collection__1_E__, Types._Set,
+			3, TypeUtil.createTemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Set__collect = new ExecutorOperation("collect", Parameters._Lambda_0_T_1_V, Types._Set,
 			4, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Set__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Set,
@@ -1582,7 +1589,7 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull ExecutorOperation @NonNull [] _Bag__Bag = {
 			OCLstdlibTables.Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Bag___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Bag__closure /* closure(T[1]|Lambda T() : Set(T)[?]) */,
+			OCLstdlibTables.Operations._Bag__closure /* closure(E)(E[1]|Lambda E() : Collection(E)[?]) */,
 			OCLstdlibTables.Operations._Bag__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Bag__excluding /* excluding(T[?]) */,
@@ -2357,7 +2364,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OrderedSet___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__append /* append(T[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__appendAll /* appendAll(OrderedCollection(T)) */,
-			OCLstdlibTables.Operations._OrderedSet__closure /* closure(T[1]|Lambda T() : OrderedSet(T)[?]) */,
+			OCLstdlibTables.Operations._OrderedSet__closure /* closure(E)(E[1]|Lambda E() : OrderedCollection(E)[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__excluding /* excluding(T[?]) */,
@@ -2502,7 +2509,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Sequence___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Sequence__append /* append(T[?]) */,
 			OCLstdlibTables.Operations._Sequence__appendAll /* appendAll(OrderedCollection(T)) */,
-			OCLstdlibTables.Operations._Sequence__closure /* closure(T[1]|Lambda T() : OrderedSet(T)[?]) */,
+			OCLstdlibTables.Operations._Sequence__closure /* closure(E)(E[1]|Lambda E() : OrderedCollection(E)[?]) */,
 			OCLstdlibTables.Operations._Sequence__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Sequence__excluding /* excluding(T[?]) */,
@@ -2595,7 +2602,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Set___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Set__closure /* closure(T[1]|Lambda T() : Set(T)[?]) */,
+			OCLstdlibTables.Operations._Set__closure /* closure(E)(E[1]|Lambda E() : Collection(E)[?]) */,
 			OCLstdlibTables.Operations._Set__collect /* collect(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Set__collectNested /* collectNested(V)(T[?]|Lambda T() : V[?]) */,
 			OCLstdlibTables.Operations._Set__excluding /* excluding(T[?]) */,
