@@ -52,6 +52,6 @@ public class SearchIteration extends AbstractIteration
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
 		Object bodyValue = iterationManager.evaluateBody();
 		iterationManager.updateAccumulator(bodyValue);
-		return iterationManager.evaluateBody(1) == ValueUtil.TRUE_VALUE ? CARRY_ON : null;
+		return iterationManager.evaluateBody(1) == ValueUtil.TRUE_VALUE ? CARRY_ON : iterationManager.evaluateBody(2);
 	}
 }

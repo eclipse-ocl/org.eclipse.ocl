@@ -33,7 +33,7 @@ public abstract class AbstractIteration2Java implements Iteration2Java
 
 	@SuppressWarnings("null")
 	protected @NonNull CGValuedElement getBody(@NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		return cgIterationCallExp.getBody();
+		return cgIterationCallExp.getBodies().get(0);
 	}
 
 	@SuppressWarnings("null")

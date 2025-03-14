@@ -781,15 +781,15 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGIterationCallExp_Iterators();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getBody <em>Body</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getBodies <em>Bodies</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Body</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getBody()
+	 * @return the meta object for the containment reference list '<em>Bodies</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getBodies()
 	 * @see #getCGIterationCallExp()
 	 * @generated
 	 */
-	EReference getCGIterationCallExp_Body();
+	EReference getCGIterationCallExp_Bodies();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getCoIterators <em>Co Iterators</em>}'.
@@ -2935,12 +2935,12 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_ITERATION_CALL_EXP__ITERATORS = eINSTANCE.getCGIterationCallExp_Iterators();
 
 		/**
-		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Bodies</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CG_ITERATION_CALL_EXP__BODY = eINSTANCE.getCGIterationCallExp_Body();
+		EReference CG_ITERATION_CALL_EXP__BODIES = eINSTANCE.getCGIterationCallExp_Bodies();
 
 		/**
 		 * The meta object literal for the '<em><b>Co Iterators</b></em>' containment reference list feature.

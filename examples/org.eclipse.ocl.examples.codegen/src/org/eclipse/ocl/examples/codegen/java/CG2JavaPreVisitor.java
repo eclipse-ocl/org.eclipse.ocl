@@ -406,8 +406,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
 		localContext = context.getLocalContext(cgIterationCallExp);
 		try {
-			CGValuedElement cgBody = cgIterationCallExp.getBody();
-			if (cgBody != null) {
+			for (CGValuedElement cgBody : cgIterationCallExp.getBodies()) {
 				cgBody.accept(this);
 			}
 			for (CGIterator cgIterator : cgIterationCallExp.getIterators()) {

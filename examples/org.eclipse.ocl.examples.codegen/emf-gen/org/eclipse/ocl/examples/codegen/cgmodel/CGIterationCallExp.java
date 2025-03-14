@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.Iteration;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getReferredIteration <em>Referred Iteration</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getIterators <em>Iterators</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getBodies <em>Bodies</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getCoIterators <em>Co Iterators</em>}</li>
  * </ul>
  *
@@ -75,29 +75,19 @@ public interface CGIterationCallExp extends CGCallExp {
 	@NonNull List<CGIterator> getIterators();
 
 	/**
-	 * Returns the value of the '<em><b>Body</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Bodies</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Body</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Bodies</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Body</em>' containment reference.
-	 * @see #setBody(CGValuedElement)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGIterationCallExp_Body()
+	 * @return the value of the '<em>Bodies</em>' containment reference list.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGIterationCallExp_Bodies()
 	 * @generated
 	 */
-	CGValuedElement getBody();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getBody <em>Body</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Body</em>' containment reference.
-	 * @see #getBody()
-	 * @generated
-	 */
-	void setBody(CGValuedElement value);
+	List<CGValuedElement> getBodies();
 
 	/**
 	 * Returns the value of the '<em><b>Co Iterators</b></em>' containment reference list.
