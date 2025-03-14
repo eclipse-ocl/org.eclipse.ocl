@@ -85,6 +85,9 @@ public interface IterationManager
 	 */
 	@Nullable Object evaluateBody();
 
+	/**
+	 * @since 1.23
+	 */
 	@Nullable Object evaluateBody(int bodyIndex);
 
 	/**

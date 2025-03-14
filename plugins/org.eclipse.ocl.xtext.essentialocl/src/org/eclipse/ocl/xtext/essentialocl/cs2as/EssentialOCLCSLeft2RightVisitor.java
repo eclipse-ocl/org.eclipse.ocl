@@ -972,12 +972,28 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return true;
 	}
 
-	protected void resolveIterationBody(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
+	protected void resolveIterationBody(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp asLoopExp) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
-		List<@NonNull OCLExpression> pivotBodies = new ArrayList<>();
-		Iteration asIteration = expression.getReferredIteration();
+		List<@NonNull OCLExpression> asBodies = new ArrayList<>();
+		Iteration asIteration = asLoopExp.getReferredIteration();
 		List<Parameter> asIterators = asIteration.getOwnedIterators();
 		List<Parameter> asParameters = asIteration.getOwnedParameters();
+		Type sourceType = asLoopExp.getOwnedSource().getType();
+		List<Pair<@NonNull Type, @NonNull Type>> formal2actuals = new ArrayList<>();
+		formal2actuals.add(new Pair<>(asIteration.getOwningClass(), sourceType));
+		List<Variable> asIteratorVariables = asLoopExp.getOwnedIterators();
+		int iMax = Math.max(asIterators.size(), asIteratorVariables.size());
+		for (int i = 0; i < iMax; i++) {
+			formal2actuals.add(new Pair<>(asIterators.get(i).getType(), asIteratorVariables.get(i).getType()));
+		}
+		if (asLoopExp instanceof IterateExp) {
+			List<Parameter> asAccumulators = asIteration.getOwnedAccumulators();
+			iMax = Math.max(asAccumulators.size(), 1);
+			for (int i = 0; i < iMax; i++) {
+				formal2actuals.add(new Pair<>(asAccumulators.get(i).getType(), ((IterateExp)asLoopExp).getOwnedResult().getType()));
+			}
+		}
+		OCLExpression asError = null;
 		boolean hasIteratorOrAccumulator = false;
 		for (NavigatingArgCS csArgument : csRoundBracketedClause.getOwnedArguments()) {
 			if (csArgument.getRole() == NavigationRole.ITERATOR) {
@@ -988,69 +1004,105 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 			else if (csArgument.getRole() == NavigationRole.EXPRESSION) {
 				if (csArgument.getOwnedInitExpression() != null) {
-					context.addError(csArgument, EssentialOCLCS2ASMessages.LoopExp_UnexpectedInitializer);
+					asError = context.addBadExpressionError(csArgument, EssentialOCLCS2ASMessages.LoopExp_UnexpectedInitializer);
+					break;
 				}
 				if (csArgument.getOwnedType() != null) {
-					context.addError(csArgument, EssentialOCLCS2ASMessages.LoopExp_UnexpectedType);
+					asError = context.addBadExpressionError(csArgument, EssentialOCLCS2ASMessages.LoopExp_UnexpectedType);
+					break;
 				}
 				ExpCS name = csArgument.getOwnedNameExpression();
 				assert name != null;
 				//				OCLExpression exp = context.visitLeft2Right(OCLExpression.class, name);
-				OCLExpression exp = !hasIteratorOrAccumulator ? PivotUtil.getPivot(OCLExpression.class, csArgument) : context.visitLeft2Right(OCLExpression.class, name);
+				OCLExpression asBody = !hasIteratorOrAccumulator ? PivotUtil.getPivot(OCLExpression.class, csArgument) : context.visitLeft2Right(OCLExpression.class, name);
 				//				context.installPivotElement(csArgument, exp);
-				if (exp != null) {
-					Parameter asParameter = asParameters.get(pivotBodies.size());
-					Type asParameterType = asParameter.getType();
-					if (asParameterType instanceof LambdaType) {
-						Type sourceType = expression.getOwnedSource().getType();
-
-						List<Pair<@NonNull Type, @NonNull Type>> formal2actuals = new ArrayList<>();
-						formal2actuals.add(new Pair<>(asIteration.getOwningClass(), sourceType));
-						List<Variable> iteratorVariables = expression.getOwnedIterators();
-						int iMax = Math.max(asIterators.size(), iteratorVariables.size());
-						for (int i = 0; i < iMax; i++) {
-							formal2actuals.add(new Pair<>(asIterators.get(i).getType(), iteratorVariables.get(i).getType()));
+				if (asBody == null) {
+					asError = context.addBadExpressionError(csArgument, "Invalid ''{0}'' iteration body", csNameExp.getOwnedPathName());
+					break;
+				}
+				formal2actuals.add(new Pair<>(asParameters.get(asBodies.size()).getType(), asBody.getType()));
+				asBodies.add(asBody);
+				context.installPivotUsage(csArgument, asBody);
+			}
+		}
+		if (asError == null) {
+			int asParametersSize = asParameters.size();
+			if (asBodies.size() != asParametersSize) {
+				asError = context.addBadExpressionError(csNameExp, "Iteration ''{0}'' must have exactly " + asParametersSize + " bod" + (asParametersSize != 1 ? "ies" : "y"), csNameExp.getOwnedPathName());
+			}
+			else {
+				TemplateParameterSubstitutions templateParameterSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, asIteration, formal2actuals);
+				iMax = Math.max(asIterators.size(), asIteratorVariables.size());
+				for (int i = 0; i < iMax; i++) {
+					Parameter asIterator = asIterators.get(i);
+					Type asIteratorType = asIterator.getType();
+					Type asSpecializedType = environmentFactory.getCompleteEnvironment().getSpecializedType(asIteratorType, templateParameterSubstitutions);
+					Type asElementalType = asSpecializedType instanceof LambdaType ? ((LambdaType)asSpecializedType).getResultType() : asSpecializedType;
+					Variable asIteratorVariable = asIteratorVariables.get(i);
+					Type asIteratorVariableType = asIteratorVariable.getType();
+					if (asIteratorVariableType != null) {
+						if (!asIteratorVariableType.conformsTo(standardLibrary, asElementalType)) {
+							asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedIteratorType, csNameExp.getOwnedPathName(), i+1, asElementalType, asIteratorVariableType);
+							break;
 						}
-						List<OCLExpression> expressionBodies;
-					//	if (expression instanceof IterateExp) {
-					//		expressionBodies = ((IterateExp)expression).getOwnedBodies();
-					//	}
-						expressionBodies = Collections.singletonList(exp);
-						iMax = Math.max(asParameters.size(), expressionBodies.size());
-						for (int i = 0; i < iMax; i++) {
-							formal2actuals.add(new Pair<>(asParameters.get(i).getType(), expressionBodies.get(i).getType()));
-						}
-
-						TemplateParameterSubstitutions templateParameterSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, asIteration, formal2actuals);
-						LambdaType specializedLambdaType = (LambdaType)environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
-			//			specializedLambdaType.toString();			// XXX
-						asParameterType = specializedLambdaType.getResultType();
-					}
-					Type expType = exp.getType();
-					if (expType.conformsTo(standardLibrary, asParameterType)) {
-						context.installPivotUsage(csArgument, exp);
-						pivotBodies.add(exp);
-					}
-					else if ((asIteration.getImplementation() == ClosureIteration.INSTANCE) && expType.conformsTo(standardLibrary, ((CollectionType)asParameterType).getElementType())) {
-						context.installPivotUsage(csArgument, exp);			// XXX need implicit oclAsSet
-						pivotBodies.add(exp);
 					}
 					else {
-						pivotBodies.add(context.addBadExpressionError(csArgument, PivotMessages.ExpectedArgumentType,
-							csNameExp.getOwnedPathName(), pivotBodies.size()+1, asParameterType, expType));
+						asIteratorVariable.setType(asElementalType);
 					}
 				}
-				else {
-					pivotBodies.add(context.addBadExpressionError(csArgument, "Invalid ''{0}'' iteration body", csNameExp.getOwnedPathName()));
+				if (asLoopExp instanceof IterateExp) {
+					List<Parameter> asAccumulators = asIteration.getOwnedAccumulators();
+					iMax = Math.max(asAccumulators.size(), 1);
+					for (int i = 0; i < iMax; i++) {
+						Parameter asAccumulator = asAccumulators.get(i);
+						Type asAccumulatorType = asAccumulator.getType();
+						Type asSpecializedType = environmentFactory.getCompleteEnvironment().getSpecializedType(asAccumulatorType, templateParameterSubstitutions);
+						Type asElementalType = asSpecializedType instanceof LambdaType ? ((LambdaType)asSpecializedType).getResultType() : asSpecializedType;
+						Variable asResult = ((IterateExp)asLoopExp).getOwnedResult();
+						Type asResultType = asResult.getType();
+						if (asResultType != null) {
+							if (!asElementalType.conformsTo(standardLibrary, asResultType)) {
+								asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedAccumulatorType, csNameExp.getOwnedPathName(), asElementalType, asResultType);
+								break;
+							}
+						}
+						else {
+							asResult.setType(asElementalType);
+						}
+					}
+				}
+				for (int i = 0; i < asBodies.size(); i++) {
+					Parameter asParameter = asParameters.get(i);
+					Type asParameterType = asParameter.getType();
+					OCLExpression asBody = asBodies.get(i);
+					Type asBodyType = environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
+					Type asElementalBodyType = asBodyType instanceof LambdaType ? ((LambdaType)asBodyType).getResultType() : asBodyType;
+					Type asKnownBodyType = asBody.getType();
+					if (asKnownBodyType != null) {
+						if (!asKnownBodyType.conformsTo(standardLibrary, asElementalBodyType)) {
+							if ((asIteration.getImplementation() != ClosureIteration.INSTANCE) || !asKnownBodyType.conformsTo(standardLibrary, ((CollectionType)asElementalBodyType).getElementType())) {
+								asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalBodyType, asKnownBodyType);
+								break;
+							}
+						}
+					}
+					else {
+						asBody.setType(asElementalBodyType);
+					}
 				}
 			}
 		}
-		int asParametersSize = asParameters.size();
-		if (pivotBodies.size() != asParametersSize) {
-			expression.setOwnedBody(context.addBadExpressionError(csNameExp, "Iteration ''{0}'' must have exactly " + asParametersSize + " bod" + (asParametersSize != 1 ? "ies" : "y"), csNameExp.getOwnedPathName()));
+		if (asError != null) {
+			asBodies.clear();
+			asBodies.add(asError);
+		}
+		if (asLoopExp instanceof IterateExp) {
+			List<OCLExpression> asIterateBodies = ((IterateExp)asLoopExp).getOwnedBodies();
+			asIterateBodies.clear();
+			asIterateBodies.addAll(asBodies);
 		}
 		else {
-			expression.setOwnedBody(pivotBodies.get(0));			// Multiple bodies
+			asLoopExp.setOwnedBody(asBodies.get(0));
 		}
 	}
 

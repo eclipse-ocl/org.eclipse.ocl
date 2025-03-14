@@ -1088,7 +1088,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 	//	ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->select(p | p.charAt(p))");
 //		ocl.assertSemanticErrorQuery(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->select(5)");
-		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->search(e; acc : Integer = 0 | e = 'c', acc < 2, acc = 1)");
+		ocl.assertSemanticErrorQuery(ocl.getContextType(ocl.pkg1), "Sequence{'a', 'b', 'c', 'd', 'e'}->search(e; acc : Integer = 0 | e = 'c', acc < 2, acc = 1)",
+			PivotMessages.ExpectedAccumulatorType, "search", "OclAny", "Integer");
 		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->search(e; acc : Integer = 0 | if e = 'c' then acc+1 else acc endif, acc < 2, acc = 1)");
 
 /*		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->one(e | e = 'c')");
