@@ -769,6 +769,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/evaluation/IterationManager.java" type="org.eclipse.ocl.pivot.evaluation.IterationManager">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.IterationManager"/>
+                <message_argument value="evaluateBody(int)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
         <filter id="403767336">
             <message_arguments>
@@ -1025,7 +1033,19 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="ExpectedAccumulatorType"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
                 <message_argument value="ExpectedArgumentType"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="ExpectedIteratorType"/>
             </message_arguments>
         </filter>
     </resource>
