@@ -71,6 +71,12 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/IterateExp.java" type="org.eclipse.ocl.pivot.IterateExp">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.IterateExp"/>
+                <message_argument value="getOwnedBodies()"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getOwnedBodies()"/>
@@ -94,6 +100,12 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getCallExp_OwnedInlinedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getCoCollection()"/>
             </message_arguments>
         </filter>
@@ -107,6 +119,30 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getCollectionType_CoCollection()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getIterateExp_OwnedBodies()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getIterateExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getLoopExp_OwnedBody()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -395,6 +431,24 @@
                 <message_argument value="ownedBody"/>
             </message_arguments>
         </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LoopExpImpl"/>
+                <message_argument value="basicSetOwnedBody(OCLExpression, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LoopExpImpl"/>
+                <message_argument value="getOwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LoopExpImpl"/>
+                <message_argument value="setOwnedBody(OCLExpression)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NavigationCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.NavigationCallExpImpl">
         <filter id="388194388">
@@ -429,6 +483,14 @@
                 <message_argument value="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl"/>
                 <message_argument value="ORDERED_SET_TYPE_FEATURE_COUNT"/>
                 <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.PivotPackageImpl"/>
+                <message_argument value="getLoopExp_OwnedBody()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1129,6 +1191,34 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS"/>
                 <message_argument value="error(XMIException)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/executor/ExecutorMultipleIterationManager.java" type="org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager"/>
+                <message_argument value="body1"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager"/>
+                <message_argument value="body2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/executor/ExecutorMultipleMapIterationManager.java" type="org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager"/>
+                <message_argument value="body1"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager"/>
+                <message_argument value="body2"/>
             </message_arguments>
         </filter>
     </resource>

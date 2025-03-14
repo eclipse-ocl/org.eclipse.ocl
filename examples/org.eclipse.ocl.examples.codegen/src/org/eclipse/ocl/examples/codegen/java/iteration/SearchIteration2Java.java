@@ -14,28 +14,72 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.pivot.LoopExp;
 
-public class SearchIteration2Java extends AbstractIteration2Java
+public class SearchIteration2Java extends AbstractAccumulation2Java
 {
 	public static final @NonNull SearchIteration2Java INSTANCE = new SearchIteration2Java();
 
 	@Override
 	public void appendAccumulatorInit(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		js.appendTrue();
+		CGIterator cgAccumulator = getAccumulator(cgIterationCallExp);
+		js.appendValueName(cgAccumulator.getInit());
 	}
 
 	@Override
 	public boolean appendFinalValue(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		throw new UnsupportedOperationException();
+		CGValuedElement cgBody2 = cgIterationCallExp.getBodies().get(2);
+		js.appendCommentWithOCL(null, cgBody2.getAst());
+		if (js.appendLocalStatements(cgBody2)) {
+			js.append("//\n");
+		}
+		js.appendValueName(cgIterationCallExp);
+		js.append(" = ");
+		js.appendValueName(cgBody2);
+		js.append(";\n");
+		js.append("break;\n");
+		return false;
 	}
 
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		throw new UnsupportedOperationException();
+		CGValuedElement cgBody0 = cgIterationCallExp.getBodies().get(0);
+		if (cgBody0.isInvalid()) {
+			js.appendValueName(cgBody0);
+			return true;
+		}
+		CGIterator cgAccumulator = getAccumulator(cgIterationCallExp);
+		js.appendValueName(cgAccumulator);
+		js.append(" = ");
+		js.appendValueName(cgBody0);
+		js.append(";\n");
+		CGValuedElement cgBody1 = cgIterationCallExp.getBodies().get(1);
+		js.appendCommentWithOCL(null, cgBody1.getAst());
+		if (js.appendLocalStatements(cgBody1)) {
+			js.append("//\n");
+		}
+		js.append("if (");
+		js.appendNotEqualsBoolean(cgBody1, true);
+		js.append(") {			// Stop once done.\n");
+		js.pushIndentation(null);
+		CGValuedElement cgBody2 = cgIterationCallExp.getBodies().get(2);
+		js.appendCommentWithOCL(null, cgBody2.getAst());
+		if (js.appendLocalStatements(cgBody2)) {
+			js.append("//\n");
+		}
+		js.appendValueName(cgIterationCallExp);
+		js.append(" = ");
+		js.appendValueName(cgBody2);
+		js.append(";\n");
+		js.append("break;\n");
+		js.popIndentation();
+		js.append("}\n");
+		return true;
 	}
 
 	@Override

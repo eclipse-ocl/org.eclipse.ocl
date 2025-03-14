@@ -339,7 +339,14 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			safeVisit(cgAccumulator);
 		}
 		append(" | ");
-		safeVisit(cgExp.getBody());
+		isFirst = true;
+		for (CGValuedElement cgBody : cgExp.getBodies()) {
+			if (!isFirst) {
+				append(", ");
+			}
+			safeVisit(cgBody);
+			isFirst = false;
+		}
 		append(")");//$NON-NLS-1$
 		return null;
 	}
@@ -541,7 +548,14 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			safeVisit(((CGLibraryIterateCallExp)ic).getResult());
 		}
 		append(" | ");
-		safeVisit(ic.getBody());
+		boolean isFirst = true;
+		for (CGValuedElement cgBody : ic.getBodies()) {
+			if (!isFirst) {
+				append(", ");
+			}
+			safeVisit(cgBody);
+			isFirst = false;
+		}
 		append(")");
 		//		appendAtPre(oc);
 		return null;

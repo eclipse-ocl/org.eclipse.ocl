@@ -930,7 +930,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					helper.setType(acc, accType, accIsRequired == Boolean.TRUE, null);
 				}
 				if (pivotAccumulators.size() >= iteration.getOwnedAccumulators().size()) {
-					context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, ElementUtil.getTrimmedText(csNameExp.getOwnedPathName()));
+					context.addError(csNameExp, expression instanceof IterateExp ? EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators : EssentialOCLCS2ASMessages.IteratorExp_TooManyAccumulators, ElementUtil.getTrimmedText(csNameExp.getOwnedPathName()));
 					return false;
 				}
 				acc.setRepresentedParameter(iteration.getOwnedAccumulators().get(pivotAccumulators.size()));

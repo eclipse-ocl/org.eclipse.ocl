@@ -309,7 +309,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgElement) {
 		super.visitCGBuiltInIterationCallExp(cgElement);
 		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'"));
-		CGValuedElement cgBody = cgElement.getBody();
+		CGValuedElement cgBody = cgElement.getBodies().get(0);
 		if (cgBody.isRequired()) {
 			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + cgElement.getReferredIteration() + "'"));
 		}
@@ -475,8 +475,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'");
 		rewriteAsBoxed(cgElement.getSource());
 		LibraryIteration libraryIteration = cgElement.getLibraryIteration();
-		if (!(libraryIteration instanceof IterateIteration)) {
-			rewriteAsBoxed(cgElement.getBody());
+		if (!(libraryIteration instanceof IterateIteration)) {				// XXX why?
+			for (CGValuedElement cgBody : cgElement.getBodies()) {
+				rewriteAsBoxed(cgBody);
+			}
 		}
 		return null;
 	}
@@ -487,8 +489,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'");
 		rewriteAsBoxed(cgElement.getSource());
 		LibraryIteration libraryIteration = cgElement.getLibraryIteration();
-		if (!(libraryIteration instanceof IterateIteration)) {
-			rewriteAsBoxed(cgElement.getBody());
+		if (!(libraryIteration instanceof IterateIteration)) {				// XXX why?
+			for (CGValuedElement cgBody : cgElement.getBodies()) {
+				rewriteAsBoxed(cgBody);
+			}
 		}
 		return null;
 	}
