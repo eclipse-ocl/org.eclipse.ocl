@@ -12,11 +12,13 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
@@ -43,7 +45,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CoCollectionValue;
@@ -727,7 +728,7 @@ implements CollectionType {
 		if (type instanceof CollectionType) {
 			CollectionType thatCollectionType = (CollectionType)type;
 			Type thisElementType = this.getElementType();
-			Type thatElementType = ClassUtil.nonNullEMF(thatCollectionType.getElementType());
+			Type thatElementType = Objects.requireNonNull(thatCollectionType.getElementType());
 			boolean commonIsNullFree = this.isIsNullFree() && thatCollectionType.isIsNullFree();
 			Type commonElementType = thisElementType.getCommonType(idResolver, thatElementType);
 			if ((commonInheritance instanceof CompleteInheritanceImpl) && !((CompleteInheritanceImpl)commonInheritance).isIsAbstract()) {
@@ -747,8 +748,11 @@ implements CollectionType {
 					if (isUnique() && thatCollectionType.isUnique()) {
 						return environment.getSetType(commonElementType, commonIsNullFree, null, null);
 					}
-					else {
+					else if ((this instanceof BagType) && (thatCollectionType instanceof BagType)) {
 						return environment.getBagType(commonElementType, commonIsNullFree, null, null);
+					}
+					else {
+						return environment.getCollectionType(standardLibrary.getCollectionType(), commonElementType, commonIsNullFree, null, null);
 					}
 				}
 			}
