@@ -783,15 +783,42 @@
         <ownedParameters xmi:id="bm4Pc" name="lambda" type="#9VTck"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="q2Xzg" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
-          isRequired="false" name="search" type="#e30AB">
-        <ownedAccumulators xmi:id="9cchA" name="acc" type="#f30AB"/>
+          isRequired="false" name="search" type="#jg1AB">
+        <ownedAccumulators xmi:id="9cchA" name="acc" type="#Ch1AB"/>
         <ownedIterators xmi:id="L6Pf6" isRequired="false" name="i" type="#qs59R"/>
-        <ownedParameters xmi:id="7uTPL" isRequired="false" name="nextAcc" type="#1cqaR"/>
+        <ownedParameters xmi:id="7uTPL" isRequired="false" name="nextAcc" type="#CvdbR"/>
         <ownedParameters xmi:id="574xW" isRequired="false" name="isDone" type="#9VTck"/>
-        <ownedParameters xmi:id="Kd1cl" isRequired="false" name="result" type="#mbqaR"/>
+        <ownedParameters xmi:id="Kd1cl" isRequired="false" name="result" type="#xIdbR"/>
         <ownedSignature>
-          <ownedParameters xmi:id="e30AB" name="V"/>
-          <ownedParameters xmi:id="f30AB" name="W"/>
+          <ownedParameters xmi:id="jg1AB" name="V1"/>
+          <ownedParameters xmi:id="Ch1AB" name="W1"/>
+        </ownedSignature>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="u8Xzg" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
+          isRequired="false" name="search" type="#IXwHZ">
+        <ownedAccumulators xmi:id="xK9iA" name="acc" type="#nXwHZ"/>
+        <ownedIterators xmi:id=",nwg6" isRequired="false" name="i" type="#qs59R"/>
+        <ownedIterators xmi:id="Aowg6" isRequired="false" name="j" type="#qs59R"/>
+        <ownedParameters xmi:id="vc0QL" isRequired="false" name="nextAcc" type="#tGH+B"/>
+        <ownedParameters xmi:id="tpZzW" isRequired="false" name="isDone" type="#9VTck"/>
+        <ownedParameters xmi:id="+KWel" isRequired="false" name="result" type="#cgG+B"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="IXwHZ" name="V2"/>
+          <ownedParameters xmi:id="nXwHZ" name="W2"/>
+        </ownedSignature>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="TEYzg" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
+          isRequired="false" name="search" type="#W7ZQ3">
+        <ownedAccumulators xmi:id="CE2kA" name="acc" type="#17ZQ3"/>
+        <ownedIterators xmi:id="Qhpi6" isRequired="false" name="i" type="#qs59R"/>
+        <ownedIterators xmi:id="Rhpi6" isRequired="false" name="j" type="#qs59R"/>
+        <ownedIterators xmi:id="Shpi6" isRequired="false" name="k" type="#qs59R"/>
+        <ownedParameters xmi:id="AWtSL" isRequired="false" name="nextAcc" type="#,zapO"/>
+        <ownedParameters xmi:id="+iS1W" isRequired="false" name="isDone" type="#9VTck"/>
+        <ownedParameters xmi:id="PEPgl" isRequired="false" name="result" type="#uNapO"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="W7ZQ3" name="V3"/>
+          <ownedParameters xmi:id="17ZQ3" name="W3"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="6tk0g" implementationClass="org.eclipse.ocl.pivot.library.iterator.SelectIteration"
@@ -1204,15 +1231,42 @@
         <ownedParameters xmi:id="2X,,R" name="lambda" type="#7A0zM"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="hLaa0" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
-          isRequired="false" name="search" type="#T83ch">
-        <ownedAccumulators xmi:id="YOjR2" name="acc" type="#OT3ch"/>
+          isRequired="false" name="search" type="#S83ch">
+        <ownedAccumulators xmi:id="YOjR2" name="acc" type="#x83ch"/>
         <ownedIterators xmi:id="mrWPw" isRequired="false" name="i" type="#8dAuH"/>
-        <ownedParameters xmi:id="Wga,A" isRequired="false" name="nextAcc" type="#0WLZ8"/>
+        <ownedParameters xmi:id="Wga,A" isRequired="false" name="nextAcc" type="#Bp+Z8"/>
         <ownedParameters xmi:id="Ut,hM" isRequired="false" name="isDone" type="#7A0zM"/>
-        <ownedParameters xmi:id="lO8Mb" isRequired="false" name="result" type="#,D+Z8"/>
+        <ownedParameters xmi:id="lO8Mb" isRequired="false" name="result" type="#wC+Z8"/>
         <ownedSignature>
-          <ownedParameters xmi:id="T83ch" name="V2"/>
-          <ownedParameters xmi:id="OT3ch" name="W"/>
+          <ownedParameters xmi:id="S83ch" name="V1"/>
+          <ownedParameters xmi:id="x83ch" name="W1"/>
+        </ownedSignature>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="lRaa0" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
+          isRequired="false" name="search" type="#3yyj5">
+        <ownedAccumulators xmi:id="M8DT2" name="acc" type="#Wzyj5"/>
+        <ownedIterators xmi:id="aZ3Qw" isRequired="false" name="i" type="#8dAuH"/>
+        <ownedIterators xmi:id="bZ3Qw" isRequired="false" name="j" type="#8dAuH"/>
+        <ownedParameters xmi:id="KO7AB" isRequired="false" name="nextAcc" type="#sAo8s"/>
+        <ownedParameters xmi:id="IbgjM" isRequired="false" name="isDone" type="#7A0zM"/>
+        <ownedParameters xmi:id="Z8cOb" isRequired="false" name="result" type="#ban8s"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="3yyj5" name="V2"/>
+          <ownedParameters xmi:id="Wzyj5" name="W2"/>
+        </ownedSignature>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="KZaa0" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
+          isRequired="false" name="search" type="#FXcsX">
+        <ownedAccumulators xmi:id="d18U2" name="acc" type="#kXcsX"/>
+        <ownedIterators xmi:id="rSwSw" isRequired="false" name="i" type="#8dAuH"/>
+        <ownedIterators xmi:id="sSwSw" isRequired="false" name="j" type="#8dAuH"/>
+        <ownedIterators xmi:id="tSwSw" isRequired="false" name="k" type="#8dAuH"/>
+        <ownedParameters xmi:id="bH0CB" isRequired="false" name="nextAcc" type="#+t7n5"/>
+        <ownedParameters xmi:id="ZUZlM" isRequired="false" name="isDone" type="#7A0zM"/>
+        <ownedParameters xmi:id="q1VQb" isRequired="false" name="result" type="#tH7n5"/>
+        <ownedSignature>
+          <ownedParameters xmi:id="FXcsX" name="V3"/>
+          <ownedParameters xmi:id="kXcsX" name="W3"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="xCnb0" implementationClass="org.eclipse.ocl.pivot.library.iterator.MapSelectIteration"
@@ -3062,12 +3116,16 @@
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="7A0zM" contextType="#8dAuH" name="Lambda" resultType="#XEMMs" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="voQcV" contextType="#8dAuH" name="Lambda" resultType="#jbMkR" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="uOvwZ" contextType="#8dAuH" name="Lambda" resultType="#06U6Y" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="wC+Z8" contextType="#8dAuH" name="Lambda" resultType="#S83ch" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="xFQAt" contextType="#8dAuH" name="Lambda" resultType="#BkHat" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="yptMt" contextType="#8dAuH" name="Lambda" resultType="#waOWY" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="S,+0s" contextType="#8dAuH" name="Lambda" resultType="#QNM7m" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="oH0SK" contextType="#8dAuH" name="Lambda" resultType="#aRcRF" superClasses="#ufpqK"/>
-    <ownedClasses xsi:type="pivot:LambdaType" xmi:id=",D+Z8" contextType="#8dAuH" name="Lambda" resultType="#T83ch" superClasses="#ufpqK"/>
-    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="0WLZ8" contextType="#8dAuH" name="Lambda" resultType="#OT3ch" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="ban8s" contextType="#8dAuH" name="Lambda" resultType="#3yyj5" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="tH7n5" contextType="#8dAuH" name="Lambda" resultType="#FXcsX" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="Bp+Z8" contextType="#8dAuH" name="Lambda" resultType="#x83ch" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="sAo8s" contextType="#8dAuH" name="Lambda" resultType="#Wzyj5" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="+t7n5" contextType="#8dAuH" name="Lambda" resultType="#kXcsX" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="TVxB," contextType="#k2OA6" name="Lambda" resultType="#XEMMs" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="9VTck" contextType="#qs59R" name="Lambda" resultType="#XEMMs" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="mzCFm" contextType="#53+C2" name="Lambda" resultType="#XEMMs" superClasses="#ufpqK"/>
@@ -3087,7 +3145,6 @@
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="ZBaNC" contextType="#qs59R" name="Lambda" resultType="#7VL63" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="5Wr1B" contextType="#qs59R" name="Lambda" resultType="#bIJfG" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="PfgTf" contextType="#qs59R" name="Lambda" resultType="#lMZ1k" superClasses="#ufpqK"/>
-    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="mbqaR" contextType="#qs59R" name="Lambda" resultType="#e30AB" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="ekZDz" contextType="#53+C2" name="Lambda" resultType="#ftoBy" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id=",dI4y" contextType="#53+C2" name="Lambda" resultType="#uWtir" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="Vm9VQ" contextType="#53+C2" name="Lambda" resultType="#4a94J" superClasses="#ufpqK"/>
@@ -3097,7 +3154,12 @@
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="A88rw" contextType="#ODsm5" name="Lambda" resultType="#gbWpi" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="h1rgw" contextType="#ODsm5" name="Lambda" resultType="#vEbKc" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="39g+N" contextType="#ODsm5" name="Lambda" resultType="#5Irg6" superClasses="#ufpqK"/>
-    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="1cqaR" contextType="#qs59R" name="Lambda" resultType="#f30AB" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="xIdbR" contextType="#qs59R" name="Lambda" resultType="#jg1AB" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="cgG+B" contextType="#qs59R" name="Lambda" resultType="#IXwHZ" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="uNapO" contextType="#qs59R" name="Lambda" resultType="#W7ZQ3" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="CvdbR" contextType="#qs59R" name="Lambda" resultType="#Ch1AB" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="tGH+B" contextType="#qs59R" name="Lambda" resultType="#nXwHZ" superClasses="#ufpqK"/>
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id=",zapO" contextType="#qs59R" name="Lambda" resultType="#17ZQ3" superClasses="#ufpqK"/>
     <ownedClasses xsi:type="pivot:MapType" xmi:id="Si8ek" name="Map" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#mMGvo" formal="#8dAuH"/>

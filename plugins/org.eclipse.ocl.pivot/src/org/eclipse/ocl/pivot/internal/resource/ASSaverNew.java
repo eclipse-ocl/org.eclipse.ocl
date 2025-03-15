@@ -184,7 +184,7 @@ public class ASSaverNew extends AbstractASSaver
 			if (!PivotConstants.ORPHANAGE_NAME.equals(asClass.getName())) {
 				TypeId typeId = asClass.getTypeId();
 				org.eclipse.ocl.pivot.Class old = typeId2globalType.put(typeId, asClass);
-				assert old == null;
+				assert old == null : "Replacing " + typeId + " in typeId2globalType";
 			}
 			else {
 				for (@NonNull Operation asOperation : PivotUtil.getOwnedOperations(asClass)) {
