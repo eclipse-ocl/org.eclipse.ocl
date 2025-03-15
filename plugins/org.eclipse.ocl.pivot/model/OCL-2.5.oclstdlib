@@ -606,7 +606,9 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 
 	operation coCollection() : CoCollection => 'org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation';
 	iteration gather(V)(i : T[?] | lambda : Lambda T() : V[?]) : Collection(V) => 'org.eclipse.ocl.pivot.library.iterator.GatherIteration';
-	iteration search(V,W)(i : T[?]; acc : W | nextAcc : Lambda T() : W, isDone : Lambda T() : Boolean, result : Lambda T() : V[?]) : V[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	iteration search(V1,W1)(i : T[?]; acc : W1 | nextAcc : Lambda T() : W1, isDone : Lambda T() : Boolean, result : Lambda T() : V1[?]) : V1[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	iteration search(V2,W2)(i : T[?], j : T[?]; acc : W2 | nextAcc : Lambda T() : W2, isDone : Lambda T() : Boolean, result : Lambda T() : V2[?]) : V2[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	iteration search(V3,W3)(i : T[?], j : T[?], k : T[?]; acc : W3 | nextAcc : Lambda T() : W3, isDone : Lambda T() : Boolean, result : Lambda T() : V3[?]) : V3[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
 }
 
 /*
@@ -862,7 +864,9 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 
 	operation coCollection() : CoCollection => 'org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation';
 	iteration gather(V2)(i : K[?] | lambda : Lambda K() : V2[?]) : Collection(V2) => 'org.eclipse.ocl.pivot.library.iterator.GatherIteration';
-	iteration search(V2,W)(i : K[?]; acc : W | nextAcc : Lambda K() : W, isDone : Lambda K() : Boolean, result : Lambda K() : V2[?]) : V2[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	iteration search(V1,W1)(i : K[?]; acc : W1 | nextAcc : Lambda K() : W1, isDone : Lambda K() : Boolean, result : Lambda K() : V1[?]) : V1[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	iteration search(V2,W2)(i : K[?], j : K[?]; acc : W2 | nextAcc : Lambda K() : W2, isDone : Lambda K() : Boolean, result : Lambda K() : V2[?]) : V2[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	iteration search(V3,W3)(i : K[?], j : K[?], k : K[?]; acc : W3 | nextAcc : Lambda K() : W3, isDone : Lambda K() : Boolean, result : Lambda K() : V3[?]) : V3[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
 }
 
 	/*
