@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot.internal.validation;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -1032,11 +1034,19 @@ public class EcoreOCLEValidator implements EValidator
 				String body = expressionInOCL.getBody();
 				String trimmedBody = body.replace("\\w*", " ").trim();
 				s.append("\"" + StringUtil.convertToOCLString(trimmedBody) + "\"");
-				for (Diagnostic childDiagnostic : nestedDiagnostic.getChildren()) {
-					if (childDiagnostic != null) {
+				List<Diagnostic> childDiagnostics = nestedDiagnostic.getChildren();
+				if (!childDiagnostics.isEmpty()) {
+					List<@NonNull String> strings = new ArrayList<@NonNull String>(childDiagnostics.size());
+					for (Diagnostic childDiagnostic : childDiagnostics) {
+						if (childDiagnostic != null) {
+							strings.add(childDiagnostic.getMessage());
+						}
+					}
+					Collections.sort(strings);				// Stabilize child diagnostic order.
+					for (@NonNull String string : strings) {
 						// Problems View needs a multiline to show per-line errors
 						s.append("\n\t");
-						s.append(childDiagnostic.getMessage());
+						s.append(string);
 					}
 				}
 				String invalidMessage = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, role, contextName, s.toString());
