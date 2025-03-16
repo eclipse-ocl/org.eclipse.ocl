@@ -11,12 +11,14 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
+import org.eclipse.ocl.pivot.CoCollectionType;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -92,7 +94,45 @@ public class TypeUtil
 	}
 
 	public static boolean conformsToLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull LambdaType firstLambdaType, @NonNull LambdaType secondLambdaType) {
-		throw new UnsupportedOperationException();
+		Type firstContextType = firstLambdaType.getContextType();
+		Type secondContextType = secondLambdaType.getContextType();
+		if (firstContextType != secondContextType) {
+			if ((firstContextType == null) || (secondContextType == null)) {
+				return false;
+			}
+			if (!firstContextType.conformsTo(standardLibrary, secondContextType)) {
+				return false;
+			}
+		}
+		List<? extends Type> firstParameterTypes = firstLambdaType.getParameterTypes();
+		List<? extends Type> secondParameterTypes = secondLambdaType.getParameterTypes();
+		int iSize = firstParameterTypes.size();
+		if (iSize != secondParameterTypes.size()) {
+			return false;
+		}
+		for (int i = 0; i < iSize; i++) {
+			Type firstParameterType = firstParameterTypes.get(i);
+			Type secondParameterType = secondParameterTypes.get(i);
+			if (firstParameterType != secondParameterType) {
+				if ((firstParameterType == null) || (secondParameterType == null)) {
+					return false;
+				}
+				if (!firstParameterType.conformsTo(standardLibrary, secondParameterType)) {
+					return false;
+				}
+			}
+		}
+		Type firstResultType = firstLambdaType.getResultType();
+		Type secondResultType = secondLambdaType.getResultType();
+		if (firstResultType != secondResultType) {
+			if ((firstResultType == null) || (secondResultType == null)) {
+				return false;
+			}
+			if (!secondResultType.conformsTo(standardLibrary, firstResultType)) {		// Assignable
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static boolean conformsToMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType firstMapType, @NonNull MapType secondMapType) {
@@ -186,10 +226,10 @@ public class TypeUtil
 		int iParameter = 0;
 		List<? extends Type> ownedParameters = lambdaType.getParameterTypes();
 		@NonNull Type @NonNull [] parameterTypes = new @NonNull Type[ownedParameters.size() + 2];
-		parameterTypes[iParameter++] = ClassUtil.nonNullState(lambdaType.getContextType());
-		parameterTypes[iParameter++] = ClassUtil.nonNullState(lambdaType.getResultType());
+		parameterTypes[iParameter++] = Objects.requireNonNull(lambdaType.getContextType());
+		parameterTypes[iParameter++] = Objects.requireNonNull(lambdaType.getResultType());
 		for (Type parameterType : ownedParameters) {
-			parameterTypes[iParameter++] = ClassUtil.nonNullState(parameterType);
+			parameterTypes[iParameter++] = Objects.requireNonNull(parameterType);
 		}
 		return parameterTypes;
 	}
@@ -198,7 +238,10 @@ public class TypeUtil
 	 * @since 1.18
 	 */
 	public static @NonNull String getMetaclassName(@NonNull Type asInstanceType) {
-		if (asInstanceType instanceof CollectionType) {
+		if (asInstanceType instanceof CoCollectionType) {
+			return TypeId.CO_COLLECTION_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof CollectionType) {
 			if (asInstanceType instanceof BagType) {
 				return TypeId.BAG_TYPE_NAME;
 			}
@@ -255,17 +298,17 @@ public class TypeUtil
 			List<@NonNull ? extends TypedElement> ownedAccumulators = ClassUtil.nullFree(anIteration.getOwnedAccumulators());
 			parameterTypes = new @NonNull Type[ownedIterators.size() + ownedAccumulators.size() + ownedParameters.size()];
 			for (@NonNull TypedElement ownedIterator : ownedIterators) {
-				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedIterator.getType());
+				parameterTypes[iParameter++] = Objects.requireNonNull(ownedIterator.getType());
 			}
 			for (@NonNull TypedElement ownedAccumulator : ownedAccumulators) {
-				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedAccumulator.getType());
+				parameterTypes[iParameter++] = Objects.requireNonNull(ownedAccumulator.getType());
 			}
 		}
 		else {
 			parameterTypes = new @NonNull Type[ownedParameters.size()];
 		}
 		for (@NonNull TypedElement ownedParameter : ownedParameters) {
-			parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedParameter.getType());
+			parameterTypes[iParameter++] = Objects.requireNonNull(ownedParameter.getType());
 		}
 		return parameterTypes;
 	}
@@ -273,6 +316,9 @@ public class TypeUtil
 	public static @Nullable Type getPrimitiveType(@NonNull StandardLibrary standardLibrary, @NonNull PrimitiveTypeId typeId) {
 		if (typeId == TypeId.BOOLEAN) {
 			return standardLibrary.getBooleanType();
+		}
+		else if (typeId == TypeId.CO_COLLECTION) {
+			return standardLibrary.getCoCollectionType();
 		}
 		else if (typeId == TypeId.INTEGER) {
 			return standardLibrary.getIntegerType();
