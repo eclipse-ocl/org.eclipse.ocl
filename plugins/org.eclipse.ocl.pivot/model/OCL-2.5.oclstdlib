@@ -106,7 +106,10 @@ type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.
 	/*
 	The Bag of elements which results from applying body to every member of the source nonordered collection.
 	*/
-	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Bag(V) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Bag(V) --> 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	{
+		body: gather(i | lambda);
+	}
 	/*
 	The sub-bag of the source bag for which body is oclText[false].
 	
@@ -394,7 +397,10 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	/*
 	The Collection of elements which results from applying body to every member of the source collection.
 	*/
-	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Collection(V) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Collection(V) --> 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	{
+		body: gather(i | lambda);
+	}
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.
 	*/
@@ -480,7 +486,10 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	/*
 	The number of times that object occurs in the collection oclText[self].
 	*/
-	operation count(object : T[?]) : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionCountOperation';
+	operation count(object : T[?]) : Integer[1] --> 'org.eclipse.ocl.pivot.library.collection.CollectionCountOperation';
+	{
+		body: coCollection().count(object);
+	}
 	/*
 	True if object is not an element of oclText[self], oclText[false] otherwise.
 	*/
@@ -694,7 +703,7 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	*/
 	iteration any(k : K[1] | _'body' : Lambda K() : Boolean[1]) : K[?] => 'org.eclipse.ocl.pivot.library.iterator.AnyIteration';
 	/*
-	The Map of key and values that results from applying body to every value of the source map.
+	The Collection of results from applying body to every key-value of the source map.
 	The result is flattened. 
 	*/
 	iteration collect(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Bag(V2[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
@@ -704,9 +713,12 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	*/
 	iteration collectBy(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Map(K[?],V2[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectByIteration';
 	/*
-	The Map of key and values which results from applying body to every value of the source map.
+	The Collection of results from applying body to every key-value of the source map.
 	*/
-	iteration collectNested(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Map(K[?],V2[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(V2)(k : K[?] | lambda : Lambda K() : V2[?]) : Bag(V2[?])[1] --> 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	{
+		body: gather(i | lambda);
+	}
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.
 	*/
@@ -863,7 +875,7 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	static property valueType : V[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 
 	operation coCollection() : CoCollection => 'org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation';
-	iteration gather(V2)(i : K[?] | lambda : Lambda K() : V2[?]) : Collection(V2) => 'org.eclipse.ocl.pivot.library.iterator.GatherIteration';
+	iteration gather(V2)(i : K[?] | lambda : Lambda K() : V2[?]) : Bag(V2[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.GatherIteration';
 	iteration search(V1,W1)(i : K[?]; acc : W1 | nextAcc : Lambda K() : W1, isDone : Lambda K() : Boolean, result : Lambda K() : V1[?]) : V1[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
 	iteration search(V2,W2)(i : K[?], j : K[?]; acc : W2 | nextAcc : Lambda K() : W2, isDone : Lambda K() : Boolean, result : Lambda K() : V2[?]) : V2[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
 	iteration search(V3,W3)(i : K[?], j : K[?], k : K[?]; acc : W3 | nextAcc : Lambda K() : W3, isDone : Lambda K() : Boolean, result : Lambda K() : V3[?]) : V3[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
@@ -1357,7 +1369,10 @@ type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollec
 	/*
 	The sequence of elements that results from applying body to every member of the source ordered collection.
 	*/
-	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Sequence(V) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Sequence(V) --> 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	{
+		body: gather(i | lambda);
+	}
 	/*
 	The ordered set of the source ordered set for which body is oclText[false].
 	*/
@@ -1539,7 +1554,10 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.Li
 	/*
 	The sequence of elements that results from applying body to every member of the source ordered collection.
 	*/
-	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Sequence(V) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Sequence(V) --> 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	{
+		body: gather(i | lambda);
+	}
 	/*
 	The subsequence of the source sequence for which body is oclText[false].
 	*/
@@ -1642,7 +1660,10 @@ type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {
 	/*
 	The Bag of elements which results from applying body to every member of the source nonordered collection.
 	*/
-	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Bag(V) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(V)(i : T[?] | lambda : Lambda T() : V[?]) : Bag(V) --> 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	{
+		body: gather(i | lambda);
+	}
 	/*
 	The subset of the source set for which body is oclText[false].
 	*/

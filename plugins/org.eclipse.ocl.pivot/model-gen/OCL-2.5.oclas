@@ -47,8 +47,17 @@
           <ownedParameters xmi:id="ehjJ6" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="BnvOK" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"
-          name="collectNested" type="#kj8x0">
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="BnvOK" name="collectNested" type="#kj8x0">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="gather(i | lambda)" type="#kj8x0">
+          <ownedBody xsi:type="pivot:IteratorExp" name="gather" referredIteration="#7D7Gf" type="#kj8x0">
+            <ownedBody xsi:type="pivot:VariableExp" isRequired="false" name="lambda" referredVariable="#1P5g1" type="#dKdmN"/>
+            <ownedIterators xsi:type="pivot:IteratorVariable" isRequired="false" name="i" representedParameter="#Yi6X4" type="#k2OA6"/>
+            <ownedSource xsi:type="pivot:VariableExp" isImplicit="true" name="self" referredVariable="#1RoBs" type="#yEcHF"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="1RoBs" name="self" type="#yEcHF"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="1P5g1" isRequired="false" name="lambda" representedParameter="#vqsoU"
+              type="#dKdmN"/>
+        </bodyExpression>
         <ownedComments body="&#xA;The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
         <ownedIterators xmi:id="GZOJ0" isRequired="false" name="i" type="#k2OA6"/>
         <ownedParameters xmi:id="vqsoU" isRequired="false" name="lambda" type="#dKdmN"/>
@@ -602,8 +611,17 @@
           <ownedParameters xmi:id="7VL63" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id=",0rQ3" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"
-          name="collectNested" type="#4za1O">
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id=",0rQ3" name="collectNested" type="#4za1O">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="gather(i | lambda)" type="#4za1O">
+          <ownedBody xsi:type="pivot:IteratorExp" name="gather" referredIteration="#5R3IM" type="#4za1O">
+            <ownedBody xsi:type="pivot:VariableExp" isRequired="false" name="lambda" referredVariable="#jNaVI" type="#5Wr1B"/>
+            <ownedIterators xsi:type="pivot:IteratorVariable" isRequired="false" name="i" representedParameter="#eYlVQ" type="#qs59R"/>
+            <ownedSource xsi:type="pivot:VariableExp" isImplicit="true" name="self" referredVariable="#jPJ2+" type="#IgEJU"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="jPJ2+" name="self" type="#IgEJU"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="jNaVI" isRequired="false" name="lambda" representedParameter="#1gXms"
+              type="#5Wr1B"/>
+        </bodyExpression>
         <ownedComments body="&#xA;The Collection of elements which results from applying body to every member of the source collection.&#xA;"/>
         <ownedIterators xmi:id="MP5GM" isRequired="false" name="i" type="#qs59R"/>
         <ownedParameters xmi:id="1gXms" isRequired="false" name="lambda" type="#5Wr1B"/>
@@ -611,8 +629,18 @@
           <ownedParameters xmi:id="bIJfG" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xmi:id="Nemec" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionCountOperation" name="count"
-          type="#tYtCd">
+      <ownedOperations xmi:id="Nemec" name="count" type="#tYtCd">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="coCollection().count(object)" type="#tYtCd">
+          <ownedBody xsi:type="pivot:OperationCallExp" name="count" referredOperation="#SrMm1" type="#tYtCd">
+            <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" name="object" referredVariable="#Z+pXJ" type="#qs59R"/>
+            <ownedSource xsi:type="pivot:OperationCallExp" name="coCollection" referredOperation="#HZxtu" type="#ZFBzm">
+              <ownedSource xsi:type="pivot:VariableExp" isImplicit="true" name="self" referredVariable="#hCkt6" type="#IgEJU"/>
+            </ownedSource>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="hCkt6" name="self" type="#IgEJU"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="Z+pXJ" isRequired="false" name="object" representedParameter="#DDwxg"
+              type="#qs59R"/>
+        </bodyExpression>
         <ownedComments body="&#xA;The number of times that object occurs in the collection oclText[self].&#xA;"/>
         <ownedParameters xmi:id="DDwxg" isRequired="false" name="object" type="#qs59R"/>
       </ownedOperations>
@@ -1015,7 +1043,7 @@
           type="#ZFBzm"/>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="fzpBj" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#Txm0H">
-        <ownedComments body="&#xA;The Map of key and values that results from applying body to every value of the source map.&#xA;The result is flattened.&#xA;"/>
+        <ownedComments body="&#xA;The Collection of results from applying body to every key-value of the source map.&#xA;The result is flattened.&#xA;"/>
         <ownedIterators xmi:id="uTnTY" isRequired="false" name="k" type="#8dAuH"/>
         <ownedParameters xmi:id="VlFz4" isRequired="false" name="lambda" type="#xFQAt"/>
         <ownedSignature>
@@ -1031,9 +1059,18 @@
           <ownedParameters xmi:id="waOWY" name="V2"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="2Ju3K" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"
-          name="collectNested" type="#rNtaG">
-        <ownedComments body="&#xA;The Map of key and values which results from applying body to every value of the source map.&#xA;"/>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="2Ju3K" name="collectNested" type="#KHE0G">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="gather(i | lambda)" type="#KHE0G">
+          <ownedBody xsi:type="pivot:IteratorExp" name="gather" referredIteration="#wm5vf" type="#KHE0G">
+            <ownedBody xsi:type="pivot:VariableExp" isRequired="false" name="lambda" referredVariable="#Spcxo" type="#S,+0s"/>
+            <ownedIterators xsi:type="pivot:IteratorVariable" name="i" representedParameter="#5JsFG" type="#8dAuH"/>
+            <ownedSource xsi:type="pivot:VariableExp" isImplicit="true" name="self" referredVariable="#SrLSf" type="#LpeHF"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="SrLSf" name="self" type="#LpeHF"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="Spcxo" isRequired="false" name="lambda" representedParameter="#QSeWi"
+              type="#S,+0s"/>
+        </bodyExpression>
+        <ownedComments body="&#xA;The Collection of results from applying body to every key-value of the source map.&#xA;"/>
         <ownedIterators xmi:id="pAA3B" isRequired="false" name="k" type="#8dAuH"/>
         <ownedParameters xmi:id="QSeWi" isRequired="false" name="lambda" type="#S,+0s"/>
         <ownedSignature>
@@ -1139,7 +1176,7 @@
         <ownedParameters xmi:id="cb8Rl" isRequired="false" name="lambda" type="#7A0zM"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="wm5vf" implementationClass="org.eclipse.ocl.pivot.library.iterator.GatherIteration"
-          name="gather" type="#fTCyi">
+          name="gather" type="#E5ZwT">
         <ownedIterators xmi:id="5JsFG" isRequired="false" name="i" type="#8dAuH"/>
         <ownedParameters xmi:id="ibKlm" isRequired="false" name="lambda" type="#oH0SK"/>
         <ownedSignature>
@@ -1895,8 +1932,17 @@
           <ownedParameters xmi:id="ftoBy" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="6r5Ys" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"
-          name="collectNested" type="#2wnD2">
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="6r5Ys" name="collectNested" type="#2wnD2">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="gather(i | lambda)" type="#2wnD2">
+          <ownedBody xsi:type="pivot:IteratorExp" name="gather" referredIteration="#0IFRB" type="#2wnD2">
+            <ownedBody xsi:type="pivot:VariableExp" isRequired="false" name="lambda" referredVariable="#2b+Yt" type="#,dI4y"/>
+            <ownedIterators xsi:type="pivot:IteratorVariable" isRequired="false" name="i" representedParameter="#tjqa0" type="#53+C2"/>
+            <ownedSource xsi:type="pivot:VariableExp" isImplicit="true" name="self" referredVariable="#2dt5j" type="#fIXUp"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="2dt5j" name="self" type="#fIXUp"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="2b+Yt" isRequired="false" name="lambda" representedParameter="#EscrQ"
+              type="#,dI4y"/>
+        </bodyExpression>
         <ownedComments body="&#xA;The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
         <ownedIterators xmi:id="ba+Lw" isRequired="false" name="i" type="#53+C2"/>
         <ownedParameters xmi:id="EscrQ" isRequired="false" name="lambda" type="#,dI4y"/>
@@ -2176,8 +2222,17 @@
           <ownedParameters xmi:id="b0XaB" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="WXVv0" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"
-          name="collectNested" type="#SaIdP">
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="WXVv0" name="collectNested" type="#SaIdP">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="gather(i | lambda)" type="#SaIdP">
+          <ownedBody xsi:type="pivot:IteratorExp" name="gather" referredIteration="#Q0gnJ" type="#SaIdP">
+            <ownedBody xsi:type="pivot:VariableExp" isRequired="false" name="lambda" referredVariable="#yitx8" type="#3dLDL"/>
+            <ownedIterators xsi:type="pivot:IteratorVariable" isRequired="false" name="i" representedParameter="#ZhOSC" type="#l1i6D"/>
+            <ownedSource xsi:type="pivot:VariableExp" isImplicit="true" name="self" referredVariable="#ykcSz" type="#rk5ZZ"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="ykcSz" name="self" type="#rk5ZZ"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="yitx8" isRequired="false" name="lambda" representedParameter="#wpAje"
+              type="#3dLDL"/>
+        </bodyExpression>
         <ownedComments body="&#xA;The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
         <ownedIterators xmi:id="HYiD+" isRequired="false" name="i" type="#l1i6D"/>
         <ownedParameters xmi:id="wpAje" isRequired="false" name="lambda" type="#3dLDL"/>
@@ -2323,8 +2378,17 @@
           <ownedParameters xmi:id="gbWpi" name="V"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="zC6OL" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"
-          name="collectNested" type="#WQv,I">
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="zC6OL" name="collectNested" type="#WQv,I">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="gather(i | lambda)" type="#WQv,I">
+          <ownedBody xsi:type="pivot:IteratorExp" name="gather" referredIteration="#tfFHg" type="#WQv,I">
+            <ownedBody xsi:type="pivot:VariableExp" isRequired="false" name="lambda" referredVariable="#3JsAe" type="#h1rgw"/>
+            <ownedIterators xsi:type="pivot:IteratorVariable" isRequired="false" name="i" representedParameter="#CvX+3" type="#ODsm5"/>
+            <ownedSource xsi:type="pivot:VariableExp" isImplicit="true" name="self" referredVariable="#3LbhU" type="#MGgHF"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="3LbhU" name="self" type="#MGgHF"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="3JsAe" isRequired="false" name="lambda" representedParameter="#Z3JPU"
+              type="#h1rgw"/>
+        </bodyExpression>
         <ownedComments body="&#xA;The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
         <ownedIterators xmi:id="wlrvz" isRequired="false" name="i" type="#ODsm5"/>
         <ownedParameters xmi:id="Z3JPU" isRequired="false" name="lambda" type="#h1rgw"/>
@@ -2774,6 +2838,16 @@
         <ownedSubstitutions actual="#BkHat" formal="#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="KHE0G" name="Bag" superClasses="#gis1V">
+      <ownedBindings>
+        <ownedSubstitutions actual="#QNM7m" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="E5ZwT" name="Bag" superClasses="#aUCyi">
+      <ownedBindings>
+        <ownedSubstitutions actual="#aRcRF" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ftE1C" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#nwL7b" formal="#qs59R"/>
@@ -3034,14 +3108,19 @@
         <ownedSubstitutions actual="#lMZ1k" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fTCyi" isNullFree="true" name="Collection" superClasses="#jbMkR">
-      <ownedBindings>
-        <ownedSubstitutions actual="#aRcRF" formal="#qs59R"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="pMP2W" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#BkHat" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gis1V" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#QNM7m" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="aUCyi" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#aRcRF" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="+pH0E" name="Collection" superClasses="#jbMkR">
@@ -3188,12 +3267,6 @@
       <ownedBindings>
         <ownedSubstitutions actual="#8dAuH" formal="#8dAuH"/>
         <ownedSubstitutions actual="#waOWY" formal="#HeAuH"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="rNtaG" keysAreNullFree="false" name="Map" superClasses="#jbMkR" valuesAreNullFree="false">
-      <ownedBindings>
-        <ownedSubstitutions actual="#8dAuH" formal="#8dAuH"/>
-        <ownedSubstitutions actual="#QNM7m" formal="#HeAuH"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:MapType" xmi:id="C3rSN" keysAreNullFree="false" name="Map" superClasses="#jbMkR" valuesAreNullFree="false">

@@ -463,6 +463,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_CollectionType_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_V_T = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Map_collect_V2_F = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Map_collectNested_V2_F = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Map_gather_V2_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_MapType_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclElement_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclInvalid_F = createBagType(_Bag_Bag_T);
@@ -495,8 +497,9 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_Map_K_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_V_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_collect_V2_F = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Map_collectNested_V2_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_T = createCollectionType(_Collection_Collection_T);
-		private final @NonNull CollectionType _Collection_Map_gather_V2_T = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Map_gather_V2_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Map_includesAll_K2_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_MapType_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclAny_F = createCollectionType(_Collection_Collection_T);
@@ -622,7 +625,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull MapType _Map_Map_includesMap_K2_T_Map_includesMap_V2_T = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_includingMap_K2_T_Map_includingMap_V2_T = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_K_F_Map_collectBy_V2_F = createMapType(_Map_Map_K_Map_V);
-		private final @NonNull MapType _Map_Map_K_F_Map_collectNested_V2_F = createMapType(_Map_Map_K_Map_V);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -877,6 +879,14 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Map_collect_V2_F);
 			ownedClasses.add(type);
+			type = _Bag_Map_collectNested_V2_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_Map_collectNested_V2_F);
+			ownedClasses.add(type);
+			type = _Bag_Map_gather_V2_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_Map_gather_V2_F);
+			ownedClasses.add(type);
 			type = _Bag_MapType_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_MapType_F);
@@ -1020,13 +1030,16 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
+			type = _Collection_Map_collectNested_V2_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
 			type = _Collection_Map_excludesAll_K2_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
-			type = _Collection_Map_gather_V2_T;
-			type.setIsNullFree(true);
+			type = _Collection_Map_gather_V2_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -1596,12 +1609,6 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
-			type = _Map_Map_K_F_Map_collectNested_V2_F;
-			type.setKeysAreNullFree(false);
-			type.setValuesAreNullFree(false);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type);
 		}
 
 		private void installTupleTypes() {
@@ -2023,7 +2030,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Collection_asSequence = createOperation("asSequence", _Sequence_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asSet = createOperation("asSet", _Set_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_coCollection = createOperation("coCollection", _CoCollection, "org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionCoCollectionOperation.INSTANCE);
-		private final @NonNull Operation op_Collection_count = createOperation("count", _Integer, "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
+		private final @NonNull Operation op_Collection_count = createOperation("count", _Integer, null, null);
 		private final @NonNull Operation op_Collection_excludes = createOperation("excludes", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_excludesAll = createOperation("excludesAll", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE, tp_Collection_excludesAll_T2);
 		private final @NonNull Operation op_Collection_excluding = createOperation("excluding", _Collection_Collection_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
@@ -2499,6 +2506,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Collection_asSet);
 			ownedOperations.add(operation = op_Collection_coCollection);
 			ownedOperations.add(operation = op_Collection_count);
+			createBodyExpression(operation, _Collection_Collection_T, "coCollection().count(object)", _Integer);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
 			ownedOperations.add(operation = op_Collection_excludes);
@@ -3046,7 +3054,7 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private final @NonNull Iteration it_Bag_closure = createIteration("closure", _Set_Bag_closure_E_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Bag_closure_E);
-		private final @NonNull Iteration it_Bag_collectNested = createIteration("collectNested", _Bag_Bag_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Bag_collectNested_V);
+		private final @NonNull Iteration it_Bag_collectNested = createIteration("collectNested", _Bag_Bag_collectNested_V_T, null, null, tp_Bag_collectNested_V);
 		private final @NonNull Iteration it_Bag_collect = createIteration("collect", _Bag_Bag_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Bag_collect_V);
 		private final @NonNull Iteration it_Bag_gather = createIteration("gather", _Bag_Bag_gather_V_T, "org.eclipse.ocl.pivot.library.iterator.GatherIteration", org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE, tp_Bag_gather_V);
 		private final @NonNull Iteration it_Bag_reject = createIteration("reject", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
@@ -3054,7 +3062,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Bag_sortedBy = createIteration("sortedBy", _Sequence_Bag_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_any = createIteration("any", tp_Collection_T, "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_collectBy = createIteration("collectBy", _Map_Collection_T_F_Collection_collectBy_V_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Collection_collectBy_V);
-		private final @NonNull Iteration it_Collection_collectNested = createIteration("collectNested", _Collection_Collection_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Collection_collectNested_V);
+		private final @NonNull Iteration it_Collection_collectNested = createIteration("collectNested", _Collection_Collection_collectNested_V_T, null, null, tp_Collection_collectNested_V);
 		private final @NonNull Iteration it_Collection_collect = createIteration("collect", _Collection_Collection_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Collection_collect_V);
 		private final @NonNull Iteration it_Collection_exists = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_exists_1 = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
@@ -3074,7 +3082,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Collection_sortedBy = createIteration("sortedBy", _Sequence_Collection_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_any = createIteration("any", tp_Map_K, "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_collectBy = createIteration("collectBy", _Map_Map_K_F_Map_collectBy_V2_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Map_collectBy_V2);
-		private final @NonNull Iteration it_Map_collectNested = createIteration("collectNested", _Map_Map_K_F_Map_collectNested_V2_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Map_collectNested_V2);
+		private final @NonNull Iteration it_Map_collectNested = createIteration("collectNested", _Bag_Map_collectNested_V2_F, null, null, tp_Map_collectNested_V2);
 		private final @NonNull Iteration it_Map_collect = createIteration("collect", _Bag_Map_collect_V2_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Map_collect_V2);
 		private final @NonNull Iteration it_Map_exists = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_exists_1 = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
@@ -3082,7 +3090,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Map_forAll = createIteration("forAll", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_forAll_1 = createIteration("forAll", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_forAll_2 = createIteration("forAll", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ForAllIteration", org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		private final @NonNull Iteration it_Map_gather = createIteration("gather", _Collection_Map_gather_V2_T, "org.eclipse.ocl.pivot.library.iterator.GatherIteration", org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE, tp_Map_gather_V2);
+		private final @NonNull Iteration it_Map_gather = createIteration("gather", _Bag_Map_gather_V2_F, "org.eclipse.ocl.pivot.library.iterator.GatherIteration", org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE, tp_Map_gather_V2);
 		private final @NonNull Iteration it_Map_isUnique = createIteration("isUnique", _Boolean, "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_iterate = createIteration("iterate", tp_Map_iterate_Tacc, "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE, tp_Map_iterate_Tacc);
 		private final @NonNull Iteration it_Map_one = createIteration("one", _Boolean, "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
@@ -3092,21 +3100,21 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Map_search_2 = createIteration("search", tp_Map_search_V3, "org.eclipse.ocl.pivot.library.iterator.SearchIteration", org.eclipse.ocl.pivot.library.iterator.SearchIteration.INSTANCE, tp_Map_search_V3, tp_Map_search_W3);
 		private final @NonNull Iteration it_Map_select = createIteration("select", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
 		private final @NonNull Iteration it_OrderedSet_closure = createIteration("closure", _OrderedSet_OrderedSet_closure_E_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_OrderedSet_closure_E);
-		private final @NonNull Iteration it_OrderedSet_collectNested = createIteration("collectNested", _Sequence_OrderedSet_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_OrderedSet_collectNested_V);
+		private final @NonNull Iteration it_OrderedSet_collectNested = createIteration("collectNested", _Sequence_OrderedSet_collectNested_V_T, null, null, tp_OrderedSet_collectNested_V);
 		private final @NonNull Iteration it_OrderedSet_collect = createIteration("collect", _Sequence_OrderedSet_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_OrderedSet_collect_V);
 		private final @NonNull Iteration it_OrderedSet_gather = createIteration("gather", _Sequence_OrderedSet_gather_V_T, "org.eclipse.ocl.pivot.library.iterator.GatherIteration", org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE, tp_OrderedSet_gather_V);
 		private final @NonNull Iteration it_OrderedSet_reject = createIteration("reject", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		private final @NonNull Iteration it_OrderedSet_select = createIteration("select", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_OrderedSet_sortedBy = createIteration("sortedBy", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Sequence_closure = createIteration("closure", _OrderedSet_Sequence_closure_E_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Sequence_closure_E);
-		private final @NonNull Iteration it_Sequence_collectNested = createIteration("collectNested", _Sequence_Sequence_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Sequence_collectNested_V);
+		private final @NonNull Iteration it_Sequence_collectNested = createIteration("collectNested", _Sequence_Sequence_collectNested_V_T, null, null, tp_Sequence_collectNested_V);
 		private final @NonNull Iteration it_Sequence_collect = createIteration("collect", _Sequence_Sequence_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Sequence_collect_V);
 		private final @NonNull Iteration it_Sequence_gather = createIteration("gather", _Sequence_Sequence_gather_V_T, "org.eclipse.ocl.pivot.library.iterator.GatherIteration", org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE, tp_Sequence_gather_V);
 		private final @NonNull Iteration it_Sequence_reject = createIteration("reject", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		private final @NonNull Iteration it_Sequence_select = createIteration("select", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Sequence_sortedBy = createIteration("sortedBy", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Set_closure = createIteration("closure", _Set_Set_closure_E_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Set_closure_E);
-		private final @NonNull Iteration it_Set_collectNested = createIteration("collectNested", _Bag_Set_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Set_collectNested_V);
+		private final @NonNull Iteration it_Set_collectNested = createIteration("collectNested", _Bag_Set_collectNested_V_T, null, null, tp_Set_collectNested_V);
 		private final @NonNull Iteration it_Set_collect = createIteration("collect", _Bag_Set_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Set_collect_V);
 		private final @NonNull Iteration it_Set_gather = createIteration("gather", _Bag_Set_gather_V_T, "org.eclipse.ocl.pivot.library.iterator.GatherIteration", org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE, tp_Set_gather_V);
 		private final @NonNull Iteration it_Set_reject = createIteration("reject", _Set_Set_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
@@ -3127,6 +3135,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Bag_closure_E_Collection, false));
 			ownedIterations.add(iteration = it_Bag_collectNested);
+			createBodyExpression(iteration, _Bag_Bag_T, "gather(i | lambda)", _Bag_Bag_collectNested_V_T);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Bag_T, false));
 			ownedParameters = iteration.getOwnedParameters();
@@ -3170,6 +3179,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T_Collection_collectBy_V, false));
 			ownedIterations.add(iteration = it_Collection_collectNested);
+			createBodyExpression(iteration, _Collection_Collection_T, "gather(i | lambda)", _Collection_Collection_collectNested_V_T);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
@@ -3318,6 +3328,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Map_K_Map_collectBy_V2, false));
 			ownedIterations.add(iteration = it_Map_collectNested);
+			createBodyExpression(iteration, _Map_Map_K_Map_V, "gather(i | lambda)", _Bag_Map_collectNested_V2_F);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("k", tp_Map_K, false));
 			ownedParameters = iteration.getOwnedParameters();
@@ -3455,6 +3466,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_OrderedSet_closure_E_OrderedCollection, false));
 			ownedIterations.add(iteration = it_OrderedSet_collectNested);
+			createBodyExpression(iteration, _OrderedSet_OrderedSet_T, "gather(i | lambda)", _Sequence_OrderedSet_collectNested_V_T);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_OrderedSet_T, false));
 			ownedParameters = iteration.getOwnedParameters();
@@ -3492,6 +3504,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Sequence_closure_E_OrderedCollection, false));
 			ownedIterations.add(iteration = it_Sequence_collectNested);
+			createBodyExpression(iteration, _Sequence_Sequence_T, "gather(i | lambda)", _Sequence_Sequence_collectNested_V_T);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Sequence_T, false));
 			ownedParameters = iteration.getOwnedParameters();
@@ -3529,6 +3542,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Set_closure_E_Collection, false));
 			ownedIterations.add(iteration = it_Set_collectNested);
+			createBodyExpression(iteration, _Set_Set_T, "gather(i | lambda)", _Bag_Set_collectNested_V_T);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Set_T, false));
 			ownedParameters = iteration.getOwnedParameters();
@@ -3714,7 +3728,9 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Bag_Collection_T_T, tp_Collection_T);
 			addBinding(_Bag_MapType_F, _MapType);
 			addBinding(_Bag_Map_V_T, tp_Map_V);
+			addBinding(_Bag_Map_collectNested_V2_F, tp_Map_collectNested_V2);
 			addBinding(_Bag_Map_collect_V2_F, tp_Map_collect_V2);
+			addBinding(_Bag_Map_gather_V2_F, tp_Map_gather_V2);
 			addBinding(_Bag_OclElement_F, _OclElement);
 			addBinding(_Bag_OclInvalid_F, _OclInvalid);
 			addBinding(_Bag_Set_collectNested_V_T, tp_Set_collectNested_V);
@@ -3746,9 +3762,10 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_Map_K_F, tp_Map_K);
 			addBinding(_Collection_Map_K_T, tp_Map_K);
 			addBinding(_Collection_Map_V_F, tp_Map_V);
+			addBinding(_Collection_Map_collectNested_V2_F, tp_Map_collectNested_V2);
 			addBinding(_Collection_Map_collect_V2_F, tp_Map_collect_V2);
 			addBinding(_Collection_Map_excludesAll_K2_T, tp_Map_excludesAll_K2);
-			addBinding(_Collection_Map_gather_V2_T, tp_Map_gather_V2);
+			addBinding(_Collection_Map_gather_V2_F, tp_Map_gather_V2);
 			addBinding(_Collection_Map_includesAll_K2_T, tp_Map_includesAll_K2);
 			addBinding(_Collection_OclAny_F, _OclAny);
 			addBinding(_Collection_OclElement_F, _OclElement);
@@ -3791,8 +3808,6 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Map_Collection_T_F_Collection_collectBy_V_F, tp_Collection_collectBy_V);
 			addBinding(_Map_Map_K_F_Map_collectBy_V2_F, tp_Map_K);
 			addBinding(_Map_Map_K_F_Map_collectBy_V2_F, tp_Map_collectBy_V2);
-			addBinding(_Map_Map_K_F_Map_collectNested_V2_F, tp_Map_K);
-			addBinding(_Map_Map_K_F_Map_collectNested_V2_F, tp_Map_collectNested_V2);
 			addBinding(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, tp_Map_excludesMap_K2);
 			addBinding(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, tp_Map_excludesMap_V2);
 			addBinding(_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, tp_Map_excludingMap_K2);
@@ -4143,8 +4158,8 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(it_Map_any, "Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,\notherwise if there are one or more kets for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].\n\nlet source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in\nsource->any(key <- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()");
 			installComment(op_Map_at, "The value of the map at oclText[key].");
 			installComment(it_Map_collectBy, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
-			installComment(it_Map_collectNested, "The Map of key and values which results from applying body to every value of the source map.");
-			installComment(it_Map_collect, "The Map of key and values that results from applying body to every value of the source map.\nThe result is flattened.");
+			installComment(it_Map_collectNested, "The Collection of results from applying body to every key-value of the source map.");
+			installComment(it_Map_collect, "The Collection of results from applying body to every key-value of the source map.\nThe result is flattened.");
 			installComment(op_Map_excludes, "True if oclText[key] is not one of the keys of oclText[self], oclText[false] otherwise.");
 			installComment(op_Map_excludes_1, "True if oclText[key] and oclText[value] are not a key-value pair of oclText[self], oclText[false] otherwise.");
 			installComment(op_Map_excludesAll, "True if none of the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.");
