@@ -922,7 +922,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			LambdaType lambdaType = (LambdaType)type;
 			String typeName = Objects.requireNonNull(lambdaType.getName());
 			Type contextType = getSpecializedType(Objects.requireNonNull(lambdaType.getContextType()), substitutions);
-			@NonNull List<@NonNull Type> oldParameterTypes = PivotUtil.getParameterType(lambdaType);	// XXX
+			@NonNull List<@NonNull Type> oldParameterTypes = PivotUtil.getParameterTypes(lambdaType);	// XXX
 			@NonNull List<@NonNull Type> newParameterTypes;
 			if (oldParameterTypes.size() == 0) {
 				newParameterTypes = oldParameterTypes;

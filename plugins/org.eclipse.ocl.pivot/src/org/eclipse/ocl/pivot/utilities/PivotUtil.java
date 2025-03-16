@@ -1860,7 +1860,15 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated Use getParameterTypes */
 	public static @NonNull List<@NonNull Type> getParameterType(@NonNull LambdaType lambdaType) {
+		return ClassUtil.nullFree(lambdaType.getParameterType());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull List<@NonNull Type> getParameterTypes(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nullFree(lambdaType.getParameterType());
 	}
 
