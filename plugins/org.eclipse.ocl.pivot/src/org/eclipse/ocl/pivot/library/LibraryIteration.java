@@ -30,6 +30,7 @@ public interface LibraryIteration extends LibraryIterationOrOperation
 	{
 		/**
 		 * Create the value that will accumulate the iteration results.
+		 * XXX change to @Nullable and regen
 		 */
 		@NonNull Object createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId);
 	}

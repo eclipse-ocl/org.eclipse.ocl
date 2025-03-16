@@ -586,8 +586,11 @@ public abstract class ValueUtil
 		else if (collectionId == TypeId.SEQUENCE) {
 			return new SparseSequenceValueImpl.Accumulator(collectedId);
 		}
-		else /*if (collectionId == TypeId.SET)*/ {
+		else if (collectionId == TypeId.SET) {
 			return new SetValueImpl.Accumulator(collectedId);
+		}
+		else /*if (collectionId == TypeId.COLLECTION)*/ {
+			return new BagValueImpl.Accumulator(collectedId);
 		}
 	}
 

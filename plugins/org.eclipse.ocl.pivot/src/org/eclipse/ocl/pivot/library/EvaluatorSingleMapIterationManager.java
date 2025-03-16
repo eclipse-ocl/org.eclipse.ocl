@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.values.MapValue;
  *
  * @since 1.6
  */
-public class EvaluatorSingleMapIterationManager extends AbstractEvaluatorIterableIterationManager<MapValue>
+public class EvaluatorSingleMapIterationManager extends AbstractEvaluatorIterableIterationManager<@NonNull MapValue>
 {
 	class Nested extends EvaluatorSingleMapIterationManager
 	{
@@ -56,9 +56,9 @@ public class EvaluatorSingleMapIterationManager extends AbstractEvaluatorIterabl
 
 	public EvaluatorSingleMapIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull MapValue mapValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue,
 			@NonNull TypedElement referredKeyIterator, @Nullable TypedElement referredValueIterator) {
-		super(invokingExecutor, callExp, body, mapValue, accumulator, accumulatorValue);
+		super(invokingExecutor, callExp, body, mapValue, accumulatorVariable, accumulatorValue);
 		this.referredKeyIterator = referredKeyIterator;
 		this.referredValueIterator = referredValueIterator;
 		this.iterator = new MapValueIterator(executor, mapValue, referredKeyIterator, referredValueIterator);

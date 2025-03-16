@@ -26,12 +26,12 @@ import org.eclipse.ocl.pivot.values.MapValue;
  */
 public class EvaluatorMultipleMapIterationManager extends AbstractEvaluatorIterableIterationManager<@NonNull MapValue>
 {
-	protected final MapValueIterator[] iterators;
+	protected final @NonNull MapValueIterator[] iterators;
 	protected boolean hasCurrent;
 
 	public EvaluatorMultipleMapIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull MapValue mapValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, @NonNull TypedElement[] referredKeyIterators, @Nullable TypedElement[] referredValueIterators) {
-		super(invokingExecutor, callExp, body, mapValue, accumulator, accumulatorValue);
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue, @NonNull TypedElement[] referredKeyIterators, @Nullable TypedElement[] referredValueIterators) {
+		super(invokingExecutor, callExp, body, mapValue, accumulatorVariable, accumulatorValue);
 		int iMax = referredKeyIterators.length;
 		MapValueIterator[] iterators = new MapValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {

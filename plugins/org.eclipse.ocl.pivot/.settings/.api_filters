@@ -1007,6 +1007,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/evaluation/EvaluationEnvironment.java" type="org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment"/>
+                <message_argument value="getOverridingIteratorValue(Object, IteratorVariable)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/evaluation/IterationManager.java" type="org.eclipse.ocl.pivot.evaluation.IterationManager">
         <filter id="403804204">
             <message_arguments>

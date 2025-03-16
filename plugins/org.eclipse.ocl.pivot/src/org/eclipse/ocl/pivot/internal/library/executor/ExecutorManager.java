@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -91,6 +92,11 @@ public abstract class ExecutorManager implements ExecutorExtension
 		@Override
 		public Map<Option<?>, Object> getOptions() {
 			return null;
+		}
+
+		@Override
+		public @Nullable Object getOverridingIteratorValue(@NonNull Object iterableValue, @NonNull IteratorVariable iteratorVariable) {
+			throw new UnsupportedOperationException();
 		}
 
 		//		@Override

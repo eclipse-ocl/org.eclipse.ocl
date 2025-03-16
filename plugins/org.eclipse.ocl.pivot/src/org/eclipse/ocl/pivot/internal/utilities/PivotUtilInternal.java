@@ -15,6 +15,7 @@ package org.eclipse.ocl.pivot.internal.utilities;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -240,7 +242,7 @@ public class PivotUtilInternal extends PivotUtil
 	 * @since 1.23
 	 */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return ClassUtil.nonNullState(ThreadLocalExecutor.basicGetEnvironmentFactory());
+		return Objects.requireNonNull(ThreadLocalExecutor.basicGetEnvironmentFactory());
 	}
 
 	/**
@@ -480,6 +482,13 @@ public class PivotUtilInternal extends PivotUtil
 	 */
 	public static @NonNull List<@NonNull OCLExpression> getOwnedArgumentsList(@NonNull OperationCallExp operationCallExp) {
 		return ClassUtil.nullFree(operationCallExp.getOwnedArguments());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull List<@NonNull OCLExpression> getOwnedBodiesList(@NonNull IterateExp asIterateExp) {
+		return ClassUtil.nullFree(asIterateExp.getOwnedBodies());
 	}
 
 	/**

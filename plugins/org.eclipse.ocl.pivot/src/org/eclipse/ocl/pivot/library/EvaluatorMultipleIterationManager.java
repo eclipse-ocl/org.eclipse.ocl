@@ -24,32 +24,32 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  * EvaluatorMultipleIterationManager supervises a multiple iterator collection iteration evaluation for which the iteration context is
  * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
  */
-public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterableIterationManager<CollectionValue>
+public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterableIterationManager<@NonNull CollectionValue>
 {
-	protected final CollectionValueIterator[] iterators;
+	protected final @NonNull CollectionValueIterator[] iterators;
 	protected boolean hasCurrent;
 
 	/** @deprecated supply a callExp */
 	@Deprecated
 	public EvaluatorMultipleIterationManager(@NonNull Evaluator invokingExecutor, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, TypedElement... referredIterators) {
-		this(ValueUtil.getExecutor(invokingExecutor), null, body, collectionValue, accumulator, accumulatorValue);
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue, TypedElement... referredIterators) {
+		this(ValueUtil.getExecutor(invokingExecutor), null, body, collectionValue, accumulatorVariable, accumulatorValue);
 	}
 
 	/**
 	 * @since 1.18
 	 */
 	public EvaluatorMultipleIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,  @NonNull TypedElement  @NonNull ... referredIterators) {
-		this(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue, referredIterators, null);
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue,  @NonNull TypedElement  @NonNull ... referredIterators) {
+		this(invokingExecutor, callExp, body, collectionValue, accumulatorVariable, accumulatorValue, referredIterators, null);
 	}
 
 	/**
 	 * @since 1.18
 	 */
 	public EvaluatorMultipleIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, @NonNull TypedElement @NonNull [] referredIterators, @Nullable TypedElement @Nullable[] coIterators) {
-		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue, @NonNull TypedElement @NonNull [] referredIterators, @Nullable TypedElement @Nullable[] coIterators) {
+		super(invokingExecutor, callExp, body, collectionValue, accumulatorVariable, accumulatorValue);
 		int iMax = referredIterators.length;
 		CollectionValueIterator[] iterators = new CollectionValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {

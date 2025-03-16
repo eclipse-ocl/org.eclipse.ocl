@@ -96,6 +96,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedIteration;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -1269,7 +1270,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					if (owningType != null) {
 						try {
 							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
-							implementation = new ConstrainedOperation(query);
+							implementation = operation instanceof Iteration ? new ConstrainedIteration(query) : new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
 							//							e.printStackTrace();
@@ -1316,7 +1317,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					if (owningType != null) {
 						try {
 							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
-							implementation = new ConstrainedOperation(query);
+							implementation = operation instanceof Iteration ? new ConstrainedIteration(query) : new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
 							//							e.printStackTrace();

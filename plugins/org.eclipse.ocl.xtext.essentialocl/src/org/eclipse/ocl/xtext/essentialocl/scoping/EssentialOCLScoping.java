@@ -201,8 +201,8 @@ public class EssentialOCLScoping
 						aSource = (NestedExpCS)eContainer;
 					}
 					else if (eContainer instanceof SpecificationCS) {
-						ExpressionInOCL expression = PivotUtil.getContainingExpressionInOCL(((SpecificationCS)eContainer).getPivot());
-						source = expression!= null ? expression.getOwnedContext() : null;
+						ExpressionInOCL expression = PivotUtil.basicGetContainingExpressionInOCL(((SpecificationCS)eContainer).getPivot());
+						source = expression != null ? expression.getOwnedContext() : null;
 						break;
 					}
 					else {
@@ -249,7 +249,7 @@ public class EssentialOCLScoping
 					if (sourceType != null) {
 					//	sourceType = PivotUtil.getBehavioralType(sourceType);
 						OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
-						if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
+						if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(csParent.getName())) {
 							typeText = "Set(" + sourceType.toString() + ")";
 						}
 						else {

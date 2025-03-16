@@ -146,8 +146,8 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	/**
-	 * Return the specialized form of type analyzing expr to determine the formal to actual parameter mappings under the
-	 * supervision of a metamodelManager and using selfType as the value of OclSelf.
+	 * Return the specialized form of type analyzing callExp to determine the formal to actual parameter mappings under the
+	 * supervision of an environmentFactory and using selfType as the value of OclSelf.
 	 */
 	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument

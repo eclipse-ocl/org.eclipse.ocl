@@ -13,11 +13,13 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -27,8 +29,10 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.DelegatedValue;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.IteratorValue;
 import org.eclipse.ocl.pivot.utilities.Option;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -186,6 +190,23 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	@Override
 	public @NonNull ModelManager getModelManager() {
 		return executor.getModelManager();
+	}
+
+	@Override
+	public @Nullable Object getOverridingIteratorValue(@NonNull Object iterableValue, @NonNull IteratorVariable iteratorVariable) {
+		int index = ((LoopExp)iteratorVariable.eContainer()).getOwnedIterators().indexOf(iteratorVariable);
+		for (Entry<@NonNull TypedElement, Object> entry : variableValues.entrySet()) {
+			TypedElement variable = entry.getKey();
+			Object value = entry.getValue();
+			if (value instanceof IteratorValue) {
+				IteratorValue iteratorValue = (IteratorValue)value;
+				IterableValue iterableValue2 = iteratorValue.getIterableValue();
+				if (iterableValue2 == iterableValue) {
+					return iteratorValue.get();
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override

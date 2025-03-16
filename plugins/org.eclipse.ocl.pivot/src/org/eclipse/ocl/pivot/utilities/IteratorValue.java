@@ -10,14 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.values.IterableValue;
 
 /**
- * A DelegatedValue supports use of the current value of a changing value such as an Iterator into the EvaluationEnvironment.
+ * A IteratorValue supports ...
  *
  * @since 1.23
  */
-public interface DelegatedValue
+public interface IteratorValue extends DelegatedValue
 {
-	@Nullable Object get();
+	IterableValue getIterableValue();
 }

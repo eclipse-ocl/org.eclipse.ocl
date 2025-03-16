@@ -230,6 +230,18 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @Nullable ExpressionInOCL basicGetContainingExpressionInOCL(@Nullable Element element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof ExpressionInOCL) {
+				return (ExpressionInOCL)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
 	 *
 	 * @since 1.14
@@ -1218,13 +1230,8 @@ public class PivotUtil
 		return null;
 	}
 
-	public static @Nullable ExpressionInOCL getContainingExpressionInOCL(@Nullable Element element) {
-		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof ExpressionInOCL) {
-				return (ExpressionInOCL)eObject;
-			}
-		}
-		return null;
+	public static @NonNull ExpressionInOCL getContainingExpressionInOCL(@Nullable Element element) {
+		return Objects.requireNonNull(basicGetContainingExpressionInOCL(element));
 	}
 
 	public static @Nullable Model getContainingModel(@Nullable EObject element) {
@@ -1999,6 +2006,13 @@ public class PivotUtil
 	 */
 	public static @NonNull VariableDeclaration getReferredVariable(@NonNull VariableExp variableExp) {
 		return Objects.requireNonNull(variableExp.getReferredVariable());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull Parameter getRepresentedParameter(@NonNull Variable asVariable) {
+		return Objects.requireNonNull(asVariable.getRepresentedParameter());
 	}
 
 	/**

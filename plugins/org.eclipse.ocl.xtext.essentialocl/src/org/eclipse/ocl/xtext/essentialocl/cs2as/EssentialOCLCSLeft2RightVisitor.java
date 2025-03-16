@@ -1075,27 +1075,43 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 				for (int i = 0; i < asArguments.size(); i++) {
 					Parameter asParameter = asParameters.get(i);
-					Type asParameterType = asParameter.getType();
-					OCLExpression asBody = asArguments.get(i);
-					Type asBodyType = environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
-					Type asElementalBodyType = asBodyType instanceof LambdaType ? ((LambdaType)asBodyType).getResultType() : asBodyType;
-					Type asKnownBodyType = asBody.getType();
-					if (asKnownBodyType instanceof LambdaType) {
-						if (!asKnownBodyType.conformsTo(standardLibrary, asBodyType)) {
-							asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalBodyType, asKnownBodyType);
+					Type asParameterType = Objects.requireNonNull(asParameter.getType());
+					OCLExpression asArgument = Objects.requireNonNull(asArguments.get(i));
+					Type asSpecializedParameterType = environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
+					Type asElementalSpecializedParameterType = asSpecializedParameterType instanceof LambdaType ? Objects.requireNonNull(((LambdaType)asSpecializedParameterType).getResultType()) : asSpecializedParameterType;
+					Type asArgumentType = asArgument.getType();
+					if (asArgumentType instanceof LambdaType) {
+						if (!asArgumentType.conformsTo(standardLibrary, asSpecializedParameterType)) {
+							asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalSpecializedParameterType, asArgumentType);
 							break;
 						}
 					}
-					else if (asKnownBodyType != null) {
-						if (!asKnownBodyType.conformsTo(standardLibrary, asElementalBodyType)) {
-							if ((asIteration.getImplementation() != ClosureIteration.INSTANCE) || !asKnownBodyType.conformsTo(standardLibrary, ((CollectionType)asElementalBodyType).getElementType())) {
-								asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalBodyType, asKnownBodyType);
+					else if (asArgumentType instanceof CollectionType) {
+						if (!asArgumentType.conformsTo(standardLibrary, asElementalSpecializedParameterType)) {
+							if ((asIteration.getImplementation() != ClosureIteration.INSTANCE) || !asArgumentType.conformsTo(standardLibrary, ((CollectionType)asElementalSpecializedParameterType).getElementType())) {
+								asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalSpecializedParameterType, asArgumentType);
+								break;
+							}
+						}
+					}
+					else if (asArgumentType instanceof MapType) {
+						if (!asArgumentType.conformsTo(standardLibrary, asElementalSpecializedParameterType)) {
+							if ((asIteration.getImplementation() != ClosureIteration.INSTANCE) || !asArgumentType.conformsTo(standardLibrary, ((CollectionType)asElementalSpecializedParameterType).getElementType())) {
+								asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalSpecializedParameterType, asArgumentType);
+								break;
+							}
+						}
+					}
+					else if (asArgumentType != null) {			// XXX shrink cases
+						if (!asArgumentType.conformsTo(standardLibrary, asElementalSpecializedParameterType)) {
+							if ((asIteration.getImplementation() != ClosureIteration.INSTANCE) || !asArgumentType.conformsTo(standardLibrary, ((CollectionType)asElementalSpecializedParameterType).getElementType())) {
+								asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalSpecializedParameterType, asArgumentType);
 								break;
 							}
 						}
 					}
 					else {
-						asBody.setType(asElementalBodyType);
+						asArgument.setType(asElementalSpecializedParameterType);
 					}
 				}
 			}

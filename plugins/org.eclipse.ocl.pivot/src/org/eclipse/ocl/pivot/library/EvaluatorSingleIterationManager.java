@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.values.IterableValue;
  * EvaluatorSingleIterationManager supervises a single iterator collection iteration evaluation for which the iteration context is
  * maintained in the executor's evaluationEnvironment for access by the body expression evaluation.
  */
-public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIterationManager<CollectionValue>
+public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIterationManager<@NonNull CollectionValue>
 {
 	class Nested extends EvaluatorSingleIterationManager
 	{
@@ -62,9 +62,9 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIt
 	@Deprecated
 	public EvaluatorSingleIterationManager(@NonNull Evaluator invokingEvaluator,
 			@NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue,
 			@NonNull TypedElement referredIterator) {
-		this(ValueUtil.getExecutor(invokingEvaluator), null, body, collectionValue, accumulator, accumulatorValue, referredIterator);
+		this(ValueUtil.getExecutor(invokingEvaluator), null, body, collectionValue, accumulatorVariable, accumulatorValue, referredIterator);
 	}
 
 	/**
@@ -73,9 +73,9 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIt
 	@Deprecated /* @deprecated specify indexIterator */
 	public EvaluatorSingleIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue,
 			@NonNull TypedElement referredIterator) {
-		this(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue, referredIterator, null);
+		this(invokingExecutor, callExp, body, collectionValue, accumulatorVariable, accumulatorValue, referredIterator, null);
 	}
 
 
@@ -84,15 +84,15 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIt
 	 */
 	public EvaluatorSingleIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
+			@Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue,
 			@NonNull TypedElement referredIterator, @Nullable TypedElement coIterator) {
-		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
+		super(invokingExecutor, callExp, body, collectionValue, accumulatorVariable, accumulatorValue);
 		this.referredIterator = referredIterator;
 		this.iterator = new CollectionValueIterator(executor, collectionValue, referredIterator, coIterator);
 	}
 
 	protected EvaluatorSingleIterationManager(@NonNull EvaluatorSingleIterationManager iterationManager, @NonNull CollectionValue collectionValue) {
-		super(iterationManager, collectionValue);
+		super(iterationManager, collectionValue);		// XXX this and siblings
 		this.referredIterator = iterationManager.referredIterator;
 		this.iterator = new CollectionValueIterator(executor, collectionValue, referredIterator, null);
 	}

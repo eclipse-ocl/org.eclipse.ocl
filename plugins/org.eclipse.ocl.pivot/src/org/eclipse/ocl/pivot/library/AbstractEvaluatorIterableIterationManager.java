@@ -11,18 +11,25 @@
 package org.eclipse.ocl.pivot.library;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.DelegatedValue;
+import org.eclipse.ocl.pivot.utilities.IteratorValue;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
@@ -37,9 +44,9 @@ import org.eclipse.ocl.pivot.values.MapValue;
  *
  * @since 1.6
  */
-public abstract class AbstractEvaluatorIterableIterationManager<IV extends IterableValue> extends AbstractIterationManager
+public abstract class AbstractEvaluatorIterableIterationManager<@NonNull IV extends IterableValue> extends AbstractIterationManager
 {
-	protected static abstract class AbstractValueIterator<IV extends IterableValue> implements DelegatedValue
+	protected static abstract class AbstractValueIterator<@NonNull IV extends IterableValue> implements IteratorValue
 	{
 		protected final EvaluationEnvironment evaluationEnvironment;
 		protected final @NonNull IV iterableValue;
@@ -63,6 +70,11 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		@Override
 		public @Nullable Object get() {
 			return iteratorValue;
+		}
+
+		@Override
+		public @NonNull IV getIterableValue() {
+			return iterableValue;
 		}
 
 		public boolean hasCurrent() {
@@ -213,14 +225,16 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 	}
 
 	/**
-	 * AccumulatorValue makes the evolving accumulator value of an iteration available via the EvaluationEnvironment.
+	 * AccumulatorValue makes the prevailing evolving accumulator value of an iteration available as the accumulator value via the EvaluationEnvironment.
+	 * <br>
+	 * Iterations rather than iterates may use an accumulator without publishing the value in the evaluation environment.
 	 */
-	private class AccumulatorValue implements DelegatedValue
+	private static class AccumulatorValue implements DelegatedValue
 	{
-		private @Nullable Object accumulatorValue;		// Non-null for well-behaved iterations, Might be null for a weird iterate().
+		private @Nullable Object evolvingValue;		// Non-null for well-behaved iterations, Might be null for a weird iterate().
 
-		protected AccumulatorValue(@NonNull Executor executor, @Nullable Object accumulatorValue, @Nullable TypedElement accumulatorVariable) {
-			this.accumulatorValue = accumulatorValue;
+		protected AccumulatorValue(@NonNull Executor executor, @Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object initialValue) {
+			this.evolvingValue = initialValue;
 			if (accumulatorVariable != null) {
 				executor.add(accumulatorVariable, this);
 			}
@@ -228,43 +242,43 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 
 		@Override
 		public @Nullable Object get() {
-			return accumulatorValue;
+			return evolvingValue;
 		}
 
-		public void set(@Nullable Object accumulatorValue) {
-			this.accumulatorValue = accumulatorValue;
+		public void set(@Nullable Object nextValue) {
+			this.evolvingValue = nextValue;
 		}
 
 		@Override
 		public @NonNull String toString() {
-			return String.valueOf(accumulatorValue);
+			return String.valueOf(evolvingValue);
 		}
 	}
 
 	protected final @NonNull IV iterableValue;
-	protected final /*@NonNull*/ CallExp callExp;		// Null at root or when calling context unknown
+	protected final @NonNull CallExp callExp;		// ?? Null at root or when calling context unknown
 	protected final @NonNull OCLExpression body;
-	protected final @Nullable TypedElement accumulatorVariable;
-	private @NonNull AccumulatorValue accumulatorValue;
+	@Deprecated /* @deprecated not used */
+	protected final @Nullable TypedElement accumulatorVariable = null;
+	private final @NonNull AccumulatorValue accumulatorValue;
 
-	protected AbstractEvaluatorIterableIterationManager(@NonNull Executor executor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull IV iterableValue,
-			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
+	protected AbstractEvaluatorIterableIterationManager(@NonNull Executor executor, @NonNull CallExp callExp, @NonNull OCLExpression body,
+			@NonNull IV iterableValue, @Nullable TypedElement/*Variable*/ accumulatorVariable, @Nullable Object accumulatorValue) {
+		this(executor, iterableValue, callExp, body, new AccumulatorValue(executor, accumulatorVariable, accumulatorValue));
+	}
+
+	@Deprecated /* @deprecated fold into subclasses */
+	public AbstractEvaluatorIterableIterationManager(@NonNull AbstractEvaluatorIterableIterationManager<@NonNull IV> iterationManager, @NonNull IV iterableValue) {
+		this(iterationManager.executor, iterableValue, iterationManager.callExp, iterationManager.body, iterationManager.accumulatorValue);
+	}
+
+	private AbstractEvaluatorIterableIterationManager(@NonNull Executor executor, @NonNull IV iterableValue, @NonNull CallExp callExp,
+			@NonNull OCLExpression body, /*@Nullable TypedElement/ *Variable* / accumulatorVariable,*/ @NonNull AccumulatorValue accumulatorValue) {
 		super(executor);
 		this.iterableValue = iterableValue;
 		this.callExp = callExp;
 		this.body = body;
-		this.accumulatorVariable = accumulatorVariable;
-		this.accumulatorValue = new AccumulatorValue(executor, accumulatorValue, accumulatorVariable);
-		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
-	}
-
-	public AbstractEvaluatorIterableIterationManager(@NonNull AbstractEvaluatorIterableIterationManager<IV> iterationManager, @NonNull IV iterableValue) {
-		super(iterationManager.executor);
-		this.callExp = iterationManager.callExp;
-		this.body = iterationManager.body;
-		this.iterableValue = iterableValue;
-		this.accumulatorValue = iterationManager.accumulatorValue;
-		this.accumulatorVariable = iterationManager.accumulatorVariable;
+		this.accumulatorValue = accumulatorValue;
 		((Executor.ExecutorExtension)this.executor).pushEvaluationEnvironment(body, (Object)callExp);
 	}
 
@@ -275,7 +289,48 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 
 	@Override
 	public @Nullable Object evaluateBody() {
-		return executor.evaluate(body);
+		Object value = executor.evaluate(body);
+		if ((value instanceof OCLExpression) && (body.getType() instanceof LambdaType)) {
+
+			IteratorExp outerIteratorExp = (IteratorExp)((OCLExpression)value).eContainer();
+			List<Variable> outerIteratorVariables = outerIteratorExp.getOwnedIterators();
+		//	List<IteratorVariable> outerCoIteratorVariables = outerIteratorExp.getOwnedCoIterators();
+			ExpressionInOCL outerExpressionInOCL = PivotUtil.getContainingExpressionInOCL(outerIteratorExp);
+		//	Iteration outerIteration = outerIteratorExp.getReferredIteration();
+		//	List<Parameter> outerIteratorParameters = outerIteration.getOwnedIterators();			// XXX redundant inferrable from outerIteratorVariables
+
+			IteratorExp innerIteratorExp = (IteratorExp)callExp;
+			List<Variable> innerIteratorVariables = innerIteratorExp.getOwnedIterators();
+		//	List<IteratorVariable> innerCoIteratorVariables = innerIteratorExp.getOwnedCoIterators();
+			ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(body);
+		//	Iteration innerIteration = innerIteratorExp.getReferredIteration();
+		//	assert innerIteration != null;
+		//	List<Parameter> innerIteratorParameters = innerIteration.getOwnedIterators();			// XXX redundant inferrable from outerIteratorVariables
+
+			EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(body, innerIteratorExp);
+		//	List<Variable> iteratorVariables = iteratorExp.getOwnedIterators();
+		//	List<IteratorVariable> coIteratorVariables = iteratorExp.getOwnedCoIterators();
+		//	List<Parameter> iteratorParameters = iteration.getOwnedIterators();
+		//	List<Parameter> coIteratorParameters = iteration.getOwnedCoIterators();
+/*			int iMax = Math.max(outerIteratorVariables.size(), innerIteratorVariables.size());
+			for (int i = 0; i < iMax; i++) {
+				Variable outerIteratorVariable = outerIteratorVariables.get(i);
+				assert outerIteratorVariable != null;
+			//	Parameter outerIteratorParameter = outerIteratorVariable.getRepresentedParameter();
+			//	Variable innerIteratorVariable = innerIteratorVariables.get(i);
+			//	Parameter innerIteratorParameter = innerIteratorVariable.getRepresentedParameter();
+				AbstractValueIterator<?> innerIteratorValue = getIteratorValue(i);
+			//	Object innerValue = nestedEvaluationEnvironment.getValueOf(iterator);
+	//			nestedEvaluationEnvironment.add(outerIteratorVariable, innerIteratorValue);
+			//	if ((coIteratorVariables != null) && (i < coIteratorVariables.size())) {
+			//		Variable coIteratorVariable = coIteratorVariables.get(i);
+				//	Parameter coIteratorParameter = coIteratorParameters.get(i);
+			//	}
+			} */
+			value = executor.evaluate((OCLExpression)value);		// XXX Push re-nesting
+			executor.popEvaluationEnvironment();
+		}
+		return value;
 	}
 
 	@Override
