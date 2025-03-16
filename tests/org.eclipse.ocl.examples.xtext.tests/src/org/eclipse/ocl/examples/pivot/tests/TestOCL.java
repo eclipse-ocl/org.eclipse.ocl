@@ -809,6 +809,8 @@ public class TestOCL extends OCLInternal
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
 		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
+		Optimizer optimizer = new Optimizer(environmentFactory);
+		query = optimizer.optimize(query);
 		PivotTestSuite.assertNoValidationErrors(expression, query);
 		try {
 			return evaluate(query, context);

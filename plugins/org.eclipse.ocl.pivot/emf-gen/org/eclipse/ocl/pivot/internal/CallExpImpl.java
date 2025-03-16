@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -129,7 +130,7 @@ public abstract class CallExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected OCLExpression ownedInlinedBody;
+	protected ExpressionInOCL ownedInlinedBody;
 	/**
 	 * The cached value of the '{@link #getOwnedSource() <em>Owned Source</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -588,7 +589,7 @@ public abstract class CallExpImpl
 	 * @generated
 	 */
 	@Override
-	public OCLExpression getOwnedInlinedBody()
+	public ExpressionInOCL getOwnedInlinedBody()
 	{
 		return ownedInlinedBody;
 	}
@@ -598,9 +599,9 @@ public abstract class CallExpImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOwnedInlinedBody(OCLExpression newOwnedInlinedBody, NotificationChain msgs)
+	public NotificationChain basicSetOwnedInlinedBody(ExpressionInOCL newOwnedInlinedBody, NotificationChain msgs)
 	{
-		OCLExpression oldOwnedInlinedBody = ownedInlinedBody;
+		ExpressionInOCL oldOwnedInlinedBody = ownedInlinedBody;
 		ownedInlinedBody = newOwnedInlinedBody;
 		if (eNotificationRequired())
 		{
@@ -616,7 +617,7 @@ public abstract class CallExpImpl
 	 * @generated
 	 */
 	@Override
-	public void setOwnedInlinedBody(OCLExpression newOwnedInlinedBody)
+	public void setOwnedInlinedBody(ExpressionInOCL newOwnedInlinedBody)
 	{
 		if (newOwnedInlinedBody != ownedInlinedBody)
 		{
@@ -631,7 +632,14 @@ public abstract class CallExpImpl
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedInlinedBody, newOwnedInlinedBody));
 	}
-
+	/**
+	 * @since 1.23
+	 */
+	@Deprecated
+	protected void setOwnedInlinedBody(OCLExpression newOwnedInlinedBody) {
+		assert newOwnedInlinedBody == null;
+		setOwnedInlinedBody((ExpressionInOCL)null);
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -743,7 +751,7 @@ public abstract class CallExpImpl
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)newValue);
+				setOwnedInlinedBody((ExpressionInOCL)newValue);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)newValue);
@@ -792,7 +800,7 @@ public abstract class CallExpImpl
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)null);
+				setOwnedInlinedBody((ExpressionInOCL)null);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)null);

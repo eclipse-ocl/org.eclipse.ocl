@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -277,7 +278,7 @@ public class PivotUtil
 			if (asConstrainingClasses.size() <= 0) {
 				return null;
 			}
-			org.eclipse.ocl.pivot.Class pivotType = ClassUtil.nonNullModel(asConstrainingClasses.get(0));
+			org.eclipse.ocl.pivot.Class pivotType = Objects.requireNonNull(asConstrainingClasses.get(0));
 			if (!(pivotType instanceof TemplateParameter)) {
 				return pivotType;
 			}
@@ -320,7 +321,7 @@ public class PivotUtil
 	}
 
 	public static void checkResourceErrors(@NonNull String message, @NonNull Resource resource) throws ParserException {
-		List<Resource.Diagnostic> errors = ClassUtil.nonNullEMF(resource.getErrors());
+		List<Resource.Diagnostic> errors = Objects.requireNonNull(resource.getErrors());
 		if (errors.size() > 0) {
 			throw new SemanticException(formatResourceDiagnostics(errors, message, "\n"));
 		}
@@ -330,7 +331,7 @@ public class PivotUtil
 	 * @since 1.4
 	 */
 	public static void checkResourceWarnings(@NonNull String message, @NonNull Resource resource) throws ParserException {
-		List<Resource.Diagnostic> warnings = ClassUtil.nonNullEMF(resource.getWarnings());
+		List<Resource.Diagnostic> warnings = Objects.requireNonNull(resource.getWarnings());
 		if (warnings.size() > 0) {
 			throw new SemanticException(PivotUtil.formatResourceDiagnostics(warnings, message, "\n"));
 		}
@@ -641,7 +642,7 @@ public class PivotUtil
 		if (asArguments != null) {
 			List<OCLExpression> asCallArguments = asCallExp.getOwnedArguments();
 			for (OCLExpression asArgument : asArguments) {
-				asCallArguments.add(ClassUtil.nonNullState(asArgument));
+				asCallArguments.add(Objects.requireNonNull(asArgument));
 			}
 		}
 		asCallExp.setType(asOperation.getType());
@@ -1069,7 +1070,7 @@ public class PivotUtil
 	 * @since 1.4
 	 */
 	public static @NonNull Element getActual(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
-		return ClassUtil.nonNullState(templateParameterSubstitution.getActual());
+		return Objects.requireNonNull(templateParameterSubstitution.getActual());
 	}
 
 	/**
@@ -1205,7 +1206,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypedElement typedElement) {
-		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)typedElement.getType());
+		return Objects.requireNonNull((org.eclipse.ocl.pivot.Class)typedElement.getType());
 	}
 
 	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
@@ -1308,7 +1309,7 @@ public class PivotUtil
 	 * @since 1.4
 	 */
 	public static @NonNull Type getContextType(@NonNull LambdaType lambdaType) {
-		return ClassUtil.nonNullState(lambdaType.getContextType());
+		return Objects.requireNonNull(lambdaType.getContextType());
 	}
 
 	/**
@@ -1332,7 +1333,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull Type getElementType(@NonNull CollectionType collectionType) {
-		return ClassUtil.nonNullState(collectionType.getElementType());
+		return Objects.requireNonNull(collectionType.getElementType());
 	}
 
 	/**
@@ -1414,7 +1415,7 @@ public class PivotUtil
 	 * @since 1.7
 	 */
 	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
-		return ClassUtil.nonNullState(mapType.getKeyType());
+		return Objects.requireNonNull(mapType.getKeyType());
 	}
 
 	/**
@@ -1463,7 +1464,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull String getName(@NonNull NamedElement namedElement) {
-		return ClassUtil.nonNullState(namedElement.getName());
+		return Objects.requireNonNull(namedElement.getName());
 	}
 
 	public static @Nullable Namespace getNamespace(@Nullable EObject element) {
@@ -1494,7 +1495,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull Property getOpposite(@NonNull Property asProperty) {
-		return ClassUtil.nonNullState(asProperty.getOpposite());
+		return Objects.requireNonNull(asProperty.getOpposite());
 	}
 
 	/**
@@ -1508,7 +1509,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedArgument(@NonNull OperationCallExp object, int index) {
-		return ClassUtil.nonNullState(object.getOwnedArguments().get(index));
+		return Objects.requireNonNull(object.getOwnedArguments().get(index));
 	}
 
 	/**
@@ -1529,14 +1530,14 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedBody(@NonNull ExpressionInOCL asExpression) {
-		return ClassUtil.nonNullState(asExpression.getOwnedBody());
+		return Objects.requireNonNull(asExpression.getOwnedBody());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedBody(@NonNull LoopExp loopExp) {
-		return ClassUtil.nonNullState(loopExp.getOwnedBody());
+		return Objects.requireNonNull(loopExp.getOwnedBody());
 	}
 
 	/**
@@ -1586,21 +1587,21 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedCondition(@NonNull IfExp ifExp) {
-		return ClassUtil.nonNullState(ifExp.getOwnedCondition());
+		return Objects.requireNonNull(ifExp.getOwnedCondition());
 	}
 
 	/**
 	 * @since 1.4
 	 */
 	public static @NonNull VariableDeclaration getOwnedContext(@NonNull ExpressionInOCL asExpression) {
-		return ClassUtil.nonNullState(asExpression.getOwnedContext());
+		return Objects.requireNonNull(asExpression.getOwnedContext());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedElse(@NonNull IfExp ifExp) {
-		return ClassUtil.nonNullState(ifExp.getOwnedElse());
+		return Objects.requireNonNull(ifExp.getOwnedElse());
 	}
 
 	/**
@@ -1614,7 +1615,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedFirst(@NonNull CollectionRange collectionRange) {
-		return ClassUtil.nonNullState(collectionRange.getOwnedFirst());
+		return Objects.requireNonNull(collectionRange.getOwnedFirst());
 	}
 
 	/**
@@ -1628,21 +1629,21 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedIn(@NonNull LetExp letExp) {
-		return ClassUtil.nonNullState(letExp.getOwnedIn());
+		return Objects.requireNonNull(letExp.getOwnedIn());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedInit(@NonNull ShadowPart shadowPart) {
-		return ClassUtil.nonNullState(shadowPart.getOwnedInit());
+		return Objects.requireNonNull(shadowPart.getOwnedInit());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedInit(@NonNull Variable variable) {
-		return ClassUtil.nonNullState(variable.getOwnedInit());
+		return Objects.requireNonNull(variable.getOwnedInit());
 	}
 
 	/**
@@ -1656,7 +1657,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedItem(@NonNull CollectionItem collectionItem) {
-		return ClassUtil.nonNullState(collectionItem.getOwnedItem());
+		return Objects.requireNonNull(collectionItem.getOwnedItem());
 	}
 
 	/**
@@ -1677,14 +1678,14 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedKey(@NonNull MapLiteralPart mapLiteralPart) {
-		return ClassUtil.nonNullState(mapLiteralPart.getOwnedKey());
+		return Objects.requireNonNull(mapLiteralPart.getOwnedKey());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedLast(@NonNull CollectionRange collectionRange) {
-		return ClassUtil.nonNullState(collectionRange.getOwnedLast());
+		return Objects.requireNonNull(collectionRange.getOwnedLast());
 	}
 
 	/**
@@ -1712,7 +1713,7 @@ public class PivotUtil
 	 * @since 1.4
 	 */
 	public static @NonNull Parameter getOwnedParameter(@NonNull Operation operation, int index) {
-		return ClassUtil.nonNullState(operation.getOwnedParameters().get(index));
+		return Objects.requireNonNull(operation.getOwnedParameters().get(index));
 	}
 
 	/**
@@ -1768,14 +1769,14 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull Variable getOwnedResult(@NonNull IterateExp iterateExp) {
-		return ClassUtil.nonNullState(iterateExp.getOwnedResult());
+		return Objects.requireNonNull(iterateExp.getOwnedResult());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedSource(@NonNull CallExp object) {
-		return ClassUtil.nonNullState(object.getOwnedSource());
+		return Objects.requireNonNull(object.getOwnedSource());
 	}
 
 	/**
@@ -1789,63 +1790,63 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedThen(@NonNull IfExp ifExp) {
-		return ClassUtil.nonNullState(ifExp.getOwnedThen());
+		return Objects.requireNonNull(ifExp.getOwnedThen());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedValue(@NonNull MapLiteralPart mapLiteralPart) {
-		return ClassUtil.nonNullState(mapLiteralPart.getOwnedValue());
+		return Objects.requireNonNull(mapLiteralPart.getOwnedValue());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull /*Let*/Variable getOwnedVariable(@NonNull LetExp letExp) {
-		return ClassUtil.nonNullState(letExp.getOwnedVariable());
+		return Objects.requireNonNull(letExp.getOwnedVariable());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation operation) {
-		return ClassUtil.nonNullState(operation.getOwningClass());
+		return Objects.requireNonNull(operation.getOwningClass());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
-		return ClassUtil.nonNullState(property.getOwningClass());
+		return Objects.requireNonNull(property.getOwningClass());
 	}
 
 	/**
 	 * @since 1.9
 	 */
 	public static @NonNull TemplateableElement getOwningElement(@NonNull TemplateSignature templateSignature) {
-		return ClassUtil.nonNullState(templateSignature.getOwningElement());
+		return Objects.requireNonNull(templateSignature.getOwningElement());
 	}
 
 	/**
 	 * @since 1.4
 	 */
 	public static @NonNull Enumeration getOwningEnumeration(@NonNull EnumerationLiteral enumerationLiteral) {
-		return ClassUtil.nonNullState(enumerationLiteral.getOwningEnumeration());
+		return Objects.requireNonNull(enumerationLiteral.getOwningEnumeration());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Package getOwningPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ClassUtil.nonNullState(asClass.getOwningPackage());
+		return Objects.requireNonNull(asClass.getOwningPackage());
 	}
 
 	/**
 	 * @since 1.9
 	 */
 	public static @NonNull TemplateSignature getOwningSignature(@NonNull TemplateParameter asTemplateParameter) {
-		return ClassUtil.nonNullState(asTemplateParameter.getOwningSignature());
+		return Objects.requireNonNull(asTemplateParameter.getOwningSignature());
 	}
 
 	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {
@@ -1860,7 +1861,15 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated Use getParameterTypes */
 	public static @NonNull List<@NonNull Type> getParameterType(@NonNull LambdaType lambdaType) {
+		return ClassUtil.nullFree(lambdaType.getParameterType());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull List<@NonNull Type> getParameterTypes(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nullFree(lambdaType.getParameterType());
 	}
 
@@ -1930,22 +1939,22 @@ public class PivotUtil
 	 * @since 1.4
 	 */
 	public static @NonNull Iteration getReferredIteration(@NonNull LoopExp loopExp) {
-		return ClassUtil.nonNullState(loopExp.getReferredIteration());
+		return Objects.requireNonNull(loopExp.getReferredIteration());
 	}
 
 	/**
 	 * @since 1.4
 	 */
 	public static @NonNull EnumerationLiteral getReferredLiteral(@NonNull EnumLiteralExp enumLiteralExp) {
-		return ClassUtil.nonNullState(enumLiteralExp.getReferredLiteral());
+		return Objects.requireNonNull(enumLiteralExp.getReferredLiteral());
 	}
 
 	public static @NonNull Operation getReferredOperation(@NonNull CallExp callExp) {
 		if (callExp instanceof LoopExp) {
-			return ClassUtil.nonNullState(((LoopExp)callExp).getReferredIteration());
+			return Objects.requireNonNull(((LoopExp)callExp).getReferredIteration());
 		}
 		else if (callExp instanceof OperationCallExp) {
-			return ClassUtil.nonNullState(((OperationCallExp)callExp).getReferredOperation());
+			return Objects.requireNonNull(((OperationCallExp)callExp).getReferredOperation());
 		}
 		else {
 			throw new IllegalStateException();
@@ -1957,14 +1966,14 @@ public class PivotUtil
 	 */
 	public static @NonNull Property getReferredProperty(@NonNull NavigationCallExp navigationCallExp) {
 		if (navigationCallExp instanceof PropertyCallExp) {
-			return ClassUtil.nonNullState(((PropertyCallExp)navigationCallExp).getReferredProperty());
+			return Objects.requireNonNull(((PropertyCallExp)navigationCallExp).getReferredProperty());
 		}
 		else if (navigationCallExp instanceof OppositePropertyCallExp) {
-			Property referredProperty = ClassUtil.nonNullState(((OppositePropertyCallExp)navigationCallExp).getReferredProperty());
+			Property referredProperty = Objects.requireNonNull(((OppositePropertyCallExp)navigationCallExp).getReferredProperty());
 			if (referredProperty.eIsProxy() ) {
 				throw new IllegalStateException("Unresolved referred property proxy '" + EcoreUtil.getURI(referredProperty) + "' at '" + EcoreUtil.getURI(navigationCallExp) + "'");
 			}
-			return ClassUtil.nonNullState(referredProperty.getOpposite());
+			return Objects.requireNonNull(referredProperty.getOpposite());
 		}
 		else {
 			throw new IllegalStateException();
@@ -1975,28 +1984,28 @@ public class PivotUtil
 	 * @since 1.10
 	 */
 	public static @NonNull Property getReferredProperty(@NonNull ShadowPart shadowPart) {
-		return ClassUtil.nonNullState(shadowPart.getReferredProperty());
+		return Objects.requireNonNull(shadowPart.getReferredProperty());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Type getReferredType(@NonNull TypeExp typeExp) {
-		return ClassUtil.nonNullState(typeExp.getReferredType());
+		return Objects.requireNonNull(typeExp.getReferredType());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull VariableDeclaration getReferredVariable(@NonNull VariableExp variableExp) {
-		return ClassUtil.nonNullState(variableExp.getReferredVariable());
+		return Objects.requireNonNull(variableExp.getReferredVariable());
 	}
 
 	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
-		return ClassUtil.nonNullState(eObject.eResource());
+		return Objects.requireNonNull(eObject.eResource());
 	}
 
 	/**
@@ -2034,7 +2043,7 @@ public class PivotUtil
 	 * @since 1.4
 	 */
 	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
-		return ClassUtil.nonNullState(lambdaType.getResultType());
+		return Objects.requireNonNull(lambdaType.getResultType());
 	}
 
 	/**
@@ -2068,7 +2077,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull Type getType(@NonNull TypedElement typedElement) {
-		return ClassUtil.nonNullState(typedElement.getType());
+		return Objects.requireNonNull(typedElement.getType());
 	}
 
 	/**
@@ -2078,7 +2087,7 @@ public class PivotUtil
 	 * @since 1.3
 	 */
 	public static @NonNull TupleType getType(@NonNull TupleLiteralExp tupleLiteralExp) {
-		return ClassUtil.nonNullState((TupleType)tupleLiteralExp.getType());
+		return Objects.requireNonNull((TupleType)tupleLiteralExp.getType());
 	}
 
 	public static @NonNull <T extends TemplateableElement> T getUnspecializedTemplateableElement(@NonNull T templateableElement) {
@@ -2098,13 +2107,13 @@ public class PivotUtil
 	 * @since 1.7
 	 */
 	public static @NonNull Type getValueType(@NonNull MapType mapType) {
-		return ClassUtil.nonNullState(mapType.getValueType());
+		return Objects.requireNonNull(mapType.getValueType());
 	}
 
 	public static @NonNull Operation initOperation(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL) {
 		for (Variable asParameterVariable : asExpressionInOCL.getOwnedParameters()) {
-			String parameterName = ClassUtil.nonNullState(asParameterVariable.getName());
-			Type parameterType = ClassUtil.nonNullState(asParameterVariable.getType());
+			String parameterName = Objects.requireNonNull(asParameterVariable.getName());
+			Type parameterType = Objects.requireNonNull(asParameterVariable.getType());
 			Parameter asParameter = createParameter(parameterName, parameterType, asParameterVariable.isIsRequired());
 			asParameterVariable.setRepresentedParameter(asParameter);
 			asOperation.getOwnedParameters().add(asParameter);

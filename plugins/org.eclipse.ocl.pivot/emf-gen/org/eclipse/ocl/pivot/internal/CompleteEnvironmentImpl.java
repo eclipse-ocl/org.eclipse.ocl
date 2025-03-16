@@ -922,8 +922,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			LambdaType lambdaType = (LambdaType)type;
 			String typeName = Objects.requireNonNull(lambdaType.getName());
 			Type contextType = getSpecializedType(Objects.requireNonNull(lambdaType.getContextType()), substitutions);
-			@NonNull List<@NonNull Type> oldParameterTypes = PivotUtil.getParameterType(lambdaType);	// XXX
-			@NonNull List<@NonNull Type> newParameterTypes;
+			@NonNull List<@NonNull Type> parameterTypes = PivotUtil.getParameterTypes(lambdaType);
+			Type resultType = getSpecializedType(Objects.requireNonNull(lambdaType.getResultType()), substitutions);
+			return getLambdaManager().getLambdaType(typeName, contextType, parameterTypes, resultType, null);
+	/*		@NonNull List<@NonNull Type> newParameterTypes;
 			if (oldParameterTypes.size() == 0) {
 				newParameterTypes = oldParameterTypes;
 			}
@@ -933,8 +935,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 					newParameterTypes.add(getSpecializedType(asParameterType, substitutions));
 				}
 			}
-			Type resultType = getSpecializedType(Objects.requireNonNull(lambdaType.getResultType()), substitutions);
-			return getLambdaManager().getLambdaType(typeName, contextType, newParameterTypes, resultType, substitutions);
+			return getLambdaManager().getLambdaType(typeName, contextType, newParameterTypes, resultType, null);		// All substitutions already done. */
 		}
 		else if (type instanceof org.eclipse.ocl.pivot.Class) {
 			//

@@ -126,8 +126,8 @@
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSource" eType="#//OCLExpression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInlinedBody" eType="#//OCLExpression"
-        transient="true" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInlinedBody" eType="#//ExpressionInOCL"
+        transient="true" containment="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallOperationAction" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -215,7 +216,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 		@Override
 		public @NonNull Type getSourceType() {
-			return ClassUtil.nonNullState(invocation.getOwningClass());
+			return Objects.requireNonNull(invocation.getOwningClass());
 		}
 
 		@Override
@@ -614,7 +615,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * sourceExp is null for an implicit source invocation.
 	 * <p>
 	 * csInvocationExp.getNamedElement() must be invoked once, after the left-hand context has been established to enable the lokup to
-	 * proceed in a simple (perhaps rivial) fashion.
+	 * proceed in a simple (perhaps trivial) fashion.
 	 */
 	protected @Nullable OCLExpression resolveBestInvocation(@Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull Invocations invocations) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
@@ -748,7 +749,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * Resolve an invocation such as source.name  or source-&gt;name
 	 */
 	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp) {
-		PathNameCS ownedPathName = ClassUtil.nonNullState(csNameExp.getOwnedPathName());
+		PathNameCS ownedPathName = Objects.requireNonNull(csNameExp.getOwnedPathName());
 		ScopeFilter propertyScopeFilter = AbstractAttribution.NOT_STATIC_SCOPE_FILTER;
 		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
 		if (csSquareBracketedClauses.size() > 0) {
@@ -868,7 +869,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//	invocations = getInvocations(sourceExp != null ? sourceExp.getType() : null,			// debugging
 		//		sourceExp != null ? sourceExp.getTypeValue() : null, csRoundBracketedClause);
 			checkForInvalidImplicitSourceType(csNameExp);
-			CS2AS.setPathElement(ClassUtil.nonNullState(csPathName), null, null);
+			CS2AS.setPathElement(Objects.requireNonNull(csPathName), null, null);
 		}
 		if (sourceExp == null) {
 			sourceExp = createImplicitSourceVariableExp(csNameExp, standardLibrary.getOclAnyType());
@@ -876,9 +877,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		OperationCallExp operationCallExp = refreshOperationCallExp(csNameExp, sourceExp);
 		Operation oclInvalidOperation = standardLibrary.getOclInvalidOperation();
 		context.setReferredOperation(operationCallExp, oclInvalidOperation);
-		if (csPathName != null) {
+		assert csPathName != null;
+//		if (csPathName != null) {
 			ElementUtil.setLastPathElement(csPathName, oclInvalidOperation);
-		}
+//		}
 		context.installPivotUsage(csNameExp, operationCallExp);
 		helper.setType(operationCallExp, standardLibrary.getOclInvalidType(), false, null);
 		return operationCallExp;
@@ -974,23 +976,23 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected void resolveIterationBody(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp asLoopExp) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
-		List<@NonNull OCLExpression> asBodies = new ArrayList<>();
+		List<@NonNull OCLExpression> asArguments = new ArrayList<>();
 		Iteration asIteration = asLoopExp.getReferredIteration();
 		List<Parameter> asIterators = asIteration.getOwnedIterators();
 		List<Parameter> asParameters = asIteration.getOwnedParameters();
-		Type sourceType = asLoopExp.getOwnedSource().getType();
-		List<Pair<@NonNull Type, @NonNull Type>> formal2actuals = new ArrayList<>();
-		formal2actuals.add(new Pair<>(asIteration.getOwningClass(), sourceType));
+		Type sourceType = Objects.requireNonNull(asLoopExp.getOwnedSource().getType());
+		List<@NonNull Pair<@NonNull Type, @NonNull Type>> formal2actuals = new ArrayList<>();
+		formal2actuals.add(new Pair<>(Objects.requireNonNull(asIteration.getOwningClass()), sourceType));
 		List<Variable> asIteratorVariables = asLoopExp.getOwnedIterators();
 		int iMax = Math.max(asIterators.size(), asIteratorVariables.size());
 		for (int i = 0; i < iMax; i++) {
-			formal2actuals.add(new Pair<>(asIterators.get(i).getType(), asIteratorVariables.get(i).getType()));
+			formal2actuals.add(new Pair<>(Objects.requireNonNull(asIterators.get(i).getType()), Objects.requireNonNull(asIteratorVariables.get(i).getType())));
 		}
 		if (asLoopExp instanceof IterateExp) {
 			List<Parameter> asAccumulators = asIteration.getOwnedAccumulators();
 			iMax = Math.max(asAccumulators.size(), 1);
 			for (int i = 0; i < iMax; i++) {
-				formal2actuals.add(new Pair<>(asAccumulators.get(i).getType(), ((IterateExp)asLoopExp).getOwnedResult().getType()));
+				formal2actuals.add(new Pair<>(Objects.requireNonNull(asAccumulators.get(i).getType()), Objects.requireNonNull(((IterateExp)asLoopExp).getOwnedResult().getType())));
 			}
 		}
 		OCLExpression asError = null;
@@ -1014,20 +1016,20 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				ExpCS name = csArgument.getOwnedNameExpression();
 				assert name != null;
 				//				OCLExpression exp = context.visitLeft2Right(OCLExpression.class, name);
-				OCLExpression asBody = !hasIteratorOrAccumulator ? PivotUtil.getPivot(OCLExpression.class, csArgument) : context.visitLeft2Right(OCLExpression.class, name);
+				OCLExpression asArgument = !hasIteratorOrAccumulator ? PivotUtil.getPivot(OCLExpression.class, csArgument) : context.visitLeft2Right(OCLExpression.class, name);
 				//				context.installPivotElement(csArgument, exp);
-				if (asBody == null) {
+				if (asArgument == null) {
 					asError = context.addBadExpressionError(csArgument, "Invalid ''{0}'' iteration body", csNameExp.getOwnedPathName());
 					break;
 				}
-				formal2actuals.add(new Pair<>(asParameters.get(asBodies.size()).getType(), asBody.getType()));
-				asBodies.add(asBody);
-				context.installPivotUsage(csArgument, asBody);
+				formal2actuals.add(new Pair<>(Objects.requireNonNull(asParameters.get(asArguments.size()).getType()), Objects.requireNonNull(asArgument.getType())));
+				asArguments.add(asArgument);
+				context.installPivotUsage(csArgument, asArgument);
 			}
 		}
 		if (asError == null) {
 			int asParametersSize = asParameters.size();
-			if (asBodies.size() != asParametersSize) {
+			if (asArguments.size() != asParametersSize) {
 				asError = context.addBadExpressionError(csNameExp, "Iteration ''{0}'' must have exactly " + asParametersSize + " bod" + (asParametersSize != 1 ? "ies" : "y"), csNameExp.getOwnedPathName());
 			}
 			else {
@@ -1035,7 +1037,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				iMax = Math.max(asIterators.size(), asIteratorVariables.size());
 				for (int i = 0; i < iMax; i++) {
 					Parameter asIterator = asIterators.get(i);
-					Type asIteratorType = asIterator.getType();
+					Type asIteratorType = Objects.requireNonNull(asIterator.getType());
 					Type asSpecializedType = environmentFactory.getCompleteEnvironment().getSpecializedType(asIteratorType, templateParameterSubstitutions);
 					Type asElementalType = asSpecializedType instanceof LambdaType ? ((LambdaType)asSpecializedType).getResultType() : asSpecializedType;
 					Variable asIteratorVariable = asIteratorVariables.get(i);
@@ -1055,7 +1057,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					iMax = Math.max(asAccumulators.size(), 1);
 					for (int i = 0; i < iMax; i++) {
 						Parameter asAccumulator = asAccumulators.get(i);
-						Type asAccumulatorType = asAccumulator.getType();
+						Type asAccumulatorType = Objects.requireNonNull(asAccumulator.getType());
 						Type asSpecializedType = environmentFactory.getCompleteEnvironment().getSpecializedType(asAccumulatorType, templateParameterSubstitutions);
 						Type asElementalType = asSpecializedType instanceof LambdaType ? ((LambdaType)asSpecializedType).getResultType() : asSpecializedType;
 						Variable asResult = ((IterateExp)asLoopExp).getOwnedResult();
@@ -1071,10 +1073,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						}
 					}
 				}
-				for (int i = 0; i < asBodies.size(); i++) {
+				for (int i = 0; i < asArguments.size(); i++) {
 					Parameter asParameter = asParameters.get(i);
 					Type asParameterType = asParameter.getType();
-					OCLExpression asBody = asBodies.get(i);
+					OCLExpression asBody = asArguments.get(i);
 					Type asBodyType = environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
 					Type asElementalBodyType = asBodyType instanceof LambdaType ? ((LambdaType)asBodyType).getResultType() : asBodyType;
 					Type asKnownBodyType = asBody.getType();
@@ -1099,16 +1101,16 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 		}
 		if (asError != null) {
-			asBodies.clear();
-			asBodies.add(asError);
+			asArguments.clear();
+			asArguments.add(asError);
 		}
 		if (asLoopExp instanceof IterateExp) {
 			List<OCLExpression> asIterateBodies = ((IterateExp)asLoopExp).getOwnedBodies();
 			asIterateBodies.clear();
-			asIterateBodies.addAll(asBodies);
+			asIterateBodies.addAll(asArguments);
 		}
 		else {
-			asLoopExp.setOwnedBody(asBodies.get(0));
+			asLoopExp.setOwnedBody(asArguments.get(0));
 		}
 	}
 
@@ -1127,7 +1129,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected void resolveIterationContent(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
 		boolean allOk = true;
-		OCLExpression source = ClassUtil.nonNullState(expression.getOwnedSource());
+		OCLExpression source = Objects.requireNonNull(expression.getOwnedSource());
 		if (allOk) {
 			resolveIterationIterators(csRoundBracketedClause, source, expression);
 		}
