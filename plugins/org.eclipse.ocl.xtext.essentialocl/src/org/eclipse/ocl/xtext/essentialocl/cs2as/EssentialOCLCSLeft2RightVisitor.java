@@ -1078,7 +1078,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					Type asBodyType = environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
 					Type asElementalBodyType = asBodyType instanceof LambdaType ? ((LambdaType)asBodyType).getResultType() : asBodyType;
 					Type asKnownBodyType = asBody.getType();
-					if (asKnownBodyType != null) {
+					if (asKnownBodyType instanceof LambdaType) {
+						if (!asKnownBodyType.conformsTo(standardLibrary, asBodyType)) {
+							asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalBodyType, asKnownBodyType);
+							break;
+						}
+					}
+					else if (asKnownBodyType != null) {
 						if (!asKnownBodyType.conformsTo(standardLibrary, asElementalBodyType)) {
 							if ((asIteration.getImplementation() != ClosureIteration.INSTANCE) || !asKnownBodyType.conformsTo(standardLibrary, ((CollectionType)asElementalBodyType).getElementType())) {
 								asError = context.addBadExpressionError(csNameExp, PivotMessages.ExpectedArgumentType, csNameExp.getOwnedPathName(), i+1, asElementalBodyType, asKnownBodyType);
