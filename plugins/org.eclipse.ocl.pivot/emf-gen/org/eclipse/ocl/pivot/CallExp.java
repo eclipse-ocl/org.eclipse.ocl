@@ -147,7 +147,7 @@ public interface CallExp extends OCLExpression {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Inlined Body</em>' containment reference.
-	 * @see #setOwnedInlinedBody(OCLExpression)
+	 * @see #setOwnedInlinedBody(ExpressionInOCL)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getCallExp_OwnedInlinedBody()
 	 * @generated
 	 */

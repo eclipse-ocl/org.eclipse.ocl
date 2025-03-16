@@ -632,14 +632,7 @@ public abstract class CallExpImpl
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 11, newOwnedInlinedBody, newOwnedInlinedBody));
 	}
-	/**
-	 * @since 1.23
-	 */
-	@Deprecated
-	protected void setOwnedInlinedBody(OCLExpression newOwnedInlinedBody) {
-		assert newOwnedInlinedBody == null;
-		setOwnedInlinedBody((ExpressionInOCL)null);
-	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -211,7 +211,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CallExp-isSafe"
         name="isSafe" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedInlinedBody"
-        name="ownedInlinedBody" eType="#T-pivot-OCLExpression" transient="true" containment="true"/>
+        name="ownedInlinedBody" eType="#T-pivot-ExpressionInOCL" transient="true"
+        containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedSource"
         name="ownedSource" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>

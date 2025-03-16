@@ -455,9 +455,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final @NonNull LibraryIterationExtension IMPL_closure_0 = (LibraryIterationExtension)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
 						final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
 						/**
-						 * Implementation of the iterator body.
+						 * Implementation of the iteration evaluation body.
 						 */
-						final @NonNull AbstractBinaryOperation BODY_closure_0 = new AbstractBinaryOperation()
+						final @NonNull AbstractBinaryOperation BODY0_closure_1 = new AbstractBinaryOperation()
 						{
 							/**
 							 * superClasses
@@ -473,7 +473,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								return BOXED_superClasses;
 							}
 						};
-						final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, oclAsSet, ACC_closure_0);
+						final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY0_closure_1, oclAsSet, ACC_closure_0);
 						@SuppressWarnings("null")
 						final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 						/*@Thrown*/ org.eclipse.ocl.pivot.values.BagValue.@NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property_0);
@@ -571,7 +571,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_1 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (or_1 == ValueUtil.FALSE_VALUE) {
@@ -605,7 +605,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								safe_startsWith_source = startsWith_0;
 							}
 							if (safe_startsWith_source == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (safe_startsWith_source == ValueUtil.FALSE_VALUE) {
@@ -677,7 +677,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_2 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (or_2 == ValueUtil.FALSE_VALUE) {
@@ -747,7 +747,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (and == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (and == ValueUtil.FALSE_VALUE) {
@@ -766,9 +766,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							final @NonNull LibraryIterationExtension IMPL_sortedBy_1 = (LibraryIterationExtension)TYPE_sortedBy_1.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
 							final @NonNull Object ACC_sortedBy_1 = IMPL_sortedBy_1.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 							/**
-							 * Implementation of the iterator body.
+							 * Implementation of the iteration evaluation body.
 							 */
-							final @NonNull AbstractBinaryOperation BODY_sortedBy_1 = new AbstractBinaryOperation()
+							final @NonNull AbstractBinaryOperation BODY0_sortedBy_2 = new AbstractBinaryOperation()
 							{
 								/**
 								 * name
@@ -783,7 +783,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									return name_0;
 								}
 							};
-							final @NonNull ExecutorSingleIterationManager MGR_sortedBy_1 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_1, extraProperties, ACC_sortedBy_1);
+							final @NonNull ExecutorSingleIterationManager MGR_sortedBy_1 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY0_sortedBy_2, extraProperties, ACC_sortedBy_1);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull OrderedSetValue sortedBy = (@NonNull OrderedSetValue)IMPL_sortedBy_1.evaluateIteration(MGR_sortedBy_1);
 							/*@NonInvalid*/ @NonNull String acc = PivotTables.STR_Unexpected_32_initializers_c;
@@ -816,9 +816,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								final @NonNull LibraryIterationExtension IMPL_sortedBy_0_0 = (LibraryIterationExtension)TYPE_sortedBy_0_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
 								final @NonNull Object ACC_sortedBy_0_0 = IMPL_sortedBy_0_0.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 								/**
-								 * Implementation of the iterator body.
+								 * Implementation of the iteration evaluation body.
 								 */
-								final @NonNull AbstractBinaryOperation BODY_sortedBy_0_0 = new AbstractBinaryOperation()
+								final @NonNull AbstractBinaryOperation BODY0_sortedBy_0_1 = new AbstractBinaryOperation()
 								{
 									/**
 									 * name
@@ -833,7 +833,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 										return name_2;
 									}
 								};
-								final @NonNull ExecutorSingleIterationManager MGR_sortedBy_0_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_0_0, missingProperties, ACC_sortedBy_0_0);
+								final @NonNull ExecutorSingleIterationManager MGR_sortedBy_0_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY0_sortedBy_0_1, missingProperties, ACC_sortedBy_0_0);
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull OrderedSetValue sortedBy_0 = (@NonNull OrderedSetValue)IMPL_sortedBy_0_0.evaluateIteration(MGR_sortedBy_0_0);
 								/*@NonInvalid*/ @NonNull String acc_0 = PivotTables.STR_Missing_32_initializers_c;

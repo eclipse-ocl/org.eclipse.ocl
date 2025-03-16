@@ -2439,7 +2439,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_BooleanLiteralExp_booleanSymbol = createProperty(PivotPackage.Literals.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL, _Boolean);
 		private final @NonNull Property pr_CallExp_isImplicit = createProperty(PivotPackage.Literals.CALL_EXP__IS_IMPLICIT, _Boolean);
 		private final @NonNull Property pr_CallExp_isSafe = createProperty(PivotPackage.Literals.CALL_EXP__IS_SAFE, _Boolean);
-		private final @NonNull Property pr_CallExp_ownedInlinedBody = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_INLINED_BODY, _OCLExpression);
+		private final @NonNull Property pr_CallExp_ownedInlinedBody = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_INLINED_BODY, _ExpressionInOCL);
 		private final @NonNull Property pr_CallExp_ownedSource = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_SOURCE, _OCLExpression);
 		private final @NonNull Property pr_CallOperationAction_operation = createProperty(PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION, _Operation);
 		private final @NonNull Property pr_CallOperationAction_MessageExp_ownedCalledOperation = createProperty("MessageExp", _MessageExp);
@@ -2536,6 +2536,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_ExpressionInOCL_ownedContext = createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT, _Variable);
 		private final @NonNull Property pr_ExpressionInOCL_ownedParameters = createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS, _OrderedSet_Variable_T);
 		private final @NonNull Property pr_ExpressionInOCL_ownedResult = createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT, _Variable);
+		private final @NonNull Property pr_ExpressionInOCL_CallExp_ownedInlinedBody = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_Feature_implementation = createProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION, _LibraryFeature);
 		private final @NonNull Property pr_Feature_implementationClass = createProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, _String);
 		private final @NonNull Property pr_Feature_isStatic = createProperty(PivotPackage.Literals.FEATURE__IS_STATIC, _Boolean);
@@ -2602,7 +2603,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_NavigationCallExp_navigationSource = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE, _Property);
 		private final @NonNull Property pr_NavigationCallExp_qualifiers = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, _OrderedSet_OCLExpression_T);
 		private final @NonNull Property pr_OCLExpression_typeValue = createProperty(PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE, _Type);
-		private final @NonNull Property pr_OCLExpression_CallExp_ownedInlinedBody = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_OCLExpression_CallExp_ownedSource = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_OCLExpression_CollectionItem_ownedItem = createProperty("CollectionItem", _CollectionItem);
 		private final @NonNull Property pr_OCLExpression_CollectionRange_ownedFirst = createProperty("CollectionRange", _CollectionRange);
@@ -2899,9 +2899,8 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_CallExp_ownedInlinedBody);
 			property.setIsComposite(true);
 			property.setIsRequired(false);
-			property.setIsResolveProxies(true);
 			property.setIsTransient(true);
-			property.setOpposite(pr_OCLExpression_CallExp_ownedInlinedBody);
+			property.setOpposite(pr_ExpressionInOCL_CallExp_ownedInlinedBody);
 			ownedProperties.add(property = pr_CallExp_ownedSource);
 			property.setIsComposite(true);
 			property.setIsRequired(false);
@@ -3326,6 +3325,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Variable_ExpressionInOCL_ownedResult);
+			ownedProperties.add(property = pr_ExpressionInOCL_CallExp_ownedInlinedBody);
+			property.setIsImplicit(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_CallExp_ownedInlinedBody);
 
 			ownedProperties = _Feature.getOwnedProperties();
 			ownedProperties.add(property = pr_Feature_implementation);
@@ -3637,11 +3641,6 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsTransient(true);
 			property.setOpposite(pr_Type_OCLExpression_typeValue);
-			ownedProperties.add(property = pr_OCLExpression_CallExp_ownedInlinedBody);
-			property.setIsImplicit(true);
-			property.setIsRequired(false);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CallExp_ownedInlinedBody);
 			ownedProperties.add(property = pr_OCLExpression_CallExp_ownedSource);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
