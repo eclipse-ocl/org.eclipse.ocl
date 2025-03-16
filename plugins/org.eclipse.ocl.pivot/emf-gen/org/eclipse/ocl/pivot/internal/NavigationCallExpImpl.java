@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -255,7 +256,7 @@ public abstract class NavigationCallExpImpl
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)newValue);
+				setOwnedInlinedBody((ExpressionInOCL)newValue);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)newValue);
@@ -314,7 +315,7 @@ public abstract class NavigationCallExpImpl
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)null);
+				setOwnedInlinedBody((ExpressionInOCL)null);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)null);

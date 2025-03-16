@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
@@ -364,7 +365,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)newValue);
+				setOwnedInlinedBody((ExpressionInOCL)newValue);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)newValue);
@@ -435,7 +436,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)null);
+				setOwnedInlinedBody((ExpressionInOCL)null);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)null);

@@ -291,7 +291,7 @@ public class AssociationClassCallExpImpl
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)null);
+				setOwnedInlinedBody((ExpressionInOCL)null);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)null);

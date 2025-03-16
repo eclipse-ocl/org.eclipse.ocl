@@ -62,8 +62,8 @@
       </ownedInvariants>
       <ownedProperties xmi:id="Xbbpj" defaultValueString="false" name="isImplicit" type="#ZuwnB"/>
       <ownedProperties xmi:id=",1h8l" defaultValueString="false" name="isSafe" type="#ZuwnB"/>
-      <ownedProperties xmi:id="w7X0p" isComposite="true" isRequired="false" isTransient="true" name="ownedInlinedBody" opposite="#MCITi"
-          type="#BFtK4"/>
+      <ownedProperties xmi:id="w7X0p" isComposite="true" isRequired="false" isResolveProxies="false" isTransient="true" name="ownedInlinedBody"
+          opposite="#Lw82o" type="#sFfJa"/>
       <ownedProperties xmi:id="IjXu4" isComposite="true" isRequired="false" name="ownedSource" opposite="#0VFpK" type="#BFtK4"/>
     </ownedClasses>
     <ownedClasses xmi:id="wuJTT" name="CallOperationAction" superClasses="#0kVqz">
@@ -341,6 +341,7 @@
       <ownedProperties xmi:id="eubAp" isComposite="true" isRequired="false" name="ownedContext" opposite="#y7+O9" type="#t4j6T"/>
       <ownedProperties xmi:id="DrnVr" isComposite="true" name="ownedParameters" opposite="#1jSjN" type="#Rl6IP"/>
       <ownedProperties xmi:id="2tYZA" isComposite="true" isRequired="false" name="ownedResult" opposite="#a3p9g" type="#t4j6T"/>
+      <ownedProperties xmi:id="Lw82o" isImplicit="true" isRequired="false" name="CallExp" opposite="#w7X0p" type="#QJrde"/>
     </ownedClasses>
     <ownedClasses xmi:id="nphZD" isAbstract="true" name="Feature" superClasses="#j7EI0">
       <ownedComments body="A Feature declares a behavioral or structural characteristic of Classifiers."/>
@@ -689,7 +690,6 @@
           type="#rrwsa">
         <ownedComments body="When oclType() returns a Class value with a known actual type, the typeValue propagates the known type."/>
       </ownedProperties>
-      <ownedProperties xmi:id="MCITi" isImplicit="true" isRequired="false" name="CallExp" opposite="#w7X0p" type="#QJrde"/>
       <ownedProperties xmi:id="0VFpK" isImplicit="true" isRequired="false" name="CallExp" opposite="#IjXu4" type="#QJrde"/>
       <ownedProperties xmi:id="ucQSI" isImplicit="true" isRequired="false" name="CollectionItem" opposite="#qB57w" type="#CKfVx"/>
       <ownedProperties xmi:id="BdVOq" isImplicit="true" isRequired="false" name="CollectionRange" opposite="#TGoSr" type="#wy8kd"/>

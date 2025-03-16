@@ -13,12 +13,6 @@
                 <message_argument value="setOwnedInlinedBody(ExpressionInOCL)"/>
             </message_arguments>
         </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.CallExp"/>
-                <message_argument value="setOwnedInlinedBody(OCLExpression)"/>
-            </message_arguments>
-        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getOwnedInlinedBody()"/>
@@ -27,11 +21,6 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="setOwnedInlinedBody(ExpressionInOCL)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="setOwnedInlinedBody(OCLExpression)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -277,18 +266,7 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
-                <message_argument value="_CoCollection"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
                 <message_argument value="_CoCollectionType"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_CoCollection"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -340,11 +318,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="basicSetOwnedInlinedBody(ExpressionInOCL, NotificationChain)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="basicSetOwnedInlinedBody(OCLExpression, NotificationChain)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -636,12 +609,6 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
-                <message_argument value="_2_W"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="_2_W1"/>
             </message_arguments>
         </filter>
@@ -655,12 +622,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="_2_W3"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
-                <message_argument value="_3_W"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -738,18 +699,6 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
-                <message_argument value="__Collection__search_V"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
-                <message_argument value="__Collection__search_W"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Map__0_search_V1"/>
             </message_arguments>
         </filter>
@@ -787,18 +736,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Map__gather_V2"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
-                <message_argument value="__Map__search_V2"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
-                <message_argument value="__Map__search_W"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -869,11 +806,6 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="_2_W"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="_2_W1"/>
             </message_arguments>
         </filter>
@@ -885,11 +817,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_2_W3"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_3_W"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -954,16 +881,6 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="__Collection__search_V"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="__Collection__search_W"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="__Map__0_search_V1"/>
             </message_arguments>
         </filter>
@@ -995,16 +912,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="__Map__gather_V2"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="__Map__search_V2"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="__Map__search_W"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -1135,12 +1042,6 @@
                 <message_argument value="basicGetCompleteClass(Type)"/>
             </message_arguments>
         </filter>
-        <filter id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal"/>
-                <message_argument value="getEnvironmentFactory()"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/complete/CompleteModelInternal.java" type="org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal">
         <filter id="404000815">
@@ -1169,14 +1070,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller"/>
                 <message_argument value="SUPPRESS_DYNAMIC_OCL_DELEGATES"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/OCLValidationDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$Global">
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory.Global"/>
-                <message_argument value="INSTANCE"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1437,26 +1330,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
                 <message_argument value="setDerived(boolean)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource$CSResourceExtension2">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
-                <message_argument value="reloadIn(EnvironmentFactory)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
-                <message_argument value="setDerived(boolean)"/>
-            </message_arguments>
-        </filter>
-        <filter id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2"/>
-                <message_argument value="isDerived()"/>
             </message_arguments>
         </filter>
     </resource>

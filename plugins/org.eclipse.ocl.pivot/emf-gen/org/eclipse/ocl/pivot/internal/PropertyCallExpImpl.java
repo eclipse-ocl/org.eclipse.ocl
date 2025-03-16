@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -248,7 +249,7 @@ implements PropertyCallExp {
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)newValue);
+				setOwnedInlinedBody((ExpressionInOCL)newValue);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)newValue);
@@ -310,7 +311,7 @@ implements PropertyCallExp {
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedInlinedBody((OCLExpression)null);
+				setOwnedInlinedBody((ExpressionInOCL)null);
 				return;
 			case 12:
 				setOwnedSource((OCLExpression)null);
