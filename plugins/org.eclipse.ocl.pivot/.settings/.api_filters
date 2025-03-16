@@ -10,12 +10,23 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.CallExp"/>
+                <message_argument value="setOwnedInlinedBody(ExpressionInOCL)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.CallExp"/>
                 <message_argument value="setOwnedInlinedBody(OCLExpression)"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getOwnedInlinedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setOwnedInlinedBody(ExpressionInOCL)"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -324,6 +335,11 @@
                 <message_argument value="org.eclipse.ocl.pivot.internal.CallExpImpl"/>
                 <message_argument value="CALL_EXP_FEATURE_COUNT"/>
                 <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicSetOwnedInlinedBody(ExpressionInOCL, NotificationChain)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">

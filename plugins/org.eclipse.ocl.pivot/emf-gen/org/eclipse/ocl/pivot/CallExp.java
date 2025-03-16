@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 
 /**
@@ -150,7 +151,7 @@ public interface CallExp extends OCLExpression {
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getCallExp_OwnedInlinedBody()
 	 * @generated
 	 */
-	OCLExpression getOwnedInlinedBody();
+	ExpressionInOCL getOwnedInlinedBody();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CallExp#getOwnedInlinedBody <em>Owned Inlined Body</em>}' containment reference.
@@ -160,6 +161,6 @@ public interface CallExp extends OCLExpression {
 	 * @see #getOwnedInlinedBody()
 	 * @generated
 	 */
-	void setOwnedInlinedBody(OCLExpression value);
+	void setOwnedInlinedBody(ExpressionInOCL value);
 
 } // CallExp
