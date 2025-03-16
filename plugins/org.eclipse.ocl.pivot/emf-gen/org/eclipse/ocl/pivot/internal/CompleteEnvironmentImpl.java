@@ -892,8 +892,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
 		if (asTemplateParameter != null) {
 			Type boundType = substitutions.get(asTemplateParameter);
-			org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
-			return asClass != null ? asClass : type;
+		//	org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
+		//	return asClass != null ? asClass : type;
+			return boundType != null ? boundType : type;
 		}
 		else if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
@@ -920,10 +921,20 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
 			String typeName = Objects.requireNonNull(lambdaType.getName());
-			Type contextType = Objects.requireNonNull(lambdaType.getContextType());
-			@NonNull List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(lambdaType);
-			Type resultType = Objects.requireNonNull(lambdaType.getResultType());
-			return getLambdaManager().getLambdaType(typeName, contextType, parameterTypes, resultType, substitutions);
+			Type contextType = getSpecializedType(Objects.requireNonNull(lambdaType.getContextType()), substitutions);
+			@NonNull List<@NonNull Type> oldParameterTypes = PivotUtil.getParameterType(lambdaType);	// XXX
+			@NonNull List<@NonNull Type> newParameterTypes;
+			if (oldParameterTypes.size() == 0) {
+				newParameterTypes = oldParameterTypes;
+			}
+			else {
+				newParameterTypes = new ArrayList<>(oldParameterTypes.size());
+				for (@NonNull Type asParameterType : oldParameterTypes) {
+					newParameterTypes.add(getSpecializedType(asParameterType, substitutions));
+				}
+			}
+			Type resultType = getSpecializedType(Objects.requireNonNull(lambdaType.getResultType()), substitutions);
+			return getLambdaManager().getLambdaType(typeName, contextType, newParameterTypes, resultType, substitutions);
 		}
 		else if (type instanceof org.eclipse.ocl.pivot.Class) {
 			//
