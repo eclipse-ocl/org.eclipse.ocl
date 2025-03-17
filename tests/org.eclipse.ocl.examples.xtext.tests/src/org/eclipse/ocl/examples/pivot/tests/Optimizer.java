@@ -11,7 +11,9 @@
 package org.eclipse.ocl.examples.pivot.tests;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
@@ -28,11 +30,16 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.Pair;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -54,7 +61,12 @@ public class Optimizer
 				Iteration asIteration = asLoopExp.getReferredIteration();
 				assert asIteration != null;
 				if (asIteration.getBodyExpression() != null) {
-					optimize(asLoopExp);
+					try {
+						optimize(asLoopExp);
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			else if (eObject instanceof OperationCallExp) {
@@ -79,11 +91,14 @@ public class Optimizer
 	{
 		protected @NonNull EnvironmentFactoryInternal environmentFactory;
 		protected @NonNull TemplateParameterSubstitutions templateParameterSubstitutions;
+		protected @NonNull Map<@NonNull VariableDeclaration, @NonNull TypedElement> actualParameterSubstitutions;
 
 		public ExpressionCopier(@NonNull EnvironmentFactoryInternal environmentFactory,
-			@NonNull TemplateParameterSubstitutions templateParameterSubstitutions) {
+			@NonNull TemplateParameterSubstitutions templateParameterSubstitutions,
+			@NonNull Map<@NonNull VariableDeclaration, @NonNull TypedElement> actualParameterSubstitutions) {
 			this.environmentFactory = environmentFactory;
 			this.templateParameterSubstitutions = templateParameterSubstitutions;
+			this.actualParameterSubstitutions = actualParameterSubstitutions;
 		}
 
 	// FIXME enforce unique names on let-variables, iterators
@@ -93,6 +108,23 @@ public class Optimizer
 				CompleteEnvironmentInternal completeEnvironment = environmentFactory.getCompleteEnvironment();
 				Type asSpecializedType = completeEnvironment.getSpecializedType((Type) oIn, templateParameterSubstitutions);
 				return asSpecializedType;
+			}
+			if (oIn instanceof Parameter) {
+				TypedElement typedElement = actualParameterSubstitutions.get(oIn);
+				CompleteEnvironmentInternal completeEnvironment = environmentFactory.getCompleteEnvironment();
+			//	Type asSpecializedType = completeEnvironment.getSpecializedType((Type) oIn, templateParameterSubstitutions);
+			//	return asSpecializedType;
+			}
+			if (oIn instanceof VariableExp) {
+				CompleteEnvironmentInternal completeEnvironment = environmentFactory.getCompleteEnvironment();
+			//	Type asSpecializedType = completeEnvironment.getSpecializedType((Type) oIn, templateParameterSubstitutions);
+			//	return asSpecializedType;
+			}
+			if (oIn instanceof Variable) {
+				TypedElement typedElement = actualParameterSubstitutions.get(oIn);
+				CompleteEnvironmentInternal completeEnvironment = environmentFactory.getCompleteEnvironment();
+			//	Type asSpecializedType = completeEnvironment.getSpecializedType((Type) oIn, templateParameterSubstitutions);
+				if (typedElement != null) return typedElement;
 			}
 			if (oIn instanceof Element) {
 			/*	List<@NonNull Element> oOuts = source2targets.get(oIn);
@@ -113,7 +145,7 @@ public class Optimizer
 		}
 
 		@Override
-		public EObject copy(EObject oIn) {
+		public EObject copy(EObject oIn) {			// Clone VE of lambda
 		/*	try {
 				if (oIn instanceof IteratorVariable) {
 					VariableDeclaration coreVariable = variablesAnalysis.getCoreVariable((IteratorVariable)oIn);
@@ -133,16 +165,19 @@ public class Optimizer
 		}
 	}
 
-	private void optimize(@NonNull LoopExp asLoopExp) {
+	private void optimize(@NonNull LoopExp asLoopExp) throws ParserException {
 		Iteration asIteration = asLoopExp.getReferredIteration();
 		assert asIteration != null;
 		List<Parameter> asIterators = asIteration.getOwnedIterators();
-		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asIteration.getBodyExpression();
+		ExpressionInOCL asExpressionInOCL = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asIteration.getBodyExpression());
 		assert asExpressionInOCL != null;
 		Type sourceType = Objects.requireNonNull(asLoopExp.getOwnedSource().getType());
 		//
 		List<@NonNull Pair<@NonNull Type, @NonNull Type>> formal2actuals = new ArrayList<>();
 		formal2actuals.add(new Pair<>(Objects.requireNonNull(asIteration.getOwningClass()), sourceType));
+		//
+		Map<@NonNull VariableDeclaration, @NonNull TypedElement> actualParameterSubstitutions = new HashMap<>();
+	//	actualParameterSubstitutions.put(asExpressionInOCL.getOwnedContext(), asLoopExp.getOwnedSource());		-- source remains a parameter
 		//
 		List<Variable> asIteratorVariables = asLoopExp.getOwnedIterators();
 		int iMax = Math.max(asIterators.size(), asIteratorVariables.size());
@@ -150,6 +185,7 @@ public class Optimizer
 			Parameter asIteratorParameter = asIterators.get(i);
 			Variable asIteratorVariable = asIteratorVariables.get(i);
 			formal2actuals.add(new Pair<>(PivotUtil.getType(asIteratorParameter), PivotUtil.getType(asIteratorVariable)));
+			actualParameterSubstitutions.put(asIteratorParameter, asIteratorVariable);
 		}
 		//
 		if (asLoopExp instanceof IterateExp) {
@@ -160,14 +196,16 @@ public class Optimizer
 				Parameter asAccumulatorParameter = asAccumulators.get(i);
 				Variable asResultVariable = asIterateExp.getOwnedResult();
 				formal2actuals.add(new Pair<>(PivotUtil.getType(asAccumulatorParameter), PivotUtil.getType(asResultVariable)));
+				actualParameterSubstitutions.put(asAccumulatorParameter, asResultVariable);
 			}
 			List<Parameter> asBodyParameters = asIteration.getOwnedParameters();
 			List<OCLExpression> asBodyExpressions = asIterateExp.getOwnedBodies();
 			iMax = Math.max(asBodyParameters.size(), asBodyExpressions.size());
-			for (int i = 0; i < iMax; i++) {
+			for (int i = 0; i < iMax; i++) {						// ?? regular parameters unchanged / lambdas cloned
 				Parameter asAccumulatorParameter = asAccumulators.get(i);
 				OCLExpression asBodyExpression = asBodyExpressions.get(i);
 				formal2actuals.add(new Pair<>(PivotUtil.getType(asAccumulatorParameter), PivotUtil.getType(asBodyExpression)));
+				actualParameterSubstitutions.put(asAccumulatorParameter, asBodyExpression);
 			}
 		}
 		else {
@@ -175,15 +213,15 @@ public class Optimizer
 			Parameter asBodyParameter = asIteration.getOwnedParameters().get(0);
 			OCLExpression asBodyExpression = asIteratorExp.getOwnedBody();
 			formal2actuals.add(new Pair<>(PivotUtil.getType(asBodyParameter), PivotUtil.getType(asBodyExpression)));
+			actualParameterSubstitutions.put(asBodyParameter, asBodyExpression);
 		}
 		TemplateParameterSubstitutions templateParameterSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, asIteration, formal2actuals);
 
 
 
-		ExpressionCopier copier = new ExpressionCopier(environmentFactory, templateParameterSubstitutions);
-		ExpressionInOCL asCopy = (ExpressionInOCL) copier.copy(asExpressionInOCL);
+		ExpressionCopier copier = new ExpressionCopier(environmentFactory, templateParameterSubstitutions, actualParameterSubstitutions);
+		ExpressionInOCL asCopy = (ExpressionInOCL)copier.copy(asExpressionInOCL);
 		copier.copyReferences();
-		getClass();
 		asLoopExp.setOwnedInlinedBody(asCopy);
 	}
 
