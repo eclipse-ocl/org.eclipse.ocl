@@ -225,7 +225,7 @@
               <includes>
                 <include>**/CompatibilityEcoreTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -239,7 +239,7 @@
               <includes>
                 <include>**/CompatibilityEcoreBacktrackingTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -253,7 +253,7 @@
               <includes>
                 <include>**/CompatibilityUMLTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -267,7 +267,7 @@
               <includes>
                 <include>**/CompatibilityUMLBacktrackingTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven-backtracking" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
             </configuration>
           </execution>
@@ -281,7 +281,7 @@
               <includes>
                 <include>**/CompatibilityPivotTests.java</include>
               </includes>
-              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="maven" -DtargetRelease=${targetRelease} -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/standalone</reportsDirectory>
               <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
             </configuration>
@@ -302,7 +302,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityEcoreTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin</reportsDirectory>
             </configuration>
           </execution>
@@ -316,7 +316,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityEcoreBacktrackingTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true ${argLineTail}</argLine>
+              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.ecore.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true ${argLineTail}</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin-backtracking</reportsDirectory>
             </configuration>
           </execution>
@@ -330,7 +330,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityUMLTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -ea -Xmx256M</argLine>
+              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -Dorg.eclipse.ocl.uml.tests.nodebug=true -Declipse.e4.inject.javax.disabled=true -ea -Xmx256M</argLine>
               <reportsDirectory>${project.build.directory}/surefire-reports/${targetRelease}/plugin</reportsDirectory>
             </configuration>
           </execution>
@@ -345,7 +345,7 @@
               <testClass>org.eclipse.ocl.compatibility.tests.CompatibilityPivotTests</testClass>
               <useUIHarness>true</useUIHarness>
               <useUIThread>true</useUIThread>
-              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -ea -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true</argLine>
+              <argLine>-DtestNameSuffix="tycho" -DtargetRelease=${targetRelease} -ea -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true -Declipse.e4.inject.javax.disabled=true</argLine>
               <systemProperties>
                 <TYCHO_TEST>true</TYCHO_TEST>
               </systemProperties>
@@ -913,6 +913,19 @@
         <executionEnvironment>JavaSE-17</executionEnvironment>
         <runtime-jdk-version>17.0</runtime-jdk-version>
         <targetRelease>2024-12</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>2025-03</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>2025-03</targetRelease>
         <tycho-version>3.0.5</tycho-version>
       </properties>
     </profile>
