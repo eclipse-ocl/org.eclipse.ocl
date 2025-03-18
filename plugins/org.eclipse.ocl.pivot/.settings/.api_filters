@@ -4,23 +4,23 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.CallExp"/>
-                <message_argument value="getOwnedInlinedBody()"/>
+                <message_argument value="getOwnedSpecializedBody()"/>
             </message_arguments>
         </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.CallExp"/>
-                <message_argument value="setOwnedInlinedBody(ExpressionInOCL)"/>
+                <message_argument value="setOwnedSpecializedBody(ExpressionInOCL)"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="getOwnedInlinedBody()"/>
+                <message_argument value="getOwnedSpecializedBody()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="setOwnedInlinedBody(ExpressionInOCL)"/>
+                <message_argument value="setOwnedSpecializedBody(ExpressionInOCL)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -83,6 +83,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/IteratorVariable.java" type="org.eclipse.ocl.pivot.IteratorVariable">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.IteratorVariable"/>
+                <message_argument value="getSpecializedIterator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.IteratorVariable"/>
+                <message_argument value="setSpecializedIterator(IteratorVariable)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getSpecializedIterator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setSpecializedIterator(IteratorVariable)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
         <filter id="403804204">
             <message_arguments>
@@ -100,7 +124,7 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="getCallExp_OwnedInlinedBody()"/>
+                <message_argument value="getCallExp_OwnedSpecializedBody()"/>
             </message_arguments>
         </filter>
         <filter id="403804204">
@@ -137,6 +161,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getIteratorVariable_SpecializedIterator()"/>
             </message_arguments>
         </filter>
         <filter id="405901410">
@@ -147,7 +177,7 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="getCallExp_OwnedInlinedBody()"/>
+                <message_argument value="getCallExp_OwnedSpecializedBody()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -178,6 +208,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIteratorVariable_SpecializedIterator()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -190,7 +225,7 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="CALL_EXP__OWNED_INLINED_BODY"/>
+                <message_argument value="CALL_EXP__OWNED_SPECIALIZED_BODY"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -223,8 +258,19 @@
                 <message_argument value="ITERATOR_EXP__OWNED_BODY"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_VARIABLE__SPECIALIZED_ITERATOR"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_CLSSid_IteratorVariable"/>
+            </message_arguments>
+        </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
@@ -235,6 +281,11 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="ORD_CLSSid_OCLExpression_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="BAG_CLSSid_IteratorVariable"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -305,7 +356,7 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.CallExpImpl"/>
-                <message_argument value="ownedInlinedBody"/>
+                <message_argument value="ownedSpecializedBody"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -317,12 +368,12 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="basicSetOwnedInlinedBody(ExpressionInOCL, NotificationChain)"/>
+                <message_argument value="basicSetOwnedSpecializedBody(ExpressionInOCL, NotificationChain)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="ownedInlinedBody"/>
+                <message_argument value="ownedSpecializedBody"/>
             </message_arguments>
         </filter>
     </resource>
@@ -410,6 +461,26 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ownedBody"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IteratorVariableImpl.java" type="org.eclipse.ocl.pivot.internal.IteratorVariableImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IteratorVariableImpl"/>
+                <message_argument value="specializedIterator"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IteratorVariableImpl"/>
+                <message_argument value="ITERATOR_VARIABLE_FEATURE_COUNT"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="specializedIterator"/>
             </message_arguments>
         </filter>
     </resource>

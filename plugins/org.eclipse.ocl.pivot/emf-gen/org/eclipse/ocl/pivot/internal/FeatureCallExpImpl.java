@@ -157,9 +157,9 @@ public abstract class FeatureCallExpImpl
 			case 10:
 				return isIsSafe();
 			case 11:
-				return getOwnedInlinedBody();
-			case 12:
 				return getOwnedSource();
+			case 12:
+				return getOwnedSpecializedBody();
 			case 13:
 				return isIsPre();
 		}
@@ -211,10 +211,10 @@ public abstract class FeatureCallExpImpl
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedInlinedBody((ExpressionInOCL)newValue);
+				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 12:
-				setOwnedSource((OCLExpression)newValue);
+				setOwnedSpecializedBody((ExpressionInOCL)newValue);
 				return;
 			case 13:
 				setIsPre((Boolean)newValue);
@@ -263,10 +263,10 @@ public abstract class FeatureCallExpImpl
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedInlinedBody((ExpressionInOCL)null);
+				setOwnedSource((OCLExpression)null);
 				return;
 			case 12:
-				setOwnedSource((OCLExpression)null);
+				setOwnedSpecializedBody((ExpressionInOCL)null);
 				return;
 			case 13:
 				setIsPre(IS_PRE_EDEFAULT);
@@ -307,9 +307,9 @@ public abstract class FeatureCallExpImpl
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
-				return ownedInlinedBody != null;
-			case 12:
 				return ownedSource != null;
+			case 12:
+				return ownedSpecializedBody != null;
 			case 13:
 				return ((eFlags & IS_PRE_EFLAG) != 0) != IS_PRE_EDEFAULT;
 		}

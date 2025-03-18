@@ -230,6 +230,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_EnumLiteralExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_EnumLiteralExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Import = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Import, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_InstanceSpecification = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_InstanceSpecification, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_IteratorVariable = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_IteratorVariable, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_LambdaType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_LambdaType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_LoopExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_LoopExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_MapType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_MapType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -2000,8 +2001,8 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull ExecutorProperty _CallExp__isImplicit = new EcoreExecutorProperty(PivotPackage.Literals.CALL_EXP__IS_IMPLICIT, Types._CallExp, 0);
 		public static final @NonNull ExecutorProperty _CallExp__isSafe = new EcoreExecutorProperty(PivotPackage.Literals.CALL_EXP__IS_SAFE, Types._CallExp, 1);
-		public static final @NonNull ExecutorProperty _CallExp__ownedInlinedBody = new EcoreExecutorProperty(PivotPackage.Literals.CALL_EXP__OWNED_INLINED_BODY, Types._CallExp, 2);
-		public static final @NonNull ExecutorProperty _CallExp__ownedSource = new EcoreExecutorProperty(PivotPackage.Literals.CALL_EXP__OWNED_SOURCE, Types._CallExp, 3);
+		public static final @NonNull ExecutorProperty _CallExp__ownedSource = new EcoreExecutorProperty(PivotPackage.Literals.CALL_EXP__OWNED_SOURCE, Types._CallExp, 2);
+		public static final @NonNull ExecutorProperty _CallExp__ownedSpecializedBody = new EcoreExecutorProperty(PivotPackage.Literals.CALL_EXP__OWNED_SPECIALIZED_BODY, Types._CallExp, 3);
 
 		public static final @NonNull ExecutorProperty _CallOperationAction__operation = new EcoreExecutorProperty(PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION, Types._CallOperationAction, 0);
 		public static final @NonNull ExecutorProperty _CallOperationAction__MessageExp__ownedCalledOperation = new ExecutorPropertyWithImplementation("MessageExp", Types._CallOperationAction, 1, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION));
@@ -2123,7 +2124,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorProperty _ExpressionInOCL__ownedContext = new EcoreExecutorProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT, Types._ExpressionInOCL, 1);
 		public static final @NonNull ExecutorProperty _ExpressionInOCL__ownedParameters = new EcoreExecutorProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS, Types._ExpressionInOCL, 2);
 		public static final @NonNull ExecutorProperty _ExpressionInOCL__ownedResult = new EcoreExecutorProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT, Types._ExpressionInOCL, 3);
-		public static final @NonNull ExecutorProperty _ExpressionInOCL__CallExp__ownedInlinedBody = new ExecutorPropertyWithImplementation("CallExp", Types._ExpressionInOCL, 4, new EcoreLibraryOppositeProperty(PivotPackage.Literals.CALL_EXP__OWNED_INLINED_BODY));
+		public static final @NonNull ExecutorProperty _ExpressionInOCL__CallExp__ownedSpecializedBody = new ExecutorPropertyWithImplementation("CallExp", Types._ExpressionInOCL, 4, new EcoreLibraryOppositeProperty(PivotPackage.Literals.CALL_EXP__OWNED_SPECIALIZED_BODY));
 
 		public static final @NonNull ExecutorProperty _Feature__implementation = new EcoreExecutorProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION, Types._Feature, 0);
 		public static final @NonNull ExecutorProperty _Feature__implementationClass = new EcoreExecutorProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, Types._Feature, 1);
@@ -2157,7 +2158,9 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull ExecutorProperty _IteratorExp__ownedBody = new EcoreExecutorProperty(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, Types._IteratorExp, 0);
 
-		public static final @NonNull ExecutorProperty _IteratorVariable__LoopExp__ownedCoIterators = new ExecutorPropertyWithImplementation("LoopExp", Types._IteratorVariable, 0, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS));
+		public static final @NonNull ExecutorProperty _IteratorVariable__specializedIterator = new EcoreExecutorProperty(PivotPackage.Literals.ITERATOR_VARIABLE__SPECIALIZED_ITERATOR, Types._IteratorVariable, 0);
+		public static final @NonNull ExecutorProperty _IteratorVariable__IteratorVariable__specializedIterator = new ExecutorPropertyWithImplementation("IteratorVariable", Types._IteratorVariable, 1, new EcoreLibraryOppositeProperty(PivotPackage.Literals.ITERATOR_VARIABLE__SPECIALIZED_ITERATOR));
+		public static final @NonNull ExecutorProperty _IteratorVariable__LoopExp__ownedCoIterators = new ExecutorPropertyWithImplementation("LoopExp", Types._IteratorVariable, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS));
 
 		public static final @NonNull ExecutorProperty _LambdaType__contextType = new EcoreExecutorProperty(PivotPackage.Literals.LAMBDA_TYPE__CONTEXT_TYPE, Types._LambdaType, 0);
 		public static final @NonNull ExecutorProperty _LambdaType__parameterType = new EcoreExecutorProperty(PivotPackage.Literals.LAMBDA_TYPE__PARAMETER_TYPE, Types._LambdaType, 1);
@@ -11874,8 +11877,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._NavigationCallExp__qualifiers,
 			PivotTables.Properties._AssociationClassCallExp__referredAssociationClass,
 			PivotTables.Properties._TypedElement__type,
@@ -12002,8 +12005,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
 		};
@@ -12561,8 +12564,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
 		};
@@ -12736,10 +12739,10 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._LoopExp__ownedCoIterators,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._LoopExp__ownedIterators,
 			PivotTables.Properties._IterateExp__ownedResult,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._LoopExp__referredIteration,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
@@ -12793,9 +12796,9 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._LoopExp__ownedCoIterators,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._LoopExp__ownedIterators,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._LoopExp__referredIteration,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
@@ -12814,6 +12817,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedExtensions,
 			PivotTables.Properties._Variable__ownedInit,
 			PivotTables.Properties._Variable__representedParameter,
+			PivotTables.Properties._IteratorVariable__specializedIterator,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._VariableDeclaration__typeValue
 		};
@@ -12947,9 +12951,9 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._LoopExp__ownedCoIterators,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._LoopExp__ownedIterators,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._LoopExp__referredIteration,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
@@ -13119,8 +13123,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._NavigationCallExp__qualifiers,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
@@ -13217,8 +13221,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._OperationCallExp__ownedArguments,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._OperationCallExp__referredOperation,
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
@@ -13238,8 +13242,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._NavigationCallExp__qualifiers,
 			PivotTables.Properties._OppositePropertyCallExp__referredProperty,
 			PivotTables.Properties._TypedElement__type,
@@ -13502,8 +13506,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._CallExp__ownedInlinedBody,
 			PivotTables.Properties._CallExp__ownedSource,
+			PivotTables.Properties._CallExp__ownedSpecializedBody,
 			PivotTables.Properties._NavigationCallExp__qualifiers,
 			PivotTables.Properties._PropertyCallExp__referredProperty,
 			PivotTables.Properties._TypedElement__type,

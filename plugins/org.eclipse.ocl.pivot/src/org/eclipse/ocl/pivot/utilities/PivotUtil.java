@@ -2061,6 +2061,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @NonNull IteratorVariable getSpecializedIterator(@NonNull IteratorVariable iteratorVariable) {
+		return Objects.requireNonNull(iteratorVariable.getSpecializedIterator());
+	}
+
+	/**
 	 * @since 1.18
 	 */
 	public static @Nullable List<@NonNull TemplateParameter> getTemplateParameters(@NonNull Element element) {

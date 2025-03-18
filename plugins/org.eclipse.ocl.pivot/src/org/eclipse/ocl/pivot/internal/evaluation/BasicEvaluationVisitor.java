@@ -530,9 +530,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		//		try {
 		OCLExpression source = iteratorExp.getOwnedSource();
 		Object sourceVal = source.accept(undecoratedVisitor);
-		//			if (sourceVal == null) {
-		//				return evaluationEnvironment.throwInvalidEvaluation("null iterator source");
-		//			}
 		sourceValue = ValueUtil.asIterableValue(sourceVal);
 		if (iteratorExp.isIsSafe()) {
 			if (sourceValue instanceof MapValue) {
@@ -540,8 +537,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			}
 			sourceValue = sourceValue.excluding(null);
 		}
-
-
 		Iteration actualIteration;
 		if (apparentIteration.isIsStatic()) {
 			actualIteration = apparentIteration;
@@ -549,67 +544,23 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		else {
 			assert source != null;
 			org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticTypeOfValue(source.getType(), sourceValue);
-		//	List<Parameter> ownedParameters = apparentIteration.getOwnedParameters();
-		//	if (ownedParameters.size() == 1) {
-		//		Parameter onlyParameter = ownedParameters.get(0);
-		//		Type onlyType = onlyParameter.getType();
-		//		if (onlyType == standardLibrary.getOclSelfType()) {
-		//			List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(iteratorExp.getOwnedArguments());
-		//			Object onlyArgument = arguments.get(0).accept(undecoratedVisitor);
-		//			org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOfValue(onlyType, onlyArgument);
-		//			actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
-					// FIXME direct evaluate using second argument
 			actualIteration = (Iteration) actualSourceType.lookupActualOperation(standardLibrary, apparentIteration);		// XXX redundant ??
 		}
 		assert actualIteration == apparentIteration;
 		LibraryIteration.LibraryIterationExtension iterationImplementation;
-		ExpressionInOCL inlinedQuery = iteratorExp.getOwnedInlinedBody();
-		if (inlinedQuery != null) {
-			iterationImplementation = new ConstrainedIteration(inlinedQuery);
+		ExpressionInOCL specializedQuery = iteratorExp.getOwnedSpecializedBody();
+		if (specializedQuery != null) {
+			iterationImplementation = new ConstrainedIteration(specializedQuery);
 		}
 		else {
 			iterationImplementation = (LibraryIteration.LibraryIterationExtension)environmentFactory.getMetamodelManager().getImplementation(actualIteration);
 		}
-		//		} catch (InvalidValueException e) {
-		//			return evaluationEnvironment.throwInvalidEvaluation(e);
-		//		}
-		//	org.eclipse.ocl.pivot.Class dynamicSourceType = idResolver.getClass(sourceValue.getTypeId(), null);
-		//	LibraryFeature lookupImplementation = dynamicSourceType.lookupImplementation(standardLibrary, apparentIteration);
-		//	LibraryIteration.LibraryIterationExtension iterationImplementation = (LibraryIteration.LibraryIterationExtension) lookupImplementation;
-		/*		Operation dynamicIteration = metamodelManager.getDynamicOperation((org.eclipse.ocl.pivot.Type) dynamicSourceType, staticIteration);
- 		if (dynamicIteration == null) {
- 			dynamicIteration = staticIteration;
- 		}
- 		LibraryIteration implementation;
-		try {
-			implementation = (LibraryIteration) metamodelManager.getImplementation(dynamicIteration);
-		} catch (Exception e) {
-			String implementationClass = dynamicIteration.getImplementationClass();
-			if (implementationClass != null) {
-				return evaluationEnvironment.throwInvalidEvaluation(e, iteratorExp, null, EvaluatorMessages.ImplementationClassLoadFailure, implementationClass);
-			}
-			else {
-				return evaluationEnvironment.throwInvalidEvaluation(e, iteratorExp, null, "Failed to load implementation for '" + dynamicIteration + "'");
-			}
-		} */
 		Object result = null;
 		try {
 			IterationManager iterationManager;
 			OCLExpression body = PivotUtil.getOwnedBody(iteratorExp);
 			Type iterationType = PivotUtil.getType(iteratorExp);//.behavioralType();
 			Type bodyType = PivotUtil.getType(body);//.behavioralType();
-		//	Object accumulatorValue = iterationImplementation.createAccumulatorValue(context, iterationType.getTypeId(), bodyType.getTypeId());
-
-		//	Type iterationType = PivotUtil.getType(iteratorExp);//.behavioralType();	// XXX redirect iterator
-		//	Type bodyType = PivotUtil.getType(body);//.behavioralType();				// XXX redirect lambda
-
-//			if (bodyType instanceof LambdaType) {
-//				body = (OCLExpression) body.accept(this);		// XXX specialize iterationType/bodyType
-//			}
-
-
-
-
 			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iteratorExp);
 			List</*@Nullable*/ IteratorVariable> coIterators = iteratorExp.getOwnedCoIterators();
 			int coSize = coIterators.size();
@@ -655,20 +606,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					}
 				}
 			}
-	//			result = iterationImplementation.evaluateIteration(iterationManager);
-	/*		if (bodyType instanceof LambdaType) {		// Add redirections in nested EvaluationEnvironment
-				// iterator redirections
-				ExpressionInOCL asExpressionInOCL = PivotUtil.getContainingExpressionInOCL(iteratorExp);
-				DelegatedContextValue asDelegatedValue = new DelegatedContextValue(getExecutor(), sourceVal, asExpressionInOCL.getOwnedContext());
-				for (EObject eObject : new TreeIterable(body, true)) {				// XXX why search for what we know
-					if (eObject instanceof VariableExp) {
-						VariableDeclaration asVariable = ((VariableExp)eObject).getReferredVariable();
-						if (asVariable instanceof IteratorVariable) {
-							new DelegatedIteratorValue(getExecutor(), sourceVal, (IteratorVariable)asVariable);
-						}
-					}
-				}
-			} */
 			result = iterationImplementation.evaluateIteration(iterationManager);
 		}
 		catch (InvalidValueException e) {

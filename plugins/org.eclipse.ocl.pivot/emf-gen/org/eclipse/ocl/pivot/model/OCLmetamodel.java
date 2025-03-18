@@ -469,6 +469,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull BagType _Bag_EnumLiteralExp_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_Import_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_InstanceSpecification_F = createBagType(_Bag);
+		private final @NonNull BagType _Bag_IteratorVariable_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_LambdaType_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_LoopExp_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_MapType_F = createBagType(_Bag);
@@ -1404,6 +1405,10 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _Bag_InstanceSpecification_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_InstanceSpecification_F);
+			ownedClasses.add(type);
+			type = _Bag_IteratorVariable_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_IteratorVariable_F);
 			ownedClasses.add(type);
 			type = _Bag_LambdaType_F;
 			superClasses = type.getSuperClasses();
@@ -2439,8 +2444,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_BooleanLiteralExp_booleanSymbol = createProperty(PivotPackage.Literals.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL, _Boolean);
 		private final @NonNull Property pr_CallExp_isImplicit = createProperty(PivotPackage.Literals.CALL_EXP__IS_IMPLICIT, _Boolean);
 		private final @NonNull Property pr_CallExp_isSafe = createProperty(PivotPackage.Literals.CALL_EXP__IS_SAFE, _Boolean);
-		private final @NonNull Property pr_CallExp_ownedInlinedBody = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_INLINED_BODY, _ExpressionInOCL);
 		private final @NonNull Property pr_CallExp_ownedSource = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_SOURCE, _OCLExpression);
+		private final @NonNull Property pr_CallExp_ownedSpecializedBody = createProperty(PivotPackage.Literals.CALL_EXP__OWNED_SPECIALIZED_BODY, _ExpressionInOCL);
 		private final @NonNull Property pr_CallOperationAction_operation = createProperty(PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION, _Operation);
 		private final @NonNull Property pr_CallOperationAction_MessageExp_ownedCalledOperation = createProperty("MessageExp", _MessageExp);
 		private final @NonNull Property pr_Class_extenders = createProperty(PivotPackage.Literals.CLASS__EXTENDERS, _Set_StereotypeExtender_T);
@@ -2536,7 +2541,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_ExpressionInOCL_ownedContext = createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT, _Variable);
 		private final @NonNull Property pr_ExpressionInOCL_ownedParameters = createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS, _OrderedSet_Variable_T);
 		private final @NonNull Property pr_ExpressionInOCL_ownedResult = createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT, _Variable);
-		private final @NonNull Property pr_ExpressionInOCL_CallExp_ownedInlinedBody = createProperty("CallExp", _CallExp);
+		private final @NonNull Property pr_ExpressionInOCL_CallExp_ownedSpecializedBody = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_Feature_implementation = createProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION, _LibraryFeature);
 		private final @NonNull Property pr_Feature_implementationClass = createProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, _String);
 		private final @NonNull Property pr_Feature_isStatic = createProperty(PivotPackage.Literals.FEATURE__IS_STATIC, _Boolean);
@@ -2560,6 +2565,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Iteration_ownedIterators = createProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, _OrderedSet_Parameter_T);
 		private final @NonNull Property pr_Iteration_LoopExp_referredIteration = createProperty("LoopExp", _Bag_LoopExp_F);
 		private final @NonNull Property pr_IteratorExp_ownedBody = createProperty(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, _OCLExpression);
+		private final @NonNull Property pr_IteratorVariable_specializedIterator = createProperty(PivotPackage.Literals.ITERATOR_VARIABLE__SPECIALIZED_ITERATOR, _IteratorVariable);
+		private final @NonNull Property pr_IteratorVariable_IteratorVariable_specializedIterator = createProperty("IteratorVariable", _Bag_IteratorVariable_F);
 		private final @NonNull Property pr_IteratorVariable_LoopExp_ownedCoIterators = createProperty("LoopExp", _LoopExp);
 		private final @NonNull Property pr_LambdaType_contextType = createProperty(PivotPackage.Literals.LAMBDA_TYPE__CONTEXT_TYPE, _Type);
 		private final @NonNull Property pr_LambdaType_parameterType = createProperty(PivotPackage.Literals.LAMBDA_TYPE__PARAMETER_TYPE, _Sequence_Type_T);
@@ -2896,16 +2903,16 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_CallExp_isSafe);
 			property.setIsResolveProxies(true);
 			property.setDefaultValueString("false");
-			ownedProperties.add(property = pr_CallExp_ownedInlinedBody);
-			property.setIsComposite(true);
-			property.setIsRequired(false);
-			property.setIsTransient(true);
-			property.setOpposite(pr_ExpressionInOCL_CallExp_ownedInlinedBody);
 			ownedProperties.add(property = pr_CallExp_ownedSource);
 			property.setIsComposite(true);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_CallExp_ownedSource);
+			ownedProperties.add(property = pr_CallExp_ownedSpecializedBody);
+			property.setIsComposite(true);
+			property.setIsRequired(false);
+			property.setIsTransient(true);
+			property.setOpposite(pr_ExpressionInOCL_CallExp_ownedSpecializedBody);
 
 			ownedProperties = _CallOperationAction.getOwnedProperties();
 			ownedProperties.add(property = pr_CallOperationAction_operation);
@@ -3325,11 +3332,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Variable_ExpressionInOCL_ownedResult);
-			ownedProperties.add(property = pr_ExpressionInOCL_CallExp_ownedInlinedBody);
+			ownedProperties.add(property = pr_ExpressionInOCL_CallExp_ownedSpecializedBody);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CallExp_ownedInlinedBody);
+			property.setOpposite(pr_CallExp_ownedSpecializedBody);
 
 			ownedProperties = _Feature.getOwnedProperties();
 			ownedProperties.add(property = pr_Feature_implementation);
@@ -3438,6 +3445,14 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_OCLExpression_IteratorExp_ownedBody);
 
 			ownedProperties = _IteratorVariable.getOwnedProperties();
+			ownedProperties.add(property = pr_IteratorVariable_specializedIterator);
+			property.setIsRequired(false);
+			property.setIsTransient(true);
+			property.setOpposite(pr_IteratorVariable_IteratorVariable_specializedIterator);
+			ownedProperties.add(property = pr_IteratorVariable_IteratorVariable_specializedIterator);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_IteratorVariable_specializedIterator);
 			ownedProperties.add(property = pr_IteratorVariable_LoopExp_ownedCoIterators);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
@@ -4924,6 +4939,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_Bag_EnumLiteralExp_F, _EnumLiteralExp);
 			addBinding(_Bag_Import_F, _Import);
 			addBinding(_Bag_InstanceSpecification_F, _InstanceSpecification);
+			addBinding(_Bag_IteratorVariable_F, _IteratorVariable);
 			addBinding(_Bag_LambdaType_F, _LambdaType);
 			addBinding(_Bag_LoopExp_F, _LoopExp);
 			addBinding(_Bag_MapType_F, _MapType);
@@ -5140,6 +5156,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(iv_BooleanLiteralExp_TypeIsBoolean, "The type of a boolean Literal expression is the type Boolean.");
 			installComment(iv_CallExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source collection is null-free.");
 			installComment(iv_CallExp_SafeSourceCannotBeMap, "Safe navigation is not supported when the source collection is a Map.");
+			installComment(pr_CallExp_ownedSpecializedBody, "Specialization of the called body using the calling context types.");
 			installComment(_Class, "A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.\n\nA Classifier represents a classification of instances according to their Features.\n\nStructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.");
 			installComment(pr_Class_isAbstract, "If true, the Class does not provide a complete declaration and cannot be instantiated. An abstract Class is typically used as a target of Associations or Generalizations.\n\nIf true, the Classifier can only be instantiated by instantiating one of its specializations. An abstract Classifier is intended to be used by other Classifiers e.g., as the target of Associations or Generalizations.");
 			installComment(pr_Class_isActive, "Determines whether an object specified by this Class is active or not. If true, then the owning Class is referred to as an active Class. If false, then such a Class is referred to as a passive Class.");
@@ -5204,6 +5221,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(iv_IteratorExp_SortedByIsOrderedIfSourceIsOrdered, "The collection type for an OrderedSet or a Sequence type is a Sequence, the result type for any other collection type is Bag.");
 			installComment(iv_IteratorExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free.");
 			installComment(iv_IteratorVariable_HasNoInitializer, "Iterator variable has no initializer.");
+			installComment(pr_IteratorVariable_specializedIterator, "Specialization of this iterator using the calling context types for use in conjunction with the parent CallExp\'s ownedSpecializedBody.");
 			installComment(iv_LetExp_CompatibleNullityForIn, "The nullity of a Let expression is the nullity of the in expression.");
 			installComment(iv_LetExp_TypeIsInType, "The type of a Let expression is the type of the in expression.");
 			installComment(iv_LetVariable_CompatibleNullityForInitializer, "The nullity of a Let variable initializer expression is the nullity of the Let variable.");

@@ -1464,6 +1464,17 @@ extends EPackage
 	EClass getIteratorVariable();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.IteratorVariable#getSpecializedIterator <em>Specialized Iterator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Specialized Iterator</em>'.
+	 * @see org.eclipse.ocl.pivot.IteratorVariable#getSpecializedIterator()
+	 * @see #getIteratorVariable()
+	 * @generated
+	 */
+	EReference getIteratorVariable_SpecializedIterator();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorVariable#validateHasNoInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Has No Initializer</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5716,17 +5727,6 @@ extends EPackage
 	EAttribute getCallExp_IsSafe();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.CallExp#getOwnedInlinedBody <em>Owned Inlined Body</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Owned Inlined Body</em>'.
-	 * @see org.eclipse.ocl.pivot.CallExp#getOwnedInlinedBody()
-	 * @see #getCallExp()
-	 * @generated
-	 */
-	EReference getCallExp_OwnedInlinedBody();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.CallExp#getOwnedSource <em>Owned Source</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5736,6 +5736,17 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getCallExp_OwnedSource();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.CallExp#getOwnedSpecializedBody <em>Owned Specialized Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Specialized Body</em>'.
+	 * @see org.eclipse.ocl.pivot.CallExp#getOwnedSpecializedBody()
+	 * @see #getCallExp()
+	 * @generated
+	 */
+	EReference getCallExp_OwnedSpecializedBody();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.CallExp#validateSafeSourceCanBeNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Safe Source Can Be Null</em>}' operation.
@@ -7079,6 +7090,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass ITERATOR_VARIABLE = eINSTANCE.getIteratorVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Specialized Iterator</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ITERATOR_VARIABLE__SPECIALIZED_ITERATOR = eINSTANCE.getIteratorVariable_SpecializedIterator();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Has No Initializer</b></em>' operation.
@@ -10502,20 +10521,20 @@ extends EPackage
 		EAttribute CALL_EXP__IS_SAFE = eINSTANCE.getCallExp_IsSafe();
 
 		/**
-		 * The meta object literal for the '<em><b>Owned Inlined Body</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CALL_EXP__OWNED_INLINED_BODY = eINSTANCE.getCallExp_OwnedInlinedBody();
-
-		/**
 		 * The meta object literal for the '<em><b>Owned Source</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference CALL_EXP__OWNED_SOURCE = eINSTANCE.getCallExp_OwnedSource();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Specialized Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CALL_EXP__OWNED_SPECIALIZED_BODY = eINSTANCE.getCallExp_OwnedSpecializedBody();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Safe Source Can Be Null</b></em>' operation.

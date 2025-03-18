@@ -62,9 +62,11 @@
       </ownedInvariants>
       <ownedProperties xmi:id="Xbbpj" defaultValueString="false" name="isImplicit" type="#ZuwnB"/>
       <ownedProperties xmi:id=",1h8l" defaultValueString="false" name="isSafe" type="#ZuwnB"/>
-      <ownedProperties xmi:id="w7X0p" isComposite="true" isRequired="false" isResolveProxies="false" isTransient="true" name="ownedInlinedBody"
-          opposite="#Lw82o" type="#sFfJa"/>
       <ownedProperties xmi:id="IjXu4" isComposite="true" isRequired="false" name="ownedSource" opposite="#0VFpK" type="#BFtK4"/>
+      <ownedProperties xmi:id="OdXdU" isComposite="true" isRequired="false" isResolveProxies="false" isTransient="true" name="ownedSpecializedBody"
+          opposite="#da5VT" type="#sFfJa">
+        <ownedComments body="Specialization of the called body using the calling context types."/>
+      </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="wuJTT" name="CallOperationAction" superClasses="#0kVqz">
       <ownedProperties xmi:id="vrBiI" name="operation" opposite="#AwSDc" type="#Yz,F1"/>
@@ -341,7 +343,7 @@
       <ownedProperties xmi:id="eubAp" isComposite="true" isRequired="false" name="ownedContext" opposite="#y7+O9" type="#t4j6T"/>
       <ownedProperties xmi:id="DrnVr" isComposite="true" name="ownedParameters" opposite="#1jSjN" type="#Rl6IP"/>
       <ownedProperties xmi:id="2tYZA" isComposite="true" isRequired="false" name="ownedResult" opposite="#a3p9g" type="#t4j6T"/>
-      <ownedProperties xmi:id="Lw82o" isImplicit="true" isRequired="false" name="CallExp" opposite="#w7X0p" type="#QJrde"/>
+      <ownedProperties xmi:id="da5VT" isImplicit="true" isRequired="false" name="CallExp" opposite="#OdXdU" type="#QJrde"/>
     </ownedClasses>
     <ownedClasses xmi:id="nphZD" isAbstract="true" name="Feature" superClasses="#j7EI0">
       <ownedComments body="A Feature declares a behavioral or structural characteristic of Classifiers."/>
@@ -528,6 +530,11 @@
         <ownedComments body="Iterator variable has no initializer."/>
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit = null"/>
       </ownedInvariants>
+      <ownedProperties xmi:id="++ut6" isRequired="false" isResolveProxies="false" isTransient="true" name="specializedIterator" opposite="#yzGLd"
+          type="#7yjCF">
+        <ownedComments body="Specialization of this iterator using the calling context types for use in conjunction with the parent CallExp's ownedSpecializedBody."/>
+      </ownedProperties>
+      <ownedProperties xmi:id="yzGLd" isImplicit="true" name="IteratorVariable" opposite="#++ut6" type="#9f3D,"/>
       <ownedProperties xmi:id="sbNVd" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
     </ownedClasses>
     <ownedClasses xmi:id="S9Pb5" name="LambdaType" superClasses="#1mHCJ">
@@ -1502,6 +1509,11 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="B2y2s" name="Bag" superClasses="#XRb47">
       <ownedBindings>
         <ownedSubstitutions actual="#f3gRG" formal="&_0;#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="9f3D," name="Bag" superClasses="#T7fFO">
+      <ownedBindings>
+        <ownedSubstitutions actual="#7yjCF" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="85RZ1" name="Bag" superClasses="#SV6aE">

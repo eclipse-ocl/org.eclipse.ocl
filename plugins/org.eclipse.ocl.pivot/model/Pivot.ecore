@@ -210,11 +210,15 @@
         name="isImplicit" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CallExp-isSafe"
         name="isSafe" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedInlinedBody"
-        name="ownedInlinedBody" eType="#T-pivot-ExpressionInOCL" transient="true"
-        containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedSource"
         name="ownedSource" eType="#T-pivot-OCLExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedSpecializedBody"
+        name="ownedSpecializedBody" eType="#T-pivot-ExpressionInOCL" transient="true"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specialization of the called body using the calling context types."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CallOperationAction" name="CallOperationAction"
       eSuperTypes="#T-pivot-NamedElement">
@@ -1506,6 +1510,13 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-IteratorVariable-specializedIterator"
+        name="specializedIterator" eType="#T-pivot-IteratorVariable" transient="true"
+        resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specialization of this iterator using the calling context types for use in conjunction with the parent CallExp's ownedSpecializedBody."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LambdaType" name="LambdaType"
       eSuperTypes="#T-pivot-DataType">

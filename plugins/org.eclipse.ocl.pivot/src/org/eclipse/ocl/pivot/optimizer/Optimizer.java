@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -56,7 +55,6 @@ public class Optimizer
 	}
 
 	public @NonNull ExpressionInOCL optimize(@NonNull ExpressionInOCL query) {
-	//	List<@NonNull CallExp> asCallExps = new ArrayList<>();
 		for (EObject eObject : new TreeIterable(query, true)) {
 			if (eObject instanceof LoopExp) {
 				LoopExp asLoopExp = (LoopExp)eObject;
@@ -125,35 +123,28 @@ public class Optimizer
 			return super.get(oIn);
 		}
 
-//		public @Nullable List<@NonNull String> getErrors() {
-//			return errors;
-//		}
+		public @Nullable List<@NonNull String> getErrors() {
+			return errors;
+		}
 	}
 
 	@SuppressWarnings("serial")
-	protected class IterationInliner extends ExpressionCopier
+	protected class IterationSpecializer extends ExpressionCopier
 	{
 		protected final @NonNull LoopExp asLoopExp;
 		protected final @NonNull Iteration asIteration;
 		protected final @NonNull Map<@NonNull String, @NonNull IteratorVariable> name2outerIteratorVariable = new HashMap<>();
 		protected final @NonNull Map<@NonNull IteratorVariable, @Nullable IteratorVariable> outerIteratorVariable2specializedIteratorVariable = new HashMap<>();
 
-		public IterationInliner(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull LoopExp asLoopExp,
-				@NonNull ExpressionInOCL asExpression, @NonNull TemplateParameterSubstitutions templateParameterSubstitutions) {
+		public IterationSpecializer(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull LoopExp asLoopExp,
+				@NonNull TemplateParameterSubstitutions templateParameterSubstitutions) {
 			super(environmentFactory, templateParameterSubstitutions);
 			this.asLoopExp = asLoopExp;
 			this.asIteration = PivotUtil.getReferredIteration(asLoopExp);
-		//	VariableDeclaration asContextVariable = PivotUtilInternal.getOwnedContext(asExpression);
-		//	Parameter asContextParameter = PivotUtil.getRepresentedParameter(asContextVariable);
-		//	name2parameter.put(PivotUtil.getName(asIterationParameter), asIteratorVariable);
-		//	name2parameter.put(PivotUtil.getName(asContextVariable), asContextVariable);
 			for (@NonNull Variable asIteratorVariable : PivotUtil.getOwnedIterators(asLoopExp)) {
 				Parameter asIterationParameter = PivotUtil.getRepresentedParameter(asIteratorVariable);
 				name2outerIteratorVariable.put(PivotUtil.getName(asIterationParameter), (IteratorVariable)asIteratorVariable);
 			}
-		//	for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asLoopExp)) {
-		//		name2parameter.put(PivotUtil.getName(asParameter), asParameter);
-		//	}
 		}
 
 		// Overridden to populate parameter2variable mapping from inner self/iterator to calling context/iterator
@@ -175,7 +166,7 @@ public class Optimizer
 			return oOut;
 		}
 
-		public @Nullable List<@NonNull String> postProcess() {
+		protected void postProcess() {
 			assert outerIteratorVariable2specializedIteratorVariable.size() <= name2outerIteratorVariable.size();
 			for (@NonNull IteratorVariable asOuterIteratorVariable : name2outerIteratorVariable.values()) {
 				IteratorVariable asSpecializedIteratorVariable = outerIteratorVariable2specializedIteratorVariable.get(asOuterIteratorVariable);
@@ -183,26 +174,17 @@ public class Optimizer
 					addError("Missing usage of " + asOuterIteratorVariable);
 				}
 				else {
-					asOuterIteratorVariable.eAdapters().add(new InliningAdapter(asOuterIteratorVariable, asSpecializedIteratorVariable));
+					asOuterIteratorVariable.setSpecializedIterator(asSpecializedIteratorVariable);
 				}
 			}
-			return errors;
-		}
-	}
-
-	@Deprecated
-	public static class InliningAdapter extends AdapterImpl				// XXX Change to proper variable
-	{
-		protected final @NonNull IteratorVariable asOuterIteratorVariable;
-		protected final @NonNull IteratorVariable asSpecializedIteratorVariable;
-
-		public InliningAdapter(@NonNull IteratorVariable asOuterIteratorVariable, @NonNull IteratorVariable asSpecializedIteratorVariable) {
-			this.asOuterIteratorVariable = asOuterIteratorVariable;
-			this.asSpecializedIteratorVariable = asSpecializedIteratorVariable;
 		}
 
-		public @NonNull IteratorVariable getSpecializedIteratorVariable() {
-			return asSpecializedIteratorVariable;
+		public @NonNull ExpressionInOCL specialize(@NonNull ExpressionInOCL asExpression) {
+			@SuppressWarnings("null")
+			ExpressionInOCL asCopy = (@NonNull ExpressionInOCL)copy(asExpression);
+			copyReferences();
+			postProcess();
+			return asCopy;
 		}
 	}
 
@@ -220,15 +202,11 @@ public class Optimizer
 		List<@NonNull Pair<@NonNull Type, @NonNull Type>> formal2actuals = new ArrayList<>();
 		formal2actuals.add(new Pair<>(PivotUtil.getOwningClass(asIteration), sourceType));
 		//
-	//	Map<@NonNull VariableDeclaration, @NonNull TypedElement> actualParameterSubstitutions = new HashMap<>();
-	//	actualParameterSubstitutions.put(asExpressionInOCL.getOwnedContext(), asLoopExp.getOwnedSource());		-- source remains a parameter
-		//
 		int iMax = Math.max(asIterationIterators.size(), asIteratorVariables.size());
 		for (int i = 0; i < iMax; i++) {
 			Parameter asIterationParameter = asIterationIterators.get(i);
 			Variable asIteratorVariable = asIteratorVariables.get(i);
 			formal2actuals.add(new Pair<>(PivotUtil.getType(asIterationParameter), PivotUtil.getType(asIteratorVariable)));
-		//	actualParameterSubstitutions.put(asIteratorParameter, asIteratorVariable);
 		}
 		//
 		if (asLoopExp instanceof IterateExp) {
@@ -239,7 +217,6 @@ public class Optimizer
 				Parameter asIterationAccumulatorParameter = asIterationAccumulators.get(i);
 				Variable asResultVariable = PivotUtil.getOwnedResult(asIterateExp);
 				formal2actuals.add(new Pair<>(PivotUtil.getType(asIterationAccumulatorParameter), PivotUtil.getType(asResultVariable)));
-			//	actualParameterSubstitutions.put(asAccumulatorParameter, asResultVariable);
 			}
 			List<@NonNull OCLExpression> asBodyExpressions = PivotUtilInternal.getOwnedBodiesList(asIterateExp);
 			iMax = Math.max(asIterationParameters.size(), asBodyExpressions.size());
@@ -247,7 +224,6 @@ public class Optimizer
 				Parameter asIterationAccumulatorParameter = asIterationAccumulators.get(i);
 				OCLExpression asBodyExpression = asBodyExpressions.get(i);
 				formal2actuals.add(new Pair<>(PivotUtil.getType(asIterationAccumulatorParameter), PivotUtil.getType(asBodyExpression)));
-			//	actualParameterSubstitutions.put(asAccumulatorParameter, asBodyExpression);
 			}
 		}
 		else {
@@ -255,16 +231,11 @@ public class Optimizer
 			Parameter asBodyParameter = asIterationParameters.get(0);
 			OCLExpression asBodyExpression = PivotUtil.getOwnedBody(asIteratorExp);
 			formal2actuals.add(new Pair<>(PivotUtil.getType(asBodyParameter), PivotUtil.getType(asBodyExpression)));
-		//	actualParameterSubstitutions.put(asBodyParameter, asBodyExpression);
 		}
 		TemplateParameterSubstitutions templateParameterSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, asIteration, formal2actuals);
-
-
-
-		IterationInliner copier = new IterationInliner(environmentFactory, asLoopExp, asExpressionInOCL, templateParameterSubstitutions);
-		ExpressionInOCL asCopy = (ExpressionInOCL)copier.copy(asExpressionInOCL);
-		copier.copyReferences();
-		List<@NonNull String> errors = copier.postProcess();
+		IterationSpecializer specializer = new IterationSpecializer(environmentFactory, asLoopExp, templateParameterSubstitutions);
+		ExpressionInOCL asCopy = specializer.specialize(asExpressionInOCL);
+		List<@NonNull String> errors = specializer.getErrors();
 		if (errors != null) {
 			StringBuilder s = new StringBuilder();
 			s.append("Failed to specialize " + asIteration);
@@ -273,6 +244,6 @@ public class Optimizer
 			}
 			throw new ParserException(s.toString());
 		}
-		asLoopExp.setOwnedInlinedBody(asCopy);
+		asLoopExp.setOwnedSpecializedBody(asCopy);
 	}
 }

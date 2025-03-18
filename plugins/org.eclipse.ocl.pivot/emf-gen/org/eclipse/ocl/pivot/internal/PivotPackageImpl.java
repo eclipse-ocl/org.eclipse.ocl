@@ -2707,6 +2707,17 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EReference getIteratorVariable_SpecializedIterator()
+	{
+		return (EReference)iteratorVariableEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map()
 	{
 		return iteratorVariableEClass.getEOperations().get(0);
@@ -7062,7 +7073,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getCallExp_OwnedInlinedBody()
+	public EReference getCallExp_OwnedSource()
 	{
 		return (EReference)callExpEClass.getEStructuralFeatures().get(2);
 	}
@@ -7073,7 +7084,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getCallExp_OwnedSource()
+	public EReference getCallExp_OwnedSpecializedBody()
 	{
 		return (EReference)callExpEClass.getEStructuralFeatures().get(3);
 	}
@@ -7554,6 +7565,7 @@ implements PivotPackage  {
 		createEOperation(iteratorExpEClass, 36);
 
 		iteratorVariableEClass = createEClass(51);
+		createEReference(iteratorVariableEClass, 12);
 		createEOperation(iteratorVariableEClass, 7);
 
 		lambdaTypeEClass = createEClass(52);
@@ -8185,8 +8197,8 @@ implements PivotPackage  {
 		initEClass(callExpEClass, CallExp.class, "CallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getCallExp_IsImplicit(), this.getBoolean(), "isImplicit", "false", 1, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(getCallExp_IsSafe(), this.getBoolean(), "isSafe", "false", 1, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(getCallExp_OwnedInlinedBody(), this.getExpressionInOCL(), null, "ownedInlinedBody", null, 0, 1, CallExp.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getCallExp_OwnedSource(), this.getOCLExpression(), null, "ownedSource", null, 0, 1, CallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getCallExp_OwnedSpecializedBody(), this.getExpressionInOCL(), null, "ownedSpecializedBody", null, 0, 1, CallExp.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateSafeSourceCanBeNull", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -8833,6 +8845,7 @@ implements PivotPackage  {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(iteratorVariableEClass, IteratorVariable.class, "IteratorVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getIteratorVariable_SpecializedIterator(), this.getIteratorVariable(), null, "specializedIterator", null, 0, 1, IteratorVariable.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateHasNoInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$

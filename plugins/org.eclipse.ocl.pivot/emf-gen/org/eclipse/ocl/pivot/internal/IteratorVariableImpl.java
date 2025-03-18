@@ -11,15 +11,22 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
@@ -39,6 +46,12 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
  * An implementation of the model object '<em><b>Iterator Variable</b></em>'.
  * @since 1.3
  * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.IteratorVariableImpl#getSpecializedIterator <em>Specialized Iterator</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -51,7 +64,7 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ITERATOR_VARIABLE_FEATURE_COUNT = VariableImpl.VARIABLE_FEATURE_COUNT + 0;
+	public static final int ITERATOR_VARIABLE_FEATURE_COUNT = VariableImpl.VARIABLE_FEATURE_COUNT + 1;
 	/**
 	 * The number of operations of the '<em>Iterator Variable</em>' class.
 	 * <!-- begin-user-doc -->
@@ -60,6 +73,16 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 	 * @ordered
 	 */
 	public static final int ITERATOR_VARIABLE_OPERATION_COUNT = VariableImpl.VARIABLE_OPERATION_COUNT + 1;
+
+	/**
+	 * The cached value of the '{@link #getSpecializedIterator() <em>Specialized Iterator</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSpecializedIterator()
+	 * @generated
+	 * @ordered
+	 */
+	protected IteratorVariable specializedIterator;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -80,6 +103,31 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 	protected EClass eStaticClass()
 	{
 		return PivotPackage.Literals.ITERATOR_VARIABLE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public IteratorVariable getSpecializedIterator()
+	{
+		return specializedIterator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setSpecializedIterator(IteratorVariable newSpecializedIterator)
+	{
+		IteratorVariable oldSpecializedIterator = specializedIterator;
+		specializedIterator = newSpecializedIterator;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldSpecializedIterator, specializedIterator));
 	}
 
 	/**
@@ -123,6 +171,193 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return getAnnotatingComments();
+			case 1:
+				return getOwnedAnnotations();
+			case 2:
+				return getOwnedComments();
+			case 3:
+				return getOwnedExtensions();
+			case 4:
+				return getName();
+			case 5:
+				return isIsMany();
+			case 6:
+				return isIsRequired();
+			case 7:
+				if (resolve) return getType();
+				return basicGetType();
+			case 8:
+				return getTypeValue();
+			case 9:
+				return isIsImplicit();
+			case 10:
+				return getOwnedInit();
+			case 11:
+				if (resolve) return getRepresentedParameter();
+				return basicGetRepresentedParameter();
+			case 12:
+				return getSpecializedIterator();
+		}
+		return eDynamicGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue)
+	{
+		switch (featureID)
+		{
+			case 0:
+				getAnnotatingComments().clear();
+				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
+				return;
+			case 1:
+				getOwnedAnnotations().clear();
+				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
+				return;
+			case 2:
+				getOwnedComments().clear();
+				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
+				return;
+			case 3:
+				getOwnedExtensions().clear();
+				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
+				return;
+			case 4:
+				setName((String)newValue);
+				return;
+			case 6:
+				setIsRequired((Boolean)newValue);
+				return;
+			case 7:
+				setType((Type)newValue);
+				return;
+			case 8:
+				setTypeValue((Type)newValue);
+				return;
+			case 9:
+				setIsImplicit((Boolean)newValue);
+				return;
+			case 10:
+				setOwnedInit((OCLExpression)newValue);
+				return;
+			case 11:
+				setRepresentedParameter((Parameter)newValue);
+				return;
+			case 12:
+				setSpecializedIterator((IteratorVariable)newValue);
+				return;
+		}
+		eDynamicSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eUnset(int featureID)
+	{
+		switch (featureID)
+		{
+			case 0:
+				getAnnotatingComments().clear();
+				return;
+			case 1:
+				getOwnedAnnotations().clear();
+				return;
+			case 2:
+				getOwnedComments().clear();
+				return;
+			case 3:
+				getOwnedExtensions().clear();
+				return;
+			case 4:
+				setName(NAME_EDEFAULT);
+				return;
+			case 6:
+				setIsRequired(IS_REQUIRED_EDEFAULT);
+				return;
+			case 7:
+				setType((Type)null);
+				return;
+			case 8:
+				setTypeValue((Type)null);
+				return;
+			case 9:
+				setIsImplicit(IS_IMPLICIT_EDEFAULT);
+				return;
+			case 10:
+				setOwnedInit((OCLExpression)null);
+				return;
+			case 11:
+				setRepresentedParameter((Parameter)null);
+				return;
+			case 12:
+				setSpecializedIterator((IteratorVariable)null);
+				return;
+		}
+		eDynamicUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean eIsSet(int featureID)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return annotatingComments != null && !annotatingComments.isEmpty();
+			case 1:
+				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
+			case 2:
+				return ownedComments != null && !ownedComments.isEmpty();
+			case 3:
+				return ownedExtensions != null && !ownedExtensions.isEmpty();
+			case 4:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 5:
+				return isIsMany() != IS_MANY_EDEFAULT;
+			case 6:
+				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
+			case 7:
+				return type != null;
+			case 8:
+				return typeValue != null;
+			case 9:
+				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
+			case 10:
+				return ownedInit != null;
+			case 11:
+				return representedParameter != null;
+			case 12:
+				return specializedIterator != null;
+		}
+		return eDynamicIsSet(featureID);
 	}
 
 	/**

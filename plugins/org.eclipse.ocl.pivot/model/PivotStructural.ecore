@@ -126,8 +126,12 @@
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSource" eType="#//OCLExpression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInlinedBody" eType="#//ExpressionInOCL"
-        transient="true" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSpecializedBody" eType="#//ExpressionInOCL"
+        transient="true" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specialization of the called body using the calling context types."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallOperationAction" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
@@ -590,7 +594,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBody" lowerBound="1"
         eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specializedIterator" eType="#//IteratorVariable"
+        transient="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specialization of this iterator using the calling context types for use in conjunction with the parent CallExp's ownedSpecializedBody."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LambdaType" eSuperTypes="#//DataType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" lowerBound="1"
         eType="#//Type"/>

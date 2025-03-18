@@ -14,24 +14,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.optimizer.Optimizer;
 import org.eclipse.ocl.pivot.utilities.DelegatedValue;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -46,33 +41,22 @@ import org.eclipse.ocl.pivot.values.IterableValue;
 public class EvaluatorConstrainedIterationManager extends AbstractEvaluatorIterableIterationManager<@NonNull IterableValue>
 {
 	/**
-	 * RedirectedIteratorValue redirects the outer iterator to the inner.
+	 * SpecializingIteratorValue redirects the outer iterator to the specialized inner.
 	 */
-	private class RedirectedIteratorValue implements DelegatedValue
+	private class SpecializingIteratorValue implements DelegatedValue
 	{
 		private @NonNull IteratorVariable iteratorVariable;
 
-		protected RedirectedIteratorValue(@NonNull Executor executor, @Nullable Object accumulatorValue, @NonNull IteratorVariable iteratorVariable) {
+		protected SpecializingIteratorValue(@NonNull Executor executor, @Nullable Object accumulatorValue, @NonNull IteratorVariable iteratorVariable) {
 			this.iteratorVariable = iteratorVariable;
 			executor.add(iteratorVariable, this);
-//			toString();
 		}
 
 		@Override
 		public @Nullable Object get() {
-			for (Adapter eAdapter : iteratorVariable.eAdapters()) {
-				if (eAdapter instanceof Optimizer.InliningAdapter) {
-					Optimizer.InliningAdapter inliningAdapter = (Optimizer.InliningAdapter)eAdapter;
-					IteratorVariable specializedIteratorVariable = inliningAdapter.getSpecializedIteratorVariable();
-					return executor.getEvaluationEnvironment().getValueOf(specializedIteratorVariable);
-				}
-			}
-			return null;
+			IteratorVariable specializedIteratorVariable = PivotUtil.getSpecializedIterator(iteratorVariable);
+			return executor.getEvaluationEnvironment().getValueOf(specializedIteratorVariable);
 		}
-
-	//	public void set(@Nullable Object accumulatorValue) {
-	//		this.accumulatorValue = accumulatorValue;
-	//	}
 
 		@Override
 		public @NonNull String toString() {
@@ -90,47 +74,21 @@ public class EvaluatorConstrainedIterationManager extends AbstractEvaluatorItera
 		OCLExpression body = PivotUtil.getOwnedBody(iteratorExp);
 		List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iteratorExp);
 		List</*@Nullable*/ IteratorVariable> coIterators = iteratorExp.getOwnedCoIterators();
-		VariableDeclaration firstIterator = iterators.get(0);
-		VariableDeclaration indexIterator = coIterators.size() >= 1 ? coIterators.get(0) : null;
+		IteratorVariable firstIterator = (IteratorVariable)iterators.get(0);
+		IteratorVariable indexIterator = coIterators.size() >= 1 ? coIterators.get(0) : null;
 		return new EvaluatorConstrainedIterationManager(executor, iteratorExp, body, collectionValue, null, null, firstIterator, indexIterator);
 	}
-
-	protected final @NonNull TypedElement referredIterator;
-
-	/** @ deprecated supply a callExp
-	@ Deprecated
-	public EvaluatorConstrainedIterationManager(@NonNull Evaluator invokingEvaluator,
-			@NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
-			@NonNull TypedElement referredIterator) {
-		this(ValueUtil.getExecutor(invokingEvaluator), null, body, collectionValue, accumulator, accumulatorValue, referredIterator);
-	} */
-
-	/*@ Deprecated / * @ deprecated specify indexIterator
-	public EvaluatorConstrainedIterationManager(@NonNull Executor invokingExecutor,
-			/ *@NonNull* / CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
-			@NonNull TypedElement referredIterator) {
-		this(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue, referredIterator, null);
-	} */
 
 	public EvaluatorConstrainedIterationManager(@NonNull Executor executor,
 			@NonNull CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
 			@Nullable Variable accumulatorVariable, @Nullable Object accumulatorValue,
-			@NonNull TypedElement firstIterator, @Nullable TypedElement indexIterator) {
+			@NonNull IteratorVariable firstIterator, @Nullable IteratorVariable indexIterator) {
 		super(executor, callExp, body, collectionValue, accumulatorVariable, accumulatorValue);
-		this.referredIterator = firstIterator;
-		new RedirectedIteratorValue(executor, collectionValue, (IteratorVariable)firstIterator);
+		new SpecializingIteratorValue(executor, collectionValue, firstIterator);
 		if (indexIterator != null) {
-			new RedirectedIteratorValue(executor, collectionValue, (IteratorVariable)indexIterator);
+			new SpecializingIteratorValue(executor, collectionValue, indexIterator);
 		}
 	}
-
-/*	protected EvaluatorConstrainedIterationManager(@NonNull EvaluatorConstrainedIterationManager iterationManager, @NonNull CollectionValue value) {
-		super(iterationManager, value);
-		this.referredIterator = iterationManager.referredIterator;
-		this.iterator = new ValueIterator(executor, collectionValue, referredIterator, null);		// FIXME
-	} */
 
 	@Override
 	public boolean advanceIterators() {
@@ -144,32 +102,24 @@ public class EvaluatorConstrainedIterationManager extends AbstractEvaluatorItera
 
 	public Object evaluate() {
 		IteratorExp iteratorExp = (IteratorExp)this.callExp;
-		Iteration referredIteration = iteratorExp.getReferredIteration();
-		ExpressionInOCL expressionInOCL = iteratorExp.getOwnedInlinedBody();		// 	specialized
+		ExpressionInOCL specializedExpressionInOCL = iteratorExp.getOwnedSpecializedBody();		// 	specialized
+		assert specializedExpressionInOCL != null;
 		//
-		OCLExpression source = iteratorExp.getOwnedSource();
-		CollectionValue sourceValue = (CollectionValue) this.iterableValue;			// XXX
-		//
-		List<Variable> outerIterators = iteratorExp.getOwnedIterators();
-		List<IteratorVariable> outerCoIterators = iteratorExp.getOwnedCoIterators();
-		//
-		OCLExpression iterationBody = iteratorExp.getOwnedBody();
+		CollectionValue sourceValue = (CollectionValue)this.iterableValue;			// XXX
 
-
-
-		PivotUtil.checkExpression(expressionInOCL);
-		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(expressionInOCL, iteratorExp);
-		nestedEvaluationEnvironment.add(Objects.requireNonNull(expressionInOCL.getOwnedContext()), sourceValue);
-		List<Variable> parameters = expressionInOCL.getOwnedParameters();
+		PivotUtil.checkExpression(specializedExpressionInOCL);
+		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(specializedExpressionInOCL, iteratorExp);
+		nestedEvaluationEnvironment.add(Objects.requireNonNull(specializedExpressionInOCL.getOwnedContext()), sourceValue);
+		List<Variable> parameters = specializedExpressionInOCL.getOwnedParameters();
 		List<OCLExpression> asArguments = iteratorExp instanceof IterateExp ? ((IterateExp)iteratorExp).getOwnedBodies() : Collections.singletonList(iteratorExp.getOwnedBody());
 		assert parameters.size() == asArguments.size();
 		for (int i = 0; i < parameters.size(); i++) {
 			nestedEvaluationEnvironment.add(Objects.requireNonNull(parameters.get(i)), asArguments.get(i));
 		}
 		try {
-			OCLExpression bodyExpression = expressionInOCL.getOwnedBody();
+			OCLExpression bodyExpression = specializedExpressionInOCL.getOwnedBody();
 			assert bodyExpression != null;
-			return executor.evaluate(bodyExpression);			// XXX eager specialize on call or lazy specialize on access ???
+			return executor.evaluate(bodyExpression);
 		}
 		finally {
 			executor.popEvaluationEnvironment();

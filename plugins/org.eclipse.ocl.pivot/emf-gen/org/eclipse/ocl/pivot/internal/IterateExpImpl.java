@@ -248,9 +248,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
-				return basicSetOwnedInlinedBody(null, msgs);
-			case 12:
 				return basicSetOwnedSource(null, msgs);
+			case 12:
+				return basicSetOwnedSpecializedBody(null, msgs);
 			case 13:
 				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
 			case 14:
@@ -299,9 +299,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 10:
 				return isIsSafe();
 			case 11:
-				return getOwnedInlinedBody();
-			case 12:
 				return getOwnedSource();
+			case 12:
+				return getOwnedSpecializedBody();
 			case 13:
 				return getOwnedCoIterators();
 			case 14:
@@ -365,10 +365,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setIsSafe((Boolean)newValue);
 				return;
 			case 11:
-				setOwnedInlinedBody((ExpressionInOCL)newValue);
+				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 12:
-				setOwnedSource((OCLExpression)newValue);
+				setOwnedSpecializedBody((ExpressionInOCL)newValue);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -436,10 +436,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setIsSafe(IS_SAFE_EDEFAULT);
 				return;
 			case 11:
-				setOwnedInlinedBody((ExpressionInOCL)null);
+				setOwnedSource((OCLExpression)null);
 				return;
 			case 12:
-				setOwnedSource((OCLExpression)null);
+				setOwnedSpecializedBody((ExpressionInOCL)null);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -496,9 +496,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 10:
 				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
 			case 11:
-				return ownedInlinedBody != null;
-			case 12:
 				return ownedSource != null;
+			case 12:
+				return ownedSpecializedBody != null;
 			case 13:
 				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
 			case 14:

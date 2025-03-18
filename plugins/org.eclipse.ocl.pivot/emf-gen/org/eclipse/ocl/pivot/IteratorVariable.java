@@ -20,12 +20,42 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @since 1.3
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.IteratorVariable#getSpecializedIterator <em>Specialized Iterator</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getIteratorVariable()
  * @generated
  */
 public interface IteratorVariable extends Variable
 {
+
+	/**
+	 * Returns the value of the '<em><b>Specialized Iterator</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Specialization of this iterator using the calling context types for use in conjunction with the parent CallExp's ownedSpecializedBody.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Specialized Iterator</em>' reference.
+	 * @see #setSpecializedIterator(IteratorVariable)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getIteratorVariable_SpecializedIterator()
+	 * @generated
+	 */
+	IteratorVariable getSpecializedIterator();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.IteratorVariable#getSpecializedIterator <em>Specialized Iterator</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Specialized Iterator</em>' reference.
+	 * @see #getSpecializedIterator()
+	 * @generated
+	 */
+	void setSpecializedIterator(IteratorVariable value);
 
 	/**
 	 * <!-- begin-user-doc -->
