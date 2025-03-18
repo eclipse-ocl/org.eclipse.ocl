@@ -666,20 +666,24 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	protected void setupUMLusage() {
 		UMLStandaloneSetup.initEAnnotationConverters();
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
-		registerEPackage(org.eclipse.uml2.uml.profile.standard.StandardPackage.eINSTANCE);
-		registerEPackage(org.eclipse.uml2.types.TypesPackage.eINSTANCE);
-		registerEPackage(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			registerEPackage(org.eclipse.uml2.uml.profile.standard.StandardPackage.eINSTANCE);
+			registerEPackage(org.eclipse.uml2.types.TypesPackage.eINSTANCE);
+			registerEPackage(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+		}
 	}
 
 	protected void teardownUMLusage() {
-		EPackageRegistryImpl.INSTANCE.remove(UMLResourcesUtil.UML2_TYPES_PACKAGE_4_0_NS_URI);
-		EPackageRegistryImpl.INSTANCE.remove(UMLResourcesUtil.UML2_UML_PACKAGE_2_0_NS_URI);
-		EPackageRegistryImpl.INSTANCE.remove(UML212UMLResource.UML_METAMODEL_NS_URI);
-		EPackageRegistryImpl.INSTANCE.remove(UML302UMLResource.UML_METAMODEL_NS_URI);
-		EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.UML_METAMODEL_NS_URI);
-		EPackageRegistryImpl.INSTANCE.remove(UML212UMLResource.STANDARD_PROFILE_NS_URI);
-		EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.STANDARD_L2_PROFILE_NS_URI);
-		EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.STANDARD_L3_PROFILE_NS_URI);
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			EPackageRegistryImpl.INSTANCE.remove(UMLResourcesUtil.UML2_TYPES_PACKAGE_4_0_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UMLResourcesUtil.UML2_UML_PACKAGE_2_0_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML212UMLResource.UML_METAMODEL_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML302UMLResource.UML_METAMODEL_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.UML_METAMODEL_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML212UMLResource.STANDARD_PROFILE_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.STANDARD_L2_PROFILE_NS_URI);
+			EPackageRegistryImpl.INSTANCE.remove(UML402UMLResource.STANDARD_L3_PROFILE_NS_URI);
+		}
 	}
 
 	protected @NonNull Resource validateUmlModel(@NonNull URI umlModelURI, @NonNull String qualifiedPackageClassName, @NonNull String pathMapName, @Nullable Map<URI, URI> extraUriMap) throws Exception, IllegalAccessException {

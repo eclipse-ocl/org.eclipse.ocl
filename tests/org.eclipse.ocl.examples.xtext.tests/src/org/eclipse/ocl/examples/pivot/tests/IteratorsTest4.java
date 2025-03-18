@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2ASMessages;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
-import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -406,7 +405,7 @@ public class IteratorsTest4 extends PivotTestSuite
 
 	@SuppressWarnings("unchecked")
 	@Test public void test_closure_recursions_401302() throws IOException {
-		registerEPackage(OCLinEcoreCSPackage.eINSTANCE);
+//		registerEPackage(OCLinEcoreCSPackage.eINSTANCE);
 		MyOCL ocl = createOCL();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();

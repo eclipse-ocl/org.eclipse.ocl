@@ -872,7 +872,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void test_constraintValidation_codeGenerated() throws Throwable {
-		registerEPackage(CompanyPackage.eINSTANCE);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
@@ -884,6 +883,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				unloadResourceSet(resourceSet);
 			}
 		});
+		EPackage.Registry.INSTANCE.remove(CompanyPackage.eINSTANCE.eNS_URI);
 	}
 
 	public void test_crossReferences_codeGenerated() throws Throwable {
@@ -1386,7 +1386,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void test_queryExecution_registered() throws Throwable {
-		registerEPackage(NoreflectioncompanyPackage.eINSTANCE);
+	//	registerEPackage(NoreflectioncompanyPackage.eINSTANCE);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
@@ -1398,6 +1398,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				unloadResourceSet(resourceSet);
 			}
 		});
+		EPackage.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eINSTANCE.eNS_URI);
 	}
 
 	public void test_queryExecution_codeGenerated() throws Throwable {
