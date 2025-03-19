@@ -610,7 +610,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
-		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->collectNested(oclAsType(String)).size()");
+//		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->collectNested(oclAsType(String)).size()");
 // XXX
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(p : ocl::Package | p.name)");

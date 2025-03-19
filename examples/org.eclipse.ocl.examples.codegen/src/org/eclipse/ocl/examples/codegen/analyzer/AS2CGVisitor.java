@@ -157,6 +157,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedIteration;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
@@ -346,6 +347,27 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		return cgOperationCallExp;
 	}
+
+/*	protected @NonNull CGValuedElement constrainedIterationCall(@NonNull IteratorExp element,
+			CGValuedElement cgSource, @NonNull Iteration finalIteration, @NonNull ConstrainedIteration constrainedIteration) {
+		@NonNull CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
+		cgOperationCallExp.setSource(cgSource);
+		//		cgOperationCallExp.setThisIsSelf(false);
+		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
+			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
+			cgOperationCallExp.getArguments().add(cgArgument);
+		}
+		setAst(cgOperationCallExp, element);
+		cgOperationCallExp.setReferredOperation(finalIteration);
+		cgOperationCallExp.setLibraryOperation(constrainedIteration);
+		if (codeGenerator.addConstrainedOperation(finalIteration)) {
+			//			CGNamedElement cgOperation = finalOperation.accept(this);
+			//			if (cgOperation != null) {
+			//				cgOperation.toString();
+			//			}
+		}
+		return cgOperationCallExp;
+	} */
 
 	protected @NonNull CGValuedElement constrainedOperationCall(@NonNull OperationCallExp element,
 			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
@@ -602,9 +624,52 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgIterator;
 	}
 
-	protected @NonNull CGIterationCallExp generateIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp element) {
-		Iteration asIteration = ClassUtil.nonNullState(element.getReferredIteration());
+	protected @NonNull CGValuedElement generateInlineIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp asIterationExp,
+		@NonNull Iteration asIteration, @NonNull ConstrainedIteration libraryIteration) {
+	//	ConstrainedIteration libraryOperation = (ConstrainedOperation)libraryIterationOrOperation;
+	//	Operation asOperation = PivotUtil.getReferredOperation(element);
+	//	boolean isRequired = asOperation.isIsRequired();
+		OCLExpression pSource = asIterationExp.getOwnedSource();
+		if (pSource != null) {
+			Type sourceType = PivotUtil.getType(pSource);
+			Iteration finalIteration = (Iteration)codeGenerator.isFinal(asIteration, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast -- redundant
+			CGClass currentClass2 = currentClass;
+			assert finalIteration != null;
+//			LanguageExpression bodyExpression = asIteration.getBodyExpression();
+			ExpressionInOCL bodyExpression = asIterationExp.getOwnedSpecializedBody();
+//			assert bodyExpression != null;
+			CGValuedElement cgOperationCallExp2 = inlineIterationCall(asIterationExp, bodyExpression);
+			//	if (cgOperationCallExp2 != null) {
+			//		return cgOperationCallExp2;
+			//	} else if (currentClass2 != null) {
+			//		return cachedOperationCall(element, currentClass2, cgSource, finalIteration, null);
+			//	} else {
+			//		return constrainedIterationCall(element, cgSource, finalIteration, libraryIteration);
+			//	}
+		//	if (currentClass2 != null) {
+		//		Iterable<@NonNull Operation> overrides = environmentFactory.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
+		//		return cachedIterationCall(element, currentClass2, cgSource, asIteration, overrides);
+		//	} else {
+		//		Iteration baseIteration = asIteration;	// FIXME
+		//		return constrainedIterationCall(element, cgSource, baseIteration, libraryIteration);
+		//	}
+//			throw new UnsupportedOperationException();
+		}
+
+		CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();		// XXX
+		cgIsInvalidExp.setSource(cgSource);
+		setAst(cgIsInvalidExp, asIterationExp);
+		cgIsInvalidExp.setInvalidating(false);
+		cgIsInvalidExp.setValidating(true);
+		return cgIsInvalidExp;
+	}
+
+	protected @NonNull CGValuedElement generateIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp element) {
+		Iteration asIteration = PivotUtil.getReferredIteration(element);
 		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
+		if (libraryIteration instanceof ConstrainedIteration) {
+			return generateInlineIteratorExp(cgSource, element, asIteration, (ConstrainedIteration)libraryIteration);
+		}
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 		boolean isRequired = element.isIsRequired();
 		if (iterationHelper != null) {
@@ -669,7 +734,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
-		Operation asOperation = ClassUtil.nonNullState(element.getReferredOperation());
+		Operation asOperation = PivotUtil.getReferredOperation(element);
 		boolean isRequired = asOperation.isIsRequired();
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
@@ -742,7 +807,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		else if (libraryOperation instanceof ConstrainedOperation) {
 			if (pSource != null) {
-				Type sourceType = ClassUtil.nonNullState(pSource.getType());
+				Type sourceType = PivotUtil.getType(pSource);
 				Operation finalOperation = codeGenerator.isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
 				CGClass currentClass2 = currentClass;
 				if (finalOperation != null) {
@@ -1152,6 +1217,53 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return variablesStack;
 	}
 
+	protected @Nullable CGValuedElement inlineIterationCall(@NonNull IteratorExp callExp, @NonNull ExpressionInOCL asExpressionInOCL) {
+	//	FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
+	//	Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();
+	//	getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, specification);
+	//	if (referencedFinalOperations.contains(callExp.getReferredIteration())) {
+	//		return null;	// Avoid an infinite inlining recursion.
+	//	}
+	//	Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, specification);
+	//	if (referencedNonFinalOperations != null) {
+	//		return null;	// Simple heavy heuristic
+	//	}
+	//	ExpressionInOCL asClone = createCopy(prototype);
+		OCLExpression asExpression = PivotUtil.getOwnedBody(asExpressionInOCL);
+/*		List<@NonNull OCLExpression> asArguments = ClassUtil.nullFree(Collections.singletonList(PivotUtil.getOwnedBody(callExp)));
+		int argumentsSize = asArguments.size();
+		if (argumentsSize > 0) {
+			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(PivotUtil.getReferredIteration(callExp));
+			List<@NonNull Variable> asParameterVariables = PivotUtilInternal.getOwnedParametersList(asExpressionInOCL);
+			List<@NonNull Variable> asVariables = new ArrayList<>(asParameterVariables);
+			asParameterVariables.clear();				// Defeat child-stealing detector
+			for (@NonNull Variable asVariable : asVariables) {
+				Parameter asParameter = asVariable.getRepresentedParameter();
+				if ((asParameter != null) && !(PivotUtil.getType(asParameter) instanceof LambdaType)) {
+					int index = asParameters.indexOf(asParameter);
+					if ((0 <= index) && (index < argumentsSize)) {
+						asExpression = createLetExp(asVariable, asArguments.get(index), asExpression);
+					}
+				}
+			}
+		}
+		Variable asVariable = asExpressionInOCL.getOwnedContext();
+		asExpressionInOCL.setOwnedContext(null);				// Defeat child-stealing detector
+		asExpression = createLetExp(asVariable, callExp.getOwnedSource(), asExpression); */
+//		ASResource asResource = (ASResource) asExpressionInOCL.eResource();
+//		try {
+//			boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
+//			asResource.getContents().add(asExpression);					// Ensure that asExpression is not a Resource-less orphan; needed for FlowAnalysis
+//			asResource.setUpdating(wasUpdating);
+			return doVisit(CGValuedElement.class, asExpression);
+//		}
+//		finally {
+//			boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
+//			asResource.getContents().remove(asExpression);
+//			asResource.setUpdating(wasUpdating);
+//		}
+	}
+
 	protected @Nullable CGValuedElement inlineOperationCall(@NonNull OperationCallExp callExp, @NonNull LanguageExpression specification) {
 		ExpressionInOCL prototype = null;
 		try {
@@ -1175,7 +1287,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return null;	// Simple heavy heuristic
 		}
 		ExpressionInOCL asClone = createCopy(prototype);
-		OCLExpression asExpression = ClassUtil.nonNullState(asClone.getOwnedBody());
+		OCLExpression asExpression = PivotUtil.getOwnedBody(asClone);
 		List<@NonNull OCLExpression> asArguments = ClassUtil.nullFree(callExp.getOwnedArguments());
 		int argumentsSize = asArguments.size();
 		if (argumentsSize > 0) {
@@ -1633,7 +1745,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		if (cgShadowExp != null) {
-			CGExecutorType cgExecutorType = context.createExecutorType(ClassUtil.nonNullState(element.getType()));
+			CGExecutorType cgExecutorType = context.createExecutorType(PivotUtil.getType(element));
 			cgShadowExp.setExecutorType(cgExecutorType);
 			cgShadowExp.getOwns().add(cgExecutorType);
 			setAst(cgShadowExp, element);
