@@ -62,13 +62,14 @@ public class StatisticsVisitor extends AbstractExtendingVisitor<@NonNull Integer
 
 	@Override
 	public @NonNull Integer visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		assert currentClass == null;
-		assert currentPackage != null;
-		this.currentClass = context.addClass(currentPackage, asClass);
-		for (@NonNull Constraint asConstraint : asClass.getOwnedInvariants()) {
-			asConstraint.accept(this);
+		if (currentPackage != null) {
+			assert currentClass == null;
+			this.currentClass = context.addClass(currentPackage, asClass);
+			for (@NonNull Constraint asConstraint : asClass.getOwnedInvariants()) {
+				asConstraint.accept(this);
+			}
+			this.currentClass = null;
 		}
-		this.currentClass = null;
 		return 0;
 	}
 
@@ -102,6 +103,9 @@ public class StatisticsVisitor extends AbstractExtendingVisitor<@NonNull Integer
 
 	@Override
 	public @NonNull Integer visitConstraint(org.eclipse.ocl.pivot.@NonNull Constraint asConstraint) {
+		if ("redefined_property_inherited".equals(asConstraint.getName())) {
+			getClass();
+		}
 		assert currentConstraint == null;
 		assert currentDepth == 0;
 		assert currentClass != null;
@@ -143,6 +147,7 @@ public class StatisticsVisitor extends AbstractExtendingVisitor<@NonNull Integer
 		@NonNull OCLExpression asBody = asIterateExp.getOwnedBody();
 		maxDepth += asBody.accept(this);
 		Iteration asIteration = asIterateExp.getReferredIteration();
+		context.addCallExp(asIterateExp, asIteration);
 		assert currentConstraint != null;
 		currentConstraint.addOperation(asIteration);
 		maxDepth += asIteration.accept(this);
@@ -158,6 +163,7 @@ public class StatisticsVisitor extends AbstractExtendingVisitor<@NonNull Integer
 		@NonNull OCLExpression asBody = asIteratorExp.getOwnedBody();
 		maxDepth += asBody.accept(this);
 		Iteration asIteration = asIteratorExp.getReferredIteration();
+		context.addCallExp(asIteratorExp, asIteration);
 		assert currentConstraint != null;
 		currentConstraint.addOperation(asIteration);
 		maxDepth += asIteration.accept(this);
@@ -211,6 +217,10 @@ public class StatisticsVisitor extends AbstractExtendingVisitor<@NonNull Integer
 
 	@Override
 	public @NonNull Integer visitOperationCallExp(@NonNull OperationCallExp asOperationCallExp) {
+		Operation asOperation = asOperationCallExp.getReferredOperation();
+		if ("allInstances".equals(asOperation.getName())) {
+			getClass();		// XXX
+		}
 		int maxDepth = asOperationCallExp.getOwnedSource().accept(this);
 		for (@NonNull OCLExpression asArgument : asOperationCallExp.getOwnedArguments()) {
 			int depth = asArgument.accept(this);
@@ -218,7 +228,7 @@ public class StatisticsVisitor extends AbstractExtendingVisitor<@NonNull Integer
 				maxDepth = depth;
 			}
 		}
-		Operation asOperation = asOperationCallExp.getReferredOperation();
+		context.addCallExp(asOperationCallExp, asOperation);
 		assert currentConstraint != null;
 		currentConstraint.addOperation(asOperation);
 		maxDepth += asOperation.accept(this);

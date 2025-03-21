@@ -12,6 +12,7 @@ package org.eclipse.ocl.doc.ocl2025.tests;
 
 import java.io.IOException;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.test.xtext.AbstractUMLLoadTests;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -29,7 +30,9 @@ public class IterationAnalysisTests extends AbstractUMLLoadTests
 		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("UML.xmi");
 		//XXX	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		Model asModel = doLoadUML(null, modelURI, false, true, null, null);		// FIXME BUG 419132 eliminate last argument; always true
-		Statistics statistics = new Statistics();
+		@NonNull String[] includedPackageNames = new @NonNull String[] {"Classification", "CommonStructure", "Packages", "SimpleClassifiers", "StructuredClassifiers", "Values"};
+		@NonNull String[] excludedPackageNames = new @NonNull String[] {"Actions", "Activities", "CommonBehavior", "Deployments", "InformationFlows", "Interactions", "StateMachines", "UML", "UseCases"};
+		Statistics statistics = new Statistics(includedPackageNames, excludedPackageNames);
 		StatisticsVisitor statisticsVisitor = new StatisticsVisitor(statistics);
 		asModel.accept(statisticsVisitor);
 		statistics.printOut();

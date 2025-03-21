@@ -17,10 +17,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.doc.ocl2025.tests.CallChainImpl.CallChainSingletonScope;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.IterableType;
+import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.SingletonScope;
+import org.eclipse.ocl.pivot.ids.IdManager.AbstractSingletonScopeFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.xtext.util.Arrays;
 
 /**
  * ResolveVisitor converts references to shared specializations
@@ -28,6 +40,45 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public class Statistics
 {
+	/*	public static class CallChain implements Comparable<@NonNull CallChain>
+	{
+		protected final @NonNull List<@NonNull Operation> operations;
+		protected final @NonNull List<@NonNull CallExp> callExps = new ArrayList<>();
+
+		public CallChain(@NonNull List<@NonNull Operation> operations) {
+			this.operations = operations;
+		}
+
+		@Override
+		public int compareTo(@NonNull CallChain o) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append(callExps.size());
+			for (@NonNull Operation asOperation : operations) {
+				s.append(" ");
+				s.append(asOperation.getName());
+			}
+			return s.toString();
+		}
+
+		public void addCallExp(@NonNull CallExp asCallExp) {
+			callExps.add(asCallExp);
+		}
+
+		public void printOut() {
+			System.out.println(toString());
+			for (@NonNull CallExp asCallExp : callExps) {
+				System.out.println(PivotUtil.getContainingExpressionInOCL(asCallExp));
+			}
+		}
+
+	} */
+
 	public static class ClassStatistics implements Comparable<@NonNull ClassStatistics>
 	{
 		protected final @NonNull Statistics statistics;
@@ -143,11 +194,63 @@ public class Statistics
 		}
 	}
 
+	/**
+	 * Map from the ParametersId hashCode to the parametersId with the same hash.
+	 */
+	private static final @NonNull CallChainSingletonScope callChains = (CallChainSingletonScope)AbstractSingletonScopeFactory.createSingletonScope(new CallChainSingletonScopeFactory());
+
+	public static class CallChainSingletonScopeFactory extends AbstractSingletonScopeFactory
+	{
+		@Override
+		protected @NonNull SingletonScope<?,?> createSingletonScope(@NonNull IdManager idManager) {
+			return new CallChainSingletonScope(idManager);
+		}
+	}
+
+
+	protected final @NonNull String[] includedPackageNames;
+	protected final @NonNull String[] excludedPackageNames;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull ClassStatistics> class2classStatistics = new HashMap<>();
 	protected final @NonNull Map<@NonNull Constraint, @NonNull ConstraintStatistics> constraint2constraintStatistics = new HashMap<>();
 	protected final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull PackageStatistics> package2packageStatistics = new HashMap<>();
+	//	protected final @NonNull Map<@NonNull CallExp, @NonNull CallChain> callExp2callChain = new HashMap<>();
+	protected final @NonNull Map<@NonNull Operation, @NonNull CallChain> operation2callChain = new HashMap<>();
+	protected final @NonNull Map<@NonNull List<@NonNull Operation>, @NonNull CallChain> operations2callChain = new HashMap<>();
 
-	public Statistics() {}
+	public Statistics(@NonNull String[] includedPackageNames, @NonNull String[] excludedPackageNames) {
+		this.includedPackageNames = includedPackageNames;
+		this.excludedPackageNames = excludedPackageNames;
+	}
+
+	public void addCallExp(@NonNull CallExp asCallExp, @NonNull Operation asOperation) {
+		//	CallChain callChain = operation2callChain.get(asOperation);
+		//	if (callChain == null) {
+		if (!(asOperation.getType() instanceof IterableType) && !(asOperation.eContainer() instanceof IterableType)) {
+			return;
+		}
+		List<@NonNull Operation> operations = new ArrayList<>();
+		operations.add(asOperation);
+		for (OCLExpression asExp = asCallExp.getOwnedSource(); asExp != null; asExp = ((CallExp)asExp).getOwnedSource()) {
+			if (asExp instanceof OperationCallExp) {
+				operations.add(0, PivotUtil.getReferredOperation((OperationCallExp)asExp));
+			}
+			else if (asExp instanceof LoopExp) {
+				operations.add(0, PivotUtil.getReferredIteration((LoopExp)asExp));
+			}
+			else {
+				break;
+			}
+		}
+		CallChain callChain = operations2callChain.get(operations);
+		if (callChain == null) {
+			callChain = callChains.getSingleton(operations);
+			operations2callChain.put(operations, callChain);
+		}
+		operation2callChain.put(asOperation, callChain);
+		callChain.addCallExp(asCallExp);
+
+		//	}
+	}
 
 	public @NonNull ClassStatistics addClass(@NonNull PackageStatistics packageStatistics, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		ClassStatistics classStatistics = getClassStatistics(asClass);
@@ -161,7 +264,14 @@ public class Statistics
 		return constraintStatistics;
 	}
 
-	public @NonNull PackageStatistics addPackage(@NonNull Package asPackage) {
+	public @Nullable PackageStatistics addPackage(@NonNull Package asPackage) {
+		String asName = PivotUtil.getName(asPackage);
+		if (Arrays.contains(excludedPackageNames, asName)) {
+			return null;
+		}
+		if (!Arrays.contains(includedPackageNames, asName)) {
+			throw new IllegalStateException("Unexpected package name '" + asName + "'");
+		}
 		PackageStatistics packageStatistics = getPackageStatistics(asPackage);
 		return packageStatistics;
 	}
@@ -199,6 +309,9 @@ public class Statistics
 		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : asPackages) {
 			PackageStatistics packageStatistics = getPackageStatistics(asPackage);
 			packageStatistics.printOut();
+		}
+		for (@NonNull CallChain callChain : operations2callChain.values()) {
+			callChain.printOut();
 		}
 	}
 }

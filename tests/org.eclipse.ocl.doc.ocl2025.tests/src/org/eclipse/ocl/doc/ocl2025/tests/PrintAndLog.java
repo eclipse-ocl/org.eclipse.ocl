@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 public class PrintAndLog
 {
 	public static int[] getTestSizes() {
-		int warmup = 100;
+		int warmup = 10; //100;
 		int tests = 37;
 		int[] testSizes = new int[warmup+tests];
 		for (int i = 0; i < warmup; i++) {
