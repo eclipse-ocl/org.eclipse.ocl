@@ -69,16 +69,34 @@ import com.google.common.collect.Iterables;
  */
 public final class IdManager
 {
+	/**
+	 * @since 1.23
+	 */
+	public abstract static class AbstractSingletonScopeFactory
+	{
+		public static @NonNull SingletonScope<?,?> createSingletonScope(@NonNull AbstractSingletonScopeFactory singletonScopeFactory) {
+			return singletonScopeFactory.createSingletonScope(PRIVATE_INSTANCE);
+		}
+
+		protected abstract @NonNull SingletonScope<?,?> createSingletonScope(@NonNull IdManager idManager);
+	}
+
 	/*
 	 * IdManager is final and the sole instance of IdManager is private and ElementId implementations need an IdManager
 	 * for construction so ElementId uniqueness is guaranteed.
 	 */
 	private static final @NonNull IdManager PRIVATE_INSTANCE = new IdManager();
 
+	private static final @NonNull Map<@NonNull Class<?>, @NonNull Class<? extends SingletonScope<?,?>>> id2scope = new HashMap<>();
+
+	static {
+		id2scope.put(BindingsId.class, BindingsIdSingletonScope.class);
+	}
 	/**
 	 * Map from the BindingsId hashCode to the elements with the same hash.
 	 */
 	private static final @NonNull BindingsIdSingletonScope bindingsIds = new BindingsIdSingletonScope();
+//	private static final @NonNull BindingsIdSingletonScope bindingsIds = id2scope.get(BindingsIdSingletonScope.class).getSingletonScope(PRIVATE_INSTANCE);
 
 	/**
 	 * Map from a Collection type name to the corresponding CollectionTypeId.
