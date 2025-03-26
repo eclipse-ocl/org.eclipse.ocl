@@ -15,16 +15,19 @@ import java.util.List;
 import java.util.Random;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 public class RandomObjectListGenerator //extends AbstractRandomListGenerator<@NonNull Integer>
 {
 	public static class Klass {
-		int name;
+		int id;
+		String name;
 		List<@NonNull Klass> parents;
 		@NonNull List<@NonNull Feature> features;
 
-		public Klass(int i, @NonNull List<@NonNull Feature> features) {
-			this.name = name;
+		public Klass(int id, @NonNull List<@NonNull Feature> features) {
+			this.id = id;
+			this.name = null;
 			this.features = features;
 		}
 
@@ -36,8 +39,16 @@ public class RandomObjectListGenerator //extends AbstractRandomListGenerator<@No
 			return features;
 		}
 
+		public @Nullable String getName() {
+			return name;
+		}
+
 		public @NonNull List<@NonNull Klass> getParents() {
 			return parents;
+		}
+
+		public void setName(@Nullable String name) {
+			this.name = name;
 		}
 	}
 

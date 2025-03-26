@@ -13,7 +13,6 @@ package org.eclipse.ocl.doc.ocl2025.tests;
 
 import java.util.Arrays;
 
-import org.eclipse.ocl.doc.ocl2025.tests.manual.OCL2025_Manual_Tests;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -30,7 +29,7 @@ public class AllOCL2025Tests extends TestCase
 
 	public static Test suite() {
 		TestSuite result = new TestSuite("All OCL 2025 Tests");
-		result.addTestSuite(OCL2025_Manual_Tests.class);		// NB this is very slow since we are -ea
+		//		result.addTestSuite(OCL2025_Set_Tests.class);		// NB this is very slow since we are -ea
 		//		result.addTestSuite(EXE2016_QVTr_AutomatedTests.class);		// NB this is very slow since we are -ea
 		return result;
 	}

@@ -19,42 +19,53 @@ import java.util.Comparator;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.doc.ocl2025.tests.AbstractOCL2025CGTests;
 import org.eclipse.ocl.doc.ocl2025.tests.PrintAndLog;
 import org.eclipse.ocl.doc.ocl2025.tests.RandomIntegerListGenerator;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Source code for OCL 2025, Collection optimization paper.
  */
-public class OCL2025_Manual_Tests extends AbstractOCL2025CGTests
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class OCL2025_Set_Tests
 {
-	@Override
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
+	//	private static @NonNull PseudoNamedElement [] elementsArray = null;
+	private static ComplexLatexSummary summary = null;
+	private static int[] testSizes = null;
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		//	System.out.println("setUpBeforeClass");
+		testSizes = PrintAndLog.getTestSizes(100, 5, 1, 100);
+		summary = new ComplexLatexSummary(OCL2025_Set_Tests.class.getSimpleName());
 	}
 
-	@Override
-	@After
-	public void tearDown() throws Exception {
-		super.tearDown();
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		//	System.out.println("tearDownAfterClass");
+		summary.dispose();
+		summary = null;
+		testSizes = null;
 	}
 
 	@Test
-	public void testManual_JavaSet_Intersection() throws Exception {
+	public void testSetIntersection_1_Java() throws Exception {
+		String testName = "Java Set";//getName();
+		PrintAndLog logger = new PrintAndLog(testName);
+		logger.printf("%s\n", testName);
+		//	summary.printf("%s", testName);
 		RandomIntegerListGenerator randomIntegerListGenerator = new RandomIntegerListGenerator();
-		PrintAndLog logger = new PrintAndLog(getName());
-		logger.printf("%s\n", getName());
 		try {
-			int[] tests = PrintAndLog.getTestSizes();
-			for (int testSize : tests) {
+			for (int i = 0; i < testSizes.length; i++) {
+				int testSize = testSizes[i];
 				int commonSize = testSize/4;
 				Collection<@NonNull Integer> randoms1 = randomIntegerListGenerator.createRandoms(testSize);
 				Collection<@NonNull Integer> randoms2 = randomIntegerListGenerator.createRandoms(testSize, randoms1, commonSize);
-				garbageCollect();
+				PrintAndLog.garbageCollect();
 				//		logger.printf("%9d: ", testSize);
 				long startTime = System.nanoTime();
 				Set<@NonNull Integer> firstSet1 = Sets.newHashSet(randoms1);
@@ -67,9 +78,22 @@ public class OCL2025_Manual_Tests extends AbstractOCL2025CGTests
 				assert firstSet2.size() == commonSize;
 				long endTime4 = System.nanoTime();
 				double scale = testSize;
-				logger.printf("%9.3f + %9.3f + %9.3f + %9.3f = %9.3fns * %9d = %9.6fs\n", (endTime1 - startTime) / scale, (endTime2 - endTime1) / scale, (endTime3 - endTime2) / scale, (endTime4 - endTime3) / scale, (endTime4 - startTime) / scale, testSize, (endTime4 - startTime) / 10e9);
+				logger.printf("%9d : %9.3f + %9.3f + %9.3f + %9.3f = %9.3fns/e : %9.6fs\n", testSize, (endTime1 - startTime) / scale, (endTime2 - endTime1) / scale, (endTime3 - endTime2) / scale, (endTime4 - endTime3) / scale, (endTime4 - startTime) / scale, (endTime4 - startTime) / 1.0e9);
 				//	randomIntegerListGenerator.checkResult(newList, testSize);
+				if (testSize != PrintAndLog.WARMUP_TEST_SIZE) {
+					summary.keyedprintf(testSize, "size", "%9d", testSize);
+					summary.keyedprintf(testSize, "ctor 1", "%9.3f", ((endTime1 - startTime) / scale));
+					summary.keyedprintf(testSize, "ctor 2", "%9.3f", ((endTime2 - endTime1) / scale));
+					summary.keyedprintf(testSize, "intersect", "%9.3f", ((endTime3 - endTime2) / scale));
+					summary.keyedprintf(testSize, "ctor 3", "%9.3f", ((endTime4 - endTime3) / scale));
+					summary.keyedprintf(testSize, "total ns/e", "%9.3f", ((endTime4 - startTime) / scale));
+					summary.keyedprintf(testSize, "total s", "%9.6f", ((endTime4 - startTime) / 1.0e9));
+				}
+				if ((testSize != PrintAndLog.WARMUP_TEST_SIZE) && (((i + 1) >= testSizes.length) || (testSize != testSizes[i+1]))) {
+					logger.printf("%s", summary.average(testSize));
+				}
 			}
+			summary.flush(testName);
 		}
 		finally {
 			logger.dispose();
@@ -77,32 +101,38 @@ public class OCL2025_Manual_Tests extends AbstractOCL2025CGTests
 	}
 
 	@Test
-	public void testManual_FastSet_Intersection() throws Exception {
+	public void testSetIntersection_2_Flat() throws Exception {
+		String testName = "Flat Set";//getName();
+		PrintAndLog logger = new PrintAndLog(testName);
+		logger.printf("%s\n", testName);
+		//	summary.printf("%s", testName);
 		RandomIntegerListGenerator randomIntegerListGenerator = new RandomIntegerListGenerator();
-		PrintAndLog logger = new PrintAndLog(getName());
-		logger.printf("%s\n", getName());
 		try {
-			int[] tests = /*new int[] { 10 };//*/ PrintAndLog.getTestSizes();
-			for (int testSize : tests) {
+			for (int i = 0; i < testSizes.length; i++) {
+				int testSize = testSizes[i];
 				int commonSize = testSize/4;
 				Collection<@NonNull Integer> randoms1 = randomIntegerListGenerator.createRandoms(testSize);
-				Collection randoms2 = randomIntegerListGenerator.createRandoms(testSize, randoms1, commonSize);
-				garbageCollect();
+				Collection<@NonNull Integer> randoms2 = randomIntegerListGenerator.createRandoms(testSize, randoms1, commonSize);
+				PrintAndLog.garbageCollect();
 				//	logger.printf("%9d, ", testSize);
 				//	long startTime = System.nanoTime();
-				FastSet intersection = FastSet.intersection(logger, randoms1, randoms2);
+				FlatSet<?> intersection = FlatSet.intersection(logger, randoms1, randoms2);
 				assert intersection.size() == commonSize;
 				//	long endTime = System.nanoTime();
 				//	logger.printf("%9.6f\n", (endTime - startTime) / 1.0e9);
 				//	randomIntegerListGenerator.checkResult(newList, testSize);
+				if ((testSize != PrintAndLog.WARMUP_TEST_SIZE) && (((i + 1) >= testSizes.length) || (testSize != testSizes[i+1]))) {
+					logger.printf("%s", summary.average(testSize));
+				}
 			}
+			summary.flush(testName);
 		}
 		finally {
 			logger.dispose();
 		}
 	}
 
-	public static class FastSet<E> implements Set<E>
+	public static class FlatSet<E> implements Set<E>
 	{
 		protected static final class HashComparator implements Comparator<Integer>
 		{
@@ -159,7 +189,7 @@ public class OCL2025_Manual_Tests extends AbstractOCL2025CGTests
 		 */
 		//	private int [] hashIndex2elementIndex = null;
 
-		public FastSet(Class<E> jClass, @NonNull Collection<@NonNull E> elements) {
+		public FlatSet(Class<E> jClass, @NonNull Collection<@NonNull E> elements) {
 			this.jClass = jClass;
 			this.elements = (E[]) Array.newInstance(jClass, elements.size());
 			int i = 0;
@@ -168,7 +198,7 @@ public class OCL2025_Manual_Tests extends AbstractOCL2025CGTests
 			}
 		}
 
-		public FastSet(Class<E> jClass, E[] elements, long[] sortedHashesAndIndexes, int size) {
+		public FlatSet(Class<E> jClass, E[] elements, long[] sortedHashesAndIndexes, int size) {
 			this.jClass = jClass;
 			this.elements = (E[]) Array.newInstance(jClass, size);
 			this.sortedHashesAndIndexes = sortedHashesAndIndexes;
@@ -250,11 +280,11 @@ public class OCL2025_Manual_Tests extends AbstractOCL2025CGTests
 			return i+1;
 		}
 
-		public static <E> FastSet<E> intersection(PrintAndLog logger, Collection<@NonNull Integer> randoms1, Collection randoms2) {
+		public static <E> FlatSet<E> intersection(PrintAndLog logger, Collection<@NonNull Integer> randoms1, Collection randoms2) {
 			long startTime = System.nanoTime();
-			FastSet<E> firstSet = new FastSet(Integer.class, randoms1);
+			FlatSet<E> firstSet = new FlatSet(Integer.class, randoms1);
 			long endTime1 = System.nanoTime();
-			FastSet<E> secondSet = new FastSet(Integer.class, randoms2);
+			FlatSet<E> secondSet = new FlatSet(Integer.class, randoms2);
 			long endTime2 = System.nanoTime();
 			firstSet.computeHashesAndIndexes();
 			long endTime3 = System.nanoTime();
@@ -295,14 +325,28 @@ public class OCL2025_Manual_Tests extends AbstractOCL2025CGTests
 				}
 			}
 			long endTime7 = System.nanoTime();
-			FastSet result = new FastSet(firstSet.jClass, valueIntersections, hashIntersections, k);
+			FlatSet result = new FlatSet(firstSet.jClass, valueIntersections, hashIntersections, k);
 			long endTime8 = System.nanoTime();
 			//	logger.printf("%9.6f %9.6f %9.6f %9.6f %9.6f %9.6f ", (endTime1 - startTime) / 1.0e9, (endTime2 - endTime1) / 1.0e9,
 			//		(endTime3 - endTime2) / 1.0e9, (endTime4 - endTime3) / 1.0e9, (endTime5 - endTime4) / 1.0e9, (endTime6 - endTime5) / 1.0e9);
 			double scale = iMax;
-			logger.printf("%9.3f + %9.3f + %9.3f + %9.3f + %9.3f + %9.3f + %9.3f + %9.3f = %9.3fns * %9d = %9.6fs\n", (endTime1 - startTime) / scale, (endTime2 - endTime1) / scale,
+			logger.printf("%9d : %9.3f + %9.3f + %9.3f + %9.3f + %9.3f + %9.3f + %9.3f + %9.3f = %9.3fns/e : %9.6fs\n", iMax, (endTime1 - startTime) / scale, (endTime2 - endTime1) / scale,
 				(endTime3 - endTime2) / scale, (endTime4 - endTime3) / scale, (endTime5 - endTime4) / scale, (endTime6 - endTime5) / scale, (endTime7 - endTime6) / scale, (endTime8 - endTime7) / scale,
-				(endTime8 - startTime) / scale, iMax, (endTime8 - startTime) / 10e9);
+				(endTime8 - startTime) / scale, (endTime8 - startTime) / 1.0e9);
+			int testSize = randoms1.size();
+			if (testSize != PrintAndLog.WARMUP_TEST_SIZE) {
+				summary.keyedprintf(testSize, "size", "%9d", testSize);
+				summary.keyedprintf(testSize, "ctor 1", "%9.3f", ((endTime1 - startTime) / scale));
+				summary.keyedprintf(testSize, "ctor 2", "%9.3f", ((endTime2 - endTime1) / scale));
+				summary.keyedprintf(testSize, "init 1", "%9.3f", ((endTime3 - endTime2) / scale));
+				summary.keyedprintf(testSize, "init 2", "%9.3f", ((endTime4 - endTime3) / scale));
+				summary.keyedprintf(testSize, "intersect", "%9.3f", ((endTime5 - endTime4) / scale));
+				summary.keyedprintf(testSize, "indexes", "%9.3f", ((endTime6 - endTime5) / scale));
+				summary.keyedprintf(testSize, "values", "%9.3f", ((endTime7 - endTime6) / scale));
+				summary.keyedprintf(testSize, "ctor 3", "%9.3f", ((endTime8 - endTime7) / scale));
+				summary.keyedprintf(testSize, "total ns/e", "%9.3f", ((endTime8 - startTime) / scale));
+				summary.keyedprintf(testSize, "total s", "%9.6f", ((endTime8 - startTime) / 1.0e9));
+			}
 			return result;
 		}
 		@Override

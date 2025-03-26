@@ -14,9 +14,7 @@ import com.google.common.collect.Sets;
 
 import junit.framework.TestCase;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -32,7 +30,7 @@ import org.junit.Test;
 /**
  * Source code for OCL 2025, Collection optimization paper.
  */
-public class OCL2025_Cascade_Tests extends TestCase
+public class OCL2025_SelectForAll_Tests extends TestCase
 {
 	@Override
 	@Before
@@ -47,49 +45,39 @@ public class OCL2025_Cascade_Tests extends TestCase
 	}
 
 	@Test
-	public void testManual_JavaSet_Cascade() throws Exception {
+	public void testManual_JavaSet_SelectForAll() throws Exception {
 		RandomObjectListGenerator randomObjectListGenerator = new RandomObjectListGenerator();
 		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
 		try {
+			@NonNull Feature @NonNull [] featuresArray = randomObjectListGenerator.createFeatures(1);
 			int[] tests = PrintAndLog.getTestSizes();
 			for (int testSize : tests) {
-				@NonNull Feature anotherFeature = new Feature(-1);
-				@NonNull Feature @NonNull [] featuresArray = randomObjectListGenerator.createFeatures(testSize);
 				@NonNull Klass @NonNull [] klassesArray = randomObjectListGenerator.createKlasses(testSize, featuresArray);
 				PrintAndLog.garbageCollect();
 				//		logger.printf("%9d: ", testSize);
 				long startTime = System.nanoTime();
-				Set<@NonNull Klass> allKlasses = Sets.newHashSet(klassesArray);
+				Set<Klass> allKlasses = Sets.newHashSet(klassesArray);
 				long endTime1 = System.nanoTime();
-				List<@NonNull Klass> allParents = new ArrayList<>();
-				for (@NonNull Klass klass : allKlasses) {
-					for (@NonNull Klass klass2 : klass.getParents()) {
-						allParents.add(klass2);
+				Set<Klass> halfClasses = new HashSet<>();
+				int i = 0;
+				for (Klass klass : allKlasses) {
+					if ((i++ & 1) != 0) {
+						halfClasses.add(klass);
 					}
 				}
 				long endTime2 = System.nanoTime();
-				Set<@NonNull Klass> allParentsSet = new HashSet<>();
-				for(@NonNull Klass klass : allParents) {
-					allParentsSet.add(klass);
-				}
-				long endTime3 = System.nanoTime();
-				List<@NonNull Feature> allFeatures = new ArrayList<>();
-				for (@NonNull Klass klass : allParentsSet) {
-					for (@NonNull Feature feature : klass.getFeatures()) {
-						allFeatures.add(feature);
+				Set<Klass> allParentsSet = new HashSet<>();
+				boolean allOk = true;
+				for(Klass klass : halfClasses) {
+					if (klass == null) {
+						allOk = false;
 					}
 				}
-				long endTime4 = System.nanoTime();
-				Set<@NonNull Feature> allFeaturesSet = new HashSet<>();
-				for(@NonNull Feature feature : allFeatures) {
-					allFeaturesSet.add(feature);
-				}
-				long endTime5 = System.nanoTime();
-				assert !allFeaturesSet.contains(anotherFeature);
-				long endTime6 = System.nanoTime();
+				assert allOk;
+				long endTime3 = System.nanoTime();
 				double scale = testSize;
-				logger.printf("%9.3f + %9.3f + %9.3f + %9.3f + %9.3f + %9.3f = %9.3fns * %9d = %9.6fs\n", (endTime1 - startTime) / scale, (endTime2 - endTime1) / scale, (endTime3 - endTime2) / scale, (endTime4 - endTime3) / scale, (endTime5 - endTime4) / scale, (endTime6 - endTime5) / scale, (endTime6 - startTime) / scale, testSize, (endTime6 - startTime) / 1.0e9);
+				logger.printf("%9.3f + %9.3f + %9.3f = %9.3fns * %9d = %9.6fs\n", (endTime1 - startTime) / scale, (endTime2 - endTime1) / scale, (endTime3 - endTime2) / scale, (endTime3 - startTime) / scale, testSize, (endTime3 - startTime) / 1.0e9);
 				//	randomIntegerListGenerator.checkResult(newList, testSize);
 			}
 		}
@@ -104,42 +92,33 @@ public class OCL2025_Cascade_Tests extends TestCase
 	static int hits = 0;
 
 	@Test
-	public void testManual_FastSet_Cascade() throws Exception {
+	public void testManual_FastSet_SelectForAll() throws Exception {
 		RandomObjectListGenerator randomObjectListGenerator = new RandomObjectListGenerator();
-		logger = new PrintAndLog(getName());
+		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
 		try {
+			@NonNull Feature @NonNull [] featuresArray = randomObjectListGenerator.createFeatures(1);
 			int[] tests = PrintAndLog.getTestSizes();
 			for (int testSize : tests) {
-				@NonNull Feature anotherFeature = new Feature(-1);
-				@NonNull Feature @NonNull [] featuresArray = randomObjectListGenerator.createFeatures(testSize);
-				@NonNull Klass @NonNull [] klassesArray = randomObjectListGenerator.createKlasses(testSize, featuresArray);
+				Klass @NonNull [] klassesArray = randomObjectListGenerator.createKlasses(testSize, featuresArray);
 				PrintAndLog.garbageCollect();
 				//		logger.printf("%9d: ", testSize);
-				misses = 0;
-				hits = 0;
-				startTime = System.nanoTime();
-				boolean gotIt = false;
-				List<@NonNull Klass> parentsSet = new ArrayList<>();
-				//	HashSet<@NonNull Klass> parentsSet = new HashSet<>();
-				//	BinaryInsertionList parentsSet = new BinaryInsertionList();
-				for (@NonNull Klass klass : klassesArray) {
-					for (@NonNull Klass parent : klass.getParents()) {
-						//	System.identityHashCode(parent);
-						//	if (parentsSet.add(parent)) {
-						for (@NonNull Feature feature : parent.getFeatures()) {
-							if (feature == anotherFeature) {
-								gotIt = true;
-								break;
-							}
+				long startTime = System.nanoTime();
+				long endTime1 = System.nanoTime();
+				boolean allOk = true;
+				int i = 0;
+				for (Klass klass : klassesArray) {
+					if ((i++ & 1) != 0) {
+						if (klass == null) {
+							allOk = false;
 						}
-						//	}
 					}
 				}
-				assert !gotIt;
-				long endTime = System.nanoTime();
+				assert allOk;
+				long endTime3 = System.nanoTime();
 				double scale = testSize;
-				logger.printf("%9.6fs : %9d @ %9.3f hits = %9d misses = %9d\n", (endTime - startTime) / 1.0e9, testSize, (endTime - startTime) / scale, hits, misses);
+				logger.printf("%9.3f + %9.3f = %9.3fns * %9d = %9.6fs\n", (endTime1 - startTime) / scale, (endTime3 - endTime1) / scale, (endTime3 - startTime) / scale, testSize, (endTime3 - startTime) / 1.0e9);
+				//	randomIntegerListGenerator.checkResult(newList, testSize);
 			}
 		}
 		finally {
