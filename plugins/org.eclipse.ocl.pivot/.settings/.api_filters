@@ -231,6 +231,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2EcoreTypeRefVisitor.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2EcoreTypeRefVisitor">
+        <filter id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2EcoreTypeRefVisitor"/>
+                <message_argument value="isRequired"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ecore/es2as/AbstractExternal2AS.java" type="org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS">
         <filter id="336695337">
             <message_arguments>
