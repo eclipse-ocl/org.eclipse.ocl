@@ -52,25 +52,22 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 {
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
-	/**
-	 * @since 1.3
-	 */
-	protected final boolean isRequired;
 
-	/* @deprecated provide isRequired argument */
-	@Deprecated
+	private boolean isRequired = false;
+	private @Nullable Element asScope = null;
+
 	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context) {
-		this(context, true);
+		super(context);
+		this.metamodelManager = context.getMetamodelManager();
+		this.standardLibrary = context.getStandardLibrary();
 	}
 
 	/**
 	 * @since 1.3
 	 */
+	/* @deprecated isRequired argument moved to safeVisit */
 	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context, boolean isRequired) {
-		super(context);
-		this.metamodelManager = context.getMetamodelManager();
-		this.standardLibrary = context.getStandardLibrary();
-		this.isRequired = isRequired;
+		this(context);
 	}
 
 	private <T extends EObject> @Nullable T getESObject(@NonNull Class<T> requiredClass, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
@@ -79,7 +76,8 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			if (type instanceof PivotObjectImpl) {
 				EObject esObject = ((PivotObjectImpl)type).getESObject();
 				if ((esObject != null) && requiredClass.isAssignableFrom(esObject.getClass())) {
-					return (T)esObject;
+					@SuppressWarnings("unchecked") T castEsObject = (T)esObject;
+					return castEsObject;
 				}
 			}
 		}
@@ -115,6 +113,23 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		return (v == null) ? null : v.accept(this);
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	public EObject safeVisit(@Nullable Visitable v, boolean isRequired, @Nullable Element asScope) {
+		boolean savedIsRequired = isRequired;
+		Element savedAsScope = asScope;
+		try {
+			this.isRequired = isRequired;
+			this.asScope = asScope;
+			return safeVisit(v);
+		}
+		finally {
+			this.isRequired = savedIsRequired;
+			this.asScope = savedAsScope;
+		}
+	}
+
 	public <T extends EObject> void safeVisitAll(List<T> eObjects, List<? extends Element> pivotObjects) {
 		for (Element pivotObject : pivotObjects) {
 			@SuppressWarnings("unchecked")
@@ -123,6 +138,23 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 				eObjects.add(eObject);
 			}
 			// else error
+		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public <T extends EObject> void safeVisitAll(List<T> eObjects, List<? extends Element> pivotObjects, boolean isRequired, @Nullable Element asScope) {
+		boolean savedIsRequired = isRequired;
+		Element savedAsScope = asScope;
+		try {
+			this.isRequired = isRequired;
+			this.asScope = asScope;
+			safeVisitAll(eObjects, pivotObjects);
+		}
+		finally {
+			this.isRequired = savedIsRequired;
+			this.asScope = savedAsScope;
 		}
 	}
 
@@ -165,7 +197,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			}
 			return null;	// FIXME may be null if not from Ecore
 		}
-		List<TemplateBinding> templateBindings = ((TemplateableElement)pivotType).getOwnedBindings();
+		List<TemplateBinding> templateBindings = pivotType.getOwnedBindings();
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 		EObject rawType = safeVisit(PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)pivotType));
 		eGenericType.setEClassifier((EClassifier) rawType);
