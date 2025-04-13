@@ -41,8 +41,8 @@ public class OclAnyOclTypesOperation extends AbstractUnaryOperation
 	/**
 	 * @since 1.18
 	 */
-	@Override
+	@Override @Deprecated /* @deprecated redundant override */
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		return environmentFactory.getStandardLibrary().getSetType();
+		return returnType;
 	}
 }
