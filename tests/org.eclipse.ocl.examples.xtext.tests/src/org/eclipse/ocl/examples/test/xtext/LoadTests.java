@@ -306,6 +306,21 @@ public class LoadTests extends AbstractLoadTests
 		ocl.dispose();
 	}
 
+	public void testLoad_OCL_2_5_oclstdlib() throws IOException, InterruptedException {
+		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.omg.org/ocl");
+		OCL ocl = createOCLWithProjectMap();
+		//		StandardLibraryContribution.REGISTRY.put(MetamodelManager.DEFAULT_OCL_STDLIB_URI, StandardLibraryContribution.NULL);
+		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("platform:/resource/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib"));
+		//		checkMonikers(asResource);
+		String ecoreName = "oclstdlib" + ".saved.ecore";
+		URI ecoreURI = getTestFileURI(ecoreName);
+		Map<String,Object> options = new HashMap<String,Object>();
+		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
+		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
+		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
+		ocl.dispose();
+	}
+
 	public void testLoad_oclstdlib_oclstdlib() throws IOException, InterruptedException {
 		EAnnotationConverter.addDefaultEAnnotationConverter("http://www.omg.org/ocl");
 		OCL ocl = createOCLWithProjectMap();
