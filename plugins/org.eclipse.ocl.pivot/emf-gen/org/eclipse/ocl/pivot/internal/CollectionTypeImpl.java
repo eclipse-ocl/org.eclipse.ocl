@@ -614,32 +614,6 @@ implements CollectionType {
 		}
 	}
 
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull TypeId computeNormalizedId() {
-		TemplateableElement unspecializedElement2 = getUnspecializedElement();
-		if (unspecializedElement2 == null) {
-			if (TypeId.COLLECTION_NAME.equals(name)) {
-				return TypeId.COLLECTION;
-			}
-			else if (TypeId.UNIQUE_COLLECTION_NAME.equals(name)) {
-				return TypeId.UNIQUE_COLLECTION;
-			}
-			else {
-				String name2 = name;
-				assert name2 != null;
-				return IdManager.getCollectionTypeId(name2);		// e.g. UniqueCollection
-			}
-		}
-		else {
-			CollectionTypeId collectionTypeId = ((CollectionType)unspecializedElement2).getTypeId();
-			TypeId elementTypeId = getElementType().getNormalizedTypeId();
-			return collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
-		}
-	}
-
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {

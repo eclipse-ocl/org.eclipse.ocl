@@ -571,7 +571,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_1 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (or_1 == ValueUtil.FALSE_VALUE) {
@@ -605,7 +605,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								safe_startsWith_source = startsWith_0;
 							}
 							if (safe_startsWith_source == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (safe_startsWith_source == ValueUtil.FALSE_VALUE) {
@@ -677,7 +677,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_2 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (or_2 == ValueUtil.FALSE_VALUE) {
@@ -747,7 +747,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (and == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda Set.T() : Boolean[1]) : Set(T)\'");
 							}
 							//
 							if (and == ValueUtil.FALSE_VALUE) {

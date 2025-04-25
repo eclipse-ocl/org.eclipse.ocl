@@ -224,7 +224,6 @@ implements Constraint {
 	@Override
 	public void setOwnedSpecification(LanguageExpression newOwnedSpecification)
 	{
-		String s = String.valueOf(newOwnedSpecification);				// XXX
 		if (newOwnedSpecification != ownedSpecification)
 		{
 			NotificationChain msgs = null;

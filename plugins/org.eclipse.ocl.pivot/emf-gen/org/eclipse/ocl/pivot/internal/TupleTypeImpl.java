@@ -102,28 +102,6 @@ public class TupleTypeImpl
 		return tupleTypeId2;
 	}
 
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull TypeId computeNormalizedId() {
-	//	TupleTypeId tupleTypeId2 = tupleTypeId;
-	//	if (tupleTypeId2 == null) {
-			String name2 = NameUtil.getSafeName(this);
-			List<Property> parts = getOwnedProperties();
-			int iSize = parts.size();
-			List<@NonNull TuplePartId> partIds = new ArrayList<@NonNull TuplePartId>(iSize);
-			for (int i = 0; i < iSize; i++) {
-				@SuppressWarnings("null")@NonNull TypedElement part = parts.get(i);
-				String partName = NameUtil.getSafeName(part);
-				TypeId partTypeId = part.getNormalizedTypeId();
-				partIds.add(IdManager.getTuplePartId(i, partName, partTypeId));
-			}
-			TypeId tupleTypeId2 = IdManager.getTupleTypeId(name2, partIds);
-	//	}
-		return tupleTypeId2;
-	}
-
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTupleType(this);

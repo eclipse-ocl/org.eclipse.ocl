@@ -296,7 +296,7 @@ public abstract class LUSSIDs
 	static int debugDepth = 0;
 	/**
 	 * Return the 32 bit LUSSID for element derived from the hashCode of its hierarchical path
-	 * and if necessessary from the local context.
+	 * and if necessary from the local context.
 	 */
 	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
 		assert asResource == element.eResource();

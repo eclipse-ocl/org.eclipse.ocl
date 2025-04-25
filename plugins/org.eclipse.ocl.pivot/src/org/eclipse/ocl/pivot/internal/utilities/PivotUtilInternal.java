@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -49,6 +50,7 @@ import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -95,6 +97,8 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
+import com.google.common.collect.Iterables;
+
 public class PivotUtilInternal extends PivotUtil
 {
 	/**
@@ -120,6 +124,17 @@ public class PivotUtilInternal extends PivotUtil
 		String fileExtension = uri.fileExtension();
 		assert !fileExtension.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
 		return uri.trimFileExtension().appendFileExtension(fileExtension + PivotConstants.AS_EXTENSION_SUFFIX);
+	}
+
+	/**
+	 * @since 1.24
+	 */
+	public static boolean assertIsNormalizedType(/*@NonNull*/ Type asType) {
+		if (!((asType instanceof NormalizedTemplateParameter) || !(asType instanceof TemplateParameter) || !(asType.getESObject() instanceof ETypeParameter) || !((ETypeParameter)asType.getESObject()).getEBounds().isEmpty())) {
+			System.out.println("assertIsNormalizedType " + NameUtil.debugSimpleName(asType) + " " + asType);
+		}
+		assert (asType instanceof NormalizedTemplateParameter) || !(asType instanceof TemplateParameter) || !(asType.getESObject() instanceof ETypeParameter) || !((ETypeParameter)asType.getESObject()).getEBounds().isEmpty();
+		return true;
 	}
 
 	/**
@@ -621,6 +636,17 @@ public class PivotUtilInternal extends PivotUtil
 	 */
 	public static @NonNull  List<@NonNull TemplateParameterSubstitution> getOwnedSubstitutionsList(@NonNull TemplateBinding asTemplateBinding) {
 		return ClassUtil.nullFree(asTemplateBinding.getOwnedSubstitutions());
+	}
+
+	/**
+	 * @since 1.24
+	 */
+	public static @NonNull List<@NonNull TemplateParameterSubstitution> getOwnedSubstitutionsList(@NonNull TemplateableElement asTemplateableElement) {
+		List<@NonNull TemplateParameterSubstitution> asTemplateParameterSubstitutions = new ArrayList<>();
+		for (@NonNull TemplateBinding asTemplateBinding : getOwnedBindings(asTemplateableElement)) {
+			Iterables.addAll(asTemplateParameterSubstitutions, getOwnedSubstitutions(asTemplateBinding));
+		}
+		return asTemplateParameterSubstitutions;
 	}
 
 	public static @NonNull String getSpecificationRole(@NonNull LanguageExpression asSpecification) {

@@ -5610,6 +5610,27 @@ extends EPackage
 	EReference getNavigationCallExp_Qualifiers();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.NormalizedTemplateParameter <em>Normalized Template Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Normalized Template Parameter</em>'.
+	 * @see org.eclipse.ocl.pivot.NormalizedTemplateParameter
+	 * @generated
+	 */
+	EClass getNormalizedTemplateParameter();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.NormalizedTemplateParameter#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.eclipse.ocl.pivot.NormalizedTemplateParameter#getIndex()
+	 * @see #getNormalizedTemplateParameter()
+	 * @generated
+	 */
+	EAttribute getNormalizedTemplateParameter_Index();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.FeatureCallExp <em>Feature Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10348,6 +10369,24 @@ extends EPackage
 		 * @generated
 		 */
 		EReference NAVIGATION_CALL_EXP__QUALIFIERS = eINSTANCE.getNavigationCallExp_Qualifiers();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl <em>Normalized Template Parameter</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNormalizedTemplateParameter()
+		 * @generated
+		 */
+		EClass NORMALIZED_TEMPLATE_PARAMETER = eINSTANCE.getNormalizedTemplateParameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NORMALIZED_TEMPLATE_PARAMETER__INDEX = eINSTANCE.getNormalizedTemplateParameter_Index();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.FeatureCallExpImpl <em>Feature Call Exp</em>}' class.

@@ -373,6 +373,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull NormalizedTemplateParameter object) {
+		return null;
+	}
+
+	@Override
 	public R visitNullLiteralExp(org.eclipse.ocl.pivot.@NonNull NullLiteralExp object) {
 		return null;
 	}

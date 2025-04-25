@@ -81,17 +81,6 @@ public class SetTypeImpl
 	}
 
 	@Override
-	public @NonNull TypeId computeNormalizedId() {
-		if (getUnspecializedElement() == null) {
-			return TypeId.SET;
-		}
-		else {
-			TypeId elementTypeId = getElementType().getNormalizedTypeId();
-			return TypeId.SET.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
-		}
-	}
-
-	@Override
 	public boolean isUnique() {
 		return true;
 	}

@@ -693,6 +693,15 @@ extends EFactory {
 	@NonNull Model createModel();
 
 	/**
+	 * Returns a new object of class '<em>Normalized Template Parameter</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Normalized Template Parameter</em>'.
+	 * @generated
+	 */
+	@NonNull NormalizedTemplateParameter createNormalizedTemplateParameter();
+
+	/**
 	 * Returns a new object of class '<em>Null Literal Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

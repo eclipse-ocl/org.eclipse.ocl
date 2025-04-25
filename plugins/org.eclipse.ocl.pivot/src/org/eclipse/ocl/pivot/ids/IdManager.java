@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl.TuplePartIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -248,9 +250,9 @@ public final class IdManager
 	 * Return the classId for eClass.
 	 */
 	public static @NonNull ClassId getClassId(@NonNull EClass eClass) {
-		EPackage ePackage = ClassUtil.nonNullEMF(eClass.getEPackage());
+		EPackage ePackage = Objects.requireNonNull(eClass.getEPackage());
 		PackageId packageId = IdManager.getPackageId(ePackage);
-		String className = ClassUtil.nonNullEMF(NameUtil.getOriginalName(eClass));
+		String className = Objects.requireNonNull(NameUtil.getOriginalName(eClass));
 		ClassId classId = packageId.getClassId(className, eClass.getETypeParameters().size());
 		return classId;
 	}
@@ -381,7 +383,7 @@ public final class IdManager
 			parametersId = getParametersId(parameterTypes);
 		}
 		else {																				// If unspecialized
-			List<@NonNull TemplateParameter> contextTemplateParameters = PivotUtil.getTemplateParameters(owningClass);
+			TemplateParameterization contextTemplateParameterization = TemplateParameterization.basicGetTemplateParameterization(owningClass);
 			TemplateSignature operationTemplateSignature = anOperation.getOwnedSignature();
 			if (operationTemplateSignature == null) {										// Never happens
 				parametersId = ParametersId.EMPTY;
@@ -393,7 +395,7 @@ public final class IdManager
 				}
 				else {		// Templated operations cannot be overloaded so use the normalized template parameter ids only
 					@NonNull TypeId typeIds[] = new @NonNull TypeId[operationTemplateParameterSize];
-					int contextTemplateParameterSize = contextTemplateParameters != null ? contextTemplateParameters.size() : 0;
+					int contextTemplateParameterSize = contextTemplateParameterization != null ? contextTemplateParameterization.size() : 0;
 					for (int i = 0; i < operationTemplateParameterSize; i++) {
 						typeIds[i] = IdManager.getTemplateParameterId(contextTemplateParameterSize + i);
 					}
@@ -494,9 +496,7 @@ public final class IdManager
 		int iSize = parameterTypes.length;
 		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[iSize];
 		for (int i = 0; i < iSize; i++) {
-			Type parameterType = parameterTypes[i];
-			@SuppressWarnings("null")boolean isNonNull = parameterType != null;
-			typeIds[i] = isNonNull ? parameterType.getNormalizedTypeId() : TypeId.OCL_INVALID;		// Never happens NPE guard
+			typeIds[i] = parameterTypes[i].getTypeId();
 		}
 		return getParametersId(typeIds);
 	}
@@ -541,9 +541,8 @@ public final class IdManager
 	 * @since 1.18
 	 */
 	public static @NonNull TemplateParameterId getTemplateParameterIndexId(@NonNull TemplateParameter templateParameter) {
-		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(templateParameter);
-		assert templateParameters != null;
-		int index = templateParameters.indexOf(templateParameter);
+		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(templateParameter);
+		int index = templateParameterization.indexOf(templateParameter);
 		return getTemplateParameterId(index);
 	}
 

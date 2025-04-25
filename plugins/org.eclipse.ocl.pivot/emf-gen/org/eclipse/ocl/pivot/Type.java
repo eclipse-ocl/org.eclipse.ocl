@@ -80,6 +80,7 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 *
 	 * @since 1.18
 	 */
+	@Deprecated /* @deprecated no longer different to getTypeId() */
 	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
 
 	/**

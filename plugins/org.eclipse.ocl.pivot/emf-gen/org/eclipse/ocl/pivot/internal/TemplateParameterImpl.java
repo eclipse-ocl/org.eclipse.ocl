@@ -36,11 +36,10 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -410,10 +409,8 @@ public class TemplateParameterImpl
 						generalizedTypeId = null;
 					}
 					if (generalizedTypeId != null) {
-						List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(this);
-						assert templateParameters != null;
-						int index = templateParameters.indexOf(this);
-						assert index >= 0;
+						TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(this);
+						int index = templateParameterization.indexOf(this);
 						templateParameterId = templateParameterId2 = generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this));
 					}
 					assert templateParameterId2 != null;
@@ -421,14 +418,6 @@ public class TemplateParameterImpl
 			}
 		}
 		return templateParameterId2;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull TypeId getNormalizedTypeId() {
-		return IdManager.getTemplateParameterIndexId(this);
 	}
 
 	@Override

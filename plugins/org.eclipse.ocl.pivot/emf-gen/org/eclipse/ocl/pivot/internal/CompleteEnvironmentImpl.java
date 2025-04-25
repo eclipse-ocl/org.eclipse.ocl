@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -53,8 +54,10 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -410,7 +413,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	/**
 	 * The known lambda types.
 	 */
-	private LambdaTypeManager lambdaManager = null;			// Lazily created
+	private @Nullable LambdaTypeManager lambdaManager = null;			// Lazily created
 
 	/**
 	 * The known tuple types.
@@ -427,7 +430,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			assert (pivotElement instanceof LambdaType)
 			|| (pivotElement instanceof TupleType);
 		}
-		pivotElement.setOwningPackage(ownedCompleteModel.getOrphanage());
+		pivotElement.setOwningPackage(environmentFactory.getOrphanage());
 	}
 
 	@Override
@@ -444,7 +447,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			}
 		}
 		//
-		//	Accrue solution to the econd template parameter
+		//	Accrue solution to the second template parameter
 		//
 		TemplateParameter secondTemplateParameter = secondType.isTemplateParameter();
 		if (secondTemplateParameter != null) {
@@ -452,7 +455,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			//			if (secondSubstitution != null) {
 			//				secondType = secondSubstitution;
 			//			}
-			secondType = secondSubstitutions.put(secondTemplateParameter, firstType);
+			/*secondType =*/ secondSubstitutions.put(secondTemplateParameter, firstType);
 			return true;
 		}
 		if (firstType == secondType) {
@@ -890,7 +893,17 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			return type;
 		}
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
-		if (asTemplateParameter != null) {
+		if ((asTemplateParameter instanceof NormalizedTemplateParameter) && (substitutions instanceof BasicTemplateSpecialization)) {
+			int index = ((NormalizedTemplateParameter)asTemplateParameter).getIndex();
+			BasicTemplateSpecialization templateSpecialization = (BasicTemplateSpecialization)substitutions;
+			Type boundType = templateSpecialization.basicGet(index);
+			if (boundType == null) {
+				TemplateParameterization templateParameterization = templateSpecialization.getTemplateParameterization();
+				boundType = templateParameterization.get(index);
+			}
+			return boundType;
+		}
+		else if (asTemplateParameter != null) {
 			Type boundType = substitutions.get(asTemplateParameter);
 			org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
 			return asClass != null ? asClass : type;
