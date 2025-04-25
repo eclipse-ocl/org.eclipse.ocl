@@ -425,12 +425,14 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					isRequired = true;
 					if (converter.isEntryClass(eClassifier)) {
 						Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
-						Property keyProperty = Objects.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
-						Property valueProperty = Objects.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
-						if (keyProperty.getType() == null) {
+						Property keyProperty1 = NameUtil.getNameable(ownedProperties, "key");
+						Property valueProperty1 = NameUtil.getNameable(ownedProperties, "value");
+						Property keyProperty2 = Objects.requireNonNull(keyProperty1);
+						Property valueProperty2 = Objects.requireNonNull(valueProperty1);
+						if (keyProperty2.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}
-						if (valueProperty.getType() == null) {
+						if (valueProperty2.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}
 						pivotType = metamodelManager.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
