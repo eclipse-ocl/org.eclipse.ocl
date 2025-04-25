@@ -293,7 +293,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		String className = javaClass.getSimpleName();
 		assert className != null;
 		RootPackageId javaPackageId = IdManager.getRootPackageId(packageName);
-		Orphanage orphanage = metamodelManager.getCompleteModel().getOrphanage();
+		Orphanage orphanage = environmentFactory.getOrphanage();
 		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), packageName);
 		if (asPackage == null) {
 			asPackage = PivotUtil.createPackage(packageName, packageName, packageName, javaPackageId);
