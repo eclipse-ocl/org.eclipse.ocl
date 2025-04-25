@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -30,8 +31,12 @@ import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.JavaClassCS;
+import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2AS;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSFactory;
@@ -96,16 +101,6 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 		return name2precedence.get(precedenceName);
 	}
 
-	@Deprecated  /* @deprecated FIXME Bug 548500 workaround */
-	@Override
-	public void installRootContents(@NonNull CSResource csResource) {
-		super.installRootContents(csResource);
-		Map<@NonNull String, @NonNull MetaclassNameCS> metaTypeNames2 = metaTypeNames;
-		if (metaTypeNames2 != null) {
-	//		csResource.getContents().addAll(metaTypeNames2.values());
-		}
-	}
-
 	@Deprecated /* @deprecated - pass String argument */
 	public @Nullable MetaclassNameCS lookUpMetaTypeName(@NonNull EObject csElement, /*@NonNull*/ EStructuralFeature eFeature) {
 		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csElement, eFeature);
@@ -118,11 +113,37 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 		return null;
 	}
 
+	public @Nullable String resolveJavaClassCS(@NonNull JavaImplementationCS csJavaImplementation) {
+		JavaClassCS csJavaClass;
+		String text = null;
+		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csJavaImplementation, BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION);
+		if ((featureNodes != null) && (featureNodes.size() > 0)) {			// If Xtext has parsed a reference
+			INode node = featureNodes.get(0);
+			text = NodeModelUtils.getTokenText(node).replace("'", "");
+		}
+		else {
+			csJavaClass = (JavaClassCS)csJavaImplementation.eGet(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, false);
+			if (csJavaClass != null) {
+				if (csJavaClass.eIsProxy()) {								// If CS XMI load has loaded an ocl:#xyzzy reference
+					text = ((InternalEObject)csJavaClass).eProxyURI().fragment();
+				}
+				else {														// If redundantly reloading
+					text = csJavaClass.getName();
+				}
+			}
+		}
+		if (text != null) {
+			csJavaClass = getJavaClassCS(text);
+			csJavaImplementation.setImplementation(csJavaClass);
+		}
+		return text;
+	}
+
 	public void setPrecedences(@NonNull Iterable</*@NonNull*/ Precedence> asPrecedences) {
 		name2precedence.clear();
 		for (Precedence asPrecedence : asPrecedences) {
 			assert asPrecedence != null;
-			Precedence old = name2precedence.put(asPrecedence.getName(), asPrecedence);
+			Precedence old = name2precedence.put(PivotUtil.getName(asPrecedence), asPrecedence);
 			assert old == null;
 		}
 	}
