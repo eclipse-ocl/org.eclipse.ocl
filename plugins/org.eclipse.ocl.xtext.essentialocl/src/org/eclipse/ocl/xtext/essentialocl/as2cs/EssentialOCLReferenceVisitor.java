@@ -18,11 +18,14 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -136,6 +139,14 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 			}
 		}
 		return csRef;
+	}
+
+	@Override
+	public ElementCS visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {
+		assert scope != null;
+		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(scope);
+		TemplateParameter asTemplateParameter = templateParameterization.get(object.getIndex());
+		return visitTemplateParameter(asTemplateParameter);
 	}
 
 	@Override

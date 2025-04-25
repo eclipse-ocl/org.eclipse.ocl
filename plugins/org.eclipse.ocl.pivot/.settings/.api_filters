@@ -148,6 +148,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TemplateParameterImpl.java" type="org.eclipse.ocl.pivot.internal.TemplateParameterImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.TemplateParameterImpl"/>
+                <message_argument value="getNormalizedTypeId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel">
         <filter id="338886760">
             <message_arguments>
