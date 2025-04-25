@@ -1894,8 +1894,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull Element visitTemplateParameterId(@NonNull TemplateParameterId id) {
-		TemplateableId templateableId = Objects.requireNonNull(id.getTemplateableId());
-		Element type = Objects.requireNonNull(templateableId.accept(this));
+		@NonNull TemplateableId templateableId = Objects.requireNonNull(id.getTemplateableId());
+		Element resolvedElement = templateableId.accept(this);
+		Element type = Objects.requireNonNull(resolvedElement);
 		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(type);
 		return templateParameters.get(id.getIndex());
 	}

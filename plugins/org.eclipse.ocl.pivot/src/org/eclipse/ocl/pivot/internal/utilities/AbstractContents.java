@@ -447,7 +447,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull Model getModel(@NonNull String modelURI) {
-		StandardLibraryContribution standardLibraryContribution = Objects.requireNonNull(StandardLibraryContribution.REGISTRY.get(modelURI));
+		@NonNull StandardLibraryContribution standardLibraryContribution = Objects.requireNonNull(StandardLibraryContribution.REGISTRY.get(modelURI));
 		Resource resource = standardLibraryContribution.getResource();
 		return Objects.requireNonNull((Model) resource.getContents().get(0));
 	}
@@ -457,7 +457,8 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getPackage(@NonNull Model asModel, @NonNull String name) {
-		return Objects.requireNonNull(NameUtil.getNameable(asModel.getOwnedPackages(), name));
+		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(asModel.getOwnedPackages(), name);
+		return Objects.requireNonNull(asPackage);
 	}
 
 	/**
@@ -468,7 +469,8 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull Property getProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
-		return Objects.requireNonNull(NameUtil.getNameable(asClass.getOwnedProperties(), name));
+		Property asProperty = NameUtil.getNameable(asClass.getOwnedProperties(), name);
+		return Objects.requireNonNull(asProperty);
 	}
 
 	/**

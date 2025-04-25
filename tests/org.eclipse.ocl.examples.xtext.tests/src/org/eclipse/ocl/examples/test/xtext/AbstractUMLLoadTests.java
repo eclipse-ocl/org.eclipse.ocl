@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.util.PivotValidator;
@@ -193,8 +194,9 @@ public class AbstractUMLLoadTests extends AbstractLoadTests
 			TestCase.fail("No such resource + '" + inputURI + "'");
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			StandaloneProjectMap.IProjectDescriptor projectDescriptor = Objects.requireNonNull(getProjectMap().getProjectDescriptor("org.eclipse.uml2.uml"));
-			projectDescriptor.initializeURIMap(URIConverter.URI_MAP);		// *.ecore2xml must be global
+			IProjectDescriptor projectDescriptor1 = getProjectMap().getProjectDescriptor("org.eclipse.uml2.uml");
+			StandaloneProjectMap.IProjectDescriptor projectDescriptor2 = Objects.requireNonNull(projectDescriptor1);
+			projectDescriptor2.initializeURIMap(URIConverter.URI_MAP);		// *.ecore2xml must be global
 		}
 		EnvironmentFactoryInternal environmentFactory = internalOCL.getEnvironmentFactory();
 		//		EnvironmentFactoryResourceSetAdapter.getAdapter(resourceSet, environmentFactory);
