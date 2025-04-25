@@ -22,9 +22,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
-import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
-import org.eclipse.ocl.xtext.basecs.JavaClassCS;
-import org.eclipse.ocl.xtext.basecs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
@@ -44,32 +41,6 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 	public OCLstdlibCSPreOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 		this.converter = (OCLstdlibCS2AS)context.getConverter();
-	}
-
-	protected @Nullable String resolveJavaClassCS(@NonNull JavaImplementationCS csJavaImplementation) {
-		JavaClassCS csJavaClass;
-		String text = null;
-		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csJavaImplementation, BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION);
-		if ((featureNodes != null) && (featureNodes.size() > 0)) {			// If Xtext has parsed a reference
-			INode node = featureNodes.get(0);
-			text = NodeModelUtils.getTokenText(node).replace("'", "");
-		}
-		else {
-			csJavaClass = (JavaClassCS)csJavaImplementation.eGet(BaseCSPackage.Literals.JAVA_IMPLEMENTATION_CS__IMPLEMENTATION, false);
-			if (csJavaClass != null) {
-				if (csJavaClass.eIsProxy()) {								// If CS XMI load has loaded an ocl:#xyzzy reference
-					text = ((InternalEObject)csJavaClass).eProxyURI().fragment();
-				}
-				else {														// If redundantly reloading
-					text = csJavaClass.getName();
-				}
-			}
-		}
-		if (text != null) {
-			csJavaClass = converter.getJavaClassCS(text);
-			csJavaImplementation.setImplementation(csJavaClass);
-		}
-		return text;
 	}
 
 	protected @Nullable Precedence resolvePrecedence(@NonNull LibOperationCS csOperation) {
@@ -99,7 +70,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 	public Continuation<?> visitLibClassCS(@NonNull LibClassCS csClass) {
 		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csClass);
 		if (pivotElement != null) {
-			/*pivotElement.setInstanceClassName(*/resolveJavaClassCS(csClass)/*)*/;
+			/*pivotElement.setInstanceClassName(*/converter.resolveJavaClassCS(csClass)/*)*/;
 		}
 		return super.visitLibClassCS(csClass);
 	}
@@ -108,7 +79,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 	public Continuation<?> visitLibCoercionCS(@NonNull LibCoercionCS csCoercion) {
 		Operation pivotCoercion = PivotUtil.getPivot(Operation.class, csCoercion);
 		if (pivotCoercion != null) {
-			pivotCoercion.setImplementationClass(resolveJavaClassCS(csCoercion));
+			pivotCoercion.setImplementationClass(converter.resolveJavaClassCS(csCoercion));
 		}
 		return super.visitLibCoercionCS(csCoercion);
 	}
@@ -117,7 +88,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 	public Continuation<?> visitLibIterationCS(@NonNull LibIterationCS csIteration) {
 		Iteration pivotIteration = PivotUtil.getPivot(Iteration.class, csIteration);
 		if (pivotIteration != null) {
-			pivotIteration.setImplementationClass(resolveJavaClassCS(csIteration));
+			pivotIteration.setImplementationClass(converter.resolveJavaClassCS(csIteration));
 		}
 		return super.visitLibIterationCS(csIteration);
 	}
@@ -128,7 +99,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 		if (pivotElement != null) {
 			pivotElement.setPrecedence(resolvePrecedence(csOperation));
 			pivotElement.setIsStatic(csOperation.isIsStatic());
-			pivotElement.setImplementationClass(resolveJavaClassCS(csOperation));
+			pivotElement.setImplementationClass(converter.resolveJavaClassCS(csOperation));
 		}
 		return super.visitLibOperationCS(csOperation);
 	}
@@ -138,7 +109,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 		Property pivotElement = PivotUtil.getPivot(Property.class, csProperty);
 		if (pivotElement != null) {
 			pivotElement.setIsStatic(csProperty.isIsStatic());
-			pivotElement.setImplementationClass(resolveJavaClassCS(csProperty));
+			pivotElement.setImplementationClass(converter.resolveJavaClassCS(csProperty));
 		}
 		return super.visitLibPropertyCS(csProperty);
 	}
