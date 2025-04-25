@@ -49,7 +49,8 @@ public class EssentialOCLAS2CS extends BaseAS2CS
 		@Override
 		public @NonNull EClass @NonNull [] getEClasses() {
 			return new EClass @NonNull [] {
-				PivotPackage.Literals.MAP_TYPE
+				PivotPackage.Literals.MAP_TYPE,
+				PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER
 			};
 		}
 	}

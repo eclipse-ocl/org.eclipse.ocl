@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.build.xtend;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
@@ -34,7 +35,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -102,8 +102,8 @@ public class NameQueries
 	public @NonNull String getEcoreLiteral(@NonNull Constraint constraint) {
 		org.eclipse.ocl.pivot.Class type = (org.eclipse.ocl.pivot.Class)PivotUtil.getContainingType(constraint);
 		assert type != null;
-		String nsURI = ClassUtil.nonNullModel(type.getOwningPackage().getURI());
-		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		String nsURI = Objects.requireNonNull(type.getOwningPackage().getURI());
+		GenPackage genPackage = Objects.requireNonNull(metamodelManager).getGenPackage(nsURI);
 		if (genPackage != null) {
 			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
 			assert genClass != null;
@@ -132,8 +132,8 @@ public class NameQueries
 
 	public @NonNull String getEcoreLiteral(@NonNull EnumerationLiteral enumerationLiteral) {
 		Enumeration enumeration = enumerationLiteral.getOwningEnumeration();
-		String nsURI = ClassUtil.nonNullModel(enumeration.getOwningPackage().getURI());
-		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		String nsURI = Objects.requireNonNull(enumeration.getOwningPackage().getURI());
+		GenPackage genPackage = Objects.requireNonNull(metamodelManager).getGenPackage(nsURI);
 		if (genPackage != null) {
 			return /*genPackage.getInterfacePackageName() +*/ genPackage.getPackageInterfaceName() + ".Literals." + CodeGenUtil.upperName(enumeration.getName())
 			+ ".getEEnumLiteral(\"" + enumerationLiteral.getName() + "\")";
@@ -143,8 +143,8 @@ public class NameQueries
 
 	public @NonNull String getEcoreLiteral(@NonNull Operation operation) {
 		org.eclipse.ocl.pivot.Class type = PivotUtil.getOwningClass(operation);
-		String nsURI = ClassUtil.nonNullModel(type.getOwningPackage().getURI());
-		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		String nsURI = Objects.requireNonNull(type.getOwningPackage().getURI());
+		GenPackage genPackage = Objects.requireNonNull(metamodelManager).getGenPackage(nsURI);
 		if (genPackage != null) {
 			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
 			assert genClass != null;
@@ -175,8 +175,8 @@ public class NameQueries
 		if (!property.isIsImplicit()) {
 			org.eclipse.ocl.pivot.Class type = property.getOwningClass();
 			if (type != null) {
-				String nsURI = ClassUtil.nonNullModel(type.getOwningPackage().getURI());
-				GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+				String nsURI = Objects.requireNonNull(type.getOwningPackage().getURI());
+				GenPackage genPackage = Objects.requireNonNull(metamodelManager).getGenPackage(nsURI);
 				if (genPackage != null) {
 					GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
 					assert genClass != null;
@@ -197,8 +197,8 @@ public class NameQueries
 	}
 
 	public @NonNull String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Class type) {
-		String nsURI = ClassUtil.nonNullModel(type.getOwningPackage().getURI());
-		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		String nsURI = Objects.requireNonNull(type.getOwningPackage().getURI());
+		GenPackage genPackage = Objects.requireNonNull(metamodelManager).getGenPackage(nsURI);
 		if (genPackage != null) {
 			return /*genPackage.getInterfacePackageName() +*/ genPackage.getPackageInterfaceName() + ".Literals." + CodeGenUtil.upperName(type.getName());
 		}
@@ -206,8 +206,8 @@ public class NameQueries
 	}
 
 	public @NonNull String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package pkge) {
-		String nsURI = ClassUtil.nonNullModel(pkge.getURI());
-		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		String nsURI = Objects.requireNonNull(pkge.getURI());
+		GenPackage genPackage = Objects.requireNonNull(metamodelManager).getGenPackage(nsURI);
 		if (genPackage != null) {
 			return /*genPackage.getInterfacePackageName() +*/ genPackage.getPackageInterfaceName() + ".eINSTANCE";
 		}
@@ -215,8 +215,8 @@ public class NameQueries
 	}
 
 	public @Nullable String getEcoreQualifiedPackageInterfaceName(org.eclipse.ocl.pivot.@NonNull Package pkge) {
-		String nsURI = ClassUtil.nonNullModel(pkge.getURI());
-		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		String nsURI = Objects.requireNonNull(pkge.getURI());
+		GenPackage genPackage = Objects.requireNonNull(metamodelManager).getGenPackage(nsURI);
 		if (genPackage == null) {
 			return null;
 		}

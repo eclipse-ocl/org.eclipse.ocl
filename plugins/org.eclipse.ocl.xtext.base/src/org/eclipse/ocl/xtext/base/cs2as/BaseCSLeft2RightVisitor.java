@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
@@ -70,14 +71,14 @@ public class BaseCSLeft2RightVisitor extends AbstractExtendingBaseCSVisitor<Elem
 			return helper;
 		}
 
-		public @Nullable TemplateParameter getTemplateParameter(@NonNull TemplateParameter normalizedTemplateParameter) {
+		public @Nullable TemplateParameter getTemplateParameter(@NonNull NormalizedTemplateParameter normalizedTemplateParameter) {
 			Namespace namespace2 = namespace;
 			assert namespace2 != null;
 			TemplateParameterization templateParameterization2 = templateParameterization;
 			if (templateParameterization2 == null) {
 				templateParameterization = templateParameterization2 = TemplateParameterization.getTemplateParameterization(namespace2);
 			}
-			return templateParameterization2.get(normalizedTemplateParameter.getTemplateParameterId().getIndex());
+			return templateParameterization2.get(normalizedTemplateParameter.getIndex());
 		}
 
 		public void popSelf(@Nullable NamedElement savedSelf) {
@@ -90,7 +91,7 @@ public class BaseCSLeft2RightVisitor extends AbstractExtendingBaseCSVisitor<Elem
 			return savedSelf;
 		}
 
-		public @NonNull Type resolveTemplateParameter(@NonNull TemplateParameter normalizedTemplateParameter) {
+		public @NonNull Type resolveTemplateParameter(@NonNull NormalizedTemplateParameter normalizedTemplateParameter) {
 			TemplateParameter templateParameter = getTemplateParameter(normalizedTemplateParameter);
 			assert templateParameter != null;
 			Type type = PivotUtil.basicGetLowerBound(templateParameter);

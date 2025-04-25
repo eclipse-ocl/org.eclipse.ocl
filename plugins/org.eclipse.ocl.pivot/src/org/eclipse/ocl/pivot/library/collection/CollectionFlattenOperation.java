@@ -14,9 +14,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -39,10 +42,14 @@ public class CollectionFlattenOperation extends AbstractSimpleUnaryOperation
 	 */
 	@Override
 	public void resolveUnmodeledTemplateParameterSubstitutions(@NonNull TemplateParameterSubstitutionVisitor templateParameterSubstitutions, @NonNull CallExp callExp) {
-		Type elementType = callExp.getOwnedSource().getType();
+		Type elementType = PivotUtil.getType(PivotUtil.getOwnedSource(callExp));
 		while (elementType instanceof CollectionType) {
-			elementType = ((CollectionType)elementType).getElementType();
+			elementType = PivotUtil.getElementType((CollectionType)elementType);
 		}
-		templateParameterSubstitutions.put(1, elementType);
+		Operation flattenOperation = PivotUtil.getReferredOperation(callExp);
+		assert flattenOperation.getImplementation() == INSTANCE;
+		TemplateParameter templateParameter = flattenOperation.getOwnedSignature().getOwnedParameters().get(0);
+		assert templateParameterSubstitutions.getTemplateParameterization().get(1) == templateParameter;
+		templateParameterSubstitutions.put(templateParameter, elementType);
 	}
 }

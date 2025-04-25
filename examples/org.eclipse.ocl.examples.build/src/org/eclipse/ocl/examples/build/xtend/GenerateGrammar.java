@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -86,7 +87,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	}
 
 	protected @NonNull String emitEClassifierLiteral(@NonNull EClassifier eClassifier) {
-	//	EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
+	//	EPackage ePackage = Objects.requireNonNull(eClassifier.getEPackage());
 	//	GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
 	//	if (genPackage == null) {
 	//		return "<<" + ePackage.getNsURI() + ">>";
@@ -103,8 +104,8 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	}
 
 	protected @NonNull String emitEEnumLiteral(@NonNull EEnumLiteral enumLiteral) {
-		EClassifier eClassifier = ClassUtil.nonNullState(enumLiteral.getEEnum());
-	//	EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
+		EClassifier eClassifier = Objects.requireNonNull(enumLiteral.getEEnum());
+	//	EPackage ePackage = Objects.requireNonNull(eClassifier.getEPackage());
 	//	GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
 	//	if (genPackage == null) {
 	//		return "<<" + ePackage.getNsURI() + ">>";
@@ -289,7 +290,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			ResourceSet resourceSet = getResourceSet();
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xtextbin", new BinaryGrammarResourceFactoryImpl());
 			Resource grammarResource = resourceSet.getResource(fileURI, true);
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(grammarResource.getErrors()), "Grammar load failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(Objects.requireNonNull(grammarResource.getErrors()), "Grammar load failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;

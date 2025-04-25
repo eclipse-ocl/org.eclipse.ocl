@@ -69,6 +69,7 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
@@ -308,10 +309,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgElement) {
 		super.visitCGBuiltInIterationCallExp(cgElement);
-		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'"));
+		Iteration referredIteration = cgElement.getReferredIteration();
+		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredIteration + "'"));
 		CGValuedElement cgBody = cgElement.getBody();
 		if (cgBody.isRequired()) {
-			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + cgElement.getReferredIteration() + "'"));
+			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + referredIteration + "'"));
 		}
 		else {
 			rewriteAsBoxed(cgBody);

@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -43,6 +44,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions.Global;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
@@ -73,7 +75,7 @@ public class PrettyPrinter
 	private static class Fragment
 	{
 		private final int depth;
-		private final @Nullable String prefix;		// null for manditory continuation  of previous fragment
+		private final @Nullable String prefix;		// null for mandatory continuation of previous fragment
 		private final @NonNull String text;
 		private final @Nullable String suffix;
 		private @Nullable Fragment parent = null;
@@ -612,7 +614,7 @@ public class PrettyPrinter
 						append(prefix);
 						Namespace savedScope = pushScope((Namespace) typeRef);
 						try {
-							appendElement(templateParameterSubstitution.getActual());
+							appendTypedElement(templateParameterSubstitution, templateParameterSubstitution.getActual());
 						}
 						finally {
 							popScope(savedScope);
@@ -650,7 +652,7 @@ public class PrettyPrinter
 					//					appendName((NamedElement) templateParameter.getParameteredElement(), restrictedNames);
 					Namespace savedScope = pushScope((Namespace) templateableElement);
 					try {
-						appendElement(templateParameter);
+						appendTypedElement(templateableElement, templateParameter);
 					}
 					finally {
 						popScope(savedScope);
@@ -675,9 +677,26 @@ public class PrettyPrinter
 		}
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	public void appendTypedElement(@NonNull Element object, Type type) {
+		if (type instanceof NormalizedTemplateParameter) {
+			TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
+			if (!templateParameterization.isEmpty()) {
+				appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
+			}
+			else {
+				append(type.getName());
+			}
+		}
+		else {
+			appendElement(type);
+		}
+	}
+
 	public void appendTypedMultiplicity(@NonNull TypedElement object) {
-		Type type = object.getType();
-		appendElement(type);
+		appendTypedElement(object, object.getType());
 		appendTypeMultiplicity(object);
 	}
 

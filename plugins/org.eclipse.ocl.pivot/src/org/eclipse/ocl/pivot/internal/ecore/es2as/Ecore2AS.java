@@ -33,8 +33,11 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -52,14 +55,17 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
@@ -122,6 +128,48 @@ public class Ecore2AS extends AbstractExternal2AS
 			adapter = createExternal2AS(resource, environmentFactory);
 		}
 		return adapter;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @Nullable List<@NonNull ETypeParameter> getAllETypeParameters(@Nullable List<@NonNull ETypeParameter> allETypeParameters, @Nullable EObject eObject) {
+	//	EObject eContainer = eObject.eContainer();
+		if (eObject instanceof EPackage) {
+			// EPackage has no self / ancestral template parameters
+		}
+		else if (eObject instanceof EClassifier) {
+			EClassifier eClassifier = (EClassifier)eObject;
+			allETypeParameters = getAllETypeParameters(allETypeParameters, eClassifier.eContainer());
+			for (ETypeParameter eTypeParameter : eClassifier.getETypeParameters()) {
+				if (allETypeParameters == null) {
+					allETypeParameters = new ArrayList<>();
+				}
+				assert eTypeParameter != null;
+				allETypeParameters.add(eTypeParameter);
+			}
+		}
+		else if (eObject instanceof EOperation) {
+			EOperation eOperation = (EOperation)eObject;
+			allETypeParameters = getAllETypeParameters(allETypeParameters, eOperation.eContainer());
+			for (ETypeParameter eTypeParameter : eOperation.getETypeParameters()) {
+				if (allETypeParameters == null) {
+					allETypeParameters = new ArrayList<>();
+				}
+				assert eTypeParameter != null;
+				allETypeParameters.add(eTypeParameter);
+			}
+		}
+		else if ((eObject instanceof EParameter) || (eObject instanceof EStructuralFeature) || (eObject instanceof ETypeParameter)) {
+			allETypeParameters = getAllETypeParameters(allETypeParameters, eObject.eContainer());
+		}
+		else if (eObject instanceof EGenericType) {
+			allETypeParameters = getAllETypeParameters(allETypeParameters, eObject.eContainer());
+		}
+		else {
+			assert false;
+		}
+		return allETypeParameters;
 	}
 
 	/**
@@ -494,6 +542,19 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	public @Nullable Resource getEcoreResource() {
 		return ecoreResource;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public @Nullable Type getNormalizedType(@Nullable Type asType) {
+		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
+			EObject eObject = asType.getESObject();
+			if ((eObject instanceof ETypeParameter) && ((ETypeParameter)eObject).getEBounds().isEmpty()) {
+				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), (TemplateParameter)asType);
+			}
+		}
+		return asType;
 	}
 
 	@Override
@@ -946,7 +1007,8 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @since 1.7
 	 */
 	protected Type resolveGenericType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
-		List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
+	//	List<@NonNull ETypeParameter> allETypeParameters = getAllETypeParameters(null, eGenericType);
+		List<@NonNull EGenericType> eTypeArguments = ClassUtil.nullFree(eGenericType.getETypeArguments());
 		assert !eGenericType.getETypeArguments().isEmpty();
 		EClassifier eClassifier = eGenericType.getEClassifier();
 		List<ETypeParameter> eTypeParameters = eClassifier.getETypeParameters();
@@ -956,12 +1018,14 @@ public class Ecore2AS extends AbstractExternal2AS
 			return null;
 		}
 		List<@NonNull Type> templateArguments = new ArrayList<>();
-		for (EGenericType eTypeArgument : eTypeArguments) {
-			if (eTypeArgument != null) {
-				Type typeArgument = resolveType(resolvedSpecializations, eTypeArgument);
-				if (typeArgument != null) {
-					templateArguments.add(typeArgument);
-				}
+		for (@NonNull EGenericType eTypeArgument : eTypeArguments) {
+			if (eTypeArgument.getETypeParameter() != null) {
+				getClass();		// XXX
+			}
+			Type typeArgument = resolveType(resolvedSpecializations, eTypeArgument);
+			if (typeArgument != null) {
+				typeArgument = getNormalizedType(typeArgument);
+				templateArguments.add(typeArgument);
 			}
 		}
 		org.eclipse.ocl.pivot.Class unspecializedPivotClass = unspecializedPivotType.isClass();
@@ -1095,6 +1159,10 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected Type resolveType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
 		Type pivotType = getCreated(Type.class, eGenericType);
 		if (pivotType != null) {
+			ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
+			if ((eTypeParameter != null) && eTypeParameter.getEBounds().isEmpty()) {
+				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), (TemplateParameter)pivotType);
+			}
 			return pivotType;
 		}
 		EClassifier eClassifier = eGenericType.getEClassifier();
@@ -1111,6 +1179,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			pivotType = resolvedSpecializations.get(ecoreMoniker);
 			if (pivotType == null) {
 				pivotType = resolveGenericType(resolvedSpecializations, eGenericType);
+				pivotType = getNormalizedType(pivotType);
 				resolvedSpecializations.put(ecoreMoniker, pivotType);
 			}
 		}

@@ -258,7 +258,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eKeyFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eKeyFeature.setName("key");
-		eKeyFeature.setEType((EClassifier)typeRefVisitor.safeVisit(keyType, pivotType.isKeysAreNullFree(), pivotType));
+		eKeyFeature.setEType((EClassifier)typeRefVisitor.safeVisit(keyType, pivotType.isKeysAreNullFree()));
 		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eKeyFeature);
@@ -270,7 +270,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eValueFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eValueFeature.setName("value");
-		eValueFeature.setEType((EClassifier)typeRefVisitor.safeVisit(valueType, pivotType.isValuesAreNullFree(), null));
+		eValueFeature.setEType((EClassifier)typeRefVisitor.safeVisit(valueType, pivotType.isValuesAreNullFree()));
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
@@ -281,11 +281,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return eClass;
 	}
 
-	@Deprecated /* inlined */
 	public <T extends EClassifier> void safeVisitAll(Class<?> javaClass, List<EGenericType> eGenericTypes, List<T> eTypes, List<? extends Type> asTypes) {
 		if (asTypes.size() > 0) {
 			List<EObject> eClasses = new ArrayList<EObject>(asTypes.size());
-			typeRefVisitor.safeVisitAll(eClasses, asTypes, false, null);		// XXX
+			typeRefVisitor.safeVisitAll(eClasses, asTypes, false);
 			eTypes.clear();
 			eGenericTypes.clear();
 			for (EObject superEClass : eClasses) {
@@ -304,25 +303,34 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private void resolveSuperClasses(@NonNull EClass eClass, org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
-		List<org.eclipse.ocl.pivot.Class> superClasses = pivotClass.getSuperClasses();
-		EList<EGenericType> eGenericTypes = eClass.getEGenericSuperTypes();
-		EList<EClass> eTypes = eClass.getESuperTypes();
-		eTypes.clear();
-		eGenericTypes.clear();
-		for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {
-			// Skip OCL's pseudo-supertypes.
-			if ((pivotObject != oclAnyType) && (pivotObject != oclElementType) && (pivotObject != oclTypeType)) {
-				EObject superEClass = typeRefVisitor.safeVisit(pivotObject, false, pivotClass);
-				if (superEClass != null) {
-					if (superEClass instanceof EGenericType) {
-						eGenericTypes.add((EGenericType)superEClass);
-					}
-					else if (superEClass instanceof EClass){
-						eTypes.add((EClass)superEClass);
-					}
-				}
-				// else error
+		Element savedAsScope = typeRefVisitor.pushScope(pivotClass);
+		try {
+			List<org.eclipse.ocl.pivot.Class> superClasses = pivotClass.getSuperClasses();
+			EList<EGenericType> eGenericTypes = eClass.getEGenericSuperTypes();
+			EList<EClass> eTypes = eClass.getESuperTypes();
+			eTypes.clear();
+			eGenericTypes.clear();
+			if ("AnyType".equals(pivotClass.getName())) {
+				getClass();		// XXX
 			}
+			for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {
+				// Skip OCL's pseudo-supertypes.
+				if ((pivotObject != oclAnyType) && (pivotObject != oclElementType) && (pivotObject != oclTypeType)) {
+					EObject superEClass = typeRefVisitor.safeVisit(pivotObject, false);
+					if (superEClass != null) {
+						if (superEClass instanceof EGenericType) {
+							eGenericTypes.add((EGenericType)superEClass);
+						}
+						else if (superEClass instanceof EClass){
+							eTypes.add((EClass)superEClass);
+						}
+					}
+					// else error
+				}
+			}
+		}
+		finally {
+			typeRefVisitor.popScope(savedAsScope);
 		}
 	}
 
@@ -360,7 +368,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			}
 			return;
 		} */
-		EObject eObject = typeRefVisitor.safeVisit(pivotType, isRequired, pivotType);
+		EObject eObject = typeRefVisitor.safeVisit(pivotType, isRequired);
 		if (eObject instanceof EGenericType) {
 			eTypedElement.setEGenericType((EGenericType)eObject);
 		}
@@ -374,7 +382,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 		else {
 			@SuppressWarnings("unused")
-			EObject eObject2 = typeRefVisitor.safeVisit(pivotType, false, pivotType);
+			EObject eObject2 = typeRefVisitor.safeVisit(pivotType, false);
 			//			throw new IllegalArgumentException("Unsupported pivot type '" + pivotType + "' in AS2Ecore Reference pass");
 		}
 	}
@@ -389,12 +397,20 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getUnspecializedElement() != context.getStandardLibrary().getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
 			CollectionType collectionType = (CollectionType)pivotType;
 			Type elementType = collectionType.getElementType();
-			EObject eObject = typeRefVisitor.safeVisit(elementType, false, pivotType);
+			EObject eObject = typeRefVisitor.safeVisit(elementType, false);
 			if (eObject instanceof EGenericType) {
 				eTypedElement.setEGenericType((EGenericType)eObject);
 			}
-			else {
+			else if (eObject instanceof EClassifier) {
 				eTypedElement.setEType((EClassifier)eObject);
+			}
+			else if (eObject instanceof ETypeParameter) {
+				EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+				eGenericType.setETypeParameter((ETypeParameter)eObject);
+				eTypedElement.setEGenericType(eGenericType);
+			}
+			else {
+				assert false;
 			}
 			eTypedElement.setOrdered(collectionType.isOrdered());
 			eTypedElement.setUnique(collectionType.isUnique());
@@ -545,29 +561,13 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (eOperation == null) {
 			return null;
 		}
-	//	safeVisitAll(EClassifier.class, eOperation.getEGenericExceptions(), eOperation.getEExceptions(), pivotOperation.getRaisedExceptions());
-		List<EGenericType> eGenericTypes = eOperation.getEGenericExceptions();
-		List<EClassifier> eTypes = eOperation.getEExceptions();
-		List<Type> asTypes = pivotOperation.getRaisedExceptions();
-	//	public <T extends EClassifier> void safeVisitAll(Class<?> javaClass, List<EGenericType> eGenericTypes, List<T> eTypes, List<? extends Type> asTypes) {
-		if (asTypes.size() > 0) {
-			List<EObject> eClasses = new ArrayList<EObject>(asTypes.size());
-			typeRefVisitor.safeVisitAll(eClasses, asTypes, false, pivotOperation);
-			eTypes.clear();
-			eGenericTypes.clear();
-			for (EObject superEClass : eClasses) {
-				if (superEClass instanceof EGenericType) {
-					eGenericTypes.add((EGenericType)superEClass);
-				}
-				else if (superEClass instanceof EClassifier){
-					eTypes.add((EClassifier)superEClass);
-				}
-			}
+		Element savedAsScope = typeRefVisitor.pushScope(pivotOperation);
+		try {
+			safeVisitAll(EClassifier.class, eOperation.getEGenericExceptions(), eOperation.getEExceptions(), pivotOperation.getRaisedExceptions());
 		}
-		else {
-			eGenericTypes.clear();
+		finally {
+			typeRefVisitor.popScope(savedAsScope);
 		}
-	//	}
 		EAnnotation eRedefinesAnnotation = null;
 		for (@SuppressWarnings("null")@NonNull Operation redefinedOperation : pivotOperation.getRedefinedOperations()) {
 			EOperation eRedefined = getCreated(EOperation.class, redefinedOperation);
@@ -642,7 +642,13 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				pivotIsRequired = optionalType.isRequired;
 			}
 		}
-		setETypeAndMultiplicity(eStructuralFeature, pivotType, pivotIsRequired);
+		Element savedAsScope = typeRefVisitor.pushScope(pivotProperty);
+		try {
+			setETypeAndMultiplicity(eStructuralFeature, pivotType, pivotIsRequired);
+		}
+		finally {
+			typeRefVisitor.popScope(savedAsScope);
+		}
 		return null;
 	}
 
@@ -652,10 +658,14 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (eTypeParameter == null) {
 			return null;
 		}
-		for (org.eclipse.ocl.pivot.Class constrainingType : pivotTemplateParameter.getConstrainingClasses()) {
-			if (constrainingType != null) {
+		for (org.eclipse.ocl.pivot.@NonNull Class constrainingType : PivotUtil.getConstrainingClasses(pivotTemplateParameter)) {
+			Element savedASScope = typeRefVisitor.pushScope(pivotTemplateParameter);
+			try {
 				EGenericType eGenericType = typeRefVisitor.resolveEGenericType(constrainingType);
 				eTypeParameter.getEBounds().add(eGenericType);
+			}
+			finally {
+				typeRefVisitor.popScope(savedASScope);
 			}
 		}
 		return null;
@@ -670,7 +680,13 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				return null;				// Occurs for Operation return type
 			}
 			//			setEType(eTypedElement, pivotType);
-			setETypeAndMultiplicity(eTypedElement, pivotType, pivotTypedElement.isIsRequired());
+			Element savedASScope = typeRefVisitor.pushScope(pivotTypedElement);
+			try {
+				setETypeAndMultiplicity(eTypedElement, pivotType, pivotTypedElement.isIsRequired());
+			}
+			finally {
+				typeRefVisitor.popScope(savedASScope);
+			}
 		}
 		return null;
 	}

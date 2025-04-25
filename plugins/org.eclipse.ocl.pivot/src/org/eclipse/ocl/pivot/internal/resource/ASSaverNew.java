@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -67,6 +68,9 @@ public class ASSaverNew extends AbstractASSaver
 
 		@Override
 		public EObject copy(EObject eObject) {
+			if (eObject instanceof NormalizedTemplateParameter) {
+				return super.copy(eObject);
+			}
 			assert !(eObject instanceof TemplateParameter);		// Generalized class never needs localizing.
 			return super.copy(eObject);
 		}
@@ -103,7 +107,7 @@ public class ASSaverNew extends AbstractASSaver
 				public EObject put(EObject key, EObject value) {
 					assert (key != null) && (value != null);
 					EObject old = target2source.put(value, key);
-					assert old == null;
+					assert (old == null) || (old == key);
 					return super.put(key, value);
 				}
 
@@ -239,7 +243,12 @@ public class ASSaverNew extends AbstractASSaver
 						if (eSource instanceof Property) {				// If Tuple Property referenced (before Tuple)
 							eSource = eSource.eContainer();				//  copy the whole Tuple.
 						}
-						if (!copier.containsKey(eSource)) {
+						if (eSource instanceof NormalizedTemplateParameter) {
+							int index = ((NormalizedTemplateParameter)eSource).getIndex();
+							EObject localEObject = Orphanage.getNormalizedTemplateParameter(localOrphanPackage, index);
+							copier.put(eSource, localEObject);
+						}
+						else if (!copier.containsKey(eSource)) {
 							assert eSource != null;
 							EObject localEObject = copier.copy(eSource);
 							if (moreObjects == null) {

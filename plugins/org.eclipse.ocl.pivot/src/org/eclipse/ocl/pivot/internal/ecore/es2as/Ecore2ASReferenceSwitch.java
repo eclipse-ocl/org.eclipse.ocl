@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -56,6 +58,7 @@ import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -399,6 +402,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			}
 			else {
 				pivotType = converter.getASType(eType);
+				pivotType = converter.getNormalizedType(pivotType);
 				assert pivotType != null;
 				if (upper == 1) {
 					if (lower == 0) {
@@ -421,8 +425,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					isRequired = true;
 					if (converter.isEntryClass(eClassifier)) {
 						Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
-						Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
-						Property valueProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "value"));
+						Property keyProperty = Objects.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
+						Property valueProperty = Objects.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
 						if (keyProperty.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}
@@ -432,11 +436,13 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						pivotType = metamodelManager.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
 					}
 					else {
-						boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
+						boolean isNullFree = Ecore2AS.isNullFree((ENamedElement)eTypedElement);
 						boolean isOrdered = eTypedElement.isOrdered();
 						boolean isUnique = eTypedElement.isUnique();
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
+						pivotType = converter.getNormalizedType(pivotType);
+						assert pivotType != null;
 						pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
 					}
 				}
@@ -446,6 +452,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			isRequired = false;
 			pivotType = standardLibrary.getOclVoidType();
 		}
+	//	pivotType =pivotType
 		pivotElement.setType(pivotType);
 		pivotElement.setIsRequired(isRequired);
 		return pivotElement;
@@ -458,7 +465,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (pivotElement == null) {
 			return this;
 		}
-		doSwitchAll(org.eclipse.ocl.pivot.Class.class, ClassUtil.<org.eclipse.ocl.pivot.Class>nullFree(pivotElement.getConstrainingClasses()), eTypeParameter.getEBounds());
+		doSwitchAll(org.eclipse.ocl.pivot.Class.class, PivotUtilInternal.getConstrainingClassesList(pivotElement), eTypeParameter.getEBounds());
 		return pivotElement;
 	}
 

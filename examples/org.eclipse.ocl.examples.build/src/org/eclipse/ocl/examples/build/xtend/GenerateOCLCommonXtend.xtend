@@ -38,6 +38,8 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants
 import org.eclipse.ocl.pivot.ids.TypeId
 import org.eclipse.ocl.pivot.utilities.NameUtil
 import org.eclipse.ocl.pivot.Constraint
+import java.util.Objects
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -280,7 +282,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		if (externals.isEmpty()) return "";
 		'''
 
-			«FOR name : externals»«var element = ClassUtil.nonNullState(name2external.get(name))»
+			«FOR name : externals»«var element = Objects.requireNonNull(name2external.get(name))»
 			«IF element instanceof Package»
 			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof PrimitiveType»
@@ -409,16 +411,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			
 			private void installLambdaTypes() {
-				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
+				final List<Class> orphanTypes = «Objects.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
 				LambdaType type;
 				List<Class> superClasses;
 				«FOR type : allLambdaTypes»
-					orphanTypes.add(type = «type.getSymbolName()»);
-					type.setContextType(«type.contextType.getSymbolName()»);
+					orphanTypes.add(type = «type.getSymbolName()»);	
+					type.setContextType(«type.contextType.getTemplateIndex()»);
 					«FOR parameterType : type.parameterType»
-						type.getParameterType().add(«parameterType.getSymbolName()»);
+						type.getParameterType().add(«parameterType.getTemplateIndex()»);
 					«ENDFOR»
-					type.setResultType(«type.resultType.getSymbolName()»);
+					type.setResultType(«type.resultType.getTemplateIndex()»);
 					«type.emitSuperClasses("type")»
 				«ENDFOR»
 			}
@@ -679,7 +681,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«FOR templateableElement : allTemplateableElements»
 					«FOR templateBinding : templateableElement.ownedBindings»
 						«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
-							addBinding(«templateableElement.getSymbolName()», «templateParameterSubstitution.actual.getSymbolName()»);
+							addBinding(«templateableElement.getSymbolName()», «templateParameterSubstitution.actual.getTemplateIndex()»);
 						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
@@ -707,7 +709,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installTupleTypes() {
-				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
+				final List<Class> orphanTypes = «Objects.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
 				TupleType type;
 				List<Class> superClasses;
 				«FOR type : allTupleTypes»
@@ -894,6 +896,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			Property: return getPartialName(element)
 			TemplateBinding case element.getTemplateSignature().owningElement === null: return "null"
 			TemplateBinding: return element.owningElement.partialName()
+			NormalizedTemplateParameter: return element.javaName()
 			TemplateParameter case element.getOwningSignature.owningElement === null: return "[" + element.getOwningSignature.partialName() + "]"
 //			TemplateParameter case element.getOwningTemplateSignature.owningTemplateableElement.getUnspecializedElement() == null: return element.javaName()
 			TemplateParameter: return element.getOwningSignature.owningElement.partialName() + "_" + element.javaName()

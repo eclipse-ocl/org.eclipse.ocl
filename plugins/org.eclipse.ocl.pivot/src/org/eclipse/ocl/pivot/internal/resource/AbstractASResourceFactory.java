@@ -262,7 +262,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	@Override
 	public @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
-		return new TemplateParameterSubstitutionVisitor((EnvironmentFactoryInternal) environmentFactory, selfType, null);
+		return ((EnvironmentFactoryInternal) environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, selfTypeValue);
 	}
 
 	@Override

@@ -37,7 +37,9 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -464,27 +466,14 @@ implements PropertyCallExp {
 	@Override
 	public /*@NonNull*/ Type getSpecializedReferredPropertyOwningType()
 	{
-		Property referredProperty = getReferredProperty();
-		org.eclipse.ocl.pivot.Class referencedType = referredProperty.getOwningClass();
-		if (TemplateSpecialisation.needsSpecialisation(referencedType)) {
-			Executor executor = PivotUtil.getExecutor(this);
-			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
-			Type resultType = getType();
-			//			if (resultType instanceof DomainMetaclass) {
-			//				resultType = ((DomainMetaclass)resultType).getInstanceType();
-			//			}
-			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
-			if (referencedType != null) {
-				return templateSpecialization.getSpecialisation(referencedType);
-			}
+		Property referredProperty = PivotUtil.getReferredProperty(this);
+		org.eclipse.ocl.pivot.Class owningType = PivotUtil.getOwningClass(referredProperty);
+		if (!TemplateParameterSubstitutionVisitor.needsSpecialization(owningType)) {
+			return owningType;
 		}
-		if (referencedType != null) {
-			return referencedType;
-		}
-		else {
-			Executor executor = PivotUtil.getExecutor(this);
-			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
-		}
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.create(environmentFactory, this, owningType);
+		return visitor.specializeType(owningType);
 	}
 
 	/**
@@ -498,23 +487,14 @@ implements PropertyCallExp {
 	@Override
 	public /*@NonNull*/ Type getSpecializedReferredPropertyType()
 	{
-		Property referredProperty = getReferredProperty();
-		Type referencedType = referredProperty.getType();
-		Type specializedType = referencedType;
-		if ((referencedType != null) && TemplateSpecialisation.needsSpecialisation(referencedType)) {
-			Executor executor = PivotUtil.getExecutor(this);
-			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
-			Type resultType = getType();
-			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
-			specializedType = templateSpecialization.getSpecialisation(referencedType);
+		Property referredProperty = PivotUtil.getReferredProperty(this);
+		Type referencedType = PivotUtil.getType(referredProperty);
+		if (!TemplateParameterSubstitutionVisitor.needsSpecialization(referencedType)) {
+			return referencedType;
 		}
-		if (specializedType != null) { //instanceof org.eclipse.ocl.pivot.Class) {
-			return /*(org.eclipse.ocl.pivot.Class)*/specializedType;
-		}
-		else {
-			Executor executor = PivotUtil.getExecutor(this);
-			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
-		}
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.create(environmentFactory, this, referencedType);
+		return visitor.specializeType(referencedType);
 	}
 
 	/**
