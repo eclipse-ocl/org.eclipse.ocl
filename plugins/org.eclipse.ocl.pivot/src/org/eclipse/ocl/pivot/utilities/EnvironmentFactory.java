@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 
@@ -204,6 +205,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * Return the MetamodelManager used to supervise the normalized Abstract Syntax representations of the metamodels.
 	 */
 	@NonNull MetamodelManager getMetamodelManager();
+
+	/**
+	 * @since 1.23
+	 */
+	default @NonNull Orphanage getOrphanage() {
+		return getCompleteModel().getOrphanage();
+	}
 
 	/**
 	 * Return the ProjectManager used to supervise the mappings and regustrations for external resource names such as those for Eclipse

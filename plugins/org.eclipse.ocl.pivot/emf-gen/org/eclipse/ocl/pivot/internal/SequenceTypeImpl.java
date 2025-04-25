@@ -81,17 +81,6 @@ public class SequenceTypeImpl
 	}
 
 	@Override
-	public @NonNull TypeId computeNormalizedId() {
-		if (getUnspecializedElement() == null) {
-			return TypeId.SEQUENCE;
-		}
-		else {
-			TypeId elementTypeId = getElementType().getNormalizedTypeId();
-			return TypeId.SEQUENCE.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
-		}
-	}
-
-	@Override
 	public boolean isOrdered() {
 		return true;
 	}

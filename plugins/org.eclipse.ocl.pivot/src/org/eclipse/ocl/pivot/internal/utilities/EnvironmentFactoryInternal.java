@@ -64,14 +64,9 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	/**
 	 * @since 1.1
 	 */
+	@Deprecated /* @deprecated folded into EnvironmentFactoryInternal */
 	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal, EnvironmentFactoryExtension2
 	{
-		/**
-		 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
-		 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
-		 * this alternative creation mechanism is available via an EnvironmentFactory override.
-		 */
-		@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
 	}
 
 	void addExternal2AS(@NonNull External2AS external2as);
@@ -105,6 +100,14 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * resolving namespace and platform URIs.
 	 */
 	void configureLoadStrategy(ProjectManager.@NonNull IResourceLoadStrategy packageLoadStrategy, ProjectManager.@Nullable IConflictHandler conflictHandler);
+
+	/**
+	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
+	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
+	 * this alternative creation mechanism is available via an EnvironmentFactory override.
+	 * @since 1.23
+	 */
+	@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
 
 	/**
 	 * Create and initialize the AS ResourceSet used by metamodelManager to contain the AS forms of CS and Ecore/UML resources.

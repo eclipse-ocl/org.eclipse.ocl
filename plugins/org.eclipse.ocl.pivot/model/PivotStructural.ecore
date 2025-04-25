@@ -718,6 +718,13 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NormalizedTemplateParameter" eSuperTypes="#//TemplateParameter">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A NormalizedTemplateParameter is normalized to its position in the TemplateableElement TemplateParameter hierarchy. It has no lower bound (other than the implicit OclAny). It avoids specializing operations and iterations for each actual type."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="#//Integer"
+        changeable="false" transient="true" defaultValueLiteral="-1" derived="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NullLiteralExp" eSuperTypes="#//PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="NumericLiteralExp" abstract="true" eSuperTypes="#//PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="OCLExpression" abstract="true" eSuperTypes="#//TypedElement">
