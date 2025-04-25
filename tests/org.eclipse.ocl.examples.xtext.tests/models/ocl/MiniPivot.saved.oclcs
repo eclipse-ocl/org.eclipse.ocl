@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<completeoclcs:CompleteOCLDocumentCS xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:basecs="http://www.eclipse.org/ocl/2015/BaseCS" xmlns:completeoclcs="http://www.eclipse.org/ocl/2015/CompleteOCLCS" xmlns:essentialoclcs="http://www.eclipse.org/ocl/2015/EssentialOCLCS"
-    xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot">
+<?xml version="1.0" encoding="ASCII"?>
+<completeoclcs:CompleteOCLDocumentCS xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basecs="http://www.eclipse.org/ocl/2015/BaseCS" xmlns:completeoclcs="http://www.eclipse.org/ocl/2015/CompleteOCLCS" xmlns:essentialoclcs="http://www.eclipse.org/ocl/2015/EssentialOCLCS" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot">
   <ownedImports>
     <ownedPathName>
       <ownedPathElements xsi:type="basecs:PathElementWithURICS">
@@ -139,7 +137,7 @@
                                       <ownedRight xsi:type="essentialoclcs:NameExpCS">
                                         <ownedPathName>
                                           <ownedPathElements>
-                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#6+B+U"/>
+                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#8BC+U"/>
                                           </ownedPathElements>
                                         </ownedPathName>
                                         <ownedRoundBracketedClause>
@@ -272,7 +270,7 @@
                                     <ownedRight xsi:type="essentialoclcs:NameExpCS">
                                       <ownedPathName>
                                         <ownedPathElements>
-                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#6+B+U"/>
+                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#8BC+U"/>
                                         </ownedPathElements>
                                       </ownedPathName>
                                       <ownedRoundBracketedClause>
@@ -710,7 +708,7 @@
                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                           <ownedPathName>
                             <ownedPathElements>
-                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#tQoce"/>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#OSoce"/>
                             </ownedPathElements>
                           </ownedPathName>
                           <ownedRoundBracketedClause>

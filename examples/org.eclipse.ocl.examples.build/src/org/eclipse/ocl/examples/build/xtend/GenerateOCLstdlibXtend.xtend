@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
+import java.util.Objects
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
@@ -70,7 +71,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 
 	/*@NonNull*/ protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		// initModel(root); in caller
-		var lib = ClassUtil.nonNullState(thisModel.getLibrary());
+		var lib = Objects.requireNonNull(thisModel.getLibrary());
 		var externalPackages = thisModel.getSortedExternalPackages();
 		var year = new GregorianCalendar().get(GregorianCalendar.YEAR);
 		'''
@@ -96,6 +97,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import java.io.IOException;
 			import java.util.List;
 			import java.util.Map;
+			import java.util.Objects;
 
 			import org.eclipse.emf.common.notify.Notification;
 			import org.eclipse.emf.common.notify.NotificationChain;
@@ -116,6 +118,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.Library;
 			import org.eclipse.ocl.pivot.MapType;
 			import org.eclipse.ocl.pivot.Model;
+			import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 			import org.eclipse.ocl.pivot.Operation;
 			import org.eclipse.ocl.pivot.OrderedSetType;
 			import org.eclipse.ocl.pivot.Package;
@@ -131,6 +134,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.VoidType;
 			import org.eclipse.ocl.pivot.ids.IdManager;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+			import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
@@ -367,24 +371,37 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 *	Construct an OCL Standard Library with specified resource URI and library content.
 				 */
 				private «javaClassName»(@NonNull String asURI, @NonNull Model libraryModel) {
-					super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
+					super(Objects.requireNonNull(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 					assert PivotUtilInternal.isASURI(uri);
 					getContents().add(libraryModel);
 				}
 			
-				private static class Contents extends AbstractContents
+				private static class AbstractLibraryContents extends AbstractContents
+				{
+					«FOR pkge : thisModel.getSortedPackages()»
+					protected final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
+					«ENDFOR»
+					«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
+					protected final @NonNull NormalizedTemplateParameter «normalizedTemplateParameter.getPrefixedSymbolName(normalizedTemplateParameter.getName())»;
+					«ENDFOR»
+			
+					protected AbstractLibraryContents() {
+						«FOR pkge : thisModel.getSortedPackages()»
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«ENDFOR»
+						«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
+						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(orphanPackage, «normalizedTemplateParameter.getIndex()»);
+						«ENDFOR»
+					}
+				}
+			
+				private static class Contents extends AbstractLibraryContents
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
-					«FOR pkge : thisModel.getSortedPackages()»
-					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
-					«ENDFOR»
 			
 					private Contents(@NonNull String asURI)
 					{
 						«thisModel.getSymbolName()» = createModel(asURI);
-						«FOR pkge : thisModel.getSortedPackages()»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
-						«ENDFOR»
 						«thisModel.installPackages()»
 						«thisModel.installClassTypes()»
 						«thisModel.installPrimitiveTypes()»

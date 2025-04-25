@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -41,6 +42,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -48,6 +51,9 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
+/**
+ * @since 1.23
+ */
 public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
 	protected final @NonNull PivotMetamodelManager metamodelManager;
@@ -84,6 +90,28 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		return null;
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	public void popScope(@Nullable Element savedASScope) {
+		if ("expressions::LiteralExp(C)".equals(String.valueOf(savedASScope))) {
+			getClass();
+		}
+		this.asScope = savedASScope;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public @Nullable Element pushScope(@NonNull Element asScope) {
+		if ("expressions::LiteralExp(C)".equals(String.valueOf(asScope))) {
+			getClass();
+		}
+		Element savedAsScope = this.asScope;
+		this.asScope = asScope;
+		return savedAsScope;
+	}
+
 	public EGenericType resolveEGenericType(org.eclipse.ocl.pivot.@NonNull Class type) {
 		EObject eType = safeVisit(type);
 		if (eType instanceof EGenericType) {
@@ -98,6 +126,9 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 					EObject eTypeParameter = safeVisit(templateParameter);
 					if (eTypeParameter instanceof EGenericType) {
 						eGenericType.getETypeArguments().add((EGenericType) eTypeParameter);
+					}
+					else {
+						assert false;			// XXX
 					}
 				}
 			}
@@ -116,17 +147,14 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	/**
 	 * @since 1.23
 	 */
-	public EObject safeVisit(@Nullable Visitable v, boolean isRequired, @Nullable Element asScope) {
+	public EObject safeVisit(@Nullable Visitable v, boolean isRequired) {
 		boolean savedIsRequired = isRequired;
-		Element savedAsScope = asScope;
 		try {
 			this.isRequired = isRequired;
-			this.asScope = asScope;
 			return safeVisit(v);
 		}
 		finally {
 			this.isRequired = savedIsRequired;
-			this.asScope = savedAsScope;
 		}
 	}
 
@@ -144,17 +172,14 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	/**
 	 * @since 1.23
 	 */
-	public <T extends EObject> void safeVisitAll(List<T> eObjects, List<? extends Element> pivotObjects, boolean isRequired, @Nullable Element asScope) {
+	public <T extends EObject> void safeVisitAll(List<T> eObjects, List<? extends Element> pivotObjects, boolean isRequired) {
 		boolean savedIsRequired = isRequired;
-		Element savedAsScope = asScope;
 		try {
 			this.isRequired = isRequired;
-			this.asScope = asScope;
 			safeVisitAll(eObjects, pivotObjects);
 		}
 		finally {
 			this.isRequired = savedIsRequired;
-			this.asScope = savedAsScope;
 		}
 	}
 
@@ -197,12 +222,11 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			}
 			return null;	// FIXME may be null if not from Ecore
 		}
-		List<TemplateBinding> templateBindings = pivotType.getOwnedBindings();
+		TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(pivotType);
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 		EObject rawType = safeVisit(PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)pivotType));
 		eGenericType.setEClassifier((EClassifier) rawType);
-		// FIXME signature ordering, multiple bindings
-		safeVisitAll(eGenericType.getETypeArguments(), templateBindings.get(0).getOwnedSubstitutions());
+		safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedSubstitutions());
 		return eGenericType;
 	}
 
@@ -227,7 +251,8 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 		EObject eClassifier2 = safeVisit(PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)pivotType));
 		eGenericType.setEClassifier((EClassifier) eClassifier2);
-		safeVisitAll(eGenericType.getETypeArguments(), pivotType.getOwnedBindings().get(0).getOwnedSubstitutions());
+		TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(pivotType);
+		safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedSubstitutions());
 		// FIXME supers
 		Number lower = pivotType.getLower();
 		Number upper = pivotType.getUpper();
@@ -258,6 +283,17 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		safeVisitAll(eGenericType.getETypeArguments(), mapType.getOwnedBindings());
 		// FIXME bounds, supers
 		return eGenericType;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public EObject visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter pivotNormalizedTemplateParameter) {
+		assert asScope != null;
+		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(asScope);
+		TemplateParameter asTemplateParameter = templateParameterization.get(pivotNormalizedTemplateParameter.getIndex());
+		return context.getCreated(ETypeParameter.class, asTemplateParameter);
 	}
 
 	@Override
@@ -328,12 +364,24 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 
 	@Override
 	public EObject visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution pivotTemplateParameterSubstitution) {
-		EObject actualType = safeVisit(pivotTemplateParameterSubstitution.getActual());
+		Type actual = pivotTemplateParameterSubstitution.getActual();
+		EObject actualType = safeVisit(actual);
 		if (actualType instanceof EGenericType) {
 			return actualType;
 		}
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		eGenericType.setEClassifier((EClassifier) actualType);
+		if (actualType instanceof EClassifier) {
+			eGenericType.setEClassifier((EClassifier) actualType);
+		}
+		else if (actualType instanceof ETypeParameter) {
+			eGenericType.setETypeParameter((ETypeParameter) actualType);
+		}
+		else if (actualType == null) {			// XXX wildcard
+		//	eGenericType.setETypeParameter((ETypeParameter) actualType);
+		}
+		else {
+			assert false;
+		}
 		return eGenericType;
 	}
 

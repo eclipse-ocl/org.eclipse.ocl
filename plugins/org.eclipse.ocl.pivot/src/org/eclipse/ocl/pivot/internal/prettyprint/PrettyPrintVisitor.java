@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.prettyprint;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -21,16 +19,17 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -109,17 +108,17 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 		//		appendParent(object.eContainer(), object, "::");
 		context.appendName(object, context.getRestrictedNames());
 		context.append(" ");
-		context.appendElement(object.getContextType());
+		context.appendTypedElement(object, object.getContextType());
 		context.append("(");
 		String prefix = ""; //$NON-NLS-1$
 		for (Type parameterType : object.getParameterType()) {
 			context.append(prefix);
-			context.appendElement(parameterType);
+			context.appendTypedElement(object, parameterType);
 			//			appendMultiplicity(parameter);
 			prefix = ",";
 		}
 		context.append(") : ");
-		context.appendElement(object.getResultType());
+		context.appendTypedElement(object, object.getResultType());
 		return null;
 	}
 
@@ -128,24 +127,23 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 		context.appendName(object);
 		context.appendTemplateParameters(object);
 		//	context.appendTemplateBindings(object);
-		List<TemplateBinding> templateBindings = object.getOwnedBindings();
-		if (!templateBindings.isEmpty()) {
+		BasicTemplateSpecialization templateSpecialization = TemplateSpecialization.basicGetTemplateSpecialization(object);
+		if (templateSpecialization != null) {
 			context.append("(");
 			String prefix = ""; //$NON-NLS-1$
 			int index = 0;
-			for (TemplateBinding templateBinding : templateBindings) {
-				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-					context.append(prefix);
-					safeVisit(templateParameterSubstitution.getActual());
-					if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
-						context.append("[?]");
-					}
-					else { //if (SHOW_ALL_MULTIPLICITIES) {
-						context.append("[1]");
-					}
-					prefix = ",";
-					index++;
+			for (Type actual : templateSpecialization) {
+				context.append(prefix);
+		//		safeVisit(actual);
+				context.appendTypedElement(object, actual);
+				if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
+					context.append("[?]");
 				}
+				else { //if (SHOW_ALL_MULTIPLICITIES) {
+					context.append("[1]");
+				}
+				prefix = ",";
+				index++;
 			}
 			context.append(")");
 		}
@@ -158,6 +156,12 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 			context.appendParent(context.getScope(), object, "::");
 		}
 		context.appendName(object, context.getReservedNames());
+		return null;
+	}
+
+	@Override
+	public Object visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {
+		context.appendName(object);
 		return null;
 	}
 

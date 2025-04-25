@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.MessageExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -101,6 +102,7 @@ import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -260,7 +262,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		}
 		else {
 			Type type = typedElement.getType();
-			safeVisit(type);
+			if (type instanceof NormalizedTemplateParameter) {
+				TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(typedElement);
+				appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
+			}
+			else {
+				safeVisit(type);
+			}
 			if (!typedElement.isIsRequired()) {
 				append("[?]");
 			}
@@ -388,7 +396,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			for (TemplateBinding templateBinding : templateBindings) {
 				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
 					append(prefix);
-					safeVisit(templateParameterSubstitution.getActual());
+					appendTypedElement(templateBinding, templateParameterSubstitution.getActual());
 					prefix = ",";
 				}
 			}
@@ -436,6 +444,25 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 //			appendTemplateBindings(templateableType.getOwnedBindings(), templateableType);
 //			appendTemplateSignature(templateableType.getOwnedSignature());
 //		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	protected void appendTypedElement(@NonNull Element object, Type type) {
+		if (type instanceof NormalizedTemplateParameter) {
+			TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
+			if (!templateParameterization.isEmpty()) {
+				appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
+			}
+			else {
+				append(type.getName());
+			}
+		}
+		else {
+			safeVisit(type);
+	//		appendType(type);
+		}
 	}
 
 	/**
@@ -924,7 +951,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		Type contextType = lambda.getContextType();
 		if (contextType != null) {
 			append(" ");
-			appendType(contextType);
+			appendTypedElement(lambda, contextType);
 			appendTemplateSignature(lambda.getOwnedSignature());
 			append("(");
 			boolean isFirst = true;
@@ -932,11 +959,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				if (!isFirst) {
 					append(",");
 				}
-				appendType(parameterType);
+				appendTypedElement(lambda, parameterType);
 				isFirst = false;
 			}
 			append(") : ");
-			appendType(lambda.getResultType());
+			appendTypedElement(lambda, lambda.getResultType());
 		}
 		return null;
 	}
@@ -1044,6 +1071,15 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public String visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {
+		appendName(object);
+		return null;
+	}
+
 	@Override
 	public String visitNullLiteralExp(@NonNull NullLiteralExp il) {
 		append("null");
@@ -1126,7 +1162,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public String visitParameter(@NonNull Parameter parameter) {
-		appendQualifiedName((NamedElement) parameter.eContainer(), ".", parameter);
+	//	appendQualifiedName((NamedElement) parameter.eContainer(), ".", parameter);
+		appendName(parameter);
+		Type type = parameter.getType();
+		if (type != null) {
+			append(" : ");
+			appendElementType(parameter);
+		}
 		return null;
 	}
 
@@ -1282,8 +1324,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public String visitTemplateSignature(@NonNull TemplateSignature object) {
-		// s.append(getQualifiedName(object.getFormal(), "/", (NamedElement)
-		// object.getActual()));
 		appendTemplateSignature(object);
 		return null;
 	}

@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
 import java.util.WeakHashMap;
@@ -55,8 +56,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -81,6 +80,7 @@ import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -88,7 +88,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -285,6 +285,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 *
 	 * @since 1.7
 	 */
+	@Deprecated /* @Deprecated rendered obsolete by use of TemplateParameterization */
 	protected final @NonNull Stack<@Nullable Type> staticTypeStack = new Stack<>();
 
 	public AbstractIdResolver(@NonNull CompleteEnvironment environment) {
@@ -456,7 +457,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		else if (eClassifier instanceof EEnum) {
 			EnumerationId enumId = getEnumerationId((EEnum)eClassifier);
-			String name = ClassUtil.nonNullModel(((Enumerator)unboxedValue).getName());
+			String name = Objects.requireNonNull(((Enumerator)unboxedValue).getName());
 			return enumId.getEnumerationLiteralId(name);
 		}
 		else {
@@ -914,8 +915,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 * @since 1.4
 	 */
 	protected @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull EEnumLiteral eEnumLiteral) {
-		EEnum eEnum = ClassUtil.nonNullModel(eEnumLiteral.getEEnum());
-		String name = ClassUtil.nonNullModel(eEnumLiteral.getName());
+		EEnum eEnum = Objects.requireNonNull(eEnumLiteral.getEEnum());
+		String name = Objects.requireNonNull(eEnumLiteral.getName());
 		EnumerationId enumerationId = getEnumerationId(eEnum);
 		return enumerationId.getEnumerationLiteralId(name);
 	}
@@ -1118,19 +1119,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			TypeId typeId = ((Value)value).getTypeId();
 			Type type = key2type.get(typeId);
 			if (type == null) {
-				boolean isTemplated = typeId.isTemplated();
-				if (isTemplated) {
-					staticTypeStack.push(contextType);
-					try {
-						type = (Type)typeId.accept(this);
-					}
-					finally {
-						staticTypeStack.pop();
-					}
-				}
-				else {
-					type = (Type)typeId.accept(this);
-				}
+				type = (Type)typeId.accept(this);
 				if (type ==  null) {
 					type = standardLibrary.getOclAnyType();
 				}
@@ -1869,7 +1858,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package visitRootPackageId(@NonNull RootPackageId id) {
 		if (id == IdManager.METAMODEL) {
-			return ClassUtil.nonNullState(getStandardLibrary().getPackage());
+			return Objects.requireNonNull(getStandardLibrary().getPackage());
 		}
 		String internedName = id.getName().intern();
 		org.eclipse.ocl.pivot.Package knownPackage = roots2package.get(internedName);
@@ -1905,33 +1894,10 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull Element visitTemplateParameterId(@NonNull TemplateParameterId id) {
-		if (!staticTypeStack.isEmpty()) {
-			Type staticType = staticTypeStack.peek();
-			if (staticType != null) {
-				int globalIndex = id.getIndex();
-				List<@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull TemplateBinding>> templateBindingsList = new ArrayList<>();
-				for (EObject eObject = staticType; eObject != null; eObject = eObject.eContainer()) {
-					if (eObject instanceof TemplateableElement) {
-						templateBindingsList.add(0, PivotUtil.getOwnedBindings((TemplateableElement) eObject));
-					}
-					int firstIndex = 0;
-					for (@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull TemplateBinding> templateBindings :  templateBindingsList) {
-						for (org.eclipse.ocl.pivot.@NonNull TemplateBinding templateBinding :  templateBindings) {
-							List<@NonNull TemplateParameterSubstitution> ownedSubstitutions = PivotUtilInternal.getOwnedSubstitutionsList(templateBinding);
-							int localIndexes = ownedSubstitutions.size();
-							int localIndex = globalIndex - firstIndex;
-							if (localIndex < localIndexes) {
-								TemplateParameterSubstitution templateParameterSubstitution = ownedSubstitutions.get(localIndex);
-								assert templateParameterSubstitution != null;
-								return PivotUtil.getActual(templateParameterSubstitution);
-							}
-							firstIndex += localIndexes;
-						}
-					}
-				}
-			}
-		}
-		throw new UnsupportedOperationException();
+		TemplateableId templateableId = Objects.requireNonNull(id.getTemplateableId());
+		Element type = Objects.requireNonNull(templateableId.accept(this));
+		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(type);
+		return templateParameters.get(id.getIndex());
 	}
 
 	@Override

@@ -97,15 +97,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.BagTypeImpl"/>
-                <message_argument value="BAG_TYPE_FEATURE_COUNT"/>
-                <message_argument value="27"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ClassImpl.java" type="org.eclipse.ocl.pivot.internal.ClassImpl">
         <filter id="338792546">
             <message_arguments>
@@ -118,33 +109,6 @@
         <filter id="1110441988">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OrderedSetTypeImpl.java" type="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl">
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl"/>
-                <message_argument value="ORDERED_SET_TYPE_FEATURE_COUNT"/>
-                <message_argument value="27"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/SequenceTypeImpl.java" type="org.eclipse.ocl.pivot.internal.SequenceTypeImpl">
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.SequenceTypeImpl"/>
-                <message_argument value="SEQUENCE_TYPE_FEATURE_COUNT"/>
-                <message_argument value="27"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/SetTypeImpl.java" type="org.eclipse.ocl.pivot.internal.SetTypeImpl">
-        <filter id="388194388">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.SetTypeImpl"/>
-                <message_argument value="SET_TYPE_FEATURE_COUNT"/>
-                <message_argument value="27"/>
             </message_arguments>
         </filter>
     </resource>
@@ -165,6 +129,240 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Parameters">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_0_K"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_0_K___1_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_0_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_0_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_1_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_1_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Bag_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Bag_selectByKind_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Bag_selectByType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__0_K__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__0_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__1_T2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__2_K2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Bag_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Collection_excludesAll_T2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Collection_includesAll_T2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Collection_product_T2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Map_K__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Map_excludesAll_K2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Map_includesAll_K2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__OrderedSet_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Sequence_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__Set_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__UniqueCollection_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection_selectByKind_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection_selectByType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Integer___0_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Integer___OrderedSet_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Integer___Sequence_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_K_2_Tacc"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_K_2_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_K_Boolean"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_K_OclAny"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_T_1_Tacc"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_T_1_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_T_Boolean"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Lambda_0_T_OclAny"/>
+            </message_arguments>
+        </filter>
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
@@ -189,8 +387,206 @@
                 <message_argument value="_Lambda_0_T_Set__0_T__"/>
             </message_arguments>
         </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map_K"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map_K___Map_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map__2_K2_3_V2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map__Map_excludesMap_K2_Map_excludesMap_V2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map__Map_excludingMap_K2_Map_excludingMap_V2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map__Map_includesMap_K2_Map_includesMap_V2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Map__Map_includingMap_K2_Map_includingMap_V2__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OclAny_oclAsType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OclElement_oclAsModelType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OclInvalid_oclAsType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OclVoid_oclAsType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OrderedCollection_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OrderedCollection__0_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OrderedCollection__OrderedSet_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OrderedCollection__Sequence_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OrderedSet_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OrderedSet_selectByKind_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_OrderedSet_selectByType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Sequence_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Sequence_selectByKind_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Sequence_selectByType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Set_T"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Set_selectByKind_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Set_selectByType_TT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_UniqueCollection"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_UniqueCollection__0_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_UniqueCollection__Collection_T__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_UnlimitedNatural_oclAsType_TT"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$TypeParameters">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="$$0"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="$$1"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="$$2"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="$$3"/>
+            </message_arguments>
+        </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
@@ -219,6 +615,26 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Set__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$0"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$1"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$2"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$3"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -290,12 +706,6 @@
                 <message_argument value="basicGetCompleteClass(Type)"/>
             </message_arguments>
         </filter>
-        <filter id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal"/>
-                <message_argument value="getEnvironmentFactory()"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/complete/CompleteModelInternal.java" type="org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal">
         <filter id="404000815">
@@ -324,14 +734,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller"/>
                 <message_argument value="SUPPRESS_DYNAMIC_OCL_DELEGATES"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/delegate/OCLValidationDelegateFactory.java" type="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory$Global">
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory.Global"/>
-                <message_argument value="INSTANCE"/>
             </message_arguments>
         </filter>
     </resource>
@@ -566,26 +968,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
                 <message_argument value="setDerived(boolean)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource$CSResourceExtension2">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
-                <message_argument value="reloadIn(EnvironmentFactory)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
-                <message_argument value="setDerived(boolean)"/>
-            </message_arguments>
-        </filter>
-        <filter id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2"/>
-                <message_argument value="isDerived()"/>
             </message_arguments>
         </filter>
     </resource>
