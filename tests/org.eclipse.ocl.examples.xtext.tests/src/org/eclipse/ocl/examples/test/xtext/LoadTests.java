@@ -1100,7 +1100,8 @@ public class LoadTests extends AbstractLoadTests
 			EObject eObject = tit.next();
 			String id = reloadedAsResource.getID(eObject);
 			if (id != null) {
-				EObject eObject2 = Objects.requireNonNull(id2eObject.get(id));
+				EObject eObject1 = id2eObject.get(id);
+				EObject eObject2 = Objects.requireNonNull(eObject1);
 				assertEquals(eObject2.getClass(), eObject.getClass());
 				newIdCount++;
 			}

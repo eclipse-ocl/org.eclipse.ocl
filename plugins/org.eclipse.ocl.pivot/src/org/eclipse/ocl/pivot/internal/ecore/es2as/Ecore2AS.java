@@ -161,9 +161,11 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		else if ((eObject instanceof EParameter) || (eObject instanceof EStructuralFeature) || (eObject instanceof ETypeParameter)) {
+			assert eObject != null;
 			allETypeParameters = getAllETypeParameters(allETypeParameters, eObject.eContainer());
 		}
 		else if (eObject instanceof EGenericType) {
+			assert eObject != null;
 			allETypeParameters = getAllETypeParameters(allETypeParameters, eObject.eContainer());
 		}
 		else {

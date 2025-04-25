@@ -28,13 +28,15 @@ public class BinaryOperationMatcher extends AbstractOperationMatcher
 
 	public BinaryOperationMatcher(@NonNull CS2ASContext cs2asContext, @Nullable Type sourceType, @Nullable ExpCS csArgument) {
 		super(cs2asContext, sourceType);
-		this.asArgument = Objects.requireNonNull(PivotUtil.getPivot(OCLExpression.class, csArgument));
+		OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csArgument);
+		this.asArgument = Objects.requireNonNull(asArgument);
 	}
 
 	@Deprecated /* @deprecated pass CS2ASContext */
 	public BinaryOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @Nullable ExpCS csArgument) {
 		super(environmentFactory, sourceType, null);
-		this.asArgument = Objects.requireNonNull(PivotUtil.getPivot(OCLExpression.class, csArgument));
+		OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csArgument);
+		this.asArgument = Objects.requireNonNull(asArgument);
 		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
