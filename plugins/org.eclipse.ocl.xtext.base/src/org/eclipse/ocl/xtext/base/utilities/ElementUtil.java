@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -53,6 +55,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
@@ -103,6 +106,29 @@ public class ElementUtil
 			s.append("null");
 		}
 		s.append(isSignificant ? "]" : ")");
+	}
+
+	public static @Nullable Namespace basicGetContainingNamespace(@NonNull ElementCS csElement) {
+		for (EObject eObject = csElement; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Pivotable) {
+				Element asElement = ((Pivotable)eObject).getPivot();
+				if ((asElement != null) && (asElement.eResource() != null)) {
+					Namespace asNamespace = PivotUtil.basicGetContainingNamespace(asElement);
+					if (asNamespace != null) {
+						return asNamespace;
+					}
+				}
+			}
+		}
+		Resource csResource = csElement.eResource();
+		if (csResource instanceof BaseCSResource) {
+			ParserContext parserContext = ((BaseCSResource)csResource).getParserContext();
+			Element elementContext = parserContext.getElementContext();
+			if (elementContext instanceof Namespace) {
+				return (Namespace)elementContext;
+			}
+		}
+        return null;
 	}
 
 	public static @Nullable ParserContext basicGetParserContext(@NonNull EObject csElement) {
@@ -275,6 +301,10 @@ public class ElementUtil
 		else {
 			return commentText.trim();
 		}
+	}
+
+	public static @NonNull Namespace getContainingNamespace(@NonNull ElementCS csElement) {
+		return Objects.requireNonNull(basicGetContainingNamespace(csElement));
 	}
 
 	public static @Nullable ModelElementCS getCsElement(@NonNull Element asElement) {

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -62,6 +63,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
@@ -71,7 +73,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -101,6 +102,7 @@ import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
+import org.eclipse.ocl.xtext.basecs.TypeParameterCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
@@ -140,7 +142,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * The Visitors
 	 */
 	private final @NonNull BaseCSVisitor<Continuation<?>> containmentVisitor;
-	private final @NonNull BaseCSVisitor<Element> left2RightVisitor;
+	private final @NonNull BaseCSLeft2RightVisitor left2RightVisitor;
 	private final @NonNull BaseCSVisitor<Continuation<?>> postOrderVisitor;
 	private final @NonNull BaseCSVisitor<Continuation<?>> preOrderVisitor;
 
@@ -171,7 +173,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		this.converter = converter;
 		this.diagnosticsConsumer = diagnosticsConsumer;
 		this.containmentVisitor = converter.createContainmentVisitor(this);
-		this.left2RightVisitor = converter.createLeft2RightVisitor(this);
+		this.left2RightVisitor = (BaseCSLeft2RightVisitor)converter.createLeft2RightVisitor(this);
 		this.postOrderVisitor = converter.createPostOrderVisitor(this);
 		this.preOrderVisitor = converter.createPreOrderVisitor(this);
 		this.optionalDefaultMultiplicity = environmentFactory.getValue(PivotValidationOptions.OptionalDefaultMultiplicity) == Boolean.TRUE;
@@ -248,7 +250,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	protected void diagnoseContinuationFailure(@NonNull List<BasicContinuation<?>> continuations) {
 		if (CONTINUATION.isActive()) {
 			for (BasicContinuation<?> continuation : continuations) {
-				CONTINUATION.println(ClassUtil.nonNullState(continuation.toString()));
+				CONTINUATION.println(Objects.requireNonNull(continuation.toString()));
 				for (Dependency dependency : continuation.getDependencies()) {
 					boolean canExecute = dependency.canExecute();
 					CONTINUATION.println((canExecute ? "+ " : "- ") + dependency.toString());
@@ -606,6 +608,39 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return newPivotElements;
 	}
 
+/*	public @Nullable Type getNormalizedType(@Nullable Type asType) {
+		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
+			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
+			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
+				// Cannot wait till TemplateParameter.constrainingClasses defined because might be cyclic: e.g. T extends Generic(T).
+				ModelElementCS csDefinition = converter.getCSElement(asTemplateParameter);
+				assert csDefinition != null;
+				List<TypedRefCS> csExtends = ((TypeParameterCS)csDefinition).getOwnedExtends();
+				if (csExtends.isEmpty()) {
+					return Orphanage.getNormalizedTemplateParameter(environmentFactory.getCompleteModel().getOrphanage(), asTemplateParameter);
+				}
+			}
+		}
+		return asType;
+	} */
+
+	/**
+	 * Return true if asTemplateParameter should be normalized to a TemplateParamterType.
+	 * This method peeks at the CS definition of the TemplateParameter to determine wherther there are any bounds
+	 * avoiding a cyclic dependency if the caller waited for the AS constrainingClasses to be defined.
+	 */
+	public boolean canBeNormalized(@NonNull TemplateParameter asTemplateParameter) {
+		boolean canBeNormalized = false;
+		if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
+			// Cannot wait till TemplateParameter.constrainingClasses defined because might be cyclic: e.g. T extends Generic(T).
+			ModelElementCS csDefinition = converter.getCSElement(asTemplateParameter);
+			assert csDefinition != null;
+			List<TypedRefCS> csExtends = ((TypeParameterCS)csDefinition).getOwnedExtends();
+			canBeNormalized = csExtends.isEmpty();
+		}
+		return canBeNormalized;
+	}
+
 	public org.eclipse.ocl.pivot.@Nullable Package getOldPackageByQualifiedName(@NonNull PackageCS csElement) {
 		String qualifiedName = getQualifiedName(new StringBuilder(), csElement);
 		return oldPackagesByQualifiedName.get(qualifiedName);
@@ -902,7 +937,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		boolean tracingOn = CONTINUATION.isActive();
 		if (tracingOn) {
 			CONTINUATION.println("------------------------------------------------ " + continuations.size());
-			CONTINUATION.println(ClassUtil.nonNullState(typesHaveSignatures.toString()));
+			CONTINUATION.println(Objects.requireNonNull(typesHaveSignatures.toString()));
 		}
 		for (BasicContinuation<?> continuation : continuations) {
 			boolean canExecute = continuation.canExecute();
@@ -1295,9 +1330,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					templateParameterSubstitutions.add(templateParameterSubstitution);
 				}
 			}
+			CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
-				Orphanage orphanage = environmentFactory.getCompleteModel().getOrphanage();
+				Orphanage orphanage = completeModel.getOrphanage();
 				templateParameterSubstitution.setActual(Orphanage.getOrphanWildcardType(orphanage));
 			}
 			else {
@@ -1334,7 +1370,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			TemplateParameter templateParameter = templateParameters.get(i);
 			if (i == 0) {
 				@NonNull TemplateBindingCS csTemplateBinding = csTemplateBindings.get(i);
-				installPivotUsage(csTemplateBinding, templateParameter.getOwningSignature());
+				installPivotUsage(csTemplateBinding, PivotUtil.getOwningSignature(templateParameter));
 			}
 			installPivotUsage(csTemplateParameterSubstutution, templateParameter);
 		}
@@ -1370,6 +1406,16 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : ownedTemplateBinding.getOwnedSubstitutions()) {
 					Type templateArgument = PivotUtil.getPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
 					if (templateArgument != null) {
+
+						if (templateArgument instanceof TemplateParameter) {
+							boolean canBeNormalized = canBeNormalized((TemplateParameter)templateArgument);
+							if (canBeNormalized) {
+						//		templateArgument = Orphanage.getNormalizedTemplateParameter(environmentFactory.getCompleteModel().getOrphanage(), (TemplateParameter)templateArgument);
+							}
+						}
+
+
+					//	templateArgument = completeModel.getNormalizedType(templateArgument);
 						templateArguments.add(templateArgument);
 					}
 				}
@@ -1608,22 +1654,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
-	public <T extends Element> @Nullable T visitLeft2Right(@NonNull Class<T> pivotClass, @NonNull ElementCS csElement) {
-		Element element = null;
-		try {
-			element = csElement.accept(left2RightVisitor);
-		} catch (Throwable e) {
-			@NonNull String message = String.valueOf(e);
-			addError(csElement, message);
-		}
-		if (element == null) {
-			return null;
-		}
-		if (!pivotClass.isAssignableFrom(element.getClass())) {
-			throw new ClassCastException(element.getClass().getName() + " is not assignable to " + pivotClass.getName());
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) element;
-		return castElement;
+	public final <T extends Element>  @Nullable T visitLeft2Right(@NonNull Class<T> pivotClass, @NonNull ElementCS csElement) {
+		return left2RightVisitor.newVisit(pivotClass, csElement);
 	}
 }

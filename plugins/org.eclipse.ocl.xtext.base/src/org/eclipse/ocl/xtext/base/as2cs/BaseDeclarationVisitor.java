@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AttributeCS;
@@ -319,14 +320,12 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	public ElementCS visitTemplateParameter(@NonNull TemplateParameter object) {
 		TypeParameterCS csElement = context.refreshElement(TypeParameterCS.class, BaseCSPackage.Literals.TYPE_PARAMETER_CS, object);
 		csElement.setName(object.getName());
-		List<org.eclipse.ocl.pivot.Class> asConstrainingClasses = object.getConstrainingClasses();
+		List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtilInternal.getConstrainingClassesList(object);
 		if (asConstrainingClasses.size() > 0) {
 			List<TypedRefCS> csExtends = new ArrayList<TypedRefCS>();
-			for (org.eclipse.ocl.pivot.Class asConstrainingClass : asConstrainingClasses) {
-				if (asConstrainingClass != null) {
-					TypedRefCS typeRef = context.visitReference(TypedRefCS.class, asConstrainingClass, null);
-					csExtends.add(typeRef);
-				}
+			for (org.eclipse.ocl.pivot.@NonNull Class asConstrainingClass : asConstrainingClasses) {
+				TypedRefCS typeRef = context.visitReference(TypedRefCS.class, asConstrainingClass, PivotUtil.getContainingNamespace(object));
+				csExtends.add(typeRef);
 			}
 			PivotUtilInternal.refreshList(csElement.getOwnedExtends(), csExtends);
 		}

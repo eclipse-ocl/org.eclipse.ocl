@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
@@ -27,7 +28,9 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -110,15 +113,15 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	protected static class LambdaContinuation extends SingleContinuation<LambdaTypeCS>
 	{
 		private static @NonNull Dependency @NonNull [] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
-			TypedRefCS ownedContextType = ClassUtil.nonNullState(csElement.getOwnedContextType());
-			TypedRefCS ownedResultType = ClassUtil.nonNullState(csElement.getOwnedResultType());
+			TypedRefCS ownedContextType = Objects.requireNonNull(csElement.getOwnedContextType());
+			TypedRefCS ownedResultType = Objects.requireNonNull(csElement.getOwnedResultType());
 			List<TypedRefCS> csParameterTypes = csElement.getOwnedParameterTypes();
 			int iMax = csParameterTypes.size();
 			@NonNull Dependency @NonNull [] dependencies = new @NonNull Dependency[2 + iMax];
 			dependencies[0] = new PivotDependency(ownedContextType);
 			dependencies[1] = new PivotDependency(ownedResultType);
 			for (int i = 0; i < iMax; i++) {
-				TypedRefCS csParameterType = ClassUtil.nonNullState(csParameterTypes.get(i));
+				TypedRefCS csParameterType = Objects.requireNonNull(csParameterTypes.get(i));
 				dependencies[i+2] = new PivotDependency(csParameterType);
 			}
 			return dependencies;
@@ -134,6 +137,8 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			Type resultType = PivotUtil.getPivot(Type.class, csElement.getOwnedResultType());
 			String name = csElement.getName();
 			if ((contextType != null) && (resultType != null) && (name != null)) {
+				CompleteModelInternal completeModel = context.getMetamodelManager().getCompleteModel();
+				Orphanage orphanage = completeModel.getOrphanage();
 				List<@NonNull Type> parameterTypes = new ArrayList<>();
 				for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
 					Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
@@ -141,7 +146,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						parameterTypes.add(parameterType);
 					}
 				}
-				LambdaType lambdaType = context.getMetamodelManager().getCompleteModel().getLambdaType(name, contextType, parameterTypes, resultType, null);
+				LambdaType lambdaType = completeModel.getLambdaType(name, contextType, parameterTypes, resultType, null);
 				context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 			}
 			return null;
@@ -324,7 +329,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						asExtends.add(asExtend);
 					}
 				}
-				PivotUtilInternal.refreshList(pivotElement.getConstrainingClasses(), asExtends);
+				PivotUtilInternal.refreshList(PivotUtilInternal.getConstrainingClassesList(pivotElement), asExtends);
 			}
 			return null;
 		}
@@ -479,11 +484,11 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
+			EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
 			Type pivotType = csElement.getReferredType();
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
 				if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
-					EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
 					org.eclipse.ocl.pivot.Class mapClass = environmentFactory.getStandardLibrary().getMapType();
 					MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, entryClass);
 					mapType.setEntryClass(entryClass);
