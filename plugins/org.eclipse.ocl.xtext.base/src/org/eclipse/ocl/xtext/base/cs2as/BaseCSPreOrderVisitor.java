@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -31,12 +32,14 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -142,9 +145,18 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				List<@NonNull Type> parameterTypes = new ArrayList<>();
 				for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
 					Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
+					if (parameterType instanceof TemplateParameter) {
+						parameterType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)parameterType);
+					}
 					if (parameterType != null) {
 						parameterTypes.add(parameterType);
 					}
+				}
+				if (contextType instanceof TemplateParameter) {
+					contextType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)contextType);
+				}
+				if (resultType instanceof TemplateParameter) {
+					resultType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)resultType);
 				}
 				LambdaType lambdaType = completeModel.getLambdaType(name, contextType, parameterTypes, resultType, null);
 				context.installPivotTypeWithMultiplicity(lambdaType, csElement);
@@ -393,7 +405,11 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						}
 					}
 				}
-				TupleType tupleType = context.getMetamodelManager().getCompleteModel().getTupleType(name, parts, null);
+				Namespace namespace = ElementUtil.basicGetContainingNamespace(csElement);
+				TemplateParameterSubstitutions templateSpecialization = namespace != null ? TemplateSpecialization.basicGetTemplateSpecialization(namespace) : null;
+			//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(namespace);
+			//	TemplateParameterSubstitutions templateParameterSubstitutions = new BasicTemplateSpecialization(namespace, templateParameterization);
+				TupleType tupleType = context.getMetamodelManager().getCompleteModel().getTupleType(name, parts, templateSpecialization);			// XXX pass parameterization from ancestral scope
 				context.installPivotTypeWithMultiplicity(tupleType, csElement);
 				List<Property> tupleParts = tupleType.getOwnedProperties();
 				for (TuplePartCS csTuplePart : csElement.getOwnedParts()) {
@@ -496,6 +512,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					return null;
 				}
 			}
+			pivotType = context.getNormalizedType(pivotType);
 			context.installPivotTypeWithMultiplicity(pivotType, csElement);
 			return null;
 		}

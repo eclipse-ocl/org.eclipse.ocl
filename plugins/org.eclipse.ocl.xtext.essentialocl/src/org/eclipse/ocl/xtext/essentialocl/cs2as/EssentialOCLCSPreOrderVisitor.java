@@ -154,6 +154,8 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				Boolean valuesAreNullFree = context.isRequired(csValueType);
 				Type keyType = PivotUtil.getPivot(Type.class, csKeyType);
 				Type valueType = PivotUtil.getPivot(Type.class, csValueType);
+				keyType = context.getNormalizedType(keyType);
+				valueType = context.getNormalizedType(valueType);
 				if ((keyType != null) && (valueType != null)) {
 					type = metamodelManager.getMapType(name, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
 				}

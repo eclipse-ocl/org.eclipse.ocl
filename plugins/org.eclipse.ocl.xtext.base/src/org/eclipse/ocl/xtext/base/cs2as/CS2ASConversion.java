@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -608,7 +609,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return newPivotElements;
 	}
 
-/*	public @Nullable Type getNormalizedType(@Nullable Type asType) {
+	public @Nullable Type getNormalizedType(@Nullable Type asType) {
 		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
 			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
 			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
@@ -622,7 +623,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 		}
 		return asType;
-	} */
+	}
 
 	/**
 	 * Return true if asTemplateParameter should be normalized to a TemplateParamterType.
@@ -1338,6 +1339,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			else {
 				Type pivotActualParameter = PivotUtil.getPivot(Type.class, csActualParameter);
+				pivotActualParameter = getNormalizedType(pivotActualParameter);
 				templateParameterSubstitution.setActual(pivotActualParameter);
 			}
 			converter.installPivotDefinition(csTemplateParameterSubstitution, templateParameterSubstitution);
@@ -1394,6 +1396,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			if (unspecializedPivotElement instanceof CollectionType) {
 				TemplateParameterSubstitutionCS csTemplateParameterSubstitution = ownedTemplateBinding.getOwnedSubstitutions().get(0);
 				Type templateArgument = PivotUtil.getPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
+				templateArgument = getNormalizedType(templateArgument);
 				boolean isNullFree = true;
 				MultiplicityCS csMultiplicity = ownedTemplateBinding.getOwnedMultiplicity();
 				if (csMultiplicity != null) {
@@ -1410,7 +1413,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 						if (templateArgument instanceof TemplateParameter) {
 							boolean canBeNormalized = canBeNormalized((TemplateParameter)templateArgument);
 							if (canBeNormalized) {
-						//		templateArgument = Orphanage.getNormalizedTemplateParameter(environmentFactory.getCompleteModel().getOrphanage(), (TemplateParameter)templateArgument);
+								templateArgument = Orphanage.getNormalizedTemplateParameter(environmentFactory.getCompleteModel().getOrphanage(), (TemplateParameter)templateArgument);
 							}
 						}
 
