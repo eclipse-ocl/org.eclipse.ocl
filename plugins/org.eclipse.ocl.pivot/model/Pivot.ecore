@@ -1907,6 +1907,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-NavigationCallExp-qualifiers"
         name="qualifiers" upperBound="-1" eType="#T-pivot-OCLExpression"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NormalizedTemplateParameter"
+      name="NormalizedTemplateParameter" eSuperTypes="#T-pivot-TemplateParameter">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A NormalizedTemplateParameter is normalized to its position in the TemplateableElement TemplateParameter hierarchy. It has no lower bound (other than the implicit OclAny). It avoids specializing operations and iterations for each actual type."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-NormalizedTemplateParameter-index"
+        name="index" eType="#T-pivot-Integer" changeable="false" transient="true"
+        defaultValueLiteral="-1" derived="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NullLiteralExp" name="NullLiteralExp"
       eSuperTypes="#T-pivot-PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NumericLiteralExp" name="NumericLiteralExp"

@@ -390,6 +390,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull NormalizedTemplateParameter object) {
+		return delegate.visitNormalizedTemplateParameter(object);
+	}
+
+	@Override
 	public R visitNullLiteralExp(org.eclipse.ocl.pivot.@NonNull NullLiteralExp object) {
 		return delegate.visitNullLiteralExp(object);
 	}

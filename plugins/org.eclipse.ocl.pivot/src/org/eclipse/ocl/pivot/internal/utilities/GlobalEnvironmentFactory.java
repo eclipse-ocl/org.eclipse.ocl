@@ -162,11 +162,9 @@ public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 	public void addExternal2AS(@NonNull External2AS external2as) {
 		super.addExternal2AS(external2as);
 		Resource esResource = external2as.getResource();
-		if (esResource != null) {
-			UnloadResourceAdapter adapter = new UnloadResourceAdapter();
-			esResource.eAdapters().add(adapter);
-			addListener(adapter);
-		}
+		UnloadResourceAdapter adapter = new UnloadResourceAdapter();
+		esResource.eAdapters().add(adapter);
+		addListener(adapter);
 	}
 
 	public void addListener(@NonNull Listener listener) {

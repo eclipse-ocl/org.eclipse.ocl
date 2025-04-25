@@ -40,7 +40,7 @@ public interface TemplateParameterSubstitutions
 	 * Install actualType as the resolutions of formalTemplateParameter, returning the highest common type of actualType
 	 * and any pre-existing resolution.
 	 */
-	@NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType);
+	@Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType);
 
 	public static final @NonNull TemplateParameterSubstitutions EMPTY = new Empty();
 

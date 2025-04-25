@@ -114,6 +114,7 @@ public interface TypedElement extends NamedElement {
 	 *
 	 * @since 1.18
 	 */
+	@Deprecated /* @deprecated no longer different to getTypeId() */
 	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
 
 	/**
