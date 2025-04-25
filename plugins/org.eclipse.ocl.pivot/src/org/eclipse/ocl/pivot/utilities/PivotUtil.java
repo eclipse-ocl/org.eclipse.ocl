@@ -229,6 +229,18 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.24
+	 */
+	public static @Nullable Namespace basicGetContainingNamespace(@NonNull EObject element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Namespace) {
+				return (Namespace)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
 	 *
 	 * @since 1.14
@@ -284,6 +296,21 @@ public class PivotUtil
 			templateParameter = (TemplateParameter) pivotType;
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.24
+	 */
+	public static @Nullable Operation basicGetReferredOperation(@NonNull CallExp callExp) {
+		if (callExp instanceof LoopExp) {
+			return ((LoopExp)callExp).getReferredIteration();
+		}
+		else if (callExp instanceof OperationCallExp) {
+			return ((OperationCallExp)callExp).getReferredOperation();
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**

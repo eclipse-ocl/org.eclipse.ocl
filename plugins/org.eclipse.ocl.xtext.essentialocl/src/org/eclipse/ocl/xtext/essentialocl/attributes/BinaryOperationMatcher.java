@@ -11,22 +11,30 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.attributes;
 
+import java.util.Objects;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.cs2as.BaseCSLeft2RightVisitor.CS2ASContext;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 
 public class BinaryOperationMatcher extends AbstractOperationMatcher
 {
 	protected final @NonNull OCLExpression asArgument;
 
+	public BinaryOperationMatcher(@NonNull CS2ASContext cs2asContext, @Nullable Type sourceType, @Nullable ExpCS csArgument) {
+		super(cs2asContext, sourceType);
+		this.asArgument = Objects.requireNonNull(PivotUtil.getPivot(OCLExpression.class, csArgument));
+	}
+
+	@Deprecated /* @deprecated pass CS2ASContext */
 	public BinaryOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @Nullable ExpCS csArgument) {
 		super(environmentFactory, sourceType, null);
-		this.asArgument = ClassUtil.nonNullState(PivotUtil.getPivot(OCLExpression.class, csArgument));
+		this.asArgument = Objects.requireNonNull(PivotUtil.getPivot(OCLExpression.class, csArgument));
 		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 

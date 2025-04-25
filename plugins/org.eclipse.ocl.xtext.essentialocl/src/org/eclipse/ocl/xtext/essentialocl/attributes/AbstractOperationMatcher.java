@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.xtext.base.cs2as.BaseCSLeft2RightVisitor.CS2ASContext;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCSLeft2RightVisitor.Invocations;
 
 public abstract class AbstractOperationMatcher implements OperationArguments
@@ -86,12 +87,21 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		}
 	};
 
+	protected @Nullable CS2ASContext cs2asContext;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @Nullable Type sourceType;
 	private @Nullable List<@NonNull Operation> ambiguities = null;
 
+	protected AbstractOperationMatcher(@NonNull CS2ASContext cs2asContext, @Nullable Type sourceType) {
+		this.cs2asContext = cs2asContext;
+		this.environmentFactory = (EnvironmentFactoryInternal)cs2asContext.getEnvironmentFactory();
+		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.sourceType = sourceType;// != null ? PivotUtil.getBehavioralType(sourceType) : null;		// FIXME redundant
+	}
+
 	protected AbstractOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
+		this.cs2asContext = null;
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.sourceType = sourceType;// != null ? PivotUtil.getBehavioralType(sourceType) : null;		// FIXME redundant
