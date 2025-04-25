@@ -648,7 +648,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		}
 		if (elementType != null) {
 			PivotUtil.debugWellContainedness(elementType);
-			TypedRefCS typeRef = visitReference(TypedRefCS.class, elementType, null);
+			TypedRefCS typeRef = visitReference(TypedRefCS.class, elementType, PivotUtil.getContainingNamespace(object));
 			csElement.setOwnedType(typeRef);
 		}
 		else {
