@@ -292,6 +292,12 @@ public class MonikerTests extends XtextTestCase
 		doMonikerTestOCLstdlib(getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 	}
 
+	public void testMoniker_OCL_2_5_oclstdlib() throws IOException, InterruptedException {
+		//		BaseScopeProvider.LOOKUP.setState(true);
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		doMonikerTestOCLstdlib(getTestModelURI("platform:/resource/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib"));
+	}
+
 	//	public void testMoniker_OCL_2_3_oclstdlib() throws IOException, InterruptedException {
 	//		BaseScopeProvider.LOOKUP.setState(true);
 	//		doMonikerTestOCLstdlib("OCL-2.3x");
