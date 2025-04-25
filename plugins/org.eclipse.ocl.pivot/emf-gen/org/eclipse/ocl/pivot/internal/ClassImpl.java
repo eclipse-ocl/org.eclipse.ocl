@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -68,7 +69,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1134,7 +1134,6 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	private TypeId typeId = null;
-	private TypeId normalizedTypeId = null;
 	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
 	@Override
@@ -1157,6 +1156,7 @@ implements org.eclipse.ocl.pivot.Class {
 	/**
 	 * @since 1.18
 	 */
+	@Deprecated /* @deprecated no longer different to computeId() */
 	public @NonNull TypeId computeNormalizedId() {
 		return computeId();
 	}
@@ -1179,7 +1179,7 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull String getMetaTypeName() {
-		return ClassUtil.nonNullState(eClass().getName());
+		return Objects.requireNonNull(eClass().getName());
 	}
 
 	@Override
@@ -1339,23 +1339,6 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull TypeId getNormalizedTypeId() {
-		TypeId normalizedTypeId2 = normalizedTypeId;
-		if (normalizedTypeId2 == null) {
-			synchronized (this) {
-				normalizedTypeId2 = normalizedTypeId;
-				if (normalizedTypeId2 == null) {
-					normalizedTypeId = normalizedTypeId2 = computeNormalizedId();
-				}
-			}
-		}
-		return normalizedTypeId2;
-	}
-
-	/**
 	 * @since 1.23
 	 */
 	@Override
@@ -1452,9 +1435,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
-		if ("EStructuralFeature".equals(newName)) {
-			getClass();
-		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {

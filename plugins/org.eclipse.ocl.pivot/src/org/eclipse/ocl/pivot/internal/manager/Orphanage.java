@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -34,7 +35,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -42,7 +46,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -396,7 +399,7 @@ public class Orphanage extends PackageImpl
 		}
 	}
 
-	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
+	public static final @NonNull URI ORPHANAGE_URI = Objects.requireNonNull(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 	@Deprecated /* @deprecated The global Orphanage is never used */
 	private static Orphanage ORPHAN_PACKAGE = null;
 
@@ -410,6 +413,26 @@ public class Orphanage extends PackageImpl
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @Nullable NormalizedTemplateParameter basicGetNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
+		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();
+		List<TemplateParameter> asTemplatedParameters;
+		org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(orphanClasses, PivotConstants.ORPHANAGE_NAME);
+		if (orphanClass == null) {
+			return null;
+		}
+		TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
+		asTemplatedParameters = asTemplateSignature.getOwnedParameters();
+		if (asTemplatedParameters.size() <= index) {
+			return null;
+		}
+		TemplateParameter templateParameter = asTemplatedParameters.get(index);
+		assert templateParameter != null;
+		return (NormalizedTemplateParameter)templateParameter;
 	}
 
 	/**
@@ -459,6 +482,41 @@ public class Orphanage extends PackageImpl
 			ORPHAN_PACKAGE.dispose();
 			ORPHAN_PACKAGE = null;
 		}
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @NonNull TemplateParameter templateParameter) {
+		int index = templateParameter.getTemplateParameterId().getIndex();
+		return getNormalizedTemplateParameter(orphanPackage, index);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
+		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();
+		List<TemplateParameter> asTemplatedParameterTypes;
+		org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(orphanClasses, PivotConstants.ORPHANAGE_NAME);
+		if (orphanClass == null) {
+			orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
+			orphanClass.setOwningPackage(orphanPackage);
+			TemplateSignature asTemplateSignature = PivotUtil.createTemplateSignature(orphanClass);
+			asTemplatedParameterTypes = asTemplateSignature.getOwnedParameters();
+		}
+		else {
+			TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
+			asTemplatedParameterTypes = asTemplateSignature.getOwnedParameters();
+		}
+		while (asTemplatedParameterTypes.size() <= index) {
+			NormalizedTemplateParameter normalizedTemplateParameter = PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
+			normalizedTemplateParameter.setName(PivotConstants.ORPHANAGE_NAME + asTemplatedParameterTypes.size());
+			asTemplatedParameterTypes.add(normalizedTemplateParameter);
+		}
+		TemplateParameter templateParameter = asTemplatedParameterTypes.get(index);
+		assert templateParameter != null;
+		return (NormalizedTemplateParameter)templateParameter;
 	}
 
 	/**

@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
@@ -569,20 +568,6 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	@Override
 	public @NonNull TypeId computeId() {
 		return IdManager.getLambdaTypeId(this);
-	}
-
-	@Override
-	public @NonNull TypeId computeNormalizedId() {
-		List<Type> parameterTypes = getParameterType();
-		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[2+parameterTypes.size()];
-		typeIds[0] = getContextType().getNormalizedTypeId();
-		typeIds[1] = getResultType().getNormalizedTypeId();
-		for (int i = 0; i < parameterTypes.size(); i++) {
-			typeIds[2+i] = parameterTypes.get(i).getNormalizedTypeId();
-		}
-		ParametersId parametersId = IdManager.getParametersId(typeIds);
-		String name = NameUtil.getSafeName(this);
-		return IdManager.getLambdaTypeId(name, parametersId);
 	}
 
 	@Override

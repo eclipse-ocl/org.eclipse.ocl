@@ -53,7 +53,11 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -355,6 +359,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _NamedElement = createClass(PivotPackage.Literals.NAMED_ELEMENT);
 		private final @NonNull Class _Namespace = createClass(PivotPackage.Literals.NAMESPACE);
 		private final @NonNull Class _NavigationCallExp = createClass(PivotPackage.Literals.NAVIGATION_CALL_EXP);
+		private final @NonNull Class _NormalizedTemplateParameter = createClass(PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER);
 		private final @NonNull Class _NullLiteralExp = createClass(PivotPackage.Literals.NULL_LITERAL_EXP);
 		private final @NonNull Class _NumericLiteralExp = createClass(PivotPackage.Literals.NUMERIC_LITERAL_EXP);
 		private final @NonNull Class _OCLExpression = createClass(PivotPackage.Literals.OCL_EXPRESSION);
@@ -981,6 +986,10 @@ public class OCLmetamodel extends ASResourceImpl
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_FeatureCallExp);
+			ownedClasses.add(type);
+			type = _NormalizedTemplateParameter;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_TemplateParameter);
 			ownedClasses.add(type);
 			type = _NullLiteralExp;
 			superClasses = type.getSuperClasses();
@@ -2566,6 +2575,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Namespace_Import_importedNamespace = createProperty("Import", _Bag_Import_F);
 		private final @NonNull Property pr_NavigationCallExp_navigationSource = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE, _Property);
 		private final @NonNull Property pr_NavigationCallExp_qualifiers = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, _OrderedSet_OCLExpression_T);
+		private final @NonNull Property pr_NormalizedTemplateParameter_index = createProperty(PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER__INDEX, _Integer);
 		private final @NonNull Property pr_OCLExpression_typeValue = createProperty(PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE, _Type);
 		private final @NonNull Property pr_OCLExpression_CallExp_ownedSource = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_OCLExpression_CollectionItem_ownedItem = createProperty("CollectionItem", _CollectionItem);
@@ -3570,6 +3580,15 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_NavigationCallExp_qualifiers);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_NavigationCallExp_qualifiers);
+
+			ownedProperties = _NormalizedTemplateParameter.getOwnedProperties();
+			ownedProperties.add(property = pr_NormalizedTemplateParameter_index);
+			property.setIsDerived(true);
+			property.setIsReadOnly(true);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setIsTransient(true);
+			property.setDefaultValueString("-1");
 
 			ownedProperties = _OCLExpression.getOwnedProperties();
 			ownedProperties.add(property = pr_OCLExpression_typeValue);
@@ -5148,6 +5167,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_NamedElement_name, "The name of the NamedElement.");
 			installComment(_Namespace, "A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name.");
 			installComment(pr_Namespace_ownedConstraints, "Specifies a set of Constraints owned by this Namespace.");
+			installComment(_NormalizedTemplateParameter, "A NormalizedTemplateParameter is normalized to its position in the TemplateableElement TemplateParameter hierarchy. It has no lower bound (other than the implicit OclAny). It avoids specializing operations and iterations for each actual type.");
 			installComment(pr_OCLExpression_typeValue, "When oclType() returns a Class value with a known actual type, the typeValue propagates the known type.");
 			installComment(_Operation, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
 			installComment(pr_Operation_isInvalidating, "Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs.");

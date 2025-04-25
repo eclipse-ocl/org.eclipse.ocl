@@ -108,6 +108,7 @@ public interface Visitor<R>
 	R visitNamedElement(org.eclipse.ocl.pivot.@NonNull NamedElement object);
 	R visitNamespace(org.eclipse.ocl.pivot.@NonNull Namespace object);
 	R visitNavigationCallExp(org.eclipse.ocl.pivot.@NonNull NavigationCallExp object);
+	R visitNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull NormalizedTemplateParameter object);
 	R visitNullLiteralExp(org.eclipse.ocl.pivot.@NonNull NullLiteralExp object);
 	R visitNumericLiteralExp(org.eclipse.ocl.pivot.@NonNull NumericLiteralExp object);
 	R visitOCLExpression(org.eclipse.ocl.pivot.@NonNull OCLExpression object);

@@ -886,6 +886,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
+	public R visitNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull NormalizedTemplateParameter object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitNormalizedTemplateParameter(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
 	public R visitNullLiteralExp(org.eclipse.ocl.pivot.@NonNull NullLiteralExp object) {
 		@Nullable P prologue = preVisit(object);
 		try {

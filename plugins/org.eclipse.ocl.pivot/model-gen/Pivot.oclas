@@ -668,6 +668,11 @@
       <ownedProperties xmi:id="Ts86V" isRequired="false" name="navigationSource" opposite="#6EjLW" type="#Gm0Mj"/>
       <ownedProperties xmi:id="ND3QN" name="qualifiers" opposite="#f4Az4" type="#Ftslp"/>
     </ownedClasses>
+    <ownedClasses xmi:id="JmIz4" name="NormalizedTemplateParameter" superClasses="#Afray">
+      <ownedComments body="A NormalizedTemplateParameter is normalized to its position in the TemplateableElement TemplateParameter hierarchy. It has no lower bound (other than the implicit OclAny). It avoids specializing operations and iterations for each actual type."/>
+      <ownedProperties xmi:id="PjAo6" defaultValueString="-1" isDerived="true" isReadOnly="true" isRequired="false" isTransient="true"
+          name="index" type="#vCSey"/>
+    </ownedClasses>
     <ownedClasses xmi:id="Ge,OM" name="NullLiteralExp" superClasses="#mKorp"/>
     <ownedClasses xmi:id="MFRWm" isAbstract="true" name="NumericLiteralExp" superClasses="#mKorp"/>
     <ownedClasses xmi:id="BFtK4" isAbstract="true" name="OCLExpression" superClasses="#j7EI0">

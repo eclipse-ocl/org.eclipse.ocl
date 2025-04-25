@@ -81,17 +81,6 @@ public class OrderedSetTypeImpl
 	}
 
 	@Override
-	public @NonNull TypeId computeNormalizedId() {
-		if (getUnspecializedElement() == null) {
-			return TypeId.ORDERED_SET;
-		}
-		else {
-			TypeId elementTypeId = getElementType().getNormalizedTypeId();
-			return TypeId.ORDERED_SET.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
-		}
-	}
-
-	@Override
 	public boolean isOrdered() {
 		return true;
 	}

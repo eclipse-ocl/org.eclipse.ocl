@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -78,7 +77,6 @@ public interface CompleteModelInternal extends CompleteModel
 	void didRemovePartialModel(@NonNull Model partialModel);
 	@Nullable String getCompleteURI(@Nullable String nsURI);
 	@NonNull TupleTypeManager getTupleManager();
-	@NonNull Orphanage getOrphanage();
 	@NonNull StandardLibraryInternal getStandardLibrary();
 	@Override
 	@NonNull CompleteEnvironmentInternal getCompleteEnvironment();

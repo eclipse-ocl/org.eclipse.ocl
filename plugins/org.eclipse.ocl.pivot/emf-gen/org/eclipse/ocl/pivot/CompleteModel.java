@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -150,5 +151,9 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackagesWithUris();
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
+	/**
+	 * @since 1.23
+	 */
+	@NonNull Orphanage getOrphanage();
 	org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
 } // CompleteModel

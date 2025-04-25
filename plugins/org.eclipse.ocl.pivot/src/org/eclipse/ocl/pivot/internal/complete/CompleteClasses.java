@@ -204,11 +204,12 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
 			templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
 			specializedMapType.getOwnedBindings().add(templateBinding);
-			getCompleteModel().resolveSuperClasses(specializedMapType, unspecializedType);
+			CompleteModelInternal completeModel = getCompleteModel();
+			completeModel.resolveSuperClasses(specializedMapType, unspecializedType);
 			specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
 			specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 			specializedMapType.setUnspecializedElement(unspecializedType);
-			Orphanage orphanage = getCompleteModel().getOrphanage();
+			Orphanage orphanage = completeModel.getOrphanage();
 			specializedMapType.setOwningPackage(orphanage);
 			specializedMapType.setEntryClass(typeParameters.getEntryClass());
 			return specializedMapType;
