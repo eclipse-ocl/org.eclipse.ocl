@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -423,6 +424,13 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visitNamedElement(@NonNull NamedElement object) {
 		context.appendParent(object, MONIKER_SCOPE_SEPARATOR);
+		context.appendName(object);
+		return true;
+	}
+
+	@Override
+	public Object visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {
+		context.append(TEMPLATE_PARAMETER_PREFIX);
 		context.appendName(object);
 		return true;
 	}

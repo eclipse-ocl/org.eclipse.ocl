@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -46,24 +45,11 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  */
 public class TupleTypeManager
 {
+	@Deprecated /* @deprecated unhelpful functionality */
 	protected static class TupleIdResolver extends PivotIdResolver
 	{
-		private final TemplateParameterReferencesVisitor referencesVisitor;
-
-		private TupleIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory,
-				TemplateParameterReferencesVisitor referencesVisitor) {
+		private TupleIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
 			super(environmentFactory);
-			this.referencesVisitor = referencesVisitor;
-		}
-
-		@Override
-		public @NonNull Element visitTemplateParameterId(@NonNull TemplateParameterId id) {
-			int index = id.getIndex();
-			TemplateParameter templateParameter = referencesVisitor.templateParameters.get(index);
-			if (templateParameter != null) {
-				return templateParameter;
-			}
-			return super.visitTemplateParameterId(id);
 		}
 	}
 
@@ -91,23 +77,15 @@ public class TupleTypeManager
 	}
 
 	/**
-	 * The TemplateParameterReferencesVisitor remembers the formal TemplateParameter for re-uyse during Tuple instantiation.
+	 * The TemplateParameterReferencesVisitor remembers the formal TemplateParameter for re-use during Tuple instantiation.
 	 */
+	@Deprecated /* @deprecated unhelpful functionality */
 	protected static class TemplateParameterReferencesVisitor extends TemplateParameterSubstitutionVisitor
 	{
 		protected final @NonNull Map<@NonNull Integer, @NonNull TemplateParameter> templateParameters = new HashMap<>();
 
 		public TemplateParameterReferencesVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, Collection<? extends Type> partValues) {
 			super(environmentFactory, null, null);
-			for (Type partValue : partValues) {
-				analyzeType(partValue, partValue);
-			}
-		}
-
-		@Override
-		public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
-			templateParameters.put(formalTemplateParameter.getTemplateParameterId().getIndex(), formalTemplateParameter);
-			return super.put(formalTemplateParameter, actualType);
 		}
 	}
 
@@ -189,8 +167,11 @@ public class TupleTypeManager
 					for (@NonNull TuplePartId partId : partIds) {
 						Type partType = idResolver.getType(partId.getTypeId());
 						Type partType2 = metamodelManager.getPrimaryType(partType);
-						Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType2);
+					//	Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType2);
+						Property property = PivotFactory.eINSTANCE.createProperty();
+						property.setName(NameUtil.getSafeName(partId));
 						ownedAttributes.add(property);
+						property.setType(partType2);			// After container to satisfy Property.setType assertIsNormalizedType
 					}
 					tupleType.getSuperClasses().add(oclTupleType);
 					tupleid2tuple2.put(tupleTypeId, tupleType);
@@ -223,7 +204,6 @@ public class TupleTypeManager
 		//	Find the outgoing template parameter references
 		// FIXME this should be more readily and reliably computed in the caller
 		@NonNull Collection<? extends Type> partValues = parts.values();
-		final TemplateParameterReferencesVisitor referencesVisitor = new TemplateParameterReferencesVisitor(metamodelManager.getEnvironmentFactory(), partValues);	// FIXME this isn't realistically extensible
 		//
 		//	Create the tuple part ids
 		//
@@ -244,11 +224,11 @@ public class TupleTypeManager
 		//	Create the tuple type id (and then specialize it)
 		//
 		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(tupleName, newPartIds);
-		PivotIdResolver pivotIdResolver = new TupleIdResolver(metamodelManager.getEnvironmentFactory(), referencesVisitor);
+		IdResolver pivotIdResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
 		//
-		//	Finally create the (specialize) tuple type
+		//	Finally create the (specialized) tuple type
 		//
-		TupleType tupleType = getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
+		TupleType tupleType = getTupleType(pivotIdResolver, tupleTypeId);
 		return tupleType;
 	}
 
@@ -279,7 +259,7 @@ public class TupleTypeManager
 				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
 				partIds.add(tuplePartId);
 			}
-			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.nonNullModel(type.getName()), partIds);
+			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(PivotUtil.getName(type), partIds);
 			specializedTupleType = getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}

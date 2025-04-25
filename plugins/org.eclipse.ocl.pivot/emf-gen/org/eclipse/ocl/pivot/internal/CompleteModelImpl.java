@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -44,6 +45,7 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -54,6 +56,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
@@ -762,7 +765,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return ClassUtil.nonNullState(environmentFactory);
+		return Objects.requireNonNull(environmentFactory);
 	}
 
 	/**
@@ -865,11 +868,23 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						Type superActual = superParameterSubstitution.getActual();
 						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
 							for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
-								if (specializedParameterSubstitution.getFormal() == superActual) {
-									Type specializedActual = ClassUtil.nonNullModel(specializedParameterSubstitution.getActual());
-									TemplateParameter superFormal = ClassUtil.nonNullModel(superParameterSubstitution.getFormal());
+								TemplateParameter specializedFormal = specializedParameterSubstitution.getFormal();
+								TemplateParameterId specializedTemplateParameterId = specializedFormal.getTemplateParameterId();
+								int specializedIndex = specializedTemplateParameterId.getIndex();
+								if (specializedFormal == superActual) {
+									Type specializedActual = Objects.requireNonNull(specializedParameterSubstitution.getActual());
+									TemplateParameter superFormal = Objects.requireNonNull(superParameterSubstitution.getFormal());
 									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
 									break;
+								}
+								else if (superActual instanceof NormalizedTemplateParameter) {
+									int superIndex = ((NormalizedTemplateParameter)superActual).getIndex();
+									if (specializedIndex == superIndex) {
+										Type specializedActual = Objects.requireNonNull(specializedParameterSubstitution.getActual());
+										TemplateParameter superFormal = Objects.requireNonNull(superParameterSubstitution.getFormal());
+										superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
+										break;
+									}
 								}
 							}
 							if (superSpecializedTemplateParameterSubstitution != null) {

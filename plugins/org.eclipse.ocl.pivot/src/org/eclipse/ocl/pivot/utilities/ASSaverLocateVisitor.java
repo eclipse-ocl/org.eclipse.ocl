@@ -146,8 +146,8 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 
 	@Override
 	public Object visitTemplateParameter(@NonNull TemplateParameter object) {
-		for (org.eclipse.ocl.pivot.Class constrainingType : object.getConstrainingClasses()) {
-			if ((constrainingType != null) && context.addSpecializingElement(object, constrainingType)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class constrainingType : PivotUtil.getConstrainingClasses(object)) {
+			if (context.addSpecializingElement(object, constrainingType)) {
 				break;
 			}
 		}

@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
@@ -49,14 +50,13 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -70,7 +70,9 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType;
+import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -593,11 +595,19 @@ public class OCLinEcoreTablesUtils
 		}
 
 		@Override
+		public Object visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter asNormalizedTemplateParameter) {
+			s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+			s.append(".");
+			s.append(PivotUtil.getName(asNormalizedTemplateParameter));
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
 			s.append("new ");
 			s.appendClassReference(null, ExecutorTupleType.class);
 			s.append("(");
-			s.appendString(ClassUtil.nonNullModel(tupleType.getName()));
+			s.appendString(Objects.requireNonNull(tupleType.getName()));
 			s.append(", ");
 			for (Property part : tupleType.getOwnedProperties()) {
 				s.append(", ");
@@ -668,7 +678,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitConstraint(@NonNull Constraint constraint) {
-			Type type = ClassUtil.nonNullModel((Type) constraint.eContainer());
+			Type type = Objects.requireNonNull((Type) constraint.eContainer());
 			s.append("_");
 			s.appendAndEncodeName(type);
 			s.append("__");
@@ -779,14 +789,14 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull GenModelHelper genModelHelper;
 
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
-		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
+		GenModel genModel = Objects.requireNonNull(genPackage.getGenModel());
 		this.useNullAnnotations = OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
 		this.metamodelManager = getMetamodelManager(genPackage);
 		this.s = new CodeGenString(metamodelManager, useNullAnnotations);
 		this.environmentFactory = metamodelManager.getEnvironmentFactory();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genPackage = genPackage;
-		this.asPackage = ClassUtil.nonNullModel(getPivotPackage(genPackage));
+		this.asPackage = Objects.requireNonNull(getPivotPackage(genPackage));
 		this.declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
 		this.emitLiteralVisitor = new EmitLiteralVisitor(s, 0);
 		this.emitScopedLiteralVisitor = new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE);
@@ -1016,7 +1026,7 @@ public class OCLinEcoreTablesUtils
 		else {
 			//		    List<Constraint> constraints = operation.getOwnedRule();
 			//			if (constraints.size() > 0) {
-			//				return getQualifiedBodiesClassName(ClassUtil.nonNullModel(operation.getOwningType())) + "._" + operation.getName() + "_" + constraints.get(0).getStereotype() + "_.INSTANCE";
+			//				return getQualifiedBodiesClassName(Objects.requireNonNull(operation.getOwningType())) + "._" + operation.getName() + "_" + constraints.get(0).getStereotype() + "_.INSTANCE";
 			//			}
 			//			else {
 			return "null";
@@ -1048,22 +1058,20 @@ public class OCLinEcoreTablesUtils
 		if (templateParameter != null) {
 			TemplateableElement template = templateParameter.getOwningSignature().getOwningElement();
 			if (template instanceof Operation) {
-				s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel(((Operation) template).getOwningClass())));
+				s.append(AbstractGenModelHelper.encodeName(Objects.requireNonNull(((Operation) template).getOwningClass())));
 				s.append("_");
 			}
-			s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel((NamedElement) template)));
+			s.append(AbstractGenModelHelper.encodeName(Objects.requireNonNull((NamedElement) template)));
 			s.append("_");
 		}
 		s.append(AbstractGenModelHelper.encodeName(element));
 		if (element instanceof TemplateableElement) {
-			List<TemplateBinding> templateBindings = ((TemplateableElement)element).getOwnedBindings();
-			if (templateBindings.size() > 0) {
+			BasicTemplateSpecialization templateSpecialization = TemplateSpecialization.basicGetTemplateSpecialization(element);
+			if (templateSpecialization != null) {
 				s.append("_");
-				for (TemplateBinding templateBinding : templateBindings) {
-					for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-						s.append("_");
-						getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(templateParameterSubstitution.getActual()));
-					}
+				for (@NonNull Type actual : templateSpecialization) {
+					s.append("_");
+					getLegacyTemplateBindingsName(s, actual);
 				}
 				s.append("__");
 			}
@@ -1071,14 +1079,13 @@ public class OCLinEcoreTablesUtils
 		if (element instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)element;
 			s.append("_");
-			getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getContextType()));
-			for (/*@NonNull*/ Type type : lambdaType.getParameterType()) {
-				assert type != null;
+			getLegacyTemplateBindingsName(s, PivotUtil.getContextType(lambdaType));
+			for (@NonNull Type type : PivotUtil.getParameterType(lambdaType)) {
 				s.append("_");
 				getLegacyTemplateBindingsName(s, type);
 			}
 			s.append("_");
-			getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getResultType()));
+			getLegacyTemplateBindingsName(s, PivotUtil.getResultType(lambdaType));
 		}
 	}
 
@@ -1121,8 +1128,8 @@ public class OCLinEcoreTablesUtils
 		for (org.eclipse.ocl.pivot.Class aClass : results.keySet()) {
 			Integer aDepth = results.get(aClass);
 			assert aDepth != null;
-			for (Operation op : getOperations(ClassUtil.nonNullState(aClass))) {
-				if (baseSignature.equals(getSignature(ClassUtil.nonNullState(op))) && (aDepth > bestDepth)) {
+			for (Operation op : getOperations(Objects.requireNonNull(aClass))) {
+				if (baseSignature.equals(getSignature(Objects.requireNonNull(op))) && (aDepth > bestDepth)) {
 					bestDepth = aDepth;
 					best = op;
 				}
@@ -1243,21 +1250,19 @@ public class OCLinEcoreTablesUtils
 		return name2;
 	}
 	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
-		TemplateParameter templateParameter = element.isTemplateParameter();
-		if (templateParameter != null) {
-			s.append(Integer.toString(templateParameter.getTemplateParameterId().getIndex()));
-			s.append("_");
-		}
+	//	TemplateParameter templateParameter = element.isTemplateParameter();
+	//	if (templateParameter != null) {
+	//		s.append(Integer.toString(templateParameter.getTemplateParameterId().getIndex()));
+	//		s.append("_");
+	//	}
 		s.append(AbstractGenModelHelper.encodeName(element));
 		if (element instanceof TemplateableElement) {
-			List<TemplateBinding> templateBindings = ((TemplateableElement)element).getOwnedBindings();
-			if (templateBindings.size() > 0) {
+			BasicTemplateSpecialization templateSpecialization = TemplateSpecialization.basicGetTemplateSpecialization(element);
+			if (templateSpecialization != null) {
 				s.append("_");
-				for (TemplateBinding templateBinding : templateBindings) {
-					for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-						s.append("_");
-						getTemplateBindingsName(s, ClassUtil.nonNullModel(templateParameterSubstitution.getActual()));
-					}
+				for (@NonNull Type actual : templateSpecialization) {
+					s.append("_");
+					getTemplateBindingsName(s, actual);
 				}
 				s.append("__");
 			}
@@ -1265,14 +1270,14 @@ public class OCLinEcoreTablesUtils
 		if (element instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)element;
 			s.append("_");
-			getTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getContextType()));
+			getTemplateBindingsName(s, PivotUtil.getContextType(lambdaType));
 			for (/*@NonNull*/ Type type : lambdaType.getParameterType()) {
 				assert type != null;
 				s.append("_");
 				getTemplateBindingsName(s, type);
 			}
 			s.append("_");
-			getTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getResultType()));
+			getTemplateBindingsName(s, PivotUtil.getResultType(lambdaType));
 		}
 	}
 

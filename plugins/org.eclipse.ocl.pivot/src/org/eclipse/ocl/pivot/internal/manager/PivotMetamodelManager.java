@@ -1150,6 +1150,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
 			thisClass = PivotUtil.createNamedElement(asClass);
 			theseClasses.add(thisClass);
+			completeClass.getPartialClasses().add(thisClass);			// XXX fudge why no p[ackage
 		}
 		return thisClass;
 	}
@@ -1838,6 +1839,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (name == null) {
 			return;
 		}
+		thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
 		// If there is no implicit property with the implicit name, create one
 		//   result a pair of mutual opposites
 		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
@@ -2301,12 +2303,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
-	 * Return the specialized form of type analyzing expr to determine the formal to actual parameter mappings
+	 * Return the specialized form of type analyzing actualExp to determine the formal to actual parameter mappings
 	 * using selfType as the value of OclSelf.
 	 */
-	public @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull Type selfType, @Nullable Type selfTypeValue) {
+	public @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull Type selfType, @Nullable Type selfTypeValue) {
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
-		return TemplateParameterSubstitutionVisitor.specializeType(type, callExp, environmentFactory, selfType, null);
+		return TemplateParameterSubstitutionVisitor.specializeType(type, actualExp, environmentFactory, selfType, null);
 	}
 
 	@Override

@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  * Library, and known type equivalences installed by invoking installEquivalence() for each. getSpecialisation may then be used
  * to resolve the type.
  */
+@Deprecated /* @deprecated no longer used - merged with TemplateSpecialization / TemplateParameterSubstitutionVisitor */
 public class TemplateSpecialisation
 {
 	/**

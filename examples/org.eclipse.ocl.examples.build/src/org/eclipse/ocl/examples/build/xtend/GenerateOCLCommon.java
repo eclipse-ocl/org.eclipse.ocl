@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
@@ -311,7 +312,11 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			TemplateSignature asTemplateSignature = asTemplateableElement.getOwnedSignature();
 			if (asTemplateSignature != null) {
-				sortedTemplateParameters.addAll(asTemplateSignature.getOwnedParameters());
+				for (TemplateParameter asTemplateParameter : asTemplateSignature.getOwnedParameters()) {
+					if (!(asTemplateParameter instanceof NormalizedTemplateParameter)) {
+						sortedTemplateParameters.add(asTemplateParameter);
+					}
+				}
 			}
 			TemplateableElement unspecializedElement = asTemplateableElement.getUnspecializedElement();
 			if (unspecializedElement instanceof NamedElement) {
@@ -342,6 +347,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
+			if (Orphanage.isOrphanage(asPackage) && PivotConstants.ORPHANAGE_NAME.equals(asClass.getName())) {
+				return null;
+			}
 			List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = package2sortedClasses.get(asPackage);
 			if (sortedClasses == null) {
 				sortedClasses = new ArrayList<>();
@@ -1131,6 +1139,20 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return allElements;
 	}
 
+	protected @NonNull List<@NonNull NormalizedTemplateParameter> getNormalizedTemplateParameters(@NonNull Model model) {
+		List<@NonNull NormalizedTemplateParameter> normalizedTemplateParameters = new ArrayList<>();
+		org.eclipse.ocl.pivot.Package orphanage = Orphanage.basicGetLocalOrphanPackage(model);
+		assert orphanage != null;
+		NormalizedTemplateParameter normalizedTemplateParameter;
+		while ((normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size())) != null) {
+			normalizedTemplateParameters.add(normalizedTemplateParameter);
+		}
+		while (normalizedTemplateParameters.size() < 4) {
+			normalizedTemplateParameters.add(Orphanage.getNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size()));			// Define four in case in transition from no NormalizedTemplateParameters.
+		}
+		return normalizedTemplateParameters;
+	}
+
 	protected String getSymbolName(@NonNull EObject elem) {
 		String name = nameQueries.basicGetSymbolName(elem);
 		if (name != null) {
@@ -1168,6 +1190,18 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		//		throw new IllegalStateException("No external name defined for " + EcoreUtil.getURI(elem));
 	}
 
+	protected @NonNull String getTemplateIndex(Type type) {
+		if (type instanceof NormalizedTemplateParameter) {
+			return getSymbolName(type);
+		}
+		else if (type instanceof TemplateParameter) {
+			return "_$$" + ((TemplateParameter)type).getTemplateParameterId().getIndex();
+		}
+		else {
+			return getSymbolName(type);
+		}
+	}
+
 	protected abstract @NonNull Model getThisModel();
 
 	protected boolean hasComplements(@NonNull Type type) {
@@ -1192,7 +1226,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	/**
-	 * Assign a unique symbol name for each localized orphan and assign the same symbol name to the shared orphan#
+	 * Assign a unique symbol name for each localized orphan and assign the same symbol name to the shared orphan
 	 * from which the local was cloned so that synthesis of references to the shared element are serialized as if the
 	 * local copy had been corrupted to point at the local.
 	 */
@@ -1243,6 +1277,11 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			else if (localOrphan instanceof TemplateParameterSubstitution) {
 			}
+			else if (localOrphan instanceof NormalizedTemplateParameter) {
+				s.append(partialName(localOrphan));
+			}
+			else if (localOrphan instanceof TemplateSignature) {
+			}
 			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
 				s.append("orphanClass");
 			}
@@ -1260,8 +1299,11 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					nameQueries.putSymbolName(sharedOrphan, symbolName);
 				}
 				else if (localOrphan == localOrphanage) {
-					Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getOrphanage());
+					Orphanage sharedOrphanage = environmentFactory.getOrphanage();
 					nameQueries.putSymbolName(sharedOrphanage, symbolName);
+				}
+				else if (localOrphan.eContainer() == localOrphanage) {
+					//
 				}
 				else {
 					System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
