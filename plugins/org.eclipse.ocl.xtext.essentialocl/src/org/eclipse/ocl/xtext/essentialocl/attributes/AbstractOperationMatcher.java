@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -267,12 +268,25 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		if (iSize != candidateParameters.size()) {
 			return null;
 		}
-		TemplateParameterSubstitutions bindings = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, null, candidateOperation);
+		TemplateParameterSubstitutions bindings = null;
+		if (TemplateParameterSubstitutionVisitor.hasTemplateParameters(candidateOperation)) {
+			TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.createVisitor(candidateOperation, environmentFactory, sourceType, null);
+			if (visitor != null) {
+				bindings = visitor;
+				visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);
+			}
+		}
+		if (bindings == null) {
+			bindings = TemplateParameterSubstitutions.EMPTY;
+		}
 		for (int i = 0; i < iSize; i++) {
 			Parameter candidateParameter = candidateParameters.get(i);
 			OCLExpression expression = getArgument(i);
 			Type candidateType = PivotUtilInternal.getType(candidateParameter);
 			Type expressionType = PivotUtilInternal.getType(expression);
+			if ((cs2asContext != null) && (expressionType instanceof NormalizedTemplateParameter)) {
+				expressionType = cs2asContext.resolveTemplateParameter((NormalizedTemplateParameter)expressionType);
+			}
 			if (!metamodelManager.conformsTo(expressionType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
 				boolean coerceable = false;
 				if (useCoercions) {
