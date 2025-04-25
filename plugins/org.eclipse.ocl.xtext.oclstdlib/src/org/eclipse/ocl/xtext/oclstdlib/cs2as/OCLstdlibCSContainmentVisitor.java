@@ -60,8 +60,11 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmentVisitor
 {
+	protected final @NonNull OCLstdlibCS2AS converter;
+
 	public OCLstdlibCSContainmentVisitor(@NonNull CS2ASConversion context) {
 		super(context);
+		this.converter = (OCLstdlibCS2AS)context.getConverter();
 	}
 
 	@Override
@@ -82,11 +85,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 		//
 		//	Resolve explicit instanceClass
 		//
-		String instanceClassName = null;
-		JavaClassCS implementation = csClass.getImplementation();
-		if ((implementation != null) && !implementation.eIsProxy()) {
-			instanceClassName = implementation.getName();
-		}
+		String instanceClassName = converter.resolveJavaClassCS(csClass);
 		Class<?> instanceClass = null;
 		if (instanceClassName != null) {
 			try {
