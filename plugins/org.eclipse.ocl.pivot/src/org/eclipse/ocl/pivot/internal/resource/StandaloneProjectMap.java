@@ -232,7 +232,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public static final @NonNull TracingOption PROJECT_MAP_RESOLVE = new TracingOption(PLUGIN_ID, "projectMap/resolve");
 
 	/**
-	 * Test flag that normally conforms that no attempt is made to intrerfere with global registries
+	 * Test flag that normally confirms that no attempt is made to interfere with global registries
 	 * when Eclipse is running. IT is automatically false when running standalone. It may be set false for testing.
 	 * See Bug 544187.
 	 *
