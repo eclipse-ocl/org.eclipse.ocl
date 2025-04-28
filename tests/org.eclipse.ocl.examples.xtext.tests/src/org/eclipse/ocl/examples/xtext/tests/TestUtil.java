@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.xtext.tests;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +48,12 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.AbstractPivotTestCase;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationConstraintsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
@@ -68,6 +71,7 @@ import org.eclipse.ocl.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
+import org.eclipse.uml2.uml.util.UMLUtil;
 import org.eclipse.xtext.XtextStandaloneSetup;
 import org.eclipse.xtext.util.EmfFormatter;
 
@@ -317,5 +321,75 @@ public class TestUtil
 		xmiResource.save(options);
 		assertNoResourceErrors("Save failed", xmiResource);
 		resource.getContents().addAll(xmiResource.getContents());
+	}
+
+	/**
+	 * Ensure that the correct URI mappings are installed for org.eclipse.uml2.uml.
+	 * This method must be called after UMLResourcesUtil.init when there are rival Model/UML.ecore files visible to a standalone class loader.
+	 */
+	public static void workaroundUMLissue123(@Nullable ResourceSet resourceSet) {
+		URI umlURI = workaroundUMLissue123_getBaseUMLURI();
+		URI modelURI = umlURI.appendSegment("model");
+		workaroundUMLissue123_mapURIs(URIConverter.URI_MAP, "platform:/plugin/org.eclipse.uml2.uml/model/", modelURI, "org.eclipse.uml2.uml");
+		if (resourceSet != null) {
+			Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
+			workaroundUMLissue123_mapURIs(uriMap, "platform:/plugin/org.eclipse.uml2.uml/model/", modelURI, "org.eclipse.uml2.uml");
+		}
+	}
+
+	// Clone of the private UMLResourcesUtil.getBaseUMLURI with the fix for uml#123
+	private static URI workaroundUMLissue123_getBaseUMLURI() {
+		URL resultURL = UMLUtil.class.getClassLoader()
+			.getResource(String.format("model/%s", "CMOF241_2_UML.ecore2xml"));
+		URI result;
+
+		if (resultURL != null) {
+			// remove the /model/UML.ecore segments of the resource
+			// we found
+			result = URI.createURI(resultURL.toExternalForm(), true)
+				.trimSegments(2);
+		} else {
+			// probably, we're not running with JARs, so assume the source
+			// project folder layout
+			resultURL = UMLUtil.class.getResource("UMLUtil.class");
+
+			String baseURL = resultURL.toExternalForm();
+
+			int index = baseURL.lastIndexOf("/bin/");
+
+			if (index != -1) {
+				baseURL = baseURL.substring(0, index);
+			}
+
+			result = URI.createURI(baseURL, true);
+		}
+
+		return result;
+	}
+
+	// Unchanged clone of the private UMLResourcesUtil.mapURIs
+	private static void workaroundUMLissue123_mapURIs(Map<URI, URI> uriMap, String uri, URI location,
+			String pluginID) {
+
+		URI prefix = URI.createURI(uri);
+
+		// ensure trailing separator (make it a "URI prefix")
+		if (!prefix.hasTrailingPathSeparator()) {
+			prefix = prefix.appendSegment(""); //$NON-NLS-1$
+		}
+
+		// same with the location
+		if (!location.hasTrailingPathSeparator()) {
+			location = location.appendSegment(""); //$NON-NLS-1$
+		}
+
+		uriMap.put(prefix, location);
+
+		// and platform URIs, too
+		String folder = location.segment(location.segmentCount() - 2);
+		String platformURI = String.format("%s/%s/", //$NON-NLS-1$
+			pluginID, folder);
+		uriMap.put(URI.createPlatformPluginURI(platformURI, true), location);
+		uriMap.put(URI.createPlatformResourceURI(platformURI, true), location);
 	}
 }

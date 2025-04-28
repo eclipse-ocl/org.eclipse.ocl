@@ -1,0 +1,23 @@
+To debug a Maven surefire test failure launch (locally):
+
+a) trim tests/pom.xml to reference the test plugin of interest
+b) similarly trim org.eclipse.ocl.tests-feature/feature.xml, org.eclipse.ocl.examples.tests-feature/feature.xml to include just the test plugin of interest
+c) trim e.g. AllXtexts.java to just the test suite of interest
+d) test e.g. UsageTests.java to just the tests of interest
+e) Add the Parameter Name maven.surefire.debug with non-blank to the launch
+	see https://stackoverflow.com/questions/975384/eclipse-error-failed-to-connect-to-remote-vm
+f) Launch a separate Eclipse e.g. E:\Tools\Eclipse\4.32baseline
+g) In a separate Eclipse
+	make a Debug Remote Java Configuration to localhost 5005 available
+	ensure a Project exists that includes interesting packages such org.eclipse.emf.ecore.xmi
+	switch to debug perspective
+	set a breakpoint at something that occurs early / a known exception
+h) Run local launch in main Eclipse
+i) Once local launching stalls at Testing, debug with Remote Java Configuration
+	should stop at breakpoint
+	(invoking Eclipse gives confusing irrelevant cannot connect popup)
+	
+To debug a Tycho surefire test
+
+similar
+?? uncomment debugPort config property ??
