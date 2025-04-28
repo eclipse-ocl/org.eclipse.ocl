@@ -128,6 +128,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		public ResourceSet createResourceSet() {
 			ResourceSet umlResourceSet = super.createResourceSet();
 			UMLResourcesUtil.init(umlResourceSet);
+			TestUtil.workaroundUMLissue123(umlResourceSet);		// Fixup org.eclipse.uml2.uml URI mappings
 			umlResourceSet.getPackageRegistry().putAll(packageRegistry);
 			return umlResourceSet;
 		}
@@ -445,6 +446,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		if (templateDirectory != null) {
 			s.append("    templateDirectory=\"" + templateDirectory + "\"\n");
 		}
+		s.append("    usedGenPackages=\"");
+		if (usedGenPackages != null) {
+			s.append(usedGenPackages + " ");
+		}
+		s.append("platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ");
+		s.append("platform:/resource/org.eclipse.uml2.types/model/Types.genmodel#//types ");
+		s.append("platform:/resource/org.eclipse.uml2.uml/model/UML.genmodel#//uml ");
+		s.append("platform:/resource/org.eclipse.ocl.pivot/model/oclstdlib.genmodel#//oclstdlib\"\n");
 		s.append("    updateClasspath=\"false\">\n");
 		s.append("  <genAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel/importer/org.eclipse.uml2.uml.ecore.importer\">\n");
 		s.append("    <details key=\"OPPOSITE_ROLE_NAMES\" value=\"PROCESS\"/>\n");
@@ -495,6 +504,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		s.append("  <usedGenPackages href=\"platform:/resource/org.eclipse.uml2.types/model/Types.genmodel#//types\"/>\n");
 		s.append("  <usedGenPackages href=\"platform:/resource/org.eclipse.uml2.uml/model/UML.genmodel#//uml\"/>\n");
 	//	s.append("  <usedGenPackages href=\"platform:/resource/org.eclipse.ocl.pivot/model/oclstdlib.genmodel#//oclstdlib\"/>\n");
+		if (metaDataPackageSuffix != null) {
+			s.append("    metaDataPackageSuffix=\"" + metaDataPackageSuffix + "\"\n");
+		}
+		s.append("  />\n");
 		s.append("</genmodel:GenModel>\n");
 
 
@@ -646,6 +659,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	protected @NonNull Resource loadUmlProfile(@NonNull ResourceSet resourceSet, @NonNull URI umlProfileURI) {
 		UMLResourcesUtil.init(resourceSet);
+		TestUtil.workaroundUMLissue123(resourceSet);		// Fixup org.eclipse.uml2.uml URI mappings
 		Resource umlProfileResource = resourceSet.getResource(umlProfileURI, true);
 		assert umlProfileResource != null;
 		assertNoResourceErrors("Profile load", umlProfileResource);
@@ -690,6 +704,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		//
 		ResourceSet resourceSet = new ResourceSetImpl();
 		UMLResourcesUtil.init(resourceSet);
+		TestUtil.workaroundUMLissue123(resourceSet);		// Fixup org.eclipse.uml2.uml URI mappings
 		resourceSet.getPackageRegistry().put(nsURI, packageImpl);
 		URI pathMapURI = URI.createURI(pathMapName, true);
 		URI profileFolderURI = umlModelURI.trimSegments(1).appendSegment("");
@@ -1108,6 +1123,15 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				Resource umlProfileResource = null;
 				try {
 					ResourceSet resourceSet0 = ocl0.getResourceSet();
+
+//					StandaloneProjectMap standaloneProjectMap = (StandaloneProjectMap) ocl0.getProjectManager();
+//					IProjectDescriptor projectDescriptor1 = standaloneProjectMap.getProjectDescriptor("org.eclipse.uml2.types");
+//					IProjectDescriptor projectDescriptor2 = standaloneProjectMap.getProjectDescriptor("org.eclipse.uml2.uml");
+//					assert projectDescriptor1 != null;
+//					assert projectDescriptor2 != null;
+//					IResourceLoadStrategy resourceLoadStrategy = StandaloneProjectMap.LoadBothStrategy.INSTANCE;//LoadFirstStrategy.INSTANCE;
+//					projectDescriptor1.configure(resourceSet0, resourceLoadStrategy, MapToFirstConflictHandlerWithLog.INSTANCE);
+//					projectDescriptor2.configure(resourceSet0, resourceLoadStrategy, MapToFirstConflictHandlerWithLog.INSTANCE);
 					TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl0, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
 					umlProfileResource = loadUmlProfile(resourceSet0, umlProfileFile.getURI());
 					String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
