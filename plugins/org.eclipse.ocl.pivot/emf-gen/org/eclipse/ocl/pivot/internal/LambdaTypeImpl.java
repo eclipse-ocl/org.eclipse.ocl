@@ -175,19 +175,24 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT FIXME workaround BUG 89325
 	 */
+	@SuppressWarnings("serial")
 	@Override
-	@SuppressWarnings("null")
 	public @NonNull List<Type> getParameterType()
 	{
-		if (parameterType == null)
-		{
-			parameterType = new EObjectResolvingEList<Type>(Type.class, this, 24);
-		}
-		return parameterType;
+	  if (parameterType == null) {
+		  parameterType = new EObjectResolvingEList<Type>(Type.class, this,
+	      PivotPackage.Literals.LAMBDA_TYPE__PARAMETER_TYPE.getFeatureID())
+	    {
+	      @Override
+	      protected boolean isUnique() {
+	        return false;
+	      }
+	    };
+	  }
+	  return parameterType;
 	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

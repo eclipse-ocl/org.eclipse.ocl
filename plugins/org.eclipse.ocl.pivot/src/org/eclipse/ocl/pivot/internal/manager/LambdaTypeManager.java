@@ -32,7 +32,7 @@ public class LambdaTypeManager
 	protected final org.eclipse.ocl.pivot.@NonNull Class oclLambdaType;
 
 	/**
-	 * Map from from context type via first parameter type, which may be null, to list of lambda types sharing context and first parameter types.
+	 * Map from from context type via result type, to list of lambda types sharing context and result types.
 	 */
 	private final @NonNull Map<@NonNull Type, @NonNull Map<@Nullable Type, @NonNull List<@NonNull LambdaType>>> lambdaTypes = new HashMap<>();
 	// FIXME Why does a List map give a moniker test failure
@@ -69,29 +69,27 @@ public class LambdaTypeManager
 			contextMap = new HashMap<>();
 			lambdaTypes.put(contextType, contextMap);
 		}
-		int iMax = parameterTypes.size();
-		Type firstParameterType = iMax > 0 ? parameterTypes.get(0) : null;
-		List<@NonNull LambdaType> lambdasList = contextMap.get(firstParameterType);
+		List<@NonNull LambdaType> lambdasList = contextMap.get(resultType);
 		if (lambdasList == null) {
 			lambdasList = new ArrayList<>();
-			contextMap.put(firstParameterType, lambdasList);
+			contextMap.put(resultType, lambdasList);
 		}
+		int iMax = parameterTypes.size();
 		for (@NonNull LambdaType candidateLambda : lambdasList) {
-			if (resultType == candidateLambda.getResultType()) {
-				List<? extends Type> candidateTypes = candidateLambda.getParameterType();
-				if (iMax == candidateTypes.size()) {
-					boolean gotIt = true;
-					for (int i = 1; i < iMax; i++) {
-						Type requiredType = parameterTypes.get(i);
-						Type candidateType = candidateTypes.get(i);
-						if (requiredType != candidateType) {
-							gotIt = false;
-							break;
-						}
+			List<? extends Type> candidateTypes = candidateLambda.getParameterType();
+			if (iMax == candidateTypes.size()) {
+				boolean gotIt = true;
+				for (int i = 0; i < iMax; i++) {
+					Type requiredType = parameterTypes.get(i);
+					Type candidateType = candidateTypes.get(i);
+					if (requiredType != candidateType) {
+						gotIt = false;
+						break;
 					}
-					if (gotIt) {
-						return candidateLambda;
-					}
+				}
+				if (gotIt) {
+				//	System.out.println("Reused " + candidateLambda + " as " + NameUtil.debugSimpleName(candidateLambda) + " in " + NameUtil.debugSimpleName(candidateLambda.eContainer()));
+					return candidateLambda;
 				}
 			}
 		}
@@ -103,6 +101,7 @@ public class LambdaTypeManager
 		lambdaType.getSuperClasses().add(oclLambdaType);
 		completeEnvironment.addOrphanClass(lambdaType);
 		lambdasList.add(lambdaType);
+	//	System.out.println("Created " + lambdaType + " as " + NameUtil.debugSimpleName(lambdaType) + " in " + NameUtil.debugSimpleName(lambdaType.eContainer()));
 		return lambdaType;
 	}
 }
