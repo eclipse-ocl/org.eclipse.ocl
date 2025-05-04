@@ -373,15 +373,15 @@ public class OCLstdlib extends ASResourceImpl
 
 		private final @NonNull TemplateParameter tp_UnlimitedNatural_oclAsType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Bag_closure_E = createTemplateParameter("E");
-		private final @NonNull TemplateParameter tp_Bag_collectNested_V = createTemplateParameter("V");
-		private final @NonNull TemplateParameter tp_Bag_collect_V = createTemplateParameter("V");
+		private final @NonNull TemplateParameter tp_Bag_collectNested_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_Bag_collect_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_Bag_flatten_T2 = createTemplateParameter("T2");
 		private final @NonNull TemplateParameter tp_Bag_selectByKind_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Bag_selectByType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Bag_T = createTemplateParameter("T");
-		private final @NonNull TemplateParameter tp_Collection_collectBy_V = createTemplateParameter("V");
-		private final @NonNull TemplateParameter tp_Collection_collectNested_V = createTemplateParameter("V");
-		private final @NonNull TemplateParameter tp_Collection_collect_V = createTemplateParameter("V");
+		private final @NonNull TemplateParameter tp_Collection_collectBy_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_Collection_collectNested_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_Collection_collect_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_Collection_excludesAll_T2 = createTemplateParameter("T2");
 		private final @NonNull TemplateParameter tp_Collection_flatten_T2 = createTemplateParameter("T2");
 		private final @NonNull TemplateParameter tp_Collection_includesAll_T2 = createTemplateParameter("T2");
@@ -390,9 +390,9 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull TemplateParameter tp_Collection_selectByKind_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Collection_selectByType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Collection_T = createTemplateParameter("T");
-		private final @NonNull TemplateParameter tp_Map_collectBy_V2 = createTemplateParameter("V2");
-		private final @NonNull TemplateParameter tp_Map_collectNested_V2 = createTemplateParameter("V2");
-		private final @NonNull TemplateParameter tp_Map_collect_V2 = createTemplateParameter("V2");
+		private final @NonNull TemplateParameter tp_Map_collectBy_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_Map_collectNested_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_Map_collect_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_Map_excludesAll_K2 = createTemplateParameter("K2");
 		private final @NonNull TemplateParameter tp_Map_excludesMap_K2 = createTemplateParameter("K2");
 		private final @NonNull TemplateParameter tp_Map_excludesMap_V2 = createTemplateParameter("V2");
@@ -412,22 +412,22 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull TemplateParameter tp_OclVoid_oclAsType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_OrderedCollection_T = createTemplateParameter("T");
 		private final @NonNull TemplateParameter tp_OrderedSet_closure_E = createTemplateParameter("E");
-		private final @NonNull TemplateParameter tp_OrderedSet_collectNested_V = createTemplateParameter("V");
-		private final @NonNull TemplateParameter tp_OrderedSet_collect_V = createTemplateParameter("V");
+		private final @NonNull TemplateParameter tp_OrderedSet_collectNested_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_OrderedSet_collect_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_OrderedSet_flatten_T2 = createTemplateParameter("T2");
 		private final @NonNull TemplateParameter tp_OrderedSet_selectByKind_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_OrderedSet_selectByType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_OrderedSet_T = createTemplateParameter("T");
 		private final @NonNull TemplateParameter tp_Sequence_closure_E = createTemplateParameter("E");
-		private final @NonNull TemplateParameter tp_Sequence_collectNested_V = createTemplateParameter("V");
-		private final @NonNull TemplateParameter tp_Sequence_collect_V = createTemplateParameter("V");
+		private final @NonNull TemplateParameter tp_Sequence_collectNested_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_Sequence_collect_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_Sequence_flatten_T2 = createTemplateParameter("T2");
 		private final @NonNull TemplateParameter tp_Sequence_selectByKind_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Sequence_selectByType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Sequence_T = createTemplateParameter("T");
 		private final @NonNull TemplateParameter tp_Set_closure_E = createTemplateParameter("E");
-		private final @NonNull TemplateParameter tp_Set_collectNested_V = createTemplateParameter("V");
-		private final @NonNull TemplateParameter tp_Set_collect_V = createTemplateParameter("V");
+		private final @NonNull TemplateParameter tp_Set_collectNested_E = createTemplateParameter("E");
+		private final @NonNull TemplateParameter tp_Set_collect_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_Set_flatten_T2 = createTemplateParameter("T2");
 		private final @NonNull TemplateParameter tp_Set_selectByKind_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Set_selectByType_TT = createTemplateParameter("TT");
@@ -447,6 +447,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T = createCollectionType(OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T);
 
 		private final @NonNull BagType _Bag_$$0_T = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_$$1_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_$$1_T = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_$$2_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_CollectionType_F = createBagType(_Bag_Bag_T);
@@ -471,16 +472,18 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _OrderedCollection_$$0_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_$$0_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_$$1_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
-		private final @NonNull CollectionType _OrderedCollection_$$1_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_Integer_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_String_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull OrderedSetType _OrderedSet_$$0_T = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_$$1_F = createOrderedSetType(_OrderedSet_OrderedSet_T);
 		private final @NonNull OrderedSetType _OrderedSet_$$1_T = createOrderedSetType(_OrderedSet_OrderedSet_T);
 		private final @NonNull SequenceType _Sequence_$$0_T = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_$$1_F = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_$$1_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_Integer_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_String_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SetType _Set_$$0_T = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_$$1_F = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_$$1_T = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclElement_T = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclSelf_F = createSetType(_Set_Set_T);
@@ -689,6 +692,10 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_$$0_F);
 			ownedClasses.add(type);
+			type = _Bag_$$1_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_$$1_F);
+			ownedClasses.add(type);
 			type = _Bag_$$1_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -790,11 +797,6 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_$$1_F);
 			ownedClasses.add(type);
-			type = _OrderedCollection_$$1_T;
-			type.setIsNullFree(true);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_$$1_F);
-			ownedClasses.add(type);
 			type = _OrderedCollection_Integer_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Integer_F);
@@ -809,6 +811,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OrderedCollection_$$0_F);
 			superClasses.add(_UniqueCollection_$$0_F);
 			ownedClasses.add(type);
+			type = _OrderedSet_$$1_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OrderedCollection_$$1_F);
+			superClasses.add(_UniqueCollection_$$1_F);
+			ownedClasses.add(type);
 			type = _OrderedSet_$$1_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -819,6 +826,10 @@ public class OCLstdlib extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OrderedCollection_$$0_F);
+			ownedClasses.add(type);
+			type = _Sequence_$$1_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OrderedCollection_$$1_F);
 			ownedClasses.add(type);
 			type = _Sequence_$$1_T;
 			type.setIsNullFree(true);
@@ -839,6 +850,10 @@ public class OCLstdlib extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_$$0_F);
+			ownedClasses.add(type);
+			type = _Set_$$1_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_UniqueCollection_$$1_F);
 			ownedClasses.add(type);
 			type = _Set_$$1_T;
 			type.setIsNullFree(true);
@@ -943,6 +958,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull LambdaType _Lambda_$$0_$$2 = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_$$0_Boolean = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_$$0_OclAny = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_$$0_OclComparable = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_$$1_Collection = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_$$1_OrderedCollection = createLambdaType("Lambda");
 
@@ -970,14 +986,19 @@ public class OCLstdlib extends ASResourceImpl
 			type.setResultType(_OclAny);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_$$0_OclComparable);
+			type.setContextType($$0);
+			type.setResultType(_OclComparable);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_$$1_Collection);
 			type.setContextType($$1);
-			type.setResultType(_Collection_$$1_T);
+			type.setResultType(_Collection_$$1_F);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_$$1_OrderedCollection);
 			type.setContextType($$1);
-			type.setResultType(_OrderedCollection_$$1_T);
+			type.setResultType(_OrderedCollection_$$1_F);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 		}
@@ -2091,16 +2112,16 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_VoidType_allInstances);
 		}
 
-		private final @NonNull Iteration it_Bag_closure = createIteration("closure", _Set_$$1_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Bag_closure_E);
-		private final @NonNull Iteration it_Bag_collectNested = createIteration("collectNested", _Bag_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Bag_collectNested_V);
-		private final @NonNull Iteration it_Bag_collect = createIteration("collect", _Bag_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Bag_collect_V);
+		private final @NonNull Iteration it_Bag_closure = createIteration("closure", _Set_$$1_F, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Bag_closure_E);
+		private final @NonNull Iteration it_Bag_collectNested = createIteration("collectNested", _Bag_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Bag_collectNested_E);
+		private final @NonNull Iteration it_Bag_collect = createIteration("collect", _Bag_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Bag_collect_E);
 		private final @NonNull Iteration it_Bag_reject = createIteration("reject", _Bag_$$0_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		private final @NonNull Iteration it_Bag_select = createIteration("select", _Bag_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Bag_sortedBy = createIteration("sortedBy", _Sequence_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_any = createIteration("any", $$0, "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-		private final @NonNull Iteration it_Collection_collectBy = createIteration("collectBy", _Map_$$0_F_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Collection_collectBy_V);
-		private final @NonNull Iteration it_Collection_collectNested = createIteration("collectNested", _Collection_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Collection_collectNested_V);
-		private final @NonNull Iteration it_Collection_collect = createIteration("collect", _Collection_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Collection_collect_V);
+		private final @NonNull Iteration it_Collection_collectBy = createIteration("collectBy", _Map_$$0_F_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Collection_collectBy_E);
+		private final @NonNull Iteration it_Collection_collectNested = createIteration("collectNested", _Collection_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Collection_collectNested_E);
+		private final @NonNull Iteration it_Collection_collect = createIteration("collect", _Collection_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Collection_collect_E);
 		private final @NonNull Iteration it_Collection_exists = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_exists_1 = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_exists_2 = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
@@ -2114,9 +2135,9 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Collection_select = createIteration("select", _Collection_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_sortedBy = createIteration("sortedBy", _Sequence_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_any = createIteration("any", $$0, "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-		private final @NonNull Iteration it_Map_collectBy = createIteration("collectBy", _Map_$$0_F_$$2_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Map_collectBy_V2);
-		private final @NonNull Iteration it_Map_collectNested = createIteration("collectNested", _Map_$$0_F_$$2_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Map_collectNested_V2);
-		private final @NonNull Iteration it_Map_collect = createIteration("collect", _Bag_$$2_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Map_collect_V2);
+		private final @NonNull Iteration it_Map_collectBy = createIteration("collectBy", _Map_$$0_F_$$2_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Map_collectBy_E);
+		private final @NonNull Iteration it_Map_collectNested = createIteration("collectNested", _Bag_$$2_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Map_collectNested_E);
+		private final @NonNull Iteration it_Map_collect = createIteration("collect", _Bag_$$2_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Map_collect_E);
 		private final @NonNull Iteration it_Map_exists = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_exists_1 = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_exists_2 = createIteration("exists", _Boolean, "org.eclipse.ocl.pivot.library.iterator.ExistsIteration", org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
@@ -2128,21 +2149,21 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Map_one = createIteration("one", _Boolean, "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_reject = createIteration("reject", _Map_$$0_F_$$1_F, "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_select = createIteration("select", _Map_$$0_F_$$1_F, "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-		private final @NonNull Iteration it_OrderedSet_closure = createIteration("closure", _OrderedSet_$$1_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_OrderedSet_closure_E);
-		private final @NonNull Iteration it_OrderedSet_collectNested = createIteration("collectNested", _Sequence_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_OrderedSet_collectNested_V);
-		private final @NonNull Iteration it_OrderedSet_collect = createIteration("collect", _Sequence_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_OrderedSet_collect_V);
+		private final @NonNull Iteration it_OrderedSet_closure = createIteration("closure", _OrderedSet_$$1_F, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_OrderedSet_closure_E);
+		private final @NonNull Iteration it_OrderedSet_collectNested = createIteration("collectNested", _Sequence_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_OrderedSet_collectNested_E);
+		private final @NonNull Iteration it_OrderedSet_collect = createIteration("collect", _Sequence_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_OrderedSet_collect_E);
 		private final @NonNull Iteration it_OrderedSet_reject = createIteration("reject", _OrderedSet_$$0_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		private final @NonNull Iteration it_OrderedSet_select = createIteration("select", _OrderedSet_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_OrderedSet_sortedBy = createIteration("sortedBy", _OrderedSet_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		private final @NonNull Iteration it_Sequence_closure = createIteration("closure", _OrderedSet_$$1_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Sequence_closure_E);
-		private final @NonNull Iteration it_Sequence_collectNested = createIteration("collectNested", _Sequence_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Sequence_collectNested_V);
-		private final @NonNull Iteration it_Sequence_collect = createIteration("collect", _Sequence_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Sequence_collect_V);
+		private final @NonNull Iteration it_Sequence_closure = createIteration("closure", _OrderedSet_$$1_F, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Sequence_closure_E);
+		private final @NonNull Iteration it_Sequence_collectNested = createIteration("collectNested", _Sequence_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Sequence_collectNested_E);
+		private final @NonNull Iteration it_Sequence_collect = createIteration("collect", _Sequence_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Sequence_collect_E);
 		private final @NonNull Iteration it_Sequence_reject = createIteration("reject", _Sequence_$$0_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		private final @NonNull Iteration it_Sequence_select = createIteration("select", _Sequence_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Sequence_sortedBy = createIteration("sortedBy", _Sequence_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		private final @NonNull Iteration it_Set_closure = createIteration("closure", _Set_$$1_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Set_closure_E);
-		private final @NonNull Iteration it_Set_collectNested = createIteration("collectNested", _Bag_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Set_collectNested_V);
-		private final @NonNull Iteration it_Set_collect = createIteration("collect", _Bag_$$1_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Set_collect_V);
+		private final @NonNull Iteration it_Set_closure = createIteration("closure", _Set_$$1_F, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE, tp_Set_closure_E);
+		private final @NonNull Iteration it_Set_collectNested = createIteration("collectNested", _Bag_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Set_collectNested_E);
+		private final @NonNull Iteration it_Set_collect = createIteration("collect", _Bag_$$1_F, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Set_collect_E);
 		private final @NonNull Iteration it_Set_reject = createIteration("reject", _Set_$$0_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		private final @NonNull Iteration it_Set_select = createIteration("select", _Set_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Set_sortedBy = createIteration("sortedBy", _OrderedSet_$$0_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
@@ -2184,7 +2205,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclAny, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclComparable, false));
 
 			ownedIterations = _Collection_Collection_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Collection_any);
@@ -2192,7 +2213,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, true));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("body", _Lambda_$$0_Boolean, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_Boolean, true));
 			ownedIterations.add(iteration = it_Collection_collectBy);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
@@ -2294,7 +2315,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclAny, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclComparable, false));
 
 			ownedIterations = _Map_Map_K_Map_V.getOwnedOperations();
 			ownedIterations.add(iteration = it_Map_any);
@@ -2302,7 +2323,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("k", $$0, true));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("body", _Lambda_$$0_Boolean, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_Boolean, true));
 			ownedIterations.add(iteration = it_Map_collectBy);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("k", $$0, false));
@@ -2431,7 +2452,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclAny, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclComparable, false));
 
 			ownedIterations = _Sequence_Sequence_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Sequence_closure);
@@ -2463,7 +2484,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclAny, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclComparable, false));
 
 			ownedIterations = _Set_Set_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Set_closure);
@@ -2495,14 +2516,14 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclAny, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclComparable, false));
 
 			ownedIterations = _UniqueCollection_UniqueCollection_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_UniqueCollection_sortedBy);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclAny, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_OclComparable, false));
 		}
 
 		private void installCoercions() {
@@ -2643,6 +2664,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		private void installTemplateBindings() {
 			addBinding(_Bag_$$0_T, $$0);
+			addBinding(_Bag_$$1_F, $$1);
 			addBinding(_Bag_$$1_T, $$1);
 			addBinding(_Bag_$$2_F, $$2);
 			addBinding(_Bag_CollectionType_F, _CollectionType);
@@ -2675,16 +2697,18 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_OrderedCollection_$$0_F, $$0);
 			addBinding(_OrderedCollection_$$0_T, $$0);
 			addBinding(_OrderedCollection_$$1_F, $$1);
-			addBinding(_OrderedCollection_$$1_T, $$1);
 			addBinding(_OrderedCollection_Integer_F, _Integer);
 			addBinding(_OrderedCollection_String_F, _String);
 			addBinding(_OrderedSet_$$0_T, $$0);
+			addBinding(_OrderedSet_$$1_F, $$1);
 			addBinding(_OrderedSet_$$1_T, $$1);
 			addBinding(_Sequence_$$0_T, $$0);
+			addBinding(_Sequence_$$1_F, $$1);
 			addBinding(_Sequence_$$1_T, $$1);
 			addBinding(_Sequence_Integer_T, _Integer);
 			addBinding(_Sequence_String_T, _String);
 			addBinding(_Set_$$0_T, $$0);
+			addBinding(_Set_$$1_F, $$1);
 			addBinding(_Set_$$1_T, $$1);
 			addBinding(_Set_OclElement_T, _OclElement);
 			addBinding(_Set_OclSelf_F, _OclSelf);
@@ -2898,7 +2922,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(pr_CollectionType_elementType, "Evaluates to the type of the collection elements.");
 			installComment(pr_CollectionType_lower, "Evaluates to the lower bound on the number of collection elements.");
 			installComment(pr_CollectionType_upper, "Evaluates to the upper bound on the number of collection elements.");
-			installComment(_Collection_Collection_T, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
+			installComment(_Collection_Collection_T, "*\nCollection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
 			installComment(op_Collection__lt__gt_, "True if c is not equal to oclText[self].");
 			installComment(op_Collection__eq_, "True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,\nin the case of an ordered collection type.");
 			installComment(it_Collection_any, "Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any element,\notherwise if there are one or more elements for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the result is oclText[null].\n\nlet source : Collection(T) = ..., body : Lambda T() : Boolean = ... in\nsource->any(iterator | body) = source->select(iterator | body)->asSequence()->first()");
@@ -2961,8 +2985,8 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(it_Map_any, "Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,\notherwise if there are one or more kets for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].\n\nlet source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in\nsource->any(key <- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()");
 			installComment(op_Map_at, "The value of the map at oclText[key].");
 			installComment(it_Map_collectBy, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
-			installComment(it_Map_collectNested, "The Map of key and values which results from applying body to every value of the source map.");
-			installComment(it_Map_collect, "The Map of key and values that results from applying body to every value of the source map.\nThe result is flattened.");
+			installComment(it_Map_collectNested, "The Collection of results from applying body to every key-value of the source map.");
+			installComment(it_Map_collect, "The Collection of results from applying body to every key-value of the source map.\nThe result is flattened.");
 			installComment(op_Map_excludes, "True if oclText[key] is not one of the keys of oclText[self], oclText[false] otherwise.");
 			installComment(op_Map_excludes_1, "True if oclText[key] and oclText[value] are not a key-value pair of oclText[self], oclText[false] otherwise.");
 			installComment(op_Map_excludesAll, "True if none of the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.");
