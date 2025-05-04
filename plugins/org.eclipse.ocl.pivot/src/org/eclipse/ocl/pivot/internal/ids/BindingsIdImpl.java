@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 /**
  * BindingsIdImpl provides a hashable list of elementIds suitable for use when indexing specializations.
  */
-public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakReference2.MatchableId<@NonNull ElementId @NonNull []>
+public class BindingsIdImpl implements BindingsId
 {
 	@Deprecated /* @deprecated no longer used */
 	protected class Iterator implements java.util.Iterator<@NonNull ElementId>
@@ -150,11 +150,6 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 	@Override @Deprecated /* @deprecated use elementIdSize()/getElementId() and/or valuesSize()/getValue() */
 	public java.util.@NonNull Iterator<@NonNull ElementId> iterator() {
 		return new Iterator();
-	}
-
-	@Override @Deprecated
-	public boolean matches(@NonNull ElementId @NonNull [] value) {
-		throw new UnsupportedOperationException();			// Only here for API compatibility
 	}
 
 	private boolean matches(@NonNull ElementId @NonNull [] thoseElementIds, @NonNull Object @Nullable [] thoseValues) {

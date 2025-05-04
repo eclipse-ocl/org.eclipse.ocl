@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, TypeId>
+public class TuplePartIdImpl implements TuplePartId
 {
 	private static class TuplePartIdValue extends AbstractKeyAndValue<@NonNull TuplePartId>
 	{
@@ -135,20 +135,6 @@ public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakRefe
 	@Override
 	public int hashCode() {
 		return hashCode;
-	}
-
-	@Override
-	public boolean matches(@NonNull Integer thatIndex, @NonNull String thatName, @NonNull TypeId thatTypeid) {
-		if (this.typeId != thatTypeid) {
-			return false;
-		}
-		if (this.index != thatIndex) {
-			return false;
-		}
-		if (!this.name.equals(thatName)) {
-			return false;
-		}
-		return true;
 	}
 
 	@Override

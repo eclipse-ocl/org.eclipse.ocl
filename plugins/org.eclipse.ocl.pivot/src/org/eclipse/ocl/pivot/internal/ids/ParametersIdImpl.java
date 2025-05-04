@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * ParametersId provides a hashed list of typeIds suitable for characterizing an operation signature.
  * parameter ids suitable for use when indexing operation overloads.
  */
-public class ParametersIdImpl implements ParametersId, WeakHashMapOfListOfWeakReference2.MatchableId<@NonNull TypeId @NonNull []>
+public class ParametersIdImpl implements ParametersId
 {
 	protected class Iterator implements java.util.Iterator<@NonNull TypeId>
 	{
@@ -147,11 +147,6 @@ public class ParametersIdImpl implements ParametersId, WeakHashMapOfListOfWeakRe
 	@Override
 	public java.util.@NonNull Iterator<@NonNull TypeId> iterator() {
 		return new Iterator();
-	}
-
-	@Override
-	public boolean matches(@NonNull TypeId @NonNull [] thoseTypeIds) {
-		return computeEquals(typeIds, thoseTypeIds);
 	}
 
 	@Override

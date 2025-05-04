@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNull OperationId> implements OperationId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, ParametersId>
+public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNull OperationId> implements OperationId
 {
 	private static class OperationIdValue extends AbstractKeyAndValue<@NonNull OperationId>
 	{
@@ -124,7 +124,6 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 		return parentId;
 	}
 
-	@Override
 	public boolean matches(@NonNull Integer thoseTemplateParameters, @NonNull String thatName, @NonNull ParametersId thatParametersId) {
 		if (this.parametersId != thatParametersId) {
 			return false;

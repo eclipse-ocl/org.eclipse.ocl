@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference2">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference2"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference4">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference4"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfWeakReference">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfWeakReference"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteModel.java" type="org.eclipse.ocl.pivot.CompleteModel">
         <filter id="403804204">
             <message_arguments>
@@ -775,11 +807,89 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/values/NumberValue.java" type="org.eclipse.ocl.pivot.values.NumberValue">
-        <filter id="404000815">
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/AbstractElementId.java" type="org.eclipse.ocl.pivot.internal.ids.AbstractElementId">
+        <filter id="338886760">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.values.NumberValue"/>
-                <message_argument value="asNumber()"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.AbstractElementId.OperationIdsMap"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.AbstractElementId.PropertyIdsMap"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/BindingsIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference2$MatchableId"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl"/>
+                <message_argument value="matches(ElementId[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/GeneralizedLambdaTypeIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3$MatchableId"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl"/>
+                <message_argument value="matches(String, ParametersId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/GeneralizedOperationIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference4$MatchableId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/GeneralizedTupleTypeIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3$MatchableId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/ParametersIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference2$MatchableId"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl"/>
+                <message_argument value="matches(TypeId[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/TuplePartIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl"/>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference4$MatchableId"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl"/>
+                <message_argument value="matches(Integer, String, TypeId)"/>
             </message_arguments>
         </filter>
     </resource>

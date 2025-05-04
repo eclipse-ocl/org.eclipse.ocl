@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot.uml" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference2">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference2"/>
+                <message_argument value="org.eclipse.ocl.pivot.uml_1.22.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3"/>
+                <message_argument value="org.eclipse.ocl.pivot.uml_1.22.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference4">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference4"/>
+                <message_argument value="org.eclipse.ocl.pivot.uml_1.22.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfWeakReference">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfWeakReference"/>
+                <message_argument value="org.eclipse.ocl.pivot.uml_1.22.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/uml/internal/utilities/UML2Moniker.java" type="org.eclipse.ocl.pivot.uml.internal.utilities.UML2Moniker">
         <filter comment="Bug 512402 workaround" id="574619656">
             <message_arguments>

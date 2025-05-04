@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
-public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, @NonNull TuplePartId @NonNull []>
+public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId
 {
 	private static class TupleTypeIdValue extends AbstractKeyAndValue<@NonNull TupleTypeId>
 	{
@@ -155,7 +155,6 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		return false;
 	}
 
-	@Override
 	public boolean matches(@NonNull String thatName, @NonNull TuplePartId @NonNull [] thoseOrderedParts) {
 		for (int i = 0; i < partIds.length; i++) {
 			if (partIds[i] != thoseOrderedParts[i]) {
