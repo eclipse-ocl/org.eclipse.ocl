@@ -1275,8 +1275,10 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"		if ((result == null) || !result.isNonNull() || !result.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {\n" +
-						"			return false;\n" +
+						"		for (@NonNull CGValuedElement body : ClassUtil.nullFree(getBodies())) {\n" +
+						"			if (!body.isNonNull() || !body.isNonInvalid()) {\n" +
+						"				return false;\n" +
+						"			}\n" +
 						"		}\n" +
 						"		return true;";
 			}
@@ -1317,8 +1319,10 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"				return false;\n" +
 						"			}\n" +
 						"		}\n" +
-						"		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {\n" +
-						"			return false;\n" +
+						"		for (@NonNull CGValuedElement body : ClassUtil.nullFree(getBodies())) {\n" +
+						"			if (!body.isNonNull() || !body.isNonInvalid()) {\n" +
+						"				return false;\n" +
+						"			}\n" +
 						"		}\n" +
 						"		return true;";
 			}

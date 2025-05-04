@@ -162,7 +162,10 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGIterationCallExp(@NonNull CGIterationCallExp cgElement) {
-		return append(super.visitCGIterationCallExp(cgElement), cgElement.getReferredIteration(), cgElement.getBody());
+		List<@Nullable Object> iterables = new ArrayList<>(super.visitCGIterationCallExp(cgElement));
+		iterables.add(cgElement.getReferredIteration());
+		iterables.addAll(cgElement.getBodies());
+		return append(iterables);
 	}
 
 	@Override

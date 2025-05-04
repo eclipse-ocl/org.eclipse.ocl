@@ -25,11 +25,12 @@ public class InnerStackPlace extends StackPlace
 {
 	public static @NonNull LocalPlace createInnerStackPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGIterationCallExp cgLoopExp) {
 		ControlPlace loopPlace = ControlPlace.getControlPlace(element2place, cgLoopExp);
-		CGValuedElement cgBodyExp = cgLoopExp.getBody();
-		if (cgBodyExp != null) {
-			InnerStackPlace innerPlace = new InnerStackPlace(loopPlace, cgBodyExp);
-			ControlPlace bodyPlace = new ControlPlace(innerPlace, cgBodyExp);
-			element2place.put(cgBodyExp, bodyPlace);
+		for (CGValuedElement cgBodyExp : cgLoopExp.getBodies()) {
+			if (cgBodyExp != null) {
+				InnerStackPlace innerPlace = new InnerStackPlace(loopPlace, cgBodyExp);
+				ControlPlace bodyPlace = new ControlPlace(innerPlace, cgBodyExp);
+				element2place.put(cgBodyExp, bodyPlace);
+			}
 		}
 		return loopPlace;
 	}

@@ -345,11 +345,13 @@ public class FieldingAnalyzer
 			for (CGIterator cgCoIterator : cgElement.getCoIterators()) {
 				cgCoIterator.accept(this);
 			}
-			if (cgElement.getReferredIteration().isIsValidating()) {
-				rewriteAsCaught(cgElement.getBody());
-			}
-			else {
-				rewriteAsThrown(cgElement.getBody());
+			for (CGValuedElement cgBody : cgElement.getBodies()) {
+				if (cgElement.getReferredIteration().isIsValidating()) {
+					rewriteAsCaught(cgBody);
+				}
+				else {
+					rewriteAsThrown(cgBody);
+				}
 			}
 			cgElement.setCaught(false);
 			return false;

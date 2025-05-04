@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getReferredIteration <em>Referred Iteration</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getIterators <em>Iterators</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getBodies <em>Bodies</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIterationCallExpImpl#getCoIterators <em>Co Iterators</em>}</li>
  * </ul>
  *
@@ -92,14 +92,14 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	protected EList<CGIterator> iterators;
 
 	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+	 * The cached value of the '{@link #getBodies() <em>Bodies</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBody()
+	 * @see #getBodies()
 	 * @generated
 	 * @ordered
 	 */
-	protected CGValuedElement body;
+	protected EList<CGValuedElement> bodies;
 
 	/**
 	 * The cached value of the '{@link #getCoIterators() <em>Co Iterators</em>}' containment reference list.
@@ -173,43 +173,11 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	 * @generated
 	 */
 	@Override
-	public CGValuedElement getBody() {
-		return body;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetBody(CGValuedElement newBody, NotificationChain msgs) {
-		CGValuedElement oldBody = body;
-		body = newBody;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldBody, newBody);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+	public List<CGValuedElement> getBodies() {
+		if (bodies == null) {
+			bodies = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 11);
 		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setBody(CGValuedElement newBody) {
-		if (newBody != body) {
-			NotificationChain msgs = null;
-			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
-			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
-			msgs = basicSetBody(newBody, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, newBody, newBody));
+		return bodies;
 	}
 
 	/**
@@ -246,7 +214,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 			case 10:
 				return ((InternalEList<?>)getIterators()).basicRemove(otherEnd, msgs);
 			case 11:
-				return basicSetBody(null, msgs);
+				return ((InternalEList<?>)getBodies()).basicRemove(otherEnd, msgs);
 			case 12:
 				return ((InternalEList<?>)getCoIterators()).basicRemove(otherEnd, msgs);
 		}
@@ -266,7 +234,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 			case 10:
 				return getIterators();
 			case 11:
-				return getBody();
+				return getBodies();
 			case 12:
 				return getCoIterators();
 		}
@@ -290,7 +258,8 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 				getIterators().addAll((Collection<? extends CGIterator>)newValue);
 				return;
 			case 11:
-				setBody((CGValuedElement)newValue);
+				getBodies().clear();
+				getBodies().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
 			case 12:
 				getCoIterators().clear();
@@ -315,7 +284,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 				getIterators().clear();
 				return;
 			case 11:
-				setBody((CGValuedElement)null);
+				getBodies().clear();
 				return;
 			case 12:
 				getCoIterators().clear();
@@ -337,7 +306,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 			case 10:
 				return iterators != null && !iterators.isEmpty();
 			case 11:
-				return body != null;
+				return bodies != null && !bodies.isEmpty();
 			case 12:
 				return coIterators != null && !coIterators.isEmpty();
 		}
@@ -395,8 +364,10 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 				return false;
 			}
 		}
-		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
-			return false;
+		for (@NonNull CGValuedElement body : ClassUtil.nullFree(getBodies())) {
+			if (!body.isNonNull() || !body.isNonInvalid()) {
+				return false;
+			}
 		}
 		return true;
 	}
