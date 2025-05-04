@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -493,17 +494,25 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-	 * @since 1.18
-	 */
-	public static @NonNull List<@NonNull Parameter> getOwnedAccumulatorsList(@NonNull Iteration iteration) {
-		return ClassUtil.nullFree(iteration.getOwnedAccumulators());
-	}
 
-	/**
 	 * @since 1.3
 	 */
 	public static @NonNull List<@NonNull OCLExpression> getOwnedArgumentsList(@NonNull OperationCallExp operationCallExp) {
 		return ClassUtil.nullFree(operationCallExp.getOwnedArguments());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull List<@NonNull TemplateBinding> getOwnedBindingsList(@NonNull TemplateableElement templateableElement) {
+		return ClassUtil.nullFree(templateableElement.getOwnedBindings());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull List<@NonNull OCLExpression> getOwnedBodiesList(@NonNull IterateExp iterateExp) {
+		return ClassUtil.nullFree(iterateExp.getOwnedBodies());
 	}
 
 	/**

@@ -2297,8 +2297,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setIsRequired(false);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
-			ownedParameters = iteration.getOwnedAccumulators();
-			ownedParameters.add(parameter = createParameter("acc", $$1, false));
+			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_$$1, false));
 			ownedIterations.add(iteration = it_Collection_one);
@@ -2407,8 +2406,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setIsRequired(false);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
-			ownedParameters = iteration.getOwnedAccumulators();
-			ownedParameters.add(parameter = createParameter("acc", $$2, false));
+			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$2, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_$$0_$$2, false));
 			ownedIterations.add(iteration = it_Map_one);

@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -143,7 +142,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
-		Object value = ((Element) body).accept(undecoratedVisitor);
+		Object value = body.accept(undecoratedVisitor);
 		assert ValueUtil.isBoxed(value);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 		return value;
 	}
@@ -413,7 +412,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			//			initValue = ValuesUtil.asValidValue(initValue);
 			IterationManager iterationManager;
 			VariableDeclaration accumulatorVariable = accumulator;
-			OCLExpression body = ClassUtil.nonNullModel(iterateExp.getOwnedBody());
+			OCLExpression body = ClassUtil.nonNullModel(iterateExp.getOwnedBodies().get(0));		// XXX break/return
 			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iterateExp);
 			int iSize = iterators.size();
 			if (sourceValue instanceof MapValue) {

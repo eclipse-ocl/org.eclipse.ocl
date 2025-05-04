@@ -2490,9 +2490,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getIterateExp_OwnedResult()
+	public EReference getIterateExp_OwnedBodies()
 	{
 		return (EReference)iterateExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getIterateExp_OwnedResult()
+	{
+		return (EReference)iterateExpEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2578,7 +2589,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getIteration_OwnedAccumulators()
+	public EReference getIteration_OwnedAccumulator()
 	{
 		return (EReference)iterationEClass.getEStructuralFeatures().get(0);
 	}
@@ -2603,6 +2614,17 @@ implements PivotPackage  {
 	public EClass getIteratorExp()
 	{
 		return iteratorExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getIteratorExp_OwnedBody()
+	{
+		return (EReference)iteratorExpEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3084,7 +3106,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getLoopExp_OwnedBody()
+	public EReference getLoopExp_OwnedCoIterators()
 	{
 		return (EReference)loopExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -3095,7 +3117,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getLoopExp_OwnedCoIterators()
+	public EReference getLoopExp_OwnedIterators()
 	{
 		return (EReference)loopExpEClass.getEStructuralFeatures().get(1);
 	}
@@ -3106,20 +3128,9 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getLoopExp_OwnedIterators()
-	{
-		return (EReference)loopExpEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getLoopExp_ReferredIteration()
 	{
-		return (EReference)loopExpEClass.getEStructuralFeatures().get(3);
+		return (EReference)loopExpEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -7460,6 +7471,7 @@ implements PivotPackage  {
 		iterableTypeEClass = createEClass(46);
 
 		iterateExpEClass = createEClass(47);
+		createEReference(iterateExpEClass, 15);
 		createEReference(iterateExpEClass, 16);
 		createEOperation(iterateExpEClass, 17);
 		createEOperation(iterateExpEClass, 18);
@@ -7473,6 +7485,7 @@ implements PivotPackage  {
 		createEReference(iterationEClass, 28);
 
 		iteratorExpEClass = createEClass(49);
+		createEReference(iteratorExpEClass, 15);
 		createEOperation(iteratorExpEClass, 17);
 		createEOperation(iteratorExpEClass, 18);
 		createEOperation(iteratorExpEClass, 19);
@@ -7528,7 +7541,6 @@ implements PivotPackage  {
 		createEReference(loopExpEClass, 12);
 		createEReference(loopExpEClass, 13);
 		createEReference(loopExpEClass, 14);
-		createEReference(loopExpEClass, 15);
 		createEOperation(loopExpEClass, 9);
 		createEOperation(loopExpEClass, 10);
 		createEOperation(loopExpEClass, 11);
@@ -8527,6 +8539,7 @@ implements PivotPackage  {
 		initEClass(iterableTypeEClass, IterableType.class, "IterableType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(iterateExpEClass, IterateExp.class, "IterateExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getIterateExp_OwnedBodies(), this.getOCLExpression(), null, "ownedBodies", null, 1, -1, IterateExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIterateExp_OwnedResult(), this.getVariable(), null, "ownedResult", null, 0, 1, IterateExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getIterateExp__ValidateBodyTypeConformsToResultType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBodyTypeConformsToResultType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -8584,10 +8597,11 @@ implements PivotPackage  {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(iterationEClass, Iteration.class, "Iteration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getIteration_OwnedAccumulators(), this.getParameter(), null, "ownedAccumulators", null, 0, -1, Iteration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIteration_OwnedAccumulator(), this.getParameter(), null, "ownedAccumulator", null, 0, 1, Iteration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIteration_OwnedIterators(), this.getParameter(), null, "ownedIterators", null, 0, -1, Iteration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(iteratorExpEClass, IteratorExp.class, "IteratorExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getIteratorExp_OwnedBody(), this.getOCLExpression(), null, "ownedBody", null, 1, 1, IteratorExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getIteratorExp__ValidateAnyBodyTypeIsBoolean__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateAnyBodyTypeIsBoolean", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -8856,7 +8870,6 @@ implements PivotPackage  {
 		initEClass(literalExpEClass, LiteralExp.class, "LiteralExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(loopExpEClass, LoopExp.class, "LoopExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getLoopExp_OwnedBody(), this.getOCLExpression(), null, "ownedBody", null, 1, 1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getLoopExp_OwnedCoIterators(), this.getIteratorVariable(), null, "ownedCoIterators", null, 0, -1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getLoopExp_OwnedIterators(), this.getVariable(), null, "ownedIterators", null, 0, -1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getLoopExp_ReferredIteration(), this.getIteration(), null, "referredIteration", null, 0, 1, LoopExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -9731,6 +9744,13 @@ implements PivotPackage  {
 		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$
 		addAnnotation
 		  (this,
+		   source,
+		   new String[]
+		   {
+			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getIteration_OwnedAccumulator(),
 		   source,
 		   new String[]
 		   {

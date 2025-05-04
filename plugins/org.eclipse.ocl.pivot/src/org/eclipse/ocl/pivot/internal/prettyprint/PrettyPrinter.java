@@ -391,17 +391,16 @@ public class PrettyPrinter
 				appendTypedMultiplicity(parameter);
 				prefix = ", ";
 			}
-			if (iteration.getOwnedAccumulators().size() > 0) {
+			if (iteration.getOwnedAccumulator() != null) {
 				prefix = "; ";
-				for (Parameter parameter : PivotUtil.getOwnedAccumulators(iteration)) {
-					if (withNames) {
-						appendName(parameter);
-						append(" : ");
-					}
-					append(prefix);
-					appendTypedMultiplicity(parameter);
-					prefix = ", ";
+				Parameter parameter = PivotUtil.getOwnedAccumulator(iteration);
+				if (withNames) {
+					appendName(parameter);
+					append(" : ");
 				}
+				append(prefix);
+				appendTypedMultiplicity(parameter);
+				prefix = ", ";
 			}
 			prefix = " | ";
 		}

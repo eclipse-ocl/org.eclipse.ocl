@@ -252,12 +252,12 @@ public class TypeUtil
 		if (anOperation instanceof Iteration) {
 			Iteration anIteration = (Iteration)anOperation;
 			List<@NonNull ? extends TypedElement> ownedIterators = ClassUtil.nullFree(anIteration.getOwnedIterators());
-			List<@NonNull ? extends TypedElement> ownedAccumulators = ClassUtil.nullFree(anIteration.getOwnedAccumulators());
-			parameterTypes = new @NonNull Type[ownedIterators.size() + ownedAccumulators.size() + ownedParameters.size()];
+			TypedElement ownedAccumulator = anIteration.getOwnedAccumulator();
+			parameterTypes = new @NonNull Type[ownedIterators.size() + (ownedAccumulator != null ? 1 : 0) + ownedParameters.size()];
 			for (@NonNull TypedElement ownedIterator : ownedIterators) {
 				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedIterator.getType());
 			}
-			for (@NonNull TypedElement ownedAccumulator : ownedAccumulators) {
+			if (ownedAccumulator != null) {
 				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedAccumulator.getType());
 			}
 		}

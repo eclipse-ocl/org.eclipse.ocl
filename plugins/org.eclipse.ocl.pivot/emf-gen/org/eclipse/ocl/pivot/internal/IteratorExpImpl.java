@@ -11,21 +11,31 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -69,6 +79,12 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Iterator Exp</b></em>'.
  * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.IteratorExpImpl#getOwnedBody <em>Owned Body</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -81,7 +97,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ITERATOR_EXP_FEATURE_COUNT = LoopExpImpl.LOOP_EXP_FEATURE_COUNT + 0;
+	public static final int ITERATOR_EXP_FEATURE_COUNT = LoopExpImpl.LOOP_EXP_FEATURE_COUNT + 1;
 	/**
 	 * The number of operations of the '<em>Iterator Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -90,6 +106,16 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	 * @ordered
 	 */
 	public static final int ITERATOR_EXP_OPERATION_COUNT = LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 21;
+
+	/**
+	 * The cached value of the '{@link #getOwnedBody() <em>Owned Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedBody()
+	 * @generated
+	 * @ordered
+	 */
+	protected OCLExpression ownedBody;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -110,6 +136,56 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	protected EClass eStaticClass()
 	{
 		return PivotPackage.Literals.ITERATOR_EXP;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public OCLExpression getOwnedBody()
+	{
+		return ownedBody;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedBody(OCLExpression newOwnedBody, NotificationChain msgs)
+	{
+		OCLExpression oldOwnedBody = ownedBody;
+		ownedBody = newOwnedBody;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 15, oldOwnedBody, newOwnedBody);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedBody(OCLExpression newOwnedBody)
+	{
+		if (newOwnedBody != ownedBody)
+		{
+			NotificationChain msgs = null;
+			if (ownedBody != null)
+				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
+			if (newOwnedBody != null)
+				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
+			msgs = basicSetOwnedBody(newOwnedBody, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, newOwnedBody, newOwnedBody));
 	}
 
 	/**
@@ -2050,6 +2126,255 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public Element getReferredElement()
 	{
 		return getReferredIteration();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
+			case 1:
+				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
+			case 2:
+				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
+			case 3:
+				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
+			case 11:
+				return basicSetOwnedSource(null, msgs);
+			case 12:
+				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
+			case 13:
+				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
+			case 15:
+				return basicSetOwnedBody(null, msgs);
+		}
+		return eDynamicInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return getAnnotatingComments();
+			case 1:
+				return getOwnedAnnotations();
+			case 2:
+				return getOwnedComments();
+			case 3:
+				return getOwnedExtensions();
+			case 4:
+				return getName();
+			case 5:
+				return isIsMany();
+			case 6:
+				return isIsRequired();
+			case 7:
+				if (resolve) return getType();
+				return basicGetType();
+			case 8:
+				return getTypeValue();
+			case 9:
+				return isIsImplicit();
+			case 10:
+				return isIsSafe();
+			case 11:
+				return getOwnedSource();
+			case 12:
+				return getOwnedCoIterators();
+			case 13:
+				return getOwnedIterators();
+			case 14:
+				if (resolve) return getReferredIteration();
+				return basicGetReferredIteration();
+			case 15:
+				return getOwnedBody();
+		}
+		return eDynamicGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue)
+	{
+		switch (featureID)
+		{
+			case 0:
+				getAnnotatingComments().clear();
+				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
+				return;
+			case 1:
+				getOwnedAnnotations().clear();
+				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
+				return;
+			case 2:
+				getOwnedComments().clear();
+				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
+				return;
+			case 3:
+				getOwnedExtensions().clear();
+				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
+				return;
+			case 4:
+				setName((String)newValue);
+				return;
+			case 6:
+				setIsRequired((Boolean)newValue);
+				return;
+			case 7:
+				setType((Type)newValue);
+				return;
+			case 8:
+				setTypeValue((Type)newValue);
+				return;
+			case 9:
+				setIsImplicit((Boolean)newValue);
+				return;
+			case 10:
+				setIsSafe((Boolean)newValue);
+				return;
+			case 11:
+				setOwnedSource((OCLExpression)newValue);
+				return;
+			case 12:
+				getOwnedCoIterators().clear();
+				getOwnedCoIterators().addAll((Collection<? extends IteratorVariable>)newValue);
+				return;
+			case 13:
+				getOwnedIterators().clear();
+				getOwnedIterators().addAll((Collection<? extends Variable>)newValue);
+				return;
+			case 14:
+				setReferredIteration((Iteration)newValue);
+				return;
+			case 15:
+				setOwnedBody((OCLExpression)newValue);
+				return;
+		}
+		eDynamicSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eUnset(int featureID)
+	{
+		switch (featureID)
+		{
+			case 0:
+				getAnnotatingComments().clear();
+				return;
+			case 1:
+				getOwnedAnnotations().clear();
+				return;
+			case 2:
+				getOwnedComments().clear();
+				return;
+			case 3:
+				getOwnedExtensions().clear();
+				return;
+			case 4:
+				setName(NAME_EDEFAULT);
+				return;
+			case 6:
+				setIsRequired(IS_REQUIRED_EDEFAULT);
+				return;
+			case 7:
+				setType((Type)null);
+				return;
+			case 8:
+				setTypeValue((Type)null);
+				return;
+			case 9:
+				setIsImplicit(IS_IMPLICIT_EDEFAULT);
+				return;
+			case 10:
+				setIsSafe(IS_SAFE_EDEFAULT);
+				return;
+			case 11:
+				setOwnedSource((OCLExpression)null);
+				return;
+			case 12:
+				getOwnedCoIterators().clear();
+				return;
+			case 13:
+				getOwnedIterators().clear();
+				return;
+			case 14:
+				setReferredIteration((Iteration)null);
+				return;
+			case 15:
+				setOwnedBody((OCLExpression)null);
+				return;
+		}
+		eDynamicUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean eIsSet(int featureID)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return annotatingComments != null && !annotatingComments.isEmpty();
+			case 1:
+				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
+			case 2:
+				return ownedComments != null && !ownedComments.isEmpty();
+			case 3:
+				return ownedExtensions != null && !ownedExtensions.isEmpty();
+			case 4:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 5:
+				return isIsMany() != IS_MANY_EDEFAULT;
+			case 6:
+				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
+			case 7:
+				return type != null;
+			case 8:
+				return typeValue != null;
+			case 9:
+				return ((eFlags & IS_IMPLICIT_EFLAG) != 0) != IS_IMPLICIT_EDEFAULT;
+			case 10:
+				return ((eFlags & IS_SAFE_EFLAG) != 0) != IS_SAFE_EDEFAULT;
+			case 11:
+				return ownedSource != null;
+			case 12:
+				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
+			case 13:
+				return ownedIterators != null && !ownedIterators.isEmpty();
+			case 14:
+				return referredIteration != null;
+			case 15:
+				return ownedBody != null;
+		}
+		return eDynamicIsSet(featureID);
 	}
 
 	/**

@@ -220,7 +220,7 @@ public class PivotHelper
 		asCallExp.setOwnedSource(asSource);
 		asCallExp.getOwnedIterators().addAll(asIterators);
 		asCallExp.setOwnedResult(asResult);
-		asCallExp.setOwnedBody(asBody);
+		asCallExp.getOwnedBodies().add(asBody);
 		setOperationReturnType(asCallExp, asIteration);
 		return asCallExp;
 	}

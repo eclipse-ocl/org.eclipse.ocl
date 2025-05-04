@@ -228,9 +228,9 @@ public abstract class ElementImpl
 		final @NonNull LibraryIterationExtension IMPL_closure_0 = (LibraryIterationExtension)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
 		final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Element, PivotTables.SET_CLSSid_Element);
 		/**
-		 * Implementation of the iterator body.
+		 * Implementation of the iteration evaluation body.
 		 */
-		final @NonNull AbstractBinaryOperation BODY_closure_0 = new AbstractBinaryOperation()
+		final @NonNull AbstractBinaryOperation BODY0_closure_1 = new AbstractBinaryOperation()
 		{
 			/**
 			 * oclContents()->selectByKind(Element)
@@ -247,7 +247,7 @@ public abstract class ElementImpl
 				return selectByKind;
 			}
 		};
-		final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element, BODY_closure_0, oclAsSet, ACC_closure_0);
+		final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element, BODY0_closure_1, oclAsSet, ACC_closure_0);
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);

@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getOwnedBody <em>Owned Body</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getOwnedCoIterators <em>Owned Co Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getOwnedIterators <em>Owned Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.LoopExpImpl#getReferredIteration <em>Referred Iteration</em>}</li>
@@ -86,7 +85,7 @@ implements LoopExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int LOOP_EXP_FEATURE_COUNT = CallExpImpl.CALL_EXP_FEATURE_COUNT + 4;
+	public static final int LOOP_EXP_FEATURE_COUNT = CallExpImpl.CALL_EXP_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Loop Exp</em>' class.
@@ -96,16 +95,6 @@ implements LoopExp {
 	 * @ordered
 	 */
 	public static final int LOOP_EXP_OPERATION_COUNT = CallExpImpl.CALL_EXP_OPERATION_COUNT + 7;
-
-	/**
-	 * The cached value of the '{@link #getOwnedBody() <em>Owned Body</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedBody()
-	 * @generated
-	 * @ordered
-	 */
-	protected OCLExpression ownedBody;
 
 	/**
 	 * The cached value of the '{@link #getOwnedCoIterators() <em>Owned Co Iterators</em>}' containment reference list.
@@ -163,59 +152,11 @@ implements LoopExp {
 	 * @generated
 	 */
 	@Override
-	public OCLExpression getOwnedBody() {
-		return ownedBody;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwnedBody(OCLExpression newOwnedBody, NotificationChain msgs)
-	{
-		OCLExpression oldOwnedBody = ownedBody;
-		ownedBody = newOwnedBody;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldOwnedBody, newOwnedBody);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedBody(OCLExpression newOwnedBody) {
-		if (newOwnedBody != ownedBody)
-		{
-			NotificationChain msgs = null;
-			if (ownedBody != null)
-				msgs = ((InternalEObject)ownedBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
-			if (newOwnedBody != null)
-				msgs = ((InternalEObject)newOwnedBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
-			msgs = basicSetOwnedBody(newOwnedBody, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, newOwnedBody, newOwnedBody));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public List<IteratorVariable> getOwnedCoIterators()
 	{
 		if (ownedCoIterators == null)
 		{
-			ownedCoIterators = new EObjectContainmentEList<IteratorVariable>(IteratorVariable.class, this, 13);
+			ownedCoIterators = new EObjectContainmentEList<IteratorVariable>(IteratorVariable.class, this, 12);
 		}
 		return ownedCoIterators;
 	}
@@ -230,7 +171,7 @@ implements LoopExp {
 	{
 		if (ownedIterators == null)
 		{
-			ownedIterators = new EObjectContainmentEList<Variable>(Variable.class, this, 14);
+			ownedIterators = new EObjectContainmentEList<Variable>(Variable.class, this, 13);
 		}
 		return ownedIterators;
 	}
@@ -250,7 +191,7 @@ implements LoopExp {
 			if (referredIteration != oldReferredIteration)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 15, oldReferredIteration, referredIteration));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 14, oldReferredIteration, referredIteration));
 			}
 		}
 		return referredIteration;
@@ -277,7 +218,7 @@ implements LoopExp {
 		Iteration oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldReferredIteration, referredIteration));
 	}
 
 	/**
@@ -990,10 +931,8 @@ implements LoopExp {
 			case 11:
 				return basicSetOwnedSource(null, msgs);
 			case 12:
-				return basicSetOwnedBody(null, msgs);
-			case 13:
 				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
-			case 14:
+			case 13:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -1034,12 +973,10 @@ implements LoopExp {
 			case 11:
 				return getOwnedSource();
 			case 12:
-				return getOwnedBody();
-			case 13:
 				return getOwnedCoIterators();
-			case 14:
+			case 13:
 				return getOwnedIterators();
-			case 15:
+			case 14:
 				if (resolve) return getReferredIteration();
 				return basicGetReferredIteration();
 		}
@@ -1094,17 +1031,14 @@ implements LoopExp {
 				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)newValue);
-				return;
-			case 13:
 				getOwnedCoIterators().clear();
 				getOwnedCoIterators().addAll((Collection<? extends IteratorVariable>)newValue);
 				return;
-			case 14:
+			case 13:
 				getOwnedIterators().clear();
 				getOwnedIterators().addAll((Collection<? extends Variable>)newValue);
 				return;
-			case 15:
+			case 14:
 				setReferredIteration((Iteration)newValue);
 				return;
 		}
@@ -1154,15 +1088,12 @@ implements LoopExp {
 				setOwnedSource((OCLExpression)null);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)null);
-				return;
-			case 13:
 				getOwnedCoIterators().clear();
 				return;
-			case 14:
+			case 13:
 				getOwnedIterators().clear();
 				return;
-			case 15:
+			case 14:
 				setReferredIteration((Iteration)null);
 				return;
 		}
@@ -1203,12 +1134,10 @@ implements LoopExp {
 			case 11:
 				return ownedSource != null;
 			case 12:
-				return ownedBody != null;
-			case 13:
 				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
-			case 14:
+			case 13:
 				return ownedIterators != null && !ownedIterators.isEmpty();
-			case 15:
+			case 14:
 				return referredIteration != null;
 		}
 		return eDynamicIsSet(featureID);

@@ -536,9 +536,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				CGIterator cgAccumulator = getNullableIterator(accumulator);
 				cgAccumulator.setInit(doVisit(CGValuedElement.class, accumulator.getOwnedInit()));
 				cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
-				List<OCLExpression> asBodies = Collections.singletonList(asIterateExp.getOwnedBody());
-				cgBuiltInIterationCallExp.getBodies().add(doVisit(CGValuedElement.class, asBodies.get(0)));
 				List<Parameter> asParameters = asIteration.getOwnedParameters();
+				List<OCLExpression> asBodies = asIterateExp.getOwnedBodies();
 				int iMax = Math.min(asParameters.size(), asBodies.size());
 				for (int i = 0; i < iMax; i++) {
 					Parameter asParameter = asParameters.get(i);
@@ -587,7 +586,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGValuedElement cgInitExpression = doVisit(CGValuedElement.class, result.getOwnedInit());
 			cgResult.setInit(cgInitExpression);
 		}
-		for (OCLExpression asBody : Collections.singletonList(asIterateExp.getOwnedBody())) {
+		for (OCLExpression asBody : asIterateExp.getOwnedBodies()) {
 			cgLibraryIterateCallExp.getBodies().add(doVisit(CGValuedElement.class, asBody));
 		}
 		if (asIteration != null) {

@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -638,8 +637,8 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		analyzeType(referredIteration.getOwningClass(), object.getOwnedSource());
 		analyzeTypedElements(referredIteration.getOwnedIterators(), object.getOwnedIterators());
 		//		analyzeTypedElements(referredIteration.getOwnedCoIterators(), object.getOwnedCoIterators());
-		analyzeTypedElements(referredIteration.getOwnedAccumulators(), Collections.singletonList(object.getOwnedResult()));
-		analyzeTypedElements(referredIteration.getOwnedParameters(), Collections.singletonList(object.getOwnedBody()));
+		analyzeTypedElement(referredIteration.getOwnedAccumulator(), object.getOwnedResult());
+		analyzeTypedElements(referredIteration.getOwnedParameters(), object.getOwnedBodies());
 		return null;
 	}
 

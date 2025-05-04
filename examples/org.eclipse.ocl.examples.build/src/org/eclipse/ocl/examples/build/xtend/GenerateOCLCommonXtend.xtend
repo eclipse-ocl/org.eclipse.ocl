@@ -374,14 +374,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 							«ENDIF»
 						«ENDFOR»
 					«ENDIF»
-					«IF iteration.ownedAccumulators.size() > 0»
-						ownedParameters = iteration.getOwnedAccumulators();
-						«FOR parameter : iteration.ownedAccumulators»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
-							«IF parameter.isTypeof»
-								parameter.setIsTypeof(true);
-							«ENDIF»
-						«ENDFOR»
+					«IF iteration.ownedAccumulator !== null»
+						iteration.setOwnedAccumulator(parameter = createParameter("«iteration.ownedAccumulator.name»", «iteration.ownedAccumulator.type.getSymbolName()», «iteration.ownedAccumulator.isRequired»));
+						«IF iteration.ownedAccumulator.isTypeof»
+							parameter.setIsTypeof(true);
+						«ENDIF»
 					«ENDIF»
 					«IF iteration.ownedParameters.size() > 0»
 						ownedParameters = iteration.getOwnedParameters();

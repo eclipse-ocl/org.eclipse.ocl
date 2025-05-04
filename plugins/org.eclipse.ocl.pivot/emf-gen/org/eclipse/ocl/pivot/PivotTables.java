@@ -273,7 +273,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_IteratorVariable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_IteratorVariable, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_MapLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_MapLiteralPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_NamedElement = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_NamedElement, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression_0 = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Operation = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Operation, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Parameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Parameter, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Precedence = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Precedence, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -2139,11 +2140,14 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull ExecutorProperty _IntegerLiteralExp__integerSymbol = new EcoreExecutorProperty(PivotPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL, Types._IntegerLiteralExp, 0);
 
-		public static final @NonNull ExecutorProperty _IterateExp__ownedResult = new EcoreExecutorProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT, Types._IterateExp, 0);
+		public static final @NonNull ExecutorProperty _IterateExp__ownedBodies = new EcoreExecutorProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, Types._IterateExp, 0);
+		public static final @NonNull ExecutorProperty _IterateExp__ownedResult = new EcoreExecutorProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT, Types._IterateExp, 1);
 
-		public static final @NonNull ExecutorProperty _Iteration__ownedAccumulators = new EcoreExecutorProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATORS, Types._Iteration, 0);
+		public static final @NonNull ExecutorProperty _Iteration__ownedAccumulator = new EcoreExecutorProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR, Types._Iteration, 0);
 		public static final @NonNull ExecutorProperty _Iteration__ownedIterators = new EcoreExecutorProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, Types._Iteration, 1);
 		public static final @NonNull ExecutorProperty _Iteration__LoopExp__referredIteration = new ExecutorPropertyWithImplementation("LoopExp", Types._Iteration, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION));
+
+		public static final @NonNull ExecutorProperty _IteratorExp__ownedBody = new EcoreExecutorProperty(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, Types._IteratorExp, 0);
 
 		public static final @NonNull ExecutorProperty _IteratorVariable__LoopExp__ownedCoIterators = new ExecutorPropertyWithImplementation("LoopExp", Types._IteratorVariable, 0, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS));
 
@@ -2163,10 +2167,9 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull ExecutorProperty _Library__ownedPrecedences = new EcoreExecutorProperty(PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, Types._Library, 0);
 
-		public static final @NonNull ExecutorProperty _LoopExp__ownedBody = new EcoreExecutorProperty(PivotPackage.Literals.LOOP_EXP__OWNED_BODY, Types._LoopExp, 0);
-		public static final @NonNull ExecutorProperty _LoopExp__ownedCoIterators = new EcoreExecutorProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, Types._LoopExp, 1);
-		public static final @NonNull ExecutorProperty _LoopExp__ownedIterators = new EcoreExecutorProperty(PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, Types._LoopExp, 2);
-		public static final @NonNull ExecutorProperty _LoopExp__referredIteration = new EcoreExecutorProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, Types._LoopExp, 3);
+		public static final @NonNull ExecutorProperty _LoopExp__ownedCoIterators = new EcoreExecutorProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, Types._LoopExp, 0);
+		public static final @NonNull ExecutorProperty _LoopExp__ownedIterators = new EcoreExecutorProperty(PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, Types._LoopExp, 1);
+		public static final @NonNull ExecutorProperty _LoopExp__referredIteration = new EcoreExecutorProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, Types._LoopExp, 2);
 
 		public static final @NonNull ExecutorProperty _MapLiteralExp__ownedParts = new EcoreExecutorProperty(PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS, Types._MapLiteralExp, 0);
 
@@ -2214,17 +2217,18 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorProperty _OCLExpression__IfExp__ownedCondition = new ExecutorPropertyWithImplementation("IfExp", Types._OCLExpression, 6, new EcoreLibraryOppositeProperty(PivotPackage.Literals.IF_EXP__OWNED_CONDITION));
 		public static final @NonNull ExecutorProperty _OCLExpression__IfExp__ownedElse = new ExecutorPropertyWithImplementation("IfExp", Types._OCLExpression, 7, new EcoreLibraryOppositeProperty(PivotPackage.Literals.IF_EXP__OWNED_ELSE));
 		public static final @NonNull ExecutorProperty _OCLExpression__IfExp__ownedThen = new ExecutorPropertyWithImplementation("IfExp", Types._OCLExpression, 8, new EcoreLibraryOppositeProperty(PivotPackage.Literals.IF_EXP__OWNED_THEN));
-		public static final @NonNull ExecutorProperty _OCLExpression__LetExp__ownedIn = new ExecutorPropertyWithImplementation("LetExp", Types._OCLExpression, 9, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LET_EXP__OWNED_IN));
-		public static final @NonNull ExecutorProperty _OCLExpression__LoopExp__ownedBody = new ExecutorPropertyWithImplementation("LoopExp", Types._OCLExpression, 10, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__OWNED_BODY));
-		public static final @NonNull ExecutorProperty _OCLExpression__MapLiteralPart__ownedKey = new ExecutorPropertyWithImplementation("MapLiteralPart", Types._OCLExpression, 11, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY));
-		public static final @NonNull ExecutorProperty _OCLExpression__MapLiteralPart__ownedValue = new ExecutorPropertyWithImplementation("MapLiteralPart", Types._OCLExpression, 12, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE));
-		public static final @NonNull ExecutorProperty _OCLExpression__MessageExp__ownedArguments = new ExecutorPropertyWithImplementation("MessageExp", Types._OCLExpression, 13, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS));
-		public static final @NonNull ExecutorProperty _OCLExpression__MessageExp__ownedTarget = new ExecutorPropertyWithImplementation("MessageExp", Types._OCLExpression, 14, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_TARGET));
-		public static final @NonNull ExecutorProperty _OCLExpression__NavigationCallExp__qualifiers = new ExecutorPropertyWithImplementation("NavigationCallExp", Types._OCLExpression, 15, new EcoreLibraryOppositeProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS));
-		public static final @NonNull ExecutorProperty _OCLExpression__OperationCallExp__ownedArguments = new ExecutorPropertyWithImplementation("OperationCallExp", Types._OCLExpression, 16, new EcoreLibraryOppositeProperty(PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS));
-		public static final @NonNull ExecutorProperty _OCLExpression__ShadowPart__ownedInit = new ExecutorPropertyWithImplementation("ShadowPart", Types._OCLExpression, 17, new EcoreLibraryOppositeProperty(PivotPackage.Literals.SHADOW_PART__OWNED_INIT));
-		public static final @NonNull ExecutorProperty _OCLExpression__TupleLiteralPart__ownedInit = new ExecutorPropertyWithImplementation("TupleLiteralPart", Types._OCLExpression, 18, new EcoreLibraryOppositeProperty(PivotPackage.Literals.TUPLE_LITERAL_PART__OWNED_INIT));
-		public static final @NonNull ExecutorProperty _OCLExpression__Variable__ownedInit = new ExecutorPropertyWithImplementation("Variable", Types._OCLExpression, 19, new EcoreLibraryOppositeProperty(PivotPackage.Literals.VARIABLE__OWNED_INIT));
+		public static final @NonNull ExecutorProperty _OCLExpression__IterateExp__ownedBodies = new ExecutorPropertyWithImplementation("IterateExp", Types._OCLExpression, 9, new EcoreLibraryOppositeProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES));
+		public static final @NonNull ExecutorProperty _OCLExpression__IteratorExp__ownedBody = new ExecutorPropertyWithImplementation("IteratorExp", Types._OCLExpression, 10, new EcoreLibraryOppositeProperty(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY));
+		public static final @NonNull ExecutorProperty _OCLExpression__LetExp__ownedIn = new ExecutorPropertyWithImplementation("LetExp", Types._OCLExpression, 11, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LET_EXP__OWNED_IN));
+		public static final @NonNull ExecutorProperty _OCLExpression__MapLiteralPart__ownedKey = new ExecutorPropertyWithImplementation("MapLiteralPart", Types._OCLExpression, 12, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY));
+		public static final @NonNull ExecutorProperty _OCLExpression__MapLiteralPart__ownedValue = new ExecutorPropertyWithImplementation("MapLiteralPart", Types._OCLExpression, 13, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE));
+		public static final @NonNull ExecutorProperty _OCLExpression__MessageExp__ownedArguments = new ExecutorPropertyWithImplementation("MessageExp", Types._OCLExpression, 14, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS));
+		public static final @NonNull ExecutorProperty _OCLExpression__MessageExp__ownedTarget = new ExecutorPropertyWithImplementation("MessageExp", Types._OCLExpression, 15, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_TARGET));
+		public static final @NonNull ExecutorProperty _OCLExpression__NavigationCallExp__qualifiers = new ExecutorPropertyWithImplementation("NavigationCallExp", Types._OCLExpression, 16, new EcoreLibraryOppositeProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS));
+		public static final @NonNull ExecutorProperty _OCLExpression__OperationCallExp__ownedArguments = new ExecutorPropertyWithImplementation("OperationCallExp", Types._OCLExpression, 17, new EcoreLibraryOppositeProperty(PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS));
+		public static final @NonNull ExecutorProperty _OCLExpression__ShadowPart__ownedInit = new ExecutorPropertyWithImplementation("ShadowPart", Types._OCLExpression, 18, new EcoreLibraryOppositeProperty(PivotPackage.Literals.SHADOW_PART__OWNED_INIT));
+		public static final @NonNull ExecutorProperty _OCLExpression__TupleLiteralPart__ownedInit = new ExecutorPropertyWithImplementation("TupleLiteralPart", Types._OCLExpression, 19, new EcoreLibraryOppositeProperty(PivotPackage.Literals.TUPLE_LITERAL_PART__OWNED_INIT));
+		public static final @NonNull ExecutorProperty _OCLExpression__Variable__ownedInit = new ExecutorPropertyWithImplementation("Variable", Types._OCLExpression, 20, new EcoreLibraryOppositeProperty(PivotPackage.Literals.VARIABLE__OWNED_INIT));
 
 		public static final @NonNull ExecutorProperty _Operation__bodyExpression = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, Types._Operation, 0);
 		public static final @NonNull ExecutorProperty _Operation__isInvalidating = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__IS_INVALIDATING, Types._Operation, 1);
@@ -2266,7 +2270,7 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull ExecutorProperty _Parameter__isTypeof = new EcoreExecutorProperty(PivotPackage.Literals.PARAMETER__IS_TYPEOF, Types._Parameter, 0);
 		public static final @NonNull ExecutorProperty _Parameter__owningOperation = new EcoreExecutorProperty(PivotPackage.Literals.PARAMETER__OWNING_OPERATION, Types._Parameter, 1);
-		public static final @NonNull ExecutorProperty _Parameter__Iteration__ownedAccumulators = new ExecutorPropertyWithImplementation("Iteration", Types._Parameter, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATORS));
+		public static final @NonNull ExecutorProperty _Parameter__Iteration__ownedAccumulator = new ExecutorPropertyWithImplementation("Iteration", Types._Parameter, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR));
 		public static final @NonNull ExecutorProperty _Parameter__Iteration__ownedIterators = new ExecutorPropertyWithImplementation("Iteration", Types._Parameter, 3, new EcoreLibraryOppositeProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS));
 		public static final @NonNull ExecutorProperty _Parameter__Variable__representedParameter = new ExecutorPropertyWithImplementation("Variable", Types._Parameter, 4, new EcoreLibraryOppositeProperty(PivotPackage.Literals.VARIABLE__REPRESENTED_PARAMETER));
 
@@ -12676,7 +12680,7 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			PivotTables.Properties._Element__ownedAnnotations,
-			PivotTables.Properties._LoopExp__ownedBody,
+			PivotTables.Properties._IterateExp__ownedBodies,
 			PivotTables.Properties._LoopExp__ownedCoIterators,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
@@ -12703,7 +12707,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._NamedElement__name,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
-			PivotTables.Properties._Iteration__ownedAccumulators,
+			PivotTables.Properties._Iteration__ownedAccumulator,
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._TemplateableElement__ownedBindings,
 			PivotTables.Properties._Element__ownedComments,
@@ -12732,7 +12736,7 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			PivotTables.Properties._Element__ownedAnnotations,
-			PivotTables.Properties._LoopExp__ownedBody,
+			PivotTables.Properties._IteratorExp__ownedBody,
 			PivotTables.Properties._LoopExp__ownedCoIterators,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
@@ -12886,7 +12890,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			PivotTables.Properties._Element__ownedAnnotations,
-			PivotTables.Properties._LoopExp__ownedBody,
 			PivotTables.Properties._LoopExp__ownedCoIterators,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,

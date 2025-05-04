@@ -41,7 +41,15 @@ public class PivotMessages
 	/**
 	 * @since 1.23
 	 */
+	public static String ExpectedAccumulatorType;
+	/**
+	 * @since 1.23
+	 */
 	public static String ExpectedArgumentType;
+	/**
+	 * @since 1.23
+	 */
+	public static String ExpectedIteratorType;
 	/**
 	 * @since 1.18
 	 */

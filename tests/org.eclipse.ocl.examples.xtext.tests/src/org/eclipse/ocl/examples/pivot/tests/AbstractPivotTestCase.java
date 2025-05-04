@@ -14,8 +14,10 @@ package org.eclipse.ocl.examples.pivot.tests;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +50,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
@@ -70,6 +73,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -259,12 +263,19 @@ public class AbstractPivotTestCase extends TestCase
 		}
 		StringBuilder s1 = null;
 		for (Diagnostic diagnostic : diagnostics) {
-			String actual = diagnostic.getMessage();
-			for (Object data : diagnostic.getData()) {
-				if (data instanceof Throwable) {
-					Throwable t = (Throwable)data;
-					if (!actual.equals(t.getMessage())) {		// e.g EvaluationException message promoted
-						actual += "\n\t" + t.getClass().getSimpleName() + " - " + t.getMessage();
+			String actual = normalizeMessage(diagnostic.getMessage());
+			List<?> datas = diagnostic.getData();
+			if (datas != null) {
+				if (datas.size() > 1) {
+					datas = new ArrayList<>(datas);
+					Collections.sort(datas, NameUtil.TO_STRING_COMPARATOR);
+				}
+				for (Object data : datas) {
+					if (data instanceof Throwable) {
+						Throwable t = (Throwable)data;
+						if (!actual.equals(t.getMessage())) {		// e.g EvaluationException message promoted
+							actual += "\n\t" + t.getClass().getSimpleName() + " - " + t.getMessage();
+						}
 					}
 				}
 			}
@@ -418,7 +429,7 @@ public class AbstractPivotTestCase extends TestCase
 					if (s == null) {
 						s = new StringBuilder();
 						s.append(message);
-						s.append(" unresolved pivots in ");
+						s.append(" in ");
 						s.append(csResource.getURI());
 					}
 					s.append("\n\t");
@@ -679,6 +690,28 @@ public class AbstractPivotTestCase extends TestCase
 		return (os != null) && os.startsWith("Windows");
 	}
 
+	private static @NonNull String normalizeMessage(@NonNull String message) {
+		@NonNull String[] lines = message.split("\n");
+		Arrays.sort(lines, new Comparator<@NonNull String>() {
+			@Override
+			public int compare(@NonNull String o1, @NonNull String o2) {
+				if (o1.startsWith("\t") && o2.startsWith("\t")) {
+					return o1.compareTo(o2);
+				}
+				int x1 = message.indexOf(o1);
+				int x2 = message.indexOf(o2);
+				return x1 - x2;
+			}});
+		StringBuilder s = new StringBuilder();
+		for (String line : lines) {
+			if (s.length() != 0) {
+				s.append("\n");
+			}
+			s.append(line);
+		}
+		return s.toString();
+	}
+
 	public static void unloadResourceSet(@NonNull ResourceSet resourceSet) {
 		StandaloneProjectMap projectMap = StandaloneProjectMap.findAdapter(resourceSet);
 		if (projectMap != null) {
@@ -765,7 +798,7 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	/**
-	 * Register the temporary use of EPackage by the test, ensuring correctr installation and de-instalation for
+	 * Register the temporary use of EPackage by the test, ensuring correct installation and de-instalation for
 	 * repeated usage and defeating the missing registration check in restoreMemento.
 	 */
 	protected void registerEPackage(EPackage ePackage) {
@@ -802,6 +835,7 @@ public class AbstractPivotTestCase extends TestCase
 			XMLNamespacePackage.eINSTANCE.getClass();
 			GenModelPackage.eINSTANCE.getName();
 			org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE.getName();
+			CGModelPackage.eINSTANCE.getClass();
 			EcoreAnnotationValidator.INSTANCE.getClass();
 			ExtendedMetaDataAnnotationValidator.INSTANCE.getClass();
 			testHelper.doStartUp();					// Ensure all plugins are started before saving global state
