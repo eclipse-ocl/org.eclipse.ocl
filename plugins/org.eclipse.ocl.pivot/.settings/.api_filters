@@ -628,7 +628,61 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="_2_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Bag__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Bag__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Bag__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__collectBy_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__collectBy_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__collect_E"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -640,13 +694,139 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__OrderedSet__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__OrderedSet__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Sequence__closure_E"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Sequence__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Sequence__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
                 <message_argument value="__Set__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Set__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Set__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="_2_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Bag__collectNested_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Bag__collect_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__collectBy_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__collectNested_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Collection__collect_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__collectBy_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__collectNested_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Map__collect_V2"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__OrderedSet__collectNested_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__OrderedSet__collect_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Sequence__collectNested_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Sequence__collect_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Set__collectNested_V"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.TypeParameters"/>
+                <message_argument value="__Set__collect_V"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -676,7 +856,52 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="_2_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Bag__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Bag__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Bag__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__collectBy_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__collectBy_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__collect_E"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -686,12 +911,42 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="__OrderedSet__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__OrderedSet__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Sequence__closure_E"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="__Sequence__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Sequence__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Set__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Set__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Set__collect_E"/>
             </message_arguments>
         </filter>
     </resource>

@@ -1144,8 +1144,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class context = environmentFactory.getASClass("Package");
 		org.eclipse.ocl.pivot.Class type = environmentFactory.getASClass("Class");
-		ocl.assertValidationErrorQuery(context, "ownedClasses->sortedBy(e | e)",
-			PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
+		ocl.assertSemanticErrorQuery(context, "ownedClasses->sortedBy(e | e)",
+			PivotMessages.ExpectedArgumentType, "sortedBy", 1, "OclComparable", "Class");
+	//	PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
 
 		ocl.assertQuery(context, "ownedClasses->sortedBy(e | e.name)");
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
