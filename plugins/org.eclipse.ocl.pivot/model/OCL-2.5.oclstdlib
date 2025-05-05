@@ -101,18 +101,18 @@ type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.
 	/*
 	The closure of applying body transitively to every distinct element of the source collection.
 	*/
-	iteration closure(E)(i : E[?] | lambda : Lambda E() : Collection(E[?])) : Set(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
-	iteration collect(E)(i : T[?] | lambda : Lambda T() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
+	iteration closure(E)(i : E[?] | lambda : Lambda E[?]() : Collection(E[?])) : Set(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
+	iteration collect(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/*
 	The Bag of elements which results from applying body to every member of the source nonordered collection.
 	*/
-	iteration collectNested(E)(i : T[?] | lambda : Lambda T() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
 	/*
 	The sub-bag of the source bag for which body is oclText[false].
 	
 	oclCode[self->reject(iterator | body) = self->select(iterator | not body)].	
 	*/
-	iteration reject(i : T[?] | lambda : Lambda T() : Boolean[1]) : Bag(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
+	iteration reject(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Bag(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
 	/*
 	The sub-bag of the source bag for which body is oclText[true].
 
@@ -122,14 +122,14 @@ type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.
 								else result
 						endif)]
 	*/
-	iteration select(i : T[?] | lambda : Lambda T() : Boolean[1]) : Bag(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
+	iteration select(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Bag(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
 	/*
 	Results in the Sequence containing all elements of the source collection.
 	The element for which body has the lowest value comes first, and so on.
 	The type of the body expression must have the < operation defined.
 	The < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).
 	*/
-	iteration sortedBy(i : T[?] | lambda : Lambda T() : OclComparable[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
+	iteration sortedBy(i : T[?] | lambda : Lambda T[?]() : OclComparable[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
 	/*
 	True if oclText[self] and bag contain the same elements, the same number of times.
 	*/
@@ -372,78 +372,78 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	let source : Collection(T) = ..., body : Lambda T() : Boolean = ... in
 	source->any(iterator | body) = source->select(iterator | body)->asSequence()->first()
 	*/
-	iteration any(i : T[1] | lambda : Lambda T() : Boolean[1]) : T[?] => 'org.eclipse.ocl.pivot.library.iterator.AnyIteration';
+	iteration any(i : T[1] | lambda : Lambda T[1]() : Boolean[1]) : T[?] => 'org.eclipse.ocl.pivot.library.iterator.AnyIteration';
 	/*
 	The Collection of elements that results from applying body to every member of the source set.
 	The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.
 	collectNested is defined individually for each subclass of CollectionType.
 	*/
-	iteration collect(E)(i : T[?] | lambda : Lambda T() : E[?]) : Collection(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
+	iteration collect(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Collection(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/*
 	The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.
 	The result is not flattened. 
 	*/
-	iteration collectBy(E)(i : T[?] | lambda : Lambda T() : E[?]) : Map(T[?],E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectByIteration';
+	iteration collectBy(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Map(T[?],E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectByIteration';
 	/*
 	The Collection of elements which results from applying body to every member of the source collection.
 	*/
-	iteration collectNested(E)(i : T[?] | lambda : Lambda T() : E[?]) : Collection(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Collection(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.
 	*/
-	iteration exists(i : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(i : T[?] | lambda : Lambda T[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j] in the source collection.
 	*/
-	iteration exists(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(i : T[?], j : T[?] | lambda : Lambda T[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j], oclText[k] in the source collection.
 	*/
-	iteration exists(i : T[?], j : T[?], k : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(i : T[?], j : T[?], k : T[?] | lambda : Lambda T[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/*
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each element oclText[i] in the source collection; otherwise, result is oclText[false].
 	*/
-	iteration forAll(i : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(i : T[?] | lambda : Lambda T[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/*
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j], oclText[k] in the source collection; otherwise, result is oclText[false].
 	*/
-	iteration forAll(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(i : T[?], j : T[?] | lambda : Lambda T[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/*
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].
 	*/
-	iteration forAll(i : T[?], j : T[?], k : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(i : T[?], j : T[?], k : T[?] | lambda : Lambda T[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/*
 	The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.
 	The result is not flattened. 
 	*/
---	iteration inverseCollectBy(V)(i : T[?] | lambda : Lambda T() : V[?]) : Map(V,Set(T[?])) => 'org.eclipse.ocl.pivot.library.iterator.InverseCollectByIteration';
+--	iteration inverseCollectBy(V)(i : T[?] | lambda : Lambda T[?]() : V[?]) : Map(V,Set(T[?])) => 'org.eclipse.ocl.pivot.library.iterator.InverseCollectByIteration';
 	/*
 	Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].
 	*/
-	iteration isUnique(i : T[?] | lambda : Lambda T() : OclAny[?]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration';
+	iteration isUnique(i : T[?] | lambda : Lambda T[?]() : OclAny[?]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration';
 	/*
 	Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source collection.
 	*/
-	iteration iterate(Tacc)(i : T[?]; acc : Tacc[?] | lambda : Lambda T() : Tacc[?]) : Tacc[?] => 'org.eclipse.ocl.pivot.library.iterator.IterateIteration';
+	iteration iterate(Tacc)(i : T[?]; acc : Tacc[?] | lambda : Lambda T[?]() : Tacc[?]) : Tacc[?] => 'org.eclipse.ocl.pivot.library.iterator.IterateIteration';
 	/*
 	Results in oclText[true] if there is exactly one element in the source collection for which body is oclText[true].
 	*/
-	iteration one(i : T[?] | lambda : Lambda T() : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.OneIteration';
+	iteration one(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.OneIteration';
 	/*
 	The sub-collection of the source collection for which body is oclText[false].
 	*/
-	iteration reject(i : T[?] | lambda : Lambda T() : Boolean[1]) : Collection(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
+	iteration reject(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Collection(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
 	/*
 	The sub-collection of the source collection for which body is oclText[true].
 	*/
-	iteration select(i : T[?] | lambda : Lambda T() : Boolean[1]) : Collection(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
+	iteration select(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Collection(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
 	/*
 	Results in the Collection containing all elements of the source collection.
 	The element for which body has the lowest value comes first, and so on.
 	The type of the body expression must have the < operation defined.
 	The < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).
 	*/
-	iteration sortedBy(i : T[?] | lambda : Lambda T() : OclComparable[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
+	iteration sortedBy(i : T[?] | lambda : Lambda T[?]() : OclComparable[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
 	/*
 	True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,
 	in the case of an ordered collection type.
@@ -679,65 +679,65 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	let source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in
 	source->any(key <- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()
 	*/
-	iteration any(k : K[1] | lambda : Lambda K() : Boolean[1]) : K[?] => 'org.eclipse.ocl.pivot.library.iterator.AnyIteration';
+	iteration any(k : K[1] | lambda : Lambda K[?]() : Boolean[1]) : K[?] => 'org.eclipse.ocl.pivot.library.iterator.AnyIteration';
 	/*
 	The Collection of results from applying body to every key-value of the source map.
 	The result is flattened. 
 	*/
-	iteration collect(E)(k : K[?] | lambda : Lambda K() : E[?]) : Bag(E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
+	iteration collect(E)(k : K[?] | lambda : Lambda K[?]() : E[?]) : Bag(E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/*
 	The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.
 	The result is not flattened. 
 	*/
-	iteration collectBy(E)(k : K[?] | lambda : Lambda K() : E[?]) : Map(K[?],E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectByIteration';
+	iteration collectBy(E)(k : K[?] | lambda : Lambda K[?]() : E[?]) : Map(K[?],E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectByIteration';
 	/*
 	The Collection of results from applying body to every key-value of the source map.
 	*/
-	iteration collectNested(E)(k : K[?] | lambda : Lambda K() : E[?]) : Bag(E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(E)(k : K[?] | lambda : Lambda K[?]() : E[?]) : Bag(E[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.
 	*/
-	iteration exists(k : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(k : K[?] | lambda : Lambda K[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2] in the source map.
 	*/
-	iteration exists(k1 : K[?], k2 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(k1 : K[?], k2 : K[?] | lambda : Lambda K[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/*
 	Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map.
 	*/
-	iteration exists(k1 : K[?], k2 : K[?], k3 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(k1 : K[?], k2 : K[?], k3 : K[?] | lambda : Lambda K[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/*
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].
 	*/
-	iteration forAll(k : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(k : K[?] | lambda : Lambda K[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/*
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2] in the source map; otherwise, result is oclText[false].
 	*/
-	iteration forAll(k1 : K[?], k2 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(k1 : K[?], k2 : K[?] | lambda : Lambda K[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/*
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map; otherwise, result is oclText[false].
 	*/
-	iteration forAll(k1 : K[?], k2 : K[?], k3 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(k1 : K[?], k2 : K[?], k3 : K[?] | lambda : Lambda K[?]() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/*
 	Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].
 	*/
-	iteration isUnique(i : K[?] | lambda : Lambda K() : OclAny[?]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration';
+	iteration isUnique(i : K[?] | lambda : Lambda K[?]() : OclAny[?]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration';
 	/*
 	Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.
 	*/
-	iteration iterate(Tacc)(i : K[?]; acc : Tacc[?] | lambda : Lambda K() : Tacc[?]) : Tacc[?] => 'org.eclipse.ocl.pivot.library.iterator.IterateIteration';
+	iteration iterate(Tacc)(i : K[?]; acc : Tacc[?] | lambda : Lambda K[?]() : Tacc[?]) : Tacc[?] => 'org.eclipse.ocl.pivot.library.iterator.IterateIteration';
 	/*
 	Results in oclText[true] if there is exactly one element in the source map for which body is oclText[true].
 	*/
-	iteration one(i : K[?] | lambda : Lambda K() : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.OneIteration';
+	iteration one(i : K[?] | lambda : Lambda K[?]() : Boolean[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.iterator.OneIteration';
 	/*
 	The subset of the source set for which body is oclText[false].
 	*/
-	iteration reject(i : K[?] | lambda : Lambda K() : Boolean[1]) : Map(K[?],V[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.MapRejectIteration';
+	iteration reject(i : K[?] | lambda : Lambda K[?]() : Boolean[1]) : Map(K[?],V[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.MapRejectIteration';
 	/*
 	The subset of set for which expr is oclText[true].
 	*/
-	iteration select(i : K[?] | lambda : Lambda K() : Boolean[1]) : Map(K[?],V[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.MapSelectIteration';
+	iteration select(i : K[?] | lambda : Lambda K[?]() : Boolean[1]) : Map(K[?],V[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.MapSelectIteration';
 	/*
 	Evaluates to oclText[true] if oclText[self] and s contain the same elements.
 	*/
@@ -1328,32 +1328,32 @@ type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollec
 	/*
 	The closure of applying body transitively to every distinct element of the source collection.
 	*/
-	iteration closure(E)(i : E[?] | lambda : Lambda E() : OrderedCollection(E[?])) : OrderedSet(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
+	iteration closure(E)(i : E[?] | lambda : Lambda E[?]() : OrderedCollection(E[?])) : OrderedSet(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
 	/*
 	The Sequence of elements that results from applying body to every member of the source set.
 	The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.
 	collectNested is defined individually for each subclass of CollectionType.
 	*/
-	iteration collect(E)(i : T[?] | lambda : Lambda T() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
+	iteration collect(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/*
 	The sequence of elements that results from applying body to every member of the source ordered collection.
 	*/
-	iteration collectNested(E)(i : T[?] | lambda : Lambda T() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
 	/*
 	The ordered set of the source ordered set for which body is oclText[false].
 	*/
-	iteration reject(i : T[?] | lambda : Lambda T() : Boolean[1]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
+	iteration reject(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
 	/*
 	The ordered set of the source ordered set for which body is oclText[true]
 	*/
-	iteration select(i : T[?] | lambda : Lambda T() : Boolean[1]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
+	iteration select(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
 	/*
 	Results in the ordered set containing all elements of the source collection.
 	The element for which body has the lowest value comes first, and so on.
 	The type of the body expression must have the < operation defined.
 	The < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).
 	*/
-	iteration sortedBy(i : T[?] | lambda : Lambda T() : OclComparable[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
+	iteration sortedBy(i : T[?] | lambda : Lambda T[?]() : OclComparable[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
 	/*
 	Evaluates to oclText[true] if oclText[self] and s contain the same elements.
 	*/
@@ -1508,32 +1508,32 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.Li
 	/*
 	The closure of applying body transitively to every distinct element of the source collection.
 	*/
-	iteration closure(E)(i : E[?] | lambda : Lambda E() : OrderedCollection(E[?])) : OrderedSet(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
+	iteration closure(E)(i : E[?] | lambda : Lambda E[?]() : OrderedCollection(E[?])) : OrderedSet(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
 	/*
 	The Bag of elements that results from applying body to every member of the source sequence.
 	The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.
 	collectNested is defined individually for each subclass of CollectionType.
 	*/
-	iteration collect(E)(i : T[?] | lambda : Lambda T() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
+	iteration collect(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/*
 	The sequence of elements that results from applying body to every member of the source ordered collection.
 	*/
-	iteration collectNested(E)(i : T[?] | lambda : Lambda T() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
 	/*
 	The subsequence of the source sequence for which body is oclText[false].
 	*/
-	iteration reject(i : T[?] | lambda : Lambda T() : Boolean[1]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
+	iteration reject(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
 	/*
 	The subsequence of the source sequence for which body is oclText[true].
 	*/
-	iteration select(i : T[?] | lambda : Lambda T() : Boolean[1]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
+	iteration select(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
 	/*
 	Results in the Sequence containing all elements of the source collection.
 	The element for which body has the lowest value comes first, and so on.
 	The type of the body expression must have the < operation defined.
 	The < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).
 	*/
-	iteration sortedBy(i : T[?] | lambda : Lambda T() : OclComparable[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
+	iteration sortedBy(i : T[?] | lambda : Lambda T[?]() : OclComparable[?]) : Sequence(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
 	/*
 	True if oclText[self] contains the same elements as s in the same order.
 	*/
@@ -1609,32 +1609,32 @@ type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {
 	/*
 	The closure of applying body transitively to every distinct element of the source collection.
 	*/
-	iteration closure(E)(i : E[?] | lambda : Lambda E() : Collection(E[?])) : Set(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
+	iteration closure(E)(i : E[?] | lambda : Lambda E[?]() : Collection(E[?])) : Set(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.ClosureIteration';
 	/*
 	The Bag of elements that results from applying body to every member of the source set.
 	The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.
 	collectNested is defined individually for each subclass of CollectionType.
 	*/
-	iteration collect(E)(i : T[?] | lambda : Lambda T() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
+	iteration collect(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectIteration';
 	/*
 	The Bag of elements which results from applying body to every member of the source nonordered collection.
 	*/
-	iteration collectNested(E)(i : T[?] | lambda : Lambda T() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
+	iteration collectNested(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration';
 	/*
 	The subset of the source set for which body is oclText[false].
 	*/
-	iteration reject(i : T[?] | lambda : Lambda T() : Boolean[1]) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
+	iteration reject(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
 	/*
 	The subset of set for which expr is oclText[true].
 	*/
-	iteration select(i : T[?] | lambda : Lambda T() : Boolean[1]) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
+	iteration select(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Set(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
 	/*
 	Results in the ordered set containing all elements of the source collection.
 	The element for which body has the lowest value comes first, and so on.
 	The type of the body expression must have the < operation defined.
 	The < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).
 	*/
-	iteration sortedBy(i : T[?] | lambda : Lambda T() : OclComparable[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
+	iteration sortedBy(i : T[?] | lambda : Lambda T[?]() : OclComparable[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
 	/*
 	Evaluates to oclText[true] if oclText[self] and s contain the same elements.
 	*/
@@ -1857,7 +1857,7 @@ abstract type UniqueCollection(T) : CollectionType conformsTo Collection(T) => '
 	The type of the body expression must have the < operation defined.
 	The < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).
 	*/
-	iteration sortedBy(i : T[?] | lambda : Lambda T() : OclComparable[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
+	iteration sortedBy(i : T[?] | lambda : Lambda T[?]() : OclComparable[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.iterator.SortedByIteration';
 	/*
 	The elements of oclText[self], which are not in s.
 	*/
