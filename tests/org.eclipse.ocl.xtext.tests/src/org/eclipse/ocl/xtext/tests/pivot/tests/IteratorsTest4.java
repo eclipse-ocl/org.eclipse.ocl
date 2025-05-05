@@ -856,6 +856,42 @@ public class IteratorsTest4 extends PivotTestSuite
 	}
 
 	/**
+	 * Tests the gather() iterator.
+	 */
+	@Test public void test_gather() {
+		MyOCL ocl = createOCL();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		IdResolver idResolver = ocl.getIdResolver();
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
+		CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedId(packageType.getTypeId());
+		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->gather(oclAsType(String)).size()");
+//
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->gather(p : ocl::Package | p.name)");
+
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->gather(p | p.name)");
+
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->gather(name)");
+
+		// nested collections not flattened
+		Set<org.eclipse.ocl.pivot.Package> e1 = Collections.singleton(ocl.jim);
+		Set<?> e2 = Collections.EMPTY_SET;
+		HashSet<Object> e3 = new HashSet<Object>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
+		CollectionValue expected2 = idResolver.createBagOfEach(typeId, e1, e2, e3);
+
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->gather(ownedPackages)");
+		// Bug 423489 - ensure return is collection of body type not source type
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->gather(oclAsType(String)).size()");
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{Sequence{1,2},Sequence{3,4}}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc','dddd'}} in s->gather(oclAsType(Sequence(String)))->gather(s | s.size())");
+		// Bug 423490 - ensure nested iteration uses iterator as implicit source
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{2,1}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc'}} in s->gather(size())");
+		ocl.dispose();
+	}
+
+	/**
 	 * Tests that when the body of an iterator results in invalid, the
 	 * isUnique iterator expression treats it like any other value.
 	 */
@@ -973,6 +1009,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->one(k with v | k = v)");
 		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->one(k with v | k <> v)");
 		ocl.assertQueryFalse(ocl.pkg1, "Map{'a' with 'a', 'b' with 'b' }->one(k with v | k <> v)");
+		ocl.assertSemanticErrorQuery(ocl.getContextType(ocl.pkg1), "Map{}->one(k with v; acc : Integer = 0 |  k = v)",
+			EssentialOCLCS2ASMessages.IteratorExp_TooManyAccumulators, "one");
 		ocl.dispose();
 	}
 
@@ -1037,6 +1075,78 @@ public class IteratorsTest4 extends PivotTestSuite
 		// same deal for a null value (in the exists case)
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
 				"Bag{1, 2, 3}->reject(null.oclAsType(Boolean))");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the exists() iterator.
+	 */
+	@Test public void test_search_exists() {
+		MyOCL ocl = createOCL();
+		ocl.assertQueryFalse(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{false}}->search(e; acc : Boolean = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{false}, Sequence{false}}->search(e; acc : Boolean[?] = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{true}}->search(e; acc : Boolean[?] = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryNull(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{null}, Sequence{false}}->search(e; acc : Boolean[?] = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{}}->search(e; acc : Boolean[?] = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{null}, Sequence{}}->search(e; acc : Boolean[?] = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{}, Sequence{null}}->search(e; acc : Boolean[?] = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{}}->search(e; acc : Boolean[?] = false | let f = e->first() in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->search(e; acc : Boolean[?] = false | let f = e = 'c' in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->search(e; acc : Boolean[?] = false | let f = e = 'c' in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->search(e; acc : Boolean[?] = false | let f = e = 'c' in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		// when there are no values, they the desired result implictly
+		// does not occur
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{}->search(e; acc : Boolean[?] = false | let f = e = 'c' in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		ocl.assertQueryTrue(ocl.pkg1, "ownedPackages->search(e; acc : Boolean[?] = false | let f = true in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key with value; acc : Boolean[?] = false | let f = key <> value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key; acc : Boolean[?] = false | let f = key <> null in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', null with null}->search(key; acc : Boolean[?] = false | let f = key <> null in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', null with null}->search(key  with value; acc : Boolean[?] = false | let f = key = value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryFalse(null, "Map{1 with '1', true with 'TRUE', null with 'null'}->search(key  with value; acc : Boolean[?] = false | let f = key = value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryFalse(null, "Map{1 with '1', true with 'TRUE', 'null' with null}->search(key  with value; acc : Boolean[?] = false | let f = key = value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryInvalid(null, "Map{1 with '1', true with 'TRUE', invalid with null}->search(key with value; acc : Boolean[?] = false | let f = key = value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryInvalid(null, "Map{1 with '1', true with 'TRUE', null with invalid}->search(key with value; acc : Boolean[?] = false | let f = key = value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryInvalid(null, "Map{1 with '1', true with 'TRUE', 'null' with null}->search(key with value; acc : Boolean[?] = false | let f = key = invalid in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key : OclAny; acc : Boolean[?] = false | let f = key <> null in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+//		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key1, key2 with value2; acc : Boolean[?] = false | let f = key1 <> value2 in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+//		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key1 : OclAny, key2 : OclAny with value2 : String; acc : Boolean[?] = false | let f = key1 <> value2 in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+//		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key1 with value1, key2; acc : Boolean[?] = false | let f = key2 <> value1 in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key with value; acc : Boolean[?] = false | let f = key.toString().toUpper() = value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->search(key : OclAny with value : String; acc : Boolean[?] = false | let f = key.toString().toUpper() = value in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{2,3,4,6,12}->search(e1, e2, e3; acc : Boolean[?] = false | let f = e1 * e2 * e3 = 73 in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{2,3,4,6,12}->search(e1, e2, e3; acc : Boolean[?] = false | let f = e1 * e2 * e3 = 72 in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+
+		ocl.assertQueryTrue(null, "Map{2 with 1, 3 with 2,1 with 3}->search(k1 with v1, k2 with v2, k3 with v3; acc : Boolean[?] = false | let f = k1 = v2 and k2 = v3 and k3 = v1 in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.assertQueryFalse(null, "Map{2 with 1, 4 with 2,1 with 3}->search(k1 with v1, k2 with v2, k3 with v3; acc : Boolean[?] = false | let f = k1 = v2 and k2 = v3 and k3 = v1 in if f = true then true elseif acc.oclIsInvalid() then acc elseif f.oclIsInvalid() then f elseif acc = null then null elseif f = null then null else false endif, acc = true, acc)");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the one() iterator.
+	 */
+	@Test public void test_search_one() {
+		MyOCL ocl = createOCL();
+		ocl.assertSemanticErrorQuery(ocl.getContextType(ocl.pkg1), "Sequence{'a', 'b', 'c', 'd', 'e'}->search(e; acc : Integer = 0 | e = 'c', acc >= 2, acc = 1)",
+			PivotMessages.ExpectedAccumulatorType, "search", "OclAny", "Integer");
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->search(e; acc : Integer = 0 | if e = 'c' then acc+1 else acc endif, acc >= 2, acc = 1)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->search(e; acc : Integer = 0 | if e = 'c' then acc+1 else acc endif, acc >= 2, acc = 1)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->search(e; acc : Integer = 0 | if e = 'c' then acc+1 else acc endif, acc >= 2, acc = 1)");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a'}->search(i; acc : Integer = 0 | if true then acc+1 else acc endif, acc >= 2, acc = 1)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Map{}->search(k with v; acc : Integer = 0 | if k = v then acc+1 else acc endif, acc >= 2, acc = 1)");
+		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->search(k with v; acc : Integer = 0 | if k = v then acc+1 else acc endif, acc >= 2, acc = 1)");
+		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->search(k with v; acc : Integer = 0 | if k <> v then acc+1 else acc endif, acc >= 2, acc = 1)");
+		ocl.assertQueryFalse(ocl.pkg1, "Map{'a' with 'a', 'b' with 'b' }->search(k with v; acc : Integer = 0 | if k <> v then acc+1 else acc endif, acc >= 2, acc = 1)");
 		ocl.dispose();
 	}
 
