@@ -42,7 +42,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibIterationCSImpl#getImplementation <em>Implementation</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibIterationCSImpl#isIsInvalidating <em>Is Invalidating</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibIterationCSImpl#isIsValidating <em>Is Validating</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibIterationCSImpl#getOwnedAccumulators <em>Owned Accumulators</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibIterationCSImpl#getOwnedAccumulator <em>Owned Accumulator</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibIterationCSImpl#getOwnedIterators <em>Owned Iterators</em>}</li>
  * </ul>
  *
@@ -112,14 +112,14 @@ public class LibIterationCSImpl
 	protected boolean isValidating = IS_VALIDATING_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getOwnedAccumulators() <em>Owned Accumulators</em>}' containment reference list.
+	 * The cached value of the '{@link #getOwnedAccumulator() <em>Owned Accumulator</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedAccumulators()
+	 * @see #getOwnedAccumulator()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ParameterCS> ownedAccumulators;
+	protected ParameterCS ownedAccumulator;
 
 	/**
 	 * The cached value of the '{@link #getOwnedIterators() <em>Owned Iterators</em>}' containment reference list.
@@ -215,21 +215,6 @@ public class LibIterationCSImpl
 	 * @generated
 	 */
 	@Override
-	public EList<ParameterCS> getOwnedAccumulators()
-	{
-		if (ownedAccumulators == null)
-		{
-			ownedAccumulators = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3);
-		}
-		return ownedAccumulators;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public boolean isIsInvalidating()
 	{
 		return isInvalidating;
@@ -280,12 +265,62 @@ public class LibIterationCSImpl
 	 * @generated
 	 */
 	@Override
+	public ParameterCS getOwnedAccumulator()
+	{
+		return ownedAccumulator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedAccumulator(ParameterCS newOwnedAccumulator, NotificationChain msgs)
+	{
+		ParameterCS oldOwnedAccumulator = ownedAccumulator;
+		ownedAccumulator = newOwnedAccumulator;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3, oldOwnedAccumulator, newOwnedAccumulator);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedAccumulator(ParameterCS newOwnedAccumulator)
+	{
+		if (newOwnedAccumulator != ownedAccumulator)
+		{
+			NotificationChain msgs = null;
+			if (ownedAccumulator != null)
+				msgs = ((InternalEObject)ownedAccumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3), null, msgs);
+			if (newOwnedAccumulator != null)
+				msgs = ((InternalEObject)newOwnedAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3), null, msgs);
+			msgs = basicSetOwnedAccumulator(newOwnedAccumulator, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3, newOwnedAccumulator, newOwnedAccumulator));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
-				return ((InternalEList<?>)getOwnedAccumulators()).basicRemove(otherEnd, msgs);
+				return basicSetOwnedAccumulator(null, msgs);
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 		}
@@ -309,7 +344,7 @@ public class LibIterationCSImpl
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				return isIsValidating();
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
-				return getOwnedAccumulators();
+				return getOwnedAccumulator();
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				return getOwnedIterators();
 		}
@@ -336,8 +371,7 @@ public class LibIterationCSImpl
 				setIsValidating((Boolean)newValue);
 				return;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
-				getOwnedAccumulators().clear();
-				getOwnedAccumulators().addAll((Collection<? extends ParameterCS>)newValue);
+				setOwnedAccumulator((ParameterCS)newValue);
 				return;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				getOwnedIterators().clear();
@@ -366,7 +400,7 @@ public class LibIterationCSImpl
 				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
-				getOwnedAccumulators().clear();
+				setOwnedAccumulator((ParameterCS)null);
 				return;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				getOwnedIterators().clear();
@@ -391,7 +425,7 @@ public class LibIterationCSImpl
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
 				return isValidating != IS_VALIDATING_EDEFAULT;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
-				return ownedAccumulators != null && !ownedAccumulators.isEmpty();
+				return ownedAccumulator != null;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
 				return ownedIterators != null && !ownedIterators.isEmpty();
 		}
