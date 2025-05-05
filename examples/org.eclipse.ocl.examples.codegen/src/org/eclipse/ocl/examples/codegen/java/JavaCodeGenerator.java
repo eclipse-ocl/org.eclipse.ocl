@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.URI;
@@ -50,10 +51,12 @@ import org.eclipse.ocl.examples.codegen.java.iteration.CollectIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.CollectNestedIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.ExistsIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.ForAllIteration2Java;
+import org.eclipse.ocl.examples.codegen.java.iteration.GatherIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.IsUniqueIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.IterateIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.OneIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.RejectIteration2Java;
+import org.eclipse.ocl.examples.codegen.java.iteration.SearchIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.iteration.SelectIteration2Java;
 import org.eclipse.ocl.examples.codegen.java.types.BoxedDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
@@ -74,12 +77,13 @@ import org.eclipse.ocl.pivot.library.iterator.CollectIteration;
 import org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
+import org.eclipse.ocl.pivot.library.iterator.GatherIteration;
 import org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
 import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
+import org.eclipse.ocl.pivot.library.iterator.SearchIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.collect.Lists;
 
@@ -366,6 +370,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		else if (libraryIteration instanceof ForAllIteration) {
 			return ForAllIteration2Java.INSTANCE;
 		}
+		else if (libraryIteration instanceof GatherIteration) {
+			return GatherIteration2Java.INSTANCE;
+		}
 		else if (libraryIteration instanceof IsUniqueIteration) {
 			return IsUniqueIteration2Java.INSTANCE;
 		}
@@ -377,6 +384,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		else if (libraryIteration instanceof RejectIteration) {
 			return RejectIteration2Java.INSTANCE;
+		}
+		else if (libraryIteration instanceof SearchIteration) {
+			return SearchIteration2Java.INSTANCE;
 		}
 		else if (libraryIteration instanceof SelectIteration) {
 			return SelectIteration2Java.INSTANCE;
@@ -437,8 +447,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		if (typeId == null) {
 			typeId = cgElement.getTypeId();
 		}
-		CGTypeId cgTypeId = ClassUtil.nonNullState(typeId);
-		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
+		CGTypeId cgTypeId = Objects.requireNonNull(typeId);
+		ElementId elementId = Objects.requireNonNull(cgTypeId.getElementId());
 		TypeDescriptor typeDescriptor = getBoxedDescriptor(elementId);
 		if (cgElement.isEcore()) {
 			EClassifier eClassifier = cgElement.getEcoreClassifier();
@@ -468,7 +478,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return null;
 		}
 		CGTypeId cgTypeId = getAnalyzer().getTypeId(asOperation.getOwningClass().getTypeId());
-		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
+		ElementId elementId = Objects.requireNonNull(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = getUnboxedDescriptor(elementId);
 		String getAccessor = genModelHelper.getOperationAccessor(asOperation);
 		Class<?> requiredJavaClass = requiredTypeDescriptor.hasJavaClass();
@@ -489,7 +499,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return null;
 		}
 		CGTypeId cgTypeId = getAnalyzer().getTypeId(asProperty.getOwningClass().getTypeId());
-		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
+		ElementId elementId = Objects.requireNonNull(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = getUnboxedDescriptor(elementId);
 		String getAccessor = genModelHelper.getGetAccessor((EStructuralFeature)eStructuralFeature);
 		Class<?> requiredJavaClass = requiredTypeDescriptor.hasJavaClass();
