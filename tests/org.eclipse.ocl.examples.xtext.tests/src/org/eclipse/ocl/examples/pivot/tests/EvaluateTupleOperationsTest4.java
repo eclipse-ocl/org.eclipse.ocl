@@ -80,12 +80,12 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 
 	@Test public void testTupleType_Collections() {
 		TestOCL ocl = createOCL();
-		TuplePartId aTuplePartId = IdManager.getTuplePartId(0, "a", TypeId.INTEGER);
+		TuplePartId aTuplePartId = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
 		@SuppressWarnings("null") TupleTypeId aTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(aTuplePartId));
 		Map<@NonNull TuplePartId, @Nullable Object> aValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
 		aValues.put(aTuplePartId, ValueUtil.integerValueOf(3));
 		TupleValue aValue = ValueUtil.createTupleValue(aTupleTypeId, aValues);
-		TuplePartId bTuplePartId = IdManager.getTuplePartId(0, "b", TypeId.INTEGER);
+		TuplePartId bTuplePartId = IdManager.getPartId(0, "b", TypeId.INTEGER, true);
 		@SuppressWarnings("null") TupleTypeId bTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(bTuplePartId));
 		Map<@NonNull TuplePartId, @Nullable Object> bValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
 		bValues.put(bTuplePartId, ValueUtil.integerValueOf(4));

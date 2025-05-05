@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -398,12 +399,13 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		}
 		if (resolutions != null) {
 			List<@NonNull TuplePartId> partIds = new ArrayList<>(parts.size());
+			Collections.sort(partIds);
 			for (int i = 0; i < parts.size(); i++) {
 				@SuppressWarnings("null") @NonNull Property part = parts.get(i);
 				String partName = NameUtil.getSafeName(part);
 				Type resolvedPropertyType = resolutions.get(partName);
 				TypeId partTypeId = resolvedPropertyType != null ? resolvedPropertyType.getTypeId() : part.getTypeId();
-				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
+				TuplePartId tuplePartId = IdManager.getPartId(i, partName, partTypeId, part.isIsRequired());			// XXX
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(Objects.requireNonNull(type.getName()), partIds);
@@ -411,16 +413,16 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			return specializedTupleType;
 		}
 		else {
-			Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
+			List<@NonNull TuplePartId> partList = new ArrayList<>();
 			for (TypedElement part : type.getOwnedProperties()) {
 				Type type1 = part.getType();
 				if (type1 != null) {
 					Type type2 = metamodelManager.getPrimaryType(type1);
 					Type type3 = specializeType(type2);
-					partMap.put(PivotUtil.getName(part), type3);
+					partList.add(IdManager.getPartId(-1, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired()));
 				}
 			}
-			return metamodelManager.getCompleteModel().getTupleManager().getTupleType(NameUtil.getSafeName(type), partMap);
+			return metamodelManager.getCompleteModel().getTupleManager().getTupleType(NameUtil.getSafeName(type), partList);
 		}
 	}
 

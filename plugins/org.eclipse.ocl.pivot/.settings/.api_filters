@@ -1775,6 +1775,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TuplePartId.java" type="org.eclipse.ocl.pivot.ids.TuplePartId">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TuplePartId"/>
+                <message_argument value="isRequired()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
         <filter id="405864542">
             <message_arguments>
@@ -1868,6 +1876,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS"/>
                 <message_argument value="error(XMIException)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/executor/ExecutorTuplePart.java" type="org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart"/>
+                <message_argument value="isRequired"/>
             </message_arguments>
         </filter>
     </resource>

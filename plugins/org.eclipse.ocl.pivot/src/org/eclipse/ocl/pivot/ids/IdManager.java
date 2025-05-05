@@ -331,14 +331,6 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named lambdaPartId with the defined name and type and nullity.
-	 * @since 1.23
-	 */
-	public static @NonNull TuplePartId getLambdaPartId(int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
-		return tupleParts.getSingleton(PRIVATE_INSTANCE, index, name, typeId, isRequired);
-	}
-
-	/**
 	 * Return the typeId for aLambdaType.
 	 */
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull LambdaType lambdaType) {
@@ -429,10 +421,18 @@ public final class IdManager
 	}
 
 	/**
+	 * Return the named tuple typeId with the defined parts (which have not been alphabetically ordered by part name).
+	 * @since 1.23
+	 */
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull TuplePartId> unOrderedPartIds) {
+		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, unOrderedPartIds);
+	}
+
+	/**
 	 * Return the named tuple typeId with the defined parts (which are alphabetically ordered by part name).
 	 */
-	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
-		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, parts);
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, orderedPartIds);
 	}
 
 	/**
@@ -531,6 +531,14 @@ public final class IdManager
 	}
 
 	/**
+	 * Return the named lambda/tuple PartId with the defined name and type and nullity.
+	 * @since 1.23
+	 */
+	public static @NonNull TuplePartId getPartId(int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+		return tupleParts.getSingleton(PRIVATE_INSTANCE, index, name, typeId, isRequired);
+	}
+
+	/**
 	 * Return the named primitive typeId.
 	 */
 	public static @NonNull PrimitiveTypeId getPrimitiveTypeId(@NonNull String name) {
@@ -591,14 +599,15 @@ public final class IdManager
 		TupleType tupleType = (TupleType) PivotUtil.getOwningClass(asProperty);
 		String name = NameUtil.getSafeName(asProperty);
 		int index = tupleType.getOwnedProperties().indexOf(asProperty);
-		return getTuplePartId(index, name, asProperty.getTypeId());
+		return getPartId(index, name, asProperty.getTypeId(), asProperty.isIsRequired());
 	}
 
 	/**
 	 * Return the named tuplePartId with the defined name and type.
 	 */
+	@Deprecated /* Use getPartId to prreserve part nullity */
 	public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
-		return getLambdaPartId(index, name, typeId, false);
+		return getPartId(index, name, typeId, false);
 	}
 
 	/**
@@ -610,8 +619,8 @@ public final class IdManager
 		for (TuplePartId part : parts) {
 			orderedParts[i++] = part;
 		}
-		Arrays.sort(orderedParts);
-		return getOrderedTupleTypeId(name, orderedParts);
+	//	Arrays.sort(orderedParts);
+		return getTupleTypeId(name, orderedParts);
 	}
 
 	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull ... parts) {
@@ -621,6 +630,13 @@ public final class IdManager
 			orderedParts[i++] = part;
 		}
 		Arrays.sort(orderedParts);
+		int index = 0;
+		for (TuplePartId part : parts) {
+			if (part.getIndex() != index) {
+				orderedParts[i] = getPartId(index, part.getName(), part.getTypeId(), part.isRequired());
+			}
+			index++;
+		}
 		return getOrderedTupleTypeId(name, orderedParts);
 	}
 

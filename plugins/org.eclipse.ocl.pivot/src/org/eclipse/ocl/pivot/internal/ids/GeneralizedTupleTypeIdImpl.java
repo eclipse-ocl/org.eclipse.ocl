@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ids;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
@@ -19,6 +22,7 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId
 {
@@ -57,8 +61,42 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	 */
 	public static class TupleTypeIdSingletonScope extends AbstractSingletonScope<@NonNull TupleTypeId, @NonNull TupleTypeIdValue>
 	{
-		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+		/**
+		 * @since 1.23
+		 */
+		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull Collection<@NonNull TuplePartId> unOrderedPartIds) {
+			@NonNull TuplePartId @NonNull [] orderedPartIds = unOrderedPartIds.toArray(new @NonNull TuplePartId [unOrderedPartIds.size()]);
+			Arrays.sort(orderedPartIds);
+			int index = 0;
+			for (@NonNull TuplePartId partId : orderedPartIds) {
+				if (index != partId.getIndex()) {
+					orderedPartIds[index] = IdManager.getPartId(index, partId.getName(), partId.getTypeId(), partId.isRequired());
+				}
+				index++;
+			}
 			return getSingletonFor(new TupleTypeIdValue(idManager, name, orderedPartIds));
+		}
+
+		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+			assert assertIsOrdered(orderedPartIds);
+			int index = 0;
+			for (@NonNull TuplePartId partId : orderedPartIds) {
+				if (index != partId.getIndex()) {		// If part at wrong index, replace with correctly indexed partId
+					orderedPartIds[index] = IdManager.getPartId(index, partId.getName(), partId.getTypeId(), partId.isRequired());
+				}
+				index++;
+			}
+			return getSingletonFor(new TupleTypeIdValue(idManager, name, orderedPartIds));
+		}
+
+		private boolean assertIsOrdered(@NonNull TuplePartId @NonNull [] orderedPartIds) {
+			@NonNull TuplePartId @NonNull [] orderedPartIds2 = new @NonNull TuplePartId [orderedPartIds.length];
+			System.arraycopy(orderedPartIds, 0, orderedPartIds2, 0, orderedPartIds.length);
+			Arrays.sort(orderedPartIds2);
+			for (int i = 0; i < orderedPartIds.length; i++) {
+				assert orderedPartIds[i] == orderedPartIds2[i];
+			}
+			return true;
 		}
 	}
 
@@ -77,6 +115,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		this.partIds = orderedPartIds;
 		assert partsAreOrdered();
 		this.hashCode.equals(computeHashCode(name, orderedPartIds));
+		System.out.println(NameUtil.debugSimpleName(this) + " " + hashCode + " " + this);
 	}
 
 	private GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
@@ -84,6 +123,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		this.name = name;
 		this.partIds = orderedPartIds;
 		assert partsAreOrdered();
+		System.out.println(NameUtil.debugSimpleName(this) + " " + hashCode + " " + this);
 	}
 
 	@Override

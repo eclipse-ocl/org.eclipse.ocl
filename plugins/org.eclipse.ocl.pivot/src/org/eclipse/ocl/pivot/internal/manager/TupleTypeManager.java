@@ -130,6 +130,9 @@ public class TupleTypeManager
 			if (rightProperty == null) {
 				return null;				// Happens for inconsistent tuples
 			}
+			if (leftProperty.isIsRequired() != rightProperty.isIsRequired()) {
+				return null;				// ?? Never happens
+			}
 			Type leftPropertyType = leftProperty.getType();
 			if (leftPropertyType == null) {
 				return null;				// Never happens
@@ -139,7 +142,7 @@ public class TupleTypeManager
 				return null;				// Never happens
 			}
 			Type commonType = metamodelManager.getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
-			TuplePartId commonPartId = IdManager.getTuplePartId(i, name, commonType.getTypeId());
+			TuplePartId commonPartId = IdManager.getPartId(i, name, commonType.getTypeId(), leftProperty.isIsRequired());
 			commonPartIds.add(commonPartId);
 		}
 		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
@@ -170,6 +173,7 @@ public class TupleTypeManager
 					//	Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType2);
 						Property property = PivotFactory.eINSTANCE.createProperty();
 						property.setName(NameUtil.getSafeName(partId));
+						property.setIsRequired(partId.isRequired());
 						ownedAttributes.add(property);
 						property.setType(partType2);			// After container to satisfy Property.setType assertIsNormalizedType
 					}
@@ -184,21 +188,35 @@ public class TupleTypeManager
 
 	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions usageBindings) {
-		Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
-		for (@NonNull TypedElement part : parts) {
+		List<@NonNull TypedElement> sortedParts = new ArrayList<>(parts);
+		Collections.sort(sortedParts, NameUtil.NAMEABLE_COMPARATOR);
+		@NonNull TuplePartId @NonNull [] orderedPartIds = new @NonNull TuplePartId [sortedParts.size()];
+		int index = 0;
+		for (@NonNull TypedElement part : sortedParts) {
 			Type type1 = part.getType();
 			if (type1 != null) {
 				Type type2 = metamodelManager.getPrimaryType(type1);
 				Type type3 = completeEnvironment.getSpecializedType(type2, usageBindings);
-				partMap.put(PivotUtil.getName(part), type3);
+				orderedPartIds[index] = IdManager.getPartId(index, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired());
 			}
+			index++;
 		}
-		return getTupleType(tupleName, partMap);
+		//
+		//	Create the tuple type id (and then specialize it)
+		//
+		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(tupleName, orderedPartIds);
+		IdResolver pivotIdResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
+		//
+		//	Finally create the (specialized) tuple type
+		//
+		TupleType tupleType = getTupleType(pivotIdResolver, tupleTypeId);
+		return tupleType;
 	}
 
 	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 */
+	@Deprecated /* Use partIds to preserve part nullity */
 	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
 		//
 		//	Find the outgoing template parameter references
@@ -216,7 +234,7 @@ public class TupleTypeManager
 			Type partType = parts.get(partName);
 			if (partType != null) {
 				TypeId partTypeId = partType.getTypeId();
-				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
+				TuplePartId tuplePartId = IdManager.getPartId(i, partName, partTypeId, false);
 				newPartIds[i] = tuplePartId;
 			}
 		}
@@ -224,6 +242,28 @@ public class TupleTypeManager
 		//	Create the tuple type id (and then specialize it)
 		//
 		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(tupleName, newPartIds);
+		IdResolver pivotIdResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
+		//
+		//	Finally create the (specialized) tuple type
+		//
+		TupleType tupleType = getTupleType(pivotIdResolver, tupleTypeId);
+		return tupleType;
+	}
+
+	/**
+	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
+	 * @since 1.23
+	 */
+	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull List<@NonNull TuplePartId> partIds) {
+		//
+		//	Sort the tuple part ids
+		//
+	//	@NonNull TuplePartId[] sortedPartIds = partIds.toArray(new @NonNull TuplePartId[partIds.size()]);
+	//	Arrays.sort(sortedPartIds);
+		//
+		//	Create the tuple type id (and then specialize it)
+		//
+		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(tupleName, partIds);
 		IdResolver pivotIdResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
 		//
 		//	Finally create the (specialized) tuple type
@@ -256,7 +296,7 @@ public class TupleTypeManager
 				String partName = NameUtil.getSafeName(part);
 				Type resolvedPropertyType = resolutions.get(partName);
 				TypeId partTypeId = resolvedPropertyType != null ? resolvedPropertyType.getTypeId() : part.getTypeId();
-				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
+				TuplePartId tuplePartId = IdManager.getPartId(i, partName, partTypeId, part.isIsRequired());
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(PivotUtil.getName(type), partIds);

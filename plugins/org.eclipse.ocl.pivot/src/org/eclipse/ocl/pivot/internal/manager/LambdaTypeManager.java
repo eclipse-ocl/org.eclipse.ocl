@@ -144,7 +144,7 @@ public class LambdaTypeManager
 
 	private @NonNull TuplePartId getPartTypeId(@NonNull TypedElement typedElement) {
 		TypeId contextTypeId = typedElement.getTypeId();
-		return IdManager.getLambdaPartId(0, PivotUtil.getName(typedElement), contextTypeId, typedElement.isIsRequired());
+		return IdManager.getPartId(0, PivotUtil.getName(typedElement), contextTypeId, typedElement.isIsRequired());
 	}
 
 	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateParameterSubstitutions bindings) {

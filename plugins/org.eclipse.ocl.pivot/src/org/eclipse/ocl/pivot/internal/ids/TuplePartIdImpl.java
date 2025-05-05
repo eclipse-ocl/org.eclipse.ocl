@@ -47,7 +47,7 @@ public class TuplePartIdImpl implements TuplePartId
 		public boolean equals(@Nullable Object that) {
 			if (that instanceof TuplePartIdImpl) {
 				TuplePartIdImpl singleton = (TuplePartIdImpl)that;
-				return (index == singleton.getIndex()) && name.equals(singleton.getName()) && (typeId == singleton.getTypeId());
+				return (index == singleton.getIndex()) && name.equals(singleton.getName()) && (typeId == singleton.getTypeId()) && (isRequired == singleton.isRequired());
 			}
 			else {
 				return false;
@@ -103,7 +103,7 @@ public class TuplePartIdImpl implements TuplePartId
 	}
 
 	@Override
-	public int compareTo(TuplePartId o) {
+	public int compareTo(@NonNull TuplePartId o) {
 		String n1 = name;
 		String n2 = o.getName();
 		if (n1 == n2) {
@@ -124,7 +124,8 @@ public class TuplePartIdImpl implements TuplePartId
 
 	@Override
 	public @NonNull String getDisplayName() {
-		return String.valueOf(name) + " : " + String.valueOf(typeId);
+//		return String.valueOf(name) + " : " + String.valueOf(typeId);
+		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
 	}
 
 	@Override
@@ -148,7 +149,12 @@ public class TuplePartIdImpl implements TuplePartId
 	}
 
 	@Override
+	public boolean isRequired() {
+		return isRequired;
+	}
+
+	@Override
 	public String toString() {
-		return String.valueOf(name) + " : " + String.valueOf(typeId);
+		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
 	}
 }

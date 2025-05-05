@@ -413,7 +413,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					if (partName != null) {
 						Type partType = PivotUtil.getPivot(Type.class, csTuplePart.getOwnedType());
 						if (partType != null) {
-							parts.add(new ExecutorTuplePart(partType, partName));
+							parts.add(new ExecutorTuplePart(partName, partType, !csTuplePart.isIsOptional()));
 						}
 					}
 				}
