@@ -150,6 +150,11 @@ public abstract class AbstractDelegatingBaseCSVisitor<R, C, @NonNull D extends B
 	}
 
 	@Override
+	public R visitLambdaParameterCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaParameterCS object) {
+		return delegate.visitLambdaParameterCS(object);
+	}
+
+	@Override
 	public R visitLambdaTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaTypeCS object) {
 		return delegate.visitLambdaTypeCS(object);
 	}
