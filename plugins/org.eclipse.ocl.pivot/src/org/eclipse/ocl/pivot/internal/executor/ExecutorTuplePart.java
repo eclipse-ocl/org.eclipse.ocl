@@ -16,12 +16,31 @@ import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorTypedElement;
 
 public class ExecutorTuplePart extends AbstractExecutorTypedElement
 {
+	/**
+	 * @since 1.23
+	 */
+	protected final boolean isRequired;
+
+	@Deprecated /* pass isRequired */
 	public ExecutorTuplePart(@NonNull Type type, @NonNull String name) {
+		this(name, type, false);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public ExecutorTuplePart(@NonNull String name, @NonNull Type type, boolean isRequired) {
 		super(name, type);
+		this.isRequired = isRequired;
+	}
+
+	@Override
+	public boolean isIsRequired() {
+		return isRequired;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(name) + " : " + String.valueOf(type); //$NON-NLS-1$
+		return String.valueOf(name) + " : " + String.valueOf(type) + (isRequired ? "[1]" : "[?])"); //$NON-NLS-1$
 	}
 }

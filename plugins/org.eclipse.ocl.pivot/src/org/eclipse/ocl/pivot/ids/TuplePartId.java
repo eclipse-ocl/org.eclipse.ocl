@@ -16,10 +16,14 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 /**
  * A TuplePartId provides a unique identifier for a TuplePart such as first:String.
  */
-public interface TuplePartId extends ElementId, Nameable, Comparable<TuplePartId>
+public interface TuplePartId extends ElementId, Nameable, Comparable<@NonNull TuplePartId>
 {
 	int getIndex();
 	@Override
 	@NonNull String getName();
 	@NonNull TypeId getTypeId();
+	/**
+	 * @since 1.23
+	 */
+	boolean isRequired();
 }

@@ -189,7 +189,6 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 		return hashCode;
 	}
 
-
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Tuple{"); //$NON-NLS-1$
