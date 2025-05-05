@@ -2090,7 +2090,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 */
 	@Override
 	public EReference getTypedElementCS_OwnedType() {
-		return (EReference)typedElementCSEClass.getEStructuralFeatures().get(1);
+		return (EReference)typedElementCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2101,18 +2101,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	@Override
 	public EAttribute getTypedElementCS_Qualifiers()
 	{
-		return (EAttribute)typedElementCSEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getTypedElementCS_IsOptional()
-	{
-		return (EAttribute)typedElementCSEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)typedElementCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2398,12 +2387,12 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		namespaceCSEClass = createEClass(26);
 
 		operationCSEClass = createEClass(27);
+		createEReference(operationCSEClass, 9);
 		createEReference(operationCSEClass, 10);
 		createEReference(operationCSEClass, 11);
 		createEReference(operationCSEClass, 12);
 		createEReference(operationCSEClass, 13);
 		createEReference(operationCSEClass, 14);
-		createEReference(operationCSEClass, 15);
 
 		packageCSEClass = createEClass(28);
 		createEAttribute(packageCSEClass, 7);
@@ -2414,7 +2403,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(packageOwnerCSEClass, 5);
 
 		parameterCSEClass = createEClass(30);
-		createEReference(parameterCSEClass, 9);
+		createEReference(parameterCSEClass, 8);
 
 		pathElementCSEClass = createEClass(31);
 		createEReference(pathElementCSEClass, 2);
@@ -2439,9 +2428,9 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEAttribute(primitiveTypeRefCSEClass, 4);
 
 		referenceCSEClass = createEClass(36);
+		createEReference(referenceCSEClass, 11);
 		createEReference(referenceCSEClass, 12);
 		createEReference(referenceCSEClass, 13);
-		createEReference(referenceCSEClass, 14);
 
 		rootCSEClass = createEClass(37);
 		createEReference(rootCSEClass, 5);
@@ -2452,9 +2441,9 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEAttribute(specificationCSEClass, 5);
 
 		structuralFeatureCSEClass = createEClass(40);
-		createEAttribute(structuralFeatureCSEClass, 9);
+		createEAttribute(structuralFeatureCSEClass, 8);
+		createEReference(structuralFeatureCSEClass, 9);
 		createEReference(structuralFeatureCSEClass, 10);
-		createEReference(structuralFeatureCSEClass, 11);
 
 		structuredClassCSEClass = createEClass(41);
 		createEAttribute(structuredClassCSEClass, 10);
@@ -2497,9 +2486,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		typeRefCSEClass = createEClass(51);
 
 		typedElementCSEClass = createEClass(52);
-		createEAttribute(typedElementCSEClass, 6);
-		createEReference(typedElementCSEClass, 7);
-		createEAttribute(typedElementCSEClass, 8);
+		createEReference(typedElementCSEClass, 6);
+		createEAttribute(typedElementCSEClass, 7);
 
 		typedRefCSEClass = createEClass(53);
 		createEReference(typedRefCSEClass, 3);
@@ -2819,7 +2807,6 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEClass(typeRefCSEClass, TypeRefCS.class, "TypeRefCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(typedElementCSEClass, TypedElementCS.class, "TypedElementCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getTypedElementCS_IsOptional(), thePivotPackage.getBoolean(), "isOptional", null, 0, 1, TypedElementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTypedElementCS_OwnedType(), this.getTypedRefCS(), null, "ownedType", null, 0, 1, TypedElementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getTypedElementCS_Qualifiers(), thePivotPackage.getString(), "qualifiers", null, 0, -1, TypedElementCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 

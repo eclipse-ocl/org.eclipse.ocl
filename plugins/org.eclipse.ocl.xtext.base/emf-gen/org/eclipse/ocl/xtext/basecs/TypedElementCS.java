@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsOptional <em>Is Optional</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#getOwnedType <em>Owned Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#getQualifiers <em>Qualifiers</em>}</li>
  * </ul>
@@ -73,32 +72,5 @@ public interface TypedElementCS extends NamedElementCS {
 	 * @generated
 	 */
 	EList<String> getQualifiers();
-
-	/**
-	 * Returns the value of the '<em><b>Is Optional</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Optional</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Optional</em>' attribute.
-	 * @see #setIsOptional(boolean)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedElementCS_IsOptional()
-	 * @model dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated NOT
-	 */
-	@Deprecated /* not used */
-	boolean isIsOptional();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsOptional <em>Is Optional</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Optional</em>' attribute.
-	 * @see #isIsOptional()
-	 * @generated
-	 */
-	void setIsOptional(boolean value);
 
 } // TypedElementCS

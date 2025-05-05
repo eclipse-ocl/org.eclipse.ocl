@@ -239,7 +239,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public EList<OperationCS> getOwnedOperations() {
 		if (ownedOperations == null)
 		{
-			ownedOperations = new EObjectContainmentWithInverseEList<OperationCS>(OperationCS.class, this, 13, 15);
+			ownedOperations = new EObjectContainmentWithInverseEList<OperationCS>(OperationCS.class, this, 13, 14);
 		}
 		return ownedOperations;
 	}
@@ -253,7 +253,7 @@ public class StructuredClassCSImpl extends ClassCSImpl implements StructuredClas
 	public EList<StructuralFeatureCS> getOwnedProperties() {
 		if (ownedProperties == null)
 		{
-			ownedProperties = new EObjectContainmentWithInverseEList<StructuralFeatureCS>(StructuralFeatureCS.class, this, 14, 11);
+			ownedProperties = new EObjectContainmentWithInverseEList<StructuralFeatureCS>(StructuralFeatureCS.class, this, 14, 10);
 		}
 		return ownedProperties;
 	}

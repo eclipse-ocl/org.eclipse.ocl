@@ -71,7 +71,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	 */
 	@Override
 	public OperationCS getOwningOperation() {
-		if (eContainerFeatureID() != (9)) return null;
+		if (eContainerFeatureID() != (8)) return null;
 		return (OperationCS)eInternalContainer();
 	}
 
@@ -82,7 +82,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	 */
 	public NotificationChain basicSetOwningOperation(OperationCS newOwningOperation, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, 9, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningOperation, 8, msgs);
 		return msgs;
 	}
 
@@ -93,7 +93,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	 */
 	@Override
 	public void setOwningOperation(OperationCS newOwningOperation) {
-		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != (9) && newOwningOperation != null))
+		if (newOwningOperation != eInternalContainer() || (eContainerFeatureID() != (8) && newOwningOperation != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningOperation))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -101,12 +101,12 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningOperation != null)
-				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, 12, OperationCS.class, msgs);
+				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, 11, OperationCS.class, msgs);
 			msgs = basicSetOwningOperation(newOwningOperation, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwningOperation, newOwningOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwningOperation, newOwningOperation));
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case 9:
+			case 8:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningOperation((OperationCS)otherEnd, msgs);
@@ -135,7 +135,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case 9:
+			case 8:
 				return basicSetOwningOperation(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -150,8 +150,8 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case 9:
-				return eInternalContainer().eInverseRemove(this, 12, OperationCS.class, msgs);
+			case 8:
+				return eInternalContainer().eInverseRemove(this, 11, OperationCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -165,7 +165,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case 9:
+			case 8:
 				return getOwningOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -180,7 +180,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case 9:
+			case 8:
 				setOwningOperation((OperationCS)newValue);
 				return;
 		}
@@ -196,7 +196,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case 9:
+			case 8:
 				setOwningOperation((OperationCS)null);
 				return;
 		}
@@ -212,7 +212,7 @@ public class ParameterCSImpl extends TypedElementCSImpl implements ParameterCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case 9:
+			case 8:
 				return getOwningOperation() != null;
 		}
 		return super.eIsSet(featureID);

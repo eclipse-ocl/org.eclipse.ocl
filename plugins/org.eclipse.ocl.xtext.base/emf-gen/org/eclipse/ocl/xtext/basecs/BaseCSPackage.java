@@ -2165,17 +2165,6 @@ public interface BaseCSPackage extends EPackage {
 	EAttribute getTypedElementCS_Qualifiers();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsOptional <em>Is Optional</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Optional</em>'.
-	 * @see org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsOptional()
-	 * @see #getTypedElementCS()
-	 * @generated
-	 */
-	EAttribute getTypedElementCS_IsOptional();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.basecs.TypedRefCS <em>Typed Ref CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3583,14 +3572,6 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TYPED_ELEMENT_CS__QUALIFIERS = eINSTANCE.getTypedElementCS_Qualifiers();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Optional</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TYPED_ELEMENT_CS__IS_OPTIONAL = eINSTANCE.getTypedElementCS_IsOptional();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.impl.TypedRefCSImpl <em>Typed Ref CS</em>}' class.
