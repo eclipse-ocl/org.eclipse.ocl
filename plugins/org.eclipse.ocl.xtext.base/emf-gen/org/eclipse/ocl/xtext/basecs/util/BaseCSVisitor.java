@@ -60,6 +60,7 @@ public interface BaseCSVisitor<R>
 	R visitImportCS(org.eclipse.ocl.xtext.basecs.@NonNull ImportCS object);
 	R visitJavaClassCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaClassCS object);
 	R visitJavaImplementationCS(org.eclipse.ocl.xtext.basecs.@NonNull JavaImplementationCS object);
+	R visitLambdaParameterCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaParameterCS object);
 	R visitLambdaTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaTypeCS object);
 	R visitModelElementCS(org.eclipse.ocl.xtext.basecs.@NonNull ModelElementCS object);
 	R visitModelElementRefCS(org.eclipse.ocl.xtext.basecs.@NonNull ModelElementRefCS object);

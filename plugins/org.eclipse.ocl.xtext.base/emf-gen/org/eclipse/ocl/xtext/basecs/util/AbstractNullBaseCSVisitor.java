@@ -133,6 +133,11 @@ public abstract class AbstractNullBaseCSVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitLambdaParameterCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaParameterCS object) {
+		return null;
+	}
+
+	@Override
 	public R visitLambdaTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaTypeCS object) {
 		return null;
 	}

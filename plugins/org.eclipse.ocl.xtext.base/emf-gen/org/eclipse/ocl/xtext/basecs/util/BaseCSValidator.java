@@ -191,88 +191,90 @@ public class BaseCSValidator extends EObjectValidator
 			case 18:
 				return validateJavaImplementationCS((JavaImplementationCS)value, diagnostics, context);
 			case 19:
-				return validateLambdaTypeCS((LambdaTypeCS)value, diagnostics, context);
+				return validateLambdaParameterCS((LambdaParameterCS)value, diagnostics, context);
 			case 20:
-				return validateModelElementCS((ModelElementCS)value, diagnostics, context);
+				return validateLambdaTypeCS((LambdaTypeCS)value, diagnostics, context);
 			case 21:
-				return validateModelElementRefCS((ModelElementRefCS)value, diagnostics, context);
+				return validateModelElementCS((ModelElementCS)value, diagnostics, context);
 			case 22:
-				return validateMultiplicityBoundsCS((MultiplicityBoundsCS)value, diagnostics, context);
+				return validateModelElementRefCS((ModelElementRefCS)value, diagnostics, context);
 			case 23:
-				return validateMultiplicityCS((MultiplicityCS)value, diagnostics, context);
+				return validateMultiplicityBoundsCS((MultiplicityBoundsCS)value, diagnostics, context);
 			case 24:
-				return validateMultiplicityStringCS((MultiplicityStringCS)value, diagnostics, context);
+				return validateMultiplicityCS((MultiplicityCS)value, diagnostics, context);
 			case 25:
-				return validateNamedElementCS((NamedElementCS)value, diagnostics, context);
+				return validateMultiplicityStringCS((MultiplicityStringCS)value, diagnostics, context);
 			case 26:
-				return validateNamespaceCS((NamespaceCS)value, diagnostics, context);
+				return validateNamedElementCS((NamedElementCS)value, diagnostics, context);
 			case 27:
-				return validateOperationCS((OperationCS)value, diagnostics, context);
+				return validateNamespaceCS((NamespaceCS)value, diagnostics, context);
 			case 28:
-				return validatePackageCS((PackageCS)value, diagnostics, context);
+				return validateOperationCS((OperationCS)value, diagnostics, context);
 			case 29:
-				return validatePackageOwnerCS((PackageOwnerCS)value, diagnostics, context);
+				return validatePackageCS((PackageCS)value, diagnostics, context);
 			case 30:
-				return validateParameterCS((ParameterCS)value, diagnostics, context);
+				return validatePackageOwnerCS((PackageOwnerCS)value, diagnostics, context);
 			case 31:
-				return validatePathElementCS((PathElementCS)value, diagnostics, context);
+				return validateParameterCS((ParameterCS)value, diagnostics, context);
 			case 32:
-				return validatePathElementWithURICS((PathElementWithURICS)value, diagnostics, context);
+				return validatePathElementCS((PathElementCS)value, diagnostics, context);
 			case 33:
-				return validatePathNameCS((PathNameCS)value, diagnostics, context);
+				return validatePathElementWithURICS((PathElementWithURICS)value, diagnostics, context);
 			case 34:
-				return validatePivotableElementCS((PivotableElementCS)value, diagnostics, context);
+				return validatePathNameCS((PathNameCS)value, diagnostics, context);
 			case 35:
-				return validatePrimitiveTypeRefCS((PrimitiveTypeRefCS)value, diagnostics, context);
+				return validatePivotableElementCS((PivotableElementCS)value, diagnostics, context);
 			case 36:
-				return validateReferenceCS((ReferenceCS)value, diagnostics, context);
+				return validatePrimitiveTypeRefCS((PrimitiveTypeRefCS)value, diagnostics, context);
 			case 37:
-				return validateRootCS((RootCS)value, diagnostics, context);
+				return validateReferenceCS((ReferenceCS)value, diagnostics, context);
 			case 38:
-				return validateRootPackageCS((RootPackageCS)value, diagnostics, context);
+				return validateRootCS((RootCS)value, diagnostics, context);
 			case 39:
-				return validateSpecificationCS((SpecificationCS)value, diagnostics, context);
+				return validateRootPackageCS((RootPackageCS)value, diagnostics, context);
 			case 40:
-				return validateStructuralFeatureCS((StructuralFeatureCS)value, diagnostics, context);
+				return validateSpecificationCS((SpecificationCS)value, diagnostics, context);
 			case 41:
-				return validateStructuredClassCS((StructuredClassCS)value, diagnostics, context);
+				return validateStructuralFeatureCS((StructuralFeatureCS)value, diagnostics, context);
 			case 42:
-				return validateTemplateBindingCS((TemplateBindingCS)value, diagnostics, context);
+				return validateStructuredClassCS((StructuredClassCS)value, diagnostics, context);
 			case 43:
-				return validateTemplateParameterCS((TemplateParameterCS)value, diagnostics, context);
+				return validateTemplateBindingCS((TemplateBindingCS)value, diagnostics, context);
 			case 44:
-				return validateTemplateParameterSubstitutionCS((TemplateParameterSubstitutionCS)value, diagnostics, context);
+				return validateTemplateParameterCS((TemplateParameterCS)value, diagnostics, context);
 			case 45:
-				return validateTemplateSignatureCS((TemplateSignatureCS)value, diagnostics, context);
+				return validateTemplateParameterSubstitutionCS((TemplateParameterSubstitutionCS)value, diagnostics, context);
 			case 46:
-				return validateTemplateableElementCS((TemplateableElementCS)value, diagnostics, context);
+				return validateTemplateSignatureCS((TemplateSignatureCS)value, diagnostics, context);
 			case 47:
-				return validateTuplePartCS((TuplePartCS)value, diagnostics, context);
+				return validateTemplateableElementCS((TemplateableElementCS)value, diagnostics, context);
 			case 48:
-				return validateTupleTypeCS((TupleTypeCS)value, diagnostics, context);
+				return validateTuplePartCS((TuplePartCS)value, diagnostics, context);
 			case 49:
-				return validateTypeCS((TypeCS)value, diagnostics, context);
+				return validateTupleTypeCS((TupleTypeCS)value, diagnostics, context);
 			case 50:
-				return validateTypeParameterCS((TypeParameterCS)value, diagnostics, context);
+				return validateTypeCS((TypeCS)value, diagnostics, context);
 			case 51:
-				return validateTypeRefCS((TypeRefCS)value, diagnostics, context);
+				return validateTypeParameterCS((TypeParameterCS)value, diagnostics, context);
 			case 52:
-				return validateTypedElementCS((TypedElementCS)value, diagnostics, context);
+				return validateTypeRefCS((TypeRefCS)value, diagnostics, context);
 			case 53:
-				return validateTypedRefCS((TypedRefCS)value, diagnostics, context);
+				return validateTypedElementCS((TypedElementCS)value, diagnostics, context);
 			case 54:
-				return validateTypedTypeRefCS((TypedTypeRefCS)value, diagnostics, context);
+				return validateTypedRefCS((TypedRefCS)value, diagnostics, context);
 			case 55:
-				return validateVisitableCS((VisitableCS)value, diagnostics, context);
+				return validateTypedTypeRefCS((TypedTypeRefCS)value, diagnostics, context);
 			case 56:
-				return validateWildcardTypeRefCS((WildcardTypeRefCS)value, diagnostics, context);
+				return validateVisitableCS((VisitableCS)value, diagnostics, context);
 			case 57:
-				return validatePathRole((PathRole)value, diagnostics, context);
+				return validateWildcardTypeRefCS((WildcardTypeRefCS)value, diagnostics, context);
 			case 58:
-				return validateBigNumber((Number)value, diagnostics, context);
+				return validatePathRole((PathRole)value, diagnostics, context);
 			case 59:
-				return validateCSI((CSI)value, diagnostics, context);
+				return validateBigNumber((Number)value, diagnostics, context);
 			case 60:
+				return validateCSI((CSI)value, diagnostics, context);
+			case 61:
 				return validateScopeFilter((ScopeFilter)value, diagnostics, context);
 			default:
 				return true;
@@ -508,6 +510,16 @@ public class BaseCSValidator extends EObjectValidator
 	public boolean validateJavaImplementationCS(JavaImplementationCS javaImplementationCS, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(javaImplementationCS, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateLambdaParameterCS(LambdaParameterCS lambdaParameterCS, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(lambdaParameterCS, diagnostics, context);
 	}
 
 	/**

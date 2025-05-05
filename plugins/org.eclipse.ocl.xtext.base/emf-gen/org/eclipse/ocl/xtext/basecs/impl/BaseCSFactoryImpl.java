@@ -34,6 +34,7 @@ import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
 import org.eclipse.ocl.xtext.basecs.ImplicitOppositeCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
+import org.eclipse.ocl.xtext.basecs.LambdaParameterCS;
 import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
@@ -118,29 +119,30 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 			case 15: return createImplicitOppositeCS();
 			case 16: return createImportCS();
 			case 17: return createJavaClassCS();
-			case 19: return createLambdaTypeCS();
-			case 21: return createModelElementRefCS();
-			case 22: return createMultiplicityBoundsCS();
-			case 24: return createMultiplicityStringCS();
-			case 27: return createOperationCS();
-			case 28: return createPackageCS();
-			case 30: return createParameterCS();
-			case 31: return createPathElementCS();
-			case 32: return createPathElementWithURICS();
-			case 33: return createPathNameCS();
-			case 35: return createPrimitiveTypeRefCS();
-			case 36: return createReferenceCS();
-			case 38: return createRootPackageCS();
-			case 39: return createSpecificationCS();
-			case 41: return createStructuredClassCS();
-			case 42: return createTemplateBindingCS();
-			case 44: return createTemplateParameterSubstitutionCS();
-			case 45: return createTemplateSignatureCS();
-			case 47: return createTuplePartCS();
-			case 48: return createTupleTypeCS();
-			case 50: return createTypeParameterCS();
-			case 54: return createTypedTypeRefCS();
-			case 56: return createWildcardTypeRefCS();
+			case 19: return createLambdaParameterCS();
+			case 20: return createLambdaTypeCS();
+			case 22: return createModelElementRefCS();
+			case 23: return createMultiplicityBoundsCS();
+			case 25: return createMultiplicityStringCS();
+			case 28: return createOperationCS();
+			case 29: return createPackageCS();
+			case 31: return createParameterCS();
+			case 32: return createPathElementCS();
+			case 33: return createPathElementWithURICS();
+			case 34: return createPathNameCS();
+			case 36: return createPrimitiveTypeRefCS();
+			case 37: return createReferenceCS();
+			case 39: return createRootPackageCS();
+			case 40: return createSpecificationCS();
+			case 42: return createStructuredClassCS();
+			case 43: return createTemplateBindingCS();
+			case 45: return createTemplateParameterSubstitutionCS();
+			case 46: return createTemplateSignatureCS();
+			case 48: return createTuplePartCS();
+			case 49: return createTupleTypeCS();
+			case 51: return createTypeParameterCS();
+			case 55: return createTypedTypeRefCS();
+			case 57: return createWildcardTypeRefCS();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -156,11 +158,11 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 57:
-				return createPathRoleFromString(eDataType, initialValue);
 			case 58:
+				return createPathRoleFromString(eDataType, initialValue);
+			case 59:
 				return createBigNumberFromString(eDataType, initialValue);
-			case 60:
+			case 61:
 				return createScopeFilterFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -177,11 +179,11 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 57:
-				return convertPathRoleToString(eDataType, instanceValue);
 			case 58:
+				return convertPathRoleToString(eDataType, instanceValue);
+			case 59:
 				return convertBigNumberToString(eDataType, instanceValue);
-			case 60:
+			case 61:
 				return convertScopeFilterToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -312,10 +314,22 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	 * @generated
 	 */
 	@Override
-	public JavaClassCS createJavaClassCS()
+	public @NonNull JavaClassCS createJavaClassCS()
 	{
 		JavaClassCSImpl javaClassCS = new JavaClassCSImpl();
 		return javaClassCS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull LambdaParameterCS createLambdaParameterCS()
+	{
+		LambdaParameterCSImpl lambdaParameterCS = new LambdaParameterCSImpl();
+		return lambdaParameterCS;
 	}
 
 	/**
