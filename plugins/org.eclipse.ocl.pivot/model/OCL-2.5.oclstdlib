@@ -434,6 +434,27 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	*/
 	iteration reject(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Collection(T) => 'org.eclipse.ocl.pivot.library.iterator.RejectIteration';
 	/*
+	Search the source elements one-dimensionally using each element in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i)].
+	The search proceeds so long as oclText[source.break(nextAcc,i)] returns oclText[true].
+	The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i)].
+	For an empty collection the final result is determined by oclText[source.return(nextAcc,null)].
+	*/
+	iteration search(Q,R)(i : T[?]; acc : Q[?] | nextAcc : Lambda Q[?](i : T[?]) : Q[?], break : Lambda Q[?](i : T[?]) : Boolean, return : Lambda Q[?](i : T[?]) : R[?]) : R[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	/*
+	Search the source elements two-dimensionally using each element pair in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j)].
+	The search proceeds so long as oclText[source.break(nextAcc,i,j)] returns oclText[true].
+	The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j)].
+	For an empty collection the final result is determined by oclText[source.return(nextAcc,null,null)].
+	*/
+	iteration search(Q,R)(i : T[?], j : T[?]; acc : Q[?] | nextAcc : Lambda Q[?](i : T[?], j : T[?]) : Q[?], break : Lambda Q[?](i : T[?], j : T[?]) : Boolean, return : Lambda Q[?](i : T[?], j : T[?]) : R[?]) : R[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	/*
+	Search the source elements three-dimensionally using each element triple in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j,k)].
+	The search proceeds so long as oclText[source.break(nextAcc,i,j,k)] returns oclText[true].
+	The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j,k)].
+	For an empty collection the final result is determined by oclText[source.return(nextAcc,null,null,null)].
+	*/
+	iteration search(Q,R)(i : T[?], j : T[?], k : T[?]; acc : Q[?] | nextAcc : Lambda Q[?](i : T[?], j : T[?], k : T[?]) : Q[?], break : Lambda Q[?](i : T[?], j : T[?], k : T[?]) : Boolean, return : Lambda Q[?](i : T[?], j : T[?], k : T[?]) : R[?]) : R[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	/*
 	The sub-collection of the source collection for which body is oclText[true].
 	*/
 	iteration select(i : T[?] | lambda : Lambda T[?]() : Boolean[1]) : Collection(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
@@ -495,6 +516,10 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	If the element type is a collection type, the result is a collection containing all the elements of all the recursively flattened elements of oclText[self].
 	*/
 	operation flatten(T2)() : Collection(T2) => 'org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation';
+	/*
+	The bag of elements which results from applying oclText[lambda] to every member of the source collection.
+	*/
+	iteration gather(V)(i : T[?] | lambda : Lambda T() : V[?]) : Bag(V) => 'org.eclipse.ocl.pivot.library.iterator.GatherIteration';
 	/*
 	True if object is an element of oclText[self], oclText[false] otherwise.
 	*/
@@ -735,6 +760,27 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	*/
 	iteration reject(i : K[?] | lambda : Lambda K[?]() : Boolean[1]) : Map(K[?],V[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.MapRejectIteration';
 	/*
+	Search the source keys one-dimensionally using each key in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i)].
+	The search proceeds so long as oclText[source.break(nextAcc,i)] returns oclText[true].
+	The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i)].
+	For an empty map the final result is determined by oclText[source.return(nextAcc,null)].
+	*/
+	iteration search(Q,R)(i : K[?]; acc : Q[?] | nextAcc : Lambda Q[?](i : K[?]) : Q[?], break : Lambda Q[?](i : K[?]) : Boolean, return : Lambda Q[?](i : K[?]) : R[?]) : R[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	/*
+	Search the source keys two-dimensionally using each key pair in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j)].
+	The search proceeds so long as oclText[source.break(nextAcc,i,j)] returns oclText[true].
+	The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j)].
+	For an empty map the final result is determined by oclText[source.return(nextAcc,null,null)].
+	*/
+	iteration search(Q,R)(i : K[?], j : K[?]; acc : Q[?] | nextAcc : Lambda Q[?](i : K[?], j : K[?]) : Q[?], break : Lambda Q[?](i : K[?], j : K[?]) : Boolean, return : Lambda Q[?](i : K[?], j : K[?]) : R[?]) : R[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	/*
+	Search the source keys three-dimensionally using each key triple in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j,k)].
+	The search proceeds so long as oclText[source.break(nextAcc,i,j,k)] returns oclText[true].
+	The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j,k)].
+	For an empty map the final result is determined by oclText[source.return(nextAcc,null,null,null)].
+	*/
+	iteration search(Q,R)(i : K[?], j : K[?], k : K[?]; acc : Q[?] | nextAcc : Lambda Q[?](i : K[?], j : K[?], k : K[?]) : Q[?], break : Lambda Q[?](i : K[?], j : K[?], k : K[?]) : Boolean, return : Lambda Q[?](i : K[?], j : K[?], k : K[?]) : R[?]) : R[?] => 'org.eclipse.ocl.pivot.library.iterator.SearchIteration';
+	/*
 	The subset of set for which expr is oclText[true].
 	*/
 	iteration select(i : K[?] | lambda : Lambda K[?]() : Boolean[1]) : Map(K[?],V[?])[1] => 'org.eclipse.ocl.pivot.library.iterator.MapSelectIteration';
@@ -786,6 +832,10 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	The map containing all key-value pairs of oclText[self] except any which is also included in oclText[map].
 	*/
 	operation excludingMap(K2,V2)(map : Map(K2,V2)) : Map(K,V) => 'org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation';
+	/*
+	The bag of elements which results from applying oclText[lambda] to every member of the source collection.
+	*/
+	iteration gather(E)(i : K[?] | lambda : Lambda K() : E[?]) : Bag(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.GatherIteration';
 	/*
 	True if oclText[key] is one of the keys of oclText[self], oclText[false] otherwise.
 	*/
@@ -1315,6 +1365,10 @@ abstract type OrderedCollection(T) : CollectionType conformsTo Collection(T) => 
 	The last element in oclText[self].
 	*/
 	operation last() : T[?] invalidating => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation';
+	/*
+	The sequence of elements which results from applying oclText[lambda] to every member of the source collection.
+	*/
+	iteration gather(E)(i : T[?] | lambda : Lambda T[?]() : E[?]) : Sequence(E[?]) => 'org.eclipse.ocl.pivot.library.iterator.GatherIteration';
 }
 
 /*

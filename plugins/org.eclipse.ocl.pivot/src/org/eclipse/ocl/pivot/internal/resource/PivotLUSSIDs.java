@@ -278,7 +278,7 @@ public class PivotLUSSIDs extends LUSSIDs
 		else if (eObject instanceof Model) {
 			return true;
 		}
-		else if ((eObject instanceof Parameter) && !(eObject instanceof LambdaParameter)) {
+		else if ((eObject instanceof Parameter) && !(eObject.eContainer() instanceof LambdaType)) {
 			return true;
 		}
 		else if (eObject instanceof ShadowPart) {

@@ -34,6 +34,14 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 {
 	protected final @NonNull TypeId returnTypeId;
 	protected final @NonNull AbstractSimpleOperation body;
+	/**
+	 * @since 1.23
+	 */
+	protected final @Nullable AbstractSimpleOperation body1;
+	/**
+	 * @since 1.23
+	 */
+	protected final @Nullable AbstractSimpleOperation body2;
 	private @Nullable Object accumulatorValue;
 	protected final @NonNull CollectionValue collectionValue;
 	private @NonNull List<@NonNull Iterator<@Nullable Object>> iteratorValues;
@@ -51,14 +59,25 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 	 */
 	public ExecutorMultipleIterationManager(@NonNull Executor executor, int iterators, boolean hasCoIterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
 			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
+		this(executor, iterators, hasCoIterators, returnTypeId, body, null, null, collectionValue, accumulatorValue);
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public ExecutorMultipleIterationManager(@NonNull Executor executor, int iterators, boolean hasCoIterators, @NonNull TypeId returnTypeId,
+			@NonNull AbstractSimpleOperation body0, @Nullable AbstractSimpleOperation body1, @Nullable AbstractSimpleOperation body2,
+			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
 		super(executor);
 		this.returnTypeId = returnTypeId;
-		this.body = body;
+		this.body = body0;
+		this.body1 = body1;
+		this.body2 = body2;
 		this.iteratorIndexes = hasCoIterators ? new int [iterators] : null;
 		this.accumulatorValue = accumulatorValue;
 		this.collectionValue = ValueUtil.asCollectionValue(collectionValue);
 		this.iteratorValues = new ArrayList<@NonNull Iterator<@Nullable Object>>(iterators);
-		this.arguments = new @Nullable Object[1 + (hasCoIterators ? 2*iterators : iterators)];
+		this.arguments = new @Nullable Object[2 + (hasCoIterators ? 2*iterators : iterators)];
 		this.arguments[0] = this.collectionValue;
 		for (int i = 0; i < iterators; i++) {
 			Iterator<@Nullable Object> iteratorValue = this.collectionValue.iterator();
@@ -71,6 +90,10 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 				iteratorIndexes2[i] = 1;
 				this.arguments[1 + iterators + i] = ValueUtil.ONE_VALUE;
 			}
+			this.arguments[1 + 2*iterators] = this.accumulatorValue;
+		}
+		else {
+			this.arguments[1 + iterators] = this.accumulatorValue;
 		}
 	}
 
@@ -115,6 +138,20 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 	}
 
 	@Override
+	public @Nullable Object evaluateBody(int bodyIndex) {
+		if (bodyIndex == 0) {
+			return body.evaluate(executor, returnTypeId, arguments);
+		}
+		else if ((bodyIndex == 1) && (body1 != null)) {
+			return body1.evaluate(executor, returnTypeId, arguments);		// XXX returnTypeId
+		}
+		else if ((bodyIndex == 2) && (body2 != null)) {
+			return body2.evaluate(executor, returnTypeId, arguments);		// XXX returnTypeId
+		}
+		return super.evaluateBody(bodyIndex);
+	}
+
+	@Override
 	public @Nullable Object get() {
 		if (iteratorValues.size() == 1) {
 			return arguments[1];
@@ -145,6 +182,12 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 	@Override
 	public @Nullable Object updateAccumulator(Object newValue) {
 		this.accumulatorValue = newValue;
-		return null;					// carry on
+		int index = 1 + iteratorValues.size();
+		int[] iteratorIndexes2 = iteratorIndexes;
+		if (iteratorIndexes2 != null) {
+			index += iteratorIndexes2.length;
+		}
+		arguments[index] = newValue;		// XXX
+		return null;					// carry on XXX not used
 	}
 }
