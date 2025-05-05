@@ -21,11 +21,6 @@ public class ExecutorTuplePart extends AbstractExecutorTypedElement
 	 */
 	protected final boolean isRequired;
 
-	@Deprecated /* pass isRequired */
-	public ExecutorTuplePart(@NonNull Type type, @NonNull String name) {
-		this(name, type, false);
-	}
-
 	/**
 	 * @since 1.23
 	 */

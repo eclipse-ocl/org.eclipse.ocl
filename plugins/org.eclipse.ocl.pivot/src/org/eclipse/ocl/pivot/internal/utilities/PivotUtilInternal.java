@@ -493,7 +493,6 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-
 	 * @since 1.3
 	 */
 	public static @NonNull List<@NonNull OCLExpression> getOwnedArgumentsList(@NonNull OperationCallExp operationCallExp) {

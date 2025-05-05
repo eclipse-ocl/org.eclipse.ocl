@@ -608,13 +608,12 @@ public final class IdManager
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 */
 	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull ? extends TuplePartId> parts) {
-		@NonNull TuplePartId @NonNull [] orderedParts = new @NonNull TuplePartId[parts.size()];
+		@NonNull TuplePartId @NonNull [] unorderedParts = new @NonNull TuplePartId[parts.size()];
 		int i = 0;
 		for (TuplePartId part : parts) {
-			orderedParts[i++] = part;
+			unorderedParts[i++] = part;
 		}
-	//	Arrays.sort(orderedParts);
-		return getTupleTypeId(name, orderedParts);
+		return getTupleTypeId(name, unorderedParts);
 	}
 
 	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull ... parts) {

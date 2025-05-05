@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
@@ -155,8 +154,6 @@ public interface IdResolver extends IdVisitor<Element>
 	default org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type contextType, @Nullable Object value) {
 		return getStaticTypeOf(value);
 	}
-
-	@NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId);
 
 	@NonNull TupleType getTupleType(@NonNull TupleTypeId typeId);
 

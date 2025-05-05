@@ -1978,6 +1978,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/IdResolver.java" type="org.eclipse.ocl.pivot.ids.IdResolver">
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
+                <message_argument value="getTuplePart(String, TypeId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/LambdaTypeId.java" type="org.eclipse.ocl.pivot.ids.LambdaTypeId">
         <filter id="405901410">
             <message_arguments>
@@ -2095,6 +2103,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart"/>
                 <message_argument value="isRequired"/>
+            </message_arguments>
+        </filter>
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart"/>
+                <message_argument value="ExecutorTuplePart(Type, String)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -2235,6 +2249,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl.TuplePartIdSingletonScope"/>
                 <message_argument value="getSingleton(IdManager, int, String, TypeId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/executor/AbstractIdResolver.java" type="org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver"/>
+                <message_argument value="getTuplePart(String, Type)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver"/>
+                <message_argument value="getTuplePart(String, TypeId)"/>
             </message_arguments>
         </filter>
     </resource>

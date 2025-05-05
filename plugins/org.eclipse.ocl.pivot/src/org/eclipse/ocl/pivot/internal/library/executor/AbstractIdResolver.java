@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -87,7 +86,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
@@ -262,13 +260,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	protected final @NonNull Map<@NonNull Object, @NonNull Type> key2type = new HashMap<>();	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull EnumerationLiteralId, @NonNull Enumerator> enumerationLiteral2enumerator = null;	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull Enumerator, @NonNull EnumerationLiteralId> enumerator2enumerationLiteralId = null;	// Concurrent puts are duplicates
-
-	/**
-	 * Mapping from name to list of correspondingly named types for definition of tuple parts. This cache is used to provide the
-	 * required part definitions to construct a tuple type in the lightweight execution environment. This cache may remain
-	 * unused when using the full pivot environment.
-	 */
-	private Map<@NonNull String, @NonNull Map<@NonNull Type, @NonNull WeakReference<@Nullable TypedElement>>> tupleParts = null;		// Lazily created
 
 	/**
 	 * Mapping from package URI to corresponding Pivot Package. (used to resolve NsURIPackageId).
@@ -683,7 +674,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public void dispose() {
-		tupleParts = null;
 		key2type.clear();
 		enumerationLiteral2enumerator = null;
 		enumerator2enumerationLiteralId = null;
@@ -1154,29 +1144,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		Class<?> jClass = value.getClass();
 		assert jClass != null;
 		return getJavaType(jClass);
-	}
-
-	@Override
-	public @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId) {
-		return getTuplePart(name, getType(typeId));
-	}
-
-	public synchronized @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull Type type) {
-		String internedName = name.intern();
-		if (tupleParts == null) {
-			tupleParts = new WeakHashMap<>();
-		}
-		Map<@NonNull Type, @NonNull WeakReference<@Nullable TypedElement>> typeMap = tupleParts.get(internedName);
-		if (typeMap == null) {
-			typeMap = new WeakHashMap<>();
-			tupleParts.put(internedName, typeMap);
-		}
-		TypedElement tupleProperty = weakGet(typeMap, type);
-		if (tupleProperty == null) {
-			tupleProperty = new ExecutorTuplePart(type, internedName);
-			typeMap.put(type, new WeakReference<>(tupleProperty));
-		}
-		return tupleProperty;
 	}
 
 	@Override
