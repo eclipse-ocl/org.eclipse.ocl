@@ -23,22 +23,24 @@ public class TuplePartIdImpl implements TuplePartId
 {
 	private static class TuplePartIdValue extends AbstractKeyAndValue<@NonNull TuplePartId>
 	{
-		private @NonNull IdManager idManager;
-		private int index;
-		private @NonNull String name;
-		private @NonNull TypeId typeId;
+		private final @NonNull IdManager idManager;
+		private final int index;
+		private final @NonNull String name;
+		private final @NonNull TypeId typeId;
+		private final boolean isRequired;
 
-		private TuplePartIdValue(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId) {
-			super(computeHashCode(index, name, typeId));
+		private TuplePartIdValue(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+			super(computeHashCode(index, name, typeId, isRequired));
 			this.idManager = idManager;
 			this.index = index;
 			this.name = name;
 			this.typeId = typeId;
+			this.isRequired = isRequired;
 		}
 
 		@Override
 		public @NonNull TuplePartId createSingleton() {
-			return new TuplePartIdImpl(idManager, index, name, typeId);
+			return new TuplePartIdImpl(idManager, index, name, typeId, isRequired);
 		}
 
 		@Override
@@ -58,33 +60,41 @@ public class TuplePartIdImpl implements TuplePartId
 	 */
 	public static class TuplePartIdSingletonScope extends AbstractSingletonScope<@NonNull TuplePartId, @NonNull TuplePartIdValue>
 	{
-		public @NonNull TuplePartId getSingleton(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId) {
-			return getSingletonFor(new TuplePartIdValue(idManager, index, name, typeId));
+		/**
+		 * @since 1.23
+		 */
+		public @NonNull TuplePartId getSingleton(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+			return getSingletonFor(new TuplePartIdValue(idManager, index, name, typeId, isRequired));
 		}
 	}
 
-	private static int computeHashCode(int index, @NonNull String name, @NonNull TypeId typeId) {
-		return name.hashCode() + 7 * typeId.hashCode() + 989 * index;
+	private static int computeHashCode(int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+		return name.hashCode() + 7 * typeId.hashCode() + 989 * index + (isRequired ? 977 : 0);
 	}
 
 	protected final @NonNull Integer hashCode;
 	protected final int index;
 	protected final @NonNull String name;
 	protected final @NonNull TypeId typeId;
+	/**
+	 * @since 1.23
+	 */
+	protected final boolean isRequired;
 
 	@Deprecated /* @deprecated use simpler constructor */
 	public TuplePartIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, int index, @NonNull String name, @NonNull TypeId typeId) {
-		this(idManager, index, name, typeId);
+		this(idManager, index, name, typeId, false);
 	}
 
 	/**
 	 * @since 1.18
 	 */
-	private TuplePartIdImpl(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId) {
+	private TuplePartIdImpl(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
 		this.index = index;
 		this.name = name;
 		this.typeId = typeId;
-		this.hashCode = computeHashCode(index, name, typeId);
+		this.isRequired = isRequired;
+		this.hashCode = computeHashCode(index, name, typeId, isRequired);
 	}
 
 	@Override

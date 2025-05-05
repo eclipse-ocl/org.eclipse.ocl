@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
@@ -22,11 +21,42 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 public class ExecutorLambdaType extends AbstractExecutorClass implements ExecutorTypeArgument
 {
-	protected final @NonNull TypeId typeId;
+//	protected final @NonNull TypeId typeId;
+//	protected final @NonNull String name;
+	/**
+	 * @since 1.23
+	 */
+	protected /*final @NonNull*/ ExecutorLambdaParameter context;
+	/**
+	 * @since 1.23
+	 */
+	protected /*final @NonNull*/ ExecutorLambdaParameter /*@NonNull*/ [] parameters;
+	/**
+	 * @since 1.23
+	 */
+	protected /*final @NonNull*/ ExecutorLambdaParameter result;
 
-	public ExecutorLambdaType(@NonNull String name, @NonNull ExecutorTypeArgument @NonNull ... typeArguments) {
+	/**
+	 * @since 1.23
+	 */
+	public ExecutorLambdaType(@NonNull String name, @NonNull ExecutorLambdaParameter context, @NonNull ExecutorLambdaParameter result, @NonNull ExecutorLambdaParameter @NonNull ... parameters) {
 		super(name, 0);
-		typeId = IdManager.getLambdaTypeId(name, IdManager.getParametersId(typeArguments));
+//		typeId = TypeId.BOOLEAN; // XXX IdManager.getLambdaTypeId(name, typeArguments);
+//		this.name = name;
+		this.context = context;
+		this.parameters = parameters;
+		this.result = result;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Deprecated
+	public ExecutorLambdaType(String name, @NonNull ExecutorTypeParameter $$0) {
+		super(name, 0);
+		this.context = null;
+		this.parameters = null;
+		this.result = null;
 	}
 
 	@Override
@@ -56,6 +86,8 @@ public class ExecutorLambdaType extends AbstractExecutorClass implements Executo
 
 	@Override
 	public @NonNull TypeId getTypeId() {
-		return typeId;
+//		return typeId;
+//		throw new UnsupportedOperationException();			// WIP fixme
+		return TypeId.BOOLEAN;		// XXX
 	}
 }

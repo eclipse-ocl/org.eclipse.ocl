@@ -175,8 +175,8 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType,
-			@NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType, @Nullable TemplateParameterSubstitutions bindings) {
+	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement context,
+			@NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result, @Nullable TemplateParameterSubstitutions bindings) {
 		throw new UnsupportedOperationException();
 	}
 

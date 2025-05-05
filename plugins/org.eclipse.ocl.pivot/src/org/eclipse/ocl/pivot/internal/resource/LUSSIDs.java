@@ -63,8 +63,19 @@ public abstract class LUSSIDs
 	protected static final int COLLECTION_UPPER_BOUND_MULTIPLIER = 67;
 	protected static final int CONTAINER_MULTIPLIER = 1021;
 	protected static final int CONTAINMENT_FEATURE_NAME_MULTIPLER = 5;
+	/**
+	 * @since 1.23
+	 */
+	protected static final int LAMBDA_PARAMETER_NAME_MULTIPLIER = 71;
+	/**
+	 * @since 1.23
+	 */
+	protected static final int PARAMETER_IS_OPTIONAL_MULTIPLIER = 73;
+	@Deprecated /* not used */
 	protected static final int LAMBDA_TYPE_CONTEXT_MULTIPLIER = 71;
+	@Deprecated /* not used */
 	protected static final int LAMBDA_TYPE_PARAMETER_TYPE_MULTIPLIER = 73;
+	@Deprecated /* not used */
 	protected static final int LAMBDA_TYPE_RETURN_TYPE_MULTIPLIER = 79;
 	protected static final int MAP_KEYS_ARE_NULL_FREE_MULTIPLIER = 101;
 	protected static final int MAP_VALUES_ARE_NULL_FREE_MULTIPLIER = 103;

@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -200,7 +201,8 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			if (needsSpecialization(resultType)) {
 				return true;
 			}
-			for (Type parameterType : lambdaType.getParameterTypes()) {
+			for (LambdaParameter parameter : lambdaType.getOwnedParameters()) {
+				Type parameterType = parameter.getType();
 				if (needsSpecialization(parameterType)) {
 					return true;
 				}
@@ -474,6 +476,13 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		this.templateSpecialization = templateSpecialization;
 	}
 
+	private @NonNull TypedElement specializeLambdaParameter(@NonNull LambdaParameter lambdaParameter) {
+		String name = PivotUtil.getName(lambdaParameter);
+		Type specializedType = specializeType(PivotUtil.getType(lambdaParameter));
+		boolean isRequired = lambdaParameter.isIsRequired();
+		return LambdaTypeManager.createCandidateLambdaParameter(name, specializedType, isRequired);
+	}
+
 	public @NonNull Type specializeType(@NonNull Type type) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		if (type instanceof NormalizedTemplateParameter) {
@@ -525,13 +534,13 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
 			String typeName = PivotUtil.getName(lambdaType);
-			Type specializedContextType = specializeType(PivotUtil.getContextType(lambdaType));
-			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
-			for (Type parameterType : PivotUtil.getParameterType(lambdaType)) {
-				specializedParameterTypes.add(specializeType(parameterType));
+			TypedElement specializedContext = specializeLambdaParameter(PivotUtil.getOwnedContext(lambdaType));
+			List<@NonNull TypedElement> specializedParameters = new ArrayList<>();
+			for (LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
+				specializedParameters.add(specializeLambdaParameter(parameter));
 			}
-			Type specializedResultType = specializeType(PivotUtil.getResultType(lambdaType));
-			return metamodelManager.getCompleteModel().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
+			TypedElement specializedResult = specializeLambdaParameter(PivotUtil.getOwnedResult(lambdaType));
+			return metamodelManager.getCompleteModel().getLambdaType(typeName, specializedContext, specializedParameters, specializedResult);
 		}
 		else if (templateSpecialization == null) {	// type instanceof Class
 			return type;
@@ -668,7 +677,15 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			LambdaType actualLambdaType = (LambdaType)actual;
 			analyzeType(object.getContextType(), actualLambdaType.getContextType());
 			analyzeType(object.getResultType(), actualLambdaType.getResultType());
-			analyzeTypes(object.getParameterType(), actualLambdaType.getParameterType());
+			List<LambdaParameter> formalParameters = object.getOwnedParameters();
+			List<LambdaParameter> actualParameters = actualLambdaType.getOwnedParameters();
+			int iMax = formalParameters.size();
+			assert iMax == actualParameters.size();
+			for (int i = 0; i < iMax; i++) {
+				LambdaParameter formalParameter = formalParameters.get(i);
+				LambdaParameter actualParameter = actualParameters.get(i);
+				analyzeType(formalParameter.getType(), actualParameter.getType());
+			}
 		}
 		else {
 			analyzeType(object.getResultType(), actual);

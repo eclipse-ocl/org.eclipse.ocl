@@ -112,7 +112,10 @@ public interface CompleteEnvironment extends Element
 	@Deprecated
 	@NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
+	/**
+	 * @since 1.23
+	 */
+	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
 			@Nullable TemplateParameterSubstitutions bindings);
 
 	/**

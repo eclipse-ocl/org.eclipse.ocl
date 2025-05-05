@@ -293,6 +293,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitLambdaParameter(org.eclipse.ocl.pivot.@NonNull LambdaParameter object) {
+		return null;
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		return null;
 	}

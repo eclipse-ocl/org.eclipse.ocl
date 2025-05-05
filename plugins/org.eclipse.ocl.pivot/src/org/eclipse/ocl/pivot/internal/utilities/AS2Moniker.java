@@ -25,6 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -136,21 +137,24 @@ public class AS2Moniker implements PivotConstantsInternal
 		append(0);
 	}
 
-	public void appendLambdaType(Type contextType, List<? extends Type> parameterTypes,
-			Type resultType, Map<TemplateParameter, Type> bindings) {
-		if (contextType != null) {
+	/**
+	 * @since 1.23
+	 */
+	public void appendLambdaType(@NonNull LambdaParameter context, List<@NonNull LambdaParameter> parameters,
+			@NonNull LambdaParameter result, Map<TemplateParameter, Type> bindings) {
+		if (context != null) {					// XXX name isRequired
 			append(MONIKER_OPERATOR_SEPARATOR);
-			appendElement(contextType, bindings);
+			appendElement(context.getType(), bindings);
 			append(PARAMETER_PREFIX);
 			String prefix = ""; //$NON-NLS-1$
-			for (Type parameterType : parameterTypes) {
+			for (LambdaParameter parameter : parameters) {
 				append(prefix);
-				appendElement(parameterType, bindings);
+				appendElement(parameter.getType(), bindings);
 				prefix = PARAMETER_SEPARATOR;
 			}
 			append(PARAMETER_SUFFIX);
-			if (resultType != null) {
-				appendElement(resultType, bindings);
+			if (result != null) {
+				appendElement(result.getType(), bindings);
 			}
 		}
 	}

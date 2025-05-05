@@ -17,10 +17,17 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -28,13 +35,26 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  */
 public class LambdaTypeManager
 {
+	/**
+	 * Return a concrete TypedElement instance suitable for parameterizing a shared LambdaType access/creation.
+	 *
+	 * @since 1.23
+	 */
+	public static @NonNull TypedElement createCandidateLambdaParameter(@NonNull String name, @NonNull Type type, boolean isRequired) {
+		TypedElement typedElement = PivotFactory.eINSTANCE.createParameter();
+		typedElement.setName(name);
+		typedElement.setType(type);
+		typedElement.setIsRequired(isRequired);
+		return typedElement;
+	}
+
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	protected final org.eclipse.ocl.pivot.@NonNull Class oclLambdaType;
 
 	/**
 	 * Map from from context type via result type, to list of lambda types sharing context and result types.
 	 */
-	private final @NonNull Map<@NonNull Type, @NonNull Map<@Nullable Type, @NonNull List<@NonNull LambdaType>>> lambdaTypes = new HashMap<>();
+	private final @NonNull Map<@NonNull TuplePartId, @NonNull Map<@NonNull TuplePartId, @NonNull List<@NonNull LambdaType>>> lambdaTypes = new HashMap<>();
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
@@ -47,42 +67,49 @@ public class LambdaTypeManager
 		lambdaTypes.clear();
 	}
 
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
+	/**
+	 * @since 1.23
+	 */
+	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		if (bindings == null) {
-			return getLambdaType(typeName, contextType, parameterTypes, resultType);
+			return getLambdaType(typeName, context, parameters, result);
 		}
 		else {
-			Type specializedContextType = completeEnvironment.getSpecializedType(contextType, bindings);
-			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
-			for (@NonNull Type parameterType : parameterTypes) {
-				specializedParameterTypes.add(completeEnvironment.getSpecializedType(parameterType, bindings));
+			TypedElement specializedContext = specialize(context, bindings);
+			List<@NonNull TypedElement> specializedParameters = new ArrayList<>();
+			for (@NonNull TypedElement parameter : parameters) {
+				specializedParameters.add(specialize(parameter, bindings));
 			}
-			Type specializedResultType = completeEnvironment.getSpecializedType(resultType, bindings);
-			return getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
+			TypedElement specializedResult = specialize(result, bindings);
+			return getLambdaType(typeName, specializedContext, specializedParameters, specializedResult);
 		}
 	}
 
-	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
-		Map<@Nullable Type, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextType);
+	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
+		TuplePartId contextPartId = getPartTypeId(context);
+		Map<@NonNull TuplePartId, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextPartId);
 		if (contextMap == null) {
 			contextMap = new HashMap<>();
-			lambdaTypes.put(contextType, contextMap);
+			lambdaTypes.put(contextPartId, contextMap);
 		}
-		List<@NonNull LambdaType> lambdasList = contextMap.get(resultType);
+		TuplePartId resultPartId  = getPartTypeId(result);
+		List<@NonNull LambdaType> lambdasList = contextMap.get(resultPartId);
 		if (lambdasList == null) {
 			lambdasList = new ArrayList<>();
-			contextMap.put(resultType, lambdasList);
+			contextMap.put(resultPartId, lambdasList);
 		}
-		int iMax = parameterTypes.size();
+		int iMax = parameters.size();
 		for (@NonNull LambdaType candidateLambda : lambdasList) {
-			List<? extends Type> candidateTypes = candidateLambda.getParameterType();
-			if (iMax == candidateTypes.size()) {
+			List<@NonNull LambdaParameter> candidateParameters = PivotUtilInternal.getOwnedParametersList(candidateLambda);
+			if (iMax == candidateParameters.size()) {
 				boolean gotIt = true;
 				for (int i = 0; i < iMax; i++) {
-					Type requiredType = parameterTypes.get(i);
-					Type candidateType = candidateTypes.get(i);
-					if (requiredType != candidateType) {
+					TypedElement parameter = parameters.get(i);
+					LambdaParameter candidateParameter = candidateParameters.get(i);
+					TuplePartId parameterPartId  = getPartTypeId(parameter);
+					TuplePartId candidatePartId  = getPartTypeId(candidateParameter);
+					if (parameterPartId != candidatePartId) {
 						gotIt = false;
 						break;
 					}
@@ -95,13 +122,35 @@ public class LambdaTypeManager
 		}
 		LambdaType lambdaType = PivotFactory.eINSTANCE.createLambdaType();
 		lambdaType.setName(typeName);
-		lambdaType.setContextType(contextType);
-		lambdaType.getParameterType().addAll(parameterTypes);
-		lambdaType.setResultType(resultType);
+		lambdaType.setOwnedContext(createLambdaParameter(context));
+		for (TypedElement parameter : parameters) {
+			lambdaType.getOwnedParameters().add(createLambdaParameter(parameter));
+		}
+		lambdaType.setOwnedResult(createLambdaParameter(result));
 		lambdaType.getSuperClasses().add(oclLambdaType);
 		completeEnvironment.addOrphanClass(lambdaType);
 		lambdasList.add(lambdaType);
 	//	System.out.println("Created " + lambdaType + " as " + NameUtil.debugSimpleName(lambdaType) + " in " + NameUtil.debugSimpleName(lambdaType.eContainer()));
 		return lambdaType;
+	}
+
+	private @NonNull LambdaParameter createLambdaParameter(@NonNull TypedElement typedElement) {
+		LambdaParameter lambdaParameter = PivotFactory.eINSTANCE.createLambdaParameter();
+		lambdaParameter.setName(typedElement.getName());
+		lambdaParameter.setType(typedElement.getType());
+		lambdaParameter.setIsRequired(typedElement.isIsRequired());
+		return lambdaParameter;
+	}
+
+	private @NonNull TuplePartId getPartTypeId(@NonNull TypedElement typedElement) {
+		TypeId contextTypeId = typedElement.getTypeId();
+		return IdManager.getLambdaPartId(0, PivotUtil.getName(typedElement), contextTypeId, typedElement.isIsRequired());
+	}
+
+	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateParameterSubstitutions bindings) {
+		String name = PivotUtil.getName(context);
+		Type specializedType = completeEnvironment.getSpecializedType(PivotUtil.getType(context), bindings);
+		boolean isRequired = context.isIsRequired();
+		return createCandidateLambdaParameter(name, specializedType, isRequired);
 	}
 }

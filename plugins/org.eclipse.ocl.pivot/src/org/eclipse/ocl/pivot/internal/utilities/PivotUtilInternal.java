@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -365,10 +366,8 @@ public class PivotUtilInternal extends PivotUtil
 	 */
 	public static @NonNull Type getNonLambdaType(@NonNull Type type) {
 		if (type instanceof LambdaType) {
-			Type resultType = ((LambdaType)type).getResultType();
-			if (resultType != null) {
-				type = resultType;
-			}
+			LambdaParameter result = getOwnedResult((LambdaType)type);
+			type = getType(result);
 		}
 		return type;
 	}
@@ -576,6 +575,13 @@ public class PivotUtilInternal extends PivotUtil
 	 */
 	public static @NonNull List<@NonNull Variable> getOwnedParametersList(@NonNull ExpressionInOCL expressionInOCL) {
 		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull List<@NonNull LambdaParameter> getOwnedParametersList(@NonNull LambdaType lambdaType) {
+		return ClassUtil.nullFree(lambdaType.getOwnedParameters());
 	}
 
 	/**

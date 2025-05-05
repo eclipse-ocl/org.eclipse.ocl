@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
-import org.eclipse.ocl.pivot.ids.ParametersId;
 
 public class SpecializedLambdaTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId
 {
@@ -30,11 +29,6 @@ public class SpecializedLambdaTypeIdImpl extends AbstractSpecializedIdImpl<@NonN
 	@Override
 	protected @NonNull LambdaTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
 		return new SpecializedLambdaTypeIdImpl(this, templateBindings);
-	}
-
-	@Override
-	public @NonNull ParametersId getParametersId() {
-		return generalizedId.getParametersId();
 	}
 
 	/**

@@ -31,12 +31,14 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
+import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -136,30 +138,40 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			Type contextType = PivotUtil.getPivot(Type.class, csElement.getOwnedContextType());
-			Type resultType = PivotUtil.getPivot(Type.class, csElement.getOwnedResultType());
-			String name = csElement.getName();
-			if ((contextType != null) && (resultType != null) && (name != null)) {
-				CompleteModelInternal completeModel = context.getMetamodelManager().getCompleteModel();
-				Orphanage orphanage = completeModel.getOrphanage();
-				List<@NonNull Type> parameterTypes = new ArrayList<>();
-				for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
-					Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
-					if (parameterType instanceof TemplateParameter) {
-						parameterType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)parameterType);
+			TypedRefCS csContext = csElement.getOwnedContextType();
+			TypedRefCS csResult = csElement.getOwnedResultType();
+			if ((csContext != null) && (csResult != null)) {
+				Type contextType = PivotUtil.getPivot(Type.class, csContext);
+				Type resultType = PivotUtil.getPivot(Type.class, csResult);
+				String name = csElement.getName();
+				if ((contextType != null) && (resultType != null) && (name != null)) {
+					CompleteModelInternal completeModel = context.getMetamodelManager().getCompleteModel();
+					Orphanage orphanage = completeModel.getOrphanage();
+					List<@NonNull TypedElement> parameters = new ArrayList<>();
+					for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
+						Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
+						if (parameterType instanceof TemplateParameter) {
+							parameterType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)parameterType);
+						}
+						if (parameterType != null) {
+							boolean isRequired = context.isRequiredWithDefault(csParameterType);
+							TypedElement parameter = LambdaTypeManager.createCandidateLambdaParameter("_" + (parameters.size()+1), parameterType, isRequired);
+							parameters.add(parameter);
+						}
 					}
-					if (parameterType != null) {
-						parameterTypes.add(parameterType);
+					if (contextType instanceof TemplateParameter) {
+						contextType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)contextType);
 					}
+					boolean isRequired = context.isRequiredWithDefault(csContext);
+					TypedElement contextParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.SELF_NAME, contextType, isRequired);
+					if (resultType instanceof TemplateParameter) {
+						resultType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)resultType);
+					}
+					isRequired = context.isRequiredWithDefault(csResult);
+					TypedElement resultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.RESULT_NAME, resultType, isRequired);
+					LambdaType lambdaType = completeModel.getLambdaType(name, contextParameter, parameters, resultParameter, null);
+					context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 				}
-				if (contextType instanceof TemplateParameter) {
-					contextType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)contextType);
-				}
-				if (resultType instanceof TemplateParameter) {
-					resultType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)resultType);
-				}
-				LambdaType lambdaType = completeModel.getLambdaType(name, contextType, parameterTypes, resultType, null);
-				context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 			}
 			return null;
 		}

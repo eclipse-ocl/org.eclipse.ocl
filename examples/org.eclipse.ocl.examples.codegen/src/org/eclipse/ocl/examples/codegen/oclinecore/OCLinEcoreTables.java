@@ -42,11 +42,13 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -77,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaParameter;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation;
@@ -760,15 +763,29 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void declareParameterLists() {
-		Map<@NonNull String, @NonNull ParameterTypes> name2list = new HashMap<>();
-		Set<@NonNull ParameterTypes> allLists = new HashSet<>();
+		Map<@NonNull String, @NonNull ParameterTypes> name2parameterTypes = new HashMap<>();
+		Map<@NonNull String, @NonNull LambdaParameter> name2lambdaParameter = new HashMap<>();
+		Set<@NonNull ParameterTypes> allParameterTypes = new HashSet<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			for (Operation operation : getOperations(pClass)) {
 				ParameterTypes parameterTypes = operation.getParameterTypes();
-				allLists.add(parameterTypes);
+				allParameterTypes.add(parameterTypes);
 				if (parameterTypes.size() > 0) {
 					String name = getTemplateBindingsName(parameterTypes);
-					name2list.put(name, parameterTypes);
+					name2parameterTypes.put(name, parameterTypes);
+				}
+				for (Parameter parameter : operation.getOwnedParameters()) {
+					Type parameterType = parameter.getType();
+					if (parameterType instanceof LambdaType) {
+						LambdaType lambdaType = (LambdaType)parameterType;
+						LambdaParameter contextParameter = PivotUtil.getOwnedContext(lambdaType);
+						name2lambdaParameter.put(getLambdaParameterName(contextParameter), contextParameter);		// Any one of a multiple is ok
+						for (LambdaParameter lambdaParameter : PivotUtil.getOwnedParameters(lambdaType)) {
+							name2lambdaParameter.put(getLambdaParameterName(lambdaParameter), lambdaParameter);		// Any one of a multiple is ok
+						}
+						LambdaParameter resultParameter = PivotUtil.getOwnedResult(lambdaType);
+						name2lambdaParameter.put(getLambdaParameterName(resultParameter), resultParameter);		// Any one of a multiple is ok
+					}
 				}
 			}
 		}
@@ -781,12 +798,33 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static class " + AbstractGenModelHelper.PARAMETERS_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.PARAMETERS_PACKAGE_NAME);
-		if (name2list.size() > 0) {
-			s.append("\n");
-			List<@NonNull String> sortedNames = new ArrayList<>(name2list.keySet());
+		if (name2lambdaParameter.size() > 0) {
+			List<@NonNull String> sortedNames = new ArrayList<>(name2lambdaParameter.keySet());
 			Collections.sort(sortedNames);
 			for (@NonNull String name : sortedNames) {
-				ParameterTypes types = name2list.get(name);
+				LambdaParameter lambdaParameter = name2lambdaParameter.get(name);
+				assert lambdaParameter != null;
+				s.append("		public static final ");
+				s.appendClassReference(true, ExecutorLambdaParameter.class);
+				s.append(" ");
+				s.append(name);
+				s.append(" = new ");
+				s.appendClassReference(null, ExecutorLambdaParameter.class);
+				s.append("(\"");
+				s.append(lambdaParameter.getName());
+				s.append("\", ");
+				lambdaParameter.getType().accept(declareParameterTypeVisitor);
+				s.append(", ");
+				s.append(lambdaParameter.isIsRequired() ? "true" : "false");
+				s.append(");\n");
+			}
+		}
+		if (name2parameterTypes.size() > 0) {
+			s.append("\n");
+			List<@NonNull String> sortedNames = new ArrayList<>(name2parameterTypes.keySet());
+			Collections.sort(sortedNames);
+			for (@NonNull String name : sortedNames) {
+				ParameterTypes types = name2parameterTypes.get(name);
 				assert types != null;
 				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
 					s.append("		public static final ");
@@ -807,9 +845,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				}
 			}
 		}
-		if (allLists.size() > 0) {
+		if (allParameterTypes.size() > 0) {
 		//	s.append("\n");
-			List<@NonNull ParameterTypes> sortedLists = new ArrayList<>(allLists);
+			List<@NonNull ParameterTypes> sortedLists = new ArrayList<>(allParameterTypes);
 			Collections.sort(sortedLists, leegacyTemplateBindingNameComparator);
 			for (@NonNull ParameterTypes types : sortedLists) {
 				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier

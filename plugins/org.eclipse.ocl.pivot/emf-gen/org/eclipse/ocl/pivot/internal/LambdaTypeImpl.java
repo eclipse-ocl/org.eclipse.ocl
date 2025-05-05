@@ -14,17 +14,20 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -36,9 +39,9 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
@@ -49,9 +52,9 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.LambdaTypeImpl#getContextType <em>Context Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.LambdaTypeImpl#getParameterType <em>Parameter Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.LambdaTypeImpl#getResultType <em>Result Type</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.LambdaTypeImpl#getOwnedContext <em>Owned Context</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.LambdaTypeImpl#getOwnedParameters <em>Owned Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.LambdaTypeImpl#getOwnedResult <em>Owned Result</em>}</li>
  * </ul>
  *
  * @generated
@@ -77,34 +80,34 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	public static final int LAMBDA_TYPE_OPERATION_COUNT = DataTypeImpl.DATA_TYPE_OPERATION_COUNT + 0;
 
 	/**
-	 * The cached value of the '{@link #getContextType() <em>Context Type</em>}' reference.
+	 * The cached value of the '{@link #getOwnedContext() <em>Owned Context</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getContextType()
+	 * @see #getOwnedContext()
 	 * @generated
 	 * @ordered
 	 */
-	protected Type contextType;
+	protected LambdaParameter ownedContext;
 
 	/**
-	 * The cached value of the '{@link #getParameterType() <em>Parameter Type</em>}' reference list.
+	 * The cached value of the '{@link #getOwnedParameters() <em>Owned Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParameterType()
+	 * @see #getOwnedParameters()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Type> parameterType;
+	protected EList<LambdaParameter> ownedParameters;
 
 	/**
-	 * The cached value of the '{@link #getResultType() <em>Result Type</em>}' reference.
+	 * The cached value of the '{@link #getOwnedResult() <em>Owned Result</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getResultType()
+	 * @see #getOwnedResult()
 	 * @generated
 	 * @ordered
 	 */
-	protected Type resultType;
+	protected LambdaParameter ownedResult;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -133,19 +136,9 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	 * @generated
 	 */
 	@Override
-	public Type getContextType()
+	public LambdaParameter getOwnedContext()
 	{
-		if (contextType != null && contextType.eIsProxy())
-		{
-			InternalEObject oldContextType = (InternalEObject)contextType;
-			contextType = (Type)eResolveProxy(oldContextType);
-			if (contextType != oldContextType)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 23, oldContextType, contextType));
-			}
-		}
-		return contextType;
+		return ownedContext;
 	}
 
 	/**
@@ -153,75 +146,16 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Type basicGetContextType()
+	public NotificationChain basicSetOwnedContext(LambdaParameter newOwnedContext, NotificationChain msgs)
 	{
-		return contextType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setContextType(Type newContextType)
-	{
-		Type oldContextType = contextType;
-		contextType = newContextType;
+		LambdaParameter oldOwnedContext = ownedContext;
+		ownedContext = newOwnedContext;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 23, oldContextType, contextType));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT FIXME workaround BUG 89325
-	 */
-	@SuppressWarnings("serial")
-	@Override
-	public @NonNull List<Type> getParameterType()
-	{
-	  if (parameterType == null) {
-		  parameterType = new EObjectResolvingEList<Type>(Type.class, this,
-	      PivotPackage.Literals.LAMBDA_TYPE__PARAMETER_TYPE.getFeatureID())
-	    {
-	      @Override
-	      protected boolean isUnique() {
-	        return false;
-	      }
-	    };
-	  }
-	  return parameterType;
-	}
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Type getResultType()
-	{
-		if (resultType != null && resultType.eIsProxy())
 		{
-			InternalEObject oldResultType = (InternalEObject)resultType;
-			resultType = (Type)eResolveProxy(oldResultType);
-			if (resultType != oldResultType)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 25, oldResultType, resultType));
-			}
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 23, oldOwnedContext, newOwnedContext);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
-		return resultType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetResultType()
-	{
-		return resultType;
+		return msgs;
 	}
 
 	/**
@@ -230,12 +164,131 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	 * @generated
 	 */
 	@Override
-	public void setResultType(Type newResultType)
+	public void setOwnedContext(LambdaParameter newOwnedContext)
 	{
-		Type oldResultType = resultType;
-		resultType = newResultType;
+		if (newOwnedContext != ownedContext)
+		{
+			NotificationChain msgs = null;
+			if (ownedContext != null)
+				msgs = ((InternalEObject)ownedContext).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (23), null, msgs);
+			if (newOwnedContext != null)
+				msgs = ((InternalEObject)newOwnedContext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (23), null, msgs);
+			msgs = basicSetOwnedContext(newOwnedContext, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 23, newOwnedContext, newOwnedContext));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<LambdaParameter> getOwnedParameters()
+	{
+		if (ownedParameters == null)
+		{
+			ownedParameters = new EObjectContainmentEList<LambdaParameter>(LambdaParameter.class, this, 24);
+		}
+		return ownedParameters;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public LambdaParameter getOwnedResult()
+	{
+		return ownedResult;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedResult(LambdaParameter newOwnedResult, NotificationChain msgs)
+	{
+		LambdaParameter oldOwnedResult = ownedResult;
+		ownedResult = newOwnedResult;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldResultType, resultType));
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 25, oldOwnedResult, newOwnedResult);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedResult(LambdaParameter newOwnedResult)
+	{
+		if (newOwnedResult != ownedResult)
+		{
+			NotificationChain msgs = null;
+			if (ownedResult != null)
+				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (25), null, msgs);
+			if (newOwnedResult != null)
+				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (25), null, msgs);
+			msgs = basicSetOwnedResult(newOwnedResult, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 25, newOwnedResult, newOwnedResult));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
+			case 1:
+				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
+			case 2:
+				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
+			case 3:
+				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
+			case 5:
+				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
+			case 6:
+				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
+			case 7:
+				return basicSetOwnedSignature(null, msgs);
+			case 9:
+				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
+			case 14:
+				return ((InternalEList<?>)getOwnedBehaviors()).basicRemove(otherEnd, msgs);
+			case 15:
+				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
+			case 16:
+				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
+			case 17:
+				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
+			case 18:
+				return basicSetOwningPackage(null, msgs);
+			case 23:
+				return basicSetOwnedContext(null, msgs);
+			case 24:
+				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
+			case 25:
+				return basicSetOwnedResult(null, msgs);
+		}
+		return eDynamicInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -296,13 +349,11 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 			case 22:
 				return getValue();
 			case 23:
-				if (resolve) return getContextType();
-				return basicGetContextType();
+				return getOwnedContext();
 			case 24:
-				return getParameterType();
+				return getOwnedParameters();
 			case 25:
-				if (resolve) return getResultType();
-				return basicGetResultType();
+				return getOwnedResult();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -397,14 +448,14 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 				setIsSerializable((Boolean)newValue);
 				return;
 			case 23:
-				setContextType((Type)newValue);
+				setOwnedContext((LambdaParameter)newValue);
 				return;
 			case 24:
-				getParameterType().clear();
-				getParameterType().addAll((Collection<? extends Type>)newValue);
+				getOwnedParameters().clear();
+				getOwnedParameters().addAll((Collection<? extends LambdaParameter>)newValue);
 				return;
 			case 25:
-				setResultType((Type)newValue);
+				setOwnedResult((LambdaParameter)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -487,13 +538,13 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
 			case 23:
-				setContextType((Type)null);
+				setOwnedContext((LambdaParameter)null);
 				return;
 			case 24:
-				getParameterType().clear();
+				getOwnedParameters().clear();
 				return;
 			case 25:
-				setResultType((Type)null);
+				setOwnedResult((LambdaParameter)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -556,11 +607,11 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 			case 22:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case 23:
-				return contextType != null;
+				return ownedContext != null;
 			case 24:
-				return parameterType != null && !parameterType.isEmpty();
+				return ownedParameters != null && !ownedParameters.isEmpty();
 			case 25:
-				return resultType != null;
+				return ownedResult != null;
 		}
 		return eDynamicIsSet(featureID);
 	}
@@ -586,31 +637,13 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 		return TypeUtil.conformsToLambdaType(standardLibrary, this, (LambdaType)type);
 	}
 
-	private ParametersId parametersId = null;
-
 	@Override
-	public @NonNull ParametersId getParametersId() {
-		ParametersId parametersId2 = parametersId;
-		if (parametersId2 == null) {
-			synchronized (this) {
-				parametersId2 = parametersId;
-				if (parametersId2 == null) {
-					List<Type> parameterTypes = getParameterType();
-					@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[2+parameterTypes.size()];
-					typeIds[0] = getContextType().getTypeId();
-					typeIds[1] = getResultType().getTypeId();
-					for (int i = 0; i < parameterTypes.size(); i++) {
-						typeIds[2+i] = parameterTypes.get(i).getTypeId();
-					}
-					parametersId = parametersId2 = IdManager.getParametersId(typeIds);
-				}
-			}
-		}
-		return parametersId2;
+	public @NonNull Type getContextType() {
+		return PivotUtil.getType(ownedContext);
 	}
 
 	@Override
-	public @NonNull List<? extends Type> getParameterTypes() {
-		return getParameterType();
+	public @NonNull Type getResultType() {
+		return PivotUtil.getType(ownedResult);
 	}
 } //LambdaTypeImpl

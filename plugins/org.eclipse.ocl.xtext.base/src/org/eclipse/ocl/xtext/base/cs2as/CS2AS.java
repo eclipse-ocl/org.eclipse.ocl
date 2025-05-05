@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -527,9 +528,9 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	public void installRootContents(@NonNull CSResource csResource2) {}
 
 	/**
-	 * Return true if csTYpeRef referes to a type that cannot be null, e.g. T[1],
+	 * Return true if csTypeRef refers to a type that cannot be null, e.g. T[1],
 	 * or false if it refers to a type that may be null, e.g. T[?],
-	 * or null if the nulloty is unspecifued.
+	 * or null if the nullity is unspecified.
 	 *
 	 * Note that a lazy UML Set such as T[*] is always required; UML collections cannot be null.
 	 */
@@ -545,6 +546,15 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 			return lower > 0;
 		}
 		return null;
+	}
+
+	public boolean isRequiredWithDefault(@NonNull TypedRefCS csTypeRef) {
+		Boolean isRequired = isRequired(csTypeRef);
+		if (isRequired == null) {
+			boolean defaultIsOptional = environmentFactory.getValue(PivotValidationOptions.OptionalDefaultMultiplicity) == Boolean.TRUE;
+			isRequired = !defaultIsOptional;
+		}
+		return isRequired;
 	}
 
 	public @Nullable Iteration lookupIteration(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName, @Nullable ScopeFilter scopeFilter) {

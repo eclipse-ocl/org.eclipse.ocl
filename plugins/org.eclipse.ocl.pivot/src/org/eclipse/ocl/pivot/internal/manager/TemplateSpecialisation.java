@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -69,16 +70,16 @@ public class TemplateSpecialisation
 		}
 		if (referencedType instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)referencedType;
-			Type contextType = lambdaType.getContextType();
-			if (needsSpecialisation(contextType)) {
+			LambdaParameter context = lambdaType.getOwnedContext();
+			if (needsSpecialisation(context.getType())) {
 				return true;
 			}
-			Type resultType = lambdaType.getResultType();
-			if (needsSpecialisation(resultType)) {
+			LambdaParameter result = lambdaType.getOwnedResult();
+			if (needsSpecialisation(result.getType())) {
 				return true;
 			}
-			for (Type parameterType : lambdaType.getParameterTypes()) {
-				if (needsSpecialisation(parameterType)) {
+			for (LambdaParameter parameter : lambdaType.getOwnedParameters()) {
+				if (needsSpecialisation(parameter.getType())) {
 					return true;
 				}
 			}
@@ -188,11 +189,11 @@ public class TemplateSpecialisation
 				LambdaType resolvedLambdaType = (LambdaType)resolvedType;
 				installEquivalence(resolvedLambdaType.getContextType(), referencedLambdaType.getContextType());
 				installEquivalence(resolvedLambdaType.getResultType(), referencedLambdaType.getResultType());
-				List<? extends Type> resolvedParameterTypes = resolvedLambdaType.getParameterTypes();
-				List<? extends Type> referencedParameterTypes = referencedLambdaType.getParameterTypes();
-				for (int i = 0; i < Math.min(resolvedParameterTypes.size(), referencedParameterTypes.size()); i++) {
-					Type resolvedParameterType = resolvedParameterTypes.get(i);
-					Type referencedParameterType = referencedParameterTypes.get(i);
+				List<LambdaParameter> resolvedParameters = resolvedLambdaType.getOwnedParameters();
+				List<LambdaParameter> referencedParameters = referencedLambdaType.getOwnedParameters();
+				for (int i = 0; i < Math.min(resolvedParameters.size(), referencedParameters.size()); i++) {
+					Type resolvedParameterType = resolvedParameters.get(i).getType();
+					Type referencedParameterType = referencedParameters.get(i).getType();
 					installEquivalence(resolvedParameterType, referencedParameterType);
 				}
 			}

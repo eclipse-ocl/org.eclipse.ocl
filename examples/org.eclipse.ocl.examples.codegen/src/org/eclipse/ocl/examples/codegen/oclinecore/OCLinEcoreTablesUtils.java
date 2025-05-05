@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
@@ -549,17 +550,25 @@ public class OCLinEcoreTablesUtils
 		}
 
 		@Override
+		public Object visitLambdaParameter(@NonNull LambdaParameter asLambdaParameter) {
+			s.append(getLambdaParameterName(asLambdaParameter));
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitLambdaType(@NonNull LambdaType lambdaType) {
 			s.append("new ");
 			s.appendClassReference(null, ExecutorLambdaType.class);
 			s.append("(");
 			s.appendString(PivotUtil.getName(lambdaType));		// Never happens
 			s.append(", ");
-			lambdaType.getContextType().accept(this);
-			for (Type parameterType : lambdaType.getParameterType()) {
+			lambdaType.getOwnedContext().accept(this);
+			for (LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
 				s.append(", ");
-				parameterType.accept(this);
+				parameter.accept(this);
 			}
+			s.append(", ");
+			lambdaType.getOwnedResult().accept(this);
 			s.append(")");
 			return null;
 		}
@@ -1080,13 +1089,24 @@ public class OCLinEcoreTablesUtils
 			LambdaType lambdaType = (LambdaType)element;
 			s.append("_");
 			getLegacyTemplateBindingsName(s, PivotUtil.getContextType(lambdaType));
-			for (@NonNull Type type : PivotUtil.getParameterType(lambdaType)) {
+			for (@NonNull LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
 				s.append("_");
-				getLegacyTemplateBindingsName(s, type);
+				getLegacyTemplateBindingsName(s, PivotUtil.getType(parameter));
 			}
 			s.append("_");
 			getLegacyTemplateBindingsName(s, PivotUtil.getResultType(lambdaType));
 		}
+	}
+
+	protected @NonNull String getLambdaParameterName(LambdaParameter lambdaParameter) {
+		StringBuilder s = new StringBuilder();
+		s.append("_");
+		s.append(lambdaParameter.getName());
+		s.append("_");
+		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter));
+		s.append("_");
+		s.append(lambdaParameter.isIsRequired() ? "T" : "F");
+		return s.toString();
 	}
 
 	protected @NonNull Iterable<@NonNull Operation> getLocalOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
@@ -1230,6 +1250,14 @@ public class OCLinEcoreTablesUtils
 		return genPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
 	}
 
+	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull LambdaParameter lambdaParameter) {
+		s.append(AbstractGenModelHelper.encodeName(lambdaParameter));
+		s.append("_");
+		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter));
+		s.append("_");
+		s.append(lambdaParameter.isIsRequired() ? "T" : "F");
+	}
+
 	protected @NonNull String getTemplateBindingsName(@NonNull ParameterTypes templateBindings) {
 		String name2 = templateBindingsNames.get(templateBindings);
 		if (name2 == null) {
@@ -1270,14 +1298,14 @@ public class OCLinEcoreTablesUtils
 		if (element instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)element;
 			s.append("_");
-			getTemplateBindingsName(s, PivotUtil.getContextType(lambdaType));
-			for (/*@NonNull*/ Type type : lambdaType.getParameterType()) {
-				assert type != null;
+			getTemplateBindingsName(s, PivotUtil.getOwnedContext(lambdaType));
+			for (/*@NonNull*/ LambdaParameter parameter : lambdaType.getOwnedParameters()) {
+				assert parameter != null;
 				s.append("_");
-				getTemplateBindingsName(s, type);
+				getTemplateBindingsName(s, parameter);
 			}
 			s.append("_");
-			getTemplateBindingsName(s, PivotUtil.getResultType(lambdaType));
+			getTemplateBindingsName(s, PivotUtil.getOwnedResult(lambdaType));
 		}
 	}
 

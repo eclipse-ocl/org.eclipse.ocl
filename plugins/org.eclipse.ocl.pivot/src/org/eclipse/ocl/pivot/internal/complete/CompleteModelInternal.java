@@ -55,7 +55,10 @@ public interface CompleteModelInternal extends CompleteModel
 	@Nullable CompletePackageInternal getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull CompleteURIs getCompleteURIs();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
+	/**
+	 * @since 1.23
+	 */
+	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
 			@Nullable TemplateParameterSubstitutions bindings);
 	@NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	@NonNull PivotMetamodelManager getMetamodelManager();

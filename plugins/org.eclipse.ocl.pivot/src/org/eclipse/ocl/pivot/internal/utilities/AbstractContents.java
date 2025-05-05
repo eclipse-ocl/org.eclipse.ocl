@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -243,6 +244,17 @@ public abstract class AbstractContents extends PivotUtil
 		Iteration pivotIteration = createIteration(name, type, implementationClass, implementation);
 		initTemplateParameters(pivotIteration, templateParameters);
 		return pivotIteration;
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	protected @NonNull LambdaParameter createLambdaParameter(@NonNull String string, @NonNull Type type, boolean isRequired) {
+		LambdaParameter lambdaParameter = PivotFactory.eINSTANCE.createLambdaParameter();
+		lambdaParameter.setName(string);
+		lambdaParameter.setType(type);
+		lambdaParameter.setIsRequired(isRequired);
+		return lambdaParameter;
 	}
 
 	@Deprecated /* @deprecated add ePackage */

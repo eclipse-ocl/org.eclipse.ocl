@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -1650,6 +1651,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @NonNull LambdaParameter getOwnedContext(@NonNull LambdaType asLambdaType) {
+		return Objects.requireNonNull(asLambdaType.getOwnedContext());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedElse(@NonNull IfExp ifExp) {
@@ -1769,6 +1777,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @NonNull Iterable<@NonNull LambdaParameter> getOwnedParameters(@NonNull LambdaType lambdaType) {
+		return ClassUtil.nullFree(lambdaType.getOwnedParameters());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Parameter> getOwnedParameters(@NonNull Operation operation) {
@@ -1822,6 +1837,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Variable getOwnedResult(@NonNull IterateExp iterateExp) {
 		return Objects.requireNonNull(iterateExp.getOwnedResult());
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	public static @NonNull LambdaParameter getOwnedResult(@NonNull LambdaType asLambdaType) {
+		return Objects.requireNonNull(asLambdaType.getOwnedResult());
 	}
 
 	/**
@@ -1915,13 +1937,6 @@ public class PivotUtil
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	public static @NonNull List<@NonNull Type> getParameterType(@NonNull LambdaType lambdaType) {
-		return ClassUtil.nullFree(lambdaType.getParameterType());
 	}
 
 	/**

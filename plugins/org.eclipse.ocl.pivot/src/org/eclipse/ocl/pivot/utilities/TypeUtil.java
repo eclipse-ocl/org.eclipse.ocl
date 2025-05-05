@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
@@ -184,12 +185,12 @@ public class TypeUtil
 
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {
 		int iParameter = 0;
-		List<? extends Type> ownedParameters = lambdaType.getParameterTypes();
+		List<LambdaParameter> ownedParameters = lambdaType.getOwnedParameters();
 		@NonNull Type @NonNull [] parameterTypes = new @NonNull Type[ownedParameters.size() + 2];
 		parameterTypes[iParameter++] = ClassUtil.nonNullState(lambdaType.getContextType());
 		parameterTypes[iParameter++] = ClassUtil.nonNullState(lambdaType.getResultType());
-		for (Type parameterType : ownedParameters) {
-			parameterTypes[iParameter++] = ClassUtil.nonNullState(parameterType);
+		for (LambdaParameter parameter : ownedParameters) {
+			parameterTypes[iParameter++] = ClassUtil.nonNullState(parameter.getType());
 		}
 		return parameterTypes;
 	}

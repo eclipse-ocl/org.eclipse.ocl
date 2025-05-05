@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
@@ -42,9 +44,8 @@ import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
@@ -71,16 +72,16 @@ import com.google.common.collect.Iterables;
 public class PivotLUSSIDs extends LUSSIDs
 {
 	private org.eclipse.ocl.pivot.Package typeOrphanage = null;
-	private org.eclipse.ocl.pivot.Class featureOrphanage = null;
+//	private org.eclipse.ocl.pivot.Class featureOrphanage = null;
 
 	public PivotLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
 		super(asResource, options);
 		for (EObject eRoot : asResource.getContents()) {
 			if (eRoot instanceof Model) {
-				for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eRoot).getOwnedPackages()) {
+				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages((Model)eRoot)) {
 					if (Orphanage.isOrphanage(asPackage)) {
 						typeOrphanage = asPackage;
-						featureOrphanage = NameUtil.getNameable(asPackage.getOwnedClasses(), PivotConstants.ORPHANAGE_NAME);
+					//	featureOrphanage = NameUtil.getNameable(asPackage.getOwnedClasses(), PivotConstants.ORPHANAGE_NAME);
 						break;
 					}
 				}
@@ -147,13 +148,11 @@ public class PivotLUSSIDs extends LUSSIDs
 			}
 			else if (element instanceof LambdaType) {
 				LambdaType lambdaType = (LambdaType)element;
-				localId += LAMBDA_TYPE_CONTEXT_MULTIPLIER * computeReferenceLUSSID(as2id, PivotUtil.getContextType(lambdaType), normalizeTemplateParameters);
-				int lambdaTypeParameterTypeMultiplier = LAMBDA_TYPE_PARAMETER_TYPE_MULTIPLIER;
-				for (@NonNull Type parameterType :  PivotUtil.getParameterType(lambdaType)) {
-					localId += lambdaTypeParameterTypeMultiplier * computeReferenceLUSSID(as2id, parameterType, normalizeTemplateParameters);
-					lambdaTypeParameterTypeMultiplier += SIBLING_INDEX_MULTIPLIER * LAMBDA_TYPE_PARAMETER_TYPE_MULTIPLIER;
-				}
-				localId += LAMBDA_TYPE_RETURN_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, PivotUtil.getResultType(lambdaType), normalizeTemplateParameters);
+				List<@NonNull Parameter> lambdaParameters = new ArrayList<>();
+				lambdaParameters.add(PivotUtil.getOwnedContext(lambdaType));
+				lambdaParameters.add(PivotUtil.getOwnedResult(lambdaType));
+				lambdaParameters.addAll(PivotUtilInternal.getOwnedParametersList(lambdaType));
+				localId += computeParametersLUSSID(as2id, lambdaParameters);
 			}
 			else if (element instanceof Iteration) {
 				Iterable<@NonNull Parameter> asIterators = PivotUtil.getOwnedIterators((Iteration)element);
@@ -190,7 +189,7 @@ public class PivotLUSSIDs extends LUSSIDs
 		return Integer.valueOf(localId);
 	}
 
-	protected int computeParametersLUSSID(@NonNull AS2ID as2id, @NonNull Iterable<@NonNull Parameter> parameters) {
+	protected int computeParametersLUSSID(@NonNull AS2ID as2id, @NonNull Iterable<@NonNull ? extends Parameter> parameters) {
 		int parametersLUSSID = 0;
 		int parameterIndex = 1;
 		for (@NonNull Parameter parameter :  parameters) {
@@ -202,6 +201,12 @@ public class PivotLUSSIDs extends LUSSIDs
 					List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 					index = templateParameters.indexOf(parameterType);
 				}
+			}
+			if (parameter instanceof LambdaParameter) {
+				parametersLUSSID += parameterIndex * LAMBDA_PARAMETER_NAME_MULTIPLIER * parameter.getName().hashCode();
+			}
+			if (!parameter.isIsRequired()) {
+				parametersLUSSID += parameterIndex * PARAMETER_IS_OPTIONAL_MULTIPLIER;
 			}
 			if (index >= 0) {
 				parametersLUSSID += parameterIndex * TEMPLATE_PARAMETER_INDEX_MULTIPLIER * (index + 1);
@@ -273,7 +278,7 @@ public class PivotLUSSIDs extends LUSSIDs
 		else if (eObject instanceof Model) {
 			return true;
 		}
-		else if (eObject instanceof Parameter) {
+		else if ((eObject instanceof Parameter) && !(eObject instanceof LambdaParameter)) {
 			return true;
 		}
 		else if (eObject instanceof ShadowPart) {

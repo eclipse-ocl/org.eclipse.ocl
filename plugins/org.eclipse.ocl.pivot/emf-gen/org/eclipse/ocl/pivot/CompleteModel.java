@@ -150,7 +150,10 @@ public interface CompleteModel extends NamedElement
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackagesWithUris();
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
+	/**
+	 * @since 1.23
+	 */
+	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result);
 	/**
 	 * @since 1.23
 	 */

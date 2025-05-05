@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
@@ -78,7 +79,8 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 				doneIt = true;
 			}
 			if (!doneIt) {
-				for (Type parameterType : object.getParameterType()) {
+				for (LambdaParameter parameter : object.getOwnedParameters()) {
+					Type parameterType = parameter.getType();
 					referredClass = parameterType != null ? parameterType.isClass() : null;
 					if ((referredClass != null) && context.addSpecializingElement(object, referredClass)) {
 						break;
