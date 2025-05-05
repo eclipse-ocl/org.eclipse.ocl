@@ -710,7 +710,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivationBody");
 				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
 				getWithException(badClassInstance, eStructuralFeature.getName(),
-					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, property, PivotConstantsInternal.INITIALIZER_ROLE));
+					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(property), PivotConstantsInternal.INITIALIZER_ROLE));
 				ocl.dispose();
 				unloadResourceSet(resourceSet);
 			}

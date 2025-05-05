@@ -364,10 +364,10 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(String)", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}->SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}->SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType : Type[1]");
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "String", "elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}.SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}.SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType : Type[1]");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertQueryEquals(null, stringType, "Set{'1'}->oclType().elementType");
@@ -375,11 +375,11 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->oclType()._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bag(PrimitiveType)", "elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType : Type[1]");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType().elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "PrimitiveType", "elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType().SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType().SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType : Type[1]");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertQueryEquals(null, oclAnyType, "Set{1, 2.0, '3'}->oclType().elementType");

@@ -605,7 +605,7 @@ public final class IdManager
 	/**
 	 * Return the named tuplePartId with the defined name and type.
 	 */
-	@Deprecated /* Use getPartId to prreserve part nullity */
+	@Deprecated /* Use getPartId to preserve part nullity */
 	public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
 		return getPartId(index, name, typeId, false);
 	}

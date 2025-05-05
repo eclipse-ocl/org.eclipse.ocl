@@ -137,7 +137,7 @@
                                       <ownedRight xsi:type="essentialoclcs:NameExpCS">
                                         <ownedPathName>
                                           <ownedPathElements>
-                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#8BC+U"/>
+                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#XFC+U"/>
                                           </ownedPathElements>
                                         </ownedPathName>
                                         <ownedRoundBracketedClause>
@@ -200,7 +200,7 @@
                                       <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                                         <ownedPathName>
                                           <ownedPathElements>
-                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#mnV4N"/>
+                                            <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#voV4N"/>
                                           </ownedPathElements>
                                         </ownedPathName>
                                         <ownedRoundBracketedClause>
@@ -270,7 +270,7 @@
                                     <ownedRight xsi:type="essentialoclcs:NameExpCS">
                                       <ownedPathName>
                                         <ownedPathElements>
-                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#8BC+U"/>
+                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#XFC+U"/>
                                         </ownedPathElements>
                                       </ownedPathName>
                                       <ownedRoundBracketedClause>
@@ -333,7 +333,7 @@
                                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                                       <ownedPathName>
                                         <ownedPathElements>
-                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#mnV4N"/>
+                                          <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#voV4N"/>
                                         </ownedPathElements>
                                       </ownedPathName>
                                       <ownedRoundBracketedClause>
@@ -452,7 +452,7 @@
                               <ownedRight xsi:type="essentialoclcs:NameExpCS">
                                 <ownedPathName>
                                   <ownedPathElements>
-                                    <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                                    <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#a3WFz"/>
                                   </ownedPathElements>
                                 </ownedPathName>
                                 <ownedRoundBracketedClause>
@@ -493,7 +493,7 @@
                               <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                                 <ownedPathName>
                                   <ownedPathElements>
-                                    <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                                    <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#a3WFz"/>
                                   </ownedPathElements>
                                 </ownedPathName>
                                 <ownedRoundBracketedClause>
@@ -532,7 +532,7 @@
                             <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                               <ownedPathName>
                                 <ownedPathElements>
-                                  <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                                  <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#a3WFz"/>
                                 </ownedPathElements>
                               </ownedPathName>
                               <ownedRoundBracketedClause>
@@ -562,7 +562,7 @@
                           <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                             <ownedPathName>
                               <ownedPathElements>
-                                <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                                <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#a3WFz"/>
                               </ownedPathElements>
                             </ownedPathName>
                             <ownedRoundBracketedClause>
@@ -597,7 +597,7 @@
                         <ownedRight xsi:type="essentialoclcs:NameExpCS">
                           <ownedPathName>
                             <ownedPathElements>
-                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#a3WFz"/>
                             </ownedPathElements>
                           </ownedPathName>
                           <ownedRoundBracketedClause>
@@ -631,7 +631,7 @@
                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                           <ownedPathName>
                             <ownedPathElements>
-                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#R2WFz"/>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#a3WFz"/>
                             </ownedPathElements>
                           </ownedPathName>
                           <ownedRoundBracketedClause>
@@ -708,7 +708,7 @@
                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                           <ownedPathName>
                             <ownedPathElements>
-                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#OSoce"/>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#XToce"/>
                             </ownedPathElements>
                           </ownedPathName>
                           <ownedRoundBracketedClause>

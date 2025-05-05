@@ -1799,12 +1799,4 @@ implements Property {
 		}
 		throw new UnsupportedOperationException();
 	}
-
-	@Override
-	public void setName(String newName) {
-		if ("second".equals(newName)) {
-			getClass();			// XXX
-		}
-		super.setName(newName);
-	}
 } //PropertyImpl

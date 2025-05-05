@@ -308,10 +308,12 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	@Override
 	public @Nullable Object visitTuplePartId(@NonNull TuplePartId id) {
 		js.appendClassReference(null, IdManager.class);
-		js.append(".getTuplePartId(" + id.getIndex() + ", ");
+		js.append(".getPartId(" + id.getIndex() + ", ");
 		js.appendString(id.getName());
 		js.append(", ");
 		js.appendIdReference(id.getTypeId());
+		js.append(", ");
+		js.appendBooleanString(id.isRequired());
 		js.append(")");
 		return null;
 	}
