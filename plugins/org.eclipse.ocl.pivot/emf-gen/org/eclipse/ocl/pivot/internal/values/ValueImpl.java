@@ -280,6 +280,13 @@ public abstract class ValueImpl extends ValueUtil implements Value {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 100);
+		return s.toString();
+	}
+
 	/**
 	 * @generated NOT
 	 */

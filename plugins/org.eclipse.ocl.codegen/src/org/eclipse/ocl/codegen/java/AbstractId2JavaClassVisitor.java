@@ -28,13 +28,13 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
@@ -102,6 +102,11 @@ public abstract class AbstractId2JavaClassVisitor implements IdVisitor<Class<?>>
 	}
 
 	@Override
+	public @NonNull Class<?> visitPartId(@NonNull PartId id) {
+		return Property.class;
+	}
+
+	@Override
 	public @Nullable Class<?> visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 		if (id instanceof JavaTypeId) {
 			return ((JavaTypeId)id).getJavaClass();
@@ -150,11 +155,6 @@ public abstract class AbstractId2JavaClassVisitor implements IdVisitor<Class<?>>
 	@Override
 	public @NonNull Class<?> visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
 		return Type.class;
-	}
-
-	@Override
-	public @NonNull Class<?> visitTuplePartId(@NonNull TuplePartId id) {
-		return Property.class;
 	}
 
 	@Override

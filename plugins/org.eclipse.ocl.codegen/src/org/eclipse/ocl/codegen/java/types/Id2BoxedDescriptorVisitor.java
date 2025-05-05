@@ -37,13 +37,13 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
@@ -393,6 +393,11 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	}
 
 	@Override
+	public @NonNull BoxedDescriptor visitPartId(@NonNull PartId id) {
+		return new SimpleValueDescriptor(id, Property.class);
+	}
+
+	@Override
 	public @NonNull BoxedDescriptor visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 		if (id instanceof JavaTypeId) {
 			Class<?> javaClass = ((JavaTypeId)id).getJavaClass();
@@ -469,11 +474,6 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	@Override
 	public @NonNull BoxedDescriptor visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
 		return new SimpleValueDescriptor(id, Type.class);
-	}
-
-	@Override
-	public @NonNull BoxedDescriptor visitTuplePartId(@NonNull TuplePartId id) {
-		return new SimpleValueDescriptor(id, Property.class);
 	}
 
 	@Override

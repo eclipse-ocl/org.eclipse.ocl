@@ -19,6 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface TupleTypeId extends TypeId
 {
 	@NonNull String getName();
-	@Nullable TuplePartId getPartId(@NonNull String name);
-	@NonNull TuplePartId @NonNull [] getPartIds();
+	@Nullable PartId getPartId(@NonNull String name);
+	@NonNull PartId @NonNull [] getPartIds();
 }

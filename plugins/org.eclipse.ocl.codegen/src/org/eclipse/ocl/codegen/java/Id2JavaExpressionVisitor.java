@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -36,7 +37,6 @@ import org.eclipse.ocl.pivot.ids.SpecializedId;
 import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
@@ -261,6 +261,19 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	}
 
 	@Override
+	public @Nullable Object visitPartId(@NonNull PartId id) {
+		js.appendClassReference(null, IdManager.class);
+		js.append(".getPartId(" + id.getIndex() + ", ");
+		js.appendString(id.getName());
+		js.append(", ");
+		js.appendIdReference(id.getTypeId());
+		js.append(", ");
+		js.appendBooleanString(id.isRequired());
+		js.append(")");
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 		js.appendClassReference(null, TypeId.class);
 		js.append(".");
@@ -306,22 +319,11 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	}
 
 	@Override
-	public @Nullable Object visitTuplePartId(@NonNull TuplePartId id) {
-		js.appendClassReference(null, IdManager.class);
-		js.append(".getTuplePartId(" + id.getIndex() + ", ");
-		js.appendString(id.getName());
-		js.append(", ");
-		js.appendIdReference(id.getTypeId());
-		js.append(")");
-		return null;
-	}
-
-	@Override
 	public @Nullable Object visitTupleTypeId(@NonNull TupleTypeId id) {
 		js.appendClassReference(null, IdManager.class);
 		js.append(".getTupleTypeId(");
 		js.appendString(id.getName());
-		for (TuplePartId partId : id.getPartIds()) {
+		for (PartId partId : id.getPartIds()) {
 			js.append(", ");
 			js.appendIdReference(partId);
 		}

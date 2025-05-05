@@ -1231,6 +1231,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitProperty(@NonNull Property property) {
 		appendQualifiedName(property.getOwningClass(), "::", property);
+		Type type = property.getType();
+		if (type != null) {
+			append(" : ");
+			appendElementType(property);
+		}
 		return null;
 	}
 

@@ -104,7 +104,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -268,9 +268,9 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 104:
 				return createOperationFromString(eDataType, initialValue);
 			case 105:
-				return createPropertyFromString(eDataType, initialValue);
+				return createPartIdFromString(eDataType, initialValue);
 			case 106:
-				return createTuplePartIdFromString(eDataType, initialValue);
+				return createPropertyFromString(eDataType, initialValue);
 			case 107:
 				return createTypeFromString(eDataType, initialValue);
 			case 108:
@@ -313,9 +313,9 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 104:
 				return convertOperationToString(eDataType, instanceValue);
 			case 105:
-				return convertPropertyToString(eDataType, instanceValue);
+				return convertPartIdToString(eDataType, instanceValue);
 			case 106:
-				return convertTuplePartIdToString(eDataType, instanceValue);
+				return convertPropertyToString(eDataType, instanceValue);
 			case 107:
 				return convertTypeToString(eDataType, instanceValue);
 			case 108:
@@ -1378,6 +1378,24 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public PartId createPartIdFromString(EDataType eDataType, String initialValue) {
+		return (PartId)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertPartIdToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Property createPropertyFromString(EDataType eDataType, String initialValue) {
 		return (Property)super.createFromString(eDataType, initialValue);
 	}
@@ -1388,24 +1406,6 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	 * @generated
 	 */
 	public String convertPropertyToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TuplePartId createTuplePartIdFromString(EDataType eDataType, String initialValue) {
-		return (TuplePartId)super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertTuplePartIdToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

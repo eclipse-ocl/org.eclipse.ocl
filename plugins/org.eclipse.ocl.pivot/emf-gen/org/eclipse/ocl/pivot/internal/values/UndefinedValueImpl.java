@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -403,7 +403,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull Value getValue(@NonNull TuplePartId partId) {
+	public @NonNull Value getValue(@NonNull PartId partId) {
 		return toInvalidValue();
 	}
 

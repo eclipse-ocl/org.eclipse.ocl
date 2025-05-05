@@ -120,7 +120,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -874,14 +874,14 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType propertyEDataType = null;
+	private EDataType partIdEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType tuplePartIdEDataType = null;
+	private EDataType propertyEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2774,7 +2774,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCGTuplePartCallExp_AstTuplePartId() {
+	public EAttribute getCGTuplePartCallExp_AstPartId() {
 		return (EAttribute)cgTuplePartCallExpEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -3064,8 +3064,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EDataType getProperty() {
-		return propertyEDataType;
+	public EDataType getPartId() {
+		return partIdEDataType;
 	}
 
 	/**
@@ -3074,8 +3074,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EDataType getTuplePartId() {
-		return tuplePartIdEDataType;
+	public EDataType getProperty() {
+		return propertyEDataType;
 	}
 
 	/**
@@ -3431,8 +3431,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		numberEDataType = createEDataType(102);
 		objectEDataType = createEDataType(103);
 		operationEDataType = createEDataType(104);
-		propertyEDataType = createEDataType(105);
-		tuplePartIdEDataType = createEDataType(106);
+		partIdEDataType = createEDataType(105);
+		propertyEDataType = createEDataType(106);
 		typeEDataType = createEDataType(107);
 		typeIdEDataType = createEDataType(108);
 	}
@@ -3822,7 +3822,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEReference(getCGTuplePart_TupleExp(), this.getCGTupleExp(), this.getCGTupleExp_Parts(), "tupleExp", null, 1, 1, CGTuplePart.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgTuplePartCallExpEClass, CGTuplePartCallExp.class, "CGTuplePartCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCGTuplePartCallExp_AstTuplePartId(), this.getTuplePartId(), "astTuplePartId", null, 1, 1, CGTuplePartCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGTuplePartCallExp_AstPartId(), this.getPartId(), "astPartId", null, 1, 1, CGTuplePartCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgTypeIdEClass, CGTypeId.class, "CGTypeId", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -3862,8 +3862,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEDataType(numberEDataType, Number.class, "Number", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(operationEDataType, Operation.class, "Operation", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(partIdEDataType, PartId.class, "PartId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(propertyEDataType, Property.class, "Property", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(tuplePartIdEDataType, TuplePartId.class, "TuplePartId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(typeEDataType, Type.class, "Type", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(typeIdEDataType, TypeId.class, "TypeId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
