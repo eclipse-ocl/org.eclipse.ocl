@@ -128,7 +128,16 @@ public interface BaseCSFactory extends EFactory {
 	 * @return a new object of class '<em>Java Class CS</em>'.
 	 * @generated
 	 */
-	JavaClassCS createJavaClassCS();
+	@NonNull JavaClassCS createJavaClassCS();
+
+	/**
+	 * Returns a new object of class '<em>Lambda Parameter CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Lambda Parameter CS</em>'.
+	 * @generated
+	 */
+	@NonNull LambdaParameterCS createLambdaParameterCS();
 
 	/**
 	 * Returns a new object of class '<em>Lambda Type CS</em>'.

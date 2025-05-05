@@ -17,11 +17,19 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.ocl.xtext.oclstdlibcs.*;
+import org.eclipse.ocl.xtext.oclstdlibcs.DummyOCLstdlibConstraintClass;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibOppositeCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibPackageCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibRootPackageCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
+import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
 
 /**
  * <!-- begin-user-doc -->

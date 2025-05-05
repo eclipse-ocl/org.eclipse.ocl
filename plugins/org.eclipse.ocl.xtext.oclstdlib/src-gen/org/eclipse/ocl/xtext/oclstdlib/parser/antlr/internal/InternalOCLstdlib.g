@@ -1791,9 +1791,9 @@ ruleLibIterationCS returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedParametersParameterCSParserRuleCall_7_1_0());
+						newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedParametersLambdaParameterCSParserRuleCall_7_1_0());
 					}
-					lv_ownedParameters_10_0=ruleParameterCS
+					lv_ownedParameters_10_0=ruleLambdaParameterCS
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1802,7 +1802,7 @@ ruleLibIterationCS returns [EObject current=null]
 							$current,
 							"ownedParameters",
 							lv_ownedParameters_10_0,
-							"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ParameterCS");
+							"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LambdaParameterCS");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1815,9 +1815,9 @@ ruleLibIterationCS returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedParametersParameterCSParserRuleCall_7_2_1_0());
+							newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedParametersLambdaParameterCSParserRuleCall_7_2_1_0());
 						}
-						lv_ownedParameters_12_0=ruleParameterCS
+						lv_ownedParameters_12_0=ruleLambdaParameterCS
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1826,7 +1826,7 @@ ruleLibIterationCS returns [EObject current=null]
 								$current,
 								"ownedParameters",
 								lv_ownedParameters_12_0,
-								"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ParameterCS");
+								"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LambdaParameterCS");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2052,6 +2052,148 @@ ruleIteratorCS returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleLambdaParameterCS
+entryRuleLambdaParameterCS returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLambdaParameterCSRule()); }
+	iv_ruleLambdaParameterCS=ruleLambdaParameterCS
+	{ $current=$iv_ruleLambdaParameterCS.current; }
+	EOF;
+
+// Rule LambdaParameterCS
+ruleLambdaParameterCS returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLambdaParameterCSAccess().getNameIdentifierParserRuleCall_0_0());
+				}
+				lv_name_0_0=ruleIdentifier
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLambdaParameterCSRule());
+					}
+					set(
+						$current,
+						"name",
+						lv_name_0_0,
+						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.Identifier");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_1=':'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getLambdaParameterCSAccess().getColonKeyword_1());
+		}
+		otherlv_2='Lambda'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getLambdaParameterCSAccess().getLambdaKeyword_2());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLambdaParameterCSAccess().getOwnedContextTypeTypedMultiplicityRefCSParserRuleCall_3_0());
+				}
+				lv_ownedContextType_3_0=ruleTypedMultiplicityRefCS
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLambdaParameterCSRule());
+					}
+					set(
+						$current,
+						"ownedContextType",
+						lv_ownedContextType_3_0,
+						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedMultiplicityRefCS");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_4='('
+		{
+			newLeafNode(otherlv_4, grammarAccess.getLambdaParameterCSAccess().getLeftParenthesisKeyword_4());
+		}
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getLambdaParameterCSAccess().getOwnedParametersParameterCSParserRuleCall_5_0_0());
+					}
+					lv_ownedParameters_5_0=ruleParameterCS
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getLambdaParameterCSRule());
+						}
+						add(
+							$current,
+							"ownedParameters",
+							lv_ownedParameters_5_0,
+							"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ParameterCS");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_6=','
+				{
+					newLeafNode(otherlv_6, grammarAccess.getLambdaParameterCSAccess().getCommaKeyword_5_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getLambdaParameterCSAccess().getOwnedParametersParameterCSParserRuleCall_5_1_1_0());
+						}
+						lv_ownedParameters_7_0=ruleParameterCS
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getLambdaParameterCSRule());
+							}
+							add(
+								$current,
+								"ownedParameters",
+								lv_ownedParameters_7_0,
+								"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ParameterCS");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
+		otherlv_8=')'
+		{
+			newLeafNode(otherlv_8, grammarAccess.getLambdaParameterCSAccess().getRightParenthesisKeyword_6());
+		}
+		otherlv_9=':'
+		{
+			newLeafNode(otherlv_9, grammarAccess.getLambdaParameterCSAccess().getColonKeyword_7());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLambdaParameterCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_8_0());
+				}
+				lv_ownedType_10_0=ruleTypedMultiplicityRefCS
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLambdaParameterCSRule());
+					}
+					set(
+						$current,
+						"ownedType",
+						lv_ownedType_10_0,
+						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedMultiplicityRefCS");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
 // Entry rule entryRuleLambdaTypeCS
 entryRuleLambdaTypeCS returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getLambdaTypeCSRule()); }
@@ -2104,9 +2246,9 @@ ruleLambdaTypeCS returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getLambdaTypeCSAccess().getOwnedContextTypeLambdaContextTypeRefCSParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getLambdaTypeCSAccess().getOwnedContextTypeTypedMultiplicityRefCSParserRuleCall_2_0());
 				}
-				lv_ownedContextType_2_0=ruleLambdaContextTypeRefCS
+				lv_ownedContextType_2_0=ruleTypedMultiplicityRefCS
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getLambdaTypeCSRule());
@@ -2115,7 +2257,7 @@ ruleLambdaTypeCS returns [EObject current=null]
 						$current,
 						"ownedContextType",
 						lv_ownedContextType_2_0,
-						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LambdaContextTypeRefCS");
+						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedMultiplicityRefCS");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -2181,9 +2323,9 @@ ruleLambdaTypeCS returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getLambdaTypeCSAccess().getOwnedResultTypeTypedRefCSParserRuleCall_7_0());
+					newCompositeNode(grammarAccess.getLambdaTypeCSAccess().getOwnedResultTypeTypedMultiplicityRefCSParserRuleCall_7_0());
 				}
-				lv_ownedResultType_9_0=ruleTypedRefCS
+				lv_ownedResultType_9_0=ruleTypedMultiplicityRefCS
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getLambdaTypeCSRule());
@@ -2192,46 +2334,10 @@ ruleLambdaTypeCS returns [EObject current=null]
 						$current,
 						"ownedResultType",
 						lv_ownedResultType_9_0,
-						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedRefCS");
+						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedMultiplicityRefCS");
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)
-	)
-;
-
-// Entry rule entryRuleLambdaContextTypeRefCS
-entryRuleLambdaContextTypeRefCS returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getLambdaContextTypeRefCSRule()); }
-	iv_ruleLambdaContextTypeRefCS=ruleLambdaContextTypeRefCS
-	{ $current=$iv_ruleLambdaContextTypeRefCS.current; }
-	EOF;
-
-// Rule LambdaContextTypeRefCS
-ruleLambdaContextTypeRefCS returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			{
-				newCompositeNode(grammarAccess.getLambdaContextTypeRefCSAccess().getOwnedPathNameLibPathNameCSParserRuleCall_0());
-			}
-			lv_ownedPathName_0_0=ruleLibPathNameCS
-			{
-				if ($current==null) {
-					$current = createModelElementForParent(grammarAccess.getLambdaContextTypeRefCSRule());
-				}
-				set(
-					$current,
-					"ownedPathName",
-					lv_ownedPathName_0_0,
-					"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibPathNameCS");
-				afterParserOrEnumRuleCall();
-			}
 		)
 	)
 ;

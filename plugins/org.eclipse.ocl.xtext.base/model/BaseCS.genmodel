@@ -94,6 +94,10 @@
     <genClasses image="false" ecoreClass="BaseCS.ecore#//JavaImplementationCS">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseCS.ecore#//JavaImplementationCS/implementation"/>
     </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//LambdaParameterCS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//LambdaParameterCS/ownedContextType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//LambdaParameterCS/ownedParameters"/>
+    </genClasses>
     <genClasses ecoreClass="BaseCS.ecore#//LambdaTypeCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//LambdaTypeCS/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//LambdaTypeCS/ownedContextType"/>
