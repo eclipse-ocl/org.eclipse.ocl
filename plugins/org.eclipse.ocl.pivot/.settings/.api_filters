@@ -188,12 +188,6 @@
         <filter id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.LambdaType"/>
-                <message_argument value="getResultType()"/>
-            </message_arguments>
-        </filter>
-        <filter id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.LambdaType"/>
                 <message_argument value="setContextType(Type)"/>
             </message_arguments>
         </filter>
@@ -755,12 +749,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.LambdaTypeImpl"/>
                 <message_argument value="basicGetResultType()"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.LambdaTypeImpl"/>
-                <message_argument value="getContextType()"/>
             </message_arguments>
         </filter>
         <filter id="338792546">
@@ -1968,6 +1956,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl"/>
                 <message_argument value="org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3$MatchableId"/>
+            </message_arguments>
+        </filter>
+        <filter id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl"/>
+                <message_argument value="GeneralizedTupleTypeIdImpl(IdManager, Integer, String, TuplePartId[])"/>
             </message_arguments>
         </filter>
     </resource>

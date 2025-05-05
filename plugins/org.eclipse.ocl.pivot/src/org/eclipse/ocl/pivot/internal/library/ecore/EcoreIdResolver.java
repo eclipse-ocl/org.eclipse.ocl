@@ -140,7 +140,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		for (int i = 0; i < iSize; i++) {
 			TypedElement part = parts[i];
 			String partName = NameUtil.getSafeName(part);
-			partsList.add(IdManager.getTuplePartId(i, partName, part.getTypeId()));
+			partsList.add(IdManager.getPartId(i, partName, part.getTypeId(), part.isIsRequired()));
 		}
 		return getTupleType(IdManager.getTupleTypeId(TypeId.TUPLE_NAME, partsList));
 	}

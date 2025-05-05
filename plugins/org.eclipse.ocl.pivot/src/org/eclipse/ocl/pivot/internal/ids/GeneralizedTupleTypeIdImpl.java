@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId
 {
@@ -108,22 +107,11 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	protected final @NonNull String name;
 	protected final @NonNull TuplePartId @NonNull [] partIds;
 
-	@Deprecated /* Not used */
-	public GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
-		this.hashCode = hashCode;
-		this.name = name;
-		this.partIds = orderedPartIds;
-		assert partsAreOrdered();
-		this.hashCode.equals(computeHashCode(name, orderedPartIds));
-		System.out.println(NameUtil.debugSimpleName(this) + " " + hashCode + " " + this);
-	}
-
 	private GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
 		this.hashCode = computeHashCode(name, orderedPartIds);
 		this.name = name;
 		this.partIds = orderedPartIds;
 		assert partsAreOrdered();
-		System.out.println(NameUtil.debugSimpleName(this) + " " + hashCode + " " + this);
 	}
 
 	@Override

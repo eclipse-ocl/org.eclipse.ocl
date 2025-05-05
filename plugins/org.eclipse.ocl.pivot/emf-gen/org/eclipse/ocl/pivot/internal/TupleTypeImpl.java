@@ -95,7 +95,7 @@ public class TupleTypeImpl
 				@SuppressWarnings("null")@NonNull TypedElement part = parts.get(i);
 				String partName = NameUtil.getSafeName(part);
 				TypeId partTypeId = part.getTypeId();
-				partIds.add(IdManager.getTuplePartId(i, partName, partTypeId));
+				partIds.add(IdManager.getPartId(i, partName, partTypeId, part.isIsRequired()));
 			}
 			tupleTypeId = tupleTypeId2 = IdManager.getTupleTypeId(name2, partIds);
 		}
