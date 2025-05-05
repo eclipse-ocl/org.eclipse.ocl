@@ -166,7 +166,13 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 			TuplePartCS csPart = BaseCSFactory.eINSTANCE.createTuplePartCS();
 			csPart.setPivot(asTuplePart);
 			csPart.setName(asTuplePart.getName());
-			csPart.setOwnedType((TypedRefCS) asTuplePart.getType().accept(this));
+			TypedRefCS csTypedRef = (TypedRefCS) asTuplePart.getType().accept(this);
+			csPart.setOwnedType(csTypedRef);
+			if (!asTuplePart.isIsRequired()) {
+				MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
+				csMultiplicity.setStringBounds("?");
+				csTypedRef.setOwnedMultiplicity(csMultiplicity);
+			}
 			csRef.getOwnedParts().add(csPart);
 		}
 		return csRef;

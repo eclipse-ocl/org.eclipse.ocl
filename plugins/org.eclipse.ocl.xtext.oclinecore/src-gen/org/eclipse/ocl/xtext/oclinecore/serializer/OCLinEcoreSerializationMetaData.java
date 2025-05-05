@@ -78,8 +78,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 	private final @NonNull EnumerationValue @NonNull [] enumerationValues = new @NonNull EnumerationValue[24];
 	private final @NonNull GrammarRuleValue @NonNull [] grammarRuleValues = new @NonNull GrammarRuleValue[131];
 	private final @NonNull GrammarRuleVector @NonNull [] grammarRuleVectors = new @NonNull GrammarRuleVector[74];
-	private final @NonNull SerializationMatchStep @NonNull [] serializationMatchSteps = new @NonNull SerializationMatchStep[356];
-	private final @NonNull SerializationMatchTerm @NonNull [] serializationMatchTerms = new @NonNull SerializationMatchTerm[242];
+	private final @NonNull SerializationMatchStep @NonNull [] serializationMatchSteps = new @NonNull SerializationMatchStep[355];
+	private final @NonNull SerializationMatchTerm @NonNull [] serializationMatchTerms = new @NonNull SerializationMatchTerm[241];
 	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[150];
 	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [23] @NonNull [];
 	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[287];
@@ -2829,121 +2829,121 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 	 */
 	private void initMatchSteps() {
 		// 0: assert (|AbstractNameExpCS::ownedPathName| - 1) == 0
-		serializationMatchSteps[0] = createMatchStep_Assert(151);
+		serializationMatchSteps[0] = createMatchStep_Assert(150);
 		// 1: assert (|AnnotationElementCS::ownedDetails| - 1) == 0
-		serializationMatchSteps[1] = createMatchStep_Assert(152);
+		serializationMatchSteps[1] = createMatchStep_Assert(151);
 		// 2: assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0
-		serializationMatchSteps[2] = createMatchStep_Assert(154);
+		serializationMatchSteps[2] = createMatchStep_Assert(153);
 		// 3: assert (|CollectionLiteralExpCS::ownedType| - 1) == 0
-		serializationMatchSteps[3] = createMatchStep_Assert(157);
+		serializationMatchSteps[3] = createMatchStep_Assert(156);
 		// 4: assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0
-		serializationMatchSteps[4] = createMatchStep_Assert(158);
+		serializationMatchSteps[4] = createMatchStep_Assert(157);
 		// 5: assert (|CollectionPatternCS::ownedType| - 1) == 0
-		serializationMatchSteps[5] = createMatchStep_Assert(160);
+		serializationMatchSteps[5] = createMatchStep_Assert(159);
 		// 6: assert (|CollectionTypeCS::name| - 1) == 0
-		serializationMatchSteps[6] = createMatchStep_Assert(161);
+		serializationMatchSteps[6] = createMatchStep_Assert(160);
 		// 7: assert (|ConstraintCS::stereotype.'invariant'| - 1) == 0
-		serializationMatchSteps[7] = createMatchStep_Assert(162);
+		serializationMatchSteps[7] = createMatchStep_Assert(161);
 		// 8: assert (|ConstraintCS::stereotype.'postcondition'| - 1) == 0
-		serializationMatchSteps[8] = createMatchStep_Assert(163);
+		serializationMatchSteps[8] = createMatchStep_Assert(162);
 		// 9: assert (|ConstraintCS::stereotype.'precondition'| - 1) == 0
-		serializationMatchSteps[9] = createMatchStep_Assert(164);
+		serializationMatchSteps[9] = createMatchStep_Assert(163);
 		// 10: assert (|ContextCS::ownedExpression| - 1) == 0
-		serializationMatchSteps[10] = createMatchStep_Assert(165);
+		serializationMatchSteps[10] = createMatchStep_Assert(164);
 		// 11: assert (|ExpSpecificationCS::ownedExpression| - 1) == 0
-		serializationMatchSteps[11] = createMatchStep_Assert(168);
+		serializationMatchSteps[11] = createMatchStep_Assert(167);
 		// 12: assert (|IfExpCS::ownedCondition| - 1) == 0
-		serializationMatchSteps[12] = createMatchStep_Assert(169);
+		serializationMatchSteps[12] = createMatchStep_Assert(168);
 		// 13: assert (|IfExpCS::ownedElseExpression| - 1) == 0
-		serializationMatchSteps[13] = createMatchStep_Assert(170);
+		serializationMatchSteps[13] = createMatchStep_Assert(169);
 		// 14: assert (|IfExpCS::ownedThenExpression| - 1) == 0
-		serializationMatchSteps[14] = createMatchStep_Assert(171);
+		serializationMatchSteps[14] = createMatchStep_Assert(170);
 		// 15: assert (|IfThenExpCS::ownedCondition| - 1) == 0
-		serializationMatchSteps[15] = createMatchStep_Assert(172);
+		serializationMatchSteps[15] = createMatchStep_Assert(171);
 		// 16: assert (|IfThenExpCS::ownedThenExpression| - 1) == 0
-		serializationMatchSteps[16] = createMatchStep_Assert(173);
+		serializationMatchSteps[16] = createMatchStep_Assert(172);
 		// 17: assert (|ImportCS::ownedPathName| - 1) == 0
-		serializationMatchSteps[17] = createMatchStep_Assert(174);
+		serializationMatchSteps[17] = createMatchStep_Assert(173);
 		// 18: assert (|InfixExpCS::ownedLeft| - 1) == 0
-		serializationMatchSteps[18] = createMatchStep_Assert(175);
+		serializationMatchSteps[18] = createMatchStep_Assert(174);
 		// 19: assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0
-		serializationMatchSteps[19] = createMatchStep_Assert(176);
+		serializationMatchSteps[19] = createMatchStep_Assert(175);
 		// 20: assert (|LetExpCS::ownedInExpression| - 1) == 0
-		serializationMatchSteps[20] = createMatchStep_Assert(177);
+		serializationMatchSteps[20] = createMatchStep_Assert(176);
 		// 21: assert (|MapLiteralExpCS::ownedType| - 1) == 0
-		serializationMatchSteps[21] = createMatchStep_Assert(181);
+		serializationMatchSteps[21] = createMatchStep_Assert(180);
 		// 22: assert (|MapLiteralPartCS::ownedKey| - 1) == 0
-		serializationMatchSteps[22] = createMatchStep_Assert(182);
+		serializationMatchSteps[22] = createMatchStep_Assert(181);
 		// 23: assert (|MapLiteralPartCS::ownedValue| - 1) == 0
-		serializationMatchSteps[23] = createMatchStep_Assert(183);
+		serializationMatchSteps[23] = createMatchStep_Assert(182);
 		// 24: assert (|MapTypeCS::name.'Map'| - 1) == 0
-		serializationMatchSteps[24] = createMatchStep_Assert(184);
+		serializationMatchSteps[24] = createMatchStep_Assert(183);
 		// 25: assert (|MapTypeCS::ownedKeyType| - V0) == 0
-		serializationMatchSteps[25] = createMatchStep_Assert(185);
+		serializationMatchSteps[25] = createMatchStep_Assert(184);
 		// 26: assert (|ModelElementRefCS::ownedPathName| - 1) == 0
-		serializationMatchSteps[26] = createMatchStep_Assert(187);
+		serializationMatchSteps[26] = createMatchStep_Assert(186);
 		// 27: assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0
-		serializationMatchSteps[27] = createMatchStep_Assert(188);
+		serializationMatchSteps[27] = createMatchStep_Assert(187);
 		// 28: assert (|MultiplicityCS::isNullFree.'|1'| - 1) == 0
-		serializationMatchSteps[28] = createMatchStep_Assert(189);
+		serializationMatchSteps[28] = createMatchStep_Assert(188);
 		// 29: assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0
-		serializationMatchSteps[29] = createMatchStep_Assert(190);
+		serializationMatchSteps[29] = createMatchStep_Assert(189);
 		// 30: assert (|NamedElementCS::name| - 1) == 0
-		serializationMatchSteps[30] = createMatchStep_Assert(191);
+		serializationMatchSteps[30] = createMatchStep_Assert(190);
 		// 31: assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0
-		serializationMatchSteps[31] = createMatchStep_Assert(192);
+		serializationMatchSteps[31] = createMatchStep_Assert(191);
 		// 32: assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0
-		serializationMatchSteps[32] = createMatchStep_Assert(193);
+		serializationMatchSteps[32] = createMatchStep_Assert(192);
 		// 33: assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0
-		serializationMatchSteps[33] = createMatchStep_Assert(194);
+		serializationMatchSteps[33] = createMatchStep_Assert(193);
 		// 34: assert (|NavigatingArgCS::ownedType| - 1) == 0
-		serializationMatchSteps[34] = createMatchStep_Assert(195);
+		serializationMatchSteps[34] = createMatchStep_Assert(194);
 		// 35: assert (|NavigatingArgCS::prefix.','| - 1) == 0
-		serializationMatchSteps[35] = createMatchStep_Assert(196);
+		serializationMatchSteps[35] = createMatchStep_Assert(195);
 		// 36: assert (|NavigatingArgCS::prefix.';'| - 1) == 0
-		serializationMatchSteps[36] = createMatchStep_Assert(197);
+		serializationMatchSteps[36] = createMatchStep_Assert(196);
 		// 37: assert (|NavigatingArgCS::prefix.'|'| - 1) == 0
-		serializationMatchSteps[37] = createMatchStep_Assert(198);
+		serializationMatchSteps[37] = createMatchStep_Assert(197);
 		// 38: assert (|NestedExpCS::ownedExpression| - 1) == 0
-		serializationMatchSteps[38] = createMatchStep_Assert(199);
+		serializationMatchSteps[38] = createMatchStep_Assert(198);
 		// 39: assert (|NumberLiteralExpCS::symbol| - 1) == 0
-		serializationMatchSteps[39] = createMatchStep_Assert(200);
+		serializationMatchSteps[39] = createMatchStep_Assert(199);
 		// 40: assert (|OperatorExpCS::ownedRight| - 1) == 0
-		serializationMatchSteps[40] = createMatchStep_Assert(206);
+		serializationMatchSteps[40] = createMatchStep_Assert(205);
 		// 41: assert (|PathElementCS::referredElement| - 1) == 0
-		serializationMatchSteps[41] = createMatchStep_Assert(207);
+		serializationMatchSteps[41] = createMatchStep_Assert(206);
 		// 42: assert (|PathNameCS::ownedPathElements| - 1) == 0
-		serializationMatchSteps[42] = createMatchStep_Assert(208);
+		serializationMatchSteps[42] = createMatchStep_Assert(207);
 		// 43: assert (|PatternExpCS::ownedPatternType| - 1) == 0
-		serializationMatchSteps[43] = createMatchStep_Assert(209);
+		serializationMatchSteps[43] = createMatchStep_Assert(208);
 		// 44: assert (|PrimitiveTypeRefCS::name| - 1) == 0
-		serializationMatchSteps[44] = createMatchStep_Assert(210);
+		serializationMatchSteps[44] = createMatchStep_Assert(209);
 		// 45: assert (|ShadowPartCS::ownedInitExpression| - 1) == 0
-		serializationMatchSteps[45] = createMatchStep_Assert(213);
+		serializationMatchSteps[45] = createMatchStep_Assert(212);
 		// 46: assert (|ShadowPartCS::referredProperty| - 1) == 0
-		serializationMatchSteps[46] = createMatchStep_Assert(214);
+		serializationMatchSteps[46] = createMatchStep_Assert(213);
 		// 47: assert (|SpecificationCS::exprString| - 1) == 0
-		serializationMatchSteps[47] = createMatchStep_Assert(215);
+		serializationMatchSteps[47] = createMatchStep_Assert(214);
 		// 48: assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0
-		serializationMatchSteps[48] = createMatchStep_Assert(222);
+		serializationMatchSteps[48] = createMatchStep_Assert(221);
 		// 49: assert (|TupleTypeCS::name.'Tuple'| - 1) == 0
-		serializationMatchSteps[49] = createMatchStep_Assert(225);
+		serializationMatchSteps[49] = createMatchStep_Assert(224);
 		// 50: assert (|TypeLiteralExpCS::ownedType| - 1) == 0
-		serializationMatchSteps[50] = createMatchStep_Assert(228);
+		serializationMatchSteps[50] = createMatchStep_Assert(227);
 		// 51: assert (|TypeNameExpCS::ownedPathName| - 1) == 0
-		serializationMatchSteps[51] = createMatchStep_Assert(229);
+		serializationMatchSteps[51] = createMatchStep_Assert(228);
 		// 52: assert (|TypedElementCS::ownedType| - 1) == 0
-		serializationMatchSteps[52] = createMatchStep_Assert(232);
+		serializationMatchSteps[52] = createMatchStep_Assert(231);
 		// 53: assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0
-		serializationMatchSteps[53] = createMatchStep_Assert(237);
+		serializationMatchSteps[53] = createMatchStep_Assert(236);
 		// 54: assert (|TypedElementCS::qualifiers.'static'| - 1) == 0
-		serializationMatchSteps[54] = createMatchStep_Assert(238);
+		serializationMatchSteps[54] = createMatchStep_Assert(237);
 		// 55: assert (|TypedTypeRefCS::ownedBinding| - 1) == 0
-		serializationMatchSteps[55] = createMatchStep_Assert(239);
+		serializationMatchSteps[55] = createMatchStep_Assert(238);
 		// 56: assert (|TypedTypeRefCS::ownedPathName| - 1) == 0
-		serializationMatchSteps[56] = createMatchStep_Assert(240);
+		serializationMatchSteps[56] = createMatchStep_Assert(239);
 		// 57: assert (|VariableCS::ownedInitExpression| - 1) == 0
-		serializationMatchSteps[57] = createMatchStep_Assert(241);
+		serializationMatchSteps[57] = createMatchStep_Assert(240);
 		// 58: assert |AnnotationCS::ownedContents| == 0
 		serializationMatchSteps[58] = createMatchStep_Assert(8);
 		// 59: assert |AnnotationCS::ownedReferences| == 0
@@ -3022,524 +3022,522 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationMatchSteps[95] = createMatchStep_Assert(119);
 		// 96: assert |TypeLiteralExpCS::ownedPathName| == 0
 		serializationMatchSteps[96] = createMatchStep_Assert(128);
-		// 97: assert |TypedElementCS::isOptional| == 0
-		serializationMatchSteps[97] = createMatchStep_Assert(134);
-		// 98: assert |TypedElementCS::qualifiers| == 0
+		// 97: assert |TypedElementCS::qualifiers| == 0
+		serializationMatchSteps[97] = createMatchStep_Assert(141);
+		// 98: assert |TypedRefCS::ownedMultiplicity| == 0
 		serializationMatchSteps[98] = createMatchStep_Assert(142);
-		// 99: assert |TypedRefCS::ownedMultiplicity| == 0
+		// 99: assert |TypedTypeRefCS::isTypeof| == 0
 		serializationMatchSteps[99] = createMatchStep_Assert(143);
-		// 100: assert |TypedTypeRefCS::isTypeof| == 0
+		// 100: assert |TypedTypeRefCS::ownedBinding| == 0
 		serializationMatchSteps[100] = createMatchStep_Assert(144);
-		// 101: assert |TypedTypeRefCS::ownedBinding| == 0
-		serializationMatchSteps[101] = createMatchStep_Assert(145);
-		// 102: assert |VariableCS::ownedInitExpression| == 0
-		serializationMatchSteps[102] = createMatchStep_Assert(147);
-		// 103: assert |WildcardTypeRefCS::ownedSuper| == 0
-		serializationMatchSteps[103] = createMatchStep_Assert(150);
-		// 104: assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0)
-		serializationMatchSteps[104] = createMatchStep_Assign(0, 156);
-		// 105: assign V0 = (|CurlyBracketedClauseCS::ownedParts| > 0)
-		serializationMatchSteps[105] = createMatchStep_Assign(0, 167);
-		// 106: assign V0 = (|LetExpCS::ownedVariables| - 1)
-		serializationMatchSteps[106] = createMatchStep_Assign(0, 178);
-		// 107: assign V0 = (|MapLiteralExpCS::ownedParts| > 0)
-		serializationMatchSteps[107] = createMatchStep_Assign(0, 180);
-		// 108: assign V0 = (|PathNameCS::ownedPathElements| - 1)
-		serializationMatchSteps[108] = createMatchStep_Assign(0, 208);
-		// 109: assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1)
-		serializationMatchSteps[109] = createMatchStep_Assign(0, 216);
-		// 110: assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1)
-		serializationMatchSteps[110] = createMatchStep_Assign(0, 221);
-		// 111: assign V0 = (|TemplateSignatureCS::ownedParameters| - 1)
+		// 101: assert |VariableCS::ownedInitExpression| == 0
+		serializationMatchSteps[101] = createMatchStep_Assert(146);
+		// 102: assert |WildcardTypeRefCS::ownedSuper| == 0
+		serializationMatchSteps[102] = createMatchStep_Assert(149);
+		// 103: assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0)
+		serializationMatchSteps[103] = createMatchStep_Assign(0, 155);
+		// 104: assign V0 = (|CurlyBracketedClauseCS::ownedParts| > 0)
+		serializationMatchSteps[104] = createMatchStep_Assign(0, 166);
+		// 105: assign V0 = (|LetExpCS::ownedVariables| - 1)
+		serializationMatchSteps[105] = createMatchStep_Assign(0, 177);
+		// 106: assign V0 = (|MapLiteralExpCS::ownedParts| > 0)
+		serializationMatchSteps[106] = createMatchStep_Assign(0, 179);
+		// 107: assign V0 = (|PathNameCS::ownedPathElements| - 1)
+		serializationMatchSteps[107] = createMatchStep_Assign(0, 207);
+		// 108: assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1)
+		serializationMatchSteps[108] = createMatchStep_Assign(0, 215);
+		// 109: assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1)
+		serializationMatchSteps[109] = createMatchStep_Assign(0, 220);
+		// 110: assign V0 = (|TemplateSignatureCS::ownedParameters| - 1)
+		serializationMatchSteps[110] = createMatchStep_Assign(0, 222);
+		// 111: assign V0 = (|TupleLiteralExpCS::ownedParts| - 1)
 		serializationMatchSteps[111] = createMatchStep_Assign(0, 223);
-		// 112: assign V0 = (|TupleLiteralExpCS::ownedParts| - 1)
-		serializationMatchSteps[112] = createMatchStep_Assign(0, 224);
-		// 113: assign V0 = (|TupleTypeCS::ownedParts| > 0)
-		serializationMatchSteps[113] = createMatchStep_Assign(0, 227);
-		// 114: assign V0 = (|TypeParameterCS::ownedExtends| > 0)
-		serializationMatchSteps[114] = createMatchStep_Assign(0, 231);
-		// 115: assign V0 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
-		serializationMatchSteps[115] = createMatchStep_Assign(0, 236);
-		// 116: assign V0 = 0
-		serializationMatchSteps[116] = createMatchStep_Assign(0, 0);
-		// 117: assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses|
-		serializationMatchSteps[117] = createMatchStep_Assign(0, 7);
-		// 118: assign V0 = |AnnotationElementCS::ownedDetails|
-		serializationMatchSteps[118] = createMatchStep_Assign(0, 10);
-		// 119: assign V0 = |CollectionLiteralPartCS::ownedLastExpression|
-		serializationMatchSteps[119] = createMatchStep_Assign(0, 17);
-		// 120: assign V0 = |CollectionPatternCS::restVariableName|
-		serializationMatchSteps[120] = createMatchStep_Assign(0, 21);
-		// 121: assign V0 = |CollectionTypeCS::ownedType|
-		serializationMatchSteps[121] = createMatchStep_Assign(0, 24);
-		// 122: assign V0 = |DataTypeCS::isPrimitive.'primitive'|
-		serializationMatchSteps[122] = createMatchStep_Assign(0, 33);
-		// 123: assign V0 = |DetailCS::values|
-		serializationMatchSteps[123] = createMatchStep_Assign(0, 36);
-		// 124: assign V0 = |DocumentationCS::value|
-		serializationMatchSteps[124] = createMatchStep_Assign(0, 37);
-		// 125: assign V0 = |EnumerationLiteralCS::literal|
-		serializationMatchSteps[125] = createMatchStep_Assign(0, 41);
-		// 126: assign V0 = |IfExpCS::ownedIfThenExpressions|
-		serializationMatchSteps[126] = createMatchStep_Assign(0, 47);
-		// 127: assign V0 = |LetVariableCS::ownedRoundBracketedClause|
-		serializationMatchSteps[127] = createMatchStep_Assign(0, 58);
-		// 128: assign V0 = |MapTypeCS::ownedValueType|
-		serializationMatchSteps[128] = createMatchStep_Assign(0, 65);
-		// 129: assign V0 = |MultiplicityBoundsCS::upperBound|
-		serializationMatchSteps[129] = createMatchStep_Assign(0, 69);
-		// 130: assign V0 = |NamedElementCS::name|
-		serializationMatchSteps[130] = createMatchStep_Assign(0, 73);
-		// 131: assign V0 = |NavigatingArgCS::ownedCoIterator|
-		serializationMatchSteps[131] = createMatchStep_Assign(0, 74);
-		// 132: assign V0 = |NavigatingArgCS::ownedInitExpression|
-		serializationMatchSteps[132] = createMatchStep_Assign(0, 75);
-		// 133: assign V0 = |NavigatingArgCS::ownedType|
-		serializationMatchSteps[133] = createMatchStep_Assign(0, 77);
-		// 134: assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'|
-		serializationMatchSteps[134] = createMatchStep_Assign(0, 84);
-		// 135: assign V0 = |PackageCS::nsPrefix|
-		serializationMatchSteps[135] = createMatchStep_Assign(0, 92);
-		// 136: assign V0 = |PatternExpCS::patternVariableName|
-		serializationMatchSteps[136] = createMatchStep_Assign(0, 99);
-		// 137: assign V0 = |ReferenceCS::referredOpposite|
-		serializationMatchSteps[137] = createMatchStep_Assign(0, 103);
-		// 138: assign V0 = |StringLiteralExpCS::segments|
-		serializationMatchSteps[138] = createMatchStep_Assign(0, 110);
-		// 139: assign V0 = |StructuredClassCS::isAbstract.'abstract'|
-		serializationMatchSteps[139] = createMatchStep_Assign(0, 113);
-		// 140: assign V0 = |TemplateableElementCS::ownedSignature|
-		serializationMatchSteps[140] = createMatchStep_Assign(0, 124);
-		// 141: assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause|
-		serializationMatchSteps[141] = createMatchStep_Assign(0, 130);
-		// 142: assign V0 = |TypedElementCS::ownedType|
-		serializationMatchSteps[142] = createMatchStep_Assign(0, 135);
-		// 143: assign V0 = |TypedElementCS::qualifiers.'definition'|
+		// 112: assign V0 = (|TupleTypeCS::ownedParts| > 0)
+		serializationMatchSteps[112] = createMatchStep_Assign(0, 226);
+		// 113: assign V0 = (|TypeParameterCS::ownedExtends| > 0)
+		serializationMatchSteps[113] = createMatchStep_Assign(0, 230);
+		// 114: assign V0 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+		serializationMatchSteps[114] = createMatchStep_Assign(0, 235);
+		// 115: assign V0 = 0
+		serializationMatchSteps[115] = createMatchStep_Assign(0, 0);
+		// 116: assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses|
+		serializationMatchSteps[116] = createMatchStep_Assign(0, 7);
+		// 117: assign V0 = |AnnotationElementCS::ownedDetails|
+		serializationMatchSteps[117] = createMatchStep_Assign(0, 10);
+		// 118: assign V0 = |CollectionLiteralPartCS::ownedLastExpression|
+		serializationMatchSteps[118] = createMatchStep_Assign(0, 17);
+		// 119: assign V0 = |CollectionPatternCS::restVariableName|
+		serializationMatchSteps[119] = createMatchStep_Assign(0, 21);
+		// 120: assign V0 = |CollectionTypeCS::ownedType|
+		serializationMatchSteps[120] = createMatchStep_Assign(0, 24);
+		// 121: assign V0 = |DataTypeCS::isPrimitive.'primitive'|
+		serializationMatchSteps[121] = createMatchStep_Assign(0, 33);
+		// 122: assign V0 = |DetailCS::values|
+		serializationMatchSteps[122] = createMatchStep_Assign(0, 36);
+		// 123: assign V0 = |DocumentationCS::value|
+		serializationMatchSteps[123] = createMatchStep_Assign(0, 37);
+		// 124: assign V0 = |EnumerationLiteralCS::literal|
+		serializationMatchSteps[124] = createMatchStep_Assign(0, 41);
+		// 125: assign V0 = |IfExpCS::ownedIfThenExpressions|
+		serializationMatchSteps[125] = createMatchStep_Assign(0, 47);
+		// 126: assign V0 = |LetVariableCS::ownedRoundBracketedClause|
+		serializationMatchSteps[126] = createMatchStep_Assign(0, 58);
+		// 127: assign V0 = |MapTypeCS::ownedValueType|
+		serializationMatchSteps[127] = createMatchStep_Assign(0, 65);
+		// 128: assign V0 = |MultiplicityBoundsCS::upperBound|
+		serializationMatchSteps[128] = createMatchStep_Assign(0, 69);
+		// 129: assign V0 = |NamedElementCS::name|
+		serializationMatchSteps[129] = createMatchStep_Assign(0, 73);
+		// 130: assign V0 = |NavigatingArgCS::ownedCoIterator|
+		serializationMatchSteps[130] = createMatchStep_Assign(0, 74);
+		// 131: assign V0 = |NavigatingArgCS::ownedInitExpression|
+		serializationMatchSteps[131] = createMatchStep_Assign(0, 75);
+		// 132: assign V0 = |NavigatingArgCS::ownedType|
+		serializationMatchSteps[132] = createMatchStep_Assign(0, 77);
+		// 133: assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'|
+		serializationMatchSteps[133] = createMatchStep_Assign(0, 84);
+		// 134: assign V0 = |PackageCS::nsPrefix|
+		serializationMatchSteps[134] = createMatchStep_Assign(0, 92);
+		// 135: assign V0 = |PatternExpCS::patternVariableName|
+		serializationMatchSteps[135] = createMatchStep_Assign(0, 99);
+		// 136: assign V0 = |ReferenceCS::referredOpposite|
+		serializationMatchSteps[136] = createMatchStep_Assign(0, 103);
+		// 137: assign V0 = |StringLiteralExpCS::segments|
+		serializationMatchSteps[137] = createMatchStep_Assign(0, 110);
+		// 138: assign V0 = |StructuredClassCS::isAbstract.'abstract'|
+		serializationMatchSteps[138] = createMatchStep_Assign(0, 113);
+		// 139: assign V0 = |TemplateableElementCS::ownedSignature|
+		serializationMatchSteps[139] = createMatchStep_Assign(0, 124);
+		// 140: assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause|
+		serializationMatchSteps[140] = createMatchStep_Assign(0, 130);
+		// 141: assign V0 = |TypedElementCS::ownedType|
+		serializationMatchSteps[141] = createMatchStep_Assign(0, 134);
+		// 142: assign V0 = |TypedElementCS::qualifiers.'definition'|
+		serializationMatchSteps[142] = createMatchStep_Assign(0, 139);
+		// 143: assign V0 = |TypedElementCS::qualifiers.'static'|
 		serializationMatchSteps[143] = createMatchStep_Assign(0, 140);
-		// 144: assign V0 = |TypedElementCS::qualifiers.'static'|
-		serializationMatchSteps[144] = createMatchStep_Assign(0, 141);
-		// 145: assign V0 = |TypedRefCS::ownedMultiplicity|
-		serializationMatchSteps[145] = createMatchStep_Assign(0, 143);
-		// 146: assign V0 = |VariableCS::ownedType|
+		// 144: assign V0 = |TypedRefCS::ownedMultiplicity|
+		serializationMatchSteps[144] = createMatchStep_Assign(0, 142);
+		// 145: assign V0 = |VariableCS::ownedType|
+		serializationMatchSteps[145] = createMatchStep_Assign(0, 147);
+		// 146: assign V0 = |WildcardTypeRefCS::ownedExtends|
 		serializationMatchSteps[146] = createMatchStep_Assign(0, 148);
-		// 147: assign V0 = |WildcardTypeRefCS::ownedExtends|
-		serializationMatchSteps[147] = createMatchStep_Assign(0, 149);
-		// 148: assign V1 = (|AnnotationElementCS::ownedDetails| > 0)
-		serializationMatchSteps[148] = createMatchStep_Assign(1, 153);
-		// 149: assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1)
-		serializationMatchSteps[149] = createMatchStep_Assign(1, 155);
-		// 150: assign V1 = (|CollectionPatternCS::ownedParts| - 1)
-		serializationMatchSteps[150] = createMatchStep_Assign(1, 159);
-		// 151: assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1)
-		serializationMatchSteps[151] = createMatchStep_Assign(1, 166);
-		// 152: assign V1 = (|MapLiteralExpCS::ownedParts| - 1)
-		serializationMatchSteps[152] = createMatchStep_Assign(1, 179);
-		// 153: assign V1 = (|OperationCS::ownedParameters| > 0)
-		serializationMatchSteps[153] = createMatchStep_Assign(1, 205);
-		// 154: assign V1 = (|TupleTypeCS::ownedParts| > 0)
-		serializationMatchSteps[154] = createMatchStep_Assign(1, 227);
-		// 155: assign V1 = (|TypeParameterCS::ownedExtends| - 1)
-		serializationMatchSteps[155] = createMatchStep_Assign(1, 230);
-		// 156: assign V1 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
-		serializationMatchSteps[156] = createMatchStep_Assign(1, 236);
-		// 157: assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause|
-		serializationMatchSteps[157] = createMatchStep_Assign(1, 6);
-		// 158: assign V1 = |ClassCS::instanceClassName|
-		serializationMatchSteps[158] = createMatchStep_Assign(1, 12);
-		// 159: assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity|
-		serializationMatchSteps[159] = createMatchStep_Assign(1, 23);
-		// 160: assign V1 = |ConstraintCS::ownedMessageSpecification|
-		serializationMatchSteps[160] = createMatchStep_Assign(1, 25);
-		// 161: assign V1 = |EnumerationLiteralCS::value|
-		serializationMatchSteps[161] = createMatchStep_Assign(1, 42);
-		// 162: assign V1 = |ImportCS::isAll.'::*'|
-		serializationMatchSteps[162] = createMatchStep_Assign(1, 51);
-		// 163: assign V1 = |NamedElementCS::name|
-		serializationMatchSteps[163] = createMatchStep_Assign(1, 73);
-		// 164: assign V1 = |NavigatingArgCS::ownedCoIterator|
-		serializationMatchSteps[164] = createMatchStep_Assign(1, 74);
-		// 165: assign V1 = |NavigatingArgCS::ownedInitExpression|
-		serializationMatchSteps[165] = createMatchStep_Assign(1, 75);
-		// 166: assign V1 = |PackageCS::nsURI|
-		serializationMatchSteps[166] = createMatchStep_Assign(1, 93);
-		// 167: assign V1 = |ReferenceCS::referredOpposite|
-		serializationMatchSteps[167] = createMatchStep_Assign(1, 103);
-		// 168: assign V1 = |RootCS::ownedImports|
-		serializationMatchSteps[168] = createMatchStep_Assign(1, 104);
-		// 169: assign V1 = |StructuralFeatureCS::default|
-		serializationMatchSteps[169] = createMatchStep_Assign(1, 111);
-		// 170: assign V1 = |TemplateBindingCS::ownedMultiplicity|
-		serializationMatchSteps[170] = createMatchStep_Assign(1, 120);
-		// 171: assign V1 = |TemplateableElementCS::ownedSignature|
-		serializationMatchSteps[171] = createMatchStep_Assign(1, 124);
-		// 172: assign V1 = |TypeNameExpCS::ownedPatternGuard|
-		serializationMatchSteps[172] = createMatchStep_Assign(1, 132);
-		// 173: assign V1 = |TypedElementCS::ownedType|
-		serializationMatchSteps[173] = createMatchStep_Assign(1, 135);
-		// 174: assign V1 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
-		serializationMatchSteps[174] = createMatchStep_Assign(1, 139);
-		// 175: assign V1 = |TypedRefCS::ownedMultiplicity|
-		serializationMatchSteps[175] = createMatchStep_Assign(1, 143);
-		// 176: assign V1 = |VariableCS::ownedType|
-		serializationMatchSteps[176] = createMatchStep_Assign(1, 148);
-		// 177: assign V10 = (|ReferenceCS::referredKeys| - 1)
+		// 147: assign V1 = (|AnnotationElementCS::ownedDetails| > 0)
+		serializationMatchSteps[147] = createMatchStep_Assign(1, 152);
+		// 148: assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1)
+		serializationMatchSteps[148] = createMatchStep_Assign(1, 154);
+		// 149: assign V1 = (|CollectionPatternCS::ownedParts| - 1)
+		serializationMatchSteps[149] = createMatchStep_Assign(1, 158);
+		// 150: assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1)
+		serializationMatchSteps[150] = createMatchStep_Assign(1, 165);
+		// 151: assign V1 = (|MapLiteralExpCS::ownedParts| - 1)
+		serializationMatchSteps[151] = createMatchStep_Assign(1, 178);
+		// 152: assign V1 = (|OperationCS::ownedParameters| > 0)
+		serializationMatchSteps[152] = createMatchStep_Assign(1, 204);
+		// 153: assign V1 = (|TupleTypeCS::ownedParts| > 0)
+		serializationMatchSteps[153] = createMatchStep_Assign(1, 226);
+		// 154: assign V1 = (|TypeParameterCS::ownedExtends| - 1)
+		serializationMatchSteps[154] = createMatchStep_Assign(1, 229);
+		// 155: assign V1 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+		serializationMatchSteps[155] = createMatchStep_Assign(1, 235);
+		// 156: assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause|
+		serializationMatchSteps[156] = createMatchStep_Assign(1, 6);
+		// 157: assign V1 = |ClassCS::instanceClassName|
+		serializationMatchSteps[157] = createMatchStep_Assign(1, 12);
+		// 158: assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity|
+		serializationMatchSteps[158] = createMatchStep_Assign(1, 23);
+		// 159: assign V1 = |ConstraintCS::ownedMessageSpecification|
+		serializationMatchSteps[159] = createMatchStep_Assign(1, 25);
+		// 160: assign V1 = |EnumerationLiteralCS::value|
+		serializationMatchSteps[160] = createMatchStep_Assign(1, 42);
+		// 161: assign V1 = |ImportCS::isAll.'::*'|
+		serializationMatchSteps[161] = createMatchStep_Assign(1, 51);
+		// 162: assign V1 = |NamedElementCS::name|
+		serializationMatchSteps[162] = createMatchStep_Assign(1, 73);
+		// 163: assign V1 = |NavigatingArgCS::ownedCoIterator|
+		serializationMatchSteps[163] = createMatchStep_Assign(1, 74);
+		// 164: assign V1 = |NavigatingArgCS::ownedInitExpression|
+		serializationMatchSteps[164] = createMatchStep_Assign(1, 75);
+		// 165: assign V1 = |PackageCS::nsURI|
+		serializationMatchSteps[165] = createMatchStep_Assign(1, 93);
+		// 166: assign V1 = |ReferenceCS::referredOpposite|
+		serializationMatchSteps[166] = createMatchStep_Assign(1, 103);
+		// 167: assign V1 = |RootCS::ownedImports|
+		serializationMatchSteps[167] = createMatchStep_Assign(1, 104);
+		// 168: assign V1 = |StructuralFeatureCS::default|
+		serializationMatchSteps[168] = createMatchStep_Assign(1, 111);
+		// 169: assign V1 = |TemplateBindingCS::ownedMultiplicity|
+		serializationMatchSteps[169] = createMatchStep_Assign(1, 120);
+		// 170: assign V1 = |TemplateableElementCS::ownedSignature|
+		serializationMatchSteps[170] = createMatchStep_Assign(1, 124);
+		// 171: assign V1 = |TypeNameExpCS::ownedPatternGuard|
+		serializationMatchSteps[171] = createMatchStep_Assign(1, 132);
+		// 172: assign V1 = |TypedElementCS::ownedType|
+		serializationMatchSteps[172] = createMatchStep_Assign(1, 134);
+		// 173: assign V1 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
+		serializationMatchSteps[173] = createMatchStep_Assign(1, 138);
+		// 174: assign V1 = |TypedRefCS::ownedMultiplicity|
+		serializationMatchSteps[174] = createMatchStep_Assign(1, 142);
+		// 175: assign V1 = |VariableCS::ownedType|
+		serializationMatchSteps[175] = createMatchStep_Assign(1, 147);
+		// 176: assign V10 = (|ReferenceCS::referredKeys| - 1)
+		serializationMatchSteps[176] = createMatchStep_Assign(10, 210);
+		// 177: assign V10 = (|ReferenceCS::referredKeys| > 0)
 		serializationMatchSteps[177] = createMatchStep_Assign(10, 211);
-		// 178: assign V10 = (|ReferenceCS::referredKeys| > 0)
-		serializationMatchSteps[178] = createMatchStep_Assign(10, 212);
-		// 179: assign V10 = |ClassCS::ownedConstraints|
-		serializationMatchSteps[179] = createMatchStep_Assign(10, 13);
-		// 180: assign V10 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[180] = createMatchStep_Assign(10, 66);
-		// 181: assign V10 = |OperationCS::ownedBodyExpressions|
-		serializationMatchSteps[181] = createMatchStep_Assign(10, 86);
-		// 182: assign V11 = (|ReferenceCS::referredKeys| - 1)
-		serializationMatchSteps[182] = createMatchStep_Assign(11, 211);
-		// 183: assign V11 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[183] = createMatchStep_Assign(11, 66);
-		// 184: assign V11 = |OperationCS::ownedPreconditions|
-		serializationMatchSteps[184] = createMatchStep_Assign(11, 90);
-		// 185: assign V11 = |ReferenceCS::ownedImplicitOpposites|
-		serializationMatchSteps[185] = createMatchStep_Assign(11, 101);
-		// 186: assign V12 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[186] = createMatchStep_Assign(12, 66);
-		// 187: assign V12 = |OperationCS::ownedPostconditions|
-		serializationMatchSteps[187] = createMatchStep_Assign(12, 89);
-		// 188: assign V12 = |OperationCS::ownedPreconditions|
-		serializationMatchSteps[188] = createMatchStep_Assign(12, 90);
-		// 189: assign V12 = |ReferenceCS::ownedImplicitOpposites|
-		serializationMatchSteps[189] = createMatchStep_Assign(12, 101);
-		// 190: assign V13 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[190] = createMatchStep_Assign(13, 66);
-		// 191: assign V13 = |OperationCS::ownedPostconditions|
-		serializationMatchSteps[191] = createMatchStep_Assign(13, 89);
-		// 192: assign V2 = (|AnnotationElementCS::ownedDetails| - 1)
-		serializationMatchSteps[192] = createMatchStep_Assign(2, 152);
-		// 193: assign V2 = (|OperationCS::ownedParameters| - 1)
+		// 178: assign V10 = |ClassCS::ownedConstraints|
+		serializationMatchSteps[178] = createMatchStep_Assign(10, 13);
+		// 179: assign V10 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[179] = createMatchStep_Assign(10, 66);
+		// 180: assign V10 = |OperationCS::ownedBodyExpressions|
+		serializationMatchSteps[180] = createMatchStep_Assign(10, 86);
+		// 181: assign V11 = (|ReferenceCS::referredKeys| - 1)
+		serializationMatchSteps[181] = createMatchStep_Assign(11, 210);
+		// 182: assign V11 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[182] = createMatchStep_Assign(11, 66);
+		// 183: assign V11 = |OperationCS::ownedPreconditions|
+		serializationMatchSteps[183] = createMatchStep_Assign(11, 90);
+		// 184: assign V11 = |ReferenceCS::ownedImplicitOpposites|
+		serializationMatchSteps[184] = createMatchStep_Assign(11, 101);
+		// 185: assign V12 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[185] = createMatchStep_Assign(12, 66);
+		// 186: assign V12 = |OperationCS::ownedPostconditions|
+		serializationMatchSteps[186] = createMatchStep_Assign(12, 89);
+		// 187: assign V12 = |OperationCS::ownedPreconditions|
+		serializationMatchSteps[187] = createMatchStep_Assign(12, 90);
+		// 188: assign V12 = |ReferenceCS::ownedImplicitOpposites|
+		serializationMatchSteps[188] = createMatchStep_Assign(12, 101);
+		// 189: assign V13 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[189] = createMatchStep_Assign(13, 66);
+		// 190: assign V13 = |OperationCS::ownedPostconditions|
+		serializationMatchSteps[190] = createMatchStep_Assign(13, 89);
+		// 191: assign V2 = (|AnnotationElementCS::ownedDetails| - 1)
+		serializationMatchSteps[191] = createMatchStep_Assign(2, 151);
+		// 192: assign V2 = (|OperationCS::ownedParameters| - 1)
+		serializationMatchSteps[192] = createMatchStep_Assign(2, 203);
+		// 193: assign V2 = (|OperationCS::ownedParameters| > 0)
 		serializationMatchSteps[193] = createMatchStep_Assign(2, 204);
-		// 194: assign V2 = (|OperationCS::ownedParameters| > 0)
-		serializationMatchSteps[194] = createMatchStep_Assign(2, 205);
-		// 195: assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0)
-		serializationMatchSteps[195] = createMatchStep_Assign(2, 220);
-		// 196: assign V2 = (|TupleTypeCS::ownedParts| - 1)
-		serializationMatchSteps[196] = createMatchStep_Assign(2, 226);
-		// 197: assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
-		serializationMatchSteps[197] = createMatchStep_Assign(2, 234);
-		// 198: assign V2 = 0
-		serializationMatchSteps[198] = createMatchStep_Assign(2, 0);
-		// 199: assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause|
-		serializationMatchSteps[199] = createMatchStep_Assign(2, 4);
-		// 200: assign V2 = |ClassCS::instanceClassName|
-		serializationMatchSteps[200] = createMatchStep_Assign(2, 12);
-		// 201: assign V2 = |ConstraintCS::ownedMessageSpecification|
-		serializationMatchSteps[201] = createMatchStep_Assign(2, 25);
-		// 202: assign V2 = |ConstraintCS::ownedSpecification|
-		serializationMatchSteps[202] = createMatchStep_Assign(2, 26);
-		// 203: assign V2 = |EnumerationCS::isSerializable.'serializable'|
-		serializationMatchSteps[203] = createMatchStep_Assign(2, 38);
-		// 204: assign V2 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[204] = createMatchStep_Assign(2, 66);
-		// 205: assign V2 = |PackageOwnerCS::ownedPackages|
-		serializationMatchSteps[205] = createMatchStep_Assign(2, 95);
-		// 206: assign V2 = |StructuralFeatureCS::default|
-		serializationMatchSteps[206] = createMatchStep_Assign(2, 111);
-		// 207: assign V2 = |TypedElementCS::ownedType|
-		serializationMatchSteps[207] = createMatchStep_Assign(2, 135);
-		// 208: assign V2 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
-		serializationMatchSteps[208] = createMatchStep_Assign(2, 139);
-		// 209: assign V2 = |TypedRefCS::ownedMultiplicity|
-		serializationMatchSteps[209] = createMatchStep_Assign(2, 143);
-		// 210: assign V3 = (|ModelElementCS::ownedAnnotations| > 0)
-		serializationMatchSteps[210] = createMatchStep_Assign(3, 186);
-		// 211: assign V3 = (|OperationCS::ownedParameters| - 1)
-		serializationMatchSteps[211] = createMatchStep_Assign(3, 204);
-		// 212: assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1)
-		serializationMatchSteps[212] = createMatchStep_Assign(3, 219);
-		// 213: assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+		// 194: assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0)
+		serializationMatchSteps[194] = createMatchStep_Assign(2, 219);
+		// 195: assign V2 = (|TupleTypeCS::ownedParts| - 1)
+		serializationMatchSteps[195] = createMatchStep_Assign(2, 225);
+		// 196: assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+		serializationMatchSteps[196] = createMatchStep_Assign(2, 233);
+		// 197: assign V2 = 0
+		serializationMatchSteps[197] = createMatchStep_Assign(2, 0);
+		// 198: assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause|
+		serializationMatchSteps[198] = createMatchStep_Assign(2, 4);
+		// 199: assign V2 = |ClassCS::instanceClassName|
+		serializationMatchSteps[199] = createMatchStep_Assign(2, 12);
+		// 200: assign V2 = |ConstraintCS::ownedMessageSpecification|
+		serializationMatchSteps[200] = createMatchStep_Assign(2, 25);
+		// 201: assign V2 = |ConstraintCS::ownedSpecification|
+		serializationMatchSteps[201] = createMatchStep_Assign(2, 26);
+		// 202: assign V2 = |EnumerationCS::isSerializable.'serializable'|
+		serializationMatchSteps[202] = createMatchStep_Assign(2, 38);
+		// 203: assign V2 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[203] = createMatchStep_Assign(2, 66);
+		// 204: assign V2 = |PackageOwnerCS::ownedPackages|
+		serializationMatchSteps[204] = createMatchStep_Assign(2, 95);
+		// 205: assign V2 = |StructuralFeatureCS::default|
+		serializationMatchSteps[205] = createMatchStep_Assign(2, 111);
+		// 206: assign V2 = |TypedElementCS::ownedType|
+		serializationMatchSteps[206] = createMatchStep_Assign(2, 134);
+		// 207: assign V2 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
+		serializationMatchSteps[207] = createMatchStep_Assign(2, 138);
+		// 208: assign V2 = |TypedRefCS::ownedMultiplicity|
+		serializationMatchSteps[208] = createMatchStep_Assign(2, 142);
+		// 209: assign V3 = (|ModelElementCS::ownedAnnotations| > 0)
+		serializationMatchSteps[209] = createMatchStep_Assign(3, 185);
+		// 210: assign V3 = (|OperationCS::ownedParameters| - 1)
+		serializationMatchSteps[210] = createMatchStep_Assign(3, 203);
+		// 211: assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1)
+		serializationMatchSteps[211] = createMatchStep_Assign(3, 218);
+		// 212: assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+		serializationMatchSteps[212] = createMatchStep_Assign(3, 232);
+		// 213: assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
 		serializationMatchSteps[213] = createMatchStep_Assign(3, 233);
-		// 214: assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
-		serializationMatchSteps[214] = createMatchStep_Assign(3, 234);
-		// 215: assign V3 = 0
-		serializationMatchSteps[215] = createMatchStep_Assign(3, 0);
-		// 216: assign V3 = |AbstractNameExpCS::isPre.'@'|
-		serializationMatchSteps[216] = createMatchStep_Assign(3, 3);
-		// 217: assign V3 = |ConstraintCS::ownedSpecification|
-		serializationMatchSteps[217] = createMatchStep_Assign(3, 26);
-		// 218: assign V3 = |DataTypeCS::isSerializable.'serializable'|
-		serializationMatchSteps[218] = createMatchStep_Assign(3, 34);
-		// 219: assign V3 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[219] = createMatchStep_Assign(3, 66);
-		// 220: assign V3 = |PackageOwnerCS::ownedPackages|
-		serializationMatchSteps[220] = createMatchStep_Assign(3, 95);
-		// 221: assign V3 = |StructuralFeatureCS::default|
-		serializationMatchSteps[221] = createMatchStep_Assign(3, 111);
-		// 222: assign V3 = |TypedElementCS::ownedType|
-		serializationMatchSteps[222] = createMatchStep_Assign(3, 135);
-		// 223: assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-		serializationMatchSteps[223] = createMatchStep_Assign(3, 137);
-		// 224: assign V3 = |TypedRefCS::ownedMultiplicity|
-		serializationMatchSteps[224] = createMatchStep_Assign(3, 143);
-		// 225: assign V4 = (|OperationCS::ownedExceptions| > 0)
-		serializationMatchSteps[225] = createMatchStep_Assign(4, 203);
-		// 226: assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
-		serializationMatchSteps[226] = createMatchStep_Assign(4, 233);
-		// 227: assign V4 = |AnnotationCS::ownedContents|
-		serializationMatchSteps[227] = createMatchStep_Assign(4, 8);
-		// 228: assign V4 = |ClassCS::instanceClassName|
-		serializationMatchSteps[228] = createMatchStep_Assign(4, 12);
-		// 229: assign V4 = |EnumerationCS::ownedLiterals|
-		serializationMatchSteps[229] = createMatchStep_Assign(4, 40);
-		// 230: assign V4 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[230] = createMatchStep_Assign(4, 66);
-		// 231: assign V4 = |PackageCS::ownedClasses|
-		serializationMatchSteps[231] = createMatchStep_Assign(4, 94);
-		// 232: assign V4 = |StructuralFeatureCS::ownedDefaultExpressions|
-		serializationMatchSteps[232] = createMatchStep_Assign(4, 112);
-		// 233: assign V4 = |TypedElementCS::ownedType|
+		// 214: assign V3 = 0
+		serializationMatchSteps[214] = createMatchStep_Assign(3, 0);
+		// 215: assign V3 = |AbstractNameExpCS::isPre.'@'|
+		serializationMatchSteps[215] = createMatchStep_Assign(3, 3);
+		// 216: assign V3 = |ConstraintCS::ownedSpecification|
+		serializationMatchSteps[216] = createMatchStep_Assign(3, 26);
+		// 217: assign V3 = |DataTypeCS::isSerializable.'serializable'|
+		serializationMatchSteps[217] = createMatchStep_Assign(3, 34);
+		// 218: assign V3 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[218] = createMatchStep_Assign(3, 66);
+		// 219: assign V3 = |PackageOwnerCS::ownedPackages|
+		serializationMatchSteps[219] = createMatchStep_Assign(3, 95);
+		// 220: assign V3 = |StructuralFeatureCS::default|
+		serializationMatchSteps[220] = createMatchStep_Assign(3, 111);
+		// 221: assign V3 = |TypedElementCS::ownedType|
+		serializationMatchSteps[221] = createMatchStep_Assign(3, 134);
+		// 222: assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+		serializationMatchSteps[222] = createMatchStep_Assign(3, 136);
+		// 223: assign V3 = |TypedRefCS::ownedMultiplicity|
+		serializationMatchSteps[223] = createMatchStep_Assign(3, 142);
+		// 224: assign V4 = (|OperationCS::ownedExceptions| > 0)
+		serializationMatchSteps[224] = createMatchStep_Assign(4, 202);
+		// 225: assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+		serializationMatchSteps[225] = createMatchStep_Assign(4, 232);
+		// 226: assign V4 = |AnnotationCS::ownedContents|
+		serializationMatchSteps[226] = createMatchStep_Assign(4, 8);
+		// 227: assign V4 = |ClassCS::instanceClassName|
+		serializationMatchSteps[227] = createMatchStep_Assign(4, 12);
+		// 228: assign V4 = |EnumerationCS::ownedLiterals|
+		serializationMatchSteps[228] = createMatchStep_Assign(4, 40);
+		// 229: assign V4 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[229] = createMatchStep_Assign(4, 66);
+		// 230: assign V4 = |PackageCS::ownedClasses|
+		serializationMatchSteps[230] = createMatchStep_Assign(4, 94);
+		// 231: assign V4 = |StructuralFeatureCS::ownedDefaultExpressions|
+		serializationMatchSteps[231] = createMatchStep_Assign(4, 112);
+		// 232: assign V4 = |TypedElementCS::ownedType|
+		serializationMatchSteps[232] = createMatchStep_Assign(4, 134);
+		// 233: assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
 		serializationMatchSteps[233] = createMatchStep_Assign(4, 135);
-		// 234: assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+		// 234: assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
 		serializationMatchSteps[234] = createMatchStep_Assign(4, 136);
-		// 235: assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-		serializationMatchSteps[235] = createMatchStep_Assign(4, 137);
-		// 236: assign V5 = (|OperationCS::ownedExceptions| - 1)
+		// 235: assign V5 = (|OperationCS::ownedExceptions| - 1)
+		serializationMatchSteps[235] = createMatchStep_Assign(5, 201);
+		// 236: assign V5 = (|OperationCS::ownedExceptions| > 0)
 		serializationMatchSteps[236] = createMatchStep_Assign(5, 202);
-		// 237: assign V5 = (|OperationCS::ownedExceptions| > 0)
-		serializationMatchSteps[237] = createMatchStep_Assign(5, 203);
-		// 238: assign V5 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+		// 237: assign V5 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+		serializationMatchSteps[237] = createMatchStep_Assign(5, 216);
+		// 238: assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0)
 		serializationMatchSteps[238] = createMatchStep_Assign(5, 217);
-		// 239: assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0)
-		serializationMatchSteps[239] = createMatchStep_Assign(5, 218);
-		// 240: assign V5 = |AnnotationCS::ownedReferences|
-		serializationMatchSteps[240] = createMatchStep_Assign(5, 9);
-		// 241: assign V5 = |ClassCS::ownedConstraints|
-		serializationMatchSteps[241] = createMatchStep_Assign(5, 13);
-		// 242: assign V5 = |StructuralFeatureCS::ownedDefaultExpressions|
-		serializationMatchSteps[242] = createMatchStep_Assign(5, 112);
-		// 243: assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
-		serializationMatchSteps[243] = createMatchStep_Assign(5, 136);
-		// 244: assign V6 = (|OperationCS::ownedExceptions| - 1)
-		serializationMatchSteps[244] = createMatchStep_Assign(6, 202);
-		// 245: assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
-		serializationMatchSteps[245] = createMatchStep_Assign(6, 217);
-		// 246: assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
-		serializationMatchSteps[246] = createMatchStep_Assign(6, 235);
-		// 247: assign V6 = 0
-		serializationMatchSteps[247] = createMatchStep_Assign(6, 0);
-		// 248: assign V6 = |StructuralFeatureCS::ownedDefaultExpressions|
-		serializationMatchSteps[248] = createMatchStep_Assign(6, 112);
-		// 249: assign V6 = |StructuredClassCS::isInterface.'interface'|
-		serializationMatchSteps[249] = createMatchStep_Assign(6, 114);
-		// 250: assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
-		serializationMatchSteps[250] = createMatchStep_Assign(7, 217);
-		// 251: assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
-		serializationMatchSteps[251] = createMatchStep_Assign(7, 235);
-		// 252: assign V7 = 0
-		serializationMatchSteps[252] = createMatchStep_Assign(7, 0);
-		// 253: assign V7 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[253] = createMatchStep_Assign(7, 66);
-		// 254: assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-		serializationMatchSteps[254] = createMatchStep_Assign(7, 138);
-		// 255: assign V8 = (|OperationCS::ownedBodyExpressions| > 0)
-		serializationMatchSteps[255] = createMatchStep_Assign(8, 201);
-		// 256: assign V8 = 0
-		serializationMatchSteps[256] = createMatchStep_Assign(8, 0);
-		// 257: assign V8 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[257] = createMatchStep_Assign(8, 66);
-		// 258: assign V8 = |StructuredClassCS::ownedOperations|
-		serializationMatchSteps[258] = createMatchStep_Assign(8, 116);
-		// 259: assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-		serializationMatchSteps[259] = createMatchStep_Assign(8, 138);
-		// 260: assign V9 = (|OperationCS::ownedBodyExpressions| > 0)
-		serializationMatchSteps[260] = createMatchStep_Assign(9, 201);
-		// 261: assign V9 = (|ReferenceCS::referredKeys| > 0)
-		serializationMatchSteps[261] = createMatchStep_Assign(9, 212);
-		// 262: assign V9 = 0
-		serializationMatchSteps[262] = createMatchStep_Assign(9, 0);
-		// 263: assign V9 = |ModelElementCS::ownedAnnotations|
-		serializationMatchSteps[263] = createMatchStep_Assign(9, 66);
-		// 264: assign V9 = |OperationCS::ownedBodyExpressions|
-		serializationMatchSteps[264] = createMatchStep_Assign(9, 86);
-		// 265: assign V9 = |StructuredClassCS::ownedProperties|
-		serializationMatchSteps[265] = createMatchStep_Assign(9, 117);
-		// 266: check-rule basecs::AnnotationCS.ownedContents : 3|6|15|21|22|53|70|71|83|96|97
-		serializationMatchSteps[266] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS, 45/*AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS*/);
-		// 267: check-rule basecs::AnnotationCS.ownedReferences : 54
-		serializationMatchSteps[267] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES, 18/*ModelElementRefCS*/);
-		// 268: check-rule basecs::AnnotationElementCS.ownedDetails : 16
-		serializationMatchSteps[268] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, 6/*DetailCS*/);
-		// 269: check-rule basecs::ClassCS.ownedConstraints : 41
-		serializationMatchSteps[269] = createMatchStep_RuleCheck(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, 13/*InvariantConstraintCS*/);
-		// 270: check-rule basecs::ConstraintCS.ownedMessageSpecification : 92
-		serializationMatchSteps[270] = createMatchStep_RuleCheck(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, 39/*SpecificationCS*/);
-		// 271: check-rule basecs::ConstraintCS.ownedSpecification : 92
-		serializationMatchSteps[271] = createMatchStep_RuleCheck(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, 39/*SpecificationCS*/);
-		// 272: check-rule basecs::EnumerationCS.ownedLiterals : 22
-		serializationMatchSteps[272] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, 8/*EnumerationLiteralCS*/);
-		// 273: check-rule basecs::ImportCS.ownedPathName : 123
-		serializationMatchSteps[273] = createMatchStep_RuleCheck(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, 64/*URIPathNameCS*/);
-		// 274: check-rule basecs::ModelElementCS.ownedAnnotations : 1|2|17|98
-		serializationMatchSteps[274] = createMatchStep_RuleCheck(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, 46/*AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS*/);
-		// 275: check-rule basecs::ModelElementRefCS.ownedPathName : 73
-		serializationMatchSteps[275] = createMatchStep_RuleCheck(BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
-		// 276: check-rule basecs::OperationCS.ownedBodyExpressions : 92
-		serializationMatchSteps[276] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, 39/*SpecificationCS*/);
-		// 277: check-rule basecs::OperationCS.ownedExceptions : 11|51|81|106|110|117|118
-		serializationMatchSteps[277] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
-		// 278: check-rule basecs::OperationCS.ownedParameters : 72
-		serializationMatchSteps[278] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, 27/*ParameterCS*/);
-		// 279: check-rule basecs::OperationCS.ownedPostconditions : 75
-		serializationMatchSteps[279] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, 31/*PostconditionConstraintCS*/);
-		// 280: check-rule basecs::OperationCS.ownedPreconditions : 76
-		serializationMatchSteps[280] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, 32/*PreconditionConstraintCS*/);
-		// 281: check-rule basecs::PackageCS.ownedClasses : 6|15|21|97
-		serializationMatchSteps[281] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES, 44/*ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS*/);
-		// 282: check-rule basecs::PackageOwnerCS.ownedPackages : 71
-		serializationMatchSteps[282] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES, 26/*PackageCS*/);
-		// 283: check-rule basecs::PathNameCS.ownedPathElements : 31
-		serializationMatchSteps[283] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 10/*FirstPathElementCS*/);
-		// 284: check-rule basecs::PathNameCS.ownedPathElements : 67
-		serializationMatchSteps[284] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 23/*NextPathElementCS*/);
-		// 285: check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37
-		serializationMatchSteps[285] = createMatchStep_RuleCheck(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, 11/*ImplicitOppositeCS*/);
-		// 286: check-rule basecs::RootCS.ownedImports : 38
-		serializationMatchSteps[286] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, 12/*ImportCS*/);
-		// 287: check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92
-		serializationMatchSteps[287] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, 39/*SpecificationCS*/);
-		// 288: check-rule basecs::StructuredClassCS.ownedOperations : 70
-		serializationMatchSteps[288] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS, 25/*OperationCS*/);
-		// 289: check-rule basecs::StructuredClassCS.ownedProperties : 3|83|96
-		serializationMatchSteps[289] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES, 43/*AttributeCS|ReferenceCS|StructuralFeatureCS*/);
-		// 290: check-rule basecs::StructuredClassCS.ownedSuperTypes : 11|51|81|106|110|117|118
-		serializationMatchSteps[290] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
-		// 291: check-rule basecs::TemplateBindingCS.ownedMultiplicity : 56
-		serializationMatchSteps[291] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 19/*MultiplicityCS*/);
-		// 292: check-rule basecs::TemplateBindingCS.ownedSubstitutions : 100
-		serializationMatchSteps[292] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 48/*TemplateParameterSubstitutionCS*/);
-		// 293: check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 11|51|81|106|110|115|117|118|130
-		serializationMatchSteps[293] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 73/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS*/);
-		// 294: check-rule basecs::TemplateSignatureCS.ownedParameters : 114
-		serializationMatchSteps[294] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 57/*TypeParameterCS*/);
-		// 295: check-rule basecs::TemplateableElementCS.ownedSignature : 101
-		serializationMatchSteps[295] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 49/*TemplateSignatureCS*/);
-		// 296: check-rule basecs::TupleTypeCS.ownedParts : 105
-		serializationMatchSteps[296] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, 51/*TuplePartCS*/);
-		// 297: check-rule basecs::TypeParameterCS.ownedExtends : 11|51|81|106|110|117|118
-		serializationMatchSteps[297] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
-		// 298: check-rule basecs::TypedElementCS.ownedType : 107
-		serializationMatchSteps[298] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 52/*TypeExpCS*/);
-		// 299: check-rule basecs::TypedElementCS.ownedType : 116
-		serializationMatchSteps[299] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 59/*TypedMultiplicityRefCS*/);
-		// 300: check-rule basecs::TypedRefCS.ownedMultiplicity : 56
-		serializationMatchSteps[300] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 19/*MultiplicityCS*/);
-		// 301: check-rule basecs::TypedTypeRefCS.ownedBinding : 99
-		serializationMatchSteps[301] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 47/*TemplateBindingCS*/);
-		// 302: check-rule basecs::TypedTypeRefCS.ownedPathName : 73
-		serializationMatchSteps[302] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
-		// 303: check-rule basecs::WildcardTypeRefCS.ownedExtends : 11|51|81|106|110|117|118
-		serializationMatchSteps[303] = createMatchStep_RuleCheck(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
-		// 304: check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13
-		serializationMatchSteps[304] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 5/*CurlyBracketedClauseCS*/);
-		// 305: check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : 73
-		serializationMatchSteps[305] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
-		// 306: check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 84
-		serializationMatchSteps[306] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, 36/*RoundBracketedClauseCS*/);
-		// 307: check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93
-		serializationMatchSteps[307] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, 40/*SquareBracketedClauseCS*/);
-		// 308: check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 9
-		serializationMatchSteps[308] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, 3/*CollectionLiteralPartCS*/);
-		// 309: check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 11
-		serializationMatchSteps[309] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, 4/*CollectionTypeCS*/);
-		// 310: check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[310] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 311: check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 74
-		serializationMatchSteps[311] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 29/*PatternExpCS*/);
-		// 312: check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[312] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 313: check-rule essentialoclcs::CollectionPatternCS.ownedParts : 74
-		serializationMatchSteps[313] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, 29/*PatternExpCS*/);
-		// 314: check-rule essentialoclcs::CollectionPatternCS.ownedType : 11
-		serializationMatchSteps[314] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, 4/*CollectionTypeCS*/);
-		// 315: check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56
-		serializationMatchSteps[315] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, 19/*MultiplicityCS*/);
-		// 316: check-rule essentialoclcs::CollectionTypeCS.ownedType : 10|11|51|81|106|108|110|113
-		serializationMatchSteps[316] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, 56/*CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS*/);
-		// 317: check-rule essentialoclcs::ContextCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[317] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 318: check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : 90
-		serializationMatchSteps[318] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, 38/*ShadowPartCS*/);
-		// 319: check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[319] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 320: check-rule essentialoclcs::IfExpCS.ownedCondition : 5|8|30|36|40|44|45|49|59|66|68|69|74|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[320] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, 71/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 321: check-rule essentialoclcs::IfExpCS.ownedElseExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[321] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 322: check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20
-		serializationMatchSteps[322] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, 7/*ElseIfThenExpCS*/);
-		// 323: check-rule essentialoclcs::IfExpCS.ownedThenExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[323] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 324: check-rule essentialoclcs::IfThenExpCS.ownedCondition : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[324] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 325: check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[325] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 326: check-rule essentialoclcs::InfixExpCS.ownedLeft : 5|8|36|40|44|49|59|66|68|69|78|79|80|89|95|103|111|125
-		serializationMatchSteps[326] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, 67/*BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 327: check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[327] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 328: check-rule essentialoclcs::LetExpCS.ownedInExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[328] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 329: check-rule essentialoclcs::LetExpCS.ownedVariables : 46
-		serializationMatchSteps[329] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, 14/*LetVariableCS*/);
-		// 330: check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : 84
-		serializationMatchSteps[330] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, 36/*RoundBracketedClauseCS*/);
-		// 331: check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50
-		serializationMatchSteps[331] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, 15/*MapLiteralPartCS*/);
-		// 332: check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51
-		serializationMatchSteps[332] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, 16/*MapTypeCS*/);
-		// 333: check-rule essentialoclcs::MapLiteralPartCS.ownedKey : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[333] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 334: check-rule essentialoclcs::MapLiteralPartCS.ownedValue : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[334] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 335: check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107
-		serializationMatchSteps[335] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, 52/*TypeExpCS*/);
-		// 336: check-rule essentialoclcs::MapTypeCS.ownedValueType : 107
-		serializationMatchSteps[336] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, 52/*TypeExpCS*/);
-		// 337: check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7
-		serializationMatchSteps[337] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 2/*CoIteratorVariableCS*/);
-		// 338: check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[338] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 339: check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 5|8|30|36|40|44|45|49|59|61|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[339] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 70/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 340: check-rule essentialoclcs::NavigatingArgCS.ownedType : 107
-		serializationMatchSteps[340] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, 52/*TypeExpCS*/);
-		// 341: check-rule essentialoclcs::NestedExpCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[341] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 342: check-rule essentialoclcs::OperatorExpCS.ownedRight : 45|77
-		serializationMatchSteps[342] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 34/*LetExpCS|PrefixedLetExpCS*/);
-		// 343: check-rule essentialoclcs::OperatorExpCS.ownedRight : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[343] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 344: check-rule essentialoclcs::OperatorExpCS.ownedRight : 5|8|36|40|44|49|59|66|68|69|78|79|80|89|95|103|111|125
-		serializationMatchSteps[344] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 67/*BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 345: check-rule essentialoclcs::PatternExpCS.ownedPatternType : 107
-		serializationMatchSteps[345] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, 52/*TypeExpCS*/);
-		// 346: check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 5|8|30|36|40|44|45|49|59|66|68|69|74|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[346] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 71/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 347: check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 95
-		serializationMatchSteps[347] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 41/*StringLiteralExpCS*/);
-		// 348: check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[348] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 349: check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 104
-		serializationMatchSteps[349] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 50/*TupleLiteralPartCS*/);
-		// 350: check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112
-		serializationMatchSteps[350] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 55/*TypeLiteralWithMultiplicityCS*/);
-		// 351: check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13
-		serializationMatchSteps[351] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 5/*CurlyBracketedClauseCS*/);
-		// 352: check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 73
-		serializationMatchSteps[352] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
-		// 353: check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[353] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 354: check-rule essentialoclcs::VariableCS.ownedInitExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
-		serializationMatchSteps[354] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
-		// 355: check-rule essentialoclcs::VariableCS.ownedType : 107
-		serializationMatchSteps[355] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, 52/*TypeExpCS*/);
+		// 239: assign V5 = |AnnotationCS::ownedReferences|
+		serializationMatchSteps[239] = createMatchStep_Assign(5, 9);
+		// 240: assign V5 = |ClassCS::ownedConstraints|
+		serializationMatchSteps[240] = createMatchStep_Assign(5, 13);
+		// 241: assign V5 = |StructuralFeatureCS::ownedDefaultExpressions|
+		serializationMatchSteps[241] = createMatchStep_Assign(5, 112);
+		// 242: assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+		serializationMatchSteps[242] = createMatchStep_Assign(5, 135);
+		// 243: assign V6 = (|OperationCS::ownedExceptions| - 1)
+		serializationMatchSteps[243] = createMatchStep_Assign(6, 201);
+		// 244: assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+		serializationMatchSteps[244] = createMatchStep_Assign(6, 216);
+		// 245: assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+		serializationMatchSteps[245] = createMatchStep_Assign(6, 234);
+		// 246: assign V6 = 0
+		serializationMatchSteps[246] = createMatchStep_Assign(6, 0);
+		// 247: assign V6 = |StructuralFeatureCS::ownedDefaultExpressions|
+		serializationMatchSteps[247] = createMatchStep_Assign(6, 112);
+		// 248: assign V6 = |StructuredClassCS::isInterface.'interface'|
+		serializationMatchSteps[248] = createMatchStep_Assign(6, 114);
+		// 249: assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+		serializationMatchSteps[249] = createMatchStep_Assign(7, 216);
+		// 250: assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+		serializationMatchSteps[250] = createMatchStep_Assign(7, 234);
+		// 251: assign V7 = 0
+		serializationMatchSteps[251] = createMatchStep_Assign(7, 0);
+		// 252: assign V7 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[252] = createMatchStep_Assign(7, 66);
+		// 253: assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+		serializationMatchSteps[253] = createMatchStep_Assign(7, 137);
+		// 254: assign V8 = (|OperationCS::ownedBodyExpressions| > 0)
+		serializationMatchSteps[254] = createMatchStep_Assign(8, 200);
+		// 255: assign V8 = 0
+		serializationMatchSteps[255] = createMatchStep_Assign(8, 0);
+		// 256: assign V8 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[256] = createMatchStep_Assign(8, 66);
+		// 257: assign V8 = |StructuredClassCS::ownedOperations|
+		serializationMatchSteps[257] = createMatchStep_Assign(8, 116);
+		// 258: assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+		serializationMatchSteps[258] = createMatchStep_Assign(8, 137);
+		// 259: assign V9 = (|OperationCS::ownedBodyExpressions| > 0)
+		serializationMatchSteps[259] = createMatchStep_Assign(9, 200);
+		// 260: assign V9 = (|ReferenceCS::referredKeys| > 0)
+		serializationMatchSteps[260] = createMatchStep_Assign(9, 211);
+		// 261: assign V9 = 0
+		serializationMatchSteps[261] = createMatchStep_Assign(9, 0);
+		// 262: assign V9 = |ModelElementCS::ownedAnnotations|
+		serializationMatchSteps[262] = createMatchStep_Assign(9, 66);
+		// 263: assign V9 = |OperationCS::ownedBodyExpressions|
+		serializationMatchSteps[263] = createMatchStep_Assign(9, 86);
+		// 264: assign V9 = |StructuredClassCS::ownedProperties|
+		serializationMatchSteps[264] = createMatchStep_Assign(9, 117);
+		// 265: check-rule basecs::AnnotationCS.ownedContents : 3|6|15|21|22|53|70|71|83|96|97
+		serializationMatchSteps[265] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS, 45/*AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS*/);
+		// 266: check-rule basecs::AnnotationCS.ownedReferences : 54
+		serializationMatchSteps[266] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES, 18/*ModelElementRefCS*/);
+		// 267: check-rule basecs::AnnotationElementCS.ownedDetails : 16
+		serializationMatchSteps[267] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, 6/*DetailCS*/);
+		// 268: check-rule basecs::ClassCS.ownedConstraints : 41
+		serializationMatchSteps[268] = createMatchStep_RuleCheck(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, 13/*InvariantConstraintCS*/);
+		// 269: check-rule basecs::ConstraintCS.ownedMessageSpecification : 92
+		serializationMatchSteps[269] = createMatchStep_RuleCheck(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, 39/*SpecificationCS*/);
+		// 270: check-rule basecs::ConstraintCS.ownedSpecification : 92
+		serializationMatchSteps[270] = createMatchStep_RuleCheck(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, 39/*SpecificationCS*/);
+		// 271: check-rule basecs::EnumerationCS.ownedLiterals : 22
+		serializationMatchSteps[271] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, 8/*EnumerationLiteralCS*/);
+		// 272: check-rule basecs::ImportCS.ownedPathName : 123
+		serializationMatchSteps[272] = createMatchStep_RuleCheck(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, 64/*URIPathNameCS*/);
+		// 273: check-rule basecs::ModelElementCS.ownedAnnotations : 1|2|17|98
+		serializationMatchSteps[273] = createMatchStep_RuleCheck(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, 46/*AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS*/);
+		// 274: check-rule basecs::ModelElementRefCS.ownedPathName : 73
+		serializationMatchSteps[274] = createMatchStep_RuleCheck(BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
+		// 275: check-rule basecs::OperationCS.ownedBodyExpressions : 92
+		serializationMatchSteps[275] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, 39/*SpecificationCS*/);
+		// 276: check-rule basecs::OperationCS.ownedExceptions : 11|51|81|106|110|117|118
+		serializationMatchSteps[276] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
+		// 277: check-rule basecs::OperationCS.ownedParameters : 72
+		serializationMatchSteps[277] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, 27/*ParameterCS*/);
+		// 278: check-rule basecs::OperationCS.ownedPostconditions : 75
+		serializationMatchSteps[278] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, 31/*PostconditionConstraintCS*/);
+		// 279: check-rule basecs::OperationCS.ownedPreconditions : 76
+		serializationMatchSteps[279] = createMatchStep_RuleCheck(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, 32/*PreconditionConstraintCS*/);
+		// 280: check-rule basecs::PackageCS.ownedClasses : 6|15|21|97
+		serializationMatchSteps[280] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES, 44/*ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS*/);
+		// 281: check-rule basecs::PackageOwnerCS.ownedPackages : 71
+		serializationMatchSteps[281] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES, 26/*PackageCS*/);
+		// 282: check-rule basecs::PathNameCS.ownedPathElements : 31
+		serializationMatchSteps[282] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 10/*FirstPathElementCS*/);
+		// 283: check-rule basecs::PathNameCS.ownedPathElements : 67
+		serializationMatchSteps[283] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 23/*NextPathElementCS*/);
+		// 284: check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37
+		serializationMatchSteps[284] = createMatchStep_RuleCheck(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, 11/*ImplicitOppositeCS*/);
+		// 285: check-rule basecs::RootCS.ownedImports : 38
+		serializationMatchSteps[285] = createMatchStep_RuleCheck(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, 12/*ImportCS*/);
+		// 286: check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92
+		serializationMatchSteps[286] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, 39/*SpecificationCS*/);
+		// 287: check-rule basecs::StructuredClassCS.ownedOperations : 70
+		serializationMatchSteps[287] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS, 25/*OperationCS*/);
+		// 288: check-rule basecs::StructuredClassCS.ownedProperties : 3|83|96
+		serializationMatchSteps[288] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES, 43/*AttributeCS|ReferenceCS|StructuralFeatureCS*/);
+		// 289: check-rule basecs::StructuredClassCS.ownedSuperTypes : 11|51|81|106|110|117|118
+		serializationMatchSteps[289] = createMatchStep_RuleCheck(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
+		// 290: check-rule basecs::TemplateBindingCS.ownedMultiplicity : 56
+		serializationMatchSteps[290] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 19/*MultiplicityCS*/);
+		// 291: check-rule basecs::TemplateBindingCS.ownedSubstitutions : 100
+		serializationMatchSteps[291] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 48/*TemplateParameterSubstitutionCS*/);
+		// 292: check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 11|51|81|106|110|115|117|118|130
+		serializationMatchSteps[292] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 73/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS*/);
+		// 293: check-rule basecs::TemplateSignatureCS.ownedParameters : 114
+		serializationMatchSteps[293] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 57/*TypeParameterCS*/);
+		// 294: check-rule basecs::TemplateableElementCS.ownedSignature : 101
+		serializationMatchSteps[294] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 49/*TemplateSignatureCS*/);
+		// 295: check-rule basecs::TupleTypeCS.ownedParts : 105
+		serializationMatchSteps[295] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, 51/*TuplePartCS*/);
+		// 296: check-rule basecs::TypeParameterCS.ownedExtends : 11|51|81|106|110|117|118
+		serializationMatchSteps[296] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
+		// 297: check-rule basecs::TypedElementCS.ownedType : 107
+		serializationMatchSteps[297] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 52/*TypeExpCS*/);
+		// 298: check-rule basecs::TypedElementCS.ownedType : 116
+		serializationMatchSteps[298] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 59/*TypedMultiplicityRefCS*/);
+		// 299: check-rule basecs::TypedRefCS.ownedMultiplicity : 56
+		serializationMatchSteps[299] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 19/*MultiplicityCS*/);
+		// 300: check-rule basecs::TypedTypeRefCS.ownedBinding : 99
+		serializationMatchSteps[300] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 47/*TemplateBindingCS*/);
+		// 301: check-rule basecs::TypedTypeRefCS.ownedPathName : 73
+		serializationMatchSteps[301] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
+		// 302: check-rule basecs::WildcardTypeRefCS.ownedExtends : 11|51|81|106|110|117|118
+		serializationMatchSteps[302] = createMatchStep_RuleCheck(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 61/*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/);
+		// 303: check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13
+		serializationMatchSteps[303] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 5/*CurlyBracketedClauseCS*/);
+		// 304: check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : 73
+		serializationMatchSteps[304] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
+		// 305: check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 84
+		serializationMatchSteps[305] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, 36/*RoundBracketedClauseCS*/);
+		// 306: check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93
+		serializationMatchSteps[306] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, 40/*SquareBracketedClauseCS*/);
+		// 307: check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 9
+		serializationMatchSteps[307] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, 3/*CollectionLiteralPartCS*/);
+		// 308: check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 11
+		serializationMatchSteps[308] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, 4/*CollectionTypeCS*/);
+		// 309: check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[309] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 310: check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 74
+		serializationMatchSteps[310] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 29/*PatternExpCS*/);
+		// 311: check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[311] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 312: check-rule essentialoclcs::CollectionPatternCS.ownedParts : 74
+		serializationMatchSteps[312] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, 29/*PatternExpCS*/);
+		// 313: check-rule essentialoclcs::CollectionPatternCS.ownedType : 11
+		serializationMatchSteps[313] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, 4/*CollectionTypeCS*/);
+		// 314: check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56
+		serializationMatchSteps[314] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, 19/*MultiplicityCS*/);
+		// 315: check-rule essentialoclcs::CollectionTypeCS.ownedType : 10|11|51|81|106|108|110|113
+		serializationMatchSteps[315] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, 56/*CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS*/);
+		// 316: check-rule essentialoclcs::ContextCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[316] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 317: check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : 90
+		serializationMatchSteps[317] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, 38/*ShadowPartCS*/);
+		// 318: check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[318] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 319: check-rule essentialoclcs::IfExpCS.ownedCondition : 5|8|30|36|40|44|45|49|59|66|68|69|74|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[319] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, 71/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 320: check-rule essentialoclcs::IfExpCS.ownedElseExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[320] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 321: check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20
+		serializationMatchSteps[321] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, 7/*ElseIfThenExpCS*/);
+		// 322: check-rule essentialoclcs::IfExpCS.ownedThenExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[322] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 323: check-rule essentialoclcs::IfThenExpCS.ownedCondition : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[323] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 324: check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[324] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 325: check-rule essentialoclcs::InfixExpCS.ownedLeft : 5|8|36|40|44|49|59|66|68|69|78|79|80|89|95|103|111|125
+		serializationMatchSteps[325] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, 67/*BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 326: check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[326] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 327: check-rule essentialoclcs::LetExpCS.ownedInExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[327] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 328: check-rule essentialoclcs::LetExpCS.ownedVariables : 46
+		serializationMatchSteps[328] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, 14/*LetVariableCS*/);
+		// 329: check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : 84
+		serializationMatchSteps[329] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, 36/*RoundBracketedClauseCS*/);
+		// 330: check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50
+		serializationMatchSteps[330] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, 15/*MapLiteralPartCS*/);
+		// 331: check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51
+		serializationMatchSteps[331] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, 16/*MapTypeCS*/);
+		// 332: check-rule essentialoclcs::MapLiteralPartCS.ownedKey : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[332] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 333: check-rule essentialoclcs::MapLiteralPartCS.ownedValue : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[333] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 334: check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107
+		serializationMatchSteps[334] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, 52/*TypeExpCS*/);
+		// 335: check-rule essentialoclcs::MapTypeCS.ownedValueType : 107
+		serializationMatchSteps[335] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, 52/*TypeExpCS*/);
+		// 336: check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7
+		serializationMatchSteps[336] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 2/*CoIteratorVariableCS*/);
+		// 337: check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[337] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 338: check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 5|8|30|36|40|44|45|49|59|61|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[338] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 70/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 339: check-rule essentialoclcs::NavigatingArgCS.ownedType : 107
+		serializationMatchSteps[339] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, 52/*TypeExpCS*/);
+		// 340: check-rule essentialoclcs::NestedExpCS.ownedExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[340] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 341: check-rule essentialoclcs::OperatorExpCS.ownedRight : 45|77
+		serializationMatchSteps[341] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 34/*LetExpCS|PrefixedLetExpCS*/);
+		// 342: check-rule essentialoclcs::OperatorExpCS.ownedRight : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[342] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 343: check-rule essentialoclcs::OperatorExpCS.ownedRight : 5|8|36|40|44|49|59|66|68|69|78|79|80|89|95|103|111|125
+		serializationMatchSteps[343] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 67/*BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 344: check-rule essentialoclcs::PatternExpCS.ownedPatternType : 107
+		serializationMatchSteps[344] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, 52/*TypeExpCS*/);
+		// 345: check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 5|8|30|36|40|44|45|49|59|66|68|69|74|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[345] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 71/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 346: check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 95
+		serializationMatchSteps[346] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 41/*StringLiteralExpCS*/);
+		// 347: check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[347] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 348: check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 104
+		serializationMatchSteps[348] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 50/*TupleLiteralPartCS*/);
+		// 349: check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112
+		serializationMatchSteps[349] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 55/*TypeLiteralWithMultiplicityCS*/);
+		// 350: check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13
+		serializationMatchSteps[350] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 5/*CurlyBracketedClauseCS*/);
+		// 351: check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 73
+		serializationMatchSteps[351] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, 28/*PathNameCS*/);
+		// 352: check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[352] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 353: check-rule essentialoclcs::VariableCS.ownedInitExpression : 5|8|30|36|40|44|45|49|59|66|68|69|77|78|79|80|89|95|103|111|125
+		serializationMatchSteps[353] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, 69/*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/);
+		// 354: check-rule essentialoclcs::VariableCS.ownedType : 107
+		serializationMatchSteps[354] = createMatchStep_RuleCheck(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, 52/*TypeExpCS*/);
 	}
 
 	/**
@@ -3814,222 +3812,220 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationMatchTerms[132] = createSerializationMatchTermEStructuralFeatureSize(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
 		// 133: |TypeParameterCS::ownedExtends|
 		serializationMatchTerms[133] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
-		// 134: |TypedElementCS::isOptional|
-		serializationMatchTerms[134] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__IS_OPTIONAL);
-		// 135: |TypedElementCS::ownedType|
-		serializationMatchTerms[135] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
-		// 136: |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
-		serializationMatchTerms[136] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 0 /* '!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile' */);
-		// 137: |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-		serializationMatchTerms[137] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 1 /* '!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile' */);
-		// 138: |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-		serializationMatchTerms[138] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 2 /* '!derived|!ordered|!transient|!unique|derived|ordered|transient|unique' */);
-		// 139: |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
-		serializationMatchTerms[139] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 3 /* '!ordered|!unique|ordered|unique' */);
-		// 140: |TypedElementCS::qualifiers.'definition'|
-		serializationMatchTerms[140] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 13 /* 'definition' */);
-		// 141: |TypedElementCS::qualifiers.'static'|
-		serializationMatchTerms[141] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 21 /* 'static' */);
-		// 142: |TypedElementCS::qualifiers|
-		serializationMatchTerms[142] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS);
-		// 143: |TypedRefCS::ownedMultiplicity|
-		serializationMatchTerms[143] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
-		// 144: |TypedTypeRefCS::isTypeof|
-		serializationMatchTerms[144] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__IS_TYPEOF);
-		// 145: |TypedTypeRefCS::ownedBinding|
-		serializationMatchTerms[145] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
-		// 146: |TypedTypeRefCS::ownedPathName|
-		serializationMatchTerms[146] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
-		// 147: |VariableCS::ownedInitExpression|
-		serializationMatchTerms[147] = createSerializationMatchTermEStructuralFeatureSize(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION);
-		// 148: |VariableCS::ownedType|
-		serializationMatchTerms[148] = createSerializationMatchTermEStructuralFeatureSize(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
-		// 149: |WildcardTypeRefCS::ownedExtends|
-		serializationMatchTerms[149] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
-		// 150: |WildcardTypeRefCS::ownedSuper|
-		serializationMatchTerms[150] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_SUPER);
-		// 151: (|AbstractNameExpCS::ownedPathName| - 1)
-		serializationMatchTerms[151] = createSerializationMatchTermSubtract(5, 1);
-		// 152: (|AnnotationElementCS::ownedDetails| - 1)
-		serializationMatchTerms[152] = createSerializationMatchTermSubtract(10, 1);
-		// 153: (|AnnotationElementCS::ownedDetails| > 0)
-		serializationMatchTerms[153] = createSerializationMatchTermGreaterThan(10, 0);
-		// 154: (|BooleanLiteralExpCS::symbol.'false|true'| - 1)
-		serializationMatchTerms[154] = createSerializationMatchTermSubtract(11, 1);
-		// 155: (|CollectionLiteralExpCS::ownedParts| - 1)
-		serializationMatchTerms[155] = createSerializationMatchTermSubtract(14, 1);
-		// 156: (|CollectionLiteralExpCS::ownedParts| > 0)
-		serializationMatchTerms[156] = createSerializationMatchTermGreaterThan(14, 0);
-		// 157: (|CollectionLiteralExpCS::ownedType| - 1)
-		serializationMatchTerms[157] = createSerializationMatchTermSubtract(15, 1);
-		// 158: (|CollectionLiteralPartCS::ownedExpression| - 1)
-		serializationMatchTerms[158] = createSerializationMatchTermSubtract(16, 1);
-		// 159: (|CollectionPatternCS::ownedParts| - 1)
-		serializationMatchTerms[159] = createSerializationMatchTermSubtract(18, 1);
-		// 160: (|CollectionPatternCS::ownedType| - 1)
-		serializationMatchTerms[160] = createSerializationMatchTermSubtract(20, 1);
-		// 161: (|CollectionTypeCS::name| - 1)
-		serializationMatchTerms[161] = createSerializationMatchTermSubtract(22, 1);
-		// 162: (|ConstraintCS::stereotype.'invariant'| - 1)
-		serializationMatchTerms[162] = createSerializationMatchTermSubtract(27, 1);
-		// 163: (|ConstraintCS::stereotype.'postcondition'| - 1)
-		serializationMatchTerms[163] = createSerializationMatchTermSubtract(28, 1);
-		// 164: (|ConstraintCS::stereotype.'precondition'| - 1)
-		serializationMatchTerms[164] = createSerializationMatchTermSubtract(29, 1);
-		// 165: (|ContextCS::ownedExpression| - 1)
-		serializationMatchTerms[165] = createSerializationMatchTermSubtract(30, 1);
-		// 166: (|CurlyBracketedClauseCS::ownedParts| - 1)
-		serializationMatchTerms[166] = createSerializationMatchTermSubtract(31, 1);
-		// 167: (|CurlyBracketedClauseCS::ownedParts| > 0)
-		serializationMatchTerms[167] = createSerializationMatchTermGreaterThan(31, 0);
-		// 168: (|ExpSpecificationCS::ownedExpression| - 1)
-		serializationMatchTerms[168] = createSerializationMatchTermSubtract(43, 1);
-		// 169: (|IfExpCS::ownedCondition| - 1)
-		serializationMatchTerms[169] = createSerializationMatchTermSubtract(45, 1);
-		// 170: (|IfExpCS::ownedElseExpression| - 1)
-		serializationMatchTerms[170] = createSerializationMatchTermSubtract(46, 1);
-		// 171: (|IfExpCS::ownedThenExpression| - 1)
-		serializationMatchTerms[171] = createSerializationMatchTermSubtract(48, 1);
-		// 172: (|IfThenExpCS::ownedCondition| - 1)
-		serializationMatchTerms[172] = createSerializationMatchTermSubtract(49, 1);
-		// 173: (|IfThenExpCS::ownedThenExpression| - 1)
-		serializationMatchTerms[173] = createSerializationMatchTermSubtract(50, 1);
-		// 174: (|ImportCS::ownedPathName| - 1)
-		serializationMatchTerms[174] = createSerializationMatchTermSubtract(52, 1);
-		// 175: (|InfixExpCS::ownedLeft| - 1)
-		serializationMatchTerms[175] = createSerializationMatchTermSubtract(53, 1);
-		// 176: (|LambdaLiteralExpCS::ownedExpressionCS| - 1)
-		serializationMatchTerms[176] = createSerializationMatchTermSubtract(54, 1);
-		// 177: (|LetExpCS::ownedInExpression| - 1)
-		serializationMatchTerms[177] = createSerializationMatchTermSubtract(56, 1);
-		// 178: (|LetExpCS::ownedVariables| - 1)
-		serializationMatchTerms[178] = createSerializationMatchTermSubtract(57, 1);
-		// 179: (|MapLiteralExpCS::ownedParts| - 1)
-		serializationMatchTerms[179] = createSerializationMatchTermSubtract(59, 1);
-		// 180: (|MapLiteralExpCS::ownedParts| > 0)
-		serializationMatchTerms[180] = createSerializationMatchTermGreaterThan(59, 0);
-		// 181: (|MapLiteralExpCS::ownedType| - 1)
-		serializationMatchTerms[181] = createSerializationMatchTermSubtract(60, 1);
-		// 182: (|MapLiteralPartCS::ownedKey| - 1)
-		serializationMatchTerms[182] = createSerializationMatchTermSubtract(61, 1);
-		// 183: (|MapLiteralPartCS::ownedValue| - 1)
-		serializationMatchTerms[183] = createSerializationMatchTermSubtract(62, 1);
-		// 184: (|MapTypeCS::name.'Map'| - 1)
-		serializationMatchTerms[184] = createSerializationMatchTermSubtract(63, 1);
-		// 185: (|MapTypeCS::ownedKeyType| - V0)
-		serializationMatchTerms[185] = createSerializationMatchTermSubtract(64, 2);
-		// 186: (|ModelElementCS::ownedAnnotations| > 0)
-		serializationMatchTerms[186] = createSerializationMatchTermGreaterThan(66, 0);
-		// 187: (|ModelElementRefCS::ownedPathName| - 1)
-		serializationMatchTerms[187] = createSerializationMatchTermSubtract(67, 1);
-		// 188: (|MultiplicityBoundsCS::lowerBound| - 1)
-		serializationMatchTerms[188] = createSerializationMatchTermSubtract(68, 1);
-		// 189: (|MultiplicityCS::isNullFree.'|1'| - 1)
-		serializationMatchTerms[189] = createSerializationMatchTermSubtract(70, 1);
-		// 190: (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1)
-		serializationMatchTerms[190] = createSerializationMatchTermSubtract(72, 1);
-		// 191: (|NamedElementCS::name| - 1)
-		serializationMatchTerms[191] = createSerializationMatchTermSubtract(73, 1);
-		// 192: (|NavigatingArgCS::ownedCoIterator| - 1)
-		serializationMatchTerms[192] = createSerializationMatchTermSubtract(74, 1);
-		// 193: (|NavigatingArgCS::ownedInitExpression| - 1)
-		serializationMatchTerms[193] = createSerializationMatchTermSubtract(75, 1);
-		// 194: (|NavigatingArgCS::ownedNameExpression| - 1)
-		serializationMatchTerms[194] = createSerializationMatchTermSubtract(76, 1);
-		// 195: (|NavigatingArgCS::ownedType| - 1)
-		serializationMatchTerms[195] = createSerializationMatchTermSubtract(77, 1);
-		// 196: (|NavigatingArgCS::prefix.','| - 1)
-		serializationMatchTerms[196] = createSerializationMatchTermSubtract(78, 1);
-		// 197: (|NavigatingArgCS::prefix.';'| - 1)
-		serializationMatchTerms[197] = createSerializationMatchTermSubtract(79, 1);
-		// 198: (|NavigatingArgCS::prefix.'|'| - 1)
-		serializationMatchTerms[198] = createSerializationMatchTermSubtract(80, 1);
-		// 199: (|NestedExpCS::ownedExpression| - 1)
-		serializationMatchTerms[199] = createSerializationMatchTermSubtract(82, 1);
-		// 200: (|NumberLiteralExpCS::symbol| - 1)
-		serializationMatchTerms[200] = createSerializationMatchTermSubtract(83, 1);
-		// 201: (|OperationCS::ownedBodyExpressions| > 0)
-		serializationMatchTerms[201] = createSerializationMatchTermGreaterThan(86, 0);
-		// 202: (|OperationCS::ownedExceptions| - 1)
-		serializationMatchTerms[202] = createSerializationMatchTermSubtract(87, 1);
-		// 203: (|OperationCS::ownedExceptions| > 0)
-		serializationMatchTerms[203] = createSerializationMatchTermGreaterThan(87, 0);
-		// 204: (|OperationCS::ownedParameters| - 1)
-		serializationMatchTerms[204] = createSerializationMatchTermSubtract(88, 1);
-		// 205: (|OperationCS::ownedParameters| > 0)
-		serializationMatchTerms[205] = createSerializationMatchTermGreaterThan(88, 0);
-		// 206: (|OperatorExpCS::ownedRight| - 1)
-		serializationMatchTerms[206] = createSerializationMatchTermSubtract(91, 1);
-		// 207: (|PathElementCS::referredElement| - 1)
-		serializationMatchTerms[207] = createSerializationMatchTermSubtract(96, 1);
-		// 208: (|PathNameCS::ownedPathElements| - 1)
-		serializationMatchTerms[208] = createSerializationMatchTermSubtract(97, 1);
-		// 209: (|PatternExpCS::ownedPatternType| - 1)
-		serializationMatchTerms[209] = createSerializationMatchTermSubtract(98, 1);
-		// 210: (|PrimitiveTypeRefCS::name| - 1)
-		serializationMatchTerms[210] = createSerializationMatchTermSubtract(100, 1);
-		// 211: (|ReferenceCS::referredKeys| - 1)
-		serializationMatchTerms[211] = createSerializationMatchTermSubtract(102, 1);
-		// 212: (|ReferenceCS::referredKeys| > 0)
-		serializationMatchTerms[212] = createSerializationMatchTermGreaterThan(102, 0);
-		// 213: (|ShadowPartCS::ownedInitExpression| - 1)
-		serializationMatchTerms[213] = createSerializationMatchTermSubtract(106, 1);
-		// 214: (|ShadowPartCS::referredProperty| - 1)
-		serializationMatchTerms[214] = createSerializationMatchTermSubtract(107, 1);
-		// 215: (|SpecificationCS::exprString| - 1)
-		serializationMatchTerms[215] = createSerializationMatchTermSubtract(108, 1);
-		// 216: (|SquareBracketedClauseCS::ownedTerms| - 1)
-		serializationMatchTerms[216] = createSerializationMatchTermSubtract(109, 1);
-		// 217: (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
-		serializationMatchTerms[217] = createSerializationMatchTermGreaterThan(112, 0);
-		// 218: (|StructuredClassCS::isInterface.'interface'| > 0)
-		serializationMatchTerms[218] = createSerializationMatchTermGreaterThan(114, 0);
-		// 219: (|StructuredClassCS::ownedSuperTypes| - 1)
-		serializationMatchTerms[219] = createSerializationMatchTermSubtract(118, 1);
-		// 220: (|StructuredClassCS::ownedSuperTypes| > 0)
-		serializationMatchTerms[220] = createSerializationMatchTermGreaterThan(118, 0);
-		// 221: (|TemplateBindingCS::ownedSubstitutions| - 1)
-		serializationMatchTerms[221] = createSerializationMatchTermSubtract(121, 1);
-		// 222: (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1)
-		serializationMatchTerms[222] = createSerializationMatchTermSubtract(122, 1);
-		// 223: (|TemplateSignatureCS::ownedParameters| - 1)
-		serializationMatchTerms[223] = createSerializationMatchTermSubtract(123, 1);
-		// 224: (|TupleLiteralExpCS::ownedParts| - 1)
-		serializationMatchTerms[224] = createSerializationMatchTermSubtract(125, 1);
-		// 225: (|TupleTypeCS::name.'Tuple'| - 1)
-		serializationMatchTerms[225] = createSerializationMatchTermSubtract(126, 1);
-		// 226: (|TupleTypeCS::ownedParts| - 1)
-		serializationMatchTerms[226] = createSerializationMatchTermSubtract(127, 1);
-		// 227: (|TupleTypeCS::ownedParts| > 0)
-		serializationMatchTerms[227] = createSerializationMatchTermGreaterThan(127, 0);
-		// 228: (|TypeLiteralExpCS::ownedType| - 1)
-		serializationMatchTerms[228] = createSerializationMatchTermSubtract(129, 1);
-		// 229: (|TypeNameExpCS::ownedPathName| - 1)
-		serializationMatchTerms[229] = createSerializationMatchTermSubtract(131, 1);
-		// 230: (|TypeParameterCS::ownedExtends| - 1)
-		serializationMatchTerms[230] = createSerializationMatchTermSubtract(133, 1);
-		// 231: (|TypeParameterCS::ownedExtends| > 0)
-		serializationMatchTerms[231] = createSerializationMatchTermGreaterThan(133, 0);
-		// 232: (|TypedElementCS::ownedType| - 1)
-		serializationMatchTerms[232] = createSerializationMatchTermSubtract(135, 1);
-		// 233: (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+		// 134: |TypedElementCS::ownedType|
+		serializationMatchTerms[134] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
+		// 135: |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+		serializationMatchTerms[135] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 0 /* '!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile' */);
+		// 136: |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+		serializationMatchTerms[136] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 1 /* '!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile' */);
+		// 137: |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+		serializationMatchTerms[137] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 2 /* '!derived|!ordered|!transient|!unique|derived|ordered|transient|unique' */);
+		// 138: |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
+		serializationMatchTerms[138] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 3 /* '!ordered|!unique|ordered|unique' */);
+		// 139: |TypedElementCS::qualifiers.'definition'|
+		serializationMatchTerms[139] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 13 /* 'definition' */);
+		// 140: |TypedElementCS::qualifiers.'static'|
+		serializationMatchTerms[140] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 21 /* 'static' */);
+		// 141: |TypedElementCS::qualifiers|
+		serializationMatchTerms[141] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS);
+		// 142: |TypedRefCS::ownedMultiplicity|
+		serializationMatchTerms[142] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		// 143: |TypedTypeRefCS::isTypeof|
+		serializationMatchTerms[143] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__IS_TYPEOF);
+		// 144: |TypedTypeRefCS::ownedBinding|
+		serializationMatchTerms[144] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
+		// 145: |TypedTypeRefCS::ownedPathName|
+		serializationMatchTerms[145] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
+		// 146: |VariableCS::ownedInitExpression|
+		serializationMatchTerms[146] = createSerializationMatchTermEStructuralFeatureSize(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION);
+		// 147: |VariableCS::ownedType|
+		serializationMatchTerms[147] = createSerializationMatchTermEStructuralFeatureSize(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
+		// 148: |WildcardTypeRefCS::ownedExtends|
+		serializationMatchTerms[148] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
+		// 149: |WildcardTypeRefCS::ownedSuper|
+		serializationMatchTerms[149] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_SUPER);
+		// 150: (|AbstractNameExpCS::ownedPathName| - 1)
+		serializationMatchTerms[150] = createSerializationMatchTermSubtract(5, 1);
+		// 151: (|AnnotationElementCS::ownedDetails| - 1)
+		serializationMatchTerms[151] = createSerializationMatchTermSubtract(10, 1);
+		// 152: (|AnnotationElementCS::ownedDetails| > 0)
+		serializationMatchTerms[152] = createSerializationMatchTermGreaterThan(10, 0);
+		// 153: (|BooleanLiteralExpCS::symbol.'false|true'| - 1)
+		serializationMatchTerms[153] = createSerializationMatchTermSubtract(11, 1);
+		// 154: (|CollectionLiteralExpCS::ownedParts| - 1)
+		serializationMatchTerms[154] = createSerializationMatchTermSubtract(14, 1);
+		// 155: (|CollectionLiteralExpCS::ownedParts| > 0)
+		serializationMatchTerms[155] = createSerializationMatchTermGreaterThan(14, 0);
+		// 156: (|CollectionLiteralExpCS::ownedType| - 1)
+		serializationMatchTerms[156] = createSerializationMatchTermSubtract(15, 1);
+		// 157: (|CollectionLiteralPartCS::ownedExpression| - 1)
+		serializationMatchTerms[157] = createSerializationMatchTermSubtract(16, 1);
+		// 158: (|CollectionPatternCS::ownedParts| - 1)
+		serializationMatchTerms[158] = createSerializationMatchTermSubtract(18, 1);
+		// 159: (|CollectionPatternCS::ownedType| - 1)
+		serializationMatchTerms[159] = createSerializationMatchTermSubtract(20, 1);
+		// 160: (|CollectionTypeCS::name| - 1)
+		serializationMatchTerms[160] = createSerializationMatchTermSubtract(22, 1);
+		// 161: (|ConstraintCS::stereotype.'invariant'| - 1)
+		serializationMatchTerms[161] = createSerializationMatchTermSubtract(27, 1);
+		// 162: (|ConstraintCS::stereotype.'postcondition'| - 1)
+		serializationMatchTerms[162] = createSerializationMatchTermSubtract(28, 1);
+		// 163: (|ConstraintCS::stereotype.'precondition'| - 1)
+		serializationMatchTerms[163] = createSerializationMatchTermSubtract(29, 1);
+		// 164: (|ContextCS::ownedExpression| - 1)
+		serializationMatchTerms[164] = createSerializationMatchTermSubtract(30, 1);
+		// 165: (|CurlyBracketedClauseCS::ownedParts| - 1)
+		serializationMatchTerms[165] = createSerializationMatchTermSubtract(31, 1);
+		// 166: (|CurlyBracketedClauseCS::ownedParts| > 0)
+		serializationMatchTerms[166] = createSerializationMatchTermGreaterThan(31, 0);
+		// 167: (|ExpSpecificationCS::ownedExpression| - 1)
+		serializationMatchTerms[167] = createSerializationMatchTermSubtract(43, 1);
+		// 168: (|IfExpCS::ownedCondition| - 1)
+		serializationMatchTerms[168] = createSerializationMatchTermSubtract(45, 1);
+		// 169: (|IfExpCS::ownedElseExpression| - 1)
+		serializationMatchTerms[169] = createSerializationMatchTermSubtract(46, 1);
+		// 170: (|IfExpCS::ownedThenExpression| - 1)
+		serializationMatchTerms[170] = createSerializationMatchTermSubtract(48, 1);
+		// 171: (|IfThenExpCS::ownedCondition| - 1)
+		serializationMatchTerms[171] = createSerializationMatchTermSubtract(49, 1);
+		// 172: (|IfThenExpCS::ownedThenExpression| - 1)
+		serializationMatchTerms[172] = createSerializationMatchTermSubtract(50, 1);
+		// 173: (|ImportCS::ownedPathName| - 1)
+		serializationMatchTerms[173] = createSerializationMatchTermSubtract(52, 1);
+		// 174: (|InfixExpCS::ownedLeft| - 1)
+		serializationMatchTerms[174] = createSerializationMatchTermSubtract(53, 1);
+		// 175: (|LambdaLiteralExpCS::ownedExpressionCS| - 1)
+		serializationMatchTerms[175] = createSerializationMatchTermSubtract(54, 1);
+		// 176: (|LetExpCS::ownedInExpression| - 1)
+		serializationMatchTerms[176] = createSerializationMatchTermSubtract(56, 1);
+		// 177: (|LetExpCS::ownedVariables| - 1)
+		serializationMatchTerms[177] = createSerializationMatchTermSubtract(57, 1);
+		// 178: (|MapLiteralExpCS::ownedParts| - 1)
+		serializationMatchTerms[178] = createSerializationMatchTermSubtract(59, 1);
+		// 179: (|MapLiteralExpCS::ownedParts| > 0)
+		serializationMatchTerms[179] = createSerializationMatchTermGreaterThan(59, 0);
+		// 180: (|MapLiteralExpCS::ownedType| - 1)
+		serializationMatchTerms[180] = createSerializationMatchTermSubtract(60, 1);
+		// 181: (|MapLiteralPartCS::ownedKey| - 1)
+		serializationMatchTerms[181] = createSerializationMatchTermSubtract(61, 1);
+		// 182: (|MapLiteralPartCS::ownedValue| - 1)
+		serializationMatchTerms[182] = createSerializationMatchTermSubtract(62, 1);
+		// 183: (|MapTypeCS::name.'Map'| - 1)
+		serializationMatchTerms[183] = createSerializationMatchTermSubtract(63, 1);
+		// 184: (|MapTypeCS::ownedKeyType| - V0)
+		serializationMatchTerms[184] = createSerializationMatchTermSubtract(64, 2);
+		// 185: (|ModelElementCS::ownedAnnotations| > 0)
+		serializationMatchTerms[185] = createSerializationMatchTermGreaterThan(66, 0);
+		// 186: (|ModelElementRefCS::ownedPathName| - 1)
+		serializationMatchTerms[186] = createSerializationMatchTermSubtract(67, 1);
+		// 187: (|MultiplicityBoundsCS::lowerBound| - 1)
+		serializationMatchTerms[187] = createSerializationMatchTermSubtract(68, 1);
+		// 188: (|MultiplicityCS::isNullFree.'|1'| - 1)
+		serializationMatchTerms[188] = createSerializationMatchTermSubtract(70, 1);
+		// 189: (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1)
+		serializationMatchTerms[189] = createSerializationMatchTermSubtract(72, 1);
+		// 190: (|NamedElementCS::name| - 1)
+		serializationMatchTerms[190] = createSerializationMatchTermSubtract(73, 1);
+		// 191: (|NavigatingArgCS::ownedCoIterator| - 1)
+		serializationMatchTerms[191] = createSerializationMatchTermSubtract(74, 1);
+		// 192: (|NavigatingArgCS::ownedInitExpression| - 1)
+		serializationMatchTerms[192] = createSerializationMatchTermSubtract(75, 1);
+		// 193: (|NavigatingArgCS::ownedNameExpression| - 1)
+		serializationMatchTerms[193] = createSerializationMatchTermSubtract(76, 1);
+		// 194: (|NavigatingArgCS::ownedType| - 1)
+		serializationMatchTerms[194] = createSerializationMatchTermSubtract(77, 1);
+		// 195: (|NavigatingArgCS::prefix.','| - 1)
+		serializationMatchTerms[195] = createSerializationMatchTermSubtract(78, 1);
+		// 196: (|NavigatingArgCS::prefix.';'| - 1)
+		serializationMatchTerms[196] = createSerializationMatchTermSubtract(79, 1);
+		// 197: (|NavigatingArgCS::prefix.'|'| - 1)
+		serializationMatchTerms[197] = createSerializationMatchTermSubtract(80, 1);
+		// 198: (|NestedExpCS::ownedExpression| - 1)
+		serializationMatchTerms[198] = createSerializationMatchTermSubtract(82, 1);
+		// 199: (|NumberLiteralExpCS::symbol| - 1)
+		serializationMatchTerms[199] = createSerializationMatchTermSubtract(83, 1);
+		// 200: (|OperationCS::ownedBodyExpressions| > 0)
+		serializationMatchTerms[200] = createSerializationMatchTermGreaterThan(86, 0);
+		// 201: (|OperationCS::ownedExceptions| - 1)
+		serializationMatchTerms[201] = createSerializationMatchTermSubtract(87, 1);
+		// 202: (|OperationCS::ownedExceptions| > 0)
+		serializationMatchTerms[202] = createSerializationMatchTermGreaterThan(87, 0);
+		// 203: (|OperationCS::ownedParameters| - 1)
+		serializationMatchTerms[203] = createSerializationMatchTermSubtract(88, 1);
+		// 204: (|OperationCS::ownedParameters| > 0)
+		serializationMatchTerms[204] = createSerializationMatchTermGreaterThan(88, 0);
+		// 205: (|OperatorExpCS::ownedRight| - 1)
+		serializationMatchTerms[205] = createSerializationMatchTermSubtract(91, 1);
+		// 206: (|PathElementCS::referredElement| - 1)
+		serializationMatchTerms[206] = createSerializationMatchTermSubtract(96, 1);
+		// 207: (|PathNameCS::ownedPathElements| - 1)
+		serializationMatchTerms[207] = createSerializationMatchTermSubtract(97, 1);
+		// 208: (|PatternExpCS::ownedPatternType| - 1)
+		serializationMatchTerms[208] = createSerializationMatchTermSubtract(98, 1);
+		// 209: (|PrimitiveTypeRefCS::name| - 1)
+		serializationMatchTerms[209] = createSerializationMatchTermSubtract(100, 1);
+		// 210: (|ReferenceCS::referredKeys| - 1)
+		serializationMatchTerms[210] = createSerializationMatchTermSubtract(102, 1);
+		// 211: (|ReferenceCS::referredKeys| > 0)
+		serializationMatchTerms[211] = createSerializationMatchTermGreaterThan(102, 0);
+		// 212: (|ShadowPartCS::ownedInitExpression| - 1)
+		serializationMatchTerms[212] = createSerializationMatchTermSubtract(106, 1);
+		// 213: (|ShadowPartCS::referredProperty| - 1)
+		serializationMatchTerms[213] = createSerializationMatchTermSubtract(107, 1);
+		// 214: (|SpecificationCS::exprString| - 1)
+		serializationMatchTerms[214] = createSerializationMatchTermSubtract(108, 1);
+		// 215: (|SquareBracketedClauseCS::ownedTerms| - 1)
+		serializationMatchTerms[215] = createSerializationMatchTermSubtract(109, 1);
+		// 216: (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+		serializationMatchTerms[216] = createSerializationMatchTermGreaterThan(112, 0);
+		// 217: (|StructuredClassCS::isInterface.'interface'| > 0)
+		serializationMatchTerms[217] = createSerializationMatchTermGreaterThan(114, 0);
+		// 218: (|StructuredClassCS::ownedSuperTypes| - 1)
+		serializationMatchTerms[218] = createSerializationMatchTermSubtract(118, 1);
+		// 219: (|StructuredClassCS::ownedSuperTypes| > 0)
+		serializationMatchTerms[219] = createSerializationMatchTermGreaterThan(118, 0);
+		// 220: (|TemplateBindingCS::ownedSubstitutions| - 1)
+		serializationMatchTerms[220] = createSerializationMatchTermSubtract(121, 1);
+		// 221: (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1)
+		serializationMatchTerms[221] = createSerializationMatchTermSubtract(122, 1);
+		// 222: (|TemplateSignatureCS::ownedParameters| - 1)
+		serializationMatchTerms[222] = createSerializationMatchTermSubtract(123, 1);
+		// 223: (|TupleLiteralExpCS::ownedParts| - 1)
+		serializationMatchTerms[223] = createSerializationMatchTermSubtract(125, 1);
+		// 224: (|TupleTypeCS::name.'Tuple'| - 1)
+		serializationMatchTerms[224] = createSerializationMatchTermSubtract(126, 1);
+		// 225: (|TupleTypeCS::ownedParts| - 1)
+		serializationMatchTerms[225] = createSerializationMatchTermSubtract(127, 1);
+		// 226: (|TupleTypeCS::ownedParts| > 0)
+		serializationMatchTerms[226] = createSerializationMatchTermGreaterThan(127, 0);
+		// 227: (|TypeLiteralExpCS::ownedType| - 1)
+		serializationMatchTerms[227] = createSerializationMatchTermSubtract(129, 1);
+		// 228: (|TypeNameExpCS::ownedPathName| - 1)
+		serializationMatchTerms[228] = createSerializationMatchTermSubtract(131, 1);
+		// 229: (|TypeParameterCS::ownedExtends| - 1)
+		serializationMatchTerms[229] = createSerializationMatchTermSubtract(133, 1);
+		// 230: (|TypeParameterCS::ownedExtends| > 0)
+		serializationMatchTerms[230] = createSerializationMatchTermGreaterThan(133, 0);
+		// 231: (|TypedElementCS::ownedType| - 1)
+		serializationMatchTerms[231] = createSerializationMatchTermSubtract(134, 1);
+		// 232: (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+		serializationMatchTerms[232] = createSerializationMatchTermGreaterThan(135, 0);
+		// 233: (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
 		serializationMatchTerms[233] = createSerializationMatchTermGreaterThan(136, 0);
-		// 234: (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+		// 234: (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
 		serializationMatchTerms[234] = createSerializationMatchTermGreaterThan(137, 0);
-		// 235: (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+		// 235: (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
 		serializationMatchTerms[235] = createSerializationMatchTermGreaterThan(138, 0);
-		// 236: (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
-		serializationMatchTerms[236] = createSerializationMatchTermGreaterThan(139, 0);
-		// 237: (|TypedElementCS::qualifiers.'definition'| - 1)
+		// 236: (|TypedElementCS::qualifiers.'definition'| - 1)
+		serializationMatchTerms[236] = createSerializationMatchTermSubtract(139, 1);
+		// 237: (|TypedElementCS::qualifiers.'static'| - 1)
 		serializationMatchTerms[237] = createSerializationMatchTermSubtract(140, 1);
-		// 238: (|TypedElementCS::qualifiers.'static'| - 1)
-		serializationMatchTerms[238] = createSerializationMatchTermSubtract(141, 1);
-		// 239: (|TypedTypeRefCS::ownedBinding| - 1)
+		// 238: (|TypedTypeRefCS::ownedBinding| - 1)
+		serializationMatchTerms[238] = createSerializationMatchTermSubtract(144, 1);
+		// 239: (|TypedTypeRefCS::ownedPathName| - 1)
 		serializationMatchTerms[239] = createSerializationMatchTermSubtract(145, 1);
-		// 240: (|TypedTypeRefCS::ownedPathName| - 1)
+		// 240: (|VariableCS::ownedInitExpression| - 1)
 		serializationMatchTerms[240] = createSerializationMatchTermSubtract(146, 1);
-		// 241: (|VariableCS::ownedInitExpression| - 1)
-		serializationMatchTerms[241] = createSerializationMatchTermSubtract(147, 1);
 	}
 
 	/**
@@ -4052,7 +4048,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[1] = createSerializationRule("MultiplicityBoundsCS-0", 55,
 			createSerializationMatchSteps(
 				72		/* assert |MultiplicityCS::isNullFree| == 0 */,
-				129		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				128		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				27		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4069,7 +4065,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[2] = createSerializationRule("MultiplicityCS-0", 56,
 			createSerializationMatchSteps(
 				72		/* assert |MultiplicityCS::isNullFree| == 0 */,
-				129		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				128		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				27		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4089,7 +4085,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[3] = createSerializationRule("MultiplicityCS-1", 56,
 			createSerializationMatchSteps(
 				28		/* assert (|MultiplicityCS::isNullFree.'|1'| - 1) == 0 */,
-				129		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				128		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				27		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4112,7 +4108,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[4] = createSerializationRule("MultiplicityCS-2", 56,
 			createSerializationMatchSteps(
 				72		/* assert |MultiplicityCS::isNullFree| == 0 */,
-				129		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				128		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				27		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4224,10 +4220,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// Base::TemplateBindingCS-0(basecs::TemplateBindingCS): { ownedSubstitutions+=TemplateParameterSubstitutionCS { "," ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[11] = createSerializationRule("TemplateBindingCS-0", 99,
 			createSerializationMatchSteps(
-				291		/* check-rule basecs::TemplateBindingCS.ownedMultiplicity : MultiplicityCS */,
-				292		/* check-rule basecs::TemplateBindingCS.ownedSubstitutions : TemplateParameterSubstitutionCS */,
-				170		/* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
-				110		/* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
+				290		/* check-rule basecs::TemplateBindingCS.ownedMultiplicity : MultiplicityCS */,
+				291		/* check-rule basecs::TemplateBindingCS.ownedSubstitutions : TemplateParameterSubstitutionCS */,
+				169		/* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
+				109		/* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			),
 			createSerializationSteps(
 				89		/* TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value */,
@@ -4249,7 +4245,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[12] = createSerializationRule("TemplateParameterSubstitutionCS-0", 100,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				293		/* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS */,
+				292		/* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS */,
 				48		/* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4264,10 +4260,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[13] = createSerializationRule("TypeParameterCS-0", 114,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				297		/* check-rule basecs::TypeParameterCS.ownedExtends : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				296		/* check-rule basecs::TypeParameterCS.ownedExtends : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				114		/* assign V0 = (|TypeParameterCS::ownedExtends| > 0) */,
-				155		/* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
+				113		/* assign V0 = (|TypeParameterCS::ownedExtends| > 0) */,
+				154		/* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -4288,8 +4284,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// Base::UnreservedPathNameCS-0(basecs::PathNameCS): { ownedPathElements+=NextPathElementCS { "::" ownedPathElements+=NextPathElementCS }[*] }
 		serializationRules[14] = createSerializationRule("UnreservedPathNameCS-0", 127,
 			createSerializationMatchSteps(
-				284		/* check-rule basecs::PathNameCS.ownedPathElements : NextPathElementCS */,
-				108		/* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
+				283		/* check-rule basecs::PathNameCS.ownedPathElements : NextPathElementCS */,
+				107		/* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			),
 			createSerializationSteps(
 				269		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */,
@@ -4305,9 +4301,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// Base::WildcardTypeRefCS-0(basecs::WildcardTypeRefCS): { "?" { "extends" ownedExtends=TypedRefCS }[?] }
 		serializationRules[15] = createSerializationRule("WildcardTypeRefCS-0", 130,
 			createSerializationMatchSteps(
-				103		/* assert |WildcardTypeRefCS::ownedSuper| == 0 */,
-				303		/* check-rule basecs::WildcardTypeRefCS.ownedExtends : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				147		/* assign V0 = |WildcardTypeRefCS::ownedExtends| */
+				102		/* assert |WildcardTypeRefCS::ownedSuper| == 0 */,
+				302		/* check-rule basecs::WildcardTypeRefCS.ownedExtends : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				146		/* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			),
 			createSerializationSteps(
 				138		/* '?' || soft-space value soft-space */,
@@ -4338,9 +4334,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[17] = createSerializationRule("CoIteratorVariableCS-0", 7,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				102		/* assert |VariableCS::ownedInitExpression| == 0 */,
-				355		/* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
-				146		/* assign V0 = |VariableCS::ownedType| */,
+				101		/* assert |VariableCS::ownedInitExpression| == 0 */,
+				354		/* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
+				145		/* assign V0 = |VariableCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4360,11 +4356,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[18] = createSerializationRule("CollectionLiteralExpCS-0", 8,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				308		/* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : CollectionLiteralPartCS */,
-				309		/* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : CollectionTypeCS */,
+				307		/* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : CollectionLiteralPartCS */,
+				308		/* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : CollectionTypeCS */,
 				3		/* assert (|CollectionLiteralExpCS::ownedType| - 1) == 0 */,
-				104		/* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
-				149		/* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
+				103		/* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
+				148		/* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -4389,9 +4385,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[19] = createSerializationRule("CollectionLiteralPartCS-0", 9,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				310		/* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				312		/* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				119		/* assign V0 = |CollectionLiteralPartCS::ownedLastExpression| */,
+				309		/* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				311		/* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				118		/* assign V0 = |CollectionLiteralPartCS::ownedLastExpression| */,
 				4		/* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4414,7 +4410,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				61		/* assert |CollectionLiteralPartCS::ownedLastExpression| == 0 */,
-				311		/* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : PatternExpCS */,
+				310		/* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : PatternExpCS */,
 				4		/* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4428,12 +4424,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::CollectionPatternCS-0(essentialoclcs::CollectionPatternCS): { ownedType=CollectionTypeCS "{" { ownedParts+=PatternExpCS { "," ownedParts+=PatternExpCS }[*] { "++" restVariableName=Identifier } }[?] "}" }
 		serializationRules[21] = createSerializationRule("CollectionPatternCS-0", 10,
 			createSerializationMatchSteps(
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
 				62		/* assert |CollectionPatternCS::ownedPatternGuard| == 0 */,
-				313		/* check-rule essentialoclcs::CollectionPatternCS.ownedParts : PatternExpCS */,
-				314		/* check-rule essentialoclcs::CollectionPatternCS.ownedType : CollectionTypeCS */,
-				120		/* assign V0 = |CollectionPatternCS::restVariableName| */,
-				150		/* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
+				312		/* check-rule essentialoclcs::CollectionPatternCS.ownedParts : PatternExpCS */,
+				313		/* check-rule essentialoclcs::CollectionPatternCS.ownedType : CollectionTypeCS */,
+				119		/* assign V0 = |CollectionPatternCS::restVariableName| */,
+				149		/* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
 				5		/* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4460,12 +4456,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::CollectionTypeCS-0(essentialoclcs::CollectionTypeCS): { name=CollectionTypeIdentifier { "(" ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ")" }[?] }
 		serializationRules[22] = createSerializationRule("CollectionTypeCS-0", 11,
 			createSerializationMatchSteps(
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
-				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
-				316		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
-				121		/* assign V0 = |CollectionTypeCS::ownedType| */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				314		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
+				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
+				120		/* assign V0 = |CollectionTypeCS::ownedType| */,
 				6		/* assert (|CollectionTypeCS::name| - 1) == 0 */,
-				159		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
+				158		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			),
 			createSerializationSteps(
 				14		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
@@ -4489,9 +4485,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[23] = createSerializationRule("CurlyBracketedClauseCS-0", 13,
 			createSerializationMatchSteps(
 				64		/* assert |CurlyBracketedClauseCS::value| == 0 */,
-				318		/* check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : ShadowPartCS */,
-				105		/* assign V0 = (|CurlyBracketedClauseCS::ownedParts| > 0) */,
-				151		/* assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1) */
+				317		/* check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : ShadowPartCS */,
+				104		/* assign V0 = (|CurlyBracketedClauseCS::ownedParts| > 0) */,
+				150		/* assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				181		/* '{' || soft-space value push soft-new-line */,
@@ -4511,8 +4507,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[24] = createSerializationRule("ElseIfThenExpCS-0", 20,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				324		/* check-rule essentialoclcs::IfThenExpCS.ownedCondition : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				325		/* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				323		/* check-rule essentialoclcs::IfThenExpCS.ownedCondition : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				324		/* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				16		/* assert (|IfThenExpCS::ownedThenExpression| - 1) == 0 */,
 				15		/* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			),
@@ -4535,8 +4531,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[25] = createSerializationRule("ExpCS-18", 30,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				326		/* check-rule essentialoclcs::InfixExpCS.ownedLeft : BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				343		/* check-rule essentialoclcs::OperatorExpCS.ownedRight : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				325		/* check-rule essentialoclcs::InfixExpCS.ownedLeft : BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				342		/* check-rule essentialoclcs::OperatorExpCS.ownedRight : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				40		/* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
 				18		/* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
@@ -4561,12 +4557,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				69		/* assert |IfExpCS::isImplicit| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				320		/* check-rule essentialoclcs::IfExpCS.ownedCondition : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				321		/* check-rule essentialoclcs::IfExpCS.ownedElseExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				322		/* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : ElseIfThenExpCS */,
-				323		/* check-rule essentialoclcs::IfExpCS.ownedThenExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				319		/* check-rule essentialoclcs::IfExpCS.ownedCondition : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				320		/* check-rule essentialoclcs::IfExpCS.ownedElseExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				321		/* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : ElseIfThenExpCS */,
+				322		/* check-rule essentialoclcs::IfExpCS.ownedThenExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				13		/* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
-				126		/* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
+				125		/* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
 				14		/* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
 				12		/* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			),
@@ -4610,7 +4606,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[28] = createSerializationRule("LambdaLiteralExpCS-0", 44,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				327		/* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				326		/* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				19		/* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4630,10 +4626,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				70		/* assert |LetExpCS::isImplicit| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				328		/* check-rule essentialoclcs::LetExpCS.ownedInExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				329		/* check-rule essentialoclcs::LetExpCS.ownedVariables : LetVariableCS */,
+				327		/* check-rule essentialoclcs::LetExpCS.ownedInExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				328		/* check-rule essentialoclcs::LetExpCS.ownedVariables : LetVariableCS */,
 				20		/* assert (|LetExpCS::ownedInExpression| - 1) == 0 */,
-				106		/* assign V0 = (|LetExpCS::ownedVariables| - 1) */
+				105		/* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -4657,12 +4653,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[30] = createSerializationRule("LetVariableCS-0", 46,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				354		/* check-rule essentialoclcs::VariableCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				330		/* check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : RoundBracketedClauseCS */,
-				355		/* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
+				353		/* check-rule essentialoclcs::VariableCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				329		/* check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : RoundBracketedClauseCS */,
+				354		/* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
 				57		/* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
-				176		/* assign V1 = |VariableCS::ownedType| */,
-				127		/* assign V0 = |LetVariableCS::ownedRoundBracketedClause| */,
+				175		/* assign V1 = |VariableCS::ownedType| */,
+				126		/* assign V0 = |LetVariableCS::ownedRoundBracketedClause| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4692,11 +4688,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[31] = createSerializationRule("MapLiteralExpCS-0", 49,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				331		/* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : MapLiteralPartCS */,
-				332		/* check-rule essentialoclcs::MapLiteralExpCS.ownedType : MapTypeCS */,
+				330		/* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : MapLiteralPartCS */,
+				331		/* check-rule essentialoclcs::MapLiteralExpCS.ownedType : MapTypeCS */,
 				21		/* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
-				107		/* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
-				152		/* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
+				106		/* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
+				151		/* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -4721,8 +4717,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[32] = createSerializationRule("MapLiteralPartCS-0", 50,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				333		/* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				334		/* check-rule essentialoclcs::MapLiteralPartCS.ownedValue : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				332		/* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				333		/* check-rule essentialoclcs::MapLiteralPartCS.ownedValue : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				23		/* assert (|MapLiteralPartCS::ownedValue| - 1) == 0 */,
 				22		/* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			),
@@ -4743,10 +4739,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::MapTypeCS-0(essentialoclcs::MapTypeCS): { name="Map" { "(" ownedKeyType=TypeExpCS "," ownedValueType=TypeExpCS ")" }[?] }
 		serializationRules[33] = createSerializationRule("MapTypeCS-0", 51,
 			createSerializationMatchSteps(
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
-				335		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
-				336		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
-				128		/* assign V0 = |MapTypeCS::ownedValueType| */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				334		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
+				335		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
+				127		/* assign V0 = |MapTypeCS::ownedValueType| */,
 				25		/* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				24		/* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			),
@@ -4776,7 +4772,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				73		/* assert |NamedElementCS::name| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				87		/* assert |RootCS::ownedImports| == 0 */,
-				317		/* check-rule essentialoclcs::ContextCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				316		/* check-rule essentialoclcs::ContextCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				10		/* assert (|ContextCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4791,14 +4787,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[35] = createSerializationRule("NameExpCS-0", 59,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				304		/* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
-				305		/* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : PathNameCS */,
-				306		/* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : RoundBracketedClauseCS */,
-				307		/* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : SquareBracketedClauseCS */,
-				216		/* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
-				199		/* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
-				157		/* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
-				117		/* assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses| */,
+				303		/* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
+				304		/* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : PathNameCS */,
+				305		/* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : RoundBracketedClauseCS */,
+				306		/* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : SquareBracketedClauseCS */,
+				215		/* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
+				198		/* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
+				156		/* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
+				116		/* assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses| */,
 				0		/* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4839,7 +4835,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				75		/* assert |NavigatingArgCS::ownedInitExpression| == 0 */,
 				76		/* assert |NavigatingArgCS::ownedNameExpression| == 0 */,
 				78		/* assert |NavigatingArgCS::prefix| == 0 */,
-				340		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
+				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 				34		/* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4857,12 +4853,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				78		/* assert |NavigatingArgCS::prefix| == 0 */,
-				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				340		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
-				165		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
-				131		/* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
+				336		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
+				164		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
+				130		/* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
 				34		/* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
@@ -4897,13 +4893,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				78		/* assert |NavigatingArgCS::prefix| == 0 */,
-				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				340		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
+				336		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 				32		/* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
-				164		/* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
-				133		/* assign V0 = |NavigatingArgCS::ownedType| */,
+				163		/* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
+				132		/* assign V0 = |NavigatingArgCS::ownedType| */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4938,10 +4934,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				77		/* assert |NavigatingArgCS::ownedType| == 0 */,
 				78		/* assert |NavigatingArgCS::prefix| == 0 */,
-				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				132		/* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
+				336		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				131		/* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
 				31		/* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
@@ -4973,7 +4969,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				75		/* assert |NavigatingArgCS::ownedInitExpression| == 0 */,
 				77		/* assert |NavigatingArgCS::ownedType| == 0 */,
 				78		/* assert |NavigatingArgCS::prefix| == 0 */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -4989,13 +4985,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				74		/* assert |NavigatingArgCS::ownedCoIterator| == 0 */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				340		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
-				133		/* assign V0 = |NavigatingArgCS::ownedType| */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
+				132		/* assign V0 = |NavigatingArgCS::ownedType| */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				37		/* assert (|NavigatingArgCS::prefix.'|'| - 1) == 0 */,
-				165		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */
+				164		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -5026,12 +5022,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[42] = createSerializationRule("NavigatingCommaArgCS-0", 63,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				340		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
-				165		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
-				131		/* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
+				336		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
+				164		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
+				130		/* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
 				34		/* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				35		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
@@ -5070,13 +5066,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[43] = createSerializationRule("NavigatingCommaArgCS-1", 63,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				340		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
+				336		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 				32		/* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
-				164		/* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
-				133		/* assign V0 = |NavigatingArgCS::ownedType| */,
+				163		/* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
+				132		/* assign V0 = |NavigatingArgCS::ownedType| */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				35		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			),
@@ -5115,10 +5111,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				77		/* assert |NavigatingArgCS::ownedType| == 0 */,
-				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				132		/* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
+				336		/* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				131		/* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
 				31		/* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				35		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
@@ -5154,7 +5150,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				74		/* assert |NavigatingArgCS::ownedCoIterator| == 0 */,
 				75		/* assert |NavigatingArgCS::ownedInitExpression| == 0 */,
 				77		/* assert |NavigatingArgCS::ownedType| == 0 */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				35		/* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			),
@@ -5176,13 +5172,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				74		/* assert |NavigatingArgCS::ownedCoIterator| == 0 */,
-				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				340		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
-				133		/* assign V0 = |NavigatingArgCS::ownedType| */,
+				337		/* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				338		/* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				339		/* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
+				132		/* assign V0 = |NavigatingArgCS::ownedType| */,
 				33		/* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				36		/* assert (|NavigatingArgCS::prefix.';'| - 1) == 0 */,
-				165		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */
+				164		/* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -5213,7 +5209,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[47] = createSerializationRule("NestedExpCS-0", 66,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				341		/* check-rule essentialoclcs::NestedExpCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				340		/* check-rule essentialoclcs::NestedExpCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				38		/* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5252,9 +5248,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[50] = createSerializationRule("PatternExpCS-0", 74,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				345		/* check-rule essentialoclcs::PatternExpCS.ownedPatternType : TypeExpCS */,
+				344		/* check-rule essentialoclcs::PatternExpCS.ownedPatternType : TypeExpCS */,
 				43		/* assert (|PatternExpCS::ownedPatternType| - 1) == 0 */,
-				136		/* assign V0 = |PatternExpCS::patternVariableName| */
+				135		/* assign V0 = |PatternExpCS::patternVariableName| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -5273,7 +5269,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[51] = createSerializationRule("PrefixedLetExpCS-1", 77,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				342		/* check-rule essentialoclcs::OperatorExpCS.ownedRight : LetExpCS|PrefixedLetExpCS */,
+				341		/* check-rule essentialoclcs::OperatorExpCS.ownedRight : LetExpCS|PrefixedLetExpCS */,
 				40		/* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
@@ -5292,7 +5288,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[52] = createSerializationRule("PrefixedPrimaryExpCS-15", 78,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				344		/* check-rule essentialoclcs::OperatorExpCS.ownedRight : BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				343		/* check-rule essentialoclcs::OperatorExpCS.ownedRight : BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				40		/* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
@@ -5310,7 +5306,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::PrimitiveTypeCS-0(basecs::PrimitiveTypeRefCS): name=PrimitiveTypeIdentifier
 		serializationRules[53] = createSerializationRule("PrimitiveTypeCS-0", 81,
 			createSerializationMatchSteps(
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
 				44		/* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5352,7 +5348,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[56] = createSerializationRule("ShadowPartCS-0", 90,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				346		/* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				345		/* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				45		/* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */,
 				46		/* assert (|ShadowPartCS::referredProperty| - 1) == 0 */
 			),
@@ -5375,7 +5371,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				89		/* assert |ShadowPartCS::referredProperty| == 0 */,
-				347		/* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : StringLiteralExpCS */,
+				346		/* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : StringLiteralExpCS */,
 				45		/* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5389,7 +5385,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::SimplePathNameCS-0(basecs::PathNameCS): ownedPathElements+=FirstPathElementCS
 		serializationRules[58] = createSerializationRule("SimplePathNameCS-0", 91,
 			createSerializationMatchSteps(
-				283		/* check-rule basecs::PathNameCS.ownedPathElements : FirstPathElementCS */,
+				282		/* check-rule basecs::PathNameCS.ownedPathElements : FirstPathElementCS */,
 				42		/* assert (|PathNameCS::ownedPathElements| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5403,8 +5399,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::SquareBracketedClauseCS-0(essentialoclcs::SquareBracketedClauseCS): { "[" ownedTerms+=ExpCS { "," ownedTerms+=ExpCS }[*] "]" }
 		serializationRules[59] = createSerializationRule("SquareBracketedClauseCS-0", 93,
 			createSerializationMatchSteps(
-				348		/* check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				109		/* assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1) */
+				347		/* check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				108		/* assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1) */
 			),
 			createSerializationSteps(
 				141		/* '[' || no-space value no-space */,
@@ -5423,7 +5419,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[60] = createSerializationRule("StringLiteralExpCS-0", 95,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				138		/* assign V0 = |StringLiteralExpCS::segments| */
+				137		/* assign V0 = |StringLiteralExpCS::segments| */
 			),
 			createSerializationSteps(
 				188		/* V00*1-steps || value */,
@@ -5436,8 +5432,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[61] = createSerializationRule("TupleLiteralExpCS-0", 103,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				349		/* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : TupleLiteralPartCS */,
-				112		/* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
+				348		/* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : TupleLiteralPartCS */,
+				111		/* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -5458,10 +5454,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[62] = createSerializationRule("TupleLiteralPartCS-0", 104,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				354		/* check-rule essentialoclcs::VariableCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				355		/* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
+				353		/* check-rule essentialoclcs::VariableCS.ownedInitExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				354		/* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
 				57		/* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
-				146		/* assign V0 = |VariableCS::ownedType| */,
+				145		/* assign V0 = |VariableCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5485,10 +5481,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TuplePartCS-0(basecs::TuplePartCS): { name=UnrestrictedName ":" ownedType=TypeExpCS }
 		serializationRules[63] = createSerializationRule("TuplePartCS-0", 105,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				98		/* assert |TypedElementCS::qualifiers| == 0 */,
-				298		/* check-rule basecs::TypedElementCS.ownedType : TypeExpCS */,
+				97		/* assert |TypedElementCS::qualifiers| == 0 */,
+				297		/* check-rule basecs::TypedElementCS.ownedType : TypeExpCS */,
 				52		/* assert (|TypedElementCS::ownedType| - 1) == 0 */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
@@ -5509,12 +5504,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TupleTypeCS-0(basecs::TupleTypeCS): { name="Tuple" { "(" { ownedParts+=TuplePartCS { "," ownedParts+=TuplePartCS }[*] }[?] ")" }[?] }
 		serializationRules[64] = createSerializationRule("TupleTypeCS-0", 106,
 			createSerializationMatchSteps(
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
-				296		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				295		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
 				49		/* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
-				113		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
-				154		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
-				196		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
+				112		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				153		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				195		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				17		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
@@ -5538,8 +5533,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS-0(basecs::PrimitiveTypeRefCS): { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[65] = createSerializationRule("TypeExpCS-0", 107,
 			createSerializationMatchSteps(
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				145		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				144		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				44		/* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5556,13 +5551,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS-1(essentialoclcs::CollectionTypeCS): { { name=CollectionTypeIdentifier { "(" ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[66] = createSerializationRule("TypeExpCS-1", 107,
 			createSerializationMatchSteps(
-				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				316		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
-				209		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
-				121		/* assign V0 = |CollectionTypeCS::ownedType| */,
+				314		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
+				208		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				120		/* assign V0 = |CollectionTypeCS::ownedType| */,
 				6		/* assert (|CollectionTypeCS::name| - 1) == 0 */,
-				159		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
+				158		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			),
 			createSerializationSteps(
 				14		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
@@ -5590,11 +5585,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS-2(essentialoclcs::MapTypeCS): { { name="Map" { "(" ownedKeyType=TypeExpCS "," ownedValueType=TypeExpCS ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[67] = createSerializationRule("TypeExpCS-2", 107,
 			createSerializationMatchSteps(
-				335		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				336		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
-				175		/* assign V1 = |TypedRefCS::ownedMultiplicity| */,
-				128		/* assign V0 = |MapTypeCS::ownedValueType| */,
+				334		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				335		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
+				174		/* assign V1 = |TypedRefCS::ownedMultiplicity| */,
+				127		/* assign V0 = |MapTypeCS::ownedValueType| */,
 				25		/* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				24		/* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			),
@@ -5626,14 +5621,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS-3(essentialoclcs::TypeNameExpCS): { { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { "{" ownedPatternGuard=ExpCS "}" }[?] }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[68] = createSerializationRule("TypeExpCS-3", 107,
 			createSerializationMatchSteps(
-				351		/* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				352		/* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : PathNameCS */,
-				353		/* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				209		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
-				141		/* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
+				350		/* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				351		/* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : PathNameCS */,
+				352		/* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				208		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				140		/* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
 				51		/* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
-				172		/* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
+				171		/* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			),
 			createSerializationSteps(
 				76		/* TypeNameExpCS::ownedPathName=PathNameCS || value */,
@@ -5664,12 +5659,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[69] = createSerializationRule("TypeExpCS-4", 107,
 			createSerializationMatchSteps(
 				62		/* assert |CollectionPatternCS::ownedPatternGuard| == 0 */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				313		/* check-rule essentialoclcs::CollectionPatternCS.ownedParts : PatternExpCS */,
-				314		/* check-rule essentialoclcs::CollectionPatternCS.ownedType : CollectionTypeCS */,
-				209		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
-				120		/* assign V0 = |CollectionPatternCS::restVariableName| */,
-				150		/* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				312		/* check-rule essentialoclcs::CollectionPatternCS.ownedParts : PatternExpCS */,
+				313		/* check-rule essentialoclcs::CollectionPatternCS.ownedType : CollectionTypeCS */,
+				208		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				119		/* assign V0 = |CollectionPatternCS::restVariableName| */,
+				149		/* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
 				5		/* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5701,13 +5696,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS-5(basecs::TupleTypeCS): { { name="Tuple" { "(" { ownedParts+=TuplePartCS { "," ownedParts+=TuplePartCS }[*] }[?] ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[70] = createSerializationRule("TypeExpCS-5", 107,
 			createSerializationMatchSteps(
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				296		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
-				224		/* assign V3 = |TypedRefCS::ownedMultiplicity| */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				295		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
+				223		/* assign V3 = |TypedRefCS::ownedMultiplicity| */,
 				49		/* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
-				113		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
-				154		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
-				196		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
+				112		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				153		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				195		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				17		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
@@ -5738,7 +5733,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				96		/* assert |TypeLiteralExpCS::ownedPathName| == 0 */,
-				350		/* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : TypeLiteralWithMultiplicityCS */,
+				349		/* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : TypeLiteralWithMultiplicityCS */,
 				50		/* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5752,8 +5747,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeLiteralWithMultiplicityCS-0(basecs::PrimitiveTypeRefCS): { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[72] = createSerializationRule("TypeLiteralWithMultiplicityCS-0", 112,
 			createSerializationMatchSteps(
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				145		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				144		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				44		/* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -5770,13 +5765,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeLiteralWithMultiplicityCS-1(essentialoclcs::CollectionTypeCS): { { name=CollectionTypeIdentifier { "(" ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[73] = createSerializationRule("TypeLiteralWithMultiplicityCS-1", 112,
 			createSerializationMatchSteps(
-				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				316		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
-				209		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
-				121		/* assign V0 = |CollectionTypeCS::ownedType| */,
+				314		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
+				208		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				120		/* assign V0 = |CollectionTypeCS::ownedType| */,
 				6		/* assert (|CollectionTypeCS::name| - 1) == 0 */,
-				159		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
+				158		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			),
 			createSerializationSteps(
 				14		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
@@ -5804,11 +5799,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeLiteralWithMultiplicityCS-2(essentialoclcs::MapTypeCS): { { name="Map" { "(" ownedKeyType=TypeExpCS "," ownedValueType=TypeExpCS ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[74] = createSerializationRule("TypeLiteralWithMultiplicityCS-2", 112,
 			createSerializationMatchSteps(
-				335		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				336		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
-				175		/* assign V1 = |TypedRefCS::ownedMultiplicity| */,
-				128		/* assign V0 = |MapTypeCS::ownedValueType| */,
+				334		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				335		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
+				174		/* assign V1 = |TypedRefCS::ownedMultiplicity| */,
+				127		/* assign V0 = |MapTypeCS::ownedValueType| */,
 				25		/* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				24		/* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			),
@@ -5840,13 +5835,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeLiteralWithMultiplicityCS-3(basecs::TupleTypeCS): { { name="Tuple" { "(" { ownedParts+=TuplePartCS { "," ownedParts+=TuplePartCS }[*] }[?] ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[75] = createSerializationRule("TypeLiteralWithMultiplicityCS-3", 112,
 			createSerializationMatchSteps(
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				296		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
-				224		/* assign V3 = |TypedRefCS::ownedMultiplicity| */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				295		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
+				223		/* assign V3 = |TypedRefCS::ownedMultiplicity| */,
 				49		/* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
-				113		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
-				154		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
-				196		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
+				112		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				153		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				195		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				17		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
@@ -5875,13 +5870,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeNameExpCS-0(essentialoclcs::TypeNameExpCS): { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { "{" ownedPatternGuard=ExpCS "}" }[?] }[?] }
 		serializationRules[76] = createSerializationRule("TypeNameExpCS-0", 113,
 			createSerializationMatchSteps(
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
-				351		/* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
-				352		/* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : PathNameCS */,
-				353		/* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
-				141		/* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				350		/* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
+				351		/* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : PathNameCS */,
+				352		/* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				140		/* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
 				51		/* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
-				172		/* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
+				171		/* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			),
 			createSerializationSteps(
 				76		/* TypeNameExpCS::ownedPathName=PathNameCS || value */,
@@ -5957,10 +5952,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				58		/* assert |AnnotationCS::ownedContents| == 0 */,
 				59		/* assert |AnnotationCS::ownedReferences| == 0 */,
-				268		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
-				130		/* assign V0 = |NamedElementCS::name| */,
-				148		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
-				192		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
+				267		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
+				129		/* assign V0 = |NamedElementCS::name| */,
+				147		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				191		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -5985,16 +5980,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AnnotationCS-1(basecs::AnnotationCS): { "annotation" name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { "(" ownedDetails+=DetailCS { "," ownedDetails+=DetailCS }[*] ")" }[?] { "{" { ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] } "}" } }
 		serializationRules[82] = createSerializationRule("AnnotationCS-1", 1,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				266		/* check-rule basecs::AnnotationCS.ownedContents : AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */,
-				268		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
-				267		/* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
-				240		/* assign V5 = |AnnotationCS::ownedReferences| */,
-				227		/* assign V4 = |AnnotationCS::ownedContents| */,
-				219		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
-				130		/* assign V0 = |NamedElementCS::name| */,
-				148		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
-				192		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				265		/* check-rule basecs::AnnotationCS.ownedContents : AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */,
+				267		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
+				266		/* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
+				239		/* assign V5 = |AnnotationCS::ownedReferences| */,
+				226		/* assign V4 = |AnnotationCS::ownedContents| */,
+				218		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				129		/* assign V0 = |NamedElementCS::name| */,
+				147		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				191		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6035,16 +6030,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AnnotationCS-2(basecs::AnnotationCS): { "annotation" name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { "(" ownedDetails+=DetailCS { "," ownedDetails+=DetailCS }[*] ")" }[?] { "{" { ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] } "}" } }
 		serializationRules[83] = createSerializationRule("AnnotationCS-2", 1,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				266		/* check-rule basecs::AnnotationCS.ownedContents : AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */,
-				268		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
-				267		/* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
-				240		/* assign V5 = |AnnotationCS::ownedReferences| */,
-				227		/* assign V4 = |AnnotationCS::ownedContents| */,
-				219		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
-				130		/* assign V0 = |NamedElementCS::name| */,
-				148		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
-				192		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				265		/* check-rule basecs::AnnotationCS.ownedContents : AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */,
+				267		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
+				266		/* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
+				239		/* assign V5 = |AnnotationCS::ownedReferences| */,
+				226		/* assign V4 = |AnnotationCS::ownedContents| */,
+				218		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				129		/* assign V0 = |NamedElementCS::name| */,
+				147		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				191		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6085,16 +6080,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AnnotationCS-3(basecs::AnnotationCS): { "annotation" name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { "(" ownedDetails+=DetailCS { "," ownedDetails+=DetailCS }[*] ")" }[?] { "{" { ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] } "}" } }
 		serializationRules[84] = createSerializationRule("AnnotationCS-3", 1,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				266		/* check-rule basecs::AnnotationCS.ownedContents : AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */,
-				268		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
-				267		/* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
-				240		/* assign V5 = |AnnotationCS::ownedReferences| */,
-				227		/* assign V4 = |AnnotationCS::ownedContents| */,
-				219		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
-				130		/* assign V0 = |NamedElementCS::name| */,
-				148		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
-				192		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				265		/* check-rule basecs::AnnotationCS.ownedContents : AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */,
+				267		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
+				266		/* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
+				239		/* assign V5 = |AnnotationCS::ownedReferences| */,
+				226		/* assign V4 = |AnnotationCS::ownedContents| */,
+				218		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				129		/* assign V0 = |NamedElementCS::name| */,
+				147		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				191		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6135,17 +6130,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS-0(basecs::AttributeCS): { { qualifiers+="definition" qualifiers+="static"[?] } "attribute" name=UnrestrictedName { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] "}" }[?] ";" }
 		serializationRules[85] = createSerializationRule("AttributeCS-0", 3,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				91		/* assert |StructuralFeatureCS::ownedDefaultExpressions| == 0 */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				206		/* assign V2 = |StructuralFeatureCS::default| */,
-				173		/* assign V1 = |TypedElementCS::ownedType| */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				205		/* assign V2 = |StructuralFeatureCS::default| */,
+				172		/* assign V1 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				144		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				143		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
 				53		/* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
-				214		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				235		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+				213		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				234		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6182,22 +6176,21 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS-1(basecs::AttributeCS): { { qualifiers+="definition" qualifiers+="static"[?] } "attribute" name=UnrestrictedName { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] "}" }[?] { "{" { { "derivation" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "initial" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] ownedAnnotations+=AnnotationElementCS[*] } "}" } }
 		serializationRules[86] = createSerializationRule("AttributeCS-1", 3,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				287		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				263		/* assign V9 = |ModelElementCS::ownedAnnotations| */,
-				206		/* assign V2 = |StructuralFeatureCS::default| */,
-				173		/* assign V1 = |TypedElementCS::ownedType| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				286		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				262		/* assign V9 = |ModelElementCS::ownedAnnotations| */,
+				205		/* assign V2 = |StructuralFeatureCS::default| */,
+				172		/* assign V1 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				144		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				143		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
 				53		/* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
-				214		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				235		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-				242		/* assign V5 = |StructuralFeatureCS::ownedDefaultExpressions| */,
-				245		/* assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
-				252		/* assign V7 = 0 */,
-				256		/* assign V8 = 0 */
+				213		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				234		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+				241		/* assign V5 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				244		/* assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
+				251		/* assign V7 = 0 */,
+				255		/* assign V8 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6255,17 +6248,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS-2(basecs::AttributeCS): { { qualifiers+="static" qualifiers+="definition"[?] } "attribute" name=UnrestrictedName { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] "}" }[?] ";" }
 		serializationRules[87] = createSerializationRule("AttributeCS-2", 3,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				91		/* assert |StructuralFeatureCS::ownedDefaultExpressions| == 0 */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				206		/* assign V2 = |StructuralFeatureCS::default| */,
-				173		/* assign V1 = |TypedElementCS::ownedType| */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				205		/* assign V2 = |StructuralFeatureCS::default| */,
+				172		/* assign V1 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				143		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				142		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
 				54		/* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
-				214		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				235		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+				213		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				234		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6302,22 +6294,21 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS-3(basecs::AttributeCS): { { qualifiers+="static" qualifiers+="definition"[?] } "attribute" name=UnrestrictedName { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] "}" }[?] { "{" { { "derivation" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "initial" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] ownedAnnotations+=AnnotationElementCS[*] } "}" } }
 		serializationRules[88] = createSerializationRule("AttributeCS-3", 3,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				287		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				263		/* assign V9 = |ModelElementCS::ownedAnnotations| */,
-				206		/* assign V2 = |StructuralFeatureCS::default| */,
-				173		/* assign V1 = |TypedElementCS::ownedType| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				286		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				262		/* assign V9 = |ModelElementCS::ownedAnnotations| */,
+				205		/* assign V2 = |StructuralFeatureCS::default| */,
+				172		/* assign V1 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				143		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				142		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
 				54		/* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
-				214		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				235		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-				242		/* assign V5 = |StructuralFeatureCS::ownedDefaultExpressions| */,
-				245		/* assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
-				252		/* assign V7 = 0 */,
-				256		/* assign V8 = 0 */
+				213		/* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				234		/* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+				241		/* assign V5 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				244		/* assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
+				251		/* assign V7 = 0 */,
+				255		/* assign V8 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6375,15 +6366,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS-4(basecs::AttributeCS): { "attribute" name=UnrestrictedName { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] "}" }[?] ";" }
 		serializationRules[89] = createSerializationRule("AttributeCS-4", 3,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				91		/* assert |StructuralFeatureCS::ownedDefaultExpressions| == 0 */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				169		/* assign V1 = |StructuralFeatureCS::default| */,
-				142		/* assign V0 = |TypedElementCS::ownedType| */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				168		/* assign V1 = |StructuralFeatureCS::default| */,
+				141		/* assign V0 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				197		/* assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				223		/* assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+				196		/* assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				222		/* assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6415,20 +6405,19 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS-5(basecs::AttributeCS): { "attribute" name=UnrestrictedName { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] "}" }[?] { "{" { { "derivation" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "initial" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] ownedAnnotations+=AnnotationElementCS[*] } "}" } }
 		serializationRules[90] = createSerializationRule("AttributeCS-5", 3,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				287		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				257		/* assign V8 = |ModelElementCS::ownedAnnotations| */,
-				169		/* assign V1 = |StructuralFeatureCS::default| */,
-				142		/* assign V0 = |TypedElementCS::ownedType| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				286		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				256		/* assign V8 = |ModelElementCS::ownedAnnotations| */,
+				168		/* assign V1 = |StructuralFeatureCS::default| */,
+				141		/* assign V0 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				197		/* assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				223		/* assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-				232		/* assign V4 = |StructuralFeatureCS::ownedDefaultExpressions| */,
-				238		/* assign V5 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
-				247		/* assign V6 = 0 */,
-				252		/* assign V7 = 0 */
+				196		/* assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				222		/* assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+				231		/* assign V4 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				237		/* assign V5 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
+				246		/* assign V6 = 0 */,
+				251		/* assign V7 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6484,12 +6473,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				65		/* assert |DataTypeCS::isSerializable| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				60		/* assert |ClassCS::ownedConstraints| == 0 */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				200		/* assign V2 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				199		/* assign V2 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				122		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
-				215		/* assign V3 = 0 */
+				121		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				214		/* assign V3 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6522,16 +6511,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[92] = createSerializationRule("DataTypeCS-1", 15,
 			createSerializationMatchSteps(
 				65		/* assert |DataTypeCS::isSerializable| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				269		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				241		/* assign V5 = |ClassCS::ownedConstraints| */,
-				230		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
-				200		/* assign V2 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				268		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				240		/* assign V5 = |ClassCS::ownedConstraints| */,
+				229		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				199		/* assign V2 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				122		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
-				215		/* assign V3 = 0 */
+				121		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				214		/* assign V3 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6576,12 +6565,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				60		/* assert |ClassCS::ownedConstraints| == 0 */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				218		/* assign V3 = |DataTypeCS::isSerializable.'serializable'| */,
-				200		/* assign V2 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				217		/* assign V3 = |DataTypeCS::isSerializable.'serializable'| */,
+				199		/* assign V2 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				122		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */
+				121		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6616,16 +6605,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::DataTypeCS-3(basecs::DataTypeCS): { isPrimitive?="primitive"[?] "datatype" name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ":" instanceClassName=SINGLE_QUOTED_STRING }[?] { "{" isSerializable?="serializable" "}" }[?] { "{" { ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] } "}" } }
 		serializationRules[94] = createSerializationRule("DataTypeCS-3", 15,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				269		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				241		/* assign V5 = |ClassCS::ownedConstraints| */,
-				230		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
-				218		/* assign V3 = |DataTypeCS::isSerializable.'serializable'| */,
-				200		/* assign V2 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				268		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				240		/* assign V5 = |ClassCS::ownedConstraints| */,
+				229		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				217		/* assign V3 = |DataTypeCS::isSerializable.'serializable'| */,
+				199		/* assign V2 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				122		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */
+				121		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6674,12 +6663,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				65		/* assert |DataTypeCS::isSerializable| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				60		/* assert |ClassCS::ownedConstraints| == 0 */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				200		/* assign V2 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				199		/* assign V2 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				122		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
-				215		/* assign V3 = 0 */
+				121		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				214		/* assign V3 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6711,16 +6700,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[96] = createSerializationRule("DataTypeCS-5", 15,
 			createSerializationMatchSteps(
 				65		/* assert |DataTypeCS::isSerializable| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				269		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				241		/* assign V5 = |ClassCS::ownedConstraints| */,
-				230		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
-				200		/* assign V2 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				268		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				240		/* assign V5 = |ClassCS::ownedConstraints| */,
+				229		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				199		/* assign V2 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				122		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
-				215		/* assign V3 = 0 */
+				121		/* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				214		/* assign V3 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6763,7 +6752,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[97] = createSerializationRule("DetailCS-0", 16,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				123		/* assign V0 = |DetailCS::values| */,
+				122		/* assign V0 = |DetailCS::values| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -6782,10 +6771,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				73		/* assert |NamedElementCS::name| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				268		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
-				124		/* assign V0 = |DocumentationCS::value| */,
-				148		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
-				192		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
+				267		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
+				123		/* assign V0 = |DocumentationCS::value| */,
+				147		/* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				191		/* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6814,11 +6803,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				60		/* assert |ClassCS::ownedConstraints| == 0 */,
 				67		/* assert |EnumerationCS::ownedLiterals| == 0 */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				158		/* assign V1 = |ClassCS::instanceClassName| */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				157		/* assign V1 = |ClassCS::instanceClassName| */,
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				198		/* assign V2 = 0 */
+				197		/* assign V2 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6846,17 +6835,17 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[100] = createSerializationRule("EnumerationCS-1", 21,
 			createSerializationMatchSteps(
 				66		/* assert |EnumerationCS::isSerializable| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				269		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
-				272		/* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				241		/* assign V5 = |ClassCS::ownedConstraints| */,
-				229		/* assign V4 = |EnumerationCS::ownedLiterals| */,
-				219		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
-				158		/* assign V1 = |ClassCS::instanceClassName| */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				268		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
+				271		/* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				240		/* assign V5 = |ClassCS::ownedConstraints| */,
+				228		/* assign V4 = |EnumerationCS::ownedLiterals| */,
+				218		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				157		/* assign V1 = |ClassCS::instanceClassName| */,
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				198		/* assign V2 = 0 */
+				197		/* assign V2 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -6902,10 +6891,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				60		/* assert |ClassCS::ownedConstraints| == 0 */,
 				67		/* assert |EnumerationCS::ownedLiterals| == 0 */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				203		/* assign V2 = |EnumerationCS::isSerializable.'serializable'| */,
-				158		/* assign V1 = |ClassCS::instanceClassName| */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				202		/* assign V2 = |EnumerationCS::isSerializable.'serializable'| */,
+				157		/* assign V1 = |ClassCS::instanceClassName| */,
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -6936,16 +6925,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::EnumerationCS-3(basecs::EnumerationCS): { "enum" name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ":" instanceClassName=SINGLE_QUOTED_STRING }[?] { "{" isSerializable?="serializable" "}" }[?] { "{" { ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] } "}" } }
 		serializationRules[102] = createSerializationRule("EnumerationCS-3", 21,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				269		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
-				272		/* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				241		/* assign V5 = |ClassCS::ownedConstraints| */,
-				229		/* assign V4 = |EnumerationCS::ownedLiterals| */,
-				219		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
-				203		/* assign V2 = |EnumerationCS::isSerializable.'serializable'| */,
-				158		/* assign V1 = |ClassCS::instanceClassName| */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				268		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
+				271		/* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				240		/* assign V5 = |ClassCS::ownedConstraints| */,
+				228		/* assign V4 = |EnumerationCS::ownedLiterals| */,
+				218		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				202		/* assign V2 = |EnumerationCS::isSerializable.'serializable'| */,
+				157		/* assign V1 = |ClassCS::instanceClassName| */,
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -6996,11 +6985,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				60		/* assert |ClassCS::ownedConstraints| == 0 */,
 				67		/* assert |EnumerationCS::ownedLiterals| == 0 */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				158		/* assign V1 = |ClassCS::instanceClassName| */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				157		/* assign V1 = |ClassCS::instanceClassName| */,
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				198		/* assign V2 = 0 */
+				197		/* assign V2 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7027,17 +7016,17 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[104] = createSerializationRule("EnumerationCS-5", 21,
 			createSerializationMatchSteps(
 				66		/* assert |EnumerationCS::isSerializable| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				269		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
-				272		/* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				241		/* assign V5 = |ClassCS::ownedConstraints| */,
-				229		/* assign V4 = |EnumerationCS::ownedLiterals| */,
-				219		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
-				158		/* assign V1 = |ClassCS::instanceClassName| */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				268		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
+				271		/* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				240		/* assign V5 = |ClassCS::ownedConstraints| */,
+				228		/* assign V4 = |EnumerationCS::ownedLiterals| */,
+				218		/* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				157		/* assign V1 = |ClassCS::instanceClassName| */,
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				198		/* assign V2 = 0 */
+				197		/* assign V2 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7080,8 +7069,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[105] = createSerializationRule("EnumerationLiteralCS-0", 22,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				161		/* assign V1 = |EnumerationLiteralCS::value| */,
-				125		/* assign V0 = |EnumerationLiteralCS::literal| */,
+				160		/* assign V1 = |EnumerationLiteralCS::value| */,
+				124		/* assign V0 = |EnumerationLiteralCS::literal| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -7104,10 +7093,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::EnumerationLiteralCS-1(basecs::EnumerationLiteralCS): { { "literal" name=UnrestrictedName } { ":" literal=SINGLE_QUOTED_STRING }[?] { "=" value=SIGNED }[?] { "{" ownedAnnotations+=AnnotationElementCS[*] "}" } }
 		serializationRules[106] = createSerializationRule("EnumerationLiteralCS-1", 22,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				204		/* assign V2 = |ModelElementCS::ownedAnnotations| */,
-				161		/* assign V1 = |EnumerationLiteralCS::value| */,
-				125		/* assign V0 = |EnumerationLiteralCS::literal| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				203		/* assign V2 = |ModelElementCS::ownedAnnotations| */,
+				160		/* assign V1 = |EnumerationLiteralCS::value| */,
+				124		/* assign V0 = |EnumerationLiteralCS::literal| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -7137,8 +7126,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[107] = createSerializationRule("EnumerationLiteralCS-2", 22,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				161		/* assign V1 = |EnumerationLiteralCS::value| */,
-				125		/* assign V0 = |EnumerationLiteralCS::literal| */,
+				160		/* assign V1 = |EnumerationLiteralCS::value| */,
+				124		/* assign V0 = |EnumerationLiteralCS::literal| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -7160,10 +7149,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::EnumerationLiteralCS-3(basecs::EnumerationLiteralCS): { name=EnumerationLiteralName { ":" literal=SINGLE_QUOTED_STRING }[?] { "=" value=SIGNED }[?] { "{" ownedAnnotations+=AnnotationElementCS[*] "}" } }
 		serializationRules[108] = createSerializationRule("EnumerationLiteralCS-3", 22,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				204		/* assign V2 = |ModelElementCS::ownedAnnotations| */,
-				161		/* assign V1 = |EnumerationLiteralCS::value| */,
-				125		/* assign V0 = |EnumerationLiteralCS::literal| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				203		/* assign V2 = |ModelElementCS::ownedAnnotations| */,
+				160		/* assign V1 = |EnumerationLiteralCS::value| */,
+				124		/* assign V0 = |EnumerationLiteralCS::literal| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -7191,13 +7180,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ImplicitOppositeCS-0(basecs::ImplicitOppositeCS): { "opposite" name=UnrestrictedName ":" ownedType=TypedMultiplicityRefCS { "{" { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] "}" }[?] }
 		serializationRules[109] = createSerializationRule("ImplicitOppositeCS-0", 37,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 				52		/* assert (|TypedElementCS::ownedType| - 1) == 0 */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				115		/* assign V0 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
-				174		/* assign V1 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
+				114		/* assign V0 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
+				173		/* assign V1 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7224,10 +7212,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[110] = createSerializationRule("ImportCS-0", 38,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				273		/* check-rule basecs::ImportCS.ownedPathName : URIPathNameCS */,
-				162		/* assign V1 = |ImportCS::isAll.'::*'| */,
+				272		/* check-rule basecs::ImportCS.ownedPathName : URIPathNameCS */,
+				161		/* assign V1 = |ImportCS::isAll.'::*'| */,
 				17		/* assert (|ImportCS::ownedPathName| - 1) == 0 */,
-				130		/* assign V0 = |NamedElementCS::name| */
+				129		/* assign V0 = |NamedElementCS::name| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7254,11 +7242,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				63		/* assert |ConstraintCS::ownedSpecification| == 0 */,
-				270		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
-				163		/* assign V1 = |NamedElementCS::name| */,
+				269		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
+				162		/* assign V1 = |NamedElementCS::name| */,
 				7		/* assert (|ConstraintCS::stereotype.'invariant'| - 1) == 0 */,
-				134		/* assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'| */,
-				201		/* assign V2 = |ConstraintCS::ownedMessageSpecification| */
+				133		/* assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'| */,
+				200		/* assign V2 = |ConstraintCS::ownedMessageSpecification| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7289,13 +7277,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[112] = createSerializationRule("InvariantConstraintCS-1", 41,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				270		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
-				271		/* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
-				217		/* assign V3 = |ConstraintCS::ownedSpecification| */,
-				163		/* assign V1 = |NamedElementCS::name| */,
+				269		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
+				270		/* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
+				216		/* assign V3 = |ConstraintCS::ownedSpecification| */,
+				162		/* assign V1 = |NamedElementCS::name| */,
 				7		/* assert (|ConstraintCS::stereotype.'invariant'| - 1) == 0 */,
-				134		/* assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'| */,
-				201		/* assign V2 = |ConstraintCS::ownedMessageSpecification| */
+				133		/* assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'| */,
+				200		/* assign V2 = |ConstraintCS::ownedMessageSpecification| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7331,7 +7319,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ModelElementRefCS-0(basecs::ModelElementRefCS): { "reference" ownedPathName=PathNameCS ";" }
 		serializationRules[113] = createSerializationRule("ModelElementRefCS-0", 54,
 			createSerializationMatchSteps(
-				275		/* check-rule basecs::ModelElementRefCS.ownedPathName : PathNameCS */,
+				274		/* check-rule basecs::ModelElementRefCS.ownedPathName : PathNameCS */,
 				26		/* assert (|ModelElementRefCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -7347,26 +7335,25 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS-0(basecs::OperationCS): { { qualifiers+="definition" qualifiers+="static"[?] } "operation" ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName "(" { ownedParameters+=ParameterCS { "," ownedParameters+=ParameterCS }[*] }[?] ")" { ":" ownedType=TypedMultiplicityRefCS }[?] { "throws" ownedExceptions+=TypedRefCS { "," ownedExceptions+=TypedRefCS }[*] }[?] { "{" { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] "}" }[?] ";" }
 		serializationRules[114] = createSerializationRule("OperationCS-0", 70,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				80		/* assert |OperationCS::ownedBodyExpressions| == 0 */,
 				81		/* assert |OperationCS::ownedPostconditions| == 0 */,
 				82		/* assert |OperationCS::ownedPreconditions| == 0 */,
-				277		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				278		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				233		/* assign V4 = |TypedElementCS::ownedType| */,
+				276		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				277		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				232		/* assign V4 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
-				144		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				143		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
 				53		/* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
-				237		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
-				244		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
-				194		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
-				211		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
-				251		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				259		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				236		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				243		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				193		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				210		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				250		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				258		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7423,31 +7410,30 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS-1(basecs::OperationCS): { { qualifiers+="definition" qualifiers+="static"[?] } "operation" ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName "(" { ownedParameters+=ParameterCS { "," ownedParameters+=ParameterCS }[*] }[?] ")" { ":" ownedType=TypedMultiplicityRefCS }[?] { "throws" ownedExceptions+=TypedRefCS { "," ownedExceptions+=TypedRefCS }[*] }[?] { "{" { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] "}" }[?] { "{" { { "body" ":" ownedBodyExpressions+=SpecificationCS[?] ";" }[*] ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] ownedPostconditions+=PostconditionConstraintCS[*] } "}" } }
 		serializationRules[115] = createSerializationRule("OperationCS-1", 70,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				276		/* check-rule basecs::OperationCS.ownedBodyExpressions : SpecificationCS */,
-				277		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				278		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
-				279		/* check-rule basecs::OperationCS.ownedPostconditions : PostconditionConstraintCS */,
-				280		/* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				191		/* assign V13 = |OperationCS::ownedPostconditions| */,
-				188		/* assign V12 = |OperationCS::ownedPreconditions| */,
-				183		/* assign V11 = |ModelElementCS::ownedAnnotations| */,
-				233		/* assign V4 = |TypedElementCS::ownedType| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				275		/* check-rule basecs::OperationCS.ownedBodyExpressions : SpecificationCS */,
+				276		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				277		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
+				278		/* check-rule basecs::OperationCS.ownedPostconditions : PostconditionConstraintCS */,
+				279		/* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				190		/* assign V13 = |OperationCS::ownedPostconditions| */,
+				187		/* assign V12 = |OperationCS::ownedPreconditions| */,
+				182		/* assign V11 = |ModelElementCS::ownedAnnotations| */,
+				232		/* assign V4 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
-				144		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				143		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
 				53		/* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
-				260		/* assign V9 = (|OperationCS::ownedBodyExpressions| > 0) */,
-				181		/* assign V10 = |OperationCS::ownedBodyExpressions| */,
-				237		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
-				244		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
-				194		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
-				211		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
-				251		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				259		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				259		/* assign V9 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				180		/* assign V10 = |OperationCS::ownedBodyExpressions| */,
+				236		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				243		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				193		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				210		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				250		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				258		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7529,26 +7515,25 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS-2(basecs::OperationCS): { { qualifiers+="static" qualifiers+="definition"[?] } "operation" ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName "(" { ownedParameters+=ParameterCS { "," ownedParameters+=ParameterCS }[*] }[?] ")" { ":" ownedType=TypedMultiplicityRefCS }[?] { "throws" ownedExceptions+=TypedRefCS { "," ownedExceptions+=TypedRefCS }[*] }[?] { "{" { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] "}" }[?] ";" }
 		serializationRules[116] = createSerializationRule("OperationCS-2", 70,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				80		/* assert |OperationCS::ownedBodyExpressions| == 0 */,
 				81		/* assert |OperationCS::ownedPostconditions| == 0 */,
 				82		/* assert |OperationCS::ownedPreconditions| == 0 */,
-				277		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				278		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				233		/* assign V4 = |TypedElementCS::ownedType| */,
+				276		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				277		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				232		/* assign V4 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
-				143		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				142		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
 				54		/* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
-				237		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
-				244		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
-				194		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
-				211		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
-				251		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				259		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				236		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				243		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				193		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				210		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				250		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				258		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7605,31 +7590,30 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS-3(basecs::OperationCS): { { qualifiers+="static" qualifiers+="definition"[?] } "operation" ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName "(" { ownedParameters+=ParameterCS { "," ownedParameters+=ParameterCS }[*] }[?] ")" { ":" ownedType=TypedMultiplicityRefCS }[?] { "throws" ownedExceptions+=TypedRefCS { "," ownedExceptions+=TypedRefCS }[*] }[?] { "{" { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] "}" }[?] { "{" { { "body" ":" ownedBodyExpressions+=SpecificationCS[?] ";" }[*] ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] ownedPostconditions+=PostconditionConstraintCS[*] } "}" } }
 		serializationRules[117] = createSerializationRule("OperationCS-3", 70,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				276		/* check-rule basecs::OperationCS.ownedBodyExpressions : SpecificationCS */,
-				277		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				278		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
-				279		/* check-rule basecs::OperationCS.ownedPostconditions : PostconditionConstraintCS */,
-				280		/* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				191		/* assign V13 = |OperationCS::ownedPostconditions| */,
-				188		/* assign V12 = |OperationCS::ownedPreconditions| */,
-				183		/* assign V11 = |ModelElementCS::ownedAnnotations| */,
-				233		/* assign V4 = |TypedElementCS::ownedType| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				275		/* check-rule basecs::OperationCS.ownedBodyExpressions : SpecificationCS */,
+				276		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				277		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
+				278		/* check-rule basecs::OperationCS.ownedPostconditions : PostconditionConstraintCS */,
+				279		/* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				190		/* assign V13 = |OperationCS::ownedPostconditions| */,
+				187		/* assign V12 = |OperationCS::ownedPreconditions| */,
+				182		/* assign V11 = |ModelElementCS::ownedAnnotations| */,
+				232		/* assign V4 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
-				143		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				142		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
 				54		/* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
-				260		/* assign V9 = (|OperationCS::ownedBodyExpressions| > 0) */,
-				181		/* assign V10 = |OperationCS::ownedBodyExpressions| */,
-				237		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
-				244		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
-				194		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
-				211		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
-				251		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				259		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				259		/* assign V9 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				180		/* assign V10 = |OperationCS::ownedBodyExpressions| */,
+				236		/* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				243		/* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				193		/* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				210		/* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				250		/* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				258		/* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7711,24 +7695,23 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS-4(basecs::OperationCS): { "operation" ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName "(" { ownedParameters+=ParameterCS { "," ownedParameters+=ParameterCS }[*] }[?] ")" { ":" ownedType=TypedMultiplicityRefCS }[?] { "throws" ownedExceptions+=TypedRefCS { "," ownedExceptions+=TypedRefCS }[*] }[?] { "{" { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] "}" }[?] ";" }
 		serializationRules[118] = createSerializationRule("OperationCS-4", 70,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				80		/* assert |OperationCS::ownedBodyExpressions| == 0 */,
 				81		/* assert |OperationCS::ownedPostconditions| == 0 */,
 				82		/* assert |OperationCS::ownedPreconditions| == 0 */,
-				277		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				278		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				222		/* assign V3 = |TypedElementCS::ownedType| */,
+				276		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				277		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				221		/* assign V3 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
-				246		/* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				254		/* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-				225		/* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
-				236		/* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
-				153		/* assign V1 = (|OperationCS::ownedParameters| > 0) */,
-				193		/* assign V2 = (|OperationCS::ownedParameters| - 1) */
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				245		/* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				253		/* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+				224		/* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
+				235		/* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
+				152		/* assign V1 = (|OperationCS::ownedParameters| > 0) */,
+				192		/* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7780,29 +7763,28 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS-5(basecs::OperationCS): { "operation" ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName "(" { ownedParameters+=ParameterCS { "," ownedParameters+=ParameterCS }[*] }[?] ")" { ":" ownedType=TypedMultiplicityRefCS }[?] { "throws" ownedExceptions+=TypedRefCS { "," ownedExceptions+=TypedRefCS }[*] }[?] { "{" { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] "}" }[?] { "{" { { "body" ":" ownedBodyExpressions+=SpecificationCS[?] ";" }[*] ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] ownedPostconditions+=PostconditionConstraintCS[*] } "}" } }
 		serializationRules[119] = createSerializationRule("OperationCS-5", 70,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				276		/* check-rule basecs::OperationCS.ownedBodyExpressions : SpecificationCS */,
-				277		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				278		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
-				279		/* check-rule basecs::OperationCS.ownedPostconditions : PostconditionConstraintCS */,
-				280		/* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				187		/* assign V12 = |OperationCS::ownedPostconditions| */,
-				184		/* assign V11 = |OperationCS::ownedPreconditions| */,
-				180		/* assign V10 = |ModelElementCS::ownedAnnotations| */,
-				222		/* assign V3 = |TypedElementCS::ownedType| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				275		/* check-rule basecs::OperationCS.ownedBodyExpressions : SpecificationCS */,
+				276		/* check-rule basecs::OperationCS.ownedExceptions : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				277		/* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
+				278		/* check-rule basecs::OperationCS.ownedPostconditions : PostconditionConstraintCS */,
+				279		/* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				186		/* assign V12 = |OperationCS::ownedPostconditions| */,
+				183		/* assign V11 = |OperationCS::ownedPreconditions| */,
+				179		/* assign V10 = |ModelElementCS::ownedAnnotations| */,
+				221		/* assign V3 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				140		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
-				255		/* assign V8 = (|OperationCS::ownedBodyExpressions| > 0) */,
-				264		/* assign V9 = |OperationCS::ownedBodyExpressions| */,
-				246		/* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				254		/* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-				225		/* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
-				236		/* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
-				153		/* assign V1 = (|OperationCS::ownedParameters| > 0) */,
-				193		/* assign V2 = (|OperationCS::ownedParameters| - 1) */
+				139		/* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				254		/* assign V8 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				263		/* assign V9 = |OperationCS::ownedBodyExpressions| */,
+				245		/* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				253		/* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+				224		/* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
+				235		/* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
+				152		/* assign V1 = (|OperationCS::ownedParameters| > 0) */,
+				192		/* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7882,8 +7864,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				83		/* assert |PackageCS::ownedClasses| == 0 */,
 				84		/* assert |PackageOwnerCS::ownedPackages| == 0 */,
-				166		/* assign V1 = |PackageCS::nsURI| */,
-				135		/* assign V0 = |PackageCS::nsPrefix| */,
+				165		/* assign V1 = |PackageCS::nsURI| */,
+				134		/* assign V0 = |PackageCS::nsPrefix| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -7906,14 +7888,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::PackageCS-1(basecs::PackageCS): { "package" name=UnrestrictedName { ":" nsPrefix=UnrestrictedName }[?] { "=" nsURI=URI }[?] { "{" { ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] } "}" } }
 		serializationRules[121] = createSerializationRule("PackageCS-1", 71,
 			createSerializationMatchSteps(
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				281		/* check-rule basecs::PackageCS.ownedClasses : ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS */,
-				282		/* check-rule basecs::PackageOwnerCS.ownedPackages : PackageCS */,
-				231		/* assign V4 = |PackageCS::ownedClasses| */,
-				220		/* assign V3 = |PackageOwnerCS::ownedPackages| */,
-				204		/* assign V2 = |ModelElementCS::ownedAnnotations| */,
-				166		/* assign V1 = |PackageCS::nsURI| */,
-				135		/* assign V0 = |PackageCS::nsPrefix| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				280		/* check-rule basecs::PackageCS.ownedClasses : ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS */,
+				281		/* check-rule basecs::PackageOwnerCS.ownedPackages : PackageCS */,
+				230		/* assign V4 = |PackageCS::ownedClasses| */,
+				219		/* assign V3 = |PackageOwnerCS::ownedPackages| */,
+				203		/* assign V2 = |ModelElementCS::ownedAnnotations| */,
+				165		/* assign V1 = |PackageCS::nsURI| */,
+				134		/* assign V0 = |PackageCS::nsPrefix| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -7952,15 +7934,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ParameterCS-0(basecs::ParameterCS): { name=UnrestrictedName { ":" ownedType=TypedMultiplicityRefCS }[?] { "{" { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] "}" }[?] { "{" ownedAnnotations+=AnnotationElementCS[*] "}" }[?] }
 		serializationRules[122] = createSerializationRule("ParameterCS-0", 72,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				142		/* assign V0 = |TypedElementCS::ownedType| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				141		/* assign V0 = |TypedElementCS::ownedType| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				210		/* assign V3 = (|ModelElementCS::ownedAnnotations| > 0) */,
-				230		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
-				156		/* assign V1 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
-				208		/* assign V2 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
+				209		/* assign V3 = (|ModelElementCS::ownedAnnotations| > 0) */,
+				229		/* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				155		/* assign V1 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
+				207		/* assign V2 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -7996,12 +7977,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				79		/* assert |OCLinEcoreConstraintCS::isCallable| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				270		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
-				271		/* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
-				202		/* assign V2 = |ConstraintCS::ownedSpecification| */,
-				130		/* assign V0 = |NamedElementCS::name| */,
+				269		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
+				270		/* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
+				201		/* assign V2 = |ConstraintCS::ownedSpecification| */,
+				129		/* assign V0 = |NamedElementCS::name| */,
 				8		/* assert (|ConstraintCS::stereotype.'postcondition'| - 1) == 0 */,
-				160		/* assign V1 = |ConstraintCS::ownedMessageSpecification| */
+				159		/* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8034,12 +8015,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				79		/* assert |OCLinEcoreConstraintCS::isCallable| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				270		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
-				271		/* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
-				202		/* assign V2 = |ConstraintCS::ownedSpecification| */,
-				130		/* assign V0 = |NamedElementCS::name| */,
+				269		/* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
+				270		/* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
+				201		/* assign V2 = |ConstraintCS::ownedSpecification| */,
+				129		/* assign V0 = |NamedElementCS::name| */,
 				9		/* assert (|ConstraintCS::stereotype.'precondition'| - 1) == 0 */,
-				160		/* assign V1 = |ConstraintCS::ownedMessageSpecification| */
+				159		/* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8070,20 +8051,19 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS-0(basecs::ReferenceCS): { { qualifiers+="definition" qualifiers+="static"[?] } "property" name=UnrestrictedName { "#" referredOpposite=UnrestrictedName }[?] { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] "}" }[?] ";" }
 		serializationRules[125] = createSerializationRule("ReferenceCS-0", 83,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				91		/* assert |StructuralFeatureCS::ownedDefaultExpressions| == 0 */,
 				85		/* assert |ReferenceCS::ownedImplicitOpposites| == 0 */,
 				86		/* assert |ReferenceCS::referredKeys| == 0 */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				221		/* assign V3 = |StructuralFeatureCS::default| */,
-				207		/* assign V2 = |TypedElementCS::ownedType| */,
-				167		/* assign V1 = |ReferenceCS::referredOpposite| */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				220		/* assign V3 = |StructuralFeatureCS::default| */,
+				206		/* assign V2 = |TypedElementCS::ownedType| */,
+				166		/* assign V1 = |ReferenceCS::referredOpposite| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				144		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				143		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
 				53		/* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
-				226		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				243		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				225		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				242		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8125,27 +8105,26 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS-1(basecs::ReferenceCS): { { qualifiers+="definition" qualifiers+="static"[?] } "property" name=UnrestrictedName { "#" referredOpposite=UnrestrictedName }[?] { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] "}" }[?] { "{" { { "derivation" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "initial" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "key" referredKeys+=UnrestrictedName { "," referredKeys+=UnrestrictedName }[*] ";" }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ";" }[*] ownedAnnotations+=AnnotationElementCS[*] } "}" } }
 		serializationRules[126] = createSerializationRule("ReferenceCS-1", 83,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				287		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
-				285		/* check-rule basecs::ReferenceCS.ownedImplicitOpposites : ImplicitOppositeCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				190		/* assign V13 = |ModelElementCS::ownedAnnotations| */,
-				189		/* assign V12 = |ReferenceCS::ownedImplicitOpposites| */,
-				221		/* assign V3 = |StructuralFeatureCS::default| */,
-				207		/* assign V2 = |TypedElementCS::ownedType| */,
-				167		/* assign V1 = |ReferenceCS::referredOpposite| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				286		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
+				284		/* check-rule basecs::ReferenceCS.ownedImplicitOpposites : ImplicitOppositeCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				189		/* assign V13 = |ModelElementCS::ownedAnnotations| */,
+				188		/* assign V12 = |ReferenceCS::ownedImplicitOpposites| */,
+				220		/* assign V3 = |StructuralFeatureCS::default| */,
+				206		/* assign V2 = |TypedElementCS::ownedType| */,
+				166		/* assign V1 = |ReferenceCS::referredOpposite| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				144		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				143		/* assign V0 = |TypedElementCS::qualifiers.'static'| */,
 				53		/* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
-				178		/* assign V10 = (|ReferenceCS::referredKeys| > 0) */,
-				182		/* assign V11 = (|ReferenceCS::referredKeys| - 1) */,
-				226		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				243		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				248		/* assign V6 = |StructuralFeatureCS::ownedDefaultExpressions| */,
-				250		/* assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
-				256		/* assign V8 = 0 */,
-				262		/* assign V9 = 0 */
+				177		/* assign V10 = (|ReferenceCS::referredKeys| > 0) */,
+				181		/* assign V11 = (|ReferenceCS::referredKeys| - 1) */,
+				225		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				242		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				247		/* assign V6 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				249		/* assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
+				255		/* assign V8 = 0 */,
+				261		/* assign V9 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8223,20 +8202,19 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS-2(basecs::ReferenceCS): { { qualifiers+="static" qualifiers+="definition"[?] } "property" name=UnrestrictedName { "#" referredOpposite=UnrestrictedName }[?] { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] "}" }[?] ";" }
 		serializationRules[127] = createSerializationRule("ReferenceCS-2", 83,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				91		/* assert |StructuralFeatureCS::ownedDefaultExpressions| == 0 */,
 				85		/* assert |ReferenceCS::ownedImplicitOpposites| == 0 */,
 				86		/* assert |ReferenceCS::referredKeys| == 0 */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				221		/* assign V3 = |StructuralFeatureCS::default| */,
-				207		/* assign V2 = |TypedElementCS::ownedType| */,
-				167		/* assign V1 = |ReferenceCS::referredOpposite| */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				220		/* assign V3 = |StructuralFeatureCS::default| */,
+				206		/* assign V2 = |TypedElementCS::ownedType| */,
+				166		/* assign V1 = |ReferenceCS::referredOpposite| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				143		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				142		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
 				54		/* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
-				226		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				243		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				225		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				242		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8280,27 +8258,26 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS-3(basecs::ReferenceCS): { { qualifiers+="static" qualifiers+="definition"[?] } "property" name=UnrestrictedName { "#" referredOpposite=UnrestrictedName }[?] { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] "}" }[?] { "{" { { "derivation" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "initial" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "key" referredKeys+=UnrestrictedName { "," referredKeys+=UnrestrictedName }[*] ";" }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ";" }[*] ownedAnnotations+=AnnotationElementCS[*] } "}" } }
 		serializationRules[128] = createSerializationRule("ReferenceCS-3", 83,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				287		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
-				285		/* check-rule basecs::ReferenceCS.ownedImplicitOpposites : ImplicitOppositeCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				190		/* assign V13 = |ModelElementCS::ownedAnnotations| */,
-				189		/* assign V12 = |ReferenceCS::ownedImplicitOpposites| */,
-				221		/* assign V3 = |StructuralFeatureCS::default| */,
-				207		/* assign V2 = |TypedElementCS::ownedType| */,
-				167		/* assign V1 = |ReferenceCS::referredOpposite| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				286		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
+				284		/* check-rule basecs::ReferenceCS.ownedImplicitOpposites : ImplicitOppositeCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				189		/* assign V13 = |ModelElementCS::ownedAnnotations| */,
+				188		/* assign V12 = |ReferenceCS::ownedImplicitOpposites| */,
+				220		/* assign V3 = |StructuralFeatureCS::default| */,
+				206		/* assign V2 = |TypedElementCS::ownedType| */,
+				166		/* assign V1 = |ReferenceCS::referredOpposite| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				143		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				142		/* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
 				54		/* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
-				178		/* assign V10 = (|ReferenceCS::referredKeys| > 0) */,
-				182		/* assign V11 = (|ReferenceCS::referredKeys| - 1) */,
-				226		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				243		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				248		/* assign V6 = |StructuralFeatureCS::ownedDefaultExpressions| */,
-				250		/* assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
-				256		/* assign V8 = 0 */,
-				262		/* assign V9 = 0 */
+				177		/* assign V10 = (|ReferenceCS::referredKeys| > 0) */,
+				181		/* assign V11 = (|ReferenceCS::referredKeys| - 1) */,
+				225		/* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				242		/* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				247		/* assign V6 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				249		/* assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
+				255		/* assign V8 = 0 */,
+				261		/* assign V9 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8378,18 +8355,17 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS-4(basecs::ReferenceCS): { "property" name=UnrestrictedName { "#" referredOpposite=UnrestrictedName }[?] { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] "}" }[?] ";" }
 		serializationRules[129] = createSerializationRule("ReferenceCS-4", 83,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				91		/* assert |StructuralFeatureCS::ownedDefaultExpressions| == 0 */,
 				85		/* assert |ReferenceCS::ownedImplicitOpposites| == 0 */,
 				86		/* assert |ReferenceCS::referredKeys| == 0 */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				206		/* assign V2 = |StructuralFeatureCS::default| */,
-				173		/* assign V1 = |TypedElementCS::ownedType| */,
-				137		/* assign V0 = |ReferenceCS::referredOpposite| */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				205		/* assign V2 = |StructuralFeatureCS::default| */,
+				172		/* assign V1 = |TypedElementCS::ownedType| */,
+				136		/* assign V0 = |ReferenceCS::referredOpposite| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				213		/* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				234		/* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				212		/* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				233		/* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8426,25 +8402,24 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS-5(basecs::ReferenceCS): { "property" name=UnrestrictedName { "#" referredOpposite=UnrestrictedName }[?] { ":" ownedType=TypedMultiplicityRefCS }[?] { "=" default=SINGLE_QUOTED_STRING }[?] { "{" { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] "}" }[?] { "{" { { "derivation" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "initial" ":" ownedDefaultExpressions+=SpecificationCS[?] ";" }[*] { "key" referredKeys+=UnrestrictedName { "," referredKeys+=UnrestrictedName }[*] ";" }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ";" }[*] ownedAnnotations+=AnnotationElementCS[*] } "}" } }
 		serializationRules[130] = createSerializationRule("ReferenceCS-5", 83,
 			createSerializationMatchSteps(
-				97		/* assert |TypedElementCS::isOptional| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				287		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
-				285		/* check-rule basecs::ReferenceCS.ownedImplicitOpposites : ImplicitOppositeCS */,
-				299		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
-				186		/* assign V12 = |ModelElementCS::ownedAnnotations| */,
-				185		/* assign V11 = |ReferenceCS::ownedImplicitOpposites| */,
-				206		/* assign V2 = |StructuralFeatureCS::default| */,
-				173		/* assign V1 = |TypedElementCS::ownedType| */,
-				137		/* assign V0 = |ReferenceCS::referredOpposite| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				286		/* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
+				284		/* check-rule basecs::ReferenceCS.ownedImplicitOpposites : ImplicitOppositeCS */,
+				298		/* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
+				185		/* assign V12 = |ModelElementCS::ownedAnnotations| */,
+				184		/* assign V11 = |ReferenceCS::ownedImplicitOpposites| */,
+				205		/* assign V2 = |StructuralFeatureCS::default| */,
+				172		/* assign V1 = |TypedElementCS::ownedType| */,
+				136		/* assign V0 = |ReferenceCS::referredOpposite| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				261		/* assign V9 = (|ReferenceCS::referredKeys| > 0) */,
-				177		/* assign V10 = (|ReferenceCS::referredKeys| - 1) */,
-				213		/* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				234		/* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				242		/* assign V5 = |StructuralFeatureCS::ownedDefaultExpressions| */,
-				245		/* assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
-				252		/* assign V7 = 0 */,
-				256		/* assign V8 = 0 */
+				260		/* assign V9 = (|ReferenceCS::referredKeys| > 0) */,
+				176		/* assign V10 = (|ReferenceCS::referredKeys| - 1) */,
+				212		/* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				233		/* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				241		/* assign V5 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				244		/* assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
+				251		/* assign V7 = 0 */,
+				255		/* assign V8 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8519,7 +8494,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			createSerializationMatchSteps(
 				90		/* assert |SpecificationCS::exprString| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				319		/* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
+				318		/* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */,
 				11		/* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -8551,16 +8526,16 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				92		/* assert |StructuredClassCS::ownedMetaclass| == 0 */,
 				93		/* assert |StructuredClassCS::ownedOperations| == 0 */,
 				94		/* assert |StructuredClassCS::ownedProperties| == 0 */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				290		/* check-rule basecs::StructuredClassCS.ownedSuperTypes : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				228		/* assign V4 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				289		/* check-rule basecs::StructuredClassCS.ownedSuperTypes : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				227		/* assign V4 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				139		/* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
-				239		/* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
-				249		/* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
-				195		/* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
-				212		/* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
+				138		/* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
+				238		/* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
+				248		/* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
+				194		/* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
+				211		/* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8606,24 +8581,24 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[134] = createSerializationRule("StructuredClassCS-1", 97,
 			createSerializationMatchSteps(
 				92		/* assert |StructuredClassCS::ownedMetaclass| == 0 */,
-				274		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
-				269		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
-				288		/* check-rule basecs::StructuredClassCS.ownedOperations : OperationCS */,
-				289		/* check-rule basecs::StructuredClassCS.ownedProperties : AttributeCS|ReferenceCS|StructuralFeatureCS */,
-				295		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
-				290		/* check-rule basecs::StructuredClassCS.ownedSuperTypes : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
-				179		/* assign V10 = |ClassCS::ownedConstraints| */,
-				265		/* assign V9 = |StructuredClassCS::ownedProperties| */,
-				258		/* assign V8 = |StructuredClassCS::ownedOperations| */,
-				253		/* assign V7 = |ModelElementCS::ownedAnnotations| */,
-				228		/* assign V4 = |ClassCS::instanceClassName| */,
-				171		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				273		/* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */,
+				268		/* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
+				287		/* check-rule basecs::StructuredClassCS.ownedOperations : OperationCS */,
+				288		/* check-rule basecs::StructuredClassCS.ownedProperties : AttributeCS|ReferenceCS|StructuralFeatureCS */,
+				294		/* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
+				289		/* check-rule basecs::StructuredClassCS.ownedSuperTypes : CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */,
+				178		/* assign V10 = |ClassCS::ownedConstraints| */,
+				264		/* assign V9 = |StructuredClassCS::ownedProperties| */,
+				257		/* assign V8 = |StructuredClassCS::ownedOperations| */,
+				252		/* assign V7 = |ModelElementCS::ownedAnnotations| */,
+				227		/* assign V4 = |ClassCS::instanceClassName| */,
+				170		/* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				30		/* assert (|NamedElementCS::name| - 1) == 0 */,
-				139		/* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
-				239		/* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
-				249		/* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
-				195		/* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
-				212		/* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
+				138		/* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
+				238		/* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
+				248		/* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
+				194		/* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
+				211		/* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8692,8 +8667,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				73		/* assert |NamedElementCS::name| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				95		/* assert |SysMLCS::value| == 0 */,
-				268		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
-				118		/* assign V0 = |AnnotationElementCS::ownedDetails| */
+				267		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
+				117		/* assign V0 = |AnnotationElementCS::ownedDetails| */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8715,7 +8690,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				73		/* assert |NamedElementCS::name| == 0 */,
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
 				95		/* assert |SysMLCS::value| == 0 */,
-				268		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
+				267		/* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 				1		/* assert (|AnnotationElementCS::ownedDetails| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -8733,8 +8708,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[137] = createSerializationRule("TemplateSignatureCS-0", 101,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				294		/* check-rule basecs::TemplateSignatureCS.ownedParameters : TypeParameterCS */,
-				111		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
+				293		/* check-rule basecs::TemplateSignatureCS.ownedParameters : TypeParameterCS */,
+				110		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8754,8 +8729,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[138] = createSerializationRule("TemplateSignatureCS-1", 101,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				294		/* check-rule basecs::TemplateSignatureCS.ownedParameters : TypeParameterCS */,
-				111		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
+				293		/* check-rule basecs::TemplateSignatureCS.ownedParameters : TypeParameterCS */,
+				110		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8775,11 +8750,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		serializationRules[139] = createSerializationRule("TopLevelCS-0", 102,
 			createSerializationMatchSteps(
 				71		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
-				286		/* check-rule basecs::RootCS.ownedImports : ImportCS */,
-				282		/* check-rule basecs::PackageOwnerCS.ownedPackages : PackageCS */,
-				205		/* assign V2 = |PackageOwnerCS::ownedPackages| */,
-				168		/* assign V1 = |RootCS::ownedImports| */,
-				116		/* assign V0 = 0 */
+				285		/* check-rule basecs::RootCS.ownedImports : ImportCS */,
+				281		/* check-rule basecs::PackageOwnerCS.ownedPackages : PackageCS */,
+				204		/* assign V2 = |PackageOwnerCS::ownedPackages| */,
+				167		/* assign V1 = |RootCS::ownedImports| */,
+				115		/* assign V0 = 0 */
 			),
 			createSerializationSteps(
 				259		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
@@ -8801,8 +8776,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS-0(basecs::PrimitiveTypeRefCS): { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[140] = createSerializationRule("TypedMultiplicityRefCS-0", 116,
 			createSerializationMatchSteps(
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				145		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				144		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				44		/* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -8819,11 +8794,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS-1(basecs::TypedTypeRefCS): { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[141] = createSerializationRule("TypedMultiplicityRefCS-1", 116,
 			createSerializationMatchSteps(
-				100		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
-				101		/* assert |TypedTypeRefCS::ownedBinding| == 0 */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				302		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
-				145		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				99		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
+				100		/* assert |TypedTypeRefCS::ownedBinding| == 0 */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				301		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
+				144		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				56		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
@@ -8842,11 +8817,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS-2(basecs::TypedTypeRefCS): { { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" } } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[142] = createSerializationRule("TypedMultiplicityRefCS-2", 116,
 			createSerializationMatchSteps(
-				100		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
-				301		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				302		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
-				145		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				99		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
+				300		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				301		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
+				144		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				55		/* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				56		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			),
@@ -8872,11 +8847,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS-3(basecs::TypedTypeRefCS): { { ownedPathName=PathNameCS { "<" ownedBinding=TemplateBindingCS ">" } } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[143] = createSerializationRule("TypedMultiplicityRefCS-3", 116,
 			createSerializationMatchSteps(
-				100		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
-				301		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				302		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
-				145		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				99		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
+				300		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				301		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
+				144		/* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				55		/* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				56		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			),
@@ -8902,13 +8877,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS-4(essentialoclcs::CollectionTypeCS): { { name=CollectionTypeIdentifier { "(" ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[144] = createSerializationRule("TypedMultiplicityRefCS-4", 116,
 			createSerializationMatchSteps(
-				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				316		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
-				209		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
-				121		/* assign V0 = |CollectionTypeCS::ownedType| */,
+				314		/* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				315		/* check-rule essentialoclcs::CollectionTypeCS.ownedType : CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */,
+				208		/* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				120		/* assign V0 = |CollectionTypeCS::ownedType| */,
 				6		/* assert (|CollectionTypeCS::name| - 1) == 0 */,
-				159		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
+				158		/* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			),
 			createSerializationSteps(
 				14		/* CollectionTypeCS::name=CollectionTypeIdentifier || soft-space value soft-space */,
@@ -8936,11 +8911,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS-5(essentialoclcs::MapTypeCS): { { name="Map" { "(" ownedKeyType=TypeExpCS "," ownedValueType=TypeExpCS ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[145] = createSerializationRule("TypedMultiplicityRefCS-5", 116,
 			createSerializationMatchSteps(
-				335		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				336		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
-				175		/* assign V1 = |TypedRefCS::ownedMultiplicity| */,
-				128		/* assign V0 = |MapTypeCS::ownedValueType| */,
+				334		/* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				335		/* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
+				174		/* assign V1 = |TypedRefCS::ownedMultiplicity| */,
+				127		/* assign V0 = |MapTypeCS::ownedValueType| */,
 				25		/* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				24		/* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			),
@@ -8972,13 +8947,13 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS-6(basecs::TupleTypeCS): { { name="Tuple" { "(" { ownedParts+=TuplePartCS { "," ownedParts+=TuplePartCS }[*] }[?] ")" }[?] } ownedMultiplicity=MultiplicityCS[?] }
 		serializationRules[146] = createSerializationRule("TypedMultiplicityRefCS-6", 116,
 			createSerializationMatchSteps(
-				300		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
-				296		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
-				224		/* assign V3 = |TypedRefCS::ownedMultiplicity| */,
+				299		/* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
+				295		/* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
+				223		/* assign V3 = |TypedRefCS::ownedMultiplicity| */,
 				49		/* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
-				113		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
-				154		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
-				196		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
+				112		/* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				153		/* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				195		/* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			),
 			createSerializationSteps(
 				17		/* TupleTypeCS::name='Tuple' || soft-space value soft-space */,
@@ -9007,10 +8982,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedTypeRefCS-0(basecs::TypedTypeRefCS): { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" } }
 		serializationRules[147] = createSerializationRule("TypedTypeRefCS-0", 118,
 			createSerializationMatchSteps(
-				100		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
-				301		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
-				302		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
+				99		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				300		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
+				301		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 				55		/* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				56		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			),
@@ -9031,10 +9006,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedTypeRefCS-1(basecs::TypedTypeRefCS): { ownedPathName=PathNameCS { "<" ownedBinding=TemplateBindingCS ">" } }
 		serializationRules[148] = createSerializationRule("TypedTypeRefCS-1", 118,
 			createSerializationMatchSteps(
-				100		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
-				301		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
-				302		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
+				99		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				300		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
+				301		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 				55		/* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				56		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			),
@@ -9055,10 +9030,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedTypeRefCS-2(basecs::TypedTypeRefCS): ownedPathName=PathNameCS
 		serializationRules[149] = createSerializationRule("TypedTypeRefCS-2", 118,
 			createSerializationMatchSteps(
-				100		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
-				101		/* assert |TypedTypeRefCS::ownedBinding| == 0 */,
-				99		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
-				302		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
+				99		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
+				100		/* assert |TypedTypeRefCS::ownedBinding| == 0 */,
+				98		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				301		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 				56		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			),
 			createSerializationSteps(
