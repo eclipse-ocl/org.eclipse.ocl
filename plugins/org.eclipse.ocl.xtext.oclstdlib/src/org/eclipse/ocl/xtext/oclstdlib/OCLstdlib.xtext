@@ -142,7 +142,7 @@ LibIterationCS returns LibIterationCS:
 	(ownedSignature=TemplateSignatureCS)?
 	'(' ownedIterators+=IteratorCS (',' ownedIterators+=IteratorCS)*
 	(';' ownedAccumulator=AccumulatorCS)?
-	('|' ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)?
+	('|' ownedParameters+=LambdaParameterCS (',' ownedParameters+=LambdaParameterCS)*)?
 	')'
 	':' ownedType=TypedMultiplicityRefCS
 	(isInvalidating?='invalidating')?
@@ -159,14 +159,18 @@ IteratorCS returns base::ParameterCS:
 	name=Identifier ':' ownedType=TypedMultiplicityRefCS
 ;
 
-LambdaTypeCS returns base::LambdaTypeCS:
-	name='Lambda' (ownedSignature=TemplateSignatureCS)? ownedContextType=LambdaContextTypeRefCS
-	'(' (ownedParameterTypes+=TypedMultiplicityRefCS (',' ownedParameterTypes+=TypedMultiplicityRefCS)*)? ')'
-	':' ownedResultType=TypedRefCS
+/* NB LambdaParameterCS is a LibIterationCS child adding names to a LambdaTypeCS; it maps to Parameter.
+ * LambdaParameter is a LambdaType child supporting the nested parametrers */
+LambdaParameterCS returns base::LambdaParameterCS:
+	name=Identifier ':' 'Lambda' ownedContextType=TypedMultiplicityRefCS
+	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')'
+	':' ownedType=TypedMultiplicityRefCS
 ;
 
-LambdaContextTypeRefCS returns base::TypedTypeRefCS:
-	ownedPathName=LibPathNameCS
+LambdaTypeCS returns base::LambdaTypeCS:
+	name='Lambda' (ownedSignature=TemplateSignatureCS)? ownedContextType=TypedMultiplicityRefCS
+	'(' (ownedParameterTypes+=TypedMultiplicityRefCS (',' ownedParameterTypes+=TypedMultiplicityRefCS)*)? ')'
+	':' ownedResultType=TypedMultiplicityRefCS
 ;
 
 OperationCS returns base::OperationCS:

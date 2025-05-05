@@ -136,6 +136,9 @@ public class OCLstdlibParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_13(), "rule__LibIterationCS__Group_13__0");
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_14_0(), "rule__LibIterationCS__Group_14_0__0");
 			builder.put(grammarAccess.getIteratorCSAccess().getGroup(), "rule__IteratorCS__Group__0");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getGroup(), "rule__LambdaParameterCS__Group__0");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getGroup_5(), "rule__LambdaParameterCS__Group_5__0");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getGroup_5_1(), "rule__LambdaParameterCS__Group_5_1__0");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getGroup(), "rule__LambdaTypeCS__Group__0");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getGroup_4(), "rule__LambdaTypeCS__Group_4__0");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getGroup_4_1(), "rule__LambdaTypeCS__Group_4_1__0");
@@ -327,13 +330,17 @@ public class OCLstdlibParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedPostconditionsAssignment_14_0_1_2(), "rule__LibIterationCS__OwnedPostconditionsAssignment_14_0_1_2");
 			builder.put(grammarAccess.getIteratorCSAccess().getNameAssignment_0(), "rule__IteratorCS__NameAssignment_0");
 			builder.put(grammarAccess.getIteratorCSAccess().getOwnedTypeAssignment_2(), "rule__IteratorCS__OwnedTypeAssignment_2");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getNameAssignment_0(), "rule__LambdaParameterCS__NameAssignment_0");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getOwnedContextTypeAssignment_3(), "rule__LambdaParameterCS__OwnedContextTypeAssignment_3");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getOwnedParametersAssignment_5_0(), "rule__LambdaParameterCS__OwnedParametersAssignment_5_0");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getOwnedParametersAssignment_5_1_1(), "rule__LambdaParameterCS__OwnedParametersAssignment_5_1_1");
+			builder.put(grammarAccess.getLambdaParameterCSAccess().getOwnedTypeAssignment_8(), "rule__LambdaParameterCS__OwnedTypeAssignment_8");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getNameAssignment_0(), "rule__LambdaTypeCS__NameAssignment_0");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getOwnedSignatureAssignment_1(), "rule__LambdaTypeCS__OwnedSignatureAssignment_1");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getOwnedContextTypeAssignment_2(), "rule__LambdaTypeCS__OwnedContextTypeAssignment_2");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getOwnedParameterTypesAssignment_4_0(), "rule__LambdaTypeCS__OwnedParameterTypesAssignment_4_0");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getOwnedParameterTypesAssignment_4_1_1(), "rule__LambdaTypeCS__OwnedParameterTypesAssignment_4_1_1");
 			builder.put(grammarAccess.getLambdaTypeCSAccess().getOwnedResultTypeAssignment_7(), "rule__LambdaTypeCS__OwnedResultTypeAssignment_7");
-			builder.put(grammarAccess.getLambdaContextTypeRefCSAccess().getOwnedPathNameAssignment(), "rule__LambdaContextTypeRefCS__OwnedPathNameAssignment");
 			builder.put(grammarAccess.getLibOperationCSAccess().getIsStaticAssignment_0(), "rule__LibOperationCS__IsStaticAssignment_0");
 			builder.put(grammarAccess.getLibOperationCSAccess().getNameAssignment_2(), "rule__LibOperationCS__NameAssignment_2");
 			builder.put(grammarAccess.getLibOperationCSAccess().getOwnedSignatureAssignment_3(), "rule__LibOperationCS__OwnedSignatureAssignment_3");

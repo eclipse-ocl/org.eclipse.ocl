@@ -133,6 +133,11 @@ public abstract class AbstractExtendingBaseCSVisitor<R, C>
 	}
 
 	@Override
+	public R visitLambdaParameterCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaParameterCS object) {
+		return visitParameterCS(object);
+	}
+
+	@Override
 	public R visitLambdaTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull LambdaTypeCS object) {
 		return visitTypedRefCS(object);
 	}
