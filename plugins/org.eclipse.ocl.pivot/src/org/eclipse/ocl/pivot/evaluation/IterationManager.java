@@ -52,6 +52,11 @@ public interface IterationManager
 	@Nullable Object evaluateBody();
 
 	/**
+	 * @since 7.0
+	 */
+	@Nullable Object evaluateBody(int bodyIndex);
+
+	/**
 	 * Get the current state of the iterator.
 	 * <br>
 	 * This is only supported for single iterator iterations.

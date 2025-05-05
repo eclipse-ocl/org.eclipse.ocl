@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -270,6 +271,13 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 	@Override
 	public @Nullable Object evaluateBody() {
 		return executor.evaluate(body);
+	}
+
+	@Override
+	public @Nullable Object evaluateBody(int bodyIndex) {
+		OCLExpression indexedBody = ((IterateExp)callExp).getOwnedBodies().get(bodyIndex);
+		assert indexedBody != null;
+		return executor.evaluate(indexedBody);
 	}
 
 	@Override
