@@ -87,6 +87,12 @@
       eSuperTypes="#//ElementCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementation" eType="#//JavaClassCS"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LambdaParameterCS" eSuperTypes="#//ParameterCS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedContextType" eType="#//TypedRefCS"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameters" upperBound="-1"
+        eType="#//ParameterCS" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LambdaTypeCS" eSuperTypes="#//TypedRefCS #//TemplateableElementCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedContextType" eType="#//TypedRefCS"

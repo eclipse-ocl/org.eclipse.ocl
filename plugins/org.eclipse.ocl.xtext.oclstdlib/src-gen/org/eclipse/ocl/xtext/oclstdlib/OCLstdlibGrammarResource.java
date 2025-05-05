@@ -105,7 +105,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_ImportCS = createParserRule("ImportCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPORT_CS));
 		private static final @NonNull ParserRule PR_InvCS = createParserRule("InvCS", createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.LIB_CONSTRAINT_CS));
 		private static final @NonNull ParserRule PR_IteratorCS = createParserRule("IteratorCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PARAMETER_CS));
-		private static final @NonNull ParserRule PR_LambdaContextTypeRefCS = createParserRule("LambdaContextTypeRefCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS));
+		private static final @NonNull ParserRule PR_LambdaParameterCS = createParserRule("LambdaParameterCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.LAMBDA_PARAMETER_CS));
 		private static final @NonNull ParserRule PR_LambdaTypeCS = createParserRule("LambdaTypeCS", createTypeRef(MM_base, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.LAMBDA_TYPE_CS));
 		private static final @NonNull ParserRule PR_LibClassCS = createParserRule("LibClassCS", createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.LIB_CLASS_CS));
 		private static final @NonNull ParserRule PR_LibCoercionCS = createParserRule("LibCoercionCS", createTypeRef(MM, org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage.Literals.LIB_COERCION_CS));
@@ -220,13 +220,26 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					createAssignment("name", "=", createRuleCall(PR_Identifier)),
 					createKeyword(":"),
 					createAssignment("ownedType", "=", createRuleCall(PR_TypedMultiplicityRefCS))));
-			PR_LambdaContextTypeRefCS.setAlternatives(
-				createAssignment("ownedPathName", "=", createRuleCall(PR_LibPathNameCS)));
+			PR_LambdaParameterCS.setAlternatives(
+				createGroup(
+					createAssignment("name", "=", createRuleCall(PR_Identifier)),
+					createKeyword(":"),
+					createKeyword("Lambda"),
+					createAssignment("ownedContextType", "=", createRuleCall(PR_TypedMultiplicityRefCS)),
+					createKeyword("("),
+					setCardinality("?", createGroup(
+						createAssignment("ownedParameters", "+=", createRuleCall(PR_ParameterCS)),
+						setCardinality("*", createGroup(
+							createKeyword(","),
+							createAssignment("ownedParameters", "+=", createRuleCall(PR_ParameterCS)))))),
+					createKeyword(")"),
+					createKeyword(":"),
+					createAssignment("ownedType", "=", createRuleCall(PR_TypedMultiplicityRefCS))));
 			PR_LambdaTypeCS.setAlternatives(
 				createGroup(
 					createAssignment("name", "=", createKeyword("Lambda")),
 					setCardinality("?", createAssignment("ownedSignature", "=", createRuleCall(_Base.PR_TemplateSignatureCS))),
-					createAssignment("ownedContextType", "=", createRuleCall(PR_LambdaContextTypeRefCS)),
+					createAssignment("ownedContextType", "=", createRuleCall(PR_TypedMultiplicityRefCS)),
 					createKeyword("("),
 					setCardinality("?", createGroup(
 						createAssignment("ownedParameterTypes", "+=", createRuleCall(PR_TypedMultiplicityRefCS)),
@@ -235,7 +248,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 							createAssignment("ownedParameterTypes", "+=", createRuleCall(PR_TypedMultiplicityRefCS)))))),
 					createKeyword(")"),
 					createKeyword(":"),
-					createAssignment("ownedResultType", "=", createRuleCall(PR_TypedRefCS))));
+					createAssignment("ownedResultType", "=", createRuleCall(PR_TypedMultiplicityRefCS))));
 			PR_LibClassCS.setAlternatives(
 				createGroup(
 					setCardinality("?", createAssignment("isAbstract", "?=", createKeyword("abstract"))),
@@ -299,10 +312,10 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 						createAssignment("ownedAccumulator", "=", createRuleCall(PR_AccumulatorCS)))),
 					setCardinality("?", createGroup(
 						createKeyword("|"),
-						createAssignment("ownedParameters", "+=", createRuleCall(PR_ParameterCS)),
+						createAssignment("ownedParameters", "+=", createRuleCall(PR_LambdaParameterCS)),
 						setCardinality("*", createGroup(
 							createKeyword(","),
-							createAssignment("ownedParameters", "+=", createRuleCall(PR_ParameterCS)))))),
+							createAssignment("ownedParameters", "+=", createRuleCall(PR_LambdaParameterCS)))))),
 					createKeyword(")"),
 					createKeyword(":"),
 					createAssignment("ownedType", "=", createRuleCall(PR_TypedMultiplicityRefCS)),
@@ -578,8 +591,8 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 				rules.add(PR_LibCoercionCS);
 				rules.add(PR_LibIterationCS);
 				rules.add(PR_IteratorCS);
+				rules.add(PR_LambdaParameterCS);
 				rules.add(PR_LambdaTypeCS);
-				rules.add(PR_LambdaContextTypeRefCS);
 				rules.add(PR_OperationCS);
 				rules.add(PR_LibOperationCS);
 				rules.add(PR_LibOppositeCS);

@@ -174,6 +174,11 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 				return createJavaImplementationCSAdapter();
 			}
 			@Override
+			public Adapter caseLambdaParameterCS(LambdaParameterCS object)
+			{
+				return createLambdaParameterCSAdapter();
+			}
+			@Override
 			public Adapter caseLambdaTypeCS(LambdaTypeCS object)
 			{
 				return createLambdaTypeCSAdapter();
@@ -659,6 +664,21 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createJavaImplementationCSAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.LambdaParameterCS <em>Lambda Parameter CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.basecs.LambdaParameterCS
+	 * @generated
+	 */
+	public Adapter createLambdaParameterCSAdapter()
 	{
 		return null;
 	}

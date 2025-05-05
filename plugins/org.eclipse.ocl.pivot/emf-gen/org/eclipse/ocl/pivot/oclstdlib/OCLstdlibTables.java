@@ -463,12 +463,13 @@ public class OCLstdlibTables extends AbstractTables
 			Init.initStart();
 			Fragments.init();
 		}
-		public static final @NonNull ExecutorLambdaParameter _result_$$1_T = new ExecutorLambdaParameter("result", TypeParameters.$$1, true);
-		public static final @NonNull ExecutorLambdaParameter _result_$$2_T = new ExecutorLambdaParameter("result", TypeParameters.$$2, true);
+		public static final @NonNull ExecutorLambdaParameter _result_$$1_F = new ExecutorLambdaParameter("result", TypeParameters.$$1, false);
+		public static final @NonNull ExecutorLambdaParameter _result_$$2_F = new ExecutorLambdaParameter("result", TypeParameters.$$2, false);
+		public static final @NonNull ExecutorLambdaParameter _result_Boolean_F = new ExecutorLambdaParameter("result", OCLstdlibTables.Types._Boolean, false);
 		public static final @NonNull ExecutorLambdaParameter _result_Boolean_T = new ExecutorLambdaParameter("result", OCLstdlibTables.Types._Boolean, true);
 		public static final @NonNull ExecutorLambdaParameter _result_Collection__$$1___T = new ExecutorLambdaParameter("result", new ExecutorSpecializedType(TypeId.COLLECTION, TypeParameters.$$1), true);
-		public static final @NonNull ExecutorLambdaParameter _result_OclAny_T = new ExecutorLambdaParameter("result", OCLstdlibTables.Types._OclAny, true);
-		public static final @NonNull ExecutorLambdaParameter _result_OclComparable_T = new ExecutorLambdaParameter("result", OCLstdlibTables.Types._OclComparable, true);
+		public static final @NonNull ExecutorLambdaParameter _result_OclAny_F = new ExecutorLambdaParameter("result", OCLstdlibTables.Types._OclAny, false);
+		public static final @NonNull ExecutorLambdaParameter _result_OclComparable_F = new ExecutorLambdaParameter("result", OCLstdlibTables.Types._OclComparable, false);
 		public static final @NonNull ExecutorLambdaParameter _result_OrderedCollection__$$1___T = new ExecutorLambdaParameter("result", new ExecutorSpecializedType(TypeId.ORDERED_COLLECTION, TypeParameters.$$1), true);
 		public static final @NonNull ExecutorLambdaParameter _self_$$0_T = new ExecutorLambdaParameter("self", TypeParameters.$$0, true);
 		public static final @NonNull ExecutorLambdaParameter _self_$$1_T = new ExecutorLambdaParameter("self", TypeParameters.$$1, true);
@@ -483,11 +484,12 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ParameterTypes _Integer = new ParameterTypes(OCLstdlibTables.Types._Integer);
 		public static final @NonNull ParameterTypes _Integer___$$0 = new ParameterTypes(OCLstdlibTables.Types._Integer, TypeParameters.$$0);
 		public static final @NonNull ParameterTypes _Integer___Integer = new ParameterTypes(OCLstdlibTables.Types._Integer, OCLstdlibTables.Types._Integer);
-		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_$$1_T = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_$$1_T));
-		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_$$2_T = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_$$2_T));
+		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_$$1_F = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_$$1_F));
+		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_$$2_F = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_$$2_F));
+		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_Boolean_F = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_Boolean_F));
 		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_Boolean_T = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_Boolean_T));
-		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_OclAny_T = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_OclAny_T));
-		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_OclComparable_T = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_OclComparable_T));
+		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_OclAny_F = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_OclAny_F));
+		public static final @NonNull ParameterTypes _Lambda_self_$$0_T_result_OclComparable_F = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$0_T, _result_OclComparable_F));
 		public static final @NonNull ParameterTypes _Lambda_self_$$1_T_result_Collection__$$1___T = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$1_T, _result_Collection__$$1___T));
 		public static final @NonNull ParameterTypes _Lambda_self_$$1_T_result_OrderedCollection__$$1___T = new ParameterTypes(new ExecutorLambdaType("Lambda", _self_$$1_T, _result_OrderedCollection__$$1___T));
 		public static final @NonNull ParameterTypes _Map__$$2_$$3__ = new ParameterTypes(new ExecutorSpecializedType(TypeId.MAP, TypeParameters.$$2, TypeParameters.$$3));
@@ -551,9 +553,9 @@ public class OCLstdlibTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Bag__closure = new ExecutorOperation("closure", Parameters._Lambda_self_$$1_T_result_Collection__$$1___T, Types._Bag,
 			2, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Bag__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Bag,
+		public static final @NonNull ExecutorOperation _Bag__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Bag,
 			3, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Bag__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Bag,
+		public static final @NonNull ExecutorOperation _Bag__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Bag,
 			4, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Bag__excluding = new ExecutorOperation("excluding", Parameters._$$0, Types._Bag,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
@@ -573,7 +575,7 @@ public class OCLstdlibTables extends AbstractTables
 			12, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Bag__selectByType = new ExecutorOperation("selectByType", Parameters._$$1, Types._Bag,
 			13, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Bag__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_T, Types._Bag,
+		public static final @NonNull ExecutorOperation _Bag__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_F, Types._Bag,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Boolean___lt__gt_ = new ExecutorOperation("<>", Parameters._OclSelf, Types._Boolean,
@@ -619,11 +621,11 @@ public class OCLstdlibTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__asSet = new ExecutorOperation("asSet", ParameterTypes.EMPTY_LIST, Types._Collection,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Collection,
 			7, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__collectBy = new ExecutorOperation("collectBy", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__collectBy = new ExecutorOperation("collectBy", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Collection,
 			8, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Collection,
 			9, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__count = new ExecutorOperation("count", Parameters._$$0, Types._Collection,
 			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
@@ -635,19 +637,19 @@ public class OCLstdlibTables extends AbstractTables
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__excludingAll = new ExecutorOperation("excludingAll", Parameters._Collection__$$0__, Types._Collection,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__2_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__2_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Collection,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__1_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__1_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Collection,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__0_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__0_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Collection,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__flatten = new ExecutorOperation("flatten", ParameterTypes.EMPTY_LIST, Types._Collection,
 			18, new TemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__2_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__2_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Collection,
 			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Collection,
 			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__0_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__0_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Collection,
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__includes = new ExecutorOperation("includes", Parameters._$$0, Types._Collection,
 			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
@@ -663,9 +665,9 @@ public class OCLstdlibTables extends AbstractTables
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__isEmpty = new ExecutorOperation("isEmpty", ParameterTypes.EMPTY_LIST, Types._Collection,
 			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__isUnique = new ExecutorOperation("isUnique", Parameters._Lambda_self_$$0_T_result_OclAny_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__isUnique = new ExecutorOperation("isUnique", Parameters._Lambda_self_$$0_T_result_OclAny_F, Types._Collection,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__iterate = new ExecutorOperation("iterate", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__iterate = new ExecutorOperation("iterate", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Collection,
 			30, new TemplateParameters(TypeParameters._1_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__max = new ExecutorOperation("max", ParameterTypes.EMPTY_LIST, Types._Collection,
 			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
@@ -687,7 +689,7 @@ public class OCLstdlibTables extends AbstractTables
 			39, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__size = new ExecutorOperation("size", ParameterTypes.EMPTY_LIST, Types._Collection,
 			40, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Collection__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_T, Types._Collection,
+		public static final @NonNull ExecutorOperation _Collection__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_F, Types._Collection,
 			41, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Collection__sum = new ExecutorOperation("sum", ParameterTypes.EMPTY_LIST, Types._Collection,
 			42, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
@@ -727,11 +729,11 @@ public class OCLstdlibTables extends AbstractTables
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Map__at = new ExecutorOperation("at", Parameters._$$0, Types._Map,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$2_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$2_F, Types._Map,
 			4, new TemplateParameters(TypeParameters._2_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__collectBy = new ExecutorOperation("collectBy", Parameters._Lambda_self_$$0_T_result_$$2_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__collectBy = new ExecutorOperation("collectBy", Parameters._Lambda_self_$$0_T_result_$$2_F, Types._Map,
 			5, new TemplateParameters(TypeParameters._2_E), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$2_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$2_F, Types._Map,
 			6, new TemplateParameters(TypeParameters._2_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Map__0_excludes = new ExecutorOperation("excludes", Parameters._$$0, Types._Map,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
@@ -751,17 +753,17 @@ public class OCLstdlibTables extends AbstractTables
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Map__excludingMap = new ExecutorOperation("excludingMap", Parameters._Map__$$2_$$3__, Types._Map,
 			15, new TemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__2_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__2_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Map,
 			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__1_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__1_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Map,
 			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__0_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__0_exists = new ExecutorOperation("exists", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Map,
 			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__2_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__2_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Map,
 			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__1_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Map,
 			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__0_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__0_forAll = new ExecutorOperation("forAll", Parameters._Lambda_self_$$0_T_result_Boolean_F, Types._Map,
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Map__0_includes = new ExecutorOperation("includes", Parameters._$$0, Types._Map,
 			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
@@ -779,9 +781,9 @@ public class OCLstdlibTables extends AbstractTables
 			28, new TemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Map__isEmpty = new ExecutorOperation("isEmpty", ParameterTypes.EMPTY_LIST, Types._Map,
 			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__isUnique = new ExecutorOperation("isUnique", Parameters._Lambda_self_$$0_T_result_OclAny_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__isUnique = new ExecutorOperation("isUnique", Parameters._Lambda_self_$$0_T_result_OclAny_F, Types._Map,
 			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Map__iterate = new ExecutorOperation("iterate", Parameters._Lambda_self_$$0_T_result_$$2_T, Types._Map,
+		public static final @NonNull ExecutorOperation _Map__iterate = new ExecutorOperation("iterate", Parameters._Lambda_self_$$0_T_result_$$2_F, Types._Map,
 			31, new TemplateParameters(TypeParameters._2_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Map__keys = new ExecutorOperation("keys", ParameterTypes.EMPTY_LIST, Types._Map,
 			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
@@ -984,9 +986,9 @@ public class OCLstdlibTables extends AbstractTables
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OrderedSet__closure = new ExecutorOperation("closure", Parameters._Lambda_self_$$1_T_result_OrderedCollection__$$1___T, Types._OrderedSet,
 			5, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _OrderedSet__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._OrderedSet,
+		public static final @NonNull ExecutorOperation _OrderedSet__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._OrderedSet,
 			6, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _OrderedSet__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._OrderedSet,
+		public static final @NonNull ExecutorOperation _OrderedSet__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._OrderedSet,
 			7, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _OrderedSet__excluding = new ExecutorOperation("excluding", Parameters._$$0, Types._OrderedSet,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
@@ -1014,7 +1016,7 @@ public class OCLstdlibTables extends AbstractTables
 			19, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OrderedSet__selectByType = new ExecutorOperation("selectByType", Parameters._$$1, Types._OrderedSet,
 			20, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OrderedSet__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_T, Types._OrderedSet,
+		public static final @NonNull ExecutorOperation _OrderedSet__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_F, Types._OrderedSet,
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _OrderedSet__subOrderedSet = new ExecutorOperation("subOrderedSet", Parameters._Integer___Integer, Types._OrderedSet,
 			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
@@ -1056,9 +1058,9 @@ public class OCLstdlibTables extends AbstractTables
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__closure = new ExecutorOperation("closure", Parameters._Lambda_self_$$1_T_result_OrderedCollection__$$1___T, Types._Sequence,
 			4, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Sequence__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Sequence,
+		public static final @NonNull ExecutorOperation _Sequence__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Sequence,
 			5, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Sequence__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Sequence,
+		public static final @NonNull ExecutorOperation _Sequence__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Sequence,
 			6, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__excluding = new ExecutorOperation("excluding", Parameters._$$0, Types._Sequence,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
@@ -1086,7 +1088,7 @@ public class OCLstdlibTables extends AbstractTables
 			18, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__selectByType = new ExecutorOperation("selectByType", Parameters._$$1, Types._Sequence,
 			19, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Sequence__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_T, Types._Sequence,
+		public static final @NonNull ExecutorOperation _Sequence__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_F, Types._Sequence,
 			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Sequence__subSequence = new ExecutorOperation("subSequence", Parameters._Integer___Integer, Types._Sequence,
 			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
@@ -1099,9 +1101,9 @@ public class OCLstdlibTables extends AbstractTables
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Set__closure = new ExecutorOperation("closure", Parameters._Lambda_self_$$1_T_result_Collection__$$1___T, Types._Set,
 			3, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Set__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Set,
+		public static final @NonNull ExecutorOperation _Set__collect = new ExecutorOperation("collect", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Set,
 			4, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull ExecutorOperation _Set__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_T, Types._Set,
+		public static final @NonNull ExecutorOperation _Set__collectNested = new ExecutorOperation("collectNested", Parameters._Lambda_self_$$0_T_result_$$1_F, Types._Set,
 			5, new TemplateParameters(TypeParameters._1_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _Set__excluding = new ExecutorOperation("excluding", Parameters._$$0, Types._Set,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
@@ -1121,7 +1123,7 @@ public class OCLstdlibTables extends AbstractTables
 			13, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Set__selectByType = new ExecutorOperation("selectByType", Parameters._$$1, Types._Set,
 			14, new TemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Set__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_T, Types._Set,
+		public static final @NonNull ExecutorOperation _Set__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_F, Types._Set,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _String___add_ = new ExecutorOperation("+", Parameters._String, Types._String,
@@ -1199,7 +1201,7 @@ public class OCLstdlibTables extends AbstractTables
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _UniqueCollection__intersection = new ExecutorOperation("intersection", Parameters._Collection__$$0__, Types._UniqueCollection,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _UniqueCollection__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_T, Types._UniqueCollection,
+		public static final @NonNull ExecutorOperation _UniqueCollection__sortedBy = new ExecutorOperation("sortedBy", Parameters._Lambda_self_$$0_T_result_OclComparable_F, Types._UniqueCollection,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull ExecutorOperation _UniqueCollection__symmetricDifference = new ExecutorOperation("symmetricDifference", Parameters._UniqueCollection__OclAny__, Types._UniqueCollection,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
@@ -1538,9 +1540,9 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull ExecutorOperation @NonNull [] _Bag__Bag = {
 			OCLstdlibTables.Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Bag___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Bag__closure /* closure(E)(E[1]|Lambda $$1() : Collection($$1[*|?])[?]) */,
-			OCLstdlibTables.Operations._Bag__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Bag__closure /* closure(E)(E[1]|Lambda $$1() : Collection($$1[*|?])[1]) */,
+			OCLstdlibTables.Operations._Bag__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Bag__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Bag__excludingAll /* excludingAll(Collection($$0)) */,
 			OCLstdlibTables.Operations._Bag__flatten /* flatten(T2)() */,
@@ -1550,7 +1552,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Bag__select /* select(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Bag__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Bag__selectByType /* selectByType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._Bag__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */
+			OCLstdlibTables.Operations._Bag__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Bag__Collection = {
 			OCLstdlibTables.Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -1560,21 +1562,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
-			OCLstdlibTables.Operations._Bag__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Bag__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Bag__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Bag__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Bag__excludingAll /* excludingAll(Collection($$0)) */,
-			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Bag__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Bag__including /* including(T[?]) */,
@@ -1582,8 +1584,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection($$0)) */,
 			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection($$0)) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__max /* max() */,
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
@@ -1594,7 +1596,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Bag__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Bag__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__size /* size() */,
-			OCLstdlibTables.Operations._Bag__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._Bag__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
 			OCLstdlibTables.Operations._Collection__union /* union(Collection($$0)) */
 		};
@@ -1658,21 +1660,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
-			OCLstdlibTables.Operations._Collection__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection($$0)) */,
-			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
@@ -1680,8 +1682,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection($$0)) */,
 			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection($$0)) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__max /* max() */,
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
@@ -1692,7 +1694,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__size /* size() */,
-			OCLstdlibTables.Operations._Collection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._Collection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
 			OCLstdlibTables.Operations._Collection__union /* union(Collection($$0)) */
 		};
@@ -1777,9 +1779,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Map___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Map__any /* any(K[1]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Map__at /* at(K[?]) */,
-			OCLstdlibTables.Operations._Map__collect /* collect(E)(K[?]|Lambda $$0() : $$2[?]) */,
-			OCLstdlibTables.Operations._Map__collectBy /* collectBy(E)(K[?]|Lambda $$0() : $$2[?]) */,
-			OCLstdlibTables.Operations._Map__collectNested /* collectNested(E)(K[?]|Lambda $$0() : $$2[?]) */,
+			OCLstdlibTables.Operations._Map__collect /* collect(E)(K[?]|Lambda $$0() : $$2[1]) */,
+			OCLstdlibTables.Operations._Map__collectBy /* collectBy(E)(K[?]|Lambda $$0() : $$2[1]) */,
+			OCLstdlibTables.Operations._Map__collectNested /* collectNested(E)(K[?]|Lambda $$0() : $$2[1]) */,
 			OCLstdlibTables.Operations._Map__0_excludes /* excludes(K[?]) */,
 			OCLstdlibTables.Operations._Map__1_excludes /* excludes(K[?],V[?]) */,
 			OCLstdlibTables.Operations._Map__excludesAll /* excludesAll(K2)(Collection($$2)) */,
@@ -1789,12 +1791,12 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Map__1_excluding /* excluding(K[?],V[?]) */,
 			OCLstdlibTables.Operations._Map__excludingAll /* excludingAll(Collection($$0)) */,
 			OCLstdlibTables.Operations._Map__excludingMap /* excludingMap(K2, V2)(Map($$2[1],$$3[1])[1]) */,
-			OCLstdlibTables.Operations._Map__2_exists /* exists(K[?],K[?],K[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Map__1_exists /* exists(K[?],K[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Map__0_exists /* exists(K[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Map__2_forAll /* forAll(K[?],K[?],K[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Map__1_forAll /* forAll(K[?],K[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Map__0_forAll /* forAll(K[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Map__2_exists /* exists(K[?],K[?],K[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Map__1_exists /* exists(K[?],K[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Map__0_exists /* exists(K[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Map__2_forAll /* forAll(K[?],K[?],K[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Map__1_forAll /* forAll(K[?],K[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Map__0_forAll /* forAll(K[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Map__0_includes /* includes(K[?]) */,
 			OCLstdlibTables.Operations._Map__1_includes /* includes(K[?],V[?]) */,
 			OCLstdlibTables.Operations._Map__includesAll /* includesAll(K2)(Collection($$2)) */,
@@ -1803,8 +1805,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Map__including /* including(K[?],V[?]) */,
 			OCLstdlibTables.Operations._Map__includingMap /* includingMap(K2, V2)(Map($$2[1],$$3[1])[1]) */,
 			OCLstdlibTables.Operations._Map__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Map__isUnique /* isUnique(K[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Map__iterate /* iterate(Tacc)(K[?];Tacc[?]|Lambda $$0() : $$2[?]) */,
+			OCLstdlibTables.Operations._Map__isUnique /* isUnique(K[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Map__iterate /* iterate(Tacc)(K[?];Tacc[?]|Lambda $$0() : $$2[1]) */,
 			OCLstdlibTables.Operations._Map__keys /* keys() */,
 			OCLstdlibTables.Operations._Map__notEmpty /* notEmpty() */,
 			OCLstdlibTables.Operations._Map__one /* one(K[?]|Lambda $$0() : Boolean[1]) */,
@@ -2251,21 +2253,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
-			OCLstdlibTables.Operations._Collection__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection($$0)) */,
-			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
@@ -2273,8 +2275,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection($$0)) */,
 			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection($$0)) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__max /* max() */,
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
@@ -2285,7 +2287,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__size /* size() */,
-			OCLstdlibTables.Operations._Collection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._Collection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
 			OCLstdlibTables.Operations._Collection__union /* union(Collection($$0)) */
 		};
@@ -2313,9 +2315,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OrderedSet___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__append /* append(T[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__appendAll /* appendAll(OrderedCollection($$0)) */,
-			OCLstdlibTables.Operations._OrderedSet__closure /* closure(E)(E[1]|Lambda $$1() : OrderedCollection($$1[*|?])[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._OrderedSet__closure /* closure(E)(E[1]|Lambda $$1() : OrderedCollection($$1[*|?])[1]) */,
+			OCLstdlibTables.Operations._OrderedSet__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__excludingAll /* excludingAll(Collection($$0)) */,
 			OCLstdlibTables.Operations._OrderedSet__flatten /* flatten(T2)() */,
@@ -2329,7 +2331,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OrderedSet__select /* select(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__selectByType /* selectByType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__subOrderedSet /* subOrderedSet(Integer[1],Integer[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OrderedSet__Collection = {
@@ -2340,21 +2342,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
-			OCLstdlibTables.Operations._OrderedSet__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._OrderedSet__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._OrderedSet__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._OrderedSet__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._OrderedSet__excludingAll /* excludingAll(Collection($$0)) */,
-			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._OrderedSet__including /* including(T[?]) */,
@@ -2362,8 +2364,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection($$0)) */,
 			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection($$0)) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__max /* max() */,
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
@@ -2374,7 +2376,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OrderedSet__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OrderedSet__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__size /* size() */,
-			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
 			OCLstdlibTables.Operations._Collection__union /* union(Collection($$0)) */
 		};
@@ -2404,7 +2406,7 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull ExecutorOperation @NonNull [] _OrderedSet__UniqueCollection = {
 			OCLstdlibTables.Operations._OrderedSet___sub_ /* _'-'(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection($$0)) */,
-			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._OrderedSet__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection($$0)) */
 		};
@@ -2458,9 +2460,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Sequence___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Sequence__append /* append(T[?]) */,
 			OCLstdlibTables.Operations._Sequence__appendAll /* appendAll(OrderedCollection($$0)) */,
-			OCLstdlibTables.Operations._Sequence__closure /* closure(E)(E[1]|Lambda $$1() : OrderedCollection($$1[*|?])[?]) */,
-			OCLstdlibTables.Operations._Sequence__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Sequence__closure /* closure(E)(E[1]|Lambda $$1() : OrderedCollection($$1[*|?])[1]) */,
+			OCLstdlibTables.Operations._Sequence__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Sequence__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Sequence__excludingAll /* excludingAll(Collection($$0)) */,
 			OCLstdlibTables.Operations._Sequence__flatten /* flatten(T2)() */,
@@ -2474,7 +2476,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Sequence__select /* select(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Sequence__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Sequence__selectByType /* selectByType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._Sequence__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._Sequence__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Sequence__subSequence /* subSequence(Integer[1],Integer[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Sequence__Collection = {
@@ -2485,21 +2487,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
-			OCLstdlibTables.Operations._Sequence__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Sequence__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Sequence__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Sequence__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Sequence__excludingAll /* excludingAll(Collection($$0)) */,
-			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Sequence__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Sequence__including /* including(T[?]) */,
@@ -2507,8 +2509,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__0_intersection /* intersection(Collection($$0)) */,
 			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection($$0)) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__max /* max() */,
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
@@ -2519,7 +2521,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Sequence__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Sequence__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__size /* size() */,
-			OCLstdlibTables.Operations._Sequence__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._Sequence__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
 			OCLstdlibTables.Operations._Collection__union /* union(Collection($$0)) */
 		};
@@ -2551,9 +2553,9 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Set___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._Set__closure /* closure(E)(E[1]|Lambda $$1() : Collection($$1[*|?])[?]) */,
-			OCLstdlibTables.Operations._Set__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Set__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Set__closure /* closure(E)(E[1]|Lambda $$1() : Collection($$1[*|?])[1]) */,
+			OCLstdlibTables.Operations._Set__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Set__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Set__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Set__excludingAll /* excludingAll(Collection($$0)) */,
 			OCLstdlibTables.Operations._Set__flatten /* flatten(T2)() */,
@@ -2563,7 +2565,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Set__select /* select(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Set__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Set__selectByType /* selectByType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */
+			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Set__Collection = {
 			OCLstdlibTables.Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -2573,21 +2575,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
-			OCLstdlibTables.Operations._Set__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Set__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Set__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Set__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Set__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Set__excludingAll /* excludingAll(Collection($$0)) */,
-			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Set__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Set__including /* including(T[?]) */,
@@ -2595,8 +2597,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection($$0)) */,
 			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection($$0)) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__max /* max() */,
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
@@ -2607,7 +2609,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Set__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Set__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__size /* size() */,
-			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
 			OCLstdlibTables.Operations._Collection__union /* union(Collection($$0)) */
 		};
@@ -2631,7 +2633,7 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull ExecutorOperation @NonNull [] _Set__UniqueCollection = {
 			OCLstdlibTables.Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection($$0)) */,
-			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._Set__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection($$0)) */
 		};
@@ -2705,7 +2707,7 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull ExecutorOperation @NonNull [] _UniqueCollection__UniqueCollection = {
 			OCLstdlibTables.Operations._UniqueCollection___sub_ /* _'-'(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection($$0)) */,
-			OCLstdlibTables.Operations._UniqueCollection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._UniqueCollection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._UniqueCollection__symmetricDifference /* symmetricDifference(UniqueCollection(OclAny)) */,
 			OCLstdlibTables.Operations._UniqueCollection__union /* union(UniqueCollection($$0)) */
 		};
@@ -2717,21 +2719,21 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__asOrderedSet /* asOrderedSet() */,
 			OCLstdlibTables.Operations._Collection__asSequence /* asSequence() */,
 			OCLstdlibTables.Operations._Collection__asSet /* asSet() */,
-			OCLstdlibTables.Operations._Collection__collect /* collect(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[?]) */,
-			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__collect /* collect(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectBy /* collectBy(E)(T[?]|Lambda $$0() : $$1[1]) */,
+			OCLstdlibTables.Operations._Collection__collectNested /* collectNested(E)(T[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__count /* count(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludes /* excludes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Collection__excluding /* excluding(T[?]) */,
 			OCLstdlibTables.Operations._Collection__excludingAll /* excludingAll(Collection($$0)) */,
-			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__flatten /* flatten(T2)() */,
-			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			OCLstdlibTables.Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[1]) */,
+			OCLstdlibTables.Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[1]) */,
 			OCLstdlibTables.Operations._Collection__includes /* includes(T[?]) */,
 			OCLstdlibTables.Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
 			OCLstdlibTables.Operations._Collection__including /* including(T[?]) */,
@@ -2739,8 +2741,8 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._UniqueCollection__intersection /* intersection(Collection($$0)) */,
 			OCLstdlibTables.Operations._Collection__1_intersection /* intersection(UniqueCollection($$0)) */,
 			OCLstdlibTables.Operations._Collection__isEmpty /* isEmpty() */,
-			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[?]) */,
-			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[?]) */,
+			OCLstdlibTables.Operations._Collection__isUnique /* isUnique(T[?]|Lambda $$0() : OclAny[1]) */,
+			OCLstdlibTables.Operations._Collection__iterate /* iterate(Tacc)(T[?];Tacc[?]|Lambda $$0() : $$1[1]) */,
 			OCLstdlibTables.Operations._Collection__max /* max() */,
 			OCLstdlibTables.Operations._Collection__min /* min() */,
 			OCLstdlibTables.Operations._Collection__notEmpty /* notEmpty() */,
@@ -2751,7 +2753,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Collection__selectByKind /* selectByKind(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__selectByType /* selectByType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._Collection__size /* size() */,
-			OCLstdlibTables.Operations._UniqueCollection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[?]) */,
+			OCLstdlibTables.Operations._UniqueCollection__sortedBy /* sortedBy(T[?]|Lambda $$0() : OclComparable[1]) */,
 			OCLstdlibTables.Operations._Collection__sum /* sum() */,
 			OCLstdlibTables.Operations._Collection__union /* union(Collection($$0)) */
 		};

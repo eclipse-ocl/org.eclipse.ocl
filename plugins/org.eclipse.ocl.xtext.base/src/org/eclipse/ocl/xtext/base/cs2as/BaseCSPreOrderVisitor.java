@@ -48,6 +48,7 @@ import org.eclipse.ocl.xtext.basecs.DataTypeCS;
 import org.eclipse.ocl.xtext.basecs.DocumentationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationCS;
 import org.eclipse.ocl.xtext.basecs.EnumerationLiteralCS;
+import org.eclipse.ocl.xtext.basecs.LambdaParameterCS;
 import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
@@ -113,7 +114,78 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class LambdaContinuation extends SingleContinuation<LambdaTypeCS>
+	protected static class LambdaParameterContinuation extends SingleContinuation<LambdaParameterCS>// Lambda withparameter names
+	{
+		private static @NonNull Dependency @NonNull [] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaParameterCS csElement) {
+			TypedRefCS ownedContextType = ClassUtil.requireNonNull(csElement.getOwnedContextType());
+			TypedRefCS ownedResultType = ClassUtil.requireNonNull(csElement.getOwnedType());
+			List<ParameterCS> csParameters = csElement.getOwnedParameters();
+			int iMax = csParameters.size();
+			@NonNull Dependency @NonNull [] dependencies = new @NonNull Dependency[2 + iMax];
+			dependencies[0] = new PivotDependency(ownedContextType);
+			dependencies[1] = new PivotDependency(ownedResultType);
+			for (int i = 0; i < iMax; i++) {
+				ParameterCS csParameter = ClassUtil.requireNonNull(csParameters.get(i));
+				dependencies[i+2] = new PivotDependency(csParameter);
+			}
+			return dependencies;
+		}
+
+		public LambdaParameterContinuation(@NonNull CS2ASConversion context, @NonNull LambdaParameterCS csElement) {
+			super(context, null, null, csElement, computeDependencies(context, csElement));
+		}
+
+		@Override
+		public BasicContinuation<?> execute() {
+			Parameter lambdaParameter = PivotUtil.getPivot(Parameter.class, csElement);
+			TypedRefCS csContext = csElement.getOwnedContextType();
+			TypedRefCS csResult = csElement.getOwnedType();
+			if ((csContext != null) && (csResult != null)) {
+				Type contextType = PivotUtil.getPivot(Type.class, csContext);
+				Type resultType = PivotUtil.getPivot(Type.class, csResult);
+				if ((contextType != null) && (resultType != null)) {
+					CompleteModelInternal completeModel = context.getMetamodelManager().getCompleteModel();
+					Orphanage orphanage = completeModel.getOrphanage();
+					List<@NonNull TypedElement> parameters = new ArrayList<>();
+					for (ParameterCS csParameter : csElement.getOwnedParameters()) {
+						assert csParameter != null;
+						TypedRefCS csParameterType = csParameter.getOwnedType();
+						assert csParameterType != null;
+						Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
+						if (parameterType instanceof TemplateParameter) {
+							parameterType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)parameterType);
+						}
+						if (parameterType != null) {
+							String name = csParameter.getName();
+							assert name != null;
+							boolean isRequired = context.isRequiredWithDefault(csParameterType);
+							TypedElement parameter = LambdaTypeManager.createCandidateLambdaParameter(name, parameterType, isRequired);
+							parameters.add(parameter);
+						}
+					}
+					if (contextType instanceof TemplateParameter) {
+						contextType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)contextType);
+					}
+					boolean isRequired = context.isRequiredWithDefault(csContext);
+					TypedElement contextParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.SELF_NAME, contextType, isRequired);
+					if (resultType instanceof TemplateParameter) {
+						resultType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)resultType);
+					}
+					isRequired = context.isRequiredWithDefault(csResult);
+					TypedElement resultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.RESULT_NAME, resultType, isRequired);
+					LambdaType lambdaType = context.getStandardLibrary().getLambdaType("Lambda", contextParameter, parameters, resultParameter, null);
+					if (lambdaParameter != null) {
+						lambdaParameter.setType(lambdaType);
+						lambdaParameter.toString();
+					}
+				//	context.installPivotReference(csElement.get, lambdaType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+				}
+			}
+			return null;
+		}
+	}
+
+	protected static class LambdaTypeContinuation extends SingleContinuation<LambdaTypeCS>	// Lambda without parameter names
 	{
 		private static @NonNull Dependency @NonNull [] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
 			TypedRefCS ownedContextType = ClassUtil.requireNonNull(csElement.getOwnedContextType());
@@ -130,7 +202,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return dependencies;
 		}
 
-		public LambdaContinuation(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
+		public LambdaTypeContinuation(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
 			super(context, null, null, csElement, computeDependencies(context, csElement));
 		}
 
@@ -147,6 +219,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					Orphanage orphanage = completeModel.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
+						assert csParameterType != null;
 						Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
 						if (parameterType instanceof TemplateParameter) {
 							parameterType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)parameterType);
@@ -584,8 +657,13 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	}
 
 	@Override
+	public Continuation<?> visitLambdaParameterCS(@NonNull LambdaParameterCS csLambdaParameter) {
+		return new LambdaParameterContinuation(context, csLambdaParameter);
+	}
+
+	@Override
 	public Continuation<?> visitLambdaTypeCS(@NonNull LambdaTypeCS csLambdaType) {
-		return new LambdaContinuation(context, csLambdaType);
+		return new LambdaTypeContinuation(context, csLambdaType);
 	}
 
 	@Override
