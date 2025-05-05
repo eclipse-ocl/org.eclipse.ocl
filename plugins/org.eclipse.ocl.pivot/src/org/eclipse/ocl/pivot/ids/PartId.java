@@ -14,12 +14,15 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
- * A TuplePartId provides a unique identifier for a TuplePart such as first:String.
+ * A PartId provides a unique identifier for a Tuple Part or Lambda Parameter such as first:String[1].
+ *
+ * @since 7.0
  */
-public interface TuplePartId extends ElementId, Nameable, Comparable<TuplePartId>
+public interface PartId extends ElementId, Nameable, Comparable<@NonNull PartId>
 {
 	int getIndex();
 	@Override
 	@NonNull String getName();
 	@NonNull TypeId getTypeId();
+	boolean isRequired();
 }

@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -90,12 +90,12 @@ public class TupleTypeImpl
 			String name2 = NameUtil.getSafeName(this);
 			List<Property> parts = getOwnedProperties();
 			int iSize = parts.size();
-			List<@NonNull TuplePartId> partIds = new ArrayList<@NonNull TuplePartId>(iSize);
+			List<@NonNull PartId> partIds = new ArrayList<>(iSize);
 			for (int i = 0; i < iSize; i++) {
 				@SuppressWarnings("null")@NonNull TypedElement part = parts.get(i);
 				String partName = NameUtil.getSafeName(part);
 				TypeId partTypeId = part.getTypeId();
-				partIds.add(IdManager.getTuplePartId(i, partName, partTypeId));
+				partIds.add(IdManager.getPartId(i, partName, partTypeId, part.isIsRequired()));
 			}
 			tupleTypeId = tupleTypeId2 = IdManager.getTupleTypeId(name2, partIds);
 		}

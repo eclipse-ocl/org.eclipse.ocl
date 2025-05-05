@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 
 /**
  * <!-- begin-user-doc -->
@@ -73,5 +73,5 @@ extends VariableDeclaration {
 	@Override
 	boolean validateTypeIsNotInvalid(DiagnosticChain diagnostics, Map<Object, Object> context);
 
-	TuplePartId getPartId();
+	PartId getPartId();
 } // TupleLiteralPart

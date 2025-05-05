@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -75,10 +75,10 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 	 * @param values my parts
 	 * @generated NOT
 	 */
-	public TupleValueImpl(@NonNull TupleTypeId tupleTypeId, @NonNull Map<@NonNull ? extends TuplePartId, @Nullable Object> values) {
+	public TupleValueImpl(@NonNull TupleTypeId tupleTypeId, @NonNull Map<@NonNull ? extends PartId, @Nullable Object> values) {
 		this.tupleTypeId = tupleTypeId;
 		partValues = new @Nullable Object[tupleTypeId.getPartIds().length];
-		for (Map.Entry<@NonNull ? extends TuplePartId, @Nullable Object> entry : values.entrySet()) {
+		for (Map.Entry<@NonNull ? extends PartId, @Nullable Object> entry : values.entrySet()) {
 			partValues[entry.getKey().getIndex()] = entry.getValue();
 		}
 	}
@@ -93,7 +93,7 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 	 */
 	public TupleValueImpl(@NonNull TupleTypeId tupleTypeId, @Nullable Object... values) {
 		this.tupleTypeId = tupleTypeId;
-		TuplePartId[] partIds = tupleTypeId.getPartIds();
+		PartId[] partIds = tupleTypeId.getPartIds();
 		if (partIds.length != values.length) {
 			throw new InvalidValueException("Mismatching tuple values");
 		}
@@ -117,9 +117,9 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 	public @NonNull LiteralExp createLiteralExp() {
 		TupleLiteralExp literalExp = PivotFactory.eINSTANCE.createTupleLiteralExp();
 		List<TupleLiteralPart> ownedParts = literalExp.getOwnedParts();
-		TuplePartId[] partIds = tupleTypeId.getPartIds();
+		PartId[] partIds = tupleTypeId.getPartIds();
 		for (int i = 0; i < partIds.length; i++) {
-			TuplePartId partId = partIds[i];
+			PartId partId = partIds[i];
 			TupleLiteralPart part = PivotFactory.eINSTANCE.createTupleLiteralPart();
 			part.setName(partId.getDisplayName());
 			part.setOwnedInit(ValueUtil.createLiteralExp(partValues[i]));
@@ -166,7 +166,7 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 
 	// implements the inherited specification
 	@Override
-	public @Nullable Object getValue(@NonNull TuplePartId partId) {
+	public @Nullable Object getValue(@NonNull PartId partId) {
 		return getValue(partId.getIndex());
 	}
 
@@ -189,13 +189,12 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 		return hashCode;
 	}
 
-
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Tuple{"); //$NON-NLS-1$
-		TuplePartId[] partIds = tupleTypeId.getPartIds();
+		PartId[] partIds = tupleTypeId.getPartIds();
 		for (int i = 0; i < partIds.length; i++) {
-			TuplePartId partId = partIds[i];
+			PartId partId = partIds[i];
 			if (i != 0) {
 				s.append(", "); //$NON-NLS-1$
 			}

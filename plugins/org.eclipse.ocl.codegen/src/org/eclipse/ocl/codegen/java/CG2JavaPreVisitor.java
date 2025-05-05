@@ -69,7 +69,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -120,7 +120,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 				addOwnedTypeId(cgConstantExp, ((CollectionTypeId)typeId).getElementTypeId());
 			}
 			else if (typeId instanceof TupleTypeId) {
-				for (TuplePartId partId : ((TupleTypeId)typeId).getPartIds()) {
+				for (PartId partId : ((TupleTypeId)typeId).getPartIds()) {
 					addOwnedTypeId(cgConstantExp, partId);
 				}
 			}

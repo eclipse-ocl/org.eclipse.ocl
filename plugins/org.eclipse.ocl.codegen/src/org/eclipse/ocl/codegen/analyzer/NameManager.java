@@ -83,13 +83,13 @@ import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
@@ -303,6 +303,11 @@ public class NameManager
 		}
 
 		@Override
+		public @NonNull String visitPartId(@NonNull PartId id) {
+			return "PARTid_";
+		}
+
+		@Override
 		public @NonNull String visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 			return "PRIMid_" + id.getName();
 		}
@@ -330,11 +335,6 @@ public class NameManager
 		@Override
 		public @NonNull String visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
 			return "TYPEid_";
-		}
-
-		@Override
-		public @NonNull String visitTuplePartId(@NonNull TuplePartId id) {
-			return "PARTid_";
 		}
 
 		@Override

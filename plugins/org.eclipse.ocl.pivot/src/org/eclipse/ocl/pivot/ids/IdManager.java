@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -47,10 +46,10 @@ import org.eclipse.ocl.pivot.internal.ids.GeneralizedMapTypeIdImpl.MapTypeIdSing
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl.TupleTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.NsURIPackageIdImpl.NsURIPackageIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl.ParametersIdSingletonScope;
+import org.eclipse.ocl.pivot.internal.ids.PartIdImpl.PartIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.PrimitiveTypeIdImpl.PrimitiveTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.RootPackageIdImpl.RootPackageIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl;
-import org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl.TuplePartIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
@@ -103,9 +102,9 @@ public final class IdManager
 	private static final @NonNull LambdaTypeIdSingletonScope lambdaTypes = new LambdaTypeIdSingletonScope();
 
 	/**
-	 * Map from the TuplePart hashCode to the tuplePartIds with the same hash.
+	 * Map from the Part hashCode to the PartIds with the same hash.
 	 */
-	private static final @NonNull TuplePartIdSingletonScope tupleParts = new TuplePartIdSingletonScope();
+	private static final @NonNull PartIdSingletonScope tupleParts = new PartIdSingletonScope();
 
 	/**
 	 * Map from a name to the corresponding URI-less unnested RootPackageTypeId.
@@ -321,45 +320,6 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the typeId for an EEnum.
-	 *
-	 * @Deprecated (UML-aware) caller should resolve the PackageId and then tunnel down.
-	 * The UML-blind implementation here fails to resolve Ecore profiles.
-	 */
-	@Deprecated
-	public static @NonNull EnumerationId getEnumerationId(@NonNull EEnum eEnum) {
-		String name = eEnum.getName();
-		assert name != null;
-		EPackage parentPackage = eEnum.getEPackage();
-		assert parentPackage != null;
-		return getPackageId(parentPackage).getEnumerationId(name);
-	}
-
-	/**
-	 * Return the typeId for an EEnumLiteral.
-	 *
-	 * @Deprecated (UML-aware) caller should resolve the PackageId and then tunnel down.
-	 * The UML-blind implementation here fails to resolve Ecore profiles.
-	 */
-	@Deprecated
-	public static @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull EEnumLiteral eEnumLiteral) {
-		EEnum eEnum = ClassUtil.requireNonNull(eEnumLiteral.getEEnum());
-		String name = ClassUtil.requireNonNull(eEnumLiteral.getName());
-		EnumerationId enumerationId = getEnumerationId(eEnum);
-		EnumerationLiteralId enumerationLiteralId = enumerationId.getEnumerationLiteralId(name);
-		return enumerationLiteralId;
-	}
-
-	/**
-	 * Return the named lambdaPartId with the defined name and type and nullity.
-	 *
-	 * @since 7.0
-	 */
-	public static @NonNull TuplePartId getLambdaPartId(int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
-		return tupleParts.getSingleton(PRIVATE_INSTANCE, index, name, typeId, isRequired);
-	}
-
-	/**
 	 * Return the typeId for aLambdaType.
 	 */
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull LambdaType lambdaType) {
@@ -371,18 +331,6 @@ public final class IdManager
 	 * Return the named lambda typeId with the defined type parameters.
 	 * @since 7.0
 	 */
-	@Deprecated /* XXX temporary fudge */
-	public static @NonNull TypeId getLambdaTypeId(@NonNull String name, @NonNull Type @NonNull [] typeArguments) {
-		return lambdaTypes.getSingleton(PRIVATE_INSTANCE, name, typeArguments);
-	}
-
-	/**
-	 * Return the named lambda typeId with the defined type parameters.
-	 * @since 7.0
-	 */
-//	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull ParametersId parametersId) {
-//		return lambdaTypes.getSingleton(PRIVATE_INSTANCE, name, parametersId);
-//	}
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull LambdaParameter context,
 			@Nullable List<@NonNull LambdaParameter> parameters, @NonNull LambdaParameter result) {
 		return lambdaTypes.getSingleton(PRIVATE_INSTANCE, name, context, parameters, result);
@@ -445,10 +393,22 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named tuple typeId with the defined parts (which are alphabetically ordered by part name).
+	 * Return the named tuple typeId with the defined parts (which have not been alphabetically ordered by part name).
+	 * @since 7.0
 	 */
-	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
-		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, parts);
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull PartId> unOrderedPartIds) {
+		@NonNull PartId @NonNull [] orderedPartIds = unOrderedPartIds.toArray(new @NonNull PartId [unOrderedPartIds.size()]);
+		Arrays.sort(orderedPartIds);
+		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, orderedPartIds);
+	}
+
+	/**
+	 * Return the named tuple typeId with the defined parts (which are alphabetically ordered by part name).
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull PartId @NonNull [] orderedPartIds) {
+		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, orderedPartIds);
 	}
 
 	/**
@@ -547,6 +507,26 @@ public final class IdManager
 	}
 
 	/**
+	 * Return the named lambda/tuple PartId with the defined name and type and nullity.
+	 * @since 7.0
+	 */
+	public static @NonNull PartId getPartId(int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+		return tupleParts.getSingleton(PRIVATE_INSTANCE, index, name, typeId, isRequired);
+	}
+
+	/**
+	 * Return the named tuple PartId for the given property of a TupleType.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull PartId getPartId(@NonNull Property asProperty) {
+		TupleType tupleType = (TupleType) PivotUtil.getOwningClass(asProperty);
+		String name = NameUtil.getSafeName(asProperty);
+		int index = tupleType.getOwnedProperties().indexOf(asProperty);
+		return getPartId(index, name, asProperty.getTypeId(), asProperty.isIsRequired());
+	}
+
+	/**
 	 * Return the named primitive typeId.
 	 */
 	public static @NonNull PrimitiveTypeId getPrimitiveTypeId(@NonNull String name) {
@@ -600,43 +580,35 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named tuplePartId for the given property of a TupleType.
-	 * @since 1.3
-	 */
-	public static @NonNull TuplePartId getTuplePartId(@NonNull Property asProperty) {
-		TupleType tupleType = (TupleType) PivotUtil.getOwningClass(asProperty);
-		String name = NameUtil.getSafeName(asProperty);
-		int index = tupleType.getOwnedProperties().indexOf(asProperty);
-		return getTuplePartId(index, name, asProperty.getTypeId());
-	}
-
-	/**
-	 * Return the named tuplePartId with the defined name and type.
-	 */
-	public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
-		return getLambdaPartId(index, name, typeId, false);
-	}
-
-	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 */
-	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull ? extends TuplePartId> parts) {
-		@NonNull TuplePartId @NonNull [] orderedParts = new @NonNull TuplePartId[parts.size()];
+	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull ? extends PartId> parts) {
+		@NonNull PartId @NonNull [] orderedParts = new @NonNull PartId[parts.size()];
 		int i = 0;
-		for (TuplePartId part : parts) {
+		for (PartId part : parts) {
 			orderedParts[i++] = part;
 		}
-		Arrays.sort(orderedParts);
-		return getOrderedTupleTypeId(name, orderedParts);
+	//	Arrays.sort(orderedParts);
+		return getTupleTypeId(name, orderedParts);
 	}
 
-	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull ... parts) {
-		@NonNull TuplePartId @NonNull [] orderedParts = new @NonNull TuplePartId[parts.length];
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull PartId @NonNull ... parts) {
+		@NonNull PartId @NonNull [] orderedParts = new @NonNull PartId[parts.length];
 		int i = 0;
-		for (TuplePartId part : parts) {
+		for (PartId part : parts) {
 			orderedParts[i++] = part;
 		}
 		Arrays.sort(orderedParts);
+		int index = 0;
+		for (PartId part : parts) {
+			if (part.getIndex() != index) {
+				orderedParts[i] = getPartId(index, part.getName(), part.getTypeId(), part.isRequired());
+			}
+			index++;
+		}
 		return getOrderedTupleTypeId(name, orderedParts);
 	}
 
