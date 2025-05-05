@@ -39,6 +39,14 @@ public abstract class AbstractIterationManager implements IterationManager
 	@Override
 	public void dispose() {}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @Nullable Object evaluateBody(int bodyIndex) {
+		throw new UnsupportedOperationException();	// XXX Only for IterateExp
+	}
+
 	@Override
 	public @Nullable Object get() {
 		throw new UnsupportedOperationException();	// Only required for single iterator managers
