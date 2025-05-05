@@ -334,7 +334,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : OclAny[1] = if type.oclIsKindOf(DataType)
+			 *         result : OclAny[?] = if type.oclIsKindOf(DataType)
 			 *         then
 			 *           let status : Boolean[1] = true
 			 *           in

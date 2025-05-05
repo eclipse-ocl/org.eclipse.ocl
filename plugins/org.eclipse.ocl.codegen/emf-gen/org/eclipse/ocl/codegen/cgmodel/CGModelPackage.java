@@ -1990,15 +1990,15 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGTuplePartCallExp();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.codegen.cgmodel.CGTuplePartCallExp#getAstTuplePartId <em>Ast Tuple Part Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.codegen.cgmodel.CGTuplePartCallExp#getAstPartId <em>Ast Part Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Ast Tuple Part Id</em>'.
-	 * @see org.eclipse.ocl.codegen.cgmodel.CGTuplePartCallExp#getAstTuplePartId()
+	 * @return the meta object for the attribute '<em>Ast Part Id</em>'.
+	 * @see org.eclipse.ocl.codegen.cgmodel.CGTuplePartCallExp#getAstPartId()
 	 * @see #getCGTuplePartCallExp()
 	 * @generated
 	 */
-	EAttribute getCGTuplePartCallExp_AstTuplePartId();
+	EAttribute getCGTuplePartCallExp_AstPartId();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.codegen.cgmodel.CGTypeId <em>CG Type Id</em>}'.
@@ -2288,6 +2288,16 @@ public interface CGModelPackage extends EPackage {
 	EDataType getOperation();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.ids.PartId <em>Part Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Part Id</em>'.
+	 * @see org.eclipse.ocl.pivot.ids.PartId
+	 * @generated
+	 */
+	EDataType getPartId();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.Property <em>Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2296,16 +2306,6 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getProperty();
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.ids.TuplePartId <em>Tuple Part Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Tuple Part Id</em>'.
-	 * @see org.eclipse.ocl.pivot.ids.TuplePartId
-	 * @generated
-	 */
-	EDataType getTuplePartId();
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.Type <em>Type</em>}'.
@@ -3967,12 +3967,12 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_TUPLE_PART_CALL_EXP = eINSTANCE.getCGTuplePartCallExp();
 
 		/**
-		 * The meta object literal for the '<em><b>Ast Tuple Part Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Ast Part Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CG_TUPLE_PART_CALL_EXP__AST_TUPLE_PART_ID = eINSTANCE.getCGTuplePartCallExp_AstTuplePartId();
+		EAttribute CG_TUPLE_PART_CALL_EXP__AST_PART_ID = eINSTANCE.getCGTuplePartCallExp_AstPartId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.codegen.cgmodel.impl.CGTypeIdImpl <em>CG Type Id</em>}' class.
@@ -4241,6 +4241,16 @@ public interface CGModelPackage extends EPackage {
 		EDataType OPERATION = eINSTANCE.getOperation();
 
 		/**
+		 * The meta object literal for the '<em>Part Id</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.ids.PartId
+		 * @see org.eclipse.ocl.codegen.cgmodel.impl.CGModelPackageImpl#getPartId()
+		 * @generated
+		 */
+		EDataType PART_ID = eINSTANCE.getPartId();
+
+		/**
 		 * The meta object literal for the '<em>Property</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4249,16 +4259,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType PROPERTY = eINSTANCE.getProperty();
-
-		/**
-		 * The meta object literal for the '<em>Tuple Part Id</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.ids.TuplePartId
-		 * @see org.eclipse.ocl.codegen.cgmodel.impl.CGModelPackageImpl#getTuplePartId()
-		 * @generated
-		 */
-		EDataType TUPLE_PART_ID = eINSTANCE.getTuplePartId();
 
 		/**
 		 * The meta object literal for the '<em>Type</em>' data type.

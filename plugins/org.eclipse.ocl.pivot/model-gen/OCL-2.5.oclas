@@ -2825,8 +2825,8 @@
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:TupleType" xmi:id=",5eVD" name="Tuple" superClasses="#,qHxF">
-      <ownedProperties xmi:id="Lv1aA" name="first" type="#qs59R"/>
-      <ownedProperties xmi:id="P28lE" name="second" type="#yzGsR"/>
+      <ownedProperties xmi:id="Lv1aA" isRequired="false" name="first" type="#qs59R"/>
+      <ownedProperties xmi:id="P28lE" isRequired="false" name="second" type="#yzGsR"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Lc4BC" isNullFree="true" name="UniqueCollection" superClasses="#ViIGS">
       <ownedBindings>

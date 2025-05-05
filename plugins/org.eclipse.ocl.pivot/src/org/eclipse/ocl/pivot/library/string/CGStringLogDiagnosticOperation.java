@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
@@ -84,7 +84,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 		if (status instanceof TupleValue) {		// Overt tuples are unpacked in the caller. Obfuscated tuples are handled here.
 			tupleValue = (TupleValue)status;
 			TupleTypeId tupleTypeId = tupleValue.getTypeId();
-			TuplePartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
+			PartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
 			if (statusPartId != null) {
 				status = tupleValue.getValue(statusPartId);
 				if (status == Boolean.TRUE) {
@@ -101,7 +101,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 			}
 			else if (tupleValue instanceof TupleValue) {			// Not InvalidValueException
 				TupleTypeId tupleTypeId = tupleValue.getTypeId();
-				TuplePartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
+				PartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
 				if (severityPartId != null) {
 					IntegerValue value = ValueUtil.integerValueOf(tupleValue.getValue(severityPartId));
 					int signum = value.signum();
@@ -118,7 +118,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 				else {
 					emfSeverity = status == null ? Diagnostic.ERROR : Diagnostic.WARNING;
 				}
-				TuplePartId messagePartId = tupleTypeId.getPartId(PivotConstants.MESSAGE_PART_NAME);
+				PartId messagePartId = tupleTypeId.getPartId(PivotConstants.MESSAGE_PART_NAME);
 				if (messagePartId != null) {
 					emfMessage = String.valueOf(tupleValue.getValue(messagePartId));
 				}

@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.internal.library;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -22,19 +22,25 @@ import org.eclipse.ocl.pivot.values.TupleValue;
 
 public class TuplePartProperty extends AbstractProperty
 {
-	protected final @NonNull TuplePartId tuplePartId;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull PartId partId;
 
-	public TuplePartProperty(@NonNull TuplePartId tuplePartId) {
-		this.tuplePartId = tuplePartId;
+	/**
+	 * @since 7.0
+	 */
+	public TuplePartProperty(@NonNull PartId partId) {
+		this.partId = partId;
 	}
 
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		TupleValue tupleValue = asTupleValue(sourceValue);
-		Object resultValue = tupleValue.getValue(tuplePartId);
+		Object resultValue = tupleValue.getValue(partId);
 		if (resultValue != null) {
 			return resultValue;		// null is a static type error so no need to diagnose dynamically
 		}
-		throw new InvalidValueException(StringUtil.bind("part '" + tuplePartId + "' is not a part of '" + sourceValue));
+		throw new InvalidValueException(StringUtil.bind("part '" + partId + "' is not a part of '" + sourceValue));
 	}
 }

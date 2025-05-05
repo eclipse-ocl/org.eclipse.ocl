@@ -34,8 +34,8 @@
     <genDataTypes ecoreDataType="cgmodel.ecore#//Number"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Object"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Operation"/>
+    <genDataTypes ecoreDataType="cgmodel.ecore#//PartId"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Property"/>
-    <genDataTypes ecoreDataType="cgmodel.ecore#//TuplePartId"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Type"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//TypeId"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGAccumulator"/>
@@ -276,7 +276,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGTuplePart/tupleExp"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGTuplePartCallExp">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGTuplePartCallExp/astTuplePartId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGTuplePartCallExp/astPartId"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGTypeId"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGTypeExp">

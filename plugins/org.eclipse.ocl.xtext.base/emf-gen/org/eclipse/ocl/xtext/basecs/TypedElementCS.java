@@ -86,8 +86,9 @@ public interface TypedElementCS extends NamedElementCS {
 	 * @see #setIsOptional(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedElementCS_IsOptional()
 	 * @model dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated
+	 * @generated NOT
 	 */
+	@Deprecated /* not used */
 	boolean isIsOptional();
 
 	/**

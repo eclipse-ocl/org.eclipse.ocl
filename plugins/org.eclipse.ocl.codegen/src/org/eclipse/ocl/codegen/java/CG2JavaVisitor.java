@@ -138,7 +138,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
@@ -3037,7 +3037,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		CGValuedElement source = getExpression(cgTuplePartCallExp.getSource());
 		//		CGTypeId resultType = cgTuplePartCallExp.getTypeId();
 		//		Class<?> requiredBoxedReturnClass = context.getBoxedClass(resultType.getElementId());
-		TuplePartId partId = cgTuplePartCallExp.getAstTuplePartId();
+		PartId partId = cgTuplePartCallExp.getAstPartId();
 		//
 		if (!js.appendLocalStatements(source)) {
 			return false;

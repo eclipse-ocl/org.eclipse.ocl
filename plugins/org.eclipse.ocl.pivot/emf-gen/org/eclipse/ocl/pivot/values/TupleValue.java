@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
 /**
@@ -49,7 +49,7 @@ public interface TupleValue extends Value {
      *
 	 * @generated NOT
      */
-	@Nullable Object getValue(@NonNull TuplePartId partId);
+	@Nullable Object getValue(@NonNull PartId partId);
 
     /**
      * Queries the value of the specified tuple part at 0-based index corresponding to the position of the

@@ -634,8 +634,8 @@
         eType="#//CGTupleExp" changeable="false" resolveProxies="false" eOpposite="#//CGTupleExp/parts"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGTuplePartCallExp" eSuperTypes="#//CGPropertyCallExp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="astTuplePartId" lowerBound="1"
-        eType="#//TuplePartId"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="astPartId" lowerBound="1"
+        eType="#//PartId"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGTypeId" eSuperTypes="#//CGElementId"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGTypeExp" eSuperTypes="#//CGValuedElement">
@@ -711,8 +711,8 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Number" instanceClassName="java.lang.Number"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Operation" instanceClassName="org.eclipse.ocl.pivot.Operation"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="PartId" instanceClassName="org.eclipse.ocl.pivot.ids.PartId"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Property" instanceClassName="org.eclipse.ocl.pivot.Property"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="TuplePartId" instanceClassName="org.eclipse.ocl.pivot.ids.TuplePartId"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Type" instanceClassName="org.eclipse.ocl.pivot.Type"/>
   <eClassifiers xsi:type="ecore:EDataType" name="TypeId" instanceClassName="org.eclipse.ocl.pivot.ids.TypeId"/>
 </ecore:EPackage>

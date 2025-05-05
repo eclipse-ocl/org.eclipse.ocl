@@ -29,13 +29,16 @@ public interface IdVisitor<R>
 	R visitNsURIPackageId(@NonNull NsURIPackageId id);
 	R visitNullId(@NonNull OclVoidTypeId id);
 	R visitOperationId(@NonNull OperationId id);
+	/**
+	 * @since 7.0
+	 */
+	R visitPartId(@NonNull PartId id);
 	R visitPrimitiveTypeId(@NonNull PrimitiveTypeId id);
 	R visitPropertyId(@NonNull PropertyId id);
 	R visitRootPackageId(@NonNull RootPackageId id);
 	R visitTemplateBinding(@NonNull TemplateBinding id);
 	R visitTemplateParameterId(@NonNull TemplateParameterId id);
 	R visitTemplateableTypeId(@NonNull TemplateableTypeId id);
-	R visitTuplePartId(@NonNull TuplePartId id);
 	R visitTupleTypeId(@NonNull TupleTypeId id);
 	R visitUnspecifiedId(@NonNull UnspecifiedId id);
 	R visitWildcardId(@NonNull  WildcardId id);

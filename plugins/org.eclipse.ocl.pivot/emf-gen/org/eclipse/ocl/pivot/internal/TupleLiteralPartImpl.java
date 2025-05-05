@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
@@ -561,12 +561,12 @@ implements TupleLiteralPart {
 		return visitor.visitTupleLiteralPart(this);
 	}
 
-	private TuplePartId partId = null;
+	private PartId partId = null;
 
 	@Override
-	public @Nullable TuplePartId getPartId() {
+	public @Nullable PartId getPartId() {
 		TupleTypeId tupleTypeId = (TupleTypeId) ((TupleLiteralExp)eContainer()).getTypeId();
-		TuplePartId partId2 = partId;
+		PartId partId2 = partId;
 		if (partId2 == null) {
 			String name2 = getName();
 			assert name2 != null;

@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -172,9 +172,9 @@ public class ImplementationManager
 			TupleType tupleType = (TupleType)property.getOwningClass();
 			String name = property.getName();
 			assert name != null;
-			TuplePartId tuplePartId = tupleType.getTypeId().getPartId(name);
-			assert tuplePartId != null;
-			return new TuplePartProperty(tuplePartId);
+			PartId partId = tupleType.getTypeId().getPartId(name);
+			assert partId != null;
+			return new TuplePartProperty(partId);
 		}
 		if (property.isIsStatic()) {
 			return new StaticProperty(property);

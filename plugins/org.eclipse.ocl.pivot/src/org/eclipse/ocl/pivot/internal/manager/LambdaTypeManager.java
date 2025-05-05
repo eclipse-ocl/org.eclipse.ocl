@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -62,7 +62,7 @@ public class LambdaTypeManager
 	/**
 	 * Map from from context type via first parameter type, which may be null, to list of lambda types sharing context and first parameter types.
 	 */
-	private final @NonNull Map<@NonNull TuplePartId, @NonNull Map<@NonNull TuplePartId, @NonNull List<@NonNull LambdaType>>> lambdaTypes = new HashMap<>();
+	private final @NonNull Map<@NonNull PartId, @NonNull Map<@NonNull PartId, @NonNull List<@NonNull LambdaType>>> lambdaTypes = new HashMap<>();
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
@@ -99,13 +99,13 @@ public class LambdaTypeManager
 	}
 
 	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
-		TuplePartId contextPartId = getPartTypeId(context);
-		Map<@NonNull TuplePartId, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextPartId);
+		PartId contextPartId = getPartTypeId(context);
+		Map<@NonNull PartId, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextPartId);
 		if (contextMap == null) {
 			contextMap = new HashMap<>();
 			lambdaTypes.put(contextPartId, contextMap);
 		}
-		TuplePartId resultPartId  = getPartTypeId(result);
+		PartId resultPartId  = getPartTypeId(result);
 		List<@NonNull LambdaType> lambdasList = contextMap.get(resultPartId);
 		if (lambdasList == null) {
 			lambdasList = new ArrayList<>();
@@ -119,8 +119,8 @@ public class LambdaTypeManager
 				for (int i = 0; i < iMax; i++) {
 					TypedElement parameter = parameters.get(i);
 					LambdaParameter candidateParameter = candidateParameters.get(i);
-					TuplePartId parameterPartId  = getPartTypeId(parameter);
-					TuplePartId candidatePartId  = getPartTypeId(candidateParameter);
+					PartId parameterPartId  = getPartTypeId(parameter);
+					PartId candidatePartId  = getPartTypeId(candidateParameter);
 					if (parameterPartId != candidatePartId) {
 						gotIt = false;
 						break;
@@ -152,9 +152,9 @@ public class LambdaTypeManager
 		return lambdaParameter;
 	}
 
-	private @NonNull TuplePartId getPartTypeId(@NonNull TypedElement typedElement) {
+	private @NonNull PartId getPartTypeId(@NonNull TypedElement typedElement) {
 		TypeId contextTypeId = typedElement.getTypeId();
-		return IdManager.getLambdaPartId(0, PivotUtil.getName(typedElement), contextTypeId, typedElement.isIsRequired());
+		return IdManager.getPartId(0, PivotUtil.getName(typedElement), contextTypeId, typedElement.isIsRequired());
 	}
 
 	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateParameterSubstitutions bindings) {

@@ -239,6 +239,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/TupleLiteralPart.java" type="org.eclipse.ocl.pivot.TupleLiteralPart">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getPartId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/ASLibrary_EPackage.java" type="org.eclipse.ocl.pivot.annotations.ASLibrary_EPackage">
         <filter id="1110441988">
             <message_arguments>
@@ -259,9 +266,6 @@
                 <message_argument value="org.eclipse.ocl.pivot.annotations.Collection_EClass"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Collection_EPackage.java">
-        <filter id="0"/>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Collection_EPackage.java" type="org.eclipse.ocl.pivot.annotations.Collection_EPackage">
         <filter id="1110441988">
@@ -503,6 +507,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/UndefinedValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getValue(PartId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$TypeParameters">
         <filter id="1143996420">
             <message_arguments>
@@ -670,6 +681,44 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="visitNormalizedTemplateParameter(NormalizedTemplateParameter)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/TupleValue.java" type="org.eclipse.ocl.pivot.values.TupleValue">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getValue(PartId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/IdHash.java" type="org.eclipse.ocl.pivot.ids.IdHash">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createTupleHash(String, PartId[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TupleTypeId.java" type="org.eclipse.ocl.pivot.ids.TupleTypeId">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getPartId(String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getPartIds()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/OclVoidTypeIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getPartId(String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getPartIds()"/>
             </message_arguments>
         </filter>
     </resource>

@@ -94,24 +94,24 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 		assertConsoleResult(consolePage, ecoreBook, "name", "'Book'\n");
 		assertConsoleResult(consolePage, ecoreBook, "copies", "<b><error>Parsing failure\n</error></b><error>\n1:1: Unresolved Element '::copies'\n</error>");
 		assertConsoleResult(consolePage, ecoreBook, "oclType().ownedProperties->sortedBy(name)",
-			"ecore::EClass::EClass\n" +
-					"ecore::EClass::EClass\n" +
-					"ecore::EClass::EReference\n" +
-					"ecore::EClass::abstract\n" +
-					"ecore::EClass::eAllAttributes\n" +
-					"ecore::EClass::eAllContainments\n" +
-					"ecore::EClass::eAllGenericSuperTypes\n" +
-					"ecore::EClass::eAllOperations\n" +
-					"ecore::EClass::eAllReferences\n" +
-					"ecore::EClass::eAllStructuralFeatures\n" +
-					"ecore::EClass::eAllSuperTypes\n" +
-					"ecore::EClass::eAttributes\n" +
-					"ecore::EClass::eGenericSuperTypes\n" +
-					"ecore::EClass::eIDAttribute\n" +
-					"ecore::EClass::eOperations\n" +
-					"ecore::EClass::eReferences\n" +
-					"ecore::EClass::eStructuralFeatures\n" +
-					"ecore::EClass::eSuperTypes\n" +
-				"ecore::EClass::interface\n");
+			"ecore::EClass::EClass : Bag(ecore::EClass[*|?])\n"
+			+ "ecore::EClass::EClass : Bag(ecore::EClass[*|?])\n"
+			+ "ecore::EClass::EReference : Bag(ecore::EReference[*|?])\n"
+			+ "ecore::EClass::abstract : Boolean[1]\n"
+			+ "ecore::EClass::eAllAttributes : OrderedSet(ecore::EAttribute)\n"
+			+ "ecore::EClass::eAllContainments : OrderedSet(ecore::EReference)\n"
+			+ "ecore::EClass::eAllGenericSuperTypes : OrderedSet(ecore::EGenericType)\n"
+			+ "ecore::EClass::eAllOperations : OrderedSet(ecore::EOperation)\n"
+			+ "ecore::EClass::eAllReferences : OrderedSet(ecore::EReference)\n"
+			+ "ecore::EClass::eAllStructuralFeatures : OrderedSet(ecore::EStructuralFeature)\n"
+			+ "ecore::EClass::eAllSuperTypes : OrderedSet(ecore::EClass)\n"
+			+ "ecore::EClass::eAttributes : OrderedSet(ecore::EAttribute)\n"
+			+ "ecore::EClass::eGenericSuperTypes : OrderedSet(ecore::EGenericType)\n"
+			+ "ecore::EClass::eIDAttribute : ecore::EAttribute[?]\n"
+			+ "ecore::EClass::eOperations : OrderedSet(ecore::EOperation)\n"
+			+ "ecore::EClass::eReferences : OrderedSet(ecore::EReference)\n"
+			+ "ecore::EClass::eStructuralFeatures : OrderedSet(ecore::EStructuralFeature)\n"
+			+ "ecore::EClass::eSuperTypes : OrderedSet(ecore::EClass)\n"
+			+ "ecore::EClass::interface : Boolean[1]\n");
 	}
 }

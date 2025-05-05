@@ -68,7 +68,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -127,8 +127,8 @@ import com.google.common.collect.Iterables;
 
 public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 {
-	public static final @NonNull TuplePartId TUPLE_MESSAGE_STATUS_0 = IdManager.getTuplePartId(0, PivotConstants.MESSAGE_PART_NAME, TypeId.STRING);
-	public static final @NonNull TuplePartId TUPLE_MESSAGE_STATUS_1 = IdManager.getTuplePartId(1, PivotConstants.STATUS_PART_NAME, TypeId.BOOLEAN);
+	public static final @NonNull PartId TUPLE_MESSAGE_STATUS_0 = IdManager.getPartId(0, PivotConstants.MESSAGE_PART_NAME, TypeId.STRING, true);
+	public static final @NonNull PartId TUPLE_MESSAGE_STATUS_1 = IdManager.getPartId(1, PivotConstants.STATUS_PART_NAME, TypeId.BOOLEAN, false);
 	public static final @NonNull TupleTypeId TUPLE_MESSAGE_STATUS = IdManager.getTupleTypeId("Tuple", TUPLE_MESSAGE_STATUS_0, TUPLE_MESSAGE_STATUS_1);
 
 	public EssentialOCLDeclarationVisitor(@NonNull AS2CSConversion context) {

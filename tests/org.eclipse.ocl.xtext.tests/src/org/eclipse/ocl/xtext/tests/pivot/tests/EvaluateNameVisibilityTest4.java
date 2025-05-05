@@ -542,7 +542,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 //		ocl.assertValidationErrorQuery(appleType, "self.Tree::name",
 //			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::NonStaticSourceTypeIsConformant", "self.name");
 		ocl.assertSemanticErrorQuery(appleType, "self.Tree::name",
-			EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "fruit::Tree::name");
+			EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "fruit::Tree::name : String[?]");
 		//
 		ocl.assertQueryFalse(redApple, "self.color = Color::green");
 		ocl.assertQueryTrue(redApple, "self.color = Color::red");

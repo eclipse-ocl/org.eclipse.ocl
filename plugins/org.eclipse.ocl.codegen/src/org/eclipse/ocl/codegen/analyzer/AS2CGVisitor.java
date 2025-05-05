@@ -153,7 +153,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
@@ -902,7 +902,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		else if (libraryProperty instanceof TuplePartProperty) {
 			CGTuplePartCallExp cgTuplePartCallExp = CGModelFactory.eINSTANCE.createCGTuplePartCallExp();
-			cgTuplePartCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
+			cgTuplePartCallExp.setAstPartId(IdManager.getPartId(asProperty));
 			cgPropertyCallExp = cgTuplePartCallExp;
 		}
 		else if (libraryProperty instanceof OclElementOclContainerProperty) {
@@ -1701,7 +1701,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGTuplePart cgTuplePart = CGModelFactory.eINSTANCE.createCGTuplePart();
 		setAst(cgTuplePart, element);
 		cgTuplePart.setInit(doVisit(CGValuedElement.class, element.getOwnedInit()));
-		TuplePartId partId = element.getPartId();
+		PartId partId = element.getPartId();
 		if (partId != null) {
 			context.getElementId(partId);
 		}

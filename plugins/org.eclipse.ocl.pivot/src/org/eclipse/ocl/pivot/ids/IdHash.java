@@ -72,9 +72,9 @@ public class IdHash
 		return (int)hash;
 	}
 
-	public static int createTupleHash(@NonNull String name, @NonNull TuplePartId @NonNull [] orderedParts) {
+	public static int createTupleHash(@NonNull String name, @NonNull PartId @NonNull [] orderedParts) {
 		int hash = 0;
-		for (TuplePartId partId : orderedParts) {
+		for (PartId partId : orderedParts) {
 			hash = PART_SCALING * hash + partId.hashCode();
 		}
 		hash += IdHash.createGlobalHash(TupleTypeId.class, name);

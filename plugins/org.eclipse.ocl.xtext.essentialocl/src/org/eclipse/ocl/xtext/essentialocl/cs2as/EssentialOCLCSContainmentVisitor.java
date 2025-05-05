@@ -14,9 +14,7 @@ package org.eclipse.ocl.xtext.essentialocl.cs2as;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
@@ -49,10 +47,12 @@ import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.PartId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -225,9 +225,9 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			asConstraint.setOwnedSpecification(asSpecification);
 		}
 		else {
-			Map<@NonNull String, @NonNull Type> tupleParts = new HashMap<>();
-			tupleParts.put(PivotConstants.MESSAGE_PART_NAME, standardLibrary.getStringType());
-			tupleParts.put(PivotConstants.STATUS_PART_NAME, standardLibrary.getBooleanType());
+			List<@NonNull PartId> tupleParts = new ArrayList<>();
+			tupleParts.add(IdManager.getPartId(0, PivotConstants.MESSAGE_PART_NAME, TypeId.STRING, true));
+			tupleParts.add(IdManager.getPartId(1, PivotConstants.STATUS_PART_NAME, TypeId.BOOLEAN, false));
 			TupleType tupleType = standardLibrary.getTupleManager().getTupleType("Tuple", tupleParts);
 			Property statusProperty = NameUtil.getNameable(tupleType.getOwnedProperties(), PivotConstants.STATUS_PART_NAME);
 			LanguageExpression asSpecification = asConstraint.getOwnedSpecification();

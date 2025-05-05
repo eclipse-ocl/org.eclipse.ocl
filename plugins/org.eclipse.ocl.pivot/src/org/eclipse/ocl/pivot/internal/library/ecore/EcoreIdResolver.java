@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
@@ -141,11 +141,11 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {
 		int iSize = parts.length;
-		List<@NonNull TuplePartId> partsList = new ArrayList<>(iSize);
+		List<@NonNull PartId> partsList = new ArrayList<>(iSize);
 		for (int i = 0; i < iSize; i++) {
 			TypedElement part = parts[i];
 			String partName = NameUtil.getSafeName(part);
-			partsList.add(IdManager.getTuplePartId(i, partName, part.getTypeId()));
+			partsList.add(IdManager.getPartId(i, partName, part.getTypeId(), part.isIsRequired()));
 		}
 		return getTupleType(IdManager.getTupleTypeId(TypeId.TUPLE_NAME, partsList));
 	}

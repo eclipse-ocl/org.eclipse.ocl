@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -112,7 +112,7 @@ public abstract class AbstractConstraintEvaluator<T>
 		if (result instanceof TupleValue) {
 			TupleValue tupleValue = (TupleValue)result;
 			TupleTypeId tupleTypeId = tupleValue.getTypeId();
-			TuplePartId messagePartId = tupleTypeId.getPartId(PivotConstants.MESSAGE_PART_NAME);
+			PartId messagePartId = tupleTypeId.getPartId(PivotConstants.MESSAGE_PART_NAME);
 			if (messagePartId != null) {
 				return String.valueOf(tupleValue.getValue(messagePartId));
 			}
@@ -134,7 +134,7 @@ public abstract class AbstractConstraintEvaluator<T>
 		if (result instanceof TupleValue) {
 			TupleValue tupleValue = (TupleValue)result;
 			TupleTypeId tupleTypeId = tupleValue.getTypeId();
-			TuplePartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
+			PartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
 			if (severityPartId != null) {
 				IntegerValue value = ValueUtil.integerValueOf(tupleValue.getValue(severityPartId));
 				int signum = value.signum();
@@ -149,7 +149,7 @@ public abstract class AbstractConstraintEvaluator<T>
 				}
 			}
 			else {
-				TuplePartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
+				PartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
 				if (statusPartId != null) {
 					result = tupleValue.getValue(statusPartId);
 				}
@@ -169,7 +169,7 @@ public abstract class AbstractConstraintEvaluator<T>
 		if (result instanceof TupleValue) {
 			TupleValue tupleValue = (TupleValue)result;
 			TupleTypeId tupleTypeId = tupleValue.getTypeId();
-			TuplePartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
+			PartId statusPartId = tupleTypeId.getPartId(PivotConstants.STATUS_PART_NAME);
 			if (statusPartId == null) {
 				return false;
 			}
