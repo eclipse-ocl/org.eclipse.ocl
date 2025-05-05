@@ -1754,6 +1754,12 @@
                 <message_argument value="getLambdaTypeId(String, TypeId[])"/>
             </message_arguments>
         </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdManager"/>
+                <message_argument value="getTuplePartId(int, String, TypeId)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/LambdaTypeId.java" type="org.eclipse.ocl.pivot.ids.LambdaTypeId">
         <filter id="405901410">
@@ -2060,6 +2066,26 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager"/>
                 <message_argument value="getLambdaType(String, Type, List&lt;? extends Type&gt;, Type, TemplateParameterSubstitutions)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/manager/TupleTypeManager.java" type="org.eclipse.ocl.pivot.internal.manager.TupleTypeManager">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.TupleTypeManager"/>
+                <message_argument value="getTupleType(String, Map&lt;String,? extends Type&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.TupleTypeManager.TemplateParameterReferencesVisitor"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.TupleTypeManager.TupleIdResolver"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
             </message_arguments>
         </filter>
     </resource>

@@ -425,7 +425,9 @@ public final class IdManager
 	 * @since 1.23
 	 */
 	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull TuplePartId> unOrderedPartIds) {
-		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, unOrderedPartIds);
+		@NonNull TuplePartId @NonNull [] orderedPartIds = unOrderedPartIds.toArray(new @NonNull TuplePartId [unOrderedPartIds.size()]);
+		Arrays.sort(orderedPartIds);
+		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, orderedPartIds);
 	}
 
 	/**
@@ -600,14 +602,6 @@ public final class IdManager
 		String name = NameUtil.getSafeName(asProperty);
 		int index = tupleType.getOwnedProperties().indexOf(asProperty);
 		return getPartId(index, name, asProperty.getTypeId(), asProperty.isIsRequired());
-	}
-
-	/**
-	 * Return the named tuplePartId with the defined name and type.
-	 */
-	@Deprecated /* Use getPartId to preserve part nullity */
-	public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
-		return getPartId(index, name, typeId, false);
 	}
 
 	/**

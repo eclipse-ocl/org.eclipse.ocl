@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ids;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
@@ -60,22 +57,6 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	 */
 	public static class TupleTypeIdSingletonScope extends AbstractSingletonScope<@NonNull TupleTypeId, @NonNull TupleTypeIdValue>
 	{
-		/**
-		 * @since 1.23
-		 */
-		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull Collection<@NonNull TuplePartId> unOrderedPartIds) {
-			@NonNull TuplePartId @NonNull [] orderedPartIds = unOrderedPartIds.toArray(new @NonNull TuplePartId [unOrderedPartIds.size()]);
-			Arrays.sort(orderedPartIds);
-			int index = 0;
-			for (@NonNull TuplePartId partId : orderedPartIds) {
-				if (index != partId.getIndex()) {
-					orderedPartIds[index] = IdManager.getPartId(index, partId.getName(), partId.getTypeId(), partId.isRequired());
-				}
-				index++;
-			}
-			return getSingletonFor(new TupleTypeIdValue(idManager, name, orderedPartIds));
-		}
-
 		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
 			assert assertIsOrdered(orderedPartIds);
 			int index = 0;
@@ -89,11 +70,12 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		}
 
 		private boolean assertIsOrdered(@NonNull TuplePartId @NonNull [] orderedPartIds) {
-			@NonNull TuplePartId @NonNull [] orderedPartIds2 = new @NonNull TuplePartId [orderedPartIds.length];
-			System.arraycopy(orderedPartIds, 0, orderedPartIds2, 0, orderedPartIds.length);
-			Arrays.sort(orderedPartIds2);
-			for (int i = 0; i < orderedPartIds.length; i++) {
-				assert orderedPartIds[i] == orderedPartIds2[i];
+			for (int i = 0; i < orderedPartIds.length-1; i++) {
+				TuplePartId earlierPartId = orderedPartIds[i];
+				TuplePartId laterPartId = orderedPartIds[i+1];
+				if (earlierPartId.compareTo(laterPartId) >= 0) {
+					return false;
+				}
 			}
 			return true;
 		}
@@ -111,7 +93,6 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		this.hashCode = computeHashCode(name, orderedPartIds);
 		this.name = name;
 		this.partIds = orderedPartIds;
-		assert partsAreOrdered();
 	}
 
 	@Override
@@ -191,17 +172,6 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		}
 		if (!this.name.equals(thatName)) {
 			return false;
-		}
-		return true;
-	}
-
-	private boolean partsAreOrdered() {
-		for (int i = 0; i < partIds.length-1; i++) {
-			TuplePartId earlierPartId = partIds[i];
-			TuplePartId laterPartId = partIds[i+1];
-			if (earlierPartId.compareTo(laterPartId) >= 0) {
-				return false;
-			}
 		}
 		return true;
 	}
