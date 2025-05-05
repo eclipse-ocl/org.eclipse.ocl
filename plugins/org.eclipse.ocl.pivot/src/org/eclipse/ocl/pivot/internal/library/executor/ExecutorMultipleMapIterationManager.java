@@ -34,6 +34,14 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 {
 	protected final @NonNull TypeId returnTypeId;
 	protected final @NonNull AbstractSimpleOperation body;
+	/**
+	 * @since 7.0
+	 */
+	protected final @Nullable AbstractSimpleOperation body1;
+	/**
+	 * @since 7.0
+	 */
+	protected final @Nullable AbstractSimpleOperation body2;
 	private final boolean hasCoIterators;
 	private @Nullable Object accumulatorValue;
 	protected final @NonNull MapValue mapValue;
@@ -45,14 +53,25 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 	 */
 	public ExecutorMultipleMapIterationManager(@NonNull Executor executor, int iterators, boolean hasCoIterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
 			@Nullable MapValue mapValue, @Nullable Object accumulatorValue) {
+		this(executor, iterators, hasCoIterators, returnTypeId, body, null, null, mapValue, accumulatorValue);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public ExecutorMultipleMapIterationManager(@NonNull Executor executor, int iterators, boolean hasCoIterators, @NonNull TypeId returnTypeId,
+			@NonNull AbstractSimpleOperation body0, @Nullable AbstractSimpleOperation body1, @Nullable AbstractSimpleOperation body2,
+			@Nullable MapValue mapValue, @Nullable Object accumulatorValue) {
 		super(executor);
 		this.returnTypeId = returnTypeId;
-		this.body = body;
+		this.body = body0;
+		this.body1 = body1;
+		this.body2 = body2;
 		this.hasCoIterators = hasCoIterators;
 		this.accumulatorValue = accumulatorValue;
 		this.mapValue = ValueUtil.asMapValue(mapValue);		// Throws InvalidValueException for null
 		this.iteratorValues = new ArrayList<@NonNull Iterator<@Nullable Object>>(iterators);
-		this.arguments = new @Nullable Object[1 + (hasCoIterators ? 2*iterators : iterators)];
+		this.arguments = new @Nullable Object[2 + (hasCoIterators ? 2*iterators : iterators)];
 		this.arguments[0] = this.mapValue;
 		for (int i = 0; i < iterators; i++) {
 			Iterator<@Nullable Object> iteratorValue = this.mapValue.iterator();
@@ -68,6 +87,7 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 				this.arguments[1 + i] = iteratorValues;
 			}
 		}
+		this.arguments[1 + 2*iterators] = this.accumulatorValue;
 	}
 
 	@Override
@@ -104,6 +124,20 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 	}
 
 	@Override
+	public @Nullable Object evaluateBody(int bodyIndex) {
+		if (bodyIndex == 0) {
+			return body.evaluate(executor, returnTypeId, arguments);
+		}
+		else if ((bodyIndex == 1) && (body1 != null)) {
+			return body1.evaluate(executor, returnTypeId, arguments);		// XXX returnTypeId
+		}
+		else if ((bodyIndex == 2) && (body2 != null)) {
+			return body2.evaluate(executor, returnTypeId, arguments);		// XXX returnTypeId
+		}
+		return super.evaluateBody(bodyIndex);
+	}
+
+	@Override
 	public @Nullable Object get() {
 		if (iteratorValues.size() == 1) {
 			return arguments[1];
@@ -129,6 +163,8 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 	@Override
 	public @Nullable Object updateAccumulator(Object newValue) {
 		this.accumulatorValue = newValue;
-		return null;					// carry on
+		int index = 1 + 2 * iteratorValues.size();
+		arguments[index] = newValue;		// XXX
+		return null;					// carry on XXX not used
 	}
 }
