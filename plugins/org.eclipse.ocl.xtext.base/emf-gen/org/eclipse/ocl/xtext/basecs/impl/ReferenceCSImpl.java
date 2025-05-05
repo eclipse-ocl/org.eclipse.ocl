@@ -120,7 +120,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 			if (referredOpposite != oldReferredOpposite)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 13, oldReferredOpposite, referredOpposite));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 12, oldReferredOpposite, referredOpposite));
 			}
 		}
 		return referredOpposite;
@@ -147,7 +147,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 		Property oldReferredOpposite = referredOpposite;
 		referredOpposite = newReferredOpposite;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldReferredOpposite, referredOpposite));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldReferredOpposite, referredOpposite));
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		if (ownedImplicitOpposites == null)
 		{
-			ownedImplicitOpposites = new EObjectContainmentEList<ImplicitOppositeCS>(ImplicitOppositeCS.class, this, 14);
+			ownedImplicitOpposites = new EObjectContainmentEList<ImplicitOppositeCS>(ImplicitOppositeCS.class, this, 13);
 		}
 		return ownedImplicitOpposites;
 	}
@@ -175,7 +175,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case 14:
+			case 13:
 				return ((InternalEList<?>)getOwnedImplicitOpposites()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -191,7 +191,7 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		if (referredKeys == null)
 		{
-			referredKeys = new EObjectResolvingEList<Property>(Property.class, this, 12);
+			referredKeys = new EObjectResolvingEList<Property>(Property.class, this, 11);
 		}
 		return referredKeys;
 	}
@@ -206,12 +206,12 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case 12:
+			case 11:
 				return getReferredKeys();
-			case 13:
+			case 12:
 				if (resolve) return getReferredOpposite();
 				return basicGetReferredOpposite();
-			case 14:
+			case 13:
 				return getOwnedImplicitOpposites();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -228,14 +228,14 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case 12:
+			case 11:
 				getReferredKeys().clear();
 				getReferredKeys().addAll((Collection<? extends Property>)newValue);
 				return;
-			case 13:
+			case 12:
 				setReferredOpposite((Property)newValue);
 				return;
-			case 14:
+			case 13:
 				getOwnedImplicitOpposites().clear();
 				getOwnedImplicitOpposites().addAll((Collection<? extends ImplicitOppositeCS>)newValue);
 				return;
@@ -253,13 +253,13 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case 12:
+			case 11:
 				getReferredKeys().clear();
 				return;
-			case 13:
+			case 12:
 				setReferredOpposite((Property)null);
 				return;
-			case 14:
+			case 13:
 				getOwnedImplicitOpposites().clear();
 				return;
 		}
@@ -276,11 +276,11 @@ public class ReferenceCSImpl extends StructuralFeatureCSImpl implements Referenc
 	{
 		switch (featureID)
 		{
-			case 12:
+			case 11:
 				return referredKeys != null && !referredKeys.isEmpty();
-			case 13:
+			case 12:
 				return referredOpposite != null;
-			case 14:
+			case 13:
 				return ownedImplicitOpposites != null && !ownedImplicitOpposites.isEmpty();
 		}
 		return super.eIsSet(featureID);
