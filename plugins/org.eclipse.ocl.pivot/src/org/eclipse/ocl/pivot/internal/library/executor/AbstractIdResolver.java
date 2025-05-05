@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -84,7 +85,6 @@ import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
@@ -189,6 +189,11 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 
 		@Override
+		public @Nullable Object visitPartId(@NonNull PartId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public @Nullable Object visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 			if (id == TypeId.BOOLEAN) {
 				return Boolean.valueOf(stringValue);
@@ -230,11 +235,6 @@ public abstract class AbstractIdResolver implements IdResolver
 
 		@Override
 		public @Nullable Object visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @Nullable Object visitTuplePartId(@NonNull TuplePartId id) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -1768,6 +1768,14 @@ public abstract class AbstractIdResolver implements IdResolver
 		return memberOperation;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull TypedElement visitPartId(@NonNull PartId id) {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public @NonNull Type visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 		Type primitiveType = standardLibrary.getPrimitiveType(id);
@@ -1850,11 +1858,6 @@ public abstract class AbstractIdResolver implements IdResolver
 	@Override
 	public @NonNull Type visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
 		return getType(id);
-	}
-
-	@Override
-	public @NonNull TypedElement visitTuplePartId(@NonNull TuplePartId id) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -16,8 +16,8 @@ import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
 public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId
@@ -26,9 +26,9 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	{
 		private final @NonNull IdManager idManager;
 		private @NonNull String name;
-		private @NonNull TuplePartId @NonNull [] orderedPartIds;
+		private @NonNull PartId @NonNull [] orderedPartIds;
 
-		private TupleTypeIdValue(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+		private TupleTypeIdValue(@NonNull IdManager idManager, @NonNull String name, @NonNull PartId @NonNull [] orderedPartIds) {
 			super(GeneralizedTupleTypeIdImpl.computeHashCode(name, orderedPartIds));
 			this.idManager = idManager;
 			this.name = name;
@@ -57,20 +57,42 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	 */
 	public static class TupleTypeIdSingletonScope extends AbstractSingletonScope<@NonNull TupleTypeId, @NonNull TupleTypeIdValue>
 	{
-		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull PartId @NonNull [] orderedPartIds) {
+			assert assertIsOrdered(orderedPartIds);
+			int index = 0;
+			for (@NonNull PartId partId : orderedPartIds) {
+				if (index != partId.getIndex()) {		// If part at wrong index, replace with correctly indexed partId
+					orderedPartIds[index] = IdManager.getPartId(index, partId.getName(), partId.getTypeId(), partId.isRequired());
+				}
+				index++;
+			}
 			return getSingletonFor(new TupleTypeIdValue(idManager, name, orderedPartIds));
+		}
+
+		private boolean assertIsOrdered(@NonNull PartId @NonNull [] orderedPartIds) {
+			for (int i = 0; i < orderedPartIds.length-1; i++) {
+				PartId earlierPartId = orderedPartIds[i];
+				PartId laterPartId = orderedPartIds[i+1];
+				if (earlierPartId.compareTo(laterPartId) >= 0) {
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 
-	private static int computeHashCode(@NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+	private static int computeHashCode(@NonNull String name, @NonNull PartId @NonNull [] orderedPartIds) {
 		return IdHash.createTupleHash(name, orderedPartIds);
 	}
 
 	protected final @NonNull Integer hashCode;			// FIXME int
 	protected final @NonNull String name;
-	protected final @NonNull TuplePartId @NonNull [] partIds;
+	protected final @NonNull PartId @NonNull [] partIds;
 
-	private GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+	private GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull String name, @NonNull PartId @NonNull [] orderedPartIds) {
 		this.hashCode = computeHashCode(name, orderedPartIds);
 		this.name = name;
 		this.partIds = orderedPartIds;
@@ -88,7 +110,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		s.append(name);
 		s.append("{");
 		boolean isFirst = true;
-		for (TuplePartId partId : partIds) {
+		for (PartId partId : partIds) {
 			if (!isFirst) {
 				s.append(", ");
 			}
@@ -114,8 +136,8 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	}
 
 	@Override
-	public @Nullable TuplePartId getPartId(@NonNull String name) {
-		for (TuplePartId partId : partIds) {
+	public @Nullable PartId getPartId(@NonNull String name) {
+		for (PartId partId : partIds) {
 			if (name.equals(partId.getName())) {
 				return partId;
 			}
@@ -124,7 +146,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	}
 
 	@Override
-	public @NonNull TuplePartId @NonNull [] getPartIds() {
+	public @NonNull PartId @NonNull [] getPartIds() {
 		return partIds;
 	}
 
@@ -138,7 +160,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	 */
 	@Override
 	public boolean isTemplated() {
-		for (TuplePartId partId : partIds) {
+		for (PartId partId : partIds) {
 			if (partId.getTypeId().isTemplated()) {
 				return true;
 			}
@@ -146,7 +168,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		return false;
 	}
 
-	private boolean matches(@NonNull String thatName, @NonNull TuplePartId @NonNull [] thoseOrderedParts) {
+	private boolean matches(@NonNull String thatName, @NonNull PartId @NonNull [] thoseOrderedParts) {
 		for (int i = 0; i < partIds.length; i++) {
 			if (partIds[i] != thoseOrderedParts[i]) {
 				return false;
@@ -160,8 +182,8 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 
 	private boolean partsAreOrdered() {
 		for (int i = 0; i < partIds.length-1; i++) {
-			TuplePartId earlierPartId = partIds[i];
-			TuplePartId laterPartId = partIds[i+1];
+			PartId earlierPartId = partIds[i];
+			PartId laterPartId = partIds[i+1];
 			if (earlierPartId.compareTo(laterPartId) >= 0) {
 				return false;
 			}

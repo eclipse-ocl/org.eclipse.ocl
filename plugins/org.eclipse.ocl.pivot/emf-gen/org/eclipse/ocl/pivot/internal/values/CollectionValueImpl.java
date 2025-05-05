@@ -703,13 +703,6 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 100);
-		return s.toString();
-	}
-
-	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
 		s.append("{");
 		boolean isFirst = true;

@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -80,15 +80,15 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 
 	@Test public void testTupleType_Collections() {
 		TestOCL ocl = createOCL();
-		TuplePartId aTuplePartId = IdManager.getTuplePartId(0, "a", TypeId.INTEGER);
-		@SuppressWarnings("null") TupleTypeId aTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(aTuplePartId));
-		Map<@NonNull TuplePartId, @Nullable Object> aValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
-		aValues.put(aTuplePartId, ValueUtil.integerValueOf(3));
+		PartId aPartId = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
+		@SuppressWarnings("null") TupleTypeId aTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(aPartId));
+		Map<@NonNull PartId, @Nullable Object> aValues = new HashMap<@NonNull PartId, @Nullable Object>();
+		aValues.put(aPartId, ValueUtil.integerValueOf(3));
 		TupleValue aValue = ValueUtil.createTupleValue(aTupleTypeId, aValues);
-		TuplePartId bTuplePartId = IdManager.getTuplePartId(0, "b", TypeId.INTEGER);
-		@SuppressWarnings("null") TupleTypeId bTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(bTuplePartId));
-		Map<@NonNull TuplePartId, @Nullable Object> bValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
-		bValues.put(bTuplePartId, ValueUtil.integerValueOf(4));
+		PartId bPartId = IdManager.getPartId(0, "b", TypeId.INTEGER, true);
+		@SuppressWarnings("null") TupleTypeId bTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(bPartId));
+		Map<@NonNull PartId, @Nullable Object> bValues = new HashMap<@NonNull PartId, @Nullable Object>();
+		bValues.put(bPartId, ValueUtil.integerValueOf(4));
 		TupleValue bValue = ValueUtil.createTupleValue(bTupleTypeId, bValues);
 		CollectionTypeId collectionTypeId = TypeId.SET.getSpecializedId(TypeId.OCL_ANY);
 		SetValue setValue = ValueUtil.createSetOfEach(collectionTypeId,  aValue, bValue);

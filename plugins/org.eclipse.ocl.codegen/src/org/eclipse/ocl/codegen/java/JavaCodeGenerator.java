@@ -156,7 +156,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		org.eclipse.ocl.pivot.ids.PackageId.class,
 		org.eclipse.ocl.pivot.ids.PrimitiveTypeId.class,
 		org.eclipse.ocl.pivot.ids.TemplateParameterId.class,
-		org.eclipse.ocl.pivot.ids.TuplePartId.class,
+		org.eclipse.ocl.pivot.ids.PartId.class,
 		org.eclipse.ocl.pivot.ids.TupleTypeId.class,
 		org.eclipse.ocl.pivot.ids.TypeId.class,
 		org.eclipse.ocl.pivot.library.AbstractBinaryOperation.class,

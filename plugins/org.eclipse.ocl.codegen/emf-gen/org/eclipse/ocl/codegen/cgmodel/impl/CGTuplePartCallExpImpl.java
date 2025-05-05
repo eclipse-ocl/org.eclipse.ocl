@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.codegen.cgmodel.CGTuplePartCallExp;
 import org.eclipse.ocl.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.codegen.cgmodel.impl.CGTuplePartCallExpImpl#getAstTuplePartId <em>Ast Tuple Part Id</em>}</li>
+ *   <li>{@link org.eclipse.ocl.codegen.cgmodel.impl.CGTuplePartCallExpImpl#getAstPartId <em>Ast Part Id</em>}</li>
  * </ul>
  *
  * @generated
@@ -43,24 +43,24 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	public static final int CG_TUPLE_PART_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
 
 	/**
-	 * The default value of the '{@link #getAstTuplePartId() <em>Ast Tuple Part Id</em>}' attribute.
+	 * The default value of the '{@link #getAstPartId() <em>Ast Part Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAstTuplePartId()
+	 * @see #getAstPartId()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final TuplePartId AST_TUPLE_PART_ID_EDEFAULT = null;
+	protected static final PartId AST_PART_ID_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getAstTuplePartId() <em>Ast Tuple Part Id</em>}' attribute.
+	 * The cached value of the '{@link #getAstPartId() <em>Ast Part Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAstTuplePartId()
+	 * @see #getAstPartId()
 	 * @generated
 	 * @ordered
 	 */
-	protected TuplePartId astTuplePartId = AST_TUPLE_PART_ID_EDEFAULT;
+	protected PartId astPartId = AST_PART_ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -87,8 +87,8 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	 * @generated
 	 */
 	@Override
-	public TuplePartId getAstTuplePartId() {
-		return astTuplePartId;
+	public PartId getAstPartId() {
+		return astPartId;
 	}
 
 	/**
@@ -97,11 +97,11 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	 * @generated
 	 */
 	@Override
-	public void setAstTuplePartId(TuplePartId newAstTuplePartId) {
-		TuplePartId oldAstTuplePartId = astTuplePartId;
-		astTuplePartId = newAstTuplePartId;
+	public void setAstPartId(PartId newAstPartId) {
+		PartId oldAstPartId = astPartId;
+		astPartId = newAstPartId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldAstTuplePartId, astTuplePartId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldAstPartId, astPartId));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case 10:
-				return getAstTuplePartId();
+				return getAstPartId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -137,7 +137,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case 10:
-				setAstTuplePartId((TuplePartId)newValue);
+				setAstPartId((PartId)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -152,7 +152,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case 10:
-				setAstTuplePartId(AST_TUPLE_PART_ID_EDEFAULT);
+				setAstPartId(AST_PART_ID_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -167,7 +167,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case 10:
-				return AST_TUPLE_PART_ID_EDEFAULT == null ? astTuplePartId != null : !AST_TUPLE_PART_ID_EDEFAULT.equals(astTuplePartId);
+				return AST_PART_ID_EDEFAULT == null ? astPartId != null : !AST_PART_ID_EDEFAULT.equals(astPartId);
 		}
 		return super.eIsSet(featureID);
 	}

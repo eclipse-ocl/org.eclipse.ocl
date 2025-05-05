@@ -69,7 +69,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
@@ -809,7 +809,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	@Override
 	public Object visitTupleLiteralExp(@NonNull TupleLiteralExp tl) {
 		Type type = ClassUtil.requireNonNull(tl.getType());
-		Map<@NonNull TuplePartId, @Nullable Object> propertyValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
+		Map<@NonNull PartId, @Nullable Object> propertyValues = new HashMap<@NonNull PartId, @Nullable Object>();
 		for (@NonNull TupleLiteralPart part : ClassUtil.nullFree(tl.getOwnedParts())) {
 			// Set the tuple field with the value of the init expression
 			propertyValues.put(ClassUtil.requireNonNull(part.getPartId()), part.accept(undecoratedVisitor));

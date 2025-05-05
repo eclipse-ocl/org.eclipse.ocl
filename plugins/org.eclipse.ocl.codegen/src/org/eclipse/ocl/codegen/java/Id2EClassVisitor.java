@@ -28,13 +28,13 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
@@ -110,6 +110,11 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 	}
 
 	@Override
+	public @Nullable EClass visitPartId(@NonNull PartId id) {
+		return null;
+	}
+
+	@Override
 	public @Nullable EClass visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 		return null;
 	}
@@ -136,11 +141,6 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 
 	@Override
 	public @Nullable EClass visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
-		return null;
-	}
-
-	@Override
-	public @Nullable EClass visitTuplePartId(@NonNull TuplePartId id) {
 		return null;
 	}
 

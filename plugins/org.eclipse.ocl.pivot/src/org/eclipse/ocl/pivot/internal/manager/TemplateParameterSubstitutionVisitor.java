@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +49,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -361,30 +362,31 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			}
 		}
 		if (resolutions != null) {
-			List<@NonNull TuplePartId> partIds = new ArrayList<>(parts.size());
+			List<@NonNull PartId> partIds = new ArrayList<>(parts.size());
+			Collections.sort(partIds);
 			for (int i = 0; i < parts.size(); i++) {
 				@SuppressWarnings("null") @NonNull Property part = parts.get(i);
 				String partName = NameUtil.getSafeName(part);
 				Type resolvedPropertyType = resolutions.get(partName);
 				TypeId partTypeId = resolvedPropertyType != null ? resolvedPropertyType.getTypeId() : part.getTypeId();
-				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
-				partIds.add(tuplePartId);
+				PartId partId = IdManager.getPartId(i, partName, partTypeId, part.isIsRequired());			// XXX
+				partIds.add(partId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.requireNonNull(type.getName()), partIds);
 			specializedTupleType = metamodelManager.getStandardLibrary().getTupleManager().getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
-			Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
+			List<@NonNull PartId> partList = new ArrayList<>();
 			for (TypedElement part : type.getOwnedProperties()) {
 				Type type1 = part.getType();
 				if (type1 != null) {
 					Type type2 = metamodelManager.getPrimaryType(type1);
 					Type type3 = specializeType(type2);
-					partMap.put(PivotUtil.getName(part), type3);
+					partList.add(IdManager.getPartId(-1, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired()));
 				}
 			}
-			return metamodelManager.getStandardLibrary().getTupleManager().getTupleType(NameUtil.getSafeName(type), partMap);
+			return metamodelManager.getStandardLibrary().getTupleManager().getTupleType(NameUtil.getSafeName(type), partList);
 		}
 	}
 

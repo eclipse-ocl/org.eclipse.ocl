@@ -15,13 +15,16 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class TuplePartIdImpl implements TuplePartId
+/**
+ * @since 7.0
+ */
+public class PartIdImpl implements PartId
 {
-	private static class TuplePartIdValue extends AbstractKeyAndValue<@NonNull TuplePartId>
+	private static class PartIdValue extends AbstractKeyAndValue<@NonNull PartId>
 	{
 		private final @NonNull IdManager idManager;
 		private final int index;
@@ -29,7 +32,7 @@ public class TuplePartIdImpl implements TuplePartId
 		private final @NonNull TypeId typeId;
 		private final boolean isRequired;
 
-		private TuplePartIdValue(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+		private PartIdValue(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
 			super(computeHashCode(index, name, typeId, isRequired));
 			this.idManager = idManager;
 			this.index = index;
@@ -39,15 +42,15 @@ public class TuplePartIdImpl implements TuplePartId
 		}
 
 		@Override
-		public @NonNull TuplePartId createSingleton() {
-			return new TuplePartIdImpl(idManager, index, name, typeId, isRequired);
+		public @NonNull PartId createSingleton() {
+			return new PartIdImpl(idManager, index, name, typeId, isRequired);
 		}
 
 		@Override
 		public boolean equals(@Nullable Object that) {
-			if (that instanceof TuplePartIdImpl) {
-				TuplePartIdImpl singleton = (TuplePartIdImpl)that;
-				return (index == singleton.getIndex()) && name.equals(singleton.getName()) && (typeId == singleton.getTypeId());
+			if (that instanceof PartIdImpl) {
+				PartIdImpl singleton = (PartIdImpl)that;
+				return (index == singleton.getIndex()) && name.equals(singleton.getName()) && (typeId == singleton.getTypeId()) && (isRequired == singleton.isRequired());
 			}
 			else {
 				return false;
@@ -58,13 +61,13 @@ public class TuplePartIdImpl implements TuplePartId
 	/**
 	 * @since 1.18
 	 */
-	public static class TuplePartIdSingletonScope extends AbstractSingletonScope<@NonNull TuplePartId, @NonNull TuplePartIdValue>
+	public static class PartIdSingletonScope extends AbstractSingletonScope<@NonNull PartId, @NonNull PartIdValue>
 	{
 		/**
 		 * @since 7.0
 		 */
-		public @NonNull TuplePartId getSingleton(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
-			return getSingletonFor(new TuplePartIdValue(idManager, index, name, typeId, isRequired));
+		public @NonNull PartId getSingleton(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+			return getSingletonFor(new PartIdValue(idManager, index, name, typeId, isRequired));
 		}
 	}
 
@@ -84,7 +87,7 @@ public class TuplePartIdImpl implements TuplePartId
 	/**
 	 * @since 1.18
 	 */
-	private TuplePartIdImpl(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+	private PartIdImpl(@NonNull IdManager idManager, int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
 		this.index = index;
 		this.name = name;
 		this.typeId = typeId;
@@ -94,11 +97,11 @@ public class TuplePartIdImpl implements TuplePartId
 
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
-		return visitor.visitTuplePartId(this);
+		return visitor.visitPartId(this);
 	}
 
 	@Override
-	public int compareTo(TuplePartId o) {
+	public int compareTo(@NonNull PartId o) {
 		String n1 = name;
 		String n2 = o.getName();
 		if (n1 == n2) {
@@ -119,7 +122,8 @@ public class TuplePartIdImpl implements TuplePartId
 
 	@Override
 	public @NonNull String getDisplayName() {
-		return String.valueOf(name) + " : " + String.valueOf(typeId);
+//		return String.valueOf(name) + " : " + String.valueOf(typeId);
+		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
 	}
 
 	@Override
@@ -143,7 +147,12 @@ public class TuplePartIdImpl implements TuplePartId
 	}
 
 	@Override
+	public boolean isRequired() {
+		return isRequired;
+	}
+
+	@Override
 	public String toString() {
-		return String.valueOf(name) + " : " + String.valueOf(typeId);
+		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
 	}
 }
