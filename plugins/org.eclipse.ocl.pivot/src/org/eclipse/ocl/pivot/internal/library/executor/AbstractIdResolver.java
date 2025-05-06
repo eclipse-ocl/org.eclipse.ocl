@@ -265,13 +265,6 @@ public abstract class AbstractIdResolver implements IdResolver
 	private /*@LazyNonNull*/ Map<@NonNull Enumerator, @NonNull EnumerationLiteralId> enumerator2enumerationLiteralId = null;	// Concurrent puts are duplicates
 
 	/**
-	 * Mapping from name to list of correspondingly named types for definition of tuple parts. This cache is used to provide the
-	 * required part definitions to construct a tuple type in the lightweight execution environment. This cache may remain
-	 * unused when using the full pivot environment.
-	 */
-	private Map<@NonNull String, @NonNull Map<@NonNull Type, @NonNull WeakReference<@Nullable TypedElement>>> tupleParts = null;		// Lazily created
-
-	/**
 	 * Mapping from package URI to corresponding Pivot Package. (used to resolve NsURIPackageId).
 	 */
 	protected final @NonNull Map<@Nullable String, org.eclipse.ocl.pivot.@NonNull Package> nsURI2package = new HashMap<>();
@@ -692,7 +685,6 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public void dispose() {
-		tupleParts = null;
 		key2class.clear();
 		enumerationLiteral2enumerator = null;
 		enumerator2enumerationLiteralId = null;
@@ -1175,9 +1167,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return standardLibrary.getTupleType(typeId);
-	}
+	public abstract @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId);
 
 	@Override
 	public final @NonNull Type getType(@NonNull TypeId typeId) {

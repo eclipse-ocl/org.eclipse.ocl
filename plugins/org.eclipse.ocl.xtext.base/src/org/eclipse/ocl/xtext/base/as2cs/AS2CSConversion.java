@@ -258,6 +258,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if (upper == -1) {
 				stringValue = "+";
 			}
+			else if (upper == -1) {
+				stringValue = "1";
+			}
 		}
 		MultiplicityCS csMultiplicity;
 		if (stringValue != null) {
