@@ -1785,11 +1785,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					isNullFree = false;
 				}
 			}
+			else if ((pivotPart != null) && !pivotPart.isIsRequired()) {
+				isNullFree = false;
+			}
 			else if (pivotPart instanceof CollectionRange) {
 				;
 			}
 			else {
-				isNullFree = false;
+				isNullFree = PivotConstants.DEFAULT_IS_NULL_FREE;
 			}
 		}
 		//		if (invalidValue != null) {
@@ -1809,9 +1812,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				commonType = standardLibrary.getOclVoidType();
 			}
 			CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(collectionTypeName);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, commonType, isNullFree, null, null);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, commonType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 			Type type = standardLibrary.getCollectionType(typeArguments);
-			helper.setType(expression, type, true, null);
+			helper.setType(expression, type, PivotConstants.DEFAULT_AGGREGATE_IS_REQUIRED, null);
 			expression.setKind(PivotUtil.getCollectionKind((CollectionType) type));
 		}
 		return expression;
@@ -2477,10 +2480,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				revisit(TupleLiteralPart.class, csPart);
 			}
 			String tupleTypeName = "Tuple"; //ownedCollectionType.getName();
-			List<@NonNull TupleLiteralPart> parts = ClassUtil.nullFree(expression.getOwnedParts());
-			assert parts != null;
+			List<@NonNull TupleLiteralPart> parts = PivotUtil.getOwnedPartsList(expression);
 			Type type = standardLibrary.getTupleType(tupleTypeName, parts, null);
-			helper.setType(expression, type, true, null);
+			helper.setType(expression, type, PivotConstants.DEFAULT_AGGREGATE_IS_REQUIRED, null);
 		}
 		return expression;
 	}
@@ -2494,8 +2496,21 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression initExpression = revisit(OCLExpression.class, csInitExpression);
 				pivotElement.setOwnedInit(initExpression);
 				TypedRefCS csType = csTupleLiteralPart.getOwnedType();
-				Type type = csType != null ? PivotUtil.getPivot(Type.class, csType) : initExpression != null ? initExpression.getType() : null;
-				helper.setType(pivotElement, type, context.getConverter().isRequiredWithDefault(csType), null);
+				Type type;
+				boolean isRequired;
+				if (csType != null) {
+					type = PivotUtil.getPivot(Type.class, csType);
+					isRequired = context.getConverter().isRequiredWithDefault(csType);
+				}
+				else if (initExpression != null) {
+					type = initExpression.getType();
+					isRequired = initExpression.isIsRequired();
+				}
+				else {
+					type = null;
+					isRequired = PivotConstants.DEFAULT_IS_NULL_FREE;
+				}
+				helper.setType(pivotElement, type, isRequired, null);
 			}
 		}
 		return pivotElement;

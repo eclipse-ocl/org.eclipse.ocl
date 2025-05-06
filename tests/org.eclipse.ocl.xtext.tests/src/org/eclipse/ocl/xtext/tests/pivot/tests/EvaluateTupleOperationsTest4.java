@@ -82,21 +82,57 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		PartId aPartId = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
 		@SuppressWarnings("null") TupleTypeId aTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(aPartId));
-		Map<@NonNull PartId, @Nullable Object> aValues = new HashMap<@NonNull PartId, @Nullable Object>();
-		aValues.put(aPartId, ValueUtil.integerValueOf(3));
-		TupleValue aValue = ValueUtil.createTupleValue(aTupleTypeId, aValues);
+		PartId aPartIdOpt = IdManager.getPartId(0, "a", TypeId.INTEGER, false);
+		@SuppressWarnings("null") TupleTypeId aTupleTypeIdOpt = IdManager.getTupleTypeId("Tuple", Collections.singletonList(aPartIdOpt));
+		PartId aPartIdVoid = IdManager.getPartId(0, "a", TypeId.OCL_VOID, false);
+		@SuppressWarnings("null") TupleTypeId aTupleTypeIdVoid = IdManager.getTupleTypeId("Tuple", Collections.singletonList(aPartIdVoid));
 		PartId bPartId = IdManager.getPartId(0, "b", TypeId.INTEGER, true);
 		@SuppressWarnings("null") TupleTypeId bTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(bPartId));
-		Map<@NonNull PartId, @Nullable Object> bValues = new HashMap<@NonNull PartId, @Nullable Object>();
-		bValues.put(bPartId, ValueUtil.integerValueOf(4));
-		TupleValue bValue = ValueUtil.createTupleValue(bTupleTypeId, bValues);
+		//
+		Map<@NonNull PartId, @Nullable Object> aValues_3 = new HashMap<>();
+		aValues_3.put(aPartId, ValueUtil.integerValueOf(3));
+		TupleValue aValue_3 = ValueUtil.createTupleValue(aTupleTypeId, aValues_3);
+		//
+		Map<@NonNull PartId, @Nullable Object> aValues_4 = new HashMap<>();
+		aValues_4.put(aPartId, ValueUtil.integerValueOf(4));
+		TupleValue aValue_4 = ValueUtil.createTupleValue(aTupleTypeId, aValues_4);
+		//
+		Map<@NonNull PartId, @Nullable Object> aValues_null = new HashMap<>();
+		aValues_null.put(aPartId, null);
+		TupleValue aValue_null = ValueUtil.createTupleValue(aTupleTypeIdOpt, aValues_null);
+		TupleValue aValuev_null = ValueUtil.createTupleValue(aTupleTypeIdVoid, aValues_null);
+		//
+		Map<@NonNull PartId, @Nullable Object> bValues_4 = new HashMap<>();
+		bValues_4.put(bPartId, ValueUtil.integerValueOf(4));
+		TupleValue bValue_4 = ValueUtil.createTupleValue(bTupleTypeId, bValues_4);
+		//
 		CollectionTypeId collectionTypeId = TypeId.SET.getSpecializedId(TypeId.OCL_ANY);
-		SetValue setValue = ValueUtil.createSetOfEach(collectionTypeId,  aValue, bValue);
-		ocl.assertQueryEquals(null, setValue, "Set{Tuple{a = 3}, Tuple{b = 4}, Tuple{a = 3}}");						// BUG 4404404
+		SetValue setValue_a3a4 = ValueUtil.createSetOfEach(collectionTypeId, aValue_3, aValue_4);
+		SetValue setValue_a3a_null = ValueUtil.createSetOfEach(collectionTypeId, aValue_3, aValue_null);
+		SetValue setValue_a3av_null = ValueUtil.createSetOfEach(collectionTypeId, aValue_3, aValuev_null);
+		SetValue setValue_a3b4 = ValueUtil.createSetOfEach(collectionTypeId, aValue_3, bValue_4);
+		SetValue setValue2 = ValueUtil.createSetOfEach(collectionTypeId);
+		ocl.assertQueryEquals(null, setValue_a3a_null, "let s : Set(Tuple(a:Integer[?])) = Set{Tuple{a = 3}, Tuple{a:Integer = null}} in s");
+		ocl.assertQueryEquals(null, setValue_a3av_null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a:Integer[1] = null}} in s");
+		ocl.assertQueryEquals(null, setValue_a3av_null, "let s : Set(Tuple(a:Integer[?])) = Set{Tuple{a = 3}, Tuple{a = null}} in s");
+		ocl.assertQueryEquals(null, setValue_a3av_null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a = null}} in s");
+
+
+		ocl.assertQueryEquals(null, setValue_a3b4, "let s : Set(OclAny) = Set{Tuple{a = 3}, Tuple{b = 4}} in s");
+		ocl.assertQueryEquals(null, setValue_a3a4, "let s : Set(Tuple(a:Integer)) = Set{Tuple{a = 3}, Tuple{a = 4}} in s");
+		ocl.assertQueryEquals(null, setValue_a3a4, "let s : Set(Tuple(a:Integer[?])) = Set{Tuple{a = 3}, Tuple{a = 4}} in s");
+		ocl.assertQueryEquals(null, setValue_a3a4, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a = 4}} in s");
+//		ocl.assertQueryEquals(null, setValue_a3a_null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a = null}} in s");
+// XXX
+		ocl.assertQueryEquals(null, setValue_a3b4, "Set{Tuple{a = 3}, Tuple{b = 4}, Tuple{a = 3}}");						// BUG 4404404
+		ocl.assertQueryEquals(null, setValue_a3b4, "Set{Tuple{a = 3}, Tuple{b = 4}, Tuple{a = 3}}");						// BUG 4404404
+		ocl.assertQueryEquals(null, setValue_a3b4, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{b = 4}} in s");
+		ocl.assertQueryEquals(null, setValue_a3b4, "let s : Set(Tuple(a:Integer[?])) = Set{Tuple{a = 3}, Tuple{b = 4}} in s");
+		ocl.assertQueryEquals(null, setValue_a3b4, "let s : Set(Tuple(a:Integer)) = Set{Tuple{a = 3}, Tuple{b = 4}} in s");
 		ocl.assertValidationErrorQuery(null, "let s : Set(Tuple(a:Integer)) = Set{Tuple{a = 3}, Tuple{b = 4}} in s",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleTypeForInitializer",
-				"s : Set(Tuple(a:Integer[1])) = Set{Tuple{a : Integer[1] = 3}, Tuple{b : Integer[1] = 4}}");
-		ocl.assertQueryEquals(null, setValue, "let s : Set(OclAny) = Set{Tuple{a = 3}, Tuple{b = 4}} in s");
+				"s : Set(Tuple(a:Integer[?])) = Set{Tuple{a : Integer[1] = 3}, Tuple{b : Integer[1] = 4}}");
+		ocl.assertQueryEquals(null, setValue_a3b4, "let s : Set(OclAny) = Set{Tuple{a = 3}, Tuple{b = 4}} in s");
 		ocl.dispose();
 	}
 

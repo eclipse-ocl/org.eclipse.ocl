@@ -128,9 +128,9 @@ public class TupleTypeManager
 			if (rightProperty == null) {
 				return null;				// Happens for inconsistent tuples
 			}
-			if (leftProperty.isIsRequired() != rightProperty.isIsRequired()) {
-				return null;				// ?? Never happens
-			}
+		//	if (leftProperty.isIsRequired() != rightProperty.isIsRequired()) {
+		//		return null;				// ?? Never happens
+		//	}
 			Type leftPropertyType = leftProperty.getType();
 			if (leftPropertyType == null) {
 				return null;				// Never happens
@@ -139,8 +139,9 @@ public class TupleTypeManager
 			if (rightPropertyType == null) {
 				return null;				// Never happens
 			}
+			boolean commonIsRequired = leftProperty.isIsRequired() && rightProperty.isIsRequired();
 			Type commonType = metamodelManager.getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
-			PartId commonPartId = IdManager.getPartId(i, name, commonType.getTypeId(), leftProperty.isIsRequired());
+			PartId commonPartId = IdManager.getPartId(i, name, commonType.getTypeId(), commonIsRequired);
 			commonPartIds.add(commonPartId);
 		}
 		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);

@@ -426,7 +426,7 @@ public class OCL
 	 * @see #check(Object, ExpressionInOCL)
 	 */
 	public @Nullable Object evaluate(@Nullable Object context, @NonNull ExpressionInOCL expression) {
-		assert ThreadLocalExecutor.basicGetExecutor() == null;
+		assert ThreadLocalExecutor.basicGetExecutor() == null : "Executor already exists, maybe a symbolic isNonNull was executed";
 		EvaluationVisitor evaluationVisitor = createEvaluationVisitor(context, expression);
 		assert ThreadLocalExecutor.basicGetExecutor() instanceof ExecutorInternal;
 		try {

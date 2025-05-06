@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -33,17 +33,11 @@ public interface CollectionTypeId extends BuiltInTypeId, TemplateableId
 	@Override
 	@NonNull CollectionTypeId getSpecializedId(@NonNull BindingsId templateBindings);
 
-	@Deprecated
-	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
-		assert templateBindings.length == 1;			// Legacy compatibility
-		return getSpecializedId(templateBindings[0], false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	}
-
 	/**
 	 * @since 1.18
 	 */
 	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId elementId) {
-		return getSpecializedId(elementId, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+		return getSpecializedId(elementId, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 
 	/**

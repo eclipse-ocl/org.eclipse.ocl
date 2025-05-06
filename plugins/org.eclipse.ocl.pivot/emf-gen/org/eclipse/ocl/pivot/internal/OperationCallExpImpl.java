@@ -670,7 +670,10 @@ implements OperationCallExp {
 					/*@Thrown*/ @Nullable Boolean forAll;
 					while (true) {
 						if (!ITERATOR_i.hasNext()) {
-							if (accumulator == ValueUtil.TRUE_VALUE) {
+							if (accumulator == null) {
+								forAll = null;
+							}
+							else if (accumulator == ValueUtil.TRUE_VALUE) {
 								forAll = ValueUtil.TRUE_VALUE;
 							}
 							else {
@@ -695,7 +698,7 @@ implements OperationCallExp {
 						 *         endif
 						 *       in argument.type?.conformsTo(requiredType)
 						 */
-						/*@Caught*/ @NonNull Object CAUGHT_safe_conformsTo_source;
+						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
 							final /*@Thrown*/ @Nullable OCLExpression argument = (@Nullable OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
 							if (safe_ownedParameters_source == null) {
@@ -757,9 +760,6 @@ implements OperationCallExp {
 								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
 								safe_conformsTo_source = conformsTo_0;
 							}
-							if (safe_conformsTo_source == null) {
-								throw new InvalidValueException("Null body for \'Collection(T).forAll($$0[?] | Lambda $$0[1]() : Boolean[?]) : Boolean[?]\'");
-							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 						}
 						catch (Exception e) {
@@ -772,6 +772,11 @@ implements OperationCallExp {
 						}
 						else if (CAUGHT_safe_conformsTo_source == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 							;															// Carry on
+						}
+						else if (CAUGHT_safe_conformsTo_source == null) {								// Abnormal null body evaluation result
+							if (accumulator == ValueUtil.TRUE_VALUE) {
+								accumulator = null;										// Cache a null failure
+							}
 						}
 						else if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {		// Abnormal exception evaluation result
 							accumulator = CAUGHT_safe_conformsTo_source;									// Cache an exception failure

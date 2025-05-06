@@ -123,7 +123,7 @@ public class PartIdImpl implements PartId
 	@Override
 	public @NonNull String getDisplayName() {
 //		return String.valueOf(name) + " : " + String.valueOf(typeId);
-		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
+		return String.valueOf(name) + /*"@" + index +*/ " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
 	}
 
 	@Override
