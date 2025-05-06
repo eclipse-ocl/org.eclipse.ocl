@@ -2009,6 +2009,18 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @since 1.23
+	 */
+	public static @NonNull OCLExpression getOwnedBody(@NonNull LoopExp loopExp) {
+		if (loopExp instanceof IterateExp) {
+			return ClassUtil.requireNonNull(((IterateExp)loopExp).getOwnedBodies().get(0));
+		}
+		else {
+			return ClassUtil.requireNonNull(((IteratorExp)loopExp).getOwnedBody());
+		}
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
