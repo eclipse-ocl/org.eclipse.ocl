@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.genmodel.OCLGenModelUtil;
-import org.eclipse.ocl.xtext.tests.company.CompanyPackage;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -45,6 +44,7 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.tests.TestUtil;
+import org.eclipse.ocl.xtext.tests.company.CompanyPackage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -508,12 +508,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertValidationErrorQuery(null, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleTypeForInitializer", "x : Bag(Type[*|?]) = Set{Integer, Real}");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleTypeForInitializer", "x : Bag(Type) = Set{Integer, Real}");
 		ocl.assertQueryTrue(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Collection(Type[*]) | x->size() > 0)");
 		ocl.assertValidationErrorQuery(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type | x->size() > 0)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::IteratorTypeIsSourceElementType", "x?->forAll(x : Type[1] | x.oclAsSet()->size().>(0))");
 		ocl.assertValidationErrorQuery(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type[*] | x->size() > 0)",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::IteratorTypeIsSourceElementType", "x?->forAll(x : Bag(Type[*|?]) | x->size().>(0))");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::IteratorTypeIsSourceElementType", "x?->forAll(x : Bag(Type) | x->size().>(0))");
 		ocl.dispose();
 	}
 

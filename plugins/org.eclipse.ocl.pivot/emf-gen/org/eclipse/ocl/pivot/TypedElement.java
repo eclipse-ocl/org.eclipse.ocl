@@ -54,7 +54,7 @@ public interface TypedElement extends NamedElement {
 
 	/**
 	 * Returns the value of the '<em><b>Is Required</b></em>' attribute.
-	 * The default value is <code>"true"</code>.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Is Required</em>' attribute isn't clear,

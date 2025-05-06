@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
@@ -84,9 +85,9 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 					}
 					else {
-						isNullFree = true;
-						lowerValue = null;
-						upperValue = null;
+						isNullFree = PivotConstants.DEFAULT_IS_NULL_FREE;
+						lowerValue = PivotConstants.DEFAULT_LOWER_BOUND;
+						upperValue = PivotConstants.DEFAULT_UPPER_BOUND;
 					}
 					CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(name);
 					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, elementType, isNullFree, lowerValue, upperValue);

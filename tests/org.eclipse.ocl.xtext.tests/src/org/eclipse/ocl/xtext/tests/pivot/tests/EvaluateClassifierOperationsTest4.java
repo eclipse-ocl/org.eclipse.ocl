@@ -148,13 +148,13 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 			ocl.assertQueryResults(null, "Set{}", "Set(Integer).allInstances()");
 			ocl.assertQueryResults(null, "Set{}", "Set{1}->oclType().allInstances()");
 			ocl.assertQueryResults(null, "Bag{}", "Set{1}.oclType().allInstances()");
-			ocl.assertSemanticErrorQuery(classType, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
+			ocl.assertSemanticErrorQuery(classType, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Integer[*|1])", "allInstances", "");
 			ocl.assertSemanticErrorQuery(classType, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "allInstances", "");
 			//
 			ocl.assertQueryResults(null, "Set{}", "Map(Integer,String).allInstances()");
 			ocl.assertQueryResults(null, "Set{}", "Map{1 with '1'}->oclType().allInstances()");
 			ocl.assertQueryResults(null, "Bag{}", "Map{1 with '1'}.oclType().allInstances()");
-			ocl.assertSemanticErrorQuery(classType, "Map{1 with '1'}->allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Map(Integer,String)", "allInstances", "");
+			ocl.assertSemanticErrorQuery(classType, "Map{1 with '1'}->allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Map(Integer[1],String[1])", "allInstances", "");
 			ocl.assertSemanticErrorQuery(classType, "Map{1 with '1'}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "allInstances", "");
 			//
 			ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).allInstances()");
