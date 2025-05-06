@@ -184,15 +184,15 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		MyOCL ocl = createOCLWithProjectMap();
 		ocl.initStateMachinePackage(getTestModelURI("models/uml/StateMachines.uml"),
 			new @NonNull String[] {
-			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»[1]'",
-			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»[1]'"
+			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»'",
+			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»'"
 		});
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		EObject context = ocl.statefulEFactory.create(ocl.c1Class);
 		org.eclipse.ocl.pivot.Class contextType = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, ocl.c1Class);
 		assert contextType != null;
 		ocl.assertSemanticErrorQuery(contextType, "self.oclIsInState(S2b)", PivotMessagesInternal.UnresolvedElement_ERROR_, "Model::C1", "S2b");
-		ocl.assertQueryInvalid(context, "self.oclIsInState(S1a)", StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclAny::oclIsInState(OclState[?]) : Boolean[1]", "C1", "self.oclIsInState(S1a)"), UnsupportedOperationException.class);
+		ocl.assertQueryInvalid(context, "self.oclIsInState(S1a)", StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclAny::oclIsInState(OclState) : Boolean[1]", "C1", "self.oclIsInState(S1a)"), UnsupportedOperationException.class);
 		ocl.dispose();
 	}
 

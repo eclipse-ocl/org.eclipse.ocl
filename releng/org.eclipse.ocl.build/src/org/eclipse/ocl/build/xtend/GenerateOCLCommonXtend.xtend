@@ -353,8 +353,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF iteration.isInvalidating»
 						iteration.setIsInvalidating(true);
 					«ENDIF»
-					«IF !iteration.isRequired»
-						iteration.setIsRequired(false);
+					«IF iteration.isRequired»
+						iteration.setIsRequired(true);
 					«ENDIF»
 					«IF iteration.isStatic»
 						iteration.setIsStatic(true);
@@ -483,8 +483,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF operation.isInvalidating»
 						operation.setIsInvalidating(true);
 					«ENDIF»
-					«IF !operation.isRequired»
-						operation.setIsRequired(false);
+					«IF operation.isRequired»
+						operation.setIsRequired(true);
 					«ENDIF»
 					«IF operation.isStatic»
 						operation.setIsStatic(true);
@@ -632,8 +632,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF property.isReadOnly»
 						property.setIsReadOnly(true);
 					«ENDIF»
-					«IF !property.isRequired»
-						property.setIsRequired(false);
+					«IF property.isRequired»
+						property.setIsRequired(true);
 					«ENDIF»
 					«IF property.isResolveProxies»
 						property.setIsResolveProxies(true);
@@ -873,8 +873,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			CollectionType case element.elementType === null: return element.javaName()
 			CollectionType: return element.javaName()
 			Constraint: return getPartialName(element)
-			LambdaType case element.contextType === null: return "null"
-			LambdaType: return element.javaName() + "_" + element.contextType.partialName()
+			LambdaType case element.ownedContext.type === null: return "null"
+			LambdaType: return element.javaName() + "_" + element.ownedContext.type.partialName()
 			MapType case element.keyType === null: return element.javaName()
 			MapType case element.valueType === null: return element.javaName()
 			MapType: return element.javaName()

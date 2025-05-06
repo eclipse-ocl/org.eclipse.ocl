@@ -22,14 +22,12 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -150,13 +148,6 @@ public class PivotIdResolver extends AbstractIdResolver
 	@Override
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
 		return (StandardLibraryInternal)super.getStandardLibrary();
-	}
-
-	@Deprecated /*XXX merge fixup */
-	@Override
-	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		TupleTypeManager tupleManager = metamodelManager.getStandardLibrary().getTupleTypeManager();
-		return tupleManager.getTupleType(typeId);
 	}
 
 	@Override

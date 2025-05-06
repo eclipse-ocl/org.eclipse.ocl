@@ -791,7 +791,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
 		ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
 		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Integer", "allInstances");
-		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
+		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer[*|1])", "allInstances");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class)", "allInstances");
 		ocl.assertQueryResults(null, "Bag{}", "Set{1}.oclType().allInstances()");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
@@ -927,10 +927,13 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		@SuppressWarnings("unused") StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class tupleTypeClass = environmentFactory.getASClass("TupleType");
 		PartId partId = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
+		PartId partIdOpt = IdManager.getPartId(0, "a", TypeId.INTEGER, false);
 		TupleTypeId tupleId = IdManager.getTupleTypeId(partId);
+		TupleTypeId tupleIdOpt = IdManager.getTupleTypeId(partIdOpt);
 		TupleType tupleType = standardLibrary.getTupleType(tupleId);
+		TupleType tupleTypeOpt = standardLibrary.getTupleType(tupleIdOpt);
 		ocl.assertQueryEquals(null, tupleType, "Tuple{a:Integer=3}.oclType()");
-		ocl.assertQueryEquals(null, tupleType, "Tuple(a:Integer)");
+		ocl.assertQueryEquals(null, tupleTypeOpt, "Tuple(a:Integer)");
 		ocl.assertQueryEquals(null, tupleTypeClass, "Tuple(a:Integer).oclType()");
 	//	ocl.assertSemanticErrorQuery(null, "Tuple(a:Integer).allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
 		ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).allInstances()");

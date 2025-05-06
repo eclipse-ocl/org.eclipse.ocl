@@ -57,7 +57,7 @@ public class ErrorTests extends XtextTestCase
 		EssentialOCLCSResource xtextResource = ClassUtil.requireNonNull((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
-			StringUtil.bind(PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Set(test::Test)", "iterate", "w, h; acc : String = ''| true"));
+			StringUtil.bind(PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Set(test::Test[*|1])", "iterate", "w, h; acc : String = ''| true"));
 		//
 		ocl.dispose();
 	}

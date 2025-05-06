@@ -3296,7 +3296,7 @@
         name="isMany" lowerBound="1" eType="#T-pivot-Boolean" changeable="false" volatile="true"
         transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TypedElement-isRequired"
-        name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
+        name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TypedElement-type"
         name="type" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

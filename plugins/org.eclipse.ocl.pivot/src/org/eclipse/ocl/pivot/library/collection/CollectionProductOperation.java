@@ -14,12 +14,15 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TupleValue;
@@ -47,5 +50,30 @@ public class CollectionProductOperation extends AbstractBinaryOperation
         else {
         	throw new InvalidValueException(PivotMessages.MissingResult, "product"); //$NON-NLS-1$
         }
+	}
+
+	@Override
+	public boolean resolveReturnNullity(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, boolean returnIsRequired) {
+		// TODO Auto-generated method stub
+		return super.resolveReturnNullity(environmentFactory, callExp,
+			returnIsRequired);
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, @Nullable Type returnType) {
+		// TODO Auto-generated method stub
+		return super.resolveReturnType(environmentFactory, callExp, returnType);
+	}
+
+	@Override
+	public @Nullable Object resolveReturnValue(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp) {
+		// TODO Auto-generated method stub
+		return super.resolveReturnValue(environmentFactory, callExp);
 	}
 }

@@ -1878,7 +1878,7 @@ abstract type UniqueCollection(T) : CollectionType conformsTo Collection(T) => '
 
 /*
 The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.
-This includes a special e[unlimited] value (*) that encodes the upper value of  a multiplicity specification.
+This includes a special e[unlimited] value (*) that encodes the upper value of a multiplicity specification.
 UnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.
 
 Note that UnlimitedNatural is not a subclass of Integer.

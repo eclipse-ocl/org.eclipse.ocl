@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * <!-- begin-user-doc -->
@@ -95,30 +96,69 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 			/**
 			 *
 			 * inv HasNoInitializer:
-			 *   let severity : Integer[1] = constraintName.getSeverity()
+			 *   let severity : Integer[?] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = ownedInit = null
+			 *       let result : Boolean[?] = ownedInit = null
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
-			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF_le;
+			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP);
+			if (severity_0 == null) {
+				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
+			}
+			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
+			if (le == null) {
+				throw new InvalidValueException("Null if condition");
+			}
+			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-				final /*@NonInvalid*/ boolean result = ownedInit == null;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				/*@Caught*/ @NonNull Object CAUGHT_result;
+				try {
+					if (this == null) {
+						throw new InvalidValueException("Null source for \'Variable::ownedInit\'");
+					}
+					final /*@Thrown*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+					final /*@Thrown*/ boolean result = ownedInit == null;
+					CAUGHT_result = result;
+				}
+				catch (Exception e) {
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_this;
+				try {
+					if (this == null) {
+						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
+					}
+					CAUGHT_this = this;
+				}
+				catch (Exception e) {
+					CAUGHT_this = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
+				try {
+					CAUGHT_severity_0 = severity_0;
+				}
+				catch (Exception e) {
+					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
+				}
+				if (CAUGHT_this instanceof InvalidValueException) {
+					throw (InvalidValueException)CAUGHT_this;
+				}
+				if (CAUGHT_severity_0 instanceof InvalidValueException) {
+					throw (InvalidValueException)CAUGHT_severity_0;
+				}
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
-			return IF_le;
+			return Boolean.TRUE == IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

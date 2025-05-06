@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -544,7 +543,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 //		ocl.assertValidationErrorQuery(appleType, "self.Tree::name",
 //			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::NonStaticSourceTypeIsConformant", "self.name");
 		ocl.assertSemanticErrorQuery(appleType, "self.Tree::name",
-			EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "fruit::Tree::name : String[?]");
+			EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "fruit::Tree::name : String");
 		//
 		ocl.assertQueryFalse(redApple, "self.color = Color::green");
 		ocl.assertQueryTrue(redApple, "self.color = Color::red");
@@ -630,7 +629,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 			OCLinEcoreStandaloneSetup.doSetup();
 			//			OCLDelegateDomain.initialize(null);
 		}
-		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.OptionalDefaultMultiplicity, Boolean.TRUE);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
 				"package Bug411154 : pfx = 'Bug411154.ecore'\n" +
@@ -750,8 +748,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(testObjectT3a, "T3a::op7", "self.op7()");
 		ocl.assertSemanticErrorQuery(pivotTypeT3a, "self.op8()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T3a::op8");
 		ocl.assertSemanticErrorQuery(pivotTypeT3a, "self.op9()", "Ambiguous resolution:\n" +
-				"\tOperation : Bug411154::T2a::op9() : String[?]\n" +
-				"\tOperation : Bug411154::T2b::op9() : String[?]");
+				"\tOperation : Bug411154::T2a::op9() : String\n" +
+				"\tOperation : Bug411154::T2b::op9() : String");
 		//
 		ocl.assertQueryEquals(testObjectDomain, "T2a::op1", "t1_2a.op1()");
 		ocl.assertSemanticErrorQuery(pivotTypeDomain, "t1_2a.op2()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T1::op2");
@@ -770,7 +768,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertSemanticErrorQuery(pivotTypeDomain, "t1_3b.op3()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T1::op3");
 		ocl.assertQueryEquals(testObjectDomain, "T2a::op4", "t1_3b.op4()");
 		ocl.assertQueryEquals(testObjectDomain, "T1::op5", "t1_3b.op5()");
-		ocl.assertQueryInvalid(testObjectDomain, "t1_3b.op6()", NLS.bind(PivotMessages.AmbiguousOperation, "Bug411154::T1::op6() : String[?]", "Bug411154::T3b"), InvalidValueException.class);
+		ocl.assertQueryInvalid(testObjectDomain, "t1_3b.op6()", NLS.bind(PivotMessages.AmbiguousOperation, "Bug411154::T1::op6() : String", "Bug411154::T3b"), InvalidValueException.class);
 		ocl.assertSemanticErrorQuery(pivotTypeDomain, "t1_3b.op7()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T1::op7");
 		//
 		ocl.assertQueryEquals(testObjectDomain, "T3a::op1", "t1_4.op1()");

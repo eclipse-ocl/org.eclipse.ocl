@@ -350,7 +350,9 @@ public class CGLibrary extends ASResourceImpl
 
 			ownedOperations = _String_1.getOwnedOperations();
 			ownedOperations.add(operation = op_String_getSeverity);
+			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_String_logDiagnostic);
+			operation.setIsRequired(true);
 			operation.setIsValidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object", _OclAny, true));
@@ -360,6 +362,7 @@ public class CGLibrary extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("status", _Boolean, false));
 			ownedParameters.add(parameter = createParameter("code", _Integer, true));
 			ownedOperations.add(operation = op_String_logDiagnostic_1);
+			operation.setIsRequired(true);
 			operation.setIsValidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object", _OclAny, true));

@@ -65,15 +65,6 @@ public class PivotProjectPreferencePage extends AbstractProjectPreferencePage
 				PivotUIMessages.Pivot_EcoreValidation, SEVERITY_MODES, fieldEditorParent));
 		fields.add(new MyComboFieldEditor(PivotValidationOptions.MissingSafeNavigation,
 				PivotUIMessages.Pivot_MissingSafeNavigation, SEVERITY_MODES, fieldEditorParent));
-		fields.add(new MyComboFieldEditor(PivotValidationOptions.OptionalDefaultMultiplicity,
-				PivotUIMessages.Pivot_OptionalDefaultMultiplicity, BOOLEANS, fieldEditorParent,
-				"In UML, the default multiplicity for a TypedElement such as an Operation, Parameter or Property is [1],\n" +
-				"which prohibits the use of a null value. In contrast, in the Sample Ecore Model Editpr, the default is [?].\n" +
-				"The original default in the Eclipse OCL editors was the UML-like [1], but changed in 2015 to make OCLinEcore\n" +
-				"Support for detection of invalid hazards makes the default more significant and a [?] default somewhat irritating.\n" +
-				"As of 2021-09, the default is therefore reverted to the UML-like [1], which is the default for this preference.\n" +
-				"You may set this preference True to retain the Ecore-like [?] default. Where you need to allow null values\n" +
-				"you are encouraged to specify [?] explicitly rather than relying on the implicit default."));
 		fields.add(new MyComboFieldEditor(PivotValidationOptions.RedundantSafeNavigation,
 				PivotUIMessages.Pivot_RedundantSafeNavigation, SEVERITY_MODES, fieldEditorParent));
 		horizontalLine = new Label(fieldEditorParent, SWT.SEPARATOR | SWT.HORIZONTAL);
