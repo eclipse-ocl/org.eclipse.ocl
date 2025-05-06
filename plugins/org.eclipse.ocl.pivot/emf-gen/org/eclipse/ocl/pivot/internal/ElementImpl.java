@@ -222,7 +222,10 @@ public abstract class ElementImpl
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ @NonNull StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		final /*@NonInvalid*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Element, this);
+		final /*@Thrown*/ @Nullable SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Element, this);
+		if (oclAsSet == null) {
+			throw new InvalidValueException("Null source for \'Set(T).closure(E)($$1 | Lambda $$1() : Collection($$1)) : Set($$1)\'");
+		}
 		final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticClassOf(oclAsSet);
 		final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
 		final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Element, PivotTables.SET_CLSSid_Element);
@@ -241,14 +244,19 @@ public abstract class ElementImpl
 				if (CAST_null == null) {
 					throw new InvalidValueException("Null \'\'OclElement\'\' rather than \'\'OclVoid\'\' value required");
 				}
-				final /*@Thrown*/ @NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, CAST_null);
-				final /*@Thrown*/ @NonNull SetValue selectByKind = (@Nullable SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);
+				final /*@Thrown*/ @Nullable SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, CAST_null);
+				if (oclContents == null) {
+					throw new InvalidValueException("Null \'\'Set\'\' rather than \'\'OclVoid\'\' value required");
+				}
+				final /*@Thrown*/ @Nullable SetValue selectByKind = (@Nullable SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);
 				return selectByKind;
 			}
 		};
 		final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element, BODY0_closure_1, oclAsSet, ACC_closure_0);
-		@SuppressWarnings("null")
-		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
+		final /*@Thrown*/ @Nullable SetValue closure = (@Nullable SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
+		if (closure == null) {
+			throw new InvalidValueException("Null body for \'pivot::Element::allOwnedElements() : Set(Element[*|1])\'");
+		}
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = idResolver.ecoreValueOfAll(Element.class, closure);
 		return (List<Element>)ECORE_closure;
 	}

@@ -1432,31 +1432,31 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
-		List<TemplateBinding> specializedTemplateBindings = specializedClass.getOwnedBindings();
-		for (org.eclipse.ocl.pivot.Class superClass : unspecializedClass.getSuperClasses()) {
+		List<@NonNull TemplateBinding> specializedTemplateBindings = PivotUtil.getOwnedBindingsList(specializedClass);
+		for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(unspecializedClass)) {
 			List<TemplateBinding> superTemplateBindings = superClass.getOwnedBindings();
 			if (superTemplateBindings.size() > 0) {
-				List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<TemplateParameterSubstitution>();
+				List<@NonNull TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<>();
 				for (TemplateBinding superTemplateBinding : superTemplateBindings) {
-					for (TemplateParameterSubstitution superParameterSubstitution : superTemplateBinding.getOwnedSubstitutions()) {
+					for (TemplateParameterSubstitution superParameterSubstitution : PivotUtil.getOwnedSubstitutions(superTemplateBinding)) {
 						TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution = null;
-						Type superActual = superParameterSubstitution.getActual();
+						Type superActual = PivotUtil.getActual(superParameterSubstitution);
 						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
-							for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
-								TemplateParameter specializedFormal = specializedParameterSubstitution.getFormal();
+							for (TemplateParameterSubstitution specializedParameterSubstitution : PivotUtil.getOwnedSubstitutions(specializedTemplateBinding)) {
+								TemplateParameter specializedFormal = PivotUtil.getFormal(specializedParameterSubstitution);
 								TemplateParameterId specializedTemplateParameterId = specializedFormal.getTemplateParameterId();
 								int specializedIndex = specializedTemplateParameterId.getIndex();
 								if (specializedFormal == superActual) {
-									Type specializedActual = ClassUtil.requireNonNull(specializedParameterSubstitution.getActual());
-									TemplateParameter superFormal = ClassUtil.requireNonNull(superParameterSubstitution.getFormal());
+									Type specializedActual = PivotUtil.getActual(specializedParameterSubstitution);
+									TemplateParameter superFormal = PivotUtil.getFormal(superParameterSubstitution);
 									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
 									break;
 								}
 								else if (superActual instanceof NormalizedTemplateParameter) {
 									int superIndex = ((NormalizedTemplateParameter)superActual).getIndex();
 									if (specializedIndex == superIndex) {
-										Type specializedActual = ClassUtil.requireNonNull(specializedParameterSubstitution.getActual());
-										TemplateParameter superFormal = ClassUtil.requireNonNull(superParameterSubstitution.getFormal());
+										Type specializedActual = PivotUtil.getActual(specializedParameterSubstitution);
+										TemplateParameter superFormal = PivotUtil.getFormal(superParameterSubstitution);
 										superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
 										break;
 									}
@@ -1478,14 +1478,15 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 					if (superSpecializedTemplateParameterSubstitutions.size() == 1) {
 						Type templateArgument = superSpecializedTemplateParameterSubstitutions.get(0).getActual();
 						if (templateArgument != null) {
-							CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument, false, null, null);
-							org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
+							CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
+								PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+							org.eclipse.ocl.pivot.Class specializedSuperClass = environmentFactory.getStandardLibrary().getCollectionType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
 					}
 				}
 				else {
-					List<@NonNull Type> superTemplateArgumentList = new ArrayList<@NonNull Type>(superSpecializedTemplateParameterSubstitutions.size());
+					List<@NonNull Type> superTemplateArgumentList = new ArrayList<>(superSpecializedTemplateParameterSubstitutions.size());
 					for (TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution : superSpecializedTemplateParameterSubstitutions) {
 						Type actual = superSpecializedTemplateParameterSubstitution.getActual();
 						if (actual != null) {
@@ -1494,12 +1495,20 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 					}
 					CompleteInheritanceImpl superCompleteInheritance = superCompleteClass.getCompleteInheritance();
 					org.eclipse.ocl.pivot.Class genericSuperType = superCompleteInheritance.getCompleteClass().getPrimaryClass();
-					org.eclipse.ocl.pivot.Class specializedSuperType = getSpecializedType(genericSuperType, superTemplateArgumentList);
+					org.eclipse.ocl.pivot.Class specializedSuperType = environmentFactory.getStandardLibrary().getSpecializedType(genericSuperType, superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);
 				}
 			}
 			else {
 				specializedClass.getSuperClasses().add(superClass);
+			}
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(unspecializedClass)) {
+			if (superClass instanceof CollectionType) {
+				CollectionType superCollection = (CollectionType)superClass;
+				assert superCollection.isIsNullFree();
+				assert superCollection.getLowerValue() == PivotConstants.DEFAULT_LOWER_BOUND;
+				assert superCollection.getUpperValue() == PivotConstants.DEFAULT_UPPER_BOUND;
 			}
 		}
 	}

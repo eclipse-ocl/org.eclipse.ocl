@@ -1485,7 +1485,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMany" lowerBound="1"
         eType="#//Boolean" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRequired" lowerBound="1"
-        eType="#//Boolean" defaultValueLiteral="true"/>
+        eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The type of the TypedElement."/>

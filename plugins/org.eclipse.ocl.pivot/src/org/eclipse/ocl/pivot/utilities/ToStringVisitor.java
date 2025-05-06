@@ -270,13 +270,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			else {
 				safeVisit(type);
 			}
-			if (!(type instanceof IterableType) && !(type instanceof LambdaType)) {
-				if (!typedElement.isIsRequired()) {
-					append("[?]");
-				}
-				else {
-					append("[1]");
-				}
+			if (!typedElement.isIsRequired()) {
+			//	append("[?]");
+			}
+			else if (!(type instanceof IterableType) && !(type instanceof LambdaType)) {
+				append("[1]");
 			}
 		}
 	}
@@ -408,7 +406,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				Number upper = collectionType.getUpper();
 				long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
 				long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
-				if (SHOW_ALL_MULTIPLICITIES || (lowerValue != 0) || (upperValue != -1) || !collectionType.isIsNullFree()) {
+				if (SHOW_ALL_MULTIPLICITIES || (lowerValue != 0) || (upperValue != -1) || (collectionType.isIsNullFree() != PivotConstants.DEFAULT_IS_NULL_FREE)) {
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
 				}
 			}
@@ -1056,9 +1054,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					append(prefix);
 					safeVisit(templateParameterSubstitution.getActual());
 					if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
-						append("[?]");
+					//	append("[?]");
 					}
-					else if (SHOW_ALL_MULTIPLICITIES) {
+					else {//if (SHOW_ALL_MULTIPLICITIES) {
 						append("[1]");
 					}
 					prefix = ",";
@@ -1393,7 +1391,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(part);
 		Type type = part.getType();
 		if (type != null) {
-			append(" : ");
+			append(":");
 			appendElementType(part);
 		}
 		OCLExpression initExpression = part.getOwnedInit();

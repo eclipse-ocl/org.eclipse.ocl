@@ -105,7 +105,27 @@ public interface PivotConstants
 	static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
 
 	/**
-	 * The default non-null-free- of Collections, Lambdas, Maps and Tuples. This is not intended to be changed;
+	 * The default non-null of non-aggregates. This is not intended to be changed;
+	 * just to document where the default is hardwired.
+	 * \br
+	 * Former user option:
+	 * \br
+	 * In UML, the default multiplicity for a TypedElement such as an Operation, Parameter or Property is [1],
+	 * which prohibits the use of a null value. In contrast, in the Sample Ecore Model Editpr, the default is [?].
+	 * The original default in the Eclipse OCL editors was the UML-like [1], but changed in 2015 to make OCLinEcore
+	 * "Support for detection of invalid hazards makes the default more significant and a [?] default somewhat irritating.
+	 * As of 2021-09, the default is therefore reverted to the UML-like [1], which is the default for this preference.
+	 * You may set this preference True to retain the Ecore-like [?] default. Where you need to allow null values
+	 * you are encouraged to specify [?] explicitly rather than relying on the implicit default.
+	 * \br
+	 * Design discussion in Issue #2176 following on from Bug 573836
+	 *
+	 * @since 7.0
+	 */
+	static final boolean DEFAULT_IS_REQUIRED = false;
+
+	/**
+	 * The default non-null-free of Collections, Lambdas, Maps and Tuples. This is not intended to be changed;
 	 * just to document where the default is hardwired.
 	 *
 	 * @since 7.0

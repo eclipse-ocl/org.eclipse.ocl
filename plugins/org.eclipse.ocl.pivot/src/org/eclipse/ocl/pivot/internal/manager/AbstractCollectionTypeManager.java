@@ -62,7 +62,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 			if (weakReference != null) {
 				CollectionType specializedType = weakReference.get();
 				if (specializedType != null) {
-					Type elementType = specializedType.getElementType();
+					Type elementType = PivotUtil.getElementType(specializedType);
 					if (isValid(elementType)) {		// If no GC pending
 						return specializedType;
 					}
@@ -118,7 +118,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 			if (weakReference != null) {
 				CollectionType specializedType = weakReference.get();
 				if (specializedType != null) {
-					Type elementType = specializedType.getElementType();
+					Type elementType = PivotUtil.getElementType(specializedType);
 					if (isValid(elementType)) {		// If no GC pending
 						return specializedType;
 					}
@@ -134,31 +134,42 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		assert collectionTypeId.getGeneralizedId() == collectionTypeId;
-		if (collectionTypeId == TypeId.BAG) {
-			return standardLibrary.getBagType();
-		}
-		else if (collectionTypeId == TypeId.COLLECTION) {
-			return standardLibrary.getCollectionType();
-		}
-		else if (collectionTypeId == TypeId.ORDERED_COLLECTION) {
-			return standardLibrary.getOrderedCollectionType();
-		}
-		else if (collectionTypeId == TypeId.ORDERED_SET) {
-			return standardLibrary.getOrderedSetType();
-		}
-		else if (collectionTypeId == TypeId.SEQUENCE) {
-			return standardLibrary.getSequenceType();
-		}
-		else if (collectionTypeId == TypeId.SET) {
-			return standardLibrary.getSetType();
-		}
-		else if (collectionTypeId == TypeId.UNIQUE_COLLECTION) {
-			return standardLibrary.getUniqueCollectionType();
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
+//		if (collectionTypeId instanceof SpecializedCollectionTypeIdImpl) {
+//			SpecializedCollectionTypeIdImpl specializedCollectionTypeId = (SpecializedCollectionTypeIdImpl)collectionTypeId;
+//			Boolean isNullFree = specializedCollectionTypeId.isNullFree();
+//			IntegerValue lower = specializedCollectionTypeId.getLowerValue();
+//			UnlimitedNaturalValue upper = specializedCollectionTypeId.getUpperValue();
+//			return getCollectionType(new CollectionTypeArguments(collectionTypeId, isNullFree, lower, upper));
+//		}
+//		else {
+//			return getCollectionType(typeId, false, null, null);
+//		}
+			assert collectionTypeId.getGeneralizedId() == collectionTypeId;
+			if (collectionTypeId == TypeId.BAG) {
+				return standardLibrary.getBagType();
+			}
+			else if (collectionTypeId == TypeId.COLLECTION) {
+				return standardLibrary.getCollectionType();
+			}
+			else if (collectionTypeId == TypeId.ORDERED_COLLECTION) {
+				return standardLibrary.getOrderedCollectionType();
+			}
+			else if (collectionTypeId == TypeId.ORDERED_SET) {
+				return standardLibrary.getOrderedSetType();
+			}
+			else if (collectionTypeId == TypeId.SEQUENCE) {
+				return standardLibrary.getSequenceType();
+			}
+			else if (collectionTypeId == TypeId.SET) {
+				return standardLibrary.getSetType();
+			}
+			else if (collectionTypeId == TypeId.UNIQUE_COLLECTION) {
+				return standardLibrary.getUniqueCollectionType();
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
+//		}
 	}
 
 	@Override

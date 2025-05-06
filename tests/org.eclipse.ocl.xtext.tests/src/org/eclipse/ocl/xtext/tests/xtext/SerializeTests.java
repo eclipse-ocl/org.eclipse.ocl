@@ -790,8 +790,8 @@ public class SerializeTests extends XtextTestCase
 			@Override
 			public @NonNull String @NonNull [] asFirstValidationMessages() {
 				return new @NonNull String[] {
-					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»[1]'",
-					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»[1]'"
+					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»'",
+					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»'"
 				};
 			}
 

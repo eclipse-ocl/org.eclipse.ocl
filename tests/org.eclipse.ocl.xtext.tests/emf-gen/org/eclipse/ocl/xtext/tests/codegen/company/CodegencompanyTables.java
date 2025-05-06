@@ -106,7 +106,7 @@ public class CodegencompanyTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_999 = ValueUtil.integerValueOf("999");
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_NULLid = TypeId.ORDERED_SET.getSpecializedId(TypeId.OCL_VOID, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull PartId PARTid__1 = IdManager.getPartId(0, "message", TypeId.STRING, true);
-	public static final /*@NonInvalid*/ @NonNull PartId PARTid__2 = IdManager.getPartId(1, "status", TypeId.BOOLEAN, true);
+	public static final /*@NonInvalid*/ @NonNull PartId PARTid__2 = IdManager.getPartId(1, "status", TypeId.BOOLEAN, false);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer_0 = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -408,7 +408,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Bug418716__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[?]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -441,7 +441,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Company__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[?]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -474,7 +474,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CompanySizeKind__OclElement = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[?]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -488,7 +488,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CompanySizeKind__OclEnumeration = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CompanySizeKind__OclType = {
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
@@ -516,7 +516,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Employee__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[?]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,

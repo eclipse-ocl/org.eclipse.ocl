@@ -89,7 +89,7 @@ implements TypedElement {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean IS_REQUIRED_EDEFAULT = true;
+	protected static final boolean IS_REQUIRED_EDEFAULT = false;
 	/**
 	 * The flag representing the value of the '{@link #isIsRequired() <em>Is Required</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -116,7 +116,6 @@ implements TypedElement {
 	 */
 	protected TypedElementImpl() {
 		super();
-		eFlags |= IS_REQUIRED_EFLAG;
 	}
 
 	/**
@@ -205,8 +204,11 @@ implements TypedElement {
 			if (type == null) {
 				throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-			final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+			if (this == null) {
+				throw new InvalidValueException("Null source for \'TypedElement::type\'");
+			}
+			final /*@Thrown*/ @Nullable Type type_0 = this.getType();
+			final /*@Thrown*/ @Nullable Boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0);
 			safe_conformsTo_source = conformsTo_0;
 		}
 		if (safe_conformsTo_source == null) {
