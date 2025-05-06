@@ -407,7 +407,13 @@ public class ParameterImpl
 	 */
 	@Override
 	public String toString() {
-		return super.toString();
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (isTypeof: "); //$NON-NLS-1$
+		result.append((eFlags & IS_TYPEOF_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
 	}
 
 	@Override

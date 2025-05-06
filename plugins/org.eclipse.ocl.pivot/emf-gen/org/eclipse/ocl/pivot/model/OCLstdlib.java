@@ -974,53 +974,41 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclTuple);
 		}
 
-		private final @NonNull LambdaType _Lambda_self_$$0_T_result_$$1_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$0_F_result_$$1_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$0_T_result_$$2_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$0_F_result_$$2_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$0_T_result_Boolean_T = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$0_F_result_Boolean_T = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$0_F_result_OclAny_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$0_F_result_OclComparable_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$1_F_result_Collection_T = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$1_F_result_OrderedCollection_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$1_F_result_Collection_F = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$1_F_result_OrderedCollection_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_result_$$1_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_result_$$2_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_result_Boolean_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$1_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$2_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$1_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_result_$$2_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_result_$$3_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_result_Boolean_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$2_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$3_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$3_F = createLambdaType("Lambda");
-		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 
 		private void installLambdaTypes() {
 			final List<Class> orphanTypes = orphanPackage.getOwnedClasses();
 			LambdaType type;
 			List<Class> superClasses;
-			orphanTypes.add(type = _Lambda_self_$$0_T_result_$$1_F);
-			type.setOwnedContext(createLambdaParameter("self", $$0, true));
-			type.setOwnedResult(createLambdaParameter("result", $$1, false));
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$0_F_result_$$1_F);
 			type.setOwnedContext(createLambdaParameter("self", $$0, false));
 			type.setOwnedResult(createLambdaParameter("result", $$1, false));
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$0_T_result_$$2_F);
-			type.setOwnedContext(createLambdaParameter("self", $$0, true));
-			type.setOwnedResult(createLambdaParameter("result", $$2, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$0_F_result_$$2_F);
@@ -1053,14 +1041,14 @@ public class OCLstdlib extends ASResourceImpl
 			type.setOwnedResult(createLambdaParameter("result", _OclComparable, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$1_F_result_Collection_T);
+			orphanTypes.add(type = _Lambda_self_$$1_F_result_Collection_F);
 			type.setOwnedContext(createLambdaParameter("self", $$1, false));
-			type.setOwnedResult(createLambdaParameter("result", _Collection_$$1_F, true));
+			type.setOwnedResult(createLambdaParameter("result", _Collection_$$1_F, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$1_F_result_OrderedCollection_T);
+			orphanTypes.add(type = _Lambda_self_$$1_F_result_OrderedCollection_F);
 			type.setOwnedContext(createLambdaParameter("self", $$1, false));
-			type.setOwnedResult(createLambdaParameter("result", _OrderedCollection_$$1_F, true));
+			type.setOwnedResult(createLambdaParameter("result", _OrderedCollection_$$1_F, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_result_$$1_F);
@@ -1075,10 +1063,10 @@ public class OCLstdlib extends ASResourceImpl
 			type.setOwnedResult(createLambdaParameter("result", $$2, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_result_Boolean_T);
+			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_result_Boolean_F);
 			type.setOwnedContext(createLambdaParameter("self", $$1, false));
 			type.getOwnedParameters().add(createLambdaParameter("i", $$0, false));
-			type.setOwnedResult(createLambdaParameter("result", _Boolean, true));
+			type.setOwnedResult(createLambdaParameter("result", _Boolean, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$1_F);
@@ -1095,11 +1083,11 @@ public class OCLstdlib extends ASResourceImpl
 			type.setOwnedResult(createLambdaParameter("result", $$2, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_T);
+			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_F);
 			type.setOwnedContext(createLambdaParameter("self", $$1, false));
 			type.getOwnedParameters().add(createLambdaParameter("i", $$0, false));
 			type.getOwnedParameters().add(createLambdaParameter("j", $$0, false));
-			type.setOwnedResult(createLambdaParameter("result", _Boolean, true));
+			type.setOwnedResult(createLambdaParameter("result", _Boolean, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$1_F);
@@ -1118,12 +1106,12 @@ public class OCLstdlib extends ASResourceImpl
 			type.setOwnedResult(createLambdaParameter("result", $$2, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_T);
+			orphanTypes.add(type = _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F);
 			type.setOwnedContext(createLambdaParameter("self", $$1, false));
 			type.getOwnedParameters().add(createLambdaParameter("i", $$0, false));
 			type.getOwnedParameters().add(createLambdaParameter("j", $$0, false));
 			type.getOwnedParameters().add(createLambdaParameter("k", $$0, false));
-			type.setOwnedResult(createLambdaParameter("result", _Boolean, true));
+			type.setOwnedResult(createLambdaParameter("result", _Boolean, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_result_$$2_F);
@@ -1138,10 +1126,10 @@ public class OCLstdlib extends ASResourceImpl
 			type.setOwnedResult(createLambdaParameter("result", $$3, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_result_Boolean_T);
+			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_result_Boolean_F);
 			type.setOwnedContext(createLambdaParameter("self", $$2, false));
 			type.getOwnedParameters().add(createLambdaParameter("i", $$0, false));
-			type.setOwnedResult(createLambdaParameter("result", _Boolean, true));
+			type.setOwnedResult(createLambdaParameter("result", _Boolean, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$2_F);
@@ -1158,11 +1146,11 @@ public class OCLstdlib extends ASResourceImpl
 			type.setOwnedResult(createLambdaParameter("result", $$3, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_T);
+			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_F);
 			type.setOwnedContext(createLambdaParameter("self", $$2, false));
 			type.getOwnedParameters().add(createLambdaParameter("i", $$0, false));
 			type.getOwnedParameters().add(createLambdaParameter("j", $$0, false));
-			type.setOwnedResult(createLambdaParameter("result", _Boolean, true));
+			type.setOwnedResult(createLambdaParameter("result", _Boolean, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F);
@@ -1181,12 +1169,12 @@ public class OCLstdlib extends ASResourceImpl
 			type.setOwnedResult(createLambdaParameter("result", $$3, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
-			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_T);
+			orphanTypes.add(type = _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F);
 			type.setOwnedContext(createLambdaParameter("self", $$2, false));
 			type.getOwnedParameters().add(createLambdaParameter("i", $$0, false));
 			type.getOwnedParameters().add(createLambdaParameter("j", $$0, false));
 			type.getOwnedParameters().add(createLambdaParameter("k", $$0, false));
-			type.setOwnedResult(createLambdaParameter("result", _Boolean, true));
+			type.setOwnedResult(createLambdaParameter("result", _Boolean, false));
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 		}
@@ -1481,7 +1469,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
 			ownedOperations.add(operation = op_Boolean_allInstances);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, true));
+			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_Boolean_and);
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
@@ -1941,7 +1929,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations = _OclElement.getOwnedOperations();
 			ownedOperations.add(operation = op_OclElement_allInstances);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, true));
+			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_OclElement_oclAsModelType);
 			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
@@ -1975,7 +1963,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations = _OclEnumeration.getOwnedOperations();
 			ownedOperations.add(operation = op_OclEnumeration_allInstances);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, true));
+			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 
 			ownedOperations = _OclInvalid.getOwnedOperations();
 			ownedOperations.add(operation = op_OclInvalid__lt__gt_);
@@ -1986,7 +1974,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
 			ownedOperations.add(operation = op_OclInvalid_allInstances);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, true));
+			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_OclInvalid_and);
 			operation.setIsRequired(false);
 			operation.setIsValidating(true);
@@ -2033,7 +2021,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations = _OclStereotype.getOwnedOperations();
 			ownedOperations.add(operation = op_OclStereotype_allInstances);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, true));
+			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 
 			ownedOperations = _OclSummable.getOwnedOperations();
 			ownedOperations.add(operation = op_OclSummable_sum);
@@ -2066,7 +2054,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
 			ownedOperations.add(operation = op_OclVoid_allInstances);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, true));
+			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_OclVoid_and);
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
@@ -2377,7 +2365,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_Collection_T, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_Collection_F, true));
 			ownedIterations.add(iteration = it_Bag_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
@@ -2484,7 +2472,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$0_T_result_$$1_F, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$0_F_result_$$1_F, true));
 			ownedIterations.add(iteration = it_Collection_isUnique);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
@@ -2516,7 +2504,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("nextAcc", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$1_F, true));
-			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_T, true));
+			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F, true));
 			ownedParameters.add(parameter = createParameter("return", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F, true));
 			ownedIterations.add(iteration = it_Collection_search_1);
 			iteration.setIsRequired(false);
@@ -2526,7 +2514,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("nextAcc", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$1_F, true));
-			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_T, true));
+			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_F, true));
 			ownedParameters.add(parameter = createParameter("return", _Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$2_F, true));
 			ownedIterations.add(iteration = it_Collection_search_2);
 			iteration.setIsRequired(false);
@@ -2535,7 +2523,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("nextAcc", _Lambda_self_$$1_F_i_$$0_F_result_$$1_F, true));
-			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$1_F_i_$$0_F_result_Boolean_T, true));
+			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$1_F_i_$$0_F_result_Boolean_F, true));
 			ownedParameters.add(parameter = createParameter("return", _Lambda_self_$$1_F_i_$$0_F_result_$$2_F, true));
 			ownedIterations.add(iteration = it_Collection_select);
 			ownedParameters = iteration.getOwnedIterators();
@@ -2628,7 +2616,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$0_T_result_$$2_F, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$0_F_result_$$2_F, true));
 			ownedIterations.add(iteration = it_Map_isUnique);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
@@ -2660,7 +2648,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$2, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("nextAcc", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F, true));
-			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_T, true));
+			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F, true));
 			ownedParameters.add(parameter = createParameter("return", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$3_F, true));
 			ownedIterations.add(iteration = it_Map_search_1);
 			iteration.setIsRequired(false);
@@ -2670,7 +2658,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$2, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("nextAcc", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$2_F, true));
-			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_T, true));
+			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_F, true));
 			ownedParameters.add(parameter = createParameter("return", _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$3_F, true));
 			ownedIterations.add(iteration = it_Map_search_2);
 			iteration.setIsRequired(false);
@@ -2679,7 +2667,7 @@ public class OCLstdlib extends ASResourceImpl
 			iteration.setOwnedAccumulator(parameter = createParameter("acc", $$2, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("nextAcc", _Lambda_self_$$2_F_i_$$0_F_result_$$2_F, true));
-			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$2_F_i_$$0_F_result_Boolean_T, true));
+			ownedParameters.add(parameter = createParameter("break", _Lambda_self_$$2_F_i_$$0_F_result_Boolean_F, true));
 			ownedParameters.add(parameter = createParameter("return", _Lambda_self_$$2_F_i_$$0_F_result_$$3_F, true));
 			ownedIterations.add(iteration = it_Map_select);
 			ownedParameters = iteration.getOwnedIterators();
@@ -2699,7 +2687,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_OrderedCollection_T, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_OrderedCollection_F, true));
 			ownedIterations.add(iteration = it_OrderedSet_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
@@ -2731,7 +2719,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_OrderedCollection_T, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_OrderedCollection_F, true));
 			ownedIterations.add(iteration = it_Sequence_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
@@ -2763,7 +2751,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_Collection_T, true));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_F_result_Collection_F, true));
 			ownedIterations.add(iteration = it_Set_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", $$0, false));
@@ -3167,7 +3155,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_String_tokenize_1, "Partition oclText[self] into a sequence substrings separated by characters in the delimiters. The delimiters are omitted from the return.");
 			installComment(op_String_tokenize_2, "Partition oclText[self] into a sequence substrings separated by characters in the delimiters. If returnDelimeters is\ntrue the returned sequence includes the delimiters, otherwise the delimiters are omitted.");
 			installComment(op_String_trim, "Return oclText[self] with leading and trailing whitespace removed.");
-			installComment(_UnlimitedNatural, "The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.\nThis includes a special e[unlimited] value (*) that encodes the upper value of  a multiplicity specification.\nUnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.\n\nNote that UnlimitedNatural is not a subclass of Integer.");
+			installComment(_UnlimitedNatural, "The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.\nThis includes a special e[unlimited] value (*) that encodes the upper value of a multiplicity specification.\nUnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.\n\nNote that UnlimitedNatural is not a subclass of Integer.");
 			installComment(op_UnlimitedNatural_max, "The maximum of oclText[self] an i.");
 			installComment(op_UnlimitedNatural_min, "The minimum of oclText[self] an i.");
 			installComment(op_UnlimitedNatural_oclAsType, "Evaluates to oclText[self], where oclText[self] is of the type identified by T.\nThe type T may be any classifier defined in the UML model;\nif the actual type of oclText[self] at evaluation time does not conform to T,\nthen the oclAsType operation evaluates to oclText[invalid].\n\nThe standard behavior is redefined for UnlimitedNatural. Numeric values may be converted to\nReal or Integer, but the e[unlimited] value may not.\nConversion of e[unlimited] to Real or Integer returns oclText[invalid].");
