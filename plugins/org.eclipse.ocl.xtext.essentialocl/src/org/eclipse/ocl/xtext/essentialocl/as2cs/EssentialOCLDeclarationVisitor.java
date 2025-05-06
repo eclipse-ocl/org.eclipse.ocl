@@ -889,7 +889,12 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		TupleLiteralPartCS csTupleLiteralPart = EssentialOCLCSFactory.eINSTANCE.createTupleLiteralPartCS();
 		csTupleLiteralPart.setPivot(asTupleLiteralPart);
 		csTupleLiteralPart.setName(asTupleLiteralPart.getName());
-		csTupleLiteralPart.setOwnedType(createTypeRefCS(asTupleLiteralPart.getType()));
+		TypedRefCS csTypeRef = createTypeRefCS(asTupleLiteralPart.getType());
+		if (csTypeRef != null) {
+			MultiplicityCS csMultiplicity = context.createMultiplicityCS(asTupleLiteralPart.isIsRequired() ? 1 : 0, 1, false);
+			csTypeRef.setOwnedMultiplicity(csMultiplicity);
+		}
+		csTupleLiteralPart.setOwnedType(csTypeRef);
 		csTupleLiteralPart.setOwnedInitExpression(createExpCS(asTupleLiteralPart.getOwnedInit()));
 		return csTupleLiteralPart;
 	}
