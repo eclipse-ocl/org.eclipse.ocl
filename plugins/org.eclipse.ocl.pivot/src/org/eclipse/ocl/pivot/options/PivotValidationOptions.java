@@ -43,7 +43,7 @@ public class PivotValidationOptions
 	 * @since 1.16
 	 */
 	public static final @NonNull BooleanOption OptionalDefaultMultiplicity = new BooleanOption(
-		PivotPlugin.PLUGIN_ID, "optional.default.multiplicity", false); //$NON-NLS-1$
+		PivotPlugin.PLUGIN_ID, "optional.default.multiplicity", true); //$NON-NLS-1$
 
 	/**
 	 * @since 1.16
