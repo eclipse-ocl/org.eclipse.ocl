@@ -160,7 +160,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 			//
 			ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).allInstances()");
 			ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).oclType().allInstances()");
-			ocl.assertSemanticErrorQuery(classType, "Tuple{a:Integer=1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
+			ocl.assertSemanticErrorQuery(classType, "Tuple{a:Integer=1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Tuple(a:Integer[?])", "allInstances", "");
 		} finally {
 			ocl.dispose();
 		}
