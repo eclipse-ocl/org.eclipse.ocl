@@ -2820,16 +2820,19 @@ public class OCLstdlib extends ASResourceImpl
 
 			ownedProperties = _Collection_Collection_T.getOwnedProperties();
 			ownedProperties.add(property = pr_Collection_elementType);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			ownedProperties.add(property = pr_Collection_lower);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			ownedProperties.add(property = pr_Collection_upper);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
@@ -2837,26 +2840,31 @@ public class OCLstdlib extends ASResourceImpl
 
 			ownedProperties = _CollectionType.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionType_elementType);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_CollectionType_elementType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
 			ownedProperties.add(property = pr_CollectionType_lower);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
 			ownedProperties.add(property = pr_CollectionType_upper);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
 
 			ownedProperties = _Map_Map_K_Map_V.getOwnedProperties();
 			ownedProperties.add(property = pr_Map_keyType);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 			ownedProperties.add(property = pr_Map_valueType);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
@@ -2864,11 +2872,13 @@ public class OCLstdlib extends ASResourceImpl
 
 			ownedProperties = _MapType.getOwnedProperties();
 			ownedProperties.add(property = pr_MapType_keyType);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_MapType_keyType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
 			ownedProperties.add(property = pr_MapType_valueType);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_MapType_valueType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.MapValueTypeProperty");
@@ -2877,47 +2887,52 @@ public class OCLstdlib extends ASResourceImpl
 			ownedProperties = _OclAny.getOwnedProperties();
 			ownedProperties.add(property = pr_OclAny_OclInvalid_oclBadProperty);
 			property.setIsImplicit(true);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclInvalid_oclBadProperty);
 
 			ownedProperties = _OclElement.getOwnedProperties();
 			ownedProperties.add(property = pr_OclElement_oclContainer);
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclElement_OclElement_oclContainer);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 			ownedProperties.add(property = pr_OclElement_oclContents);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclElement_OclElement_oclContents);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
 			ownedProperties.add(property = pr_OclElement_OclElement_oclContainer);
 			property.setIsImplicit(true);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclElement_oclContainer);
 			ownedProperties.add(property = pr_OclElement_OclElement_oclContents);
 			property.setIsImplicit(true);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclElement_oclContents);
 
 			ownedProperties = _OclInvalid.getOwnedProperties();
 			ownedProperties.add(property = pr_OclInvalid_oclBadProperty);
-			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclAny_OclInvalid_oclBadProperty);
 
 			ownedProperties = _Type.getOwnedProperties();
 			ownedProperties.add(property = pr_Type_CollectionType_elementType);
 			property.setIsImplicit(true);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CollectionType_elementType);
 			ownedProperties.add(property = pr_Type_MapType_keyType);
 			property.setIsImplicit(true);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_MapType_keyType);
 			ownedProperties.add(property = pr_Type_MapType_valueType);
 			property.setIsImplicit(true);
+			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_MapType_valueType);
 		}

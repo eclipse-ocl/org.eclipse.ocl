@@ -641,7 +641,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 								if (oclAsType == null) {
 									throw new InvalidValueException("Null source for \'CollectionType::elementType\'");
 								}
-								final /*@Thrown*/ @Nullable Type elementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
+								final /*@Thrown*/ @NonNull Type elementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
 								bodyElementType = elementType;
 							}
 							else {
@@ -656,7 +656,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 									if (oclAsType_0 == null) {
 										throw new InvalidValueException("Null source for \'MapType::keyType\'");
 									}
-									final /*@Thrown*/ @Nullable Type keyType = MapKeyTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType_0);
+									final /*@Thrown*/ @NonNull Type keyType = MapKeyTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType_0);
 									IF_oclIsKindOf_0 = keyType;
 								}
 								else {
@@ -801,7 +801,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *     else
 			 *       let result : Boolean[?] = name = 'closure' implies
 			 *         let
-			 *           resultElementType : Type[?] = type.oclAsType(CollectionType).elementType
+			 *           resultElementType : Type[1] = type.oclAsType(CollectionType).elementType
 			 *         in
 			 *           let iteratorType : Type[?] = ownedIterators->at(1).type
 			 *           in iteratorType?.conformsTo(resultElementType)
@@ -854,7 +854,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (oclAsType == null) {
 								throw new InvalidValueException("Null source for \'CollectionType::elementType\'");
 							}
-							final /*@Thrown*/ @Nullable Type resultElementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
+							final /*@Thrown*/ @NonNull Type resultElementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 							final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
@@ -1249,7 +1249,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (oclAsType == null) {
 								throw new InvalidValueException("Null source for \'CollectionType::elementType\'");
 							}
-							final /*@Thrown*/ @Nullable Type elementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
+							final /*@Thrown*/ @NonNull Type elementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull OCLExpression ownedBody = this.getOwnedBody();
 							final /*@Thrown*/ @Nullable Type type_0 = ownedBody.getType();
@@ -1271,7 +1271,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 								final /*@Thrown*/ @NonNull Type flattenedType_0 = type_0.flattenedType();
 								safe_flattenedType_source = flattenedType_0;
 							}
-							final /*@Thrown*/ boolean eq_0 = (elementType != null) && (safe_flattenedType_source != null) ? (elementType.getTypeId() == safe_flattenedType_source.getTypeId()) : false;
+							final /*@Thrown*/ boolean eq_0 = (safe_flattenedType_source != null) ? (elementType.getTypeId() == safe_flattenedType_source.getTypeId()) : false;
 							CAUGHT_eq_0 = eq_0;
 						}
 						catch (Exception e) {
@@ -1868,7 +1868,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (oclAsType == null) {
 								throw new InvalidValueException("Null source for \'CollectionType::elementType\'");
 							}
-							final /*@Thrown*/ @Nullable Type elementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
+							final /*@Thrown*/ @NonNull Type elementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
 							final /*@Thrown*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
 							/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
 							try {
@@ -1891,8 +1891,8 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (oclAsType_0 == null) {
 								throw new InvalidValueException("Null source for \'CollectionType::elementType\'");
 							}
-							final /*@Thrown*/ @Nullable Type elementType_0 = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType_0);
-							final /*@Thrown*/ boolean eq_0 = (elementType != null) && (elementType_0 != null) ? (elementType.getTypeId() == elementType_0.getTypeId()) : false;
+							final /*@Thrown*/ @NonNull Type elementType_0 = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType_0);
+							final /*@Thrown*/ boolean eq_0 = elementType.getTypeId() == elementType_0.getTypeId();
 							CAUGHT_eq_0 = eq_0;
 						}
 						catch (Exception e) {
@@ -1972,7 +1972,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *         in
 			 *           sourceType.oclIsKindOf(CollectionType) implies
 			 *           let
-			 *             sourceElementType : Type[?] = sourceType.oclAsType(CollectionType).elementType
+			 *             sourceElementType : Type[1] = sourceType.oclAsType(CollectionType).elementType
 			 *           in
 			 *             self.ownedIterators->forAll(p |
 			 *               sourceElementType.conformsTo(p.type))
@@ -2052,7 +2052,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (oclAsType == null) {
 								throw new InvalidValueException("Null source for \'CollectionType::elementType\'");
 							}
-							final /*@Thrown*/ @Nullable Type sourceElementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
+							final /*@Thrown*/ @NonNull Type sourceElementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
 							if (this == null) {
 								throw new InvalidValueException("Null source for \'LoopExp::ownedIterators\'");
 							}
@@ -2082,9 +2082,6 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 								 */
 								/*@Caught*/ @Nullable Object CAUGHT_conformsTo;
 								try {
-									if (sourceElementType == null) {
-										throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
-									}
 									final /*@NonInvalid*/ @Nullable Type type_1 = p.getType();
 									final /*@Thrown*/ @Nullable Boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, sourceElementType, type_1);
 									CAUGHT_conformsTo = conformsTo;
@@ -2196,7 +2193,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *         in
 			 *           sourceType.oclIsKindOf(MapType) implies
 			 *           let
-			 *             sourceKeyType : Type[?] = sourceType.oclAsType(MapType).keyType
+			 *             sourceKeyType : Type[1] = sourceType.oclAsType(MapType).keyType
 			 *           in
 			 *             self.ownedIterators->forAll(p |
 			 *               sourceKeyType.conformsTo(p.type))
@@ -2276,7 +2273,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (oclAsType == null) {
 								throw new InvalidValueException("Null source for \'MapType::keyType\'");
 							}
-							final /*@Thrown*/ @Nullable Type sourceKeyType = MapKeyTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
+							final /*@Thrown*/ @NonNull Type sourceKeyType = MapKeyTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
 							if (this == null) {
 								throw new InvalidValueException("Null source for \'LoopExp::ownedIterators\'");
 							}
@@ -2306,9 +2303,6 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 								 */
 								/*@Caught*/ @Nullable Object CAUGHT_conformsTo;
 								try {
-									if (sourceKeyType == null) {
-										throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
-									}
 									final /*@NonInvalid*/ @Nullable Type type_1 = p.getType();
 									final /*@Thrown*/ @Nullable Boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, sourceKeyType, type_1);
 									CAUGHT_conformsTo = conformsTo;

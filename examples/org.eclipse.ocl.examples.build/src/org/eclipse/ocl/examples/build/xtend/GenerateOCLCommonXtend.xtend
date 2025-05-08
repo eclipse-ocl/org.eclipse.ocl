@@ -144,7 +144,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR type : tupleTypes»
 				private final @NonNull TupleType «type.getPrefixedSymbolName("_" + type.partialName())» = createTupleType("«type.name»",
 				«FOR property : type.getSortedTupleParts() BEFORE ("\t") SEPARATOR (",\n\t")»
-				createProperty("«property.name»", «property.type.getSymbolName()»)«ENDFOR»);
+				«emitCreateProperty(property)»«ENDFOR»);
 			«ENDFOR»
 		'''
 	}
@@ -604,7 +604,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR pkge : sortedPackages»
 
 				«FOR property : ClassUtil.nullFree(pkge2properties.get(pkge))»
-				private final @NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»);
+				private final @NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = «emitCreateProperty(property)»;
 				«ENDFOR»
 			«ENDFOR»
 
@@ -633,8 +633,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF property.isReadOnly»
 						property.setIsReadOnly(true);
 					«ENDIF»
-					«IF !property.isRequired»
-						property.setIsRequired(false);
+					«IF property.isRequired»
+						property.setIsRequired(true);
 					«ENDIF»
 					«IF property.isResolveProxies»
 						property.setIsResolveProxies(true);
@@ -725,7 +725,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String emitCreateProperty(Property property) {
-		return "createProperty(" + property.name + ", " + property.type.getSymbolName() + ")";
+		return "createProperty(" + property.getNameLiteral() + ", " + property.type.getSymbolName() + ")";
 	}
 
 	protected def String emitPackage(Package pkg) {
