@@ -57,7 +57,6 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
-import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -448,7 +447,6 @@ public class LoadTests extends AbstractLoadTests
 
 	public void testLoad_Bug402767_oclinecore() throws IOException, InterruptedException {
 		OCL ocl = createOCL();
-		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.OptionalDefaultMultiplicity, Boolean.TRUE);
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +

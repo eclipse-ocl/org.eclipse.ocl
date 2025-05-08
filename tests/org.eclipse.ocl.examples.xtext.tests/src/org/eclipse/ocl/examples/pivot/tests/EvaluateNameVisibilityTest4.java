@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -629,7 +628,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 			OCLinEcoreStandaloneSetup.doSetup();
 			//			OCLDelegateDomain.initialize(null);
 		}
-		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.OptionalDefaultMultiplicity, Boolean.TRUE);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
 				"package Bug411154 : pfx = 'Bug411154.ecore'\n" +

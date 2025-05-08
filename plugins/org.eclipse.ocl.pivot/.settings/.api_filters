@@ -2566,6 +2566,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
+                <message_argument value="OptionalDefaultMultiplicity"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource">
         <filter id="404000815">
             <message_arguments>
