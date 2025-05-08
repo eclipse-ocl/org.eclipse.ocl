@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
 /**
@@ -110,6 +111,9 @@ implements Type {
 		/**
 		 * self
 		 */
+		if (this == null) {
+			throw new InvalidValueException("Null body for \'pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]\'");
+		}
 		return this;
 	}
 

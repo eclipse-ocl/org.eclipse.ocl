@@ -887,6 +887,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TypedElementImpl.java" type="org.eclipse.ocl.pivot.internal.TypedElementImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.TypedElementImpl"/>
+                <message_argument value="IS_REQUIRED_EDEFAULT"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel">
         <filter id="338886760">
             <message_arguments>

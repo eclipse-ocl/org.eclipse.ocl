@@ -4492,7 +4492,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsVolatile(true);
 			ownedProperties.add(property = pr_TypedElement_isRequired);
 			property.setIsResolveProxies(true);
-			property.setDefaultValueString("true");
+			property.setDefaultValueString("false");
 			ownedProperties.add(property = pr_TypedElement_type);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
