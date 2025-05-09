@@ -581,11 +581,4 @@ public class IterationImpl extends OperationImpl implements Iteration
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitIteration(this);
 	}
-
-	@Override
-	public void setType(Type newType) {
-		// TODO Auto-generated method stub
-		super.setType(newType);
-	}
-
 } //IterationImpl

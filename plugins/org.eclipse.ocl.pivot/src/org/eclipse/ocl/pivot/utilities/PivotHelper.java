@@ -705,8 +705,13 @@ public class PivotHelper
 				contextType = standardLibrary.getOclVoidType();
 			}
 		}
+		boolean isRequired = true;
+		EObject eContainer = pivotSpecification.eContainer();
+		if (eContainer instanceof Operation) {
+			isRequired = !((Operation)eContainer).isIsValidating();
+		}
 		refreshName(contextVariable, selfVariableName);
-		setType(contextVariable, contextType, true, contextInstance);
+		setType(contextVariable, contextType, isRequired, contextInstance);
 	}
 
 	/**
