@@ -2135,7 +2135,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					Type variableType = null;
 					if (csVariableType != null) {
 						variableType = PivotUtil.getPivot(Type.class, csVariableType);
-						variableIsRequired = context.isRequired(csVariableType);
+					///	if ((variableType != null) && variableType.isAggregate()) {
+					//		variableIsRequired = Boolean.TRUE;
+					//	}
+					//	else {
+							variableIsRequired = context.isRequired(csVariableType);
+					//	}
 					}
 					Boolean initIsRequired = null;
 					OCLExpression initExpression = revisit(OCLExpression.class, csInitExpression);

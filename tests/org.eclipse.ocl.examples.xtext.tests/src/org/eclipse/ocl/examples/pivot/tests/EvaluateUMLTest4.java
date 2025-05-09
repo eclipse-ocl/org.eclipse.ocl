@@ -186,8 +186,8 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		MyOCL ocl = createOCLWithProjectMap();
 		ocl.initStateMachinePackage(getTestModelURI("models/uml/StateMachines.uml"),
 			new @NonNull String[] {
-			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»[1]'",
-			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»[1]'"
+			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»'",
+			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»'"
 		});
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		EObject context = ocl.statefulEFactory.create(ocl.c1Class);

@@ -481,7 +481,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	private @NonNull TypedElement specializeLambdaParameter(@NonNull LambdaParameter lambdaParameter) {
 		String name = PivotUtil.getName(lambdaParameter);
 		Type specializedType = specializeType(PivotUtil.getType(lambdaParameter));
-		boolean isRequired = lambdaParameter.isIsRequired();
+		boolean isRequired = lambdaParameter.isIsRequired() || specializedType.isAggregate();
 		return LambdaTypeManager.createCandidateLambdaParameter(name, specializedType, isRequired);
 	}
 

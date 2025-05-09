@@ -139,7 +139,16 @@ implements TypedElement {
 	public boolean isIsRequired()
 	{
 		boolean isRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
-		assert (type == null) || !type.isAggregate() || isRequired;
+		if (type == null) {
+			//
+		}
+		else if (type.isAggregate()) {
+			assert isRequired;	//-- temporary fix for testCollectionFlatten
+		}
+		else {
+			assert true;
+		}
+	//	assert (type == null) || !type.isAggregate() || isRequired;
 		return isRequired;
 	}
 

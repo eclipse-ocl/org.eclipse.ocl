@@ -326,7 +326,7 @@ public class ValidateTests extends AbstractValidateTests
 		createFile("Bug418552.oclinecore", testDocument);
 		OCL ocl1 = createOCL();
 		@NonNull List<Diagnostic> diagnostics = doValidateOCLinEcore(ocl1, "Bug418552", getMessages(
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", "temp::Tester::total : ecore::EDoubleObject[1]")));
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", "temp::Tester::total : ecore::EDoubleObject")));
 		Object property = diagnostics.get(0).getData().get(0);
 		assert property != null;
 		assertEquals(PivotPackage.Literals.PROPERTY, ((EObject)property).eClass());

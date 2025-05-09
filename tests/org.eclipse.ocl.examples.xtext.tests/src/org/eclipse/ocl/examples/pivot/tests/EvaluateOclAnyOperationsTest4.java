@@ -932,8 +932,9 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		TupleTypeId tupleIdb = IdManager.getTupleTypeId("Tuple", partIdb);
 		TupleType tupleType = ocl.getIdResolver().getTupleType(tupleId);
 		TupleType tupleTypeb = ocl.getIdResolver().getTupleType(tupleIdb);
-		ocl.assertQueryEquals(null, tupleType, "Tuple{a:Integer=3}.oclType()");
+		ocl.assertQueryEquals(null, tupleType, "Tuple{a:Integer[?]=3}.oclType()");
 		ocl.assertQueryEquals(null, tupleTypeb, "Tuple{a:Integer[1]=3}.oclType()");
+		ocl.assertQueryEquals(null, tupleTypeb, "Tuple{a:Integer=3}.oclType()");
 		ocl.assertQueryEquals(null, tupleType, "Tuple(a:Integer)");
 		ocl.assertQueryEquals(null, tupleTypeClass, "Tuple(a:Integer).oclType()");
 	//	ocl.assertSemanticErrorQuery(null, "Tuple(a:Integer).allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");

@@ -593,7 +593,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
 		//
-		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map(String,Boolean)", "keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map(String[1],Boolean[1])", "keyType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->_'Map'::keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map", "keyType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->MapType::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "MapType::keyType : Type[1]");
 //
@@ -749,7 +749,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
-		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->valueType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map(String,Boolean)", "valueType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->valueType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map(String[1],Boolean[1])", "valueType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->_'Map'::valueType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map", "valueType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->MapType::valueType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "MapType::valueType : Type[1]");
 //

@@ -464,6 +464,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 				"self.eClassifiers->collect(c | c.eAnnotations)->collect(a | a.details)->collect(m | m->collect(k with v | k))->asSet()");
 		//	ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name','suppressedIsSetVisibility','suppressedUnsetVisibility'}",
 		//	"ecore::EAnnotation.allInstances().details->collect(m | m->collect(k with v | k))->asSet()");
+		ocl.assertQueryResults(ePackage, expectedResultExpression,
+				"self.eClassifiers.eAnnotations.details->collect(m | m->collect(k | k))->asSet()");		// XXX keys ??
 		ocl.dispose();
 	}
 

@@ -810,10 +810,12 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = null in o->flatten()");
 		// pseudo collection
 		ocl.assertQueryResults(null, "Set{1}", "1->flatten()");
-		ocl.assertQueryResults(null, "Set{1}", "let s : Sequence(Integer) = null in 1->flatten()");
-		ocl.assertQueryResults(null, "Set{1}", "let b : Bag(Integer) = null in 1->flatten()");
-		ocl.assertQueryResults(null, "Set{1}", "let s : Set(Integer) = null in 1->flatten()");
-		ocl.assertQueryResults(null, "Set{1}", "let o : OrderedSet(Integer) = null in 1->flatten()");
+		ocl.assertQueryResults(null, "Set{1}", "let s : Sequence(Integer)[?] = null in 1->flatten()");
+		ocl.assertQueryResults(null, "Set{1}", "let b : Bag(Integer)[?] = null in 1->flatten()");
+		ocl.assertQueryResults(null, "Set{1}", "let s : Set(Integer)[?] = null in 1->flatten()");
+		ocl.assertQueryResults(null, "Set{1}", "let o : OrderedSet(Integer)[?] = null in 1->flatten()");
+		ocl.assertValidationErrorQuery(null, "let o : OrderedSet(Integer) = null in 1->flatten()",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleNullityForInitializer", "o : OrderedSet(Integer) = null");
 	}
 
 	@Test public void testCollectionIncludes() {
