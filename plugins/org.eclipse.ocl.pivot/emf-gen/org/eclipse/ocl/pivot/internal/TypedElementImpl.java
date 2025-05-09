@@ -133,12 +133,14 @@ implements TypedElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT XXX
 	 */
 	@Override
 	public boolean isIsRequired()
 	{
-		return (eFlags & IS_REQUIRED_EFLAG) != 0;
+		boolean isRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
+		assert (type == null) || !type.isAggregate() || isRequired;
+		return isRequired;
 	}
 
 	/**

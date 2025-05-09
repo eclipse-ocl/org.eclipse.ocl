@@ -44,6 +44,16 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 */
 	Type flattenedType();
 
+	/**
+	 * Return true if this is an aggregate type such as a Collection/Lambda/Map/Tuple for which the default multiplicity is [1].
+	 * Else return false for a non-aggregate whose default multiplicity is [?].
+	 *
+	 * @since 1.23
+	 */
+	default boolean isAggregate() {
+		return false;
+	}
+
 	org.eclipse.ocl.pivot.@Nullable Class isClass();
 
 	@Nullable TemplateParameter isTemplateParameter();

@@ -62,5 +62,11 @@ public abstract class IterableTypeImpl extends DataTypeImpl implements IterableT
 		return PivotPackage.Literals.ITERABLE_TYPE;
 	}
 
-
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public boolean isAggregate() {
+		return true;
+	}
 } //IterableTypeImpl

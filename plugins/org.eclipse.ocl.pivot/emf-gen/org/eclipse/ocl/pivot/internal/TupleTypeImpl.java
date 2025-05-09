@@ -122,4 +122,12 @@ public class TupleTypeImpl
 	public @NonNull TupleTypeId getTypeId() {
 		return (TupleTypeId) super.getTypeId();
 	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public boolean isAggregate() {
+		return true;
+	}
 } //TupleTypeImpl

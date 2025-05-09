@@ -32,6 +32,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteEnvironment.java" type="org.eclipse.ocl.pivot.CompleteEnvironment">
         <filter id="403804204">
             <message_arguments>
@@ -606,6 +614,20 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_NormalizedTemplateParameter"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Type.java" type="org.eclipse.ocl.pivot.Type">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Type"/>
+                <message_argument value="isAggregate()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Type"/>
+                <message_argument value="isAggregate()"/>
             </message_arguments>
         </filter>
     </resource>

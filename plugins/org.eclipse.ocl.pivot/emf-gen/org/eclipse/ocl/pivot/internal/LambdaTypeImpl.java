@@ -646,4 +646,12 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	public @NonNull Type getResultType() {
 		return PivotUtil.getType(ownedResult);
 	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public boolean isAggregate() {
+		return true;
+	}
 } //LambdaTypeImpl
