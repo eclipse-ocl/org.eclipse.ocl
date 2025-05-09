@@ -63,6 +63,9 @@ public class StringUtil
 	 * A -ve upper signals unlimited.
 	 */
 	public static void appendMultiplicity(@NonNull StringBuilder s, long lower, long upper, boolean isNullFree) {
+		if ((lower == 0) && (upper < 0) && !isNullFree) {
+			return;
+		}
 		s.append("[");
 		if (upper < 0) {
 			if (lower == 1) {
@@ -86,8 +89,9 @@ public class StringUtil
 				s.append(upper);
 			}
 		}
-		s.append("|");
-		s.append(isNullFree ? "1" : "?");
+		if (isNullFree) {
+			s.append("|1");
+		}
 		s.append("]");
 	}
 	/**

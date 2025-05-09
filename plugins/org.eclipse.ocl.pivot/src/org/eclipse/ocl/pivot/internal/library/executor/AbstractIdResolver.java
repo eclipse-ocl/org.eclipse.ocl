@@ -838,7 +838,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getDynamicTypeOf(@Nullable Object value) {
-		if (value instanceof CollectionValue) {
+		if (value instanceof CollectionValue) {				// XXX MapValue ??
 			CollectionValue collectionValue = (CollectionValue) value;
 			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
 			Type elementType = getDynamicTypeOf(collectionValue.iterable());
@@ -850,7 +850,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			TypeId elementTypeId = elementType.getTypeId();
 			collectedId = collectionId.getSpecializedId(elementTypeId);
 			final IntegerValue size = collectionValue.size();
-			return getCollectionType(collectedId, false, size, size.asUnlimitedNaturalValue());		// FIXME dynamic isNullFree
+			boolean isNullFree = true;
+			for (Object elementValue : collectionValue.iterable()) {
+				if (elementValue == null) {
+					isNullFree = false;
+					break;
+				}
+			}
+			return getCollectionType(collectedId, isNullFree, size, size.asUnlimitedNaturalValue());
 		}
 		else {
 			return getStaticTypeOf(value);

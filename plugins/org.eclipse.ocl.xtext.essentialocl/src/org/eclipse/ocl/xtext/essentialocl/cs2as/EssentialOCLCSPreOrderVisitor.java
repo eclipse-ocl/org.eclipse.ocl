@@ -80,7 +80,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 					}
 					else {
-						isNullFree = true;
+						isNullFree = false;
 						lowerValue = null;
 						upperValue = null;
 					}
