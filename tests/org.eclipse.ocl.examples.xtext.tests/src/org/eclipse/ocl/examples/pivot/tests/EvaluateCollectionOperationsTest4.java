@@ -1271,9 +1271,6 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionLower() {
 		TestOCL ocl = createOCL();
-		String string2 = useCodeGen ? "Set(OclAny)" : "Set(OclAny)"; 		// FIXME See Bug 578117
-		ocl.assertQueryInvalid(null, "Sequence{1, 2.0, '3'}->oclAsType(Set(OclAny))->oclType().lower",
-			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Sequence(OclAny[3|1])", string2), InvalidValueException.class);
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclType().lower");
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, 3}->oclAsType(Collection(Real))->oclType().lower");
 		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().lower"); // no change to dynamic bound
@@ -1281,6 +1278,8 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(Sequence(OclAny))->oclType().lower");
 		ocl.assertQueryInvalid(null, "Sequence{1, 2.0, '3'}->oclAsType(Set(OclAny))->oclType().lower",
 			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Sequence(OclAny[3|1])", "Set(OclAny)"), InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Sequence{1, 2.0, '3'}->oclAsType(Set(OclAny[3|1]))->oclType().lower",
+			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Sequence(OclAny[3|1])", "Set(OclAny[3|1])"), InvalidValueException.class);
 		ocl.assertSemanticErrorQuery(null, "Sequence{1, 2.0, '3'}->oclAsType(OclVoid).oclType().lower",
 			PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclVoid", "lower");
 		ocl.assertSemanticErrorQuery(null, "Sequence{1, 2.0, '3'}->oclAsType(OclAny).oclType().lower",

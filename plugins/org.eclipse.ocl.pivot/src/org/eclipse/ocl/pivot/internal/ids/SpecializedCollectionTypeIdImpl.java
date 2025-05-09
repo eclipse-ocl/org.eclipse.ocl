@@ -43,17 +43,17 @@ public class SpecializedCollectionTypeIdImpl extends AbstractSpecializedIdImpl<@
 
 	@Override
 	public @NonNull IntegerValue getLowerValue() {
-		return (IntegerValue)templateBindings.getValue(2);
+		return (IntegerValue)templateBindings.getValue(1);
 	}
 
 	@Override
 	public @NonNull UnlimitedNaturalValue getUpperValue() {
-		return (UnlimitedNaturalValue)templateBindings.getValue(3);
+		return (UnlimitedNaturalValue)templateBindings.getValue(2);
 	}
 
 	@Override
 	public boolean isNullFree() {
-		return (boolean)templateBindings.getValue(1);
+		return (Boolean)templateBindings.getValue(0);
 	}
 
 	/**

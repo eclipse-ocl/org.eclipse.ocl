@@ -274,7 +274,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			}
 			if (!(type instanceof IterableType) && !(type instanceof LambdaType)) {
 				if (!typedElement.isIsRequired()) {
-					append("[?]");
+				//	append("[?]");
 				}
 				else {
 					append("[1]");
@@ -1058,9 +1058,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					append(prefix);
 					safeVisit(templateParameterSubstitution.getActual());
 					if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
-						append("[?]");
+					//	append("[?]");
 					}
-					else if (SHOW_ALL_MULTIPLICITIES) {
+					else {//if (SHOW_ALL_MULTIPLICITIES) {
 						append("[1]");
 					}
 					prefix = ",";

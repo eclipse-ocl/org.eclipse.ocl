@@ -124,7 +124,7 @@ public class TuplePartIdImpl implements TuplePartId
 
 	@Override
 	public @NonNull String getDisplayName() {
-		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
+		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "");
 	}
 
 	@Override

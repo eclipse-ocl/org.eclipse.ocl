@@ -86,6 +86,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
+import org.eclipse.ocl.pivot.internal.ids.SpecializedCollectionTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
@@ -784,7 +785,16 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId) {
-		return getCollectionType(typeId, false, null, null);
+		if (typeId instanceof SpecializedCollectionTypeIdImpl) {
+			SpecializedCollectionTypeIdImpl specializedCollectionTypeId = (SpecializedCollectionTypeIdImpl)typeId;
+			Boolean isNullFree = specializedCollectionTypeId.isNullFree();
+			IntegerValue lower = specializedCollectionTypeId.getLowerValue();
+			UnlimitedNaturalValue upper = specializedCollectionTypeId.getUpperValue();
+			return getCollectionType(typeId, isNullFree, lower, upper);
+		}
+		else {
+			return getCollectionType(typeId, false, null, null);
+		}
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {

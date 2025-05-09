@@ -387,7 +387,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		//
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		ocl.assertQueryEquals(null, booleanType, "true.oclType()");
-		Type collectionType = ocl.getCompleteEnvironment().getSetType(booleanType, false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE);
+		Type collectionType = ocl.getCompleteEnvironment().getSetType(booleanType, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE);
 		ocl.assertQueryEquals(null, collectionType, "true->oclType()");		// Set{true}
 		ocl.dispose();
 	}
@@ -786,12 +786,12 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		CompleteEnvironment completeEnvironment = ocl.getCompleteEnvironment();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryEquals(null, 1, "Set{1}->oclType().ownedOperations?->select(name = 'flatten')->size()");
-		ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getOclVoidType(), false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_ZERO_VALUE), "Set{}->oclType()");
-		ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getIntegerType(), false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE), "Set{1}->oclType()");
+		ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getOclVoidType(), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_ZERO_VALUE), "Set{}->oclType()");
+		ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getIntegerType(), true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE), "Set{1}->oclType()");
 		ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
 		ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
 		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Integer", "allInstances");
-		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
+		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer[*|1])", "allInstances");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class)", "allInstances");
 		ocl.assertQueryResults(null, "Bag{}", "Set{1}.oclType().allInstances()");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
@@ -926,10 +926,14 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class tupleTypeClass = environmentFactory.getASClass("TupleType");
-		TuplePartId partId = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
+		TuplePartId partId = IdManager.getPartId(0, "a", TypeId.INTEGER, false);
+		TuplePartId partIdb = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
 		TupleTypeId tupleId = IdManager.getTupleTypeId("Tuple", partId);
+		TupleTypeId tupleIdb = IdManager.getTupleTypeId("Tuple", partIdb);
 		TupleType tupleType = ocl.getIdResolver().getTupleType(tupleId);
+		TupleType tupleTypeb = ocl.getIdResolver().getTupleType(tupleIdb);
 		ocl.assertQueryEquals(null, tupleType, "Tuple{a:Integer=3}.oclType()");
+		ocl.assertQueryEquals(null, tupleTypeb, "Tuple{a:Integer[1]=3}.oclType()");
 		ocl.assertQueryEquals(null, tupleType, "Tuple(a:Integer)");
 		ocl.assertQueryEquals(null, tupleTypeClass, "Tuple(a:Integer).oclType()");
 	//	ocl.assertSemanticErrorQuery(null, "Tuple(a:Integer).allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
