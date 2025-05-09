@@ -207,10 +207,7 @@ implements TypedElement {
 			if (type == null) {
 				throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			if (this == null) {
-				throw new InvalidValueException("Null source for \'TypedElement::type\'");
-			}
-			final /*@Thrown*/ @Nullable Type type_0 = this.getType();
+			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 			final /*@Thrown*/ @Nullable Boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0);
 			safe_conformsTo_source = conformsTo_0;
 		}

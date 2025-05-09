@@ -354,23 +354,14 @@ public class MessageExpImpl
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'MessageExp::ownedSentSignal\'");
-					}
-					final /*@Thrown*/ @Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
-					final /*@Thrown*/ @Nullable SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
-					if (oclAsSet == null) {
-						throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
-					}
+					final /*@NonInvalid*/ @Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
+					final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
 					final /*@Thrown*/ @Nullable IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
 					if (size == null) {
 						throw new InvalidValueException("Null \'\'Integer\'\' rather than \'\'OclVoid\'\' value required");
 					}
-					final /*@Thrown*/ @Nullable SendSignalAction ownedSentSignal = this.getOwnedSentSignal();
-					final /*@Thrown*/ @Nullable SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
-					if (oclAsSet_0 == null) {
-						throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
-					}
+					final /*@NonInvalid*/ @Nullable SendSignalAction ownedSentSignal = this.getOwnedSentSignal();
+					final /*@Thrown*/ @NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
 					final /*@Thrown*/ @Nullable IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
 					if (size_0 == null) {
 						throw new InvalidValueException("Null \'\'OclSelf\'\' rather than \'\'OclVoid\'\' value required");
@@ -385,16 +376,6 @@ public class MessageExpImpl
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -402,13 +383,10 @@ public class MessageExpImpl
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;
@@ -462,12 +440,9 @@ public class MessageExpImpl
 					/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
 					try {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'MessageExp::ownedTarget\'");
-						}
 						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
-						final /*@Thrown*/ @Nullable Type type = ownedTarget.getType();
+						final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
+						final /*@NonInvalid*/ @Nullable Type type = ownedTarget.getType();
 						final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0);
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
@@ -494,16 +469,6 @@ public class MessageExpImpl
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -511,13 +476,10 @@ public class MessageExpImpl
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;

@@ -178,29 +178,9 @@ public class IntegerLiteralExpImpl
 				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
-				try {
-					final /*@NonInvalid*/ @NonNull PrimitiveType TYP_Integer = (@NonNull PrimitiveType)idResolver.getClass(TypeId.INTEGER, null);
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'TypedElement::type\'");
-					}
-					final /*@Thrown*/ @Nullable Type type = this.getType();
-					final /*@Thrown*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Integer.getTypeId()) : false;
-					CAUGHT_result = result;
-				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
+				final /*@NonInvalid*/ @NonNull PrimitiveType TYP_Integer = (@NonNull PrimitiveType)idResolver.getClass(TypeId.INTEGER, null);
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Integer.getTypeId()) : false;
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -208,13 +188,10 @@ public class IntegerLiteralExpImpl
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;

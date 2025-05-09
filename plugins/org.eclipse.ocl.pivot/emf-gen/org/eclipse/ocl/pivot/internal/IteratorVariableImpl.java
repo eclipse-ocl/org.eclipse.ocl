@@ -120,28 +120,8 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'Variable::ownedInit\'");
-					}
-					final /*@Thrown*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@Thrown*/ boolean result = ownedInit == null;
-					CAUGHT_result = result;
-				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
+				final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+				final /*@NonInvalid*/ boolean result = ownedInit == null;
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -149,13 +129,10 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;

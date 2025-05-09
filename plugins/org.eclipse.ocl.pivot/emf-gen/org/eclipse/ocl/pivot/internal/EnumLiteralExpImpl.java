@@ -186,19 +186,9 @@ public class EnumLiteralExpImpl
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'TypedElement::type\'");
-					}
-					final /*@Thrown*/ @Nullable Type type = this.getType();
-					final /*@Thrown*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-					/*@Caught*/ @Nullable Object CAUGHT_referredLiteral;
-					try {
-						CAUGHT_referredLiteral = referredLiteral;
-					}
-					catch (Exception e) {
-						CAUGHT_referredLiteral = ValueUtil.createInvalidValue(e);
-					}
-					final /*@NonInvalid*/ @NonNull Object owningEnumeration = CAUGHT_referredLiteral == null;
+					final /*@NonInvalid*/ @Nullable Type type = this.getType();
+					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
+					final /*@NonInvalid*/ @NonNull Object owningEnumeration = referredLiteral == null;
 					/*@Thrown*/ @Nullable Enumeration safe_owningEnumeration_source;
 					if (owningEnumeration == Boolean.TRUE) {
 						safe_owningEnumeration_source = null;
@@ -215,16 +205,6 @@ public class EnumLiteralExpImpl
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -232,13 +212,10 @@ public class EnumLiteralExpImpl
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;

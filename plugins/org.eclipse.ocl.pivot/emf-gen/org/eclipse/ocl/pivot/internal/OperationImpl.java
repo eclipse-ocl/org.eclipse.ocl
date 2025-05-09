@@ -803,31 +803,17 @@ implements Operation {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						/*@Caught*/ @NonNull Object CAUGHT_ne;
-						try {
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'Operation::bodyExpression\'");
-							}
-							final /*@Thrown*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
-							final /*@Thrown*/ boolean ne = bodyExpression != null;
-							CAUGHT_ne = ne;
-						}
-						catch (Exception e) {
-							CAUGHT_ne = ValueUtil.createInvalidValue(e);
-						}
+						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
+						final /*@NonInvalid*/ boolean ne = bodyExpression != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (CAUGHT_ne == ValueUtil.FALSE_VALUE) {
+						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								if (this == null) {
-									throw new InvalidValueException("Null source for \'Operation::bodyExpression\'");
-								}
-								final /*@Thrown*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
-								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_0, TYP_ExpressionInOCL);
+								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, TYP_ExpressionInOCL);
 								if (oclAsType == null) {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
@@ -842,9 +828,6 @@ implements Operation {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_ne instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT_ne;
-								}
 								if (CAUGHT_ne_0 instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_ne_0;
 								}
@@ -863,10 +846,7 @@ implements Operation {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
-							}
-							final /*@Thrown*/ @Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
+							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
 							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
@@ -896,16 +876,6 @@ implements Operation {
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -913,13 +883,10 @@ implements Operation {
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;
@@ -983,11 +950,8 @@ implements Operation {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'Operation::ownedPreconditions\'");
-					}
-					final /*@Thrown*/ @NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
-					final /*@Thrown*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPreconditions.iterator();
 					/*@Thrown*/ @Nullable Boolean result;
@@ -1016,16 +980,6 @@ implements Operation {
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -1033,13 +987,10 @@ implements Operation {
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;
@@ -1089,11 +1040,8 @@ implements Operation {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'Operation::ownedPostconditions\'");
-					}
-					final /*@Thrown*/ @NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
-					final /*@Thrown*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPostconditions.iterator();
 					/*@Thrown*/ @Nullable Boolean result;
@@ -1122,16 +1070,6 @@ implements Operation {
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -1139,13 +1077,10 @@ implements Operation {
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;

@@ -582,4 +582,10 @@ public class IterationImpl extends OperationImpl implements Iteration
 		return visitor.visitIteration(this);
 	}
 
+	@Override
+	public void setType(Type newType) {
+		// TODO Auto-generated method stub
+		super.setType(newType);
+	}
+
 } //IterationImpl

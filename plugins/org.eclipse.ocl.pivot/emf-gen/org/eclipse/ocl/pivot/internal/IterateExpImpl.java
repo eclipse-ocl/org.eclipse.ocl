@@ -622,99 +622,63 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						/*@Caught*/ @Nullable Object CAUGHT_not;
-						try {
-							/*@Caught*/ @NonNull Object CAUGHT_isSafe;
-							try {
-								if (this == null) {
-									throw new InvalidValueException("Null source for \'CallExp::isSafe\'");
-								}
-								final /*@Thrown*/ boolean isSafe = this.isIsSafe();
-								CAUGHT_isSafe = isSafe;
-							}
-							catch (Exception e) {
-								CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-							}
-							if (CAUGHT_isSafe instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_isSafe;
-							}
-							final /*@Thrown*/ @Nullable Boolean not;
-							if (CAUGHT_isSafe == ValueUtil.FALSE_VALUE) {
-								not = ValueUtil.TRUE_VALUE;
+						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+						final /*@NonInvalid*/ @Nullable Boolean not;
+						if (!isSafe) {
+							not = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							if (isSafe) {
+								not = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_isSafe == ValueUtil.TRUE_VALUE) {
-									not = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									not = null;
-								}
+								not = null;
 							}
-							CAUGHT_not = not;
-						}
-						catch (Exception e) {
-							CAUGHT_not = ValueUtil.createInvalidValue(e);
 						}
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (CAUGHT_not == ValueUtil.FALSE_VALUE) {
+						if (not == ValueUtil.FALSE_VALUE) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							/*@Caught*/ @Nullable Object CAUGHT_exists;
-							try {
-								if (this == null) {
-									throw new InvalidValueException("Null source for \'LoopExp::ownedIterators\'");
+							@SuppressWarnings("null")
+							final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.FALSE_VALUE;
+							@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+							/*@NonInvalid*/ @Nullable Boolean exists;
+							while (true) {
+								if (!ITERATOR__1.hasNext()) {
+									if (accumulator == ValueUtil.FALSE_VALUE) {
+										exists = ValueUtil.FALSE_VALUE;
+									}
+									else {
+										throw (InvalidValueException)accumulator;
+									}
+									break;
 								}
 								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-								final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-								/*@Thrown*/ @Nullable Object accumulator = ValueUtil.FALSE_VALUE;
-								@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-								/*@Thrown*/ @Nullable Boolean exists;
-								while (true) {
-									if (!ITERATOR__1.hasNext()) {
-										if (accumulator == ValueUtil.FALSE_VALUE) {
-											exists = ValueUtil.FALSE_VALUE;
-										}
-										else {
-											throw (InvalidValueException)accumulator;
-										}
-										break;
-									}
-									@SuppressWarnings("null")
-									/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
-									/**
-									 * isRequired
-									 */
-									final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
-									//
-									if (isRequired) {					// Normal successful body evaluation result
-										exists = ValueUtil.TRUE_VALUE;
-										break;														// Stop immediately
-									}
-									else if (!isRequired) {				// Normal unsuccessful body evaluation result
-										;															// Carry on
-									}
-									else {															// Impossible badly typed result
-										accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
-									}
+								/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
+								/**
+								 * isRequired
+								 */
+								final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
+								//
+								if (isRequired) {					// Normal successful body evaluation result
+									exists = ValueUtil.TRUE_VALUE;
+									break;														// Stop immediately
 								}
-								CAUGHT_exists = exists;
+								else if (!isRequired) {				// Normal unsuccessful body evaluation result
+									;															// Carry on
+								}
+								else {															// Impossible badly typed result
+									accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
+								}
 							}
-							catch (Exception e) {
-								CAUGHT_exists = ValueUtil.createInvalidValue(e);
-							}
-							if (CAUGHT_exists == ValueUtil.FALSE_VALUE) {
+							if (exists == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_not instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT_not;
-								}
-								if (CAUGHT_exists instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT_exists;
-								}
-								if ((CAUGHT_not == null) || (CAUGHT_exists == null)) {
+								if ((not == null) || (exists == null)) {
 									and = null;
 								}
 								else {
@@ -734,18 +698,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_IF_oclIsKindOf;
 						try {
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'CallExp::ownedSource\'");
-							}
-							final /*@Thrown*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-							try {
-								CAUGHT_ownedSource = ownedSource;
-							}
-							catch (Exception e) {
-								CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-							}
-							final /*@NonInvalid*/ @NonNull Object type = CAUGHT_ownedSource == null;
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+							final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 							/*@Thrown*/ @Nullable Type safe_type_source;
 							if (type == Boolean.TRUE) {
 								safe_type_source = null;
@@ -806,16 +760,6 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -823,13 +767,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;
@@ -908,77 +849,51 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isSafe;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CallExp::isSafe\'");
-						}
-						final /*@Thrown*/ boolean isSafe = this.isIsSafe();
-						CAUGHT_isSafe = isSafe;
-					}
-					catch (Exception e) {
-						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-					}
+					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_isSafe == ValueUtil.FALSE_VALUE) {
+					if (!isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_forAll;
-						try {
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'LoopExp::ownedIterators\'");
+						@SuppressWarnings("null")
+						final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+						/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+						@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+						/*@NonInvalid*/ @Nullable Boolean forAll;
+						while (true) {
+							if (!ITERATOR__1.hasNext()) {
+								if (accumulator == ValueUtil.TRUE_VALUE) {
+									forAll = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									throw (InvalidValueException)accumulator;
+								}
+								break;
 							}
 							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-							final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-							@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-							/*@Thrown*/ @Nullable Boolean forAll;
-							while (true) {
-								if (!ITERATOR__1.hasNext()) {
-									if (accumulator == ValueUtil.TRUE_VALUE) {
-										forAll = ValueUtil.TRUE_VALUE;
-									}
-									else {
-										throw (InvalidValueException)accumulator;
-									}
-									break;
-								}
-								@SuppressWarnings("null")
-								/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
-								/**
-								 * isRequired
-								 */
-								final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
-								//
-								if (!isRequired) {					// Normal unsuccessful body evaluation result
-									forAll = ValueUtil.FALSE_VALUE;
-									break;														// Stop immediately
-								}
-								else if (isRequired) {				// Normal successful body evaluation result
-									;															// Carry on
-								}
-								else {															// Impossible badly typed result
-									accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
-								}
+							/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
+							/**
+							 * isRequired
+							 */
+							final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
+							//
+							if (!isRequired) {					// Normal unsuccessful body evaluation result
+								forAll = ValueUtil.FALSE_VALUE;
+								break;														// Stop immediately
 							}
-							CAUGHT_forAll = forAll;
+							else if (isRequired) {				// Normal successful body evaluation result
+								;															// Carry on
+							}
+							else {															// Impossible badly typed result
+								accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
+							}
 						}
-						catch (Exception e) {
-							CAUGHT_forAll = ValueUtil.createInvalidValue(e);
-						}
-						if (CAUGHT_forAll == ValueUtil.TRUE_VALUE) {
+						if (forAll == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_isSafe instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_isSafe;
-							}
-							if (CAUGHT_forAll instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_forAll;
-							}
-							if (CAUGHT_forAll == null) {
+							if (forAll == null) {
 								result = null;
 							}
 							else {
@@ -991,16 +906,6 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -1008,13 +913,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;
@@ -1070,19 +972,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isSafe;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CallExp::isSafe\'");
-						}
-						final /*@Thrown*/ boolean isSafe = this.isIsSafe();
-						CAUGHT_isSafe = isSafe;
-					}
-					catch (Exception e) {
-						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-					}
+					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_isSafe == ValueUtil.FALSE_VALUE) {
+					if (!isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -1090,18 +982,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						try {
 							/*@Caught*/ @NonNull Object CAUGHT_IF_oclIsKindOf;
 							try {
-								if (this == null) {
-									throw new InvalidValueException("Null source for \'CallExp::ownedSource\'");
-								}
-								final /*@Thrown*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-								try {
-									CAUGHT_ownedSource = ownedSource;
-								}
-								catch (Exception e) {
-									CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-								}
-								final /*@NonInvalid*/ @NonNull Object type = CAUGHT_ownedSource == null;
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+								final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 								/*@Thrown*/ @Nullable Type safe_type_source;
 								if (type == Boolean.TRUE) {
 									safe_type_source = null;
@@ -1163,9 +1045,6 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_isSafe instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_isSafe;
-							}
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
@@ -1182,16 +1061,6 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -1199,13 +1068,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;

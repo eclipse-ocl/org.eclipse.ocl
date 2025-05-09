@@ -127,18 +127,8 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					try {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
 						try {
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'Variable::ownedInit\'");
-							}
-							final /*@Thrown*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-							/*@Caught*/ @Nullable Object CAUGHT_ownedInit;
-							try {
-								CAUGHT_ownedInit = ownedInit;
-							}
-							catch (Exception e) {
-								CAUGHT_ownedInit = ValueUtil.createInvalidValue(e);
-							}
-							final /*@NonInvalid*/ @NonNull Object isRequired = CAUGHT_ownedInit == null;
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+							final /*@NonInvalid*/ @NonNull Object isRequired = ownedInit == null;
 							/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
 							if (isRequired == Boolean.TRUE) {
 								safe_isRequired_source = null;
@@ -178,50 +168,27 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_not_0;
-						try {
-							/*@Caught*/ @NonNull Object CAUGHT_isRequired_1;
-							try {
-								if (this == null) {
-									throw new InvalidValueException("Null source for \'TypedElement::isRequired\'");
-								}
-								final /*@Thrown*/ boolean isRequired_1 = this.isIsRequired();
-								CAUGHT_isRequired_1 = isRequired_1;
-							}
-							catch (Exception e) {
-								CAUGHT_isRequired_1 = ValueUtil.createInvalidValue(e);
-							}
-							if (CAUGHT_isRequired_1 instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_isRequired_1;
-							}
-							final /*@Thrown*/ @Nullable Boolean not_0;
-							if (CAUGHT_isRequired_1 == ValueUtil.FALSE_VALUE) {
-								not_0 = ValueUtil.TRUE_VALUE;
+						final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
+						final /*@NonInvalid*/ @Nullable Boolean not_0;
+						if (!isRequired_1) {
+							not_0 = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							if (isRequired_1) {
+								not_0 = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_isRequired_1 == ValueUtil.TRUE_VALUE) {
-									not_0 = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									not_0 = null;
-								}
+								not_0 = null;
 							}
-							CAUGHT_not_0 = not_0;
 						}
-						catch (Exception e) {
-							CAUGHT_not_0 = ValueUtil.createInvalidValue(e);
-						}
-						if (CAUGHT_not_0 == ValueUtil.TRUE_VALUE) {
+						if (not_0 == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if (CAUGHT_not_0 instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_not_0;
-							}
-							if ((CAUGHT_not == null) || (CAUGHT_not_0 == null)) {
+							if ((CAUGHT_not == null) || (not_0 == null)) {
 								result = null;
 							}
 							else {
@@ -234,16 +201,6 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -251,13 +208,10 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;
@@ -307,33 +261,19 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_ne;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'Variable::ownedInit\'");
-						}
-						final /*@Thrown*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-						final /*@Thrown*/ boolean ne = ownedInit != null;
-						CAUGHT_ne = ne;
-					}
-					catch (Exception e) {
-						CAUGHT_ne = ValueUtil.createInvalidValue(e);
-					}
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+					final /*@NonInvalid*/ boolean ne = ownedInit != null;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_ne == ValueUtil.FALSE_VALUE) {
+					if (!ne) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
-							if (this == null) {
+							if (ownedInit == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
-							if (ownedInit_0 == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
-							}
-							final /*@Thrown*/ @Nullable Type type = ownedInit_0.getType();
+							final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;
 							try {
 								CAUGHT_type = type;
@@ -350,7 +290,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 								if (type == null) {
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@Thrown*/ @Nullable Type type_0 = this.getType();
+								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 								final /*@Thrown*/ @Nullable Boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0);
 								safe_conformsTo_source = conformsTo_0;
 							}
@@ -363,9 +303,6 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_ne instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_ne;
-							}
 							if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
 							}
@@ -382,16 +319,6 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -399,13 +326,10 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;
@@ -452,28 +376,8 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'Variable::ownedInit\'");
-					}
-					final /*@Thrown*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@Thrown*/ boolean result = ownedInit != null;
-					CAUGHT_result = result;
-				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
+				final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+				final /*@NonInvalid*/ boolean result = ownedInit != null;
 				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
 				try {
 					CAUGHT_severity_0 = severity_0;
@@ -481,13 +385,10 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				catch (Exception e) {
 					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
 				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
 				if (CAUGHT_severity_0 instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_severity_0;
 				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, result, PivotTables.INT_0);
 				IF_le = logDiagnostic;
 			}
 			return Boolean.TRUE == IF_le;

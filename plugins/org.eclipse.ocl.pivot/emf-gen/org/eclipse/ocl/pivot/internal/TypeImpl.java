@@ -111,9 +111,6 @@ implements Type {
 		/**
 		 * self
 		 */
-		if (this == null) {
-			throw new InvalidValueException("Null body for \'pivot::Type::specializeIn(CallExp[1],Type[1]) : Type[1]\'");
-		}
 		return this;
 	}
 
