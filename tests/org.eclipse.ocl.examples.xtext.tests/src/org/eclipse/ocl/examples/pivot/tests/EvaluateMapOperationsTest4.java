@@ -772,7 +772,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, oclAnyType, "Map{1 with 1, 2.0 with '2', '3' with true}->oclType().valueType");
 		ocl.assertQueryEquals(null, integerType, "Map{1 with 1, 2 with 2, 3 with 3}->oclType().valueType");
 		ocl.assertQueryInvalid(null, "Map{1 with 1, 2 with 2, 3 with 3}->oclAsType(Map(Real, Boolean))->oclType().valueType",
-			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Map(Integer,Integer)", "Map(Real,Boolean)"), InvalidValueException.class);
+			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Map(Integer[1],Integer[1])", "Map(Real,Boolean)"), InvalidValueException.class);
 		ocl.assertQueryEquals(null, integerType, "Map{1 with 1, 2 with 2, 3 with 3}->oclAsType(Map(Real, Real))->oclType().valueType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->MapType::size()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "MapType", "size");
 	}

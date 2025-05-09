@@ -367,9 +367,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | i.oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | i.oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
 		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(i : Property | oclContainer().oclAsSet())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(i : Property[1] | self.oclContainer().oclAsSet())");
 
@@ -807,8 +807,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "Sequence{11..15}->forAll(i1, i2, i3 | 1+i1+i2+i3 = i1+i2+i3+1)");
 		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1, i2 with x2, i3 | i1+x2+i3 = i1+i2+i3-10)");
 		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1 with x1, i2 with x2, i3 with x3 | i1+x2+i3 = x1+i2+x3+10)");
-		ocl.assertSemanticErrorQuery(null, "Set{11..15}->forAll(i1, i2 with x2, i3 | i1+x2+i3 = i1+i2+i3-10)", PivotMessages.IllegalCoIterator, "Set(Integer)");
-		ocl.assertSemanticErrorQuery(null, "Bag{11..15}->forAll(i1 with x1 | i1 = x1)", PivotMessages.IllegalCoIterator, "Bag(Integer)");
+		ocl.assertSemanticErrorQuery(null, "Set{11..15}->forAll(i1, i2 with x2, i3 | i1+x2+i3 = i1+i2+i3-10)", PivotMessages.IllegalCoIterator, "Set(Integer[*|1])");
+		ocl.assertSemanticErrorQuery(null, "Bag{11..15}->forAll(i1 with x1 | i1 = x1)", PivotMessages.IllegalCoIterator, "Bag(Integer[*|1])");
 
 		ocl.assertQueryFalse(null, "Map{2 with 1, 3 with 2,1 with 3}->forAll(k1 with v1, k2 with v2, k3 with v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
 		ocl.assertQueryTrue(null, "Map{2 with 1, 4 with 2,1 with 3}->forAll(k1 with v1, k2 with v2, k3 with v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
@@ -1275,35 +1275,35 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
 			null, "Sequence{'a', 'b', 'c'}->exists(e1, e2, e3, e4 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "exists", "e1, e2, e3, e4| e1 = e2");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "exists", "e1, e2, e3, e4| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
 			null, "Sequence{'a', 'b', 'c'}->forAll(e1, e2, e3, e4 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "forAll", "e1, e2, e3, e4| e1 = e2");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "forAll", "e1, e2, e3, e4| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
 			null, "Sequence{'a', 'b', 'c'}->collect(e1, e2 | Tuple{a : String = e1, b : String = e2})",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "collect", "e1, e2| Tuple{a : String = e1, b : String = e2}");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "collect", "e1, e2| Tuple{a : String = e1, b : String = e2}");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
 			null, "Sequence{'a', 'b', 'c'}->any(e1, e2 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "any", "e1, e2| e1 = e2");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "any", "e1, e2| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
 			null, "Sequence{'a', 'b', 'c'}->one(e1, e2 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "one", "e1, e2| e1 = e2");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "one", "e1, e2| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
 			null, "Sequence{'a', 'b', 'c'}->select(e1, e2 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "select", "e1, e2| e1 = e2");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "select", "e1, e2| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
 			null, "Sequence{'a', 'b', 'c'}->reject(e1, e2 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "reject", "e1, e2| e1 = e2");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "reject", "e1, e2| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
 			null, "Sequence{'a', 'b', 'c'}->isUnique(e1, e2 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "isUnique", "e1, e2| e1 = e2");
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "isUnique", "e1, e2| e1 = e2");
 		ocl.dispose();
 	}
 }
