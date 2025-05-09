@@ -455,8 +455,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			pivotType = standardLibrary.getOclVoidType();
 		}
 	//	pivotType =pivotType
-		pivotElement.setType(pivotType);
 		pivotElement.setIsRequired(isRequired);
+		pivotElement.setType(pivotType);
 		return pivotElement;
 	}
 

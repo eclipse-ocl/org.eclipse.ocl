@@ -43,8 +43,8 @@ public class LambdaTypeManager
 	public static @NonNull TypedElement createCandidateLambdaParameter(@NonNull String name, @NonNull Type type, boolean isRequired) {
 		TypedElement typedElement = PivotFactory.eINSTANCE.createParameter();
 		typedElement.setName(name);
-		typedElement.setType(type);
 		typedElement.setIsRequired(isRequired);
+		typedElement.setType(type);
 		return typedElement;
 	}
 
@@ -137,8 +137,8 @@ public class LambdaTypeManager
 	private @NonNull LambdaParameter createLambdaParameter(@NonNull TypedElement typedElement) {
 		LambdaParameter lambdaParameter = PivotFactory.eINSTANCE.createLambdaParameter();
 		lambdaParameter.setName(typedElement.getName());
-		lambdaParameter.setType(typedElement.getType());
 		lambdaParameter.setIsRequired(typedElement.isIsRequired());
+		lambdaParameter.setType(typedElement.getType());
 		return lambdaParameter;
 	}
 

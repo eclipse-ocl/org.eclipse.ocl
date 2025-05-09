@@ -1584,7 +1584,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//		}
 		resolveAtPre(csNameExp, callExp);
 		Type returnType = resolvePropertyReturnType(callExp, csNameExp, property);
-		helper.setType(callExp, returnType, property.isIsRequired() && !callExp.isIsSafe(), null);
+		helper.setType(callExp, returnType, ((returnType != null) && returnType.isAggregate()) || (property.isIsRequired() && !callExp.isIsSafe()), null);
 		return callExp;
 	}
 
@@ -2074,7 +2074,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							}
 							else {
 								((CallExp) callExp).setIsSafe(isSafe);
-								if (isSafe && !isAggregate) {
+								if (callExp.getType().isAggregate()) {
+									callExp.setIsRequired(true);
+								}
+								else if (isSafe && !isAggregate) {
 									callExp.setIsRequired(isAggregate);
 								}
 								navigatingExp = callExp;
@@ -2134,7 +2137,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						variableType = PivotUtil.getPivot(Type.class, csVariableType);
 						variableIsRequired = context.isRequired(csVariableType);
 					}
-					boolean initIsRequired = false;
+					Boolean initIsRequired = null;
 					OCLExpression initExpression = revisit(OCLExpression.class, csInitExpression);
 					Type initType = null;
 					Type initTypeValue = null;
@@ -2153,7 +2156,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					if (variableType == null) {
 						variableType = initType;
 					}
-					boolean isRequired = variableIsRequired != null ? variableIsRequired.booleanValue() : initIsRequired;
+					boolean isRequired = variableIsRequired != null ? variableIsRequired.booleanValue() : initIsRequired != null ? initIsRequired.booleanValue() : false;
 					helper.setType(variable, variableType, isRequired, initTypeValue);
 					if (lastLetExp != null) {
 						lastLetExp.setOwnedIn(letExp);

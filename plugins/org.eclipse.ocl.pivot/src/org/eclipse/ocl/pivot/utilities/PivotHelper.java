@@ -706,7 +706,7 @@ public class PivotHelper
 			}
 		}
 		refreshName(contextVariable, selfVariableName);
-		setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
+		setType(contextVariable, contextType, true, contextInstance);
 	}
 
 	/**
@@ -770,14 +770,17 @@ public class PivotHelper
 	}
 
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
-		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
-		if (primaryType != asTypedElement.getType()) {
-			asTypedElement.setType(primaryType);
-		}
 		boolean wasRequired = asTypedElement.isIsRequired();
 		if (wasRequired != isRequired) {
 			asTypedElement.setIsRequired(isRequired);
 		}
+		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+		if (primaryType != asTypedElement.getType()) {
+			asTypedElement.setType(primaryType);
+		}
+	//	if ((type instanceof IterableType) || (type instanceof LambdaType)) {
+	//		assert isRequired;				// XXX
+	//	}
 		if (primaryType != null) {
 			PivotUtil.debugWellContainedness(primaryType);
 		}

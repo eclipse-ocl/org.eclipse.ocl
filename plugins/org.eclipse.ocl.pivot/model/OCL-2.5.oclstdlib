@@ -193,7 +193,7 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[true].
 	*/
-	operation and2(b : Boolean[1]) : Boolean[1] validating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
+	operation and2(b : Boolean[1]) : Boolean[1] precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
 	{
 		body: if self = false then false
 			  elseif b = false then false
@@ -226,7 +226,7 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
 	Otherwise oclText[false].
 	*/
-	operation implies2(b : Boolean[1]) : Boolean[1] validating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
+	operation implies2(b : Boolean[1]) : Boolean[1] precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
 	{
 		body: if self = false then true
 			  elseif b = true then true
@@ -279,7 +279,7 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
 	Otherwise oclText[false]. 
 	*/
-	operation or2(b : Boolean[1]) : Boolean[1] validating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
+	operation or2(b : Boolean[1]) : Boolean[1] precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
 	{
 		body: if self = true then true
 			  elseif b = true then true

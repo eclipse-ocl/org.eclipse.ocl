@@ -151,6 +151,7 @@ public abstract class AbstractContents extends PivotUtil
 	 */
 	protected @NonNull ExpressionInOCL createBodyExpression(@NonNull Operation operation, @NonNull Type selfType, @NonNull String exprString, @NonNull Type resultType) {
 		ExpressionInOCL pivotExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
+		pivotExpression.setIsRequired(resultType.isAggregate());
 		pivotExpression.setType(resultType);
 		pivotExpression.setBody(exprString);
 		ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();

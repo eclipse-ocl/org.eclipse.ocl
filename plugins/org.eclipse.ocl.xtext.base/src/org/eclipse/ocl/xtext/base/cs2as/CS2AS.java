@@ -548,7 +548,16 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 	}
 
 	public boolean isRequiredWithDefault(@Nullable TypedRefCS csTypeRef) {
-		Boolean isRequired = csTypeRef != null ? isRequired(csTypeRef) : null;
+		Boolean isRequired = null;
+		if (csTypeRef != null) {
+			isRequired = isRequired(csTypeRef);
+			if (isRequired == null) {
+				Type asType = PivotUtil.getPivot(Type.class, csTypeRef);
+				if (asType != null) {
+					isRequired = asType.isAggregate();
+				}
+			}
+		}
 		if (isRequired == null) {
 			isRequired = false;
 		}

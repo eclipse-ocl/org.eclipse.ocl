@@ -177,8 +177,9 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					TypedElement resultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.RESULT_NAME, resultType, isRequired);
 					LambdaType lambdaType = completeModel.getLambdaType("Lambda", contextParameter, parameters, resultParameter, null);
 					if (lambdaParameter != null) {
-						lambdaParameter.setType(lambdaType);
-						lambdaParameter.toString();
+						context.getHelper().setType(lambdaParameter, resultType, true);
+					//	lambdaParameter.setIsRequired(true);
+					//	lambdaParameter.setType(lambdaType);
 					}
 				//	context.installPivotReference(csElement.get, lambdaType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 				}

@@ -147,6 +147,14 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public boolean isAggregate() {
+		return true;
+	}
+
 	@Override
 	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {

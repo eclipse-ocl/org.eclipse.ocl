@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -538,6 +539,7 @@ public class PivotUtil
 	public static @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
 		Iteration pivotIteration = PivotFactory.eINSTANCE.createIteration();
 		pivotIteration.setName(name);
+		pivotIteration.setIsRequired(type.isAggregate());
 		pivotIteration.setType(type);
 		pivotIteration.setImplementationClass(implementationClass);
 		pivotIteration.setImplementation(implementation);
@@ -553,8 +555,8 @@ public class PivotUtil
 	public static @NonNull LetExp createLetExp(@NonNull Variable asVariable, @NonNull OCLExpression asIn) {
 		LetExp asLetExp = PivotFactory.eINSTANCE.createLetExp();
 		asLetExp.setOwnedIn(asIn);
-		asLetExp.setType(asIn.getType());
 		asLetExp.setIsRequired(asIn.isIsRequired());
+		asLetExp.setType(asIn.getType());
 		asLetExp.setOwnedVariable(asVariable);
 		return asLetExp;
 	}
@@ -628,14 +630,15 @@ public class PivotUtil
 		}
 		asNavigationCallExp.setName(asProperty.getName());
 		asNavigationCallExp.setOwnedSource(asSource);
-		asNavigationCallExp.setType(asProperty.getType());
 		asNavigationCallExp.setIsRequired(asProperty.isIsRequired());
+		asNavigationCallExp.setType(asProperty.getType());
 		return asNavigationCallExp;
 	}
 
 	public static @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
 		Operation pivotOperation = PivotFactory.eINSTANCE.createOperation();
 		pivotOperation.setName(name);
+		pivotOperation.setIsRequired(type.isAggregate());
 		pivotOperation.setType(type);
 		pivotOperation.setImplementationClass(implementationClass);
 		pivotOperation.setImplementation(implementation);
@@ -645,6 +648,7 @@ public class PivotUtil
 	public static @NonNull Operation createOperation(/*@NonNull*/ EOperation eOperation, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
 		Operation pivotOperation = PivotFactory.eINSTANCE.createOperation();
 		pivotOperation.setName(eOperation.getName());
+		pivotOperation.setIsRequired(type.isAggregate());
 		pivotOperation.setType(type);
 		pivotOperation.setImplementationClass(implementationClass);
 		pivotOperation.setImplementation(implementation);
@@ -741,8 +745,8 @@ public class PivotUtil
 	public static @NonNull Parameter createParameter(@NonNull String name, @NonNull Type asType, boolean isRequired) {
 		Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 		asParameter.setName(name);
-		asParameter.setType(asType);
 		asParameter.setIsRequired(isRequired);
+		asParameter.setType(asType);
 		return asParameter;
 	}
 
@@ -774,6 +778,7 @@ public class PivotUtil
 	public static @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type type) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(eFeature.getName());
+		pivotProperty.setIsRequired(type.isAggregate());
 		pivotProperty.setType(type);
 		((PivotObjectImpl)pivotProperty).setESObject(eFeature);
 		return pivotProperty;
@@ -782,6 +787,7 @@ public class PivotUtil
 	public static @NonNull Property createProperty(@NonNull String name, @NonNull Type type) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(name);
+		pivotProperty.setIsRequired(type.isAggregate());
 		pivotProperty.setType(type);
 		return pivotProperty;
 	}
@@ -790,8 +796,8 @@ public class PivotUtil
 		PropertyCallExp asChild = PivotFactory.eINSTANCE.createPropertyCallExp();
 		asChild.setOwnedSource(asSource);
 		asChild.setReferredProperty(asProperty);
-		asChild.setType(asProperty.getType());
 		asChild.setIsRequired(asProperty.isIsRequired());
+		asChild.setType(asProperty.getType());
 		return asChild;
 	}
 
@@ -2192,7 +2198,7 @@ public class PivotUtil
 	 * Return true if type uses an aggregate (-&gt;) rather than object (.) navigation operator.
 	 */
 	public static boolean isAggregate(Type type) {
-		return (type instanceof CollectionType) || (type instanceof MapType);
+		return type instanceof IterableType;
 	}
 
 	public static boolean isAggregateNavigationOperator(/*@NonNull*/ String operatorName) {
@@ -2302,8 +2308,8 @@ public class PivotUtil
 	public static void setBody(@NonNull ExpressionInOCL expressionInOCL, @Nullable OCLExpression oclExpression, @Nullable String stringExpression) {
 		expressionInOCL.setBody(stringExpression != null ? StringUtil.trimSingleLineText(stringExpression) : stringExpression);
 		expressionInOCL.setOwnedBody(oclExpression);
-		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
 		expressionInOCL.setIsRequired((oclExpression != null) && oclExpression.isIsRequired());;
+		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
 	}
 
 	/**

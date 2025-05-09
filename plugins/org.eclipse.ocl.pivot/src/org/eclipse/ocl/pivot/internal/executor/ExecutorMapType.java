@@ -135,6 +135,14 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 		return valueType;
 	}
 
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public boolean isAggregate() {
+		return true;
+	}
+
 	@Override
 	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {

@@ -1846,17 +1846,17 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		newOpposite.setIsImplicit(true);
 		newOpposite.setName(name);
 		if (thisProperty.isIsComposite()) {
-			newOpposite.setType(thisClass);
 			newOpposite.setIsRequired(false);
+			newOpposite.setType(thisClass);
 		}
 		else {
+			newOpposite.setIsRequired(true);
 			newOpposite.setType(getCollectionType(
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE,
 				thisClass, false,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE));
-			newOpposite.setIsRequired(true);
 		}
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		assert thisModel != null;
