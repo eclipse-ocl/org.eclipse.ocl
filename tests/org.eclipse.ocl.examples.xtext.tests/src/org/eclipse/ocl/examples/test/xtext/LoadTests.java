@@ -580,7 +580,7 @@ public class LoadTests extends AbstractLoadTests
 	}
 
 	public void testLoad_Bug441620b_completeocl() throws IOException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		BaseCSResource csResource = doLoad_CS(ocl, getTestModelURI("models/ocl/Bug441620b.ocl"));
 		CS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
 		Resource oclResource = cs2as.getASResource();

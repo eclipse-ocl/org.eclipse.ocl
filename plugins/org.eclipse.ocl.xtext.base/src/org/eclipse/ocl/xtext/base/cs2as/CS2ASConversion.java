@@ -1432,8 +1432,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * Sequence the update passes to make the pivot match the CS.
 	 */
 	public boolean update(@NonNull CSResource csResource) {
-		getStandardLibrary().getOclElementType();			// XXX
-		getMetamodelManager().getASmetamodel();				// XXX
+//		getStandardLibrary().getOclElementType();			// XXX
+//		getMetamodelManager().getASmetamodel();				// XXX
 		resetPivotMappings(csResource);
 		oldPackagesByName = new HashMap<>();
 		oldPackagesByQualifiedName = new HashMap<>();
