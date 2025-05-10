@@ -634,14 +634,14 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 						"{\n" +
 						"	class Domain {\n" +
 						"		property types : T1[*] { ordered composes };\n" +
-						"		property t1_2a : T1;\n" +
-						"		property t1_3a : T1;\n" +
-						"		property t1_3b : T1;\n" +
-						"		property t1_4 : T1;\n" +
-						"		property t2a_2a : T2a;\n" +
-						"		property t2a_3a : T2a;\n" +
-						"		property t2b_2b : T2b;\n" +
-						"		property t3a : T3a;\n" +
+						"		property t1_2a : T1[1];\n" +
+						"		property t1_3a : T1[1];\n" +
+						"		property t1_3b : T1[1];\n" +
+						"		property t1_4 : T1[1];\n" +
+						"		property t2a_2a : T2a[1];\n" +
+						"		property t2a_3a : T2a[1];\n" +
+						"		property t2b_2b : T2b[1];\n" +
+						"		property t3a : T3a[1];\n" +
 						"	}\n" +
 						"	abstract class T1 {\n" +
 						"		operation op1() : String { body: 'T1::op1'; }\n" +
@@ -727,7 +727,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		testObjectDomain.eSet(eReferenceDomain_t2a_3a, testObjectT3a);
 		testObjectDomain.eSet(eReferenceDomain_t2b_2b, testObjectT2b);
 		testObjectDomain.eSet(eReferenceDomain_t3a, testObjectT3a);
-		//
 		ocl.assertQueryEquals(testObjectT2a, "T2a::op1", "self.op1()");
 		ocl.assertQueryEquals(testObjectT2a, "T2a::op2", "self.op2()");
 		ocl.assertSemanticErrorQuery(pivotTypeT2a, "self.op3()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T2a::op3");

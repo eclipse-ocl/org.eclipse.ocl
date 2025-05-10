@@ -605,7 +605,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->oclType().MapType::keyType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->oclType()._'Map'::keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map", "keyType");
 //
-		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bag(PrimitiveType)", "keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bag(PrimitiveType[*|1])", "keyType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->MapType::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "MapType::keyType : Type[1]");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->_'Map'::keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map", "keyType");
 //
@@ -761,7 +761,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, booleanType, "Map{'1' with true}->oclType().MapType::valueType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->oclType()._'Map'::valueType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map", "valueType");
 //
-		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->valueType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bag(PrimitiveType)", "valueType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->valueType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bag(PrimitiveType[*|1])", "valueType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->MapType::valueType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "MapType::valueType : Type[1]");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()->_'Map'::valueType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map", "valueType");
 //
@@ -772,7 +772,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, oclAnyType, "Map{1 with 1, 2.0 with '2', '3' with true}->oclType().valueType");
 		ocl.assertQueryEquals(null, integerType, "Map{1 with 1, 2 with 2, 3 with 3}->oclType().valueType");
 		ocl.assertQueryInvalid(null, "Map{1 with 1, 2 with 2, 3 with 3}->oclAsType(Map(Real, Boolean))->oclType().valueType",
-			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Map(Integer[1],Integer[1])", "Map(Real,Boolean)"), InvalidValueException.class);
+			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Map(Integer[1],Integer[1])", "Map(Real[1],Boolean[1])"), InvalidValueException.class);
 		ocl.assertQueryEquals(null, integerType, "Map{1 with 1, 2 with 2, 3 with 3}->oclAsType(Map(Real, Real))->oclType().valueType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->MapType::size()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "MapType", "size");
 	}

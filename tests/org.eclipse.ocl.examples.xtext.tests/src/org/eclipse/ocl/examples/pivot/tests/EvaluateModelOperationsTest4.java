@@ -131,26 +131,26 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
 						"package pkg : pkg = 'pkg' {\n" +
 						"  class A {\n" +
-						"    property anEBigDecimal : ecore::EBigDecimal;\n" +
-						"    property anEBigInteger : ecore::EBigInteger;\n" +
-						"    property anEBoolean : ecore::EBoolean;\n" +
-						"    property anEBooleanObject : ecore::EBooleanObject;\n" +
-						"    property anEByte : ecore::EByte;\n" +
-						"    property anEByteObject : ecore::EByteObject;\n" +
-						"    property anEChar : ecore::EChar;\n" +
-						"    property anECharacterObject : ecore::ECharacterObject;\n" +
-						"    property anEDouble : ecore::EDouble;\n" +
-						"    property anEDoubleObject : ecore::EDoubleObject;\n" +
-						"    property anEFloat : ecore::EFloat;\n" +
-						"    property anEFloatObject : ecore::EFloatObject;\n" +
-						"    property anEInt : ecore::EInt;\n" +
-						"    property anEIntegerObject : ecore::EIntegerObject;\n" +
-						"    property anELong : ecore::ELong;\n" +
-						"    property anELongObject : ecore::ELongObject;\n" +
-						"    property anEShort : ecore::EShort;\n" +
-						"    property anEShortObject : ecore::EShortObject;\n" +
-						"    property anEString : ecore::EString;\n" +
-						"    property anEDate : ecore::EDate;\n" +
+						"    property anEBigDecimal : ecore::EBigDecimal[1];\n" +
+						"    property anEBigInteger : ecore::EBigInteger[1];\n" +
+						"    property anEBoolean : ecore::EBoolean[1];\n" +
+						"    property anEBooleanObject : ecore::EBooleanObject[1];\n" +
+						"    property anEByte : ecore::EByte[1];\n" +
+						"    property anEByteObject : ecore::EByteObject[1];\n" +
+						"    property anEChar : ecore::EChar[1];\n" +
+						"    property anECharacterObject : ecore::ECharacterObject[1];\n" +
+						"    property anEDouble : ecore::EDouble[1];\n" +
+						"    property anEDoubleObject : ecore::EDoubleObject[1];\n" +
+						"    property anEFloat : ecore::EFloat[1];\n" +
+						"    property anEFloatObject : ecore::EFloatObject[1];\n" +
+						"    property anEInt : ecore::EInt[1];\n" +
+						"    property anEIntegerObject : ecore::EIntegerObject[1];\n" +
+						"    property anELong : ecore::ELong[1];\n" +
+						"    property anELongObject : ecore::ELongObject[1];\n" +
+						"    property anEShort : ecore::EShort[1];\n" +
+						"    property anEShortObject : ecore::EShortObject[1];\n" +
+						"    property anEString : ecore::EString[1];\n" +
+						"    property anEDate : ecore::EDate[1];\n" +
 						"  }\n" +
 						"}\n";
 		Resource metamodel = cs2ecore(ocl.getEnvironmentFactory(), metamodelText, getTestFileURI("test.ecore"));
@@ -507,9 +507,9 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test public void test_unified_types_411441() throws Exception {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
-		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
-		ocl.assertValidationErrorQuery(null, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)",
+		ocl.assertQueryTrue(null, "let x : Collection(Type[*|1]) = Set{Integer,Real} in x->forAll(x : Type | x.name <> null and x.name.indexOf('e') > 0)");
+		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name <> null and x.name.indexOf('e') > 0)");
+		ocl.assertValidationErrorQuery(null, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name <> null and x.name.indexOf('e') > 0)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleTypeForInitializer", "x : Bag(Type) = Set{Integer, Real}");
 		ocl.assertQueryTrue(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Collection(Type[*]) | x->size() > 0)");
 		ocl.assertValidationErrorQuery(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type | x->size() > 0)",
