@@ -502,7 +502,11 @@ public class IteratorsTest4 extends PivotTestSuite
 		String self = "foo";
 		List<String> expected = Collections.emptyList();
 
-		ocl.assertQueryEquals(self, expected, "let c : Sequence(OrderedSet(String)) = Sequence{} in c->collect(s : OrderedSet(String) | s.toUpperCase())");
+		ocl.assertQueryEquals(self, expected, "let c : Sequence(OrderedSet(String)) = Sequence{} in c->collect(toUpperCase())");
+		ocl.assertQueryEquals(self, expected, "let c : Sequence(OrderedSet(String[*|1])) = Sequence{} in c->collect(s | s.toUpperCase())");
+		ocl.assertValidationErrorQuery(null, "let c : Sequence(OrderedSet(String[*|?])) = Sequence{} in c->collect(s | s.toUpperCase())",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "OperationCallExp::UnsafeSourceCanNotBeNull", "1_.toUpperCase()");
+		ocl.assertQueryEquals(self, expected, "let c : Sequence(OrderedSet(String[*|1])) = Sequence{} in c->collect(s : OrderedSet(String[*|1]) | s.toUpperCase())");
 		ocl.dispose();
 	}
 

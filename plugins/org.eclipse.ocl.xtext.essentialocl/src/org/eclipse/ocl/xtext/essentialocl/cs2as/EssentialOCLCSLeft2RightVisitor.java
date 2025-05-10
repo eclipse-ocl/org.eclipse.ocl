@@ -801,6 +801,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		boolean isNullFree;
 		if (actualSourceType instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)actualSourceType;
+			collectionType.toString();
 			elementType = collectionType.getElementType();
 			isNullFree = collectionType.isIsNullFree();
 		}
@@ -1635,7 +1636,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Type asType = context.lookupType(csNameExp, pathName);
 		@NonNull ShadowExp pivotElement = context.refreshModelElement(ShadowExp.class, PivotPackage.Literals.SHADOW_EXP, csNameExp);
-		pivotElement.setType(asType);
+		helper.setType(pivotElement, asType, true);
 		for (ShadowPartCS csPart : csCurlyBracketedClause.getOwnedParts()) {
 			assert csPart != null;
 			revisit(ShadowPart.class, csPart);
