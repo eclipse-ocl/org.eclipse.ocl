@@ -148,7 +148,7 @@ implements VariableDeclaration {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = name <> null
+			 *       let result : Boolean[1] = name <> null
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -158,10 +158,7 @@ implements VariableDeclaration {
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -207,7 +204,7 @@ implements VariableDeclaration {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = type <> OclInvalid
+			 *       let result : Boolean[1] = type <> OclInvalid
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -218,10 +215,7 @@ implements VariableDeclaration {
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -269,7 +263,7 @@ implements VariableDeclaration {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = type <> null
+			 *       let result : Boolean[1] = type <> null
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -279,10 +273,7 @@ implements VariableDeclaration {
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;

@@ -191,10 +191,7 @@ implements TupleLiteralPart {
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -243,7 +240,7 @@ implements TupleLiteralPart {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_conformsTo;
+						/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
 							if (ownedInit_1 == null) {
@@ -254,7 +251,7 @@ implements TupleLiteralPart {
 								throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 							}
 							final /*@NonInvalid*/ @Nullable Type type_1 = this.getType();
-							final /*@Thrown*/ @Nullable Boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1);
+							final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1).booleanValue();
 							CAUGHT_conformsTo = conformsTo;
 						}
 						catch (Exception e) {
@@ -270,7 +267,7 @@ implements TupleLiteralPart {
 							if (CAUGHT_conformsTo instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_conformsTo;
 							}
-							if ((CAUGHT_and == null) || (CAUGHT_conformsTo == null)) {
+							if (CAUGHT_and == null) {
 								result = null;
 							}
 							else {
@@ -321,7 +318,7 @@ implements TupleLiteralPart {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = type <> OclInvalid
+			 *       let result : Boolean[1] = type <> OclInvalid
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -332,10 +329,7 @@ implements TupleLiteralPart {
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;

@@ -1020,10 +1020,10 @@ implements Property {
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ @Nullable Object container = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
-		/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class_0);
+			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class_0).booleanValue();
 			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
 		catch (Exception e) {
@@ -1034,16 +1034,14 @@ implements Property {
 			and = ValueUtil.FALSE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_includes;
+			/*@Caught*/ @NonNull Object CAUGHT_includes;
 			try {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1);
-				if (oclAsType == null) {
-					throw new InvalidValueException("Null source for \'Class::ownedProperties\'");
-				}
+				@SuppressWarnings("null")
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1);
 				final /*@Thrown*/ @NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
 				final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
-				final /*@Thrown*/ @Nullable Boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this);
+				final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this).booleanValue();
 				CAUGHT_includes = includes;
 			}
 			catch (Exception e) {
@@ -1059,12 +1057,7 @@ implements Property {
 				if (CAUGHT_includes instanceof InvalidValueException) {
 					throw (InvalidValueException)CAUGHT_includes;
 				}
-				if ((CAUGHT_oclIsKindOf == null) || (CAUGHT_includes == null)) {
-					and = null;
-				}
-				else {
-					and = ValueUtil.TRUE_VALUE;
-				}
+				and = ValueUtil.TRUE_VALUE;
 			}
 		}
 		if (and == null) {
@@ -1104,10 +1097,7 @@ implements Property {
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -1127,10 +1117,8 @@ implements Property {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0);
-								if (oclAsType == null) {
-									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
-								}
+								@SuppressWarnings("null")
+								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0);
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
 								final /*@Thrown*/ boolean ne_0 = ownedBody != null;
 								CAUGHT_ne_0 = ne_0;

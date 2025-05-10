@@ -237,10 +237,7 @@ public abstract class CallExpImpl
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -270,10 +267,8 @@ public abstract class CallExpImpl
 									final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
 									safe_type_source = type_0;
 								}
-								final /*@Thrown*/ @Nullable CollectionType oclAsType = (@Nullable CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType);
-								if (oclAsType == null) {
-									throw new InvalidValueException("Null source for \'CollectionType::isNullFree\'");
-								}
+								@SuppressWarnings("null")
+								final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType);
 								final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
 								CAUGHT_isNullFree = isNullFree;
 							}
@@ -372,10 +367,7 @@ public abstract class CallExpImpl
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -427,13 +419,13 @@ public abstract class CallExpImpl
 							else {
 								/*@Caught*/ @Nullable Object CAUGHT_not;
 								try {
-									/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+									/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 									try {
 										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 										if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 											throw (InvalidValueException)CAUGHT_safe_type_source;
 										}
-										final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType);
+										final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType).booleanValue();
 										CAUGHT_oclIsKindOf = oclIsKindOf;
 									}
 									catch (Exception e) {
@@ -540,7 +532,7 @@ public abstract class CallExpImpl
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = type <> OclInvalid
+			 *       let result : Boolean[1] = type <> OclInvalid
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -551,10 +543,7 @@ public abstract class CallExpImpl
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;

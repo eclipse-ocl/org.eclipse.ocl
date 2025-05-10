@@ -332,7 +332,7 @@ public class MessageExpImpl
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = ownedCalledOperation->size() +
+			 *         result : Boolean[1] = ownedCalledOperation->size() +
 			 *         ownedSentSignal->size() = 1
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -343,10 +343,7 @@ public class MessageExpImpl
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -356,21 +353,15 @@ public class MessageExpImpl
 				try {
 					final /*@NonInvalid*/ @Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
 					final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
-					final /*@Thrown*/ @Nullable IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
-					if (size == null) {
-						throw new InvalidValueException("Null \'\'Integer\'\' rather than \'\'OclVoid\'\' value required");
-					}
+					final /*@Thrown*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
 					final /*@NonInvalid*/ @Nullable SendSignalAction ownedSentSignal = this.getOwnedSentSignal();
 					final /*@Thrown*/ @NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
-					final /*@Thrown*/ @Nullable IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
-					if (size_0 == null) {
-						throw new InvalidValueException("Null \'\'OclSelf\'\' rather than \'\'OclVoid\'\' value required");
-					}
+					final /*@Thrown*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
 					if (size_0 instanceof InvalidValueException) {
 						throw (InvalidValueException)size_0;
 					}
-					final /*@Thrown*/ @Nullable IntegerValue sum = (@Nullable IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
-					final /*@Thrown*/ boolean result = PivotTables.INT_1.equals(sum);
+					final /*@Thrown*/ @NonNull IntegerValue sum = (@Nullable IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
+					final /*@Thrown*/ boolean result = sum.equals(PivotTables.INT_1);
 					CAUGHT_result = result;
 				}
 				catch (Exception e) {
@@ -426,10 +417,7 @@ public class MessageExpImpl
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -437,13 +425,13 @@ public class MessageExpImpl
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 						@SuppressWarnings("null")
 						final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
 						final /*@NonInvalid*/ @Nullable Type type = ownedTarget.getType();
-						final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0);
+						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
 					catch (Exception e) {

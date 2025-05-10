@@ -252,10 +252,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -263,11 +260,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 						final /*@NonInvalid*/ @Nullable Type type = this.getType();
-						final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType);
+						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
 					catch (Exception e) {
@@ -280,8 +277,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					else {
 						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
 						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
-						final /*@NonInvalid*/ @Nullable IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
-						final /*@NonInvalid*/ boolean eq = PivotTables.INT_1.equals(size);
+						final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
+						final /*@NonInvalid*/ boolean eq = size.equals(PivotTables.INT_1);
 						if (eq) {
 							result = ValueUtil.TRUE_VALUE;
 						}
@@ -289,12 +286,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							if (CAUGHT_oclIsKindOf == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = ValueUtil.FALSE_VALUE;
 						}
 					}
 					CAUGHT_result = result;
@@ -355,7 +347,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : OclAny[1] = if type.oclIsKindOf(DataType)
+			 *         result : OclAny[?] = if type.oclIsKindOf(DataType)
 			 *         then
 			 *           let status : Boolean[1] = true
 			 *           in
@@ -434,10 +426,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;
@@ -447,10 +436,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType_0 = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
-					final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType_0);
-					if (oclIsKindOf == null) {
-						throw new InvalidValueException("Null if condition");
-					}
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType_0).booleanValue();
 					/*@Thrown*/ @NonNull Object result;
 					if (oclIsKindOf) {
 						result = ValueUtil.TRUE_VALUE;
@@ -478,7 +464,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 						final /*@NonInvalid*/ @NonNull SetValue partProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect);
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0);
+						@SuppressWarnings("null")
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0);
 						final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);
 						final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticTypeOfValue(null, oclAsSet);
 						final @NonNull LibraryIterationExtension IMPL_closure_0 = (LibraryIterationExtension)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
@@ -600,7 +587,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_1 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0[*|1])\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (or_1 == ValueUtil.FALSE_VALUE) {
@@ -630,11 +617,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								if (name == null) {
 									throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@Thrown*/ @Nullable Boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl);
+								final /*@Thrown*/ boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
 								safe_startsWith_source = startsWith_0;
 							}
 							if (safe_startsWith_source == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0[*|1])\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (safe_startsWith_source == ValueUtil.FALSE_VALUE) {
@@ -706,7 +693,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_2 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0[*|1])\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (or_2 == ValueUtil.FALSE_VALUE) {
@@ -728,10 +715,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 */
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							final /*@NonInvalid*/ @Nullable Type type_1 = _1_6.getType();
-							final /*@Thrown*/ @Nullable Boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_1, TYP_CollectionType_0);
-							if (oclIsKindOf_0 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0[*|1])\'");
-							}
+							final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_1, TYP_CollectionType_0).booleanValue();
 							//
 							if (oclIsKindOf_0 == ValueUtil.FALSE_VALUE) {
 								accumulator_5.add(_1_6);
@@ -779,7 +763,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (and == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0[*|1])\'");
+								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (and == ValueUtil.FALSE_VALUE) {
@@ -791,10 +775,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 						final /*@Thrown*/ @NonNull SetValue extraProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
 						final /*@Thrown*/ @NonNull SetValue missingProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
-						final /*@Thrown*/ @Nullable Boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties);
-						if (notEmpty == null) {
-							throw new InvalidValueException("Null if condition");
-						}
+						final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
 						/*@Thrown*/ @NonNull Object IF_notEmpty;
 						if (notEmpty) {
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_1 = executor.getStaticTypeOfValue(null, extraProperties);
@@ -834,9 +815,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								/**
 								 * acc + ' ' + p.name
 								 */
-								final /*@NonInvalid*/ @Nullable String sum = StringConcatOperation.INSTANCE.evaluate(acc, PivotTables.STR__32);
+								final /*@NonInvalid*/ @NonNull String sum = StringConcatOperation.INSTANCE.evaluate(acc, PivotTables.STR__32);
 								final /*@NonInvalid*/ @Nullable String name_1 = p_0.getName();
-								final /*@Thrown*/ @Nullable String sum_0 = StringConcatOperation.INSTANCE.evaluate(sum, name_1);
+								final /*@Thrown*/ @NonNull String sum_0 = StringConcatOperation.INSTANCE.evaluate(sum, name_1);
 								//
 								acc = sum_0;
 							}
@@ -844,10 +825,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							IF_notEmpty = TUP_;
 						}
 						else {
-							final /*@Thrown*/ @Nullable Boolean notEmpty_0 = CollectionNotEmptyOperation.INSTANCE.evaluate(missingProperties);
-							if (notEmpty_0 == null) {
-								throw new InvalidValueException("Null if condition");
-							}
+							final /*@Thrown*/ boolean notEmpty_0 = CollectionNotEmptyOperation.INSTANCE.evaluate(missingProperties).booleanValue();
 							/*@Thrown*/ @NonNull Object IF_notEmpty_0;
 							if (notEmpty_0) {
 								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0_0 = executor.getStaticTypeOfValue(null, missingProperties);
@@ -887,9 +865,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									/**
 									 * acc + ' ' + p.name
 									 */
-									final /*@NonInvalid*/ @Nullable String sum_1 = StringConcatOperation.INSTANCE.evaluate(acc_0, PivotTables.STR__32);
+									final /*@NonInvalid*/ @NonNull String sum_1 = StringConcatOperation.INSTANCE.evaluate(acc_0, PivotTables.STR__32);
 									final /*@NonInvalid*/ @Nullable String name_3 = p_1.getName();
-									final /*@Thrown*/ @Nullable String sum_2 = StringConcatOperation.INSTANCE.evaluate(sum_1, name_3);
+									final /*@Thrown*/ @NonNull String sum_2 = StringConcatOperation.INSTANCE.evaluate(sum_1, name_3);
 									//
 									acc_0 = sum_2;
 								}
@@ -946,7 +924,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = type <> OclInvalid
+			 *       let result : Boolean[1] = type <> OclInvalid
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -957,10 +935,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			if (severity_0 == null) {
 				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
+			final /*@Thrown*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ @Nullable Boolean IF_le;
 			if (le) {
 				IF_le = ValueUtil.TRUE_VALUE;

@@ -2332,21 +2332,19 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _CompleteModel.getOwnedOperations();
 			ownedOperations.add(operation = op_CompleteModel_getOwnedCompletePackage);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("name", _String, false));
 
 			ownedOperations = _CompletePackage.getOwnedOperations();
 			ownedOperations.add(operation = op_CompletePackage_getOwnedCompleteClass);
-			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("name", _String, false));
 
 			ownedOperations = _Element.getOwnedOperations();
 			ownedOperations.add(operation = op_Element_allOwnedElements);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _Element, "self->closure(oclContents()->selectByKind(Element))", _Set_Element_T);
 			ownedOperations.add(operation = op_Element_getValue);
-			operation.setIsRequired(false);
 			createBodyExpression(operation, _Element, "null", _Element);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("stereotype", _Type, true));
@@ -2354,29 +2352,37 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _OCLExpression.getOwnedOperations();
 			ownedOperations.add(operation = op_OCLExpression_isNonNull);
+			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_OCLExpression_isNull);
+			operation.setIsRequired(true);
 
 			ownedOperations = _OperationCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_OperationCallExp_hasOclVoidOverload);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _OperationCallExp, "false", _Boolean);
 
 			ownedOperations = _Property.getOwnedOperations();
 			ownedOperations.add(operation = op_Property_isAttribute);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("p", _Property, true));
 
 			ownedOperations = _PropertyCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyOwningType);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.owningClass", _Type);
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyType);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type);
 
 			ownedOperations = _ReferringElement.getOwnedOperations();
 			ownedOperations.add(operation = op_ReferringElement_getReferredElement);
+			operation.setIsRequired(true);
 
 			ownedOperations = _SelfType.getOwnedOperations();
 			ownedOperations.add(operation = op_SelfType_specializeIn);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _SelfType, "selfType", _Type);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
@@ -2384,13 +2390,11 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _Type.getOwnedOperations();
 			ownedOperations.add(operation = op_Type_flattenedType);
-			operation.setIsRequired(false);
 			createBodyExpression(operation, _Type, "self", _Type);
 			ownedOperations.add(operation = op_Type_isClass);
-			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_Type_isTemplateParameter);
-			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_Type_specializeIn);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _Type, "self", _Type);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
@@ -2398,20 +2402,21 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _TypedElement.getOwnedOperations();
 			ownedOperations.add(operation = op_TypedElement_CompatibleBody);
+			operation.setIsRequired(true);
 			createBodyExpression(operation, _TypedElement, "bodySpecification.type?.conformsTo(self.type)", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("bodySpecification", _ValueSpecification, true));
 
 			ownedOperations = _ValueSpecification.getOwnedOperations();
 			ownedOperations.add(operation = op_ValueSpecification_booleanValue);
+			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_ValueSpecification_integerValue);
-			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_ValueSpecification_isComputable);
+			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_ValueSpecification_isNull);
+			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_ValueSpecification_stringValue);
-			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_ValueSpecification_unlimitedValue);
-			operation.setIsRequired(false);
 		}
 
 
