@@ -1382,7 +1382,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				TemplateParameterSubstitutionCS csTemplateParameterSubstitution = ownedTemplateBinding.getOwnedSubstitutions().get(0);
 				Type templateArgument = PivotUtil.getPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
 				templateArgument = getNormalizedType(templateArgument);
-				boolean isNullFree = true;
+				boolean isNullFree = false;
 				MultiplicityCS csMultiplicity = ownedTemplateBinding.getOwnedMultiplicity();
 				if (csMultiplicity != null) {
 					isNullFree = csMultiplicity.isIsNullFree();
@@ -1432,6 +1432,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * Sequence the update passes to make the pivot match the CS.
 	 */
 	public boolean update(@NonNull CSResource csResource) {
+		getStandardLibrary().getOclElementType();			// XXX
+		getMetamodelManager().getASmetamodel();				// XXX
 		resetPivotMappings(csResource);
 		oldPackagesByName = new HashMap<>();
 		oldPackagesByQualifiedName = new HashMap<>();

@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -736,6 +737,9 @@ public class PivotHelper
 		Object returnValue = null;			// Currently always a Type - see Bug 577902
 		if ((formalType != null) && (sourceType != null)) {
 			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, null);
+			if ((formalType instanceof NormalizedTemplateParameter) && returnType.isAggregate()) {
+				returnIsRequired = true;
+			}
 		}
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately.

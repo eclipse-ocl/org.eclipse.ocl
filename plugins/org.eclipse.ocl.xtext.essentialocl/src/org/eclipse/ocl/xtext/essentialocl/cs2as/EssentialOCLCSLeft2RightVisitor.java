@@ -1314,7 +1314,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			String varName = Integer.toString(iteratorIndex+1) + "_";
 			IteratorVariable iterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null);
 			helper.refreshName(iterator, varName);
-			helper.setType(iterator, sourceElementType, isSafe || formalIterator.isIsRequired(), null);
+			helper.setType(iterator, sourceElementType, isSafe || ((sourceElementType != null) && sourceElementType.isAggregate()) || formalIterator.isIsRequired(), null);
 			iterator.setIsImplicit(true);
 			iterator.setRepresentedParameter(formalIterator);
 			pivotIterators.add(iterator);

@@ -12,11 +12,13 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -46,5 +48,13 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 		else {
 			throw new InvalidValueException(PivotMessages.IncompatibleOclAsTypeSourceType, sourceType, argType);
 		}
+	}
+
+	@Override
+	public boolean resolveReturnNullity(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, boolean returnIsRequired) {
+		// XXX TODO Auto-generated method stub
+		return super.resolveReturnNullity(environmentFactory, callExp, returnIsRequired);
 	}
 }

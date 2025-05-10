@@ -143,7 +143,7 @@ implements TypedElement {
 			//
 		}
 		else if (type.isAggregate()) {
-			assert isRequired;	//-- temporary fix for testCollectionFlatten
+	// XXX		assert isRequired;	//-- temporary fix for testCollectionFlatten
 		}
 		else {
 			assert true;

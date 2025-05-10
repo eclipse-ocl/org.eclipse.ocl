@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -55,6 +56,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -249,7 +251,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionValue expected2 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages)");
 		ocl.assertSemanticErrorQuery(ocl.getContextType(ocl.pkg1), "self->asSequence()->closure(ownedPackages)",
-			PivotMessages.ExpectedArgumentType, "closure", "1", "OrderedCollection(Package[*|?])", "Set(Package)");
+			PivotMessages.ExpectedArgumentType, "closure", "1", "OrderedCollection(Package)", "Set(Package[*|1])");
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages->asSequence())");
 		SetValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
 		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->asBag()->closure(ownedPackages)");
@@ -295,8 +297,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
 		ocl.createGeneralization(fake, ocl.getStandardLibrary().getOclAnyType());
 		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, fake, true);
-		getFakes.setType(ocl.getCompleteEnvironment().getSetType(fake, false, null, null));
-
+		CollectionType setType = ocl.getCompleteEnvironment().getSetType(fake, false, null, null);
+		PivotHelper helper = new PivotHelper(ocl.getEnvironmentFactory());
+		helper.setType(getFakes, setType, true);
 		ocl.assertQuery(fake, "self->closure(getFakes())");
 		ocl.dispose();
 	}
@@ -387,7 +390,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		org.eclipse.ocl.pivot.Class contextType = ocl.getContextType(ocl.getUMLMetamodel());
 		ocl.assertSemanticErrorQuery(contextType, "let c : ocl::Type = invalid in ownedClasses->closure(c)",
-			PivotMessages.ExpectedArgumentType, "closure", 1, "Collection(Class[*|?])", "Type");
+			PivotMessages.ExpectedArgumentType, "closure", 1, "Collection(Class)", "Type");
 		ocl.assertQueryInvalid(ocl.getUMLMetamodel(), "let c : ocl::Class = invalid in ownedClasses->closure(c.oclAsSet())",
 			PivotMessages.InvalidLiteral, InvalidValueException.class);
 
@@ -608,7 +611,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
-
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{Sequence{1,2},Sequence{3,4}}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc','dddd'}} in s->collectNested(oclAsType(Sequence(String)))->collectNested(s | s.size())");
+// XXX
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(p : ocl::Package | p.name)");
 
