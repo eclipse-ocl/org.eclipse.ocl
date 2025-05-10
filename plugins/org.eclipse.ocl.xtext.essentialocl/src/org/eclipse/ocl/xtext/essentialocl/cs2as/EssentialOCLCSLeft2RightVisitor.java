@@ -2497,7 +2497,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				pivotElement.setOwnedInit(initExpression);
 				TypedRefCS csType = csTupleLiteralPart.getOwnedType();
 				Type type = csType != null ? PivotUtil.getPivot(Type.class, csType) : initExpression != null ? initExpression.getType() : null;
-				helper.setType(pivotElement, type, (initExpression != null ? initExpression.isIsRequired() : false) || context.getConverter().isRequiredWithDefault(csType), null);
+				Boolean partIsRequired = csType != null ? context.getConverter().isRequired(csType) : null;		// Explicit part declaration dominates init inference
+				helper.setType(pivotElement, type, partIsRequired != null ? partIsRequired : initExpression != null ? initExpression.isIsRequired() : false);
 			}
 		}
 		return pivotElement;

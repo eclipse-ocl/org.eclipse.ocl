@@ -957,6 +957,9 @@ implements OperationCallExp {
 	@Override
 	public boolean validateUnsafeSourceCanNotBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
+		if ("at".equals(name)) {
+			getClass();		// XXX
+		}
 		final @NonNull String constraintName = "OperationCallExp::UnsafeSourceCanNotBeNull";
 		try {
 			/**

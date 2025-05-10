@@ -93,6 +93,9 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	public boolean validateCompatibleNullityForInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		final @NonNull String constraintName = "LetVariable::CompatibleNullityForInitializer";
+		if ("h".equals(name)) {
+			getClass();		// XXX
+		}
 		try {
 			/**
 			 *

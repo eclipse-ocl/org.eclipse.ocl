@@ -35,7 +35,7 @@ public class PivotValidationOptions
 			PivotPlugin.PLUGIN_ID, "ecore.validation", StatusCodes.Severity.ERROR, StatusCodes.Severity.class); //$NON-NLS-1$
 
 	public static final @NonNull EnumeratedOption<StatusCodes.Severity> MissingSafeNavigation = new EnumeratedOption<StatusCodes.Severity>(
-			PivotPlugin.PLUGIN_ID, "missing.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
+			PivotPlugin.PLUGIN_ID, "missing.safe.navigation", StatusCodes.Severity.WARNING, StatusCodes.Severity.class); //$NON-NLS-1$
 
 	/**
 	 * @since 1.16

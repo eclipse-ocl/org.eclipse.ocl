@@ -181,10 +181,4 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitIteratorVariable(this);
 	}
-
-	@Override
-	public void setType(Type newType) {
-		// XXX TODO Auto-generated method stub
-		super.setType(newType);
-	}
 } //IteratorVariableImpl

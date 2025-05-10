@@ -354,8 +354,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF iteration.isInvalidating»
 						iteration.setIsInvalidating(true);
 					«ENDIF»
-					«IF !iteration.isRequired»
-						iteration.setIsRequired(false);
+					«IF iteration.isRequired»
+						iteration.setIsRequired(true);
 					«ENDIF»
 					«IF iteration.isStatic»
 						iteration.setIsStatic(true);
@@ -484,8 +484,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF operation.isInvalidating»
 						operation.setIsInvalidating(true);
 					«ENDIF»
-					«IF !operation.isRequired»
-						operation.setIsRequired(false);
+					«IF operation.isRequired»
+						operation.setIsRequired(true);
 					«ENDIF»
 					«IF operation.isStatic»
 						operation.setIsStatic(true);

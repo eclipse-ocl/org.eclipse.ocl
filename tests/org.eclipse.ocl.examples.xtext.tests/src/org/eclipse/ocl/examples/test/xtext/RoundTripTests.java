@@ -855,18 +855,18 @@ public class RoundTripTests extends XtextTestCase
 						"	datatype RGB : 'java.lang.String';\n" +
 						"	class Bug509533\n" +
 						"	{\n" +
-						"		operation hsv2rgb(color : HSV) : RGB[1]\n" +
+						"		operation hsv2rgb(color : HSV[1]) : RGB[1]\n" +
 						"{\n" +
 						"	body: let hsv : Sequence(String) = color.tokenize(',') in\n" +
-						"	let h : Integer = hsv->at(1).toReal().round() in\n" +
-						"	let s : Real = hsv->at(2).toReal()/100.0 in\n" +
-						"	let v : Real = hsv->at(3).toReal()/100.0 in\n" +
+						"	let h : Integer = let hr = hsv->at(1).toReal() in if hr <> null then hr.round() else 0 endif in\n" +
+						"	let s : Real = let sr = hsv->at(2).toReal() in if sr <> null then sr/100.0 else 0 endif in\n" +
+						"	let v : Real = let vr = hsv->at(3).toReal() in if vr <> null then vr/100.0 else 0 endif in\n" +
 						"	let c : Real = v * s in\n" +
 						"	let hh1 : Real = h/120 in\n" +
 						"	let hh2 : Real = 2 * (hh1 - hh1.floor()) in\n" +
 						"	let x : Real = c * (1 - (hh2 - 1).abs()) in\n" +
 						"	let m : Real = v -c in\n" +
-						"	let t : Tuple(r:Real,g:Real,b:Real) =\n" +
+						"	let t : Tuple(r:Real[1],g:Real[1],b:Real[1]) =\n" +
 						"	if h < 60 then Tuple{r=c,g=x,b=0.0}\n" +
 						"	elseif h < 120 then Tuple{r=x,g=c,b=0.0}\n" +
 						"	elseif h < 180 then Tuple{r=0.0,g=c,b=x}\n" +

@@ -273,10 +273,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				safeVisit(type);
 			}
 			if (!(type instanceof IterableType) && !(type instanceof LambdaType)) {
-				if (!typedElement.isIsRequired()) {
-				//	append("[?]");
-				}
-				else {
+				if (typedElement.isIsRequired()) {
 					append("[1]");
 				}
 			}
