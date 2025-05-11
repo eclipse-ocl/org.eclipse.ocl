@@ -9,7 +9,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.ocl.xtext.completeocl;bundle-version="[7.0.0,8.0.0)",
- org.eclipse.ocl.examples.validity;bundle-version="[7.0.0,8.0.0)"
+ org.eclipse.ocl.validity;bundle-version="[7.0.0,8.0.0)"
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Export-Package: org.eclipse.ocl.examples.standalone,
  org.eclipse.ocl.examples.standalone.messages;x-friends:="org.eclipse.ocl.examples.xtext.tests",

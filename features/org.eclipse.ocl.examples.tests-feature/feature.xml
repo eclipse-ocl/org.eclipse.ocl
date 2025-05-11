@@ -99,7 +99,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ocl.examples.validity.test"
+         id="org.eclipse.ocl.validity.tests"
          download-size="0"
          install-size="0"
          version="0.0.0"

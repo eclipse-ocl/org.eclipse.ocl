@@ -18,8 +18,8 @@ import java.util.Map;
 
 import org.apache.log4j.Appender;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.emf.validation.validity.export.HTMLExporter;
-import org.eclipse.ocl.examples.emf.validation.validity.export.TextExporter;
+import org.eclipse.ocl.emf.validation.validity.export.HTMLExporter;
+import org.eclipse.ocl.emf.validation.validity.export.TextExporter;
 import org.eclipse.ocl.examples.standalone.HelpCommand;
 import org.eclipse.ocl.examples.standalone.StandaloneApplication;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand;

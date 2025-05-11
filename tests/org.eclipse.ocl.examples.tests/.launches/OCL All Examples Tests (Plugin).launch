@@ -915,8 +915,8 @@
         <setEntry value="org.eclipse.ocl.examples.common@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.consumers.tests@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.domain@default:default"/>
-        <setEntry value="org.eclipse.ocl.examples.emf.validation.validity.ui@default:default"/>
-        <setEntry value="org.eclipse.ocl.examples.emf.validation.validity@default:default"/>
+        <setEntry value="org.eclipse.ocl.emf.validation.validity.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.emf.validation.validity@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.eventmanager.tests@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.eventmanager@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.impactanalyzer.testmodel.company@default:default"/>
@@ -936,8 +936,8 @@
         <setEntry value="org.eclipse.ocl.examples.testutils@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.ui@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.uml25@default:default"/>
-        <setEntry value="org.eclipse.ocl.examples.validity.test@default:default"/>
-        <setEntry value="org.eclipse.ocl.examples.validity@default:default"/>
+        <setEntry value="org.eclipse.ocl.validity.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.validity@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.xtext.base.ui@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.xtext.base@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.xtext.completeocl.ui@default:default"/>

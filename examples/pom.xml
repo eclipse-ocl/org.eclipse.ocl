@@ -17,8 +17,6 @@
       <module>org.eclipse.ocl.examples</module>
       <!--module>org.eclipse.ocl.examples.build</module-->
       <module>org.eclipse.ocl.examples.classic</module>
-      <module>org.eclipse.ocl.examples.emf.validation.validity</module>
-      <module>org.eclipse.ocl.examples.emf.validation.validity.ui</module>
       <module>org.eclipse.ocl.examples.eventmanager</module>
       <module>org.eclipse.ocl.examples.extlibrary</module>
       <module>org.eclipse.ocl.examples.impactanalyzer</module>
@@ -31,6 +29,5 @@
       <module>org.eclipse.ocl.examples.ui</module>
       <module>org.eclipse.ocl.examples.uml25</module>
       <module>org.eclipse.ocl.examples.unified</module>
-      <module>org.eclipse.ocl.examples.validity</module>
    </modules>
 </project>

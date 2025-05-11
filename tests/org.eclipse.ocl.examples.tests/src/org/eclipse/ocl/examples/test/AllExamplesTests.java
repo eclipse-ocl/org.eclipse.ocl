@@ -10,11 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test;
 
+import org.eclipse.ocl.validity.tests.AllValidityTests;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.eclipse.ocl.examples.validity.test.AllValidityTests;
 
 public class AllExamplesTests extends TestCase
 {
