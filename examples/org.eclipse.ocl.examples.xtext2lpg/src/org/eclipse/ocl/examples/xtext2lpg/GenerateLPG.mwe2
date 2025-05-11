@@ -11,7 +11,7 @@
 module GenerateLPG
 
 import org.eclipse.ocl.examples.xtext2lpg.*
-import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.ocl.build.utilities.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe2.runtime.workflow.*
 import org.eclipse.emf.ecore.resource.impl.*

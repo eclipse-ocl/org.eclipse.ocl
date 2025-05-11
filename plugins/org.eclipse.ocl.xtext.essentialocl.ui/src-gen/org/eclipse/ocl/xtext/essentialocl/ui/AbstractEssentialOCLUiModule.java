@@ -294,87 +294,87 @@ public abstract class AbstractEssentialOCLUiModule extends DefaultUiModule {
 		binder.bind(String.class).annotatedWith(Names.named(UIBindings.COMPARE_VIEWER_TITLE)).toInstance("EssentialOCL Compare");
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public void configurejava$lang$String(Binder binder) {
 		binder.bind(String.class).annotatedWith(com.google.inject.name.Names.named((org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS))).toInstance(".,:>");
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
 		return BaseAntlrTokenToAttributeIdMapper.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
 		return BaseAutoEditStrategyProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
 		return EssentialOCLHighlightingConfiguration.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends ILocationInFileProvider> bindILocationInFileProvider() {
 		return EssentialOCLLocationInFileProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
 		return EssentialOCLSemanticHighlightingCalculator.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends ITokenTypeToPartitionTypeMapper> bindITokenTypeToPartitionTypeMapper() {
 		return BaseTerminalsTokenTypeToPartitionMapper.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IURIEditorOpener> bindIURIEditorOpener() {
 		return BaseURIEditorOpener.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IXtextEditorCallback> bindIXtextEditorCallback() {
 		return BaseEditorCallback.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends OutlineWithEditorLinker> bindOutlineWithEditorLinker() {
 		return BaseOutlineWithEditorLinker.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends OutlineNodeElementOpener> bindOutlineNodeElementOpener() {
 		return BaseOutlineNodeElementOpener.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends XtextDocument> bindXtextDocument() {
 		return BaseDocument.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends XtextEditor> bindXtextEditor() {
 		return EssentialOCLEditor.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
+	// contributed by org.eclipse.ocl.build.fragments.MarkupHoverFragment
 	public Class<? extends IEObjectHover> bindIEObjectHover() {
 		return MarkupHover.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
+	// contributed by org.eclipse.ocl.build.fragments.MarkupHoverFragment
 	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
 		return MarkupHoverProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
+	// contributed by org.eclipse.ocl.build.fragments.MarkupHoverFragment
 	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProvider() {
 		return BaseDocumentationProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.MarkupHoverFragment
+	// contributed by org.eclipse.ocl.build.fragments.MarkupHoverFragment
 	public Class<? extends ITextHover> bindITextHover() {
 		return MarkupCompositeHover.class;
 	}

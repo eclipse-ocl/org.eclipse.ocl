@@ -1,0 +1,36 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2011 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *
+ * Run As->MWE2 Workflow to regenerate the pivot model.
+ *******************************************************************************/
+module GeneratePivotTables
+
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+var projectName = "org.eclipse.ocl.pivot"
+
+/**
+ *	Generate the Pivot Model, by performing the merge to create the flattened package
+ *  with additional MDT/OCL content, alphabeticsing the classes, reloading the genmodel
+ *  and finally generating the model code.
+ */
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = ProjectMapSetup { resourceSet = resourceSet }
+    bean = UMLStandaloneSetup {}
+    bean = UMLGenModelSetup { resourceSet = resourceSet }
+    component = Model2tablesGenerator { resourceSet = resourceSet
+    	genModelFile = "/${projectName}/model/Pivot.genmodel"
+    }
+}
+

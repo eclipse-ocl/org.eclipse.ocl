@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.emf.mwe2.launch.Mwe2LaunchConfigurationType">
+    <stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${workspace}"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/org.eclipse.ocl.build"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="org.eclipse.ocl.build"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="src/org/eclipse/ocl/build/latex/GenerateLatexForCSModel.mwe2&#13;&#10;--param sourceName=&quot;org.eclipse.ocl.xtext.essentialocl&quot;&#13;&#10;--param modelFile=&quot;model/EssentialOCLCS.ecore&quot;&#13;&#10;--param grammarFile=&quot;src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.xtext&quot;&#13;&#10;--param cs2asFile=&quot;model/EssentialOCLCS2AS.ocl&quot;&#13;&#10;--param cs2csFile=&quot;model/EssentialOCLCS2CS.ocl&quot;&#13;&#10;--param latexFileName=&quot;essentialocl-cs&quot;&#13;&#10;--param labelPrefix=&quot;ocl:EssentialOCLCS:&quot;"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.ocl.build"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+</launchConfiguration>

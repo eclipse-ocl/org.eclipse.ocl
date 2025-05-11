@@ -1,0 +1,104 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ * 
+ * Run As->MWE2 Workflow to regenerate the pivot model.
+ *******************************************************************************/
+module QuickGeneratePivotModel
+
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.ocl.build.xtend.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+import org.eclipse.uml2.uml.resource.XMI2UMLResource
+
+var buildProjectName = "org.eclipse.ocl.build"
+var ecoreSlot = "ecore"
+//var pivotProjectName = "org.eclipse.ocl.pivot"
+var internalProjectName = "org.eclipse.ocl.pivot"
+//var platformURI = ".."
+
+/**
+ *	Generate the Pivot Model, by performing the merge to create the flattened package
+ *  with additional MDT/OCL content, alphabeticsing the classes, reloading the genmodel
+ *  and finally generating the model code.
+ */
+Workflow {
+    bean = CompleteOCLStandaloneSetup {}
+
+	bean = ResourceSetImpl : pivotRenameResourceSet {}
+    bean = ProjectMapSetup { resourceSet = pivotRenameResourceSet }
+    bean = UMLStandaloneSetup { resourceSet = pivotRenameResourceSet }
+    bean = OCLStandaloneSetup {}
+    bean = EcoreGenModelSetup { resourceSet = pivotRenameResourceSet }
+    component = ResourceRenamer { resourceSet = pivotRenameResourceSet skipOnErrors = true
+    	projectName = "${buildProjectName}"
+    	resourceRename = {
+    		from = "model-gen/RawPivot.ecore"
+    		to = "../${internalProjectName}/model/Pivot.ecore"
+    	}
+    }
+    //
+    //
+    //
+	bean = ResourceSetImpl : pivotMergeResourceSet {}
+    bean = ProjectMapSetup { resourceSet = pivotMergeResourceSet }
+    bean = UMLStandaloneSetup { resourceSet = pivotMergeResourceSet }
+    bean = OCLStandaloneSetup {}
+    bean = EcoreGenModelSetup { resourceSet = pivotMergeResourceSet }
+    component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    	projectName = "${internalProjectName}"
+    	libraryURI = "http://www.eclipse.org/ocl/2015/Library"
+    	ecoreURI = "model/Pivot.ecore"
+    	oclURI = "model/Pivot.ocl"
+    	invariantPrefix = "validate"
+    }
+    component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    	uri = "/${internalProjectName}/model/Pivot.ecore"
+	}
+    component = EPackageAlphabetizer { skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    }
+    component = PruneSuperClasses { skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    }
+    component = SetASmetamodel { skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    }
+    component = StructuralENamedElementIdAssigner { skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    }
+    component = ResourceWriter { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    	uri = "/${internalProjectName}/model/Pivot.ecore"
+    }
+    //
+    //
+    //
+	bean = ResourceSetImpl : pivotGenerateResourceSet {}
+    bean = ProjectMapSetup { resourceSet = pivotGenerateResourceSet }
+    bean = UMLStandaloneSetup { resourceSet = pivotGenerateResourceSet }
+    bean = OCLStandaloneSetup {}
+    bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
+     component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+    	projectName = "${internalProjectName}"
+    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
+    	ecoreFile = "/${internalProjectName}/model/Pivot.ecore"
+    }
+    
+    component = GenerateModel { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+//    	projectName = "${internalProjectName}"
+    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
+//    	clearResourceSet = false
+//    	modelSlot = "${ecoreSlot}"
+    }
+}
+

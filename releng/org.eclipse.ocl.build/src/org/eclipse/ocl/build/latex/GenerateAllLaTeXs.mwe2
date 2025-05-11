@@ -1,0 +1,58 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ * 
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/
+module GenerateAllLaTeXs
+
+import org.eclipse.ocl.examples.xtext2lpg.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe2.runtime.workflow.*
+
+/**
+ *	Generate all the OCL LaTeX dpcuments.
+ */
+Workflow {
+	component = @GenerateLaTeXForLibrary {
+		sourceName="org.eclipse.ocl.pivot"
+		modelFile="model/OCL-2.5.oclstdlib"
+		latexFileName="ocl-standard-library"
+//		labelPrefix="ocl:StandardLibrary:"
+	}
+	component = @GenerateLaTeXForASModel {
+		sourceName="org.eclipse.ocl.pivot"
+		modelFile="model/Pivot.ecore"
+		latexFileName="abstract-syntax"
+//		labelPrefix="ocl:AbstractSyntax:"
+	}
+	component = @GenerateLaTeXForCSModel {
+		sourceName="org.eclipse.ocl.xtext.completeocl"
+		grammarFile="src/org/eclipse/ocl/xtext/completeocl/CompleteOCL.xtext"
+		modelFile="model/CompleteOCLCS.ecore"
+		latexFileName="completeocl-cs"
+		labelPrefix="ocl:CompleteOCLCS:"
+	}
+	component = @GenerateLaTeXForCSModel {
+		sourceName="org.eclipse.ocl.xtext.essentialocl"
+		grammarFile="src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.xtext"
+		modelFile="model/EssentialOCLCS.ecore"
+		cs2asFile="model/EssentialOCLCS2AS.ocl"
+		cs2csFile="model/EssentialOCLCS2CS.ocl"
+		latexFileName="essentialocl-cs"
+		labelPrefix="ocl:EssentialOCLCS:"
+	}
+	component = @GenerateLaTeXForCSModel {
+		sourceName="org.eclipse.ocl.xtext.base"
+		grammarFile="src/org/eclipse/ocl/xtext/base/Base.xtext"
+		modelFile="model/BaseCS.ecore"
+		cs2asFile="model/BaseCS2AS.ocl"
+		latexFileName="base-cs"
+		labelPrefix="ocl:BaseCS:"
+	}
+}

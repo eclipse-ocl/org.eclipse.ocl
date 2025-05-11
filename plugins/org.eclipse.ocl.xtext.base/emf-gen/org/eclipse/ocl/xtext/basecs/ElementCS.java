@@ -89,7 +89,7 @@ public interface ElementCS extends EObject, org.eclipse.ocl.xtext.basecs.util.Vi
 	 * Accept a visit from a visitor and return the result of a call to the derived type-specific visitXXX in the visitor.
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build/templates/model/Class/insert.javajetinc
+	// Generated from org.eclipse.ocl.build/templates/model/Class/insert.javajetinc
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor);
 } // ElementCS

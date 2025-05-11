@@ -37,6 +37,6 @@ public interface CGConstant extends CGValuedElement {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$1
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$1
 	@NonNull Object getConstantValue();
 } // CGGlobalConstant

@@ -91,17 +91,17 @@ public abstract class AbstractIdiomsRuntimeModule extends DefaultRuntimeModule {
 		return IdiomsGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends INodeModelFormatter> bindINodeModelFormatter() {
 		return DeclarativeFormatter.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends SerializationMetaData.Provider> bindSerializationMetaData$Provider() {
 		return IdiomsSerializationMetaData.Provider.class;
 	}
@@ -194,7 +194,7 @@ public abstract class AbstractIdiomsRuntimeModule extends DefaultRuntimeModule {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.CompatibilityFragment
+	// contributed by org.eclipse.ocl.build.fragments.CompatibilityFragment
 	public Class<? extends GrammarProvider> bindGrammarProvider() {
 		return IdiomsGrammarResource.GrammarProvider.class;
 	}

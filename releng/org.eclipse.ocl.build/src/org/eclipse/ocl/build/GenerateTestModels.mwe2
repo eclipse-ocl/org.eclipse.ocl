@@ -1,0 +1,48 @@
+/*******************************************************************************
+ * Copyright (c) 2015 Willink Transformations Ltd., University of York and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     Adolfo Sanchez-Barbudo Herrera (University of York) - initial API and implementation
+ * 
+ *******************************************************************************/
+module GenerateTestModels
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.ocl.build.xtend.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+Workflow {
+	bean = ResourceSetImpl : testResourceSet {}
+    bean = ProjectMapSetup{ resourceSet = testResourceSet}
+    bean = EcoreGenModelSetup { resourceSet = testResourceSet }
+    //
+    //	Models with no script of their own.
+    //
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
+    	genModel = "/org.eclipse.ocl.examples.emf.validation.validity/model/Validity.genmodel"
+    }
+    //
+    //	The JUnit test models
+    //
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
+    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genModel/Company.genmodel"
+    }
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
+    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genModel/CodeGenCompanySrc.genmodel"
+//    	genModel = "/org.eclipse.ocl.examples.xtext.tests/model/CodeGenCompany.genmodel" is used by the JUnit tests
+    }
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
+    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genModel/NoReflectionCompany.genmodel"
+    }
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
+    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genmodel/Bug477283A.genmodel"
+    }
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
+    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genmodel/Bug477283B.genmodel"
+    }
+}

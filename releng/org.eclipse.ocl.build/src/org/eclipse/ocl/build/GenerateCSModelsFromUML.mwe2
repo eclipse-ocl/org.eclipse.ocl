@@ -1,0 +1,165 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *     Adolfo Sanchez-Barbudo Herrera (University of York) - bug397429"
+ * 
+ * Run As->MWE2 Workflow to regenerate the Xtest CS models.
+ *******************************************************************************/
+module GenerateCSModelsFromUML
+
+import org.eclipse.ocl.build.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.ocl.build.xtend.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+var resourcesProjectName = "org.eclipse.ocl.build" //"org.eclipse.ocl.resources"
+var projectName = "org.eclipse.ocl.build"
+
+/**
+ *	Migrate the CS models from their OMG UML representation to their Eclipse Ecore representation.
+ */
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = StandaloneSetup { resourceSet = resourceSet
+//    	uriMap = Mapping {
+//    		from = "http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi"
+//    		to = "platform:/resource/${projectName}/model/PrimitiveTypes.xmi"
+//    	}
+//    	platformUri = ".."
+//    	scanClassPath = true
+//    	registerGeneratedEPackage = "org.eclipse.xtext.common.types.TypesPackage"
+    }
+    bean = ProjectMapSetup { resourceSet = resourceSet }
+    bean = UMLStandaloneSetup { resourceSet = resourceSet }
+    bean = OCLStandaloneSetup { resourceSet = resourceSet
+    	dynamicPackage = Mapping {
+    		from = "http://www.eclipse.org/ocl/2012/UML2EcoreControl"
+    		to = "platform:/resource/${projectName}/model/UML2EcoreControl.ecore#/"
+    	}
+    	dynamicPackage = Mapping {
+    		from = "http://www.eclipse.org/ocl/2012/UML2EcoreMapping"
+    		to = "platform:/resource/${projectName}/model/UML2EcoreMapping.ecore#/"
+    	}
+    }
+    bean = OCLDelegateSetup { resourceSet = resourceSet }
+    bean = GenModelSetup { resourceSet = resourceSet }
+    bean = UMLGenModelSetup { resourceSet = resourceSet }
+    
+    
+    component = IdAssigner { resourceSet = resourceSet skipOnErrors = true
+    	assignFlatIds = false
+    	normalizeEcore = true
+//    	normalizePrimitives = "/${resourcesProjectName}/model/pivot.uml"
+    	alphabeticize = true
+    	removeEcoreStereotypes = true
+    	removeProfileApplications = true
+//    	mapping = Mapping {
+//    		from = "/${projectName}/model/ecore.uml"
+//    		to = "/${projectName}/model-gen/CSEcore.uml"
+//    	}
+    	mapping = Mapping {
+    		from = "/${resourcesProjectName}/model/pivot.uml"
+    		to = "/${projectName}/model-gen/CSPivot.uml"
+    	}
+    	mapping = Mapping {
+    		from = "/${resourcesProjectName}/model/basecs.uml"
+    		to = "/${projectName}/model-gen/BaseCS.uml"
+    	}
+    	mapping = Mapping {
+    		from = "/${resourcesProjectName}/model/essentialoclcs.uml"
+    		to = "/${projectName}/model-gen/EssentialOCLCS.uml"
+    	}
+    	mapping = Mapping {
+    		from = "/${resourcesProjectName}/model/completeoclcs.uml"
+    		to = "/${projectName}/model-gen/CompleteOCLCS.uml"
+    	}
+    	mapping = Mapping {
+    		from = "/${resourcesProjectName}/model/oclstdlibcs.uml"
+    		to = "/${projectName}/model-gen/OCLstdlibCS.uml"
+    	}
+    	mapping = Mapping {
+    		from = "/${resourcesProjectName}/model/oclinecorecs.uml"
+    		to = "/${projectName}/model-gen/OCLinEcoreCS.uml"
+    	}
+    }
+    
+    component = QVToTransformationExecutor { resourceSet = resourceSet skipOnErrors = true validate = false
+    	uri = "platform:/resource/${projectName}/src/org/eclipse/ocl/build/qvto/UML2EcoreMerger.qvto"
+    	in = "platform:/resource/${projectName}/model/CS2ASinEcore.xmi" 
+    	out = "platform:/resource/${projectName}/model-gen/CS2ASinEcore.xmi" 
+	}
+    component = QVToTransformationExecutor { resourceSet = resourceSet skipOnErrors = true validate = false
+    	uri = "platform:/resource/${projectName}/src/org/eclipse/ocl/build/qvto/UML2EcoreAnalyzer.qvto"
+    	in = "platform:/resource/${projectName}/model-gen/CS2ASinEcore.xmi" 
+    	out = "platform:/resource/${projectName}/model-gen/CS2ASAnalysis.xmi" 
+	}
+    component = QVToTransformationExecutor { resourceSet = resourceSet skipOnErrors = true validate = false
+    	uri = "platform:/resource/${projectName}/src/org/eclipse/ocl/build/qvto/UML2EcoreSynthesizer.qvto"
+    	in = "platform:/resource/${projectName}/model-gen/CS2ASAnalysis.xmi" 
+    	in = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore" 
+    	out = "platform:/resource/${projectName}/model-gen/CS2AS.ecore"
+    	blackbox = "${projectName}.qvto.BlackBoxLibrary"
+	}
+     component = CSSplitter { resourceSet = resourceSet skipOnErrors = true
+    	in = "platform:/resource/${projectName}/model-gen/CS2AS.ecore" 
+     	exclude = Mapping {
+    		from = "csecore"
+    		to = "http://www.eclipse.org/emf/2002/Ecore"
+    	}
+     	exclude = Mapping {
+    		from = "cspivot"
+//    		to = "platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore"
+    		to = "Pivot.ecore"
+    	}
+     	include = Mapping {
+    		from = "basecs"
+    		to = "platform:/resource/${projectName}/model-gen/BaseCS.ecore"
+    	}
+     	include = Mapping {
+    		from = "essentialoclcs"
+    		to = "platform:/resource/${projectName}/model-gen/EssentialOCLCS.ecore"
+    	}
+     	include = Mapping {
+    		from = "completeoclcs"
+    		to = "platform:/resource/${projectName}/model-gen/CompleteOCLCS.ecore"
+    	}
+     	include = Mapping {
+    		from = "oclstdlibcs"
+    		to = "platform:/resource/${projectName}/model-gen/OCLstdlibCS.ecore"
+    	}
+     	include = Mapping {
+    		from = "oclinecorecs"
+    		to = "platform:/resource/${projectName}/model-gen/OCLinEcoreCS.ecore"
+    	}
+	}
+    
+/*    component = ResourceReader { resourceSet = resourceSet skipOnErrors = true
+    	modelSlot = "${umlSlot}"
+    	uri = "/${projectName}/model/basecs.uml"
+	}
+    component = PackageAlphabetizer { skipOnErrors = true
+    	modelSlot = "${umlSlot}"
+    }
+    component = ConstraintRemover { skipOnErrors = true
+    	modelSlot = "${umlSlot}"
+    }
+    component = CommentNormalizer { skipOnErrors = true
+    	modelSlot = "${umlSlot}"
+    }
+    component = UMLIDAssigner { skipOnErrors = true
+    	modelSlot = "${umlSlot}"
+    }
+    component = ResourceWriter { resourceSet = resourceSet skipOnErrors = true
+    	modelSlot = "${umlSlot}"
+    	uri = "/${projectName}/model-gen/BaseCS.merged.uml"
+		contentTypeIdentifier = "org.eclipse.uml2.uml_5_0_0" // UMLResource.UML_CONTENT_TYPE_IDENTIFIER
+    } */
+}

@@ -37,7 +37,7 @@
 </dl>
 </div>
 <p>This section contains some details on the way in which the OCL project is built. This should only be of interest to users creating extension of the project.</p>
-<p>The interactive build facilities may be found in the org.eclipse.ocl.examples.build plugin. The &ldquo;Generate OCL All&rdquo; launch invokes all the sub-generators for models and editors.</p>
+<p>The interactive build facilities may be found in the org.eclipse.ocl.build plugin. The &ldquo;Generate OCL All&rdquo; launch invokes all the sub-generators for models and editors.</p>
 <p>The documentation build uses the &ldquo;OCL Documentation&rdquo; Ant external launch; see org.eclipse.ocl.doc/libs/Readme.txt for prerequisites. The build populates the help/html/manual folders whose content should be committted to GIT to ensure that the regular build uses the updated documentation. Publishing ocl.pdf is an option that can be selected when performing a final Jenkins reklease build.</p>
 <p>The Javadoc build uses the &ldquo;Run OCL Javadoc using Ant directly&rdquo; Ant external launch. The build populates the javadoc folder which should not be committted to GIT. Generating and publishing the javadoc is an option that can be selected when performing a final Jenkins release build.</p>
 <p>The distribution build facilities uses the Maven pom.xml in the org.eclipse.ocl.releng.tycho plugin. The &ldquo;Build OCL Distribution - Nightly&rdquo; replicates the Jenkins build locally differing only the absence of the final signing. The build populates the org.eclipse.ocl.releng.build-site plugin</p>

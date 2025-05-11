@@ -20,7 +20,7 @@ ocl-pivot.psf
 <project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,plugins/org.eclipse.ocl.xtext.oclstdlib"/>
 <project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,plugins/org.eclipse.ocl.xtext.oclstdlib.ui"/>
 <project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,examples/org.eclipse.ocl.examples.autogen"/>
-<project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,examples/org.eclipse.ocl.examples.build"/>
+<project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,examples/org.eclipse.ocl.build"/>
 <project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,examples/org.eclipse.ocl.codegen"/>
 <project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,examples/org.eclipse.ocl.examples.debug"/>
 <project reference="1.0,http://git.eclipse.org/gitroot/ocl/org.eclipse.ocl,master,examples/org.eclipse.ocl.examples.debug.ui"/>
@@ -49,7 +49,7 @@ ocl-pivot.psf
 <item elementID="=org.eclipse.ocl.xtext.oclstdlib" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=org.eclipse.ocl.xtext.oclstdlib.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=org.eclipse.ocl.examples.autogen" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-<item elementID="=org.eclipse.ocl.examples.build" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.eclipse.ocl.build" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=org.eclipse.ocl.codegen" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=org.eclipse.ocl.examples.debug" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=org.eclipse.ocl.examples.debug.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
