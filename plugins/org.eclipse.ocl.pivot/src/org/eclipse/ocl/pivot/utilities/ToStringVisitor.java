@@ -1317,6 +1317,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(formal != null ? formal : null);
 		append("/");
 		safeVisit(object.getActual());
+		if (object.isActualIsRequired()) {
+			append("[1]");
+		}
 		return null;
 	}
 

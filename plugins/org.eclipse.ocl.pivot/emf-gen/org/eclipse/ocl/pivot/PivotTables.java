@@ -21,7 +21,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
+// import org.eclipse.ocl.pivot.ParameterTypes;
+// import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -2391,9 +2394,10 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorProperty _TemplateParameter__TemplateParameterSubstitution__formal = new ExecutorPropertyWithImplementation("TemplateParameterSubstitution", Types._TemplateParameter, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL));
 
 		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__actual = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, Types._TemplateParameterSubstitution, 0);
-		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__formal = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, Types._TemplateParameterSubstitution, 1);
-		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__ownedWildcard = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD, Types._TemplateParameterSubstitution, 2);
-		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__owningBinding = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING, Types._TemplateParameterSubstitution, 3);
+		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__actualIsRequired = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED, Types._TemplateParameterSubstitution, 1);
+		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__formal = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, Types._TemplateParameterSubstitution, 2);
+		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__ownedWildcard = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD, Types._TemplateParameterSubstitution, 3);
+		public static final @NonNull ExecutorProperty _TemplateParameterSubstitution__owningBinding = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING, Types._TemplateParameterSubstitution, 4);
 
 		public static final @NonNull ExecutorProperty _TemplateSignature__ownedParameters = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNED_PARAMETERS, Types._TemplateSignature, 0);
 		public static final @NonNull ExecutorProperty _TemplateSignature__owningElement = new EcoreExecutorProperty(PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNING_ELEMENT, Types._TemplateSignature, 1);
@@ -13860,6 +13864,7 @@ public class PivotTables extends AbstractTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _TemplateParameterSubstitution = {
 			PivotTables.Properties._TemplateParameterSubstitution__actual,
+			PivotTables.Properties._TemplateParameterSubstitution__actualIsRequired,
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._TemplateParameterSubstitution__formal,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
