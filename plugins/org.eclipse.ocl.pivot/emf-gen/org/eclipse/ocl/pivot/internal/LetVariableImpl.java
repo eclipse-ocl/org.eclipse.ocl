@@ -372,4 +372,12 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitLetVariable(this);
 	}
+
+	@Override
+	public void setType(Type newType) {
+		if ("popularTrans".equals(name)) {
+			getClass();		// XXX
+		}
+		super.setType(newType);
+	}
 } //LetVariableImpl

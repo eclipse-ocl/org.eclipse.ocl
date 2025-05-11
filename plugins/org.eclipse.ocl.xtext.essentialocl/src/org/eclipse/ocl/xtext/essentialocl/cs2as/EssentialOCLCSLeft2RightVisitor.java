@@ -801,7 +801,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		boolean isNullFree;
 		if (actualSourceType instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)actualSourceType;
-			collectionType.toString();
 			elementType = collectionType.getElementType();
 			isNullFree = collectionType.isIsNullFree();
 		}
@@ -2120,6 +2119,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		for (LetVariableCS csLetVariable : csLetExp.getOwnedVariables()) {
 			LetVariable variable = PivotUtil.getPivot(LetVariable.class, csLetVariable);
 			if (variable != null) {
+				if ("popularTrans".equals(variable.getName())) {
+					getClass();		// XXX
+				}
+
 				LetExp letExp;
 				EObject variableContainer = variable.eContainer();
 				if (variableContainer instanceof LetExp) {

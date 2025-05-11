@@ -544,10 +544,10 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 			int lower = csMultiplicity.getLower();
 			return lower > 0;
 		}
-		Type type = PivotUtil.getPivot(Type.class, csTypeRef);
-		if ((type != null) && type.isAggregate()) {
-			return Boolean.TRUE;
-		}
+	//	Type type = PivotUtil.getPivot(Type.class, csTypeRef);
+	//	if ((type != null) && type.isAggregate()) {
+	//		return Boolean.TRUE;
+	//	}
 		return null;
 	}
 
