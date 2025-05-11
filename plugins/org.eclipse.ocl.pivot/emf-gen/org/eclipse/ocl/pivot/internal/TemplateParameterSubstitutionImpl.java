@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getActual <em>Actual</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#isActualIsRequired <em>Actual Is Required</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getFormal <em>Formal</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getOwnedWildcard <em>Owned Wildcard</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getOwningBinding <em>Owning Binding</em>}</li>
@@ -58,7 +59,7 @@ public class TemplateParameterSubstitutionImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEMPLATE_PARAMETER_SUBSTITUTION_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 4;
+	public static final int TEMPLATE_PARAMETER_SUBSTITUTION_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Template Parameter Substitution</em>' class.
@@ -78,6 +79,26 @@ public class TemplateParameterSubstitutionImpl
 	 * @ordered
 	 */
 	protected Type actual;
+
+	/**
+	 * The default value of the '{@link #isActualIsRequired() <em>Actual Is Required</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isActualIsRequired()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ACTUAL_IS_REQUIRED_EDEFAULT = true;
+
+	/**
+	 * The flag representing the value of the '{@link #isActualIsRequired() <em>Actual Is Required</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isActualIsRequired()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int ACTUAL_IS_REQUIRED_EFLAG = 1 << 8;
 
 	/**
 	 * The cached value of the '{@link #getFormal() <em>Formal</em>}' reference.
@@ -106,6 +127,7 @@ public class TemplateParameterSubstitutionImpl
 	 */
 	protected TemplateParameterSubstitutionImpl() {
 		super();
+		eFlags |= ACTUAL_IS_REQUIRED_EFLAG;
 	}
 
 	/**
@@ -167,6 +189,31 @@ public class TemplateParameterSubstitutionImpl
 	 * @generated
 	 */
 	@Override
+	public boolean isActualIsRequired()
+	{
+		return (eFlags & ACTUAL_IS_REQUIRED_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setActualIsRequired(boolean newActualIsRequired)
+	{
+		boolean oldActualIsRequired = (eFlags & ACTUAL_IS_REQUIRED_EFLAG) != 0;
+		if (newActualIsRequired) eFlags |= ACTUAL_IS_REQUIRED_EFLAG; else eFlags &= ~ACTUAL_IS_REQUIRED_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldActualIsRequired, newActualIsRequired));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public TemplateParameter getFormal() {
 		if (formal != null && formal.eIsProxy())
 		{
@@ -175,7 +222,7 @@ public class TemplateParameterSubstitutionImpl
 			if (formal != oldFormal)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 5, oldFormal, formal));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 6, oldFormal, formal));
 			}
 		}
 		return formal;
@@ -200,7 +247,7 @@ public class TemplateParameterSubstitutionImpl
 		TemplateParameter oldFormal = formal;
 		formal = newFormal;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldFormal, formal));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldFormal, formal));
 	}
 
 	/**
@@ -225,7 +272,7 @@ public class TemplateParameterSubstitutionImpl
 		ownedWildcard = newOwnedWildcard;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldOwnedWildcard, newOwnedWildcard);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedWildcard, newOwnedWildcard);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -243,14 +290,14 @@ public class TemplateParameterSubstitutionImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedWildcard != null)
-				msgs = ((InternalEObject)ownedWildcard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)ownedWildcard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newOwnedWildcard != null)
-				msgs = ((InternalEObject)newOwnedWildcard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)newOwnedWildcard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetOwnedWildcard(newOwnedWildcard, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwnedWildcard, newOwnedWildcard));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedWildcard, newOwnedWildcard));
 	}
 
 	/**
@@ -260,7 +307,7 @@ public class TemplateParameterSubstitutionImpl
 	 */
 	@Override
 	public TemplateBinding getOwningBinding() {
-		if (eContainerFeatureID() != (7)) return null;
+		if (eContainerFeatureID() != (8)) return null;
 		return (TemplateBinding)eInternalContainer();
 	}
 
@@ -271,7 +318,7 @@ public class TemplateParameterSubstitutionImpl
 	 */
 	public NotificationChain basicSetOwningBinding(TemplateBinding newOwningBinding, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningBinding, 7, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningBinding, 8, msgs);
 		return msgs;
 	}
 
@@ -283,7 +330,7 @@ public class TemplateParameterSubstitutionImpl
 	@Override
 	public void setOwningBinding(TemplateBinding newOwningBinding)
 	{
-		if (newOwningBinding != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningBinding != null))
+		if (newOwningBinding != eInternalContainer() || (eContainerFeatureID() != (8) && newOwningBinding != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningBinding))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -296,7 +343,7 @@ public class TemplateParameterSubstitutionImpl
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningBinding, newOwningBinding));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwningBinding, newOwningBinding));
 	}
 
 	/**
@@ -316,7 +363,7 @@ public class TemplateParameterSubstitutionImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 7:
+			case 8:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningBinding((TemplateBinding)otherEnd, msgs);
@@ -342,9 +389,9 @@ public class TemplateParameterSubstitutionImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case 6:
-				return basicSetOwnedWildcard(null, msgs);
 			case 7:
+				return basicSetOwnedWildcard(null, msgs);
+			case 8:
 				return basicSetOwningBinding(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -360,7 +407,7 @@ public class TemplateParameterSubstitutionImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case 7:
+			case 8:
 				return eInternalContainer().eInverseRemove(this, 4, TemplateBinding.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
@@ -387,11 +434,13 @@ public class TemplateParameterSubstitutionImpl
 				if (resolve) return getActual();
 				return basicGetActual();
 			case 5:
+				return isActualIsRequired();
+			case 6:
 				if (resolve) return getFormal();
 				return basicGetFormal();
-			case 6:
-				return getOwnedWildcard();
 			case 7:
+				return getOwnedWildcard();
+			case 8:
 				return getOwningBinding();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -427,12 +476,15 @@ public class TemplateParameterSubstitutionImpl
 				setActual((Type)newValue);
 				return;
 			case 5:
-				setFormal((TemplateParameter)newValue);
+				setActualIsRequired((Boolean)newValue);
 				return;
 			case 6:
-				setOwnedWildcard((WildcardType)newValue);
+				setFormal((TemplateParameter)newValue);
 				return;
 			case 7:
+				setOwnedWildcard((WildcardType)newValue);
+				return;
+			case 8:
 				setOwningBinding((TemplateBinding)newValue);
 				return;
 		}
@@ -464,12 +516,15 @@ public class TemplateParameterSubstitutionImpl
 				setActual((Type)null);
 				return;
 			case 5:
-				setFormal((TemplateParameter)null);
+				setActualIsRequired(ACTUAL_IS_REQUIRED_EDEFAULT);
 				return;
 			case 6:
-				setOwnedWildcard((WildcardType)null);
+				setFormal((TemplateParameter)null);
 				return;
 			case 7:
+				setOwnedWildcard((WildcardType)null);
+				return;
+			case 8:
 				setOwningBinding((TemplateBinding)null);
 				return;
 		}
@@ -496,13 +551,25 @@ public class TemplateParameterSubstitutionImpl
 			case 4:
 				return actual != null;
 			case 5:
-				return formal != null;
+				return ((eFlags & ACTUAL_IS_REQUIRED_EFLAG) != 0) != ACTUAL_IS_REQUIRED_EDEFAULT;
 			case 6:
-				return ownedWildcard != null;
+				return formal != null;
 			case 7:
+				return ownedWildcard != null;
+			case 8:
 				return getOwningBinding() != null;
 		}
 		return eDynamicIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 
 	@Override

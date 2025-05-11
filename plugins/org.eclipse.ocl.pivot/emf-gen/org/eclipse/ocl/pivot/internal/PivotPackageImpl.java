@@ -5401,7 +5401,7 @@ implements PivotPackage  {
 	 */
 	@Override
 	public EReference getTemplateParameterSubstitution_Formal() {
-		return (EReference)templateParameterSubstitutionEClass.getEStructuralFeatures().get(1);
+		return (EReference)templateParameterSubstitutionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -5412,7 +5412,7 @@ implements PivotPackage  {
 	@Override
 	public EReference getTemplateParameterSubstitution_OwnedWildcard()
 	{
-		return (EReference)templateParameterSubstitutionEClass.getEStructuralFeatures().get(2);
+		return (EReference)templateParameterSubstitutionEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -5423,7 +5423,7 @@ implements PivotPackage  {
 	@Override
 	public EReference getTemplateParameterSubstitution_OwningBinding()
 	{
-		return (EReference)templateParameterSubstitutionEClass.getEStructuralFeatures().get(3);
+		return (EReference)templateParameterSubstitutionEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -5434,6 +5434,17 @@ implements PivotPackage  {
 	@Override
 	public EReference getTemplateParameterSubstitution_Actual() {
 		return (EReference)templateParameterSubstitutionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTemplateParameterSubstitution_ActualIsRequired()
+	{
+		return (EAttribute)templateParameterSubstitutionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -5859,7 +5870,19 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getTypedElement_Type() {
+	public EAttribute getTypedElement_IsRequired()
+	{
+		return (EAttribute)typedElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getTypedElement_Type()
+	{
 		return (EReference)typedElementEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -5872,17 +5895,6 @@ implements PivotPackage  {
 	public EOperation getTypedElement__CompatibleBody__ValueSpecification()
 	{
 		return typedElementEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getTypedElement_IsRequired()
-	{
-		return (EAttribute)typedElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -7811,9 +7823,10 @@ implements PivotPackage  {
 
 		templateParameterSubstitutionEClass = createEClass(112);
 		createEReference(templateParameterSubstitutionEClass, 4);
-		createEReference(templateParameterSubstitutionEClass, 5);
+		createEAttribute(templateParameterSubstitutionEClass, 5);
 		createEReference(templateParameterSubstitutionEClass, 6);
 		createEReference(templateParameterSubstitutionEClass, 7);
+		createEReference(templateParameterSubstitutionEClass, 8);
 
 		templateSignatureEClass = createEClass(113);
 		createEReference(templateSignatureEClass, 4);
@@ -9465,6 +9478,7 @@ implements PivotPackage  {
 
 		initEClass(templateParameterSubstitutionEClass, TemplateParameterSubstitution.class, "TemplateParameterSubstitution", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getTemplateParameterSubstitution_Actual(), this.getType(), null, "actual", null, 1, 1, TemplateParameterSubstitution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getTemplateParameterSubstitution_ActualIsRequired(), this.getBoolean(), "actualIsRequired", "true", 1, 1, TemplateParameterSubstitution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getTemplateParameterSubstitution_Formal(), this.getTemplateParameter(), null, "formal", null, 1, 1, TemplateParameterSubstitution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTemplateParameterSubstitution_OwnedWildcard(), this.getWildcardType(), null, "ownedWildcard", null, 0, 1, TemplateParameterSubstitution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTemplateParameterSubstitution_OwningBinding(), this.getTemplateBinding(), this.getTemplateBinding_OwnedSubstitutions(), "owningBinding", null, 1, 1, TemplateParameterSubstitution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

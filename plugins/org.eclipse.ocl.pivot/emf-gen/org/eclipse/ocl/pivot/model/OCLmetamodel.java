@@ -2735,6 +2735,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_TemplateParameter_owningSignature = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_SIGNATURE, _TemplateSignature);
 		private final @NonNull Property pr_TemplateParameter_TemplateParameterSubstitution_formal = createProperty("TemplateParameterSubstitution", _Bag_TemplateParameterSubstitution_F);
 		private final @NonNull Property pr_TemplateParameterSubstitution_actual = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, _Type);
+		private final @NonNull Property pr_TemplateParameterSubstitution_actualIsRequired = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED, _Boolean);
 		private final @NonNull Property pr_TemplateParameterSubstitution_formal = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, _TemplateParameter);
 		private final @NonNull Property pr_TemplateParameterSubstitution_ownedWildcard = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD, _WildcardType);
 		private final @NonNull Property pr_TemplateParameterSubstitution_owningBinding = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING, _TemplateBinding);
@@ -4281,6 +4282,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_TemplateParameterSubstitution_actual);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_TemplateParameterSubstitution_actual);
+			ownedProperties.add(property = pr_TemplateParameterSubstitution_actualIsRequired);
+			property.setIsResolveProxies(true);
+			property.setDefaultValueString("true");
 			ownedProperties.add(property = pr_TemplateParameterSubstitution_formal);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateParameter_TemplateParameterSubstitution_formal);
@@ -5260,6 +5264,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_TemplateParameter_owningSignature, "The TemplateSignature that owns this TemplateParameter.");
 			installComment(_TemplateParameterSubstitution, "A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding.");
 			installComment(pr_TemplateParameterSubstitution_actual, "The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution.");
+			installComment(pr_TemplateParameterSubstitution_actualIsRequired, "Whether the actual type must be non-null rather than nullable.");
 			installComment(pr_TemplateParameterSubstitution_formal, "The formal TemplateParameter that is associated with this TemplateParameterSubstitution.");
 			installComment(pr_TemplateParameterSubstitution_owningBinding, "The TemplateBinding that owns this TemplateParameterSubstitution.");
 			installComment(_TemplateSignature, "A Template Signature bundles the set of formal TemplateParameters for a template.");

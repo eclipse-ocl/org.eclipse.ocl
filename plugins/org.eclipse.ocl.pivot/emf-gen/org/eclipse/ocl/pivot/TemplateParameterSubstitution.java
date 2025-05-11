@@ -24,6 +24,7 @@ package org.eclipse.ocl.pivot;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getActual <em>Actual</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#isActualIsRequired <em>Actual Is Required</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getFormal <em>Formal</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getOwnedWildcard <em>Owned Wildcard</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getOwningBinding <em>Owning Binding</em>}</li>
@@ -103,6 +104,31 @@ public interface TemplateParameterSubstitution
 	 * @generated
 	 */
 	void setActual(Type value);
+
+	/**
+	 * Returns the value of the '<em><b>Actual Is Required</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Whether the actual type must be non-null rather than nullable.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Actual Is Required</em>' attribute.
+	 * @see #setActualIsRequired(boolean)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateParameterSubstitution_ActualIsRequired()
+	 * @generated
+	 */
+	boolean isActualIsRequired();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#isActualIsRequired <em>Actual Is Required</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Actual Is Required</em>' attribute.
+	 * @see #isActualIsRequired()
+	 * @generated
+	 */
+	void setActualIsRequired(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Owning Binding</b></em>' container reference.

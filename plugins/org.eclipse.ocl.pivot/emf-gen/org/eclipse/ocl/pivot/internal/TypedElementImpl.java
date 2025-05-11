@@ -99,7 +99,6 @@ implements TypedElement {
 	 * @ordered
 	 */
 	protected static final int IS_REQUIRED_EFLAG = 1 << 8;
-
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' reference.
 	 * <!-- begin-user-doc -->

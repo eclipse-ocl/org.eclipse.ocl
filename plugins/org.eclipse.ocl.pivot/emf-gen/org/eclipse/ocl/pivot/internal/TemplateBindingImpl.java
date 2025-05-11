@@ -107,7 +107,7 @@ public class TemplateBindingImpl
 	{
 		if (ownedSubstitutions == null)
 		{
-			ownedSubstitutions = new EObjectContainmentWithInverseEList<TemplateParameterSubstitution>(TemplateParameterSubstitution.class, this, 4, 7);
+			ownedSubstitutions = new EObjectContainmentWithInverseEList<TemplateParameterSubstitution>(TemplateParameterSubstitution.class, this, 4, 8);
 		}
 		return ownedSubstitutions;
 	}
