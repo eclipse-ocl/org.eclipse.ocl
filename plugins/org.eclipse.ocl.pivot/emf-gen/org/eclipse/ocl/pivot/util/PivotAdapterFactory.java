@@ -133,6 +133,7 @@ import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypeUsage;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.UnspecifiedValueExp;
@@ -817,6 +818,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseTypeExp(TypeExp object)
 			{
 				return createTypeExpAdapter();
+			}
+			@Override
+			public Adapter caseTypeUsage(TypeUsage object)
+			{
+				return createTypeUsageAdapter();
 			}
 			@Override
 			public Adapter caseTypedElement(TypedElement object)
@@ -2078,6 +2084,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypeExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TypeUsage <em>Type Usage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.TypeUsage
+	 * @generated
+	 */
+	public Adapter createTypeUsageAdapter()
+	{
 		return null;
 	}
 

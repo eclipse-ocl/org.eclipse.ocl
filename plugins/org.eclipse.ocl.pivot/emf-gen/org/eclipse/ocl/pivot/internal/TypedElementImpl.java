@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeUsage;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -45,9 +46,9 @@ import org.eclipse.ocl.pivot.values.UnlimitedValue;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TypedElementImpl#isIsMany <em>Is Many</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TypedElementImpl#isIsRequired <em>Is Required</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TypedElementImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TypedElementImpl#isIsMany <em>Is Many</em>}</li>
  * </ul>
  *
  * @generated
@@ -72,15 +73,6 @@ implements TypedElement {
 	 * @ordered
 	 */
 	public static final int TYPED_ELEMENT_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1;
-	/**
-	 * The default value of the '{@link #isIsMany() <em>Is Many</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsMany()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean IS_MANY_EDEFAULT = false;
 	/**
 	 * The default value of the '{@link #isIsRequired() <em>Is Required</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -109,6 +101,15 @@ implements TypedElement {
 	 * @ordered
 	 */
 	protected Type type;
+	/**
+	 * The default value of the '{@link #isIsMany() <em>Is Many</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsMany()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_MANY_EDEFAULT = false;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -156,7 +157,7 @@ implements TypedElement {
 			if (type != oldType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 7, oldType, type));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 6, oldType, type));
 			}
 		}
 		return type;
@@ -181,7 +182,7 @@ implements TypedElement {
 		Type oldType = type;
 		type = newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldType, type));
 	}
 
 	/**
@@ -227,7 +228,7 @@ implements TypedElement {
 		boolean oldIsRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
 		if (newIsRequired) eFlags |= IS_REQUIRED_EFLAG; else eFlags &= ~IS_REQUIRED_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldIsRequired, newIsRequired));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldIsRequired, newIsRequired));
 	}
 
 	/**
@@ -250,12 +251,12 @@ implements TypedElement {
 			case 4:
 				return getName();
 			case 5:
-				return isIsMany();
-			case 6:
 				return isIsRequired();
-			case 7:
+			case 6:
 				if (resolve) return getType();
 				return basicGetType();
+			case 7:
+				return isIsMany();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -289,10 +290,10 @@ implements TypedElement {
 			case 4:
 				setName((String)newValue);
 				return;
-			case 6:
+			case 5:
 				setIsRequired((Boolean)newValue);
 				return;
-			case 7:
+			case 6:
 				setType((Type)newValue);
 				return;
 		}
@@ -323,10 +324,10 @@ implements TypedElement {
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case 6:
+			case 5:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case 7:
+			case 6:
 				setType((Type)null);
 				return;
 		}
@@ -353,13 +354,53 @@ implements TypedElement {
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
-				return isIsMany() != IS_MANY_EDEFAULT;
-			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case 7:
+			case 6:
 				return type != null;
+			case 7:
+				return isIsMany() != IS_MANY_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+	{
+		if (baseClass == TypeUsage.class)
+		{
+			switch (derivedFeatureID)
+			{
+				case 5: return 4;
+				case 6: return 5;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+	{
+		if (baseClass == TypeUsage.class)
+		{
+			switch (baseFeatureID)
+			{
+				case 4: return 5;
+				case 5: return 6;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

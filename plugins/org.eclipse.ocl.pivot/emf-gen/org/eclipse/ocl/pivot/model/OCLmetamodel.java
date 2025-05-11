@@ -414,6 +414,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _TupleType = createClass(PivotPackage.Literals.TUPLE_TYPE);
 		private final @NonNull Class _Type = createClass(PivotPackage.Literals.TYPE);
 		private final @NonNull Class _TypeExp = createClass(PivotPackage.Literals.TYPE_EXP);
+		private final @NonNull Class _TypeUsage = createClass(PivotPackage.Literals.TYPE_USAGE);
 		private final @NonNull Class _TypedElement = createClass(PivotPackage.Literals.TYPED_ELEMENT);
 		private final @NonNull Class _UnlimitedNaturalLiteralExp = createClass(PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP);
 		private final @NonNull Class _UnspecifiedValueExp = createClass(PivotPackage.Literals.UNSPECIFIED_VALUE_EXP);
@@ -493,7 +494,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull BagType _Bag_TemplateParameterSubstitution_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_TemplateableElement_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_TypeExp_F = createBagType(_Bag);
-		private final @NonNull BagType _Bag_TypedElement_F = createBagType(_Bag);
+		private final @NonNull BagType _Bag_TypeUsage_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_Variable_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_VariableDeclaration_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_VariableExp_F = createBagType(_Bag);
@@ -559,7 +560,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_TupleLiteralPart_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_Type_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_TypeExp_F = createCollectionType(_Collection);
-		private final @NonNull CollectionType _Collection_TypedElement_F = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TypeUsage_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_ValueSpecification_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_Variable_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_VariableDeclaration_F = createCollectionType(_Collection);
@@ -1220,10 +1221,16 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_OCLExpression);
 			superClasses.add(_ReferringElement);
 			ownedClasses.add(type);
+			type = _TypeUsage;
+			type.setIsAbstract(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Element);
+			ownedClasses.add(type);
 			type = _TypedElement;
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_NamedElement);
+			superClasses.add(_TypeUsage);
 			ownedClasses.add(type);
 			type = _UnlimitedNaturalLiteralExp;
 			superClasses = type.getSuperClasses();
@@ -1490,9 +1497,9 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_TypeExp_F);
 			ownedClasses.add(type);
-			type = _Bag_TypedElement_F;
+			type = _Bag_TypeUsage_F;
 			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_TypedElement_F);
+			superClasses.add(_Collection_TypeUsage_F);
 			ownedClasses.add(type);
 			type = _Bag_Variable_F;
 			superClasses = type.getSuperClasses();
@@ -1754,7 +1761,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
-			type = _Collection_TypedElement_F;
+			type = _Collection_TypeUsage_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -2735,6 +2742,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_TemplateParameter_owningSignature = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_SIGNATURE, _TemplateSignature);
 		private final @NonNull Property pr_TemplateParameter_TemplateParameterSubstitution_formal = createProperty("TemplateParameterSubstitution", _Bag_TemplateParameterSubstitution_F);
 		private final @NonNull Property pr_TemplateParameterSubstitution_actual = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, _Type);
+		private final @NonNull Property pr_TemplateParameterSubstitution_actualIsRequired = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED, _Boolean);
 		private final @NonNull Property pr_TemplateParameterSubstitution_formal = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, _TemplateParameter);
 		private final @NonNull Property pr_TemplateParameterSubstitution_ownedWildcard = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD, _WildcardType);
 		private final @NonNull Property pr_TemplateParameterSubstitution_owningBinding = createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING, _TemplateBinding);
@@ -2768,14 +2776,14 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Type_Operation_raisedExceptions = createProperty("Operation", _Bag_Operation_F);
 		private final @NonNull Property pr_Type_TemplateParameterSubstitution_actual = createProperty("TemplateParameterSubstitution", _Bag_TemplateParameterSubstitution_F);
 		private final @NonNull Property pr_Type_TypeExp_referredType = createProperty("TypeExp", _Bag_TypeExp_F);
-		private final @NonNull Property pr_Type_TypedElement_type = createProperty("TypedElement", _Bag_TypedElement_F);
+		private final @NonNull Property pr_Type_TypeUsage_type = createProperty("TypeUsage", _Bag_TypeUsage_F);
 		private final @NonNull Property pr_Type_VariableDeclaration_typeValue = createProperty("VariableDeclaration", _Bag_VariableDeclaration_F);
 		private final @NonNull Property pr_Type_WildcardType_lowerBound = createProperty("WildcardType", _Bag_WildcardType_F);
 		private final @NonNull Property pr_Type_WildcardType_upperBound = createProperty("WildcardType", _Bag_WildcardType_F);
 		private final @NonNull Property pr_TypeExp_referredType = createProperty(PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE, _Type);
+		private final @NonNull Property pr_TypeUsage_isRequired = createProperty(PivotPackage.Literals.TYPE_USAGE__IS_REQUIRED, _Boolean);
+		private final @NonNull Property pr_TypeUsage_type = createProperty(PivotPackage.Literals.TYPE_USAGE__TYPE, _Type);
 		private final @NonNull Property pr_TypedElement_isMany = createProperty(PivotPackage.Literals.TYPED_ELEMENT__IS_MANY, _Boolean);
-		private final @NonNull Property pr_TypedElement_isRequired = createProperty(PivotPackage.Literals.TYPED_ELEMENT__IS_REQUIRED, _Boolean);
-		private final @NonNull Property pr_TypedElement_type = createProperty(PivotPackage.Literals.TYPED_ELEMENT__TYPE, _Type);
 		private final @NonNull Property pr_UnlimitedNaturalLiteralExp_unlimitedNaturalSymbol = createProperty(PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP__UNLIMITED_NATURAL_SYMBOL, _UnlimitedNatural);
 		private final @NonNull Property pr_ValueSpecification_Slot_ownedValues = createProperty("Slot", _Slot);
 		private final @NonNull Property pr_Variable_isImplicit = createProperty(PivotPackage.Literals.VARIABLE__IS_IMPLICIT, _Boolean);
@@ -4281,6 +4289,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_TemplateParameterSubstitution_actual);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_TemplateParameterSubstitution_actual);
+			ownedProperties.add(property = pr_TemplateParameterSubstitution_actualIsRequired);
+			property.setIsResolveProxies(true);
+			property.setDefaultValueString("true");
 			ownedProperties.add(property = pr_TemplateParameterSubstitution_formal);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateParameter_TemplateParameterSubstitution_formal);
@@ -4426,10 +4437,10 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TypeExp_referredType);
-			ownedProperties.add(property = pr_Type_TypedElement_type);
+			ownedProperties.add(property = pr_Type_TypeUsage_type);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_TypedElement_type);
+			property.setOpposite(pr_TypeUsage_type);
 			ownedProperties.add(property = pr_Type_VariableDeclaration_typeValue);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
@@ -4449,6 +4460,15 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_TypeExp_referredType);
 
+			ownedProperties = _TypeUsage.getOwnedProperties();
+			ownedProperties.add(property = pr_TypeUsage_isRequired);
+			property.setIsResolveProxies(true);
+			property.setDefaultValueString("true");
+			ownedProperties.add(property = pr_TypeUsage_type);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Type_TypeUsage_type);
+
 			ownedProperties = _TypedElement.getOwnedProperties();
 			ownedProperties.add(property = pr_TypedElement_isMany);
 			property.setIsDerived(true);
@@ -4456,13 +4476,6 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setIsTransient(true);
 			property.setIsVolatile(true);
-			ownedProperties.add(property = pr_TypedElement_isRequired);
-			property.setIsResolveProxies(true);
-			property.setDefaultValueString("true");
-			ownedProperties.add(property = pr_TypedElement_type);
-			property.setIsRequired(false);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Type_TypedElement_type);
 
 			ownedProperties = _UnlimitedNaturalLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_UnlimitedNaturalLiteralExp_unlimitedNaturalSymbol);
@@ -4893,7 +4906,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_Bag_TemplateParameter_F, _TemplateParameter);
 			addBinding(_Bag_TemplateableElement_F, _TemplateableElement);
 			addBinding(_Bag_TypeExp_F, _TypeExp);
-			addBinding(_Bag_TypedElement_F, _TypedElement);
+			addBinding(_Bag_TypeUsage_F, _TypeUsage);
 			addBinding(_Bag_VariableDeclaration_F, _VariableDeclaration);
 			addBinding(_Bag_VariableExp_F, _VariableExp);
 			addBinding(_Bag_Variable_F, _Variable);
@@ -4958,8 +4971,8 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_Collection_Trigger_F, _Trigger);
 			addBinding(_Collection_TupleLiteralPart_F, _TupleLiteralPart);
 			addBinding(_Collection_TypeExp_F, _TypeExp);
+			addBinding(_Collection_TypeUsage_F, _TypeUsage);
 			addBinding(_Collection_Type_F, _Type);
-			addBinding(_Collection_TypedElement_F, _TypedElement);
 			addBinding(_Collection_ValueSpecification_F, _ValueSpecification);
 			addBinding(_Collection_VariableDeclaration_F, _VariableDeclaration);
 			addBinding(_Collection_VariableExp_F, _VariableExp);
@@ -5260,6 +5273,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_TemplateParameter_owningSignature, "The TemplateSignature that owns this TemplateParameter.");
 			installComment(_TemplateParameterSubstitution, "A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding.");
 			installComment(pr_TemplateParameterSubstitution_actual, "The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution.");
+			installComment(pr_TemplateParameterSubstitution_actualIsRequired, "Whether the actual type must be non-null rather than nullable.");
 			installComment(pr_TemplateParameterSubstitution_formal, "The formal TemplateParameter that is associated with this TemplateParameterSubstitution.");
 			installComment(pr_TemplateParameterSubstitution_owningBinding, "The TemplateBinding that owns this TemplateParameterSubstitution.");
 			installComment(_TemplateSignature, "A Template Signature bundles the set of formal TemplateParameters for a template.");
@@ -5283,8 +5297,9 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_Trigger, "A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.");
 			installComment(_Type, "A Type constrains the values represented by a TypedElement.");
 			installComment(op_Type_flattenedType, "Return the type to be used as the element type when this is flattened. For most types this is self.\nFor a CollectionType, it is the transitive element type.");
+			installComment(_TypeUsage, "A TypeUsage annotates a Type with the isRequired (nullity) of its usage.");
+			installComment(pr_TypeUsage_type, "The type of the TypedElement.");
 			installComment(_TypedElement, "A TypedElement is a NamedElement that may have a Type specified for it.");
-			installComment(pr_TypedElement_type, "The type of the TypedElement.");
 			installComment(_ValueSpecification, "A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template.");
 			installComment(op_ValueSpecification_booleanValue, "The query booleanValue() gives a single Boolean value when one can be computed.");
 			installComment(op_ValueSpecification_integerValue, "The query integerValue() gives a single Integer value when one can be computed.");

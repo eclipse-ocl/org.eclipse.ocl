@@ -230,10 +230,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						if (feature == PivotPackage.Literals.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT) {
 							return;
 						}
-						if (feature == PivotPackage.Literals.TYPED_ELEMENT__IS_REQUIRED) {
+						if (feature == PivotPackage.Literals.TYPE_USAGE__IS_REQUIRED) {
 							return;
 						}
-						if (feature == PivotPackage.Literals.TYPED_ELEMENT__TYPE) {
+						if (feature == PivotPackage.Literals.TYPE_USAGE__TYPE) {
 							return;
 						}
 					}

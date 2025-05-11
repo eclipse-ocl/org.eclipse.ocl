@@ -284,12 +284,12 @@ implements PivotFactory {
 			case 118: return createTupleLiteralPart();
 			case 119: return createTupleType();
 			case 121: return createTypeExp();
-			case 123: return createUnlimitedNaturalLiteralExp();
-			case 124: return createUnspecifiedValueExp();
-			case 126: return createVariable();
-			case 128: return createVariableExp();
-			case 131: return createVoidType();
-			case 132: return createWildcardType();
+			case 124: return createUnlimitedNaturalLiteralExp();
+			case 125: return createUnspecifiedValueExp();
+			case 127: return createVariable();
+			case 129: return createVariableExp();
+			case 132: return createVoidType();
+			case 133: return createWildcardType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -304,31 +304,31 @@ implements PivotFactory {
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 133:
-				return createAssociativityKindFromString(eDataType, initialValue);
 			case 134:
-				return createCollectionKindFromString(eDataType, initialValue);
+				return createAssociativityKindFromString(eDataType, initialValue);
 			case 135:
-				return createPseudostateKindFromString(eDataType, initialValue);
+				return createCollectionKindFromString(eDataType, initialValue);
 			case 136:
-				return createTransitionKindFromString(eDataType, initialValue);
+				return createPseudostateKindFromString(eDataType, initialValue);
 			case 137:
-				return createBooleanFromString(eDataType, initialValue);
+				return createTransitionKindFromString(eDataType, initialValue);
 			case 138:
-				return createEcoreObjectFromString(eDataType, initialValue);
+				return createBooleanFromString(eDataType, initialValue);
 			case 139:
-				return createIntegerFromString(eDataType, initialValue);
+				return createEcoreObjectFromString(eDataType, initialValue);
 			case 140:
-				return createLibraryFeatureFromString(eDataType, initialValue);
+				return createIntegerFromString(eDataType, initialValue);
 			case 141:
-				return createObjectFromString(eDataType, initialValue);
+				return createLibraryFeatureFromString(eDataType, initialValue);
 			case 142:
-				return createRealFromString(eDataType, initialValue);
+				return createObjectFromString(eDataType, initialValue);
 			case 143:
-				return createStringFromString(eDataType, initialValue);
+				return createRealFromString(eDataType, initialValue);
 			case 144:
-				return createThrowableFromString(eDataType, initialValue);
+				return createStringFromString(eDataType, initialValue);
 			case 145:
+				return createThrowableFromString(eDataType, initialValue);
+			case 146:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -344,31 +344,31 @@ implements PivotFactory {
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 133:
-				return convertAssociativityKindToString(eDataType, instanceValue);
 			case 134:
-				return convertCollectionKindToString(eDataType, instanceValue);
+				return convertAssociativityKindToString(eDataType, instanceValue);
 			case 135:
-				return convertPseudostateKindToString(eDataType, instanceValue);
+				return convertCollectionKindToString(eDataType, instanceValue);
 			case 136:
-				return convertTransitionKindToString(eDataType, instanceValue);
+				return convertPseudostateKindToString(eDataType, instanceValue);
 			case 137:
-				return convertBooleanToString(eDataType, instanceValue);
+				return convertTransitionKindToString(eDataType, instanceValue);
 			case 138:
-				return convertEcoreObjectToString(eDataType, instanceValue);
+				return convertBooleanToString(eDataType, instanceValue);
 			case 139:
-				return convertIntegerToString(eDataType, instanceValue);
+				return convertEcoreObjectToString(eDataType, instanceValue);
 			case 140:
-				return convertLibraryFeatureToString(eDataType, instanceValue);
+				return convertIntegerToString(eDataType, instanceValue);
 			case 141:
-				return convertObjectToString(eDataType, instanceValue);
+				return convertLibraryFeatureToString(eDataType, instanceValue);
 			case 142:
-				return convertRealToString(eDataType, instanceValue);
+				return convertObjectToString(eDataType, instanceValue);
 			case 143:
-				return convertStringToString(eDataType, instanceValue);
+				return convertRealToString(eDataType, instanceValue);
 			case 144:
-				return convertThrowableToString(eDataType, instanceValue);
+				return convertStringToString(eDataType, instanceValue);
 			case 145:
+				return convertThrowableToString(eDataType, instanceValue);
+			case 146:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

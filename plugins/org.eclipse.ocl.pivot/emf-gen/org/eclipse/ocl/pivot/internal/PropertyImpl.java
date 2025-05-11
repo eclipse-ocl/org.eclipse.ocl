@@ -1278,12 +1278,12 @@ implements Property {
 			case 4:
 				return getName();
 			case 5:
-				return isIsMany();
-			case 6:
 				return isIsRequired();
-			case 7:
+			case 6:
 				if (resolve) return getType();
 				return basicGetType();
+			case 7:
+				return isIsMany();
 			case 8:
 				return getImplementation();
 			case 9:
@@ -1364,10 +1364,10 @@ implements Property {
 			case 4:
 				setName((String)newValue);
 				return;
-			case 6:
+			case 5:
 				setIsRequired((Boolean)newValue);
 				return;
-			case 7:
+			case 6:
 				setType((Type)newValue);
 				return;
 			case 8:
@@ -1467,10 +1467,10 @@ implements Property {
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case 6:
+			case 5:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case 7:
+			case 6:
 				setType((Type)null);
 				return;
 			case 8:
@@ -1563,11 +1563,11 @@ implements Property {
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
-				return isIsMany() != IS_MANY_EDEFAULT;
-			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case 7:
+			case 6:
 				return type != null;
+			case 7:
+				return isIsMany() != IS_MANY_EDEFAULT;
 			case 8:
 				return IMPLEMENTATION_EDEFAULT == null ? implementation != null : !IMPLEMENTATION_EDEFAULT.equals(implementation);
 			case 9:

@@ -3073,6 +3073,12 @@
         <details key="documentation" value="The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TemplateParameterSubstitution-actualIsRequired"
+        name="actualIsRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Whether the actual type must be non-null rather than nullable."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameterSubstitution-formal"
         name="formal" lowerBound="1" eType="#T-pivot-TemplateParameter">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3257,8 +3263,22 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TypeExp-referredType"
         name="referredType" eType="#T-pivot-Type"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TypeUsage" name="TypeUsage"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TypeUsage annotates a Type with the isRequired (nullity) of its usage."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TypeUsage-isRequired"
+        name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TypeUsage-type"
+        name="type" eType="#T-pivot-Type">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the TypedElement."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TypedElement" name="TypedElement"
-      abstract="true" eSuperTypes="#T-pivot-NamedElement">
+      abstract="true" eSuperTypes="#T-pivot-NamedElement #T-pivot-TypeUsage">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A TypedElement is a NamedElement that may have a Type specified for it."/>
     </eAnnotations>
@@ -3271,14 +3291,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TypedElement-isMany"
         name="isMany" lowerBound="1" eType="#T-pivot-Boolean" changeable="false" volatile="true"
         transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TypedElement-isRequired"
-        name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TypedElement-type"
-        name="type" eType="#T-pivot-Type">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The type of the TypedElement."/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UnlimitedNaturalLiteralExp"
       name="UnlimitedNaturalLiteralExp" eSuperTypes="#T-pivot-NumericLiteralExp">

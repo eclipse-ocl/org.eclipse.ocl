@@ -44,7 +44,7 @@
               <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                 <ownedPathName>
                   <ownedPathElements>
-                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
+                    <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypeUsage-type"/>
                   </ownedPathElements>
                 </ownedPathName>
               </ownedLeft>
@@ -520,7 +520,7 @@
                                       <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                                         <ownedPathName>
                                           <ownedPathElements>
-                                            <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
+                                            <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypeUsage-type"/>
                                           </ownedPathElements>
                                         </ownedPathName>
                                       </ownedLeft>
@@ -542,7 +542,7 @@
                                       <ownedRight xsi:type="essentialoclcs:NameExpCS">
                                         <ownedPathName>
                                           <ownedPathElements>
-                                            <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-isRequired"/>
+                                            <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypeUsage-isRequired"/>
                                           </ownedPathElements>
                                         </ownedPathName>
                                       </ownedRight>
@@ -746,7 +746,7 @@
                     <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                       <ownedPathName>
                         <ownedPathElements>
-                          <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypedElement-type"/>
+                          <referredElement xsi:type="pivot:Property" href="http://www.eclipse.org/ocl/2015/Pivot#F-pivot-TypeUsage-type"/>
                         </ownedPathElements>
                       </ownedPathName>
                     </ownedLeft>

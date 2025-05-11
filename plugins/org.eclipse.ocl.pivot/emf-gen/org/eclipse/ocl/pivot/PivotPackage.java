@@ -3419,6 +3419,38 @@ extends EPackage
 	EReference getTypeExp_ReferredType();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TypeUsage <em>Type Usage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Type Usage</em>'.
+	 * @see org.eclipse.ocl.pivot.TypeUsage
+	 * @generated
+	 */
+	EClass getTypeUsage();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TypeUsage#isIsRequired <em>Is Required</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Required</em>'.
+	 * @see org.eclipse.ocl.pivot.TypeUsage#isIsRequired()
+	 * @see #getTypeUsage()
+	 * @generated
+	 */
+	EAttribute getTypeUsage_IsRequired();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TypeUsage#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see org.eclipse.ocl.pivot.TypeUsage#getType()
+	 * @see #getTypeUsage()
+	 * @generated
+	 */
+	EReference getTypeUsage_Type();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp <em>Unlimited Natural Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4121,6 +4153,17 @@ extends EPackage
 	EReference getTemplateParameterSubstitution_Actual();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#isActualIsRequired <em>Actual Is Required</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Actual Is Required</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution#isActualIsRequired()
+	 * @see #getTemplateParameterSubstitution()
+	 * @generated
+	 */
+	EAttribute getTemplateParameterSubstitution_ActualIsRequired();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Package <em>Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4542,17 +4585,6 @@ extends EPackage
 	EAttribute getTypedElement_IsMany();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TypedElement#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Type</em>'.
-	 * @see org.eclipse.ocl.pivot.TypedElement#getType()
-	 * @see #getTypedElement()
-	 * @generated
-	 */
-	EReference getTypedElement_Type();
-
-	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TypedElement#CompatibleBody(org.eclipse.ocl.pivot.ValueSpecification) <em>Compatible Body</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4561,17 +4593,6 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getTypedElement__CompatibleBody__ValueSpecification();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Required</em>'.
-	 * @see org.eclipse.ocl.pivot.TypedElement#isIsRequired()
-	 * @see #getTypedElement()
-	 * @generated
-	 */
-	EAttribute getTypedElement_IsRequired();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.AssociationClass <em>Association Class</em>}'.
@@ -8627,6 +8648,32 @@ extends EPackage
 		EReference TYPE_EXP__REFERRED_TYPE = eINSTANCE.getTypeExp_ReferredType();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.TypeUsage <em>Type Usage</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.TypeUsage
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTypeUsage()
+		 * @generated
+		 */
+		EClass TYPE_USAGE = eINSTANCE.getTypeUsage();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Required</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_USAGE__IS_REQUIRED = eINSTANCE.getTypeUsage_IsRequired();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPE_USAGE__TYPE = eINSTANCE.getTypeUsage_Type();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.UnlimitedNaturalLiteralExpImpl <em>Unlimited Natural Literal Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9189,6 +9236,14 @@ extends EPackage
 		EReference TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL = eINSTANCE.getTemplateParameterSubstitution_Actual();
 
 		/**
+		 * The meta object literal for the '<em><b>Actual Is Required</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED = eINSTANCE.getTemplateParameterSubstitution_ActualIsRequired();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.PackageImpl <em>Package</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9513,28 +9568,12 @@ extends EPackage
 		EAttribute TYPED_ELEMENT__IS_MANY = eINSTANCE.getTypedElement_IsMany();
 
 		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TYPED_ELEMENT__TYPE = eINSTANCE.getTypedElement_Type();
-
-		/**
 		 * The meta object literal for the '<em><b>Compatible Body</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION = eINSTANCE.getTypedElement__CompatibleBody__ValueSpecification();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Required</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TYPED_ELEMENT__IS_REQUIRED = eINSTANCE.getTypedElement_IsRequired();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.AssociationClassImpl <em>Association Class</em>}' class.

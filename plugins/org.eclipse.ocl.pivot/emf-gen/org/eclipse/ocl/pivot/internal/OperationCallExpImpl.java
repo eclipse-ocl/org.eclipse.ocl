@@ -292,12 +292,12 @@ implements OperationCallExp {
 			case 4:
 				return getName();
 			case 5:
-				return isIsMany();
-			case 6:
 				return isIsRequired();
-			case 7:
+			case 6:
 				if (resolve) return getType();
 				return basicGetType();
+			case 7:
+				return isIsMany();
 			case 8:
 				return getTypeValue();
 			case 9:
@@ -348,10 +348,10 @@ implements OperationCallExp {
 			case 4:
 				setName((String)newValue);
 				return;
-			case 6:
+			case 5:
 				setIsRequired((Boolean)newValue);
 				return;
-			case 7:
+			case 6:
 				setType((Type)newValue);
 				return;
 			case 8:
@@ -407,10 +407,10 @@ implements OperationCallExp {
 			case 4:
 				setName(NAME_EDEFAULT);
 				return;
-			case 6:
+			case 5:
 				setIsRequired(IS_REQUIRED_EDEFAULT);
 				return;
-			case 7:
+			case 6:
 				setType((Type)null);
 				return;
 			case 8:
@@ -461,11 +461,11 @@ implements OperationCallExp {
 			case 4:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
-				return isIsMany() != IS_MANY_EDEFAULT;
-			case 6:
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
-			case 7:
+			case 6:
 				return type != null;
+			case 7:
+				return isIsMany() != IS_MANY_EDEFAULT;
 			case 8:
 				return typeValue != null;
 			case 9:
@@ -707,7 +707,7 @@ implements OperationCallExp {
 							final /*@Thrown*/ @NonNull OrderedSetValue safe_at_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
 							final /*@Thrown*/ @Nullable Parameter parameter = (@Nullable Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
 							if (parameter == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+								throw new InvalidValueException("Null source for \'TypeUsage::type\'");
 							}
 							final /*@Thrown*/ @Nullable Type parameterType = parameter.getType();
 							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
@@ -738,7 +738,7 @@ implements OperationCallExp {
 								requiredType = safe_specializeIn_source;
 							}
 							if (argument == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+								throw new InvalidValueException("Null source for \'TypeUsage::type\'");
 							}
 							final /*@Thrown*/ @Nullable Type type = argument.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;

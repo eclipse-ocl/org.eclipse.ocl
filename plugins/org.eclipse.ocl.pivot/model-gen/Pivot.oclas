@@ -1196,6 +1196,9 @@
       <ownedProperties xmi:id="PUrpg" name="actual" opposite="#F+7My" type="#rrwsa">
         <ownedComments body="The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution."/>
       </ownedProperties>
+      <ownedProperties xmi:id="YqU3y" defaultValueString="true" name="actualIsRequired" type="#ZuwnB">
+        <ownedComments body="Whether the actual type must be non-null rather than nullable."/>
+      </ownedProperties>
       <ownedProperties xmi:id="wNw1p" name="formal" opposite="#tGjEK" type="#Afray">
         <ownedComments body="The formal TemplateParameter that is associated with this TemplateParameterSubstitution."/>
       </ownedProperties>
@@ -1306,7 +1309,7 @@
       <ownedProperties xmi:id="iPrT3" isImplicit="true" name="Operation" opposite="#sg5YQ" type="#SI01z"/>
       <ownedProperties xmi:id="F+7My" isImplicit="true" name="TemplateParameterSubstitution" opposite="#PUrpg" type="#PtLAW"/>
       <ownedProperties xmi:id="nSmLq" isImplicit="true" name="TypeExp" opposite="#nedD3" type="#ObX5J"/>
-      <ownedProperties xmi:id=",WhCE" isImplicit="true" name="TypedElement" opposite="#pcY9R" type="#lf8ud"/>
+      <ownedProperties xmi:id="UDmTA" isImplicit="true" name="TypeUsage" opposite="#qnPVu" type="#yIeeR"/>
       <ownedProperties xmi:id="21n2W" isImplicit="true" name="VariableDeclaration" opposite="#CyT1w" type="#xbHbg"/>
       <ownedProperties xmi:id="WU9EG" isImplicit="true" name="WildcardType" opposite="#mvH+v" type="#XmaUE"/>
       <ownedProperties xmi:id="P4B7P" isImplicit="true" name="WildcardType" opposite="#lraqD" type="#XmaUE"/>
@@ -1314,17 +1317,20 @@
     <ownedClasses xmi:id="0,h6K" name="TypeExp" superClasses="#BFtK4 #dXAFV">
       <ownedProperties xmi:id="nedD3" isRequired="false" name="referredType" opposite="#nSmLq" type="#rrwsa"/>
     </ownedClasses>
-    <ownedClasses xmi:id="j7EI0" isAbstract="true" name="TypedElement" superClasses="#0kVqz">
+    <ownedClasses xmi:id="4nJZw" isAbstract="true" isInterface="true" name="TypeUsage" superClasses="#t5rpa">
+      <ownedComments body="A TypeUsage annotates a Type with the isRequired (nullity) of its usage."/>
+      <ownedProperties xmi:id="Z2zZn" defaultValueString="true" name="isRequired" type="#ZuwnB"/>
+      <ownedProperties xmi:id="qnPVu" isRequired="false" name="type" opposite="#UDmTA" type="#rrwsa">
+        <ownedComments body="The type of the TypedElement."/>
+      </ownedProperties>
+    </ownedClasses>
+    <ownedClasses xmi:id="j7EI0" isAbstract="true" name="TypedElement" superClasses="#0kVqz #4nJZw">
       <ownedComments body="A TypedElement is a NamedElement that may have a Type specified for it."/>
       <ownedOperations xmi:id="71tyJ" name="CompatibleBody" type="#ZuwnB">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="bodySpecification.type?.conformsTo(self.type)"/>
         <ownedParameters xmi:id="7IiBg" name="bodySpecification" type="#DLUxI"/>
       </ownedOperations>
       <ownedProperties xmi:id="YqNZL" isDerived="true" isReadOnly="true" isTransient="true" isVolatile="true" name="isMany" type="#ZuwnB"/>
-      <ownedProperties xmi:id="Yr8BL" defaultValueString="true" name="isRequired" type="#ZuwnB"/>
-      <ownedProperties xmi:id="pcY9R" isRequired="false" name="type" opposite="#,WhCE" type="#rrwsa">
-        <ownedComments body="The type of the TypedElement."/>
-      </ownedProperties>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="5Oxgg" instanceClassName="java.lang.Number" name="UnlimitedNatural" superClasses="&_0;#jbMkR">
       <ownedComments body="UnlimitedNatural is a primitive type representing unlimited natural values."/>
@@ -1622,9 +1628,9 @@
         <ownedSubstitutions actual="#0,h6K" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="lf8ud" name="Bag" superClasses="#76kws">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="yIeeR" name="Bag" superClasses="#IkGgg">
       <ownedBindings>
-        <ownedSubstitutions actual="#j7EI0" formal="&_0;#k2OA6"/>
+        <ownedSubstitutions actual="#4nJZw" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="xbHbg" name="Bag" superClasses="#H3vcv">
@@ -1947,14 +1953,14 @@
         <ownedSubstitutions actual="#0,h6K" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IkGgg" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#4nJZw" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="D2axV" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#rrwsa" formal="&_0;#qs59R"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="76kws" name="Collection" superClasses="&_0;#jbMkR">
-      <ownedBindings>
-        <ownedSubstitutions actual="#j7EI0" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bexGa" name="Collection" superClasses="&_0;#jbMkR">

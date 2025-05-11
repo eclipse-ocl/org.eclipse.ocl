@@ -925,6 +925,7 @@
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-TemplateParameterSubstitution">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateParameterSubstitution-actual"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-TemplateParameterSubstitution-actualIsRequired"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateParameterSubstitution-formal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateParameterSubstitution-ownedWildcard"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateParameterSubstitution-owningBinding"/>
@@ -978,10 +979,12 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-TypeExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TypeExp-referredType"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-TypeUsage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-TypeUsage-isRequired"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TypeUsage-type"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-TypedElement">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-TypedElement-isMany"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-TypedElement-isRequired"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TypedElement-type"/>
       <genOperations ecoreOperation="Pivot.ecore#//TypedElement/CompatibleBody">
         <genParameters ecoreParameter="Pivot.ecore#//TypedElement/CompatibleBody/bodySpecification"/>
       </genOperations>
