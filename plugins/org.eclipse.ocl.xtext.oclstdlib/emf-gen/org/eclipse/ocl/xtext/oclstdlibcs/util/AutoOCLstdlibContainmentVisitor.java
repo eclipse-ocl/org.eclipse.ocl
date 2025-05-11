@@ -2,7 +2,7 @@
  * «codeGenHelper.getCopyright(' * ')»
  *************************************************************************
  * This code is 100% auto-generated
- * using: org.eclipse.ocl.examples.codegen.java.JavaStream
+ * using: org.eclipse.ocl.codegen.java.JavaStream
  *
  * Do not edit it.
  */

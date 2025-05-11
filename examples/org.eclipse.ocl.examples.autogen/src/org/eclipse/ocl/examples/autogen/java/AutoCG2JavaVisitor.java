@@ -15,11 +15,11 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.codegen.java.CG2JavaVisitor;
 
 /**
  * AutoCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree

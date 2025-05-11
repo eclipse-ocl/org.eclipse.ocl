@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
+    xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.codegen/model/CGLibrary.oclstdlib" name="CGLibrary.oclstdlib"
+    xmiidVersion="1">
+  <ownedImports importedNamespace="pivot:Library http://www.eclipse.org/ocl/2015/Library.oclas#S673I" xmiidVersion="1"/>
+  <ownedPackages xsi:type="pivot:Library" xmi:id="S673I" URI="http://www.eclipse.org/ocl/2015/Library" name="ocl" nsPrefix="ocl">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="AlwVZ" name="String" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#zfDWR">
+      <ownedOperations xmi:id="oLwNm" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation" name="getSeverity"
+          type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#tYtCd"/>
+      <ownedOperations xmi:id="Fhh7B" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation" isValidating="true"
+          name="logDiagnostic" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#XEMMs">
+        <ownedParameters name="object" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters isRequired="false" name="diagnostics" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters isRequired="false" name="context" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters name="severity" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#tYtCd"/>
+        <ownedParameters isRequired="false" name="status" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#XEMMs"/>
+        <ownedParameters name="code" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#tYtCd"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="rSCYC" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation" isValidating="true"
+          name="logDiagnostic" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#XEMMs">
+        <ownedParameters name="object" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters isRequired="false" name="feature" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters isRequired="false" name="diagnostics" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters isRequired="false" name="context" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters isRequired="false" name="message" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#AlwVZ"/>
+        <ownedParameters name="severity" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#tYtCd"/>
+        <ownedParameters isRequired="false" name="status" type="pivot:AnyType http://www.eclipse.org/ocl/2015/Library.oclas#jbMkR"/>
+        <ownedParameters name="code" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#tYtCd"/>
+      </ownedOperations>
+    </ownedClasses>
+  </ownedPackages>
+</pivot:Model>

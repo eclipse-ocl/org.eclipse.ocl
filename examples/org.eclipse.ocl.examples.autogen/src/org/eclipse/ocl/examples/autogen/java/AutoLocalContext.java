@@ -11,9 +11,9 @@
 package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
+import org.eclipse.ocl.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.codegen.java.JavaLocalContext;
 
 /**
  * A AutoLocalContext maintains the Java-specific local context for generation of Auto code.

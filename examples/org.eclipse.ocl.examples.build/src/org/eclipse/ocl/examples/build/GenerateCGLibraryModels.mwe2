@@ -29,12 +29,12 @@ Workflow {
     }
     bean = GenModelSetup { resourceSet = resourceSet }
     component = GenerateOCLstdlibXtend { resourceSet = resourceSet
-    	projectName = "org.eclipse.ocl.examples.codegen"
+    	projectName = "org.eclipse.ocl.codegen"
     	modelFile = "model/CGLibrary.oclstdlib"
     	uri = "http://www.eclipse.org/ocl/2015/CGLibrary"
-    	ecoreFile = "/org.eclipse.ocl.examples.codegen/model-gen/CGLibrary.ecore"
-    	javaFolder = "/../examples/org.eclipse.ocl.examples.codegen/emf-gen"
-    	javaPackageName = "org.eclipse.ocl.examples.codegen.model"
+    	ecoreFile = "/org.eclipse.ocl.codegen/model-gen/CGLibrary.ecore"
+    	javaFolder = "/../examples/org.eclipse.ocl.codegen/emf-gen"
+    	javaPackageName = "org.eclipse.ocl.codegen.model"
     	javaClassName = "CGLibrary"
     	useOCLstdlib = true
     	generatedClassNameMap = {
@@ -47,10 +47,10 @@ Workflow {
     	}
     }
 /*    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-    	genModel = "/org.eclipse.ocl.examples.codegen/model/CGLibrary.genmodel"
+    	genModel = "/org.eclipse.ocl.codegen/model/CGLibrary.genmodel"
     }
     component = Model2tablesGenerator { resourceSet = resourceSet
-    	genModelFile = "/org.eclipse.ocl.examples.codegen/model/CGLibrary.genmodel"
+    	genModelFile = "/org.eclipse.ocl.codegen/model/CGLibrary.genmodel"
     	genOCLstdlib = true
     } */
 }

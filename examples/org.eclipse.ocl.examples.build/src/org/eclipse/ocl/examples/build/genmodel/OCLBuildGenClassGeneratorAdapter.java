@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.codegen.genmodel.OCLGenModelUtil;
 
 //
 //	Overridden to allow static templates to be invoked standalone.
