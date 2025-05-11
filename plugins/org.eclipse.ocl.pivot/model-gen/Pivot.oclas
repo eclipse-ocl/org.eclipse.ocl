@@ -1196,6 +1196,9 @@
       <ownedProperties xmi:id="PUrpg" name="actual" opposite="#F+7My" type="#rrwsa">
         <ownedComments body="The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution."/>
       </ownedProperties>
+      <ownedProperties xmi:id="YqU3y" defaultValueString="true" name="actualIsRequired" type="#ZuwnB">
+        <ownedComments body="Whether the actual type must be non-null rather than nullable."/>
+      </ownedProperties>
       <ownedProperties xmi:id="wNw1p" name="formal" opposite="#tGjEK" type="#Afray">
         <ownedComments body="The formal TemplateParameter that is associated with this TemplateParameterSubstitution."/>
       </ownedProperties>

@@ -69,6 +69,16 @@ public interface TypedElement extends NamedElement {
 	boolean isIsRequired();
 
 	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Required</em>' attribute.
+	 * @see #isIsRequired()
+	 * @generated
+	 */
+	void setIsRequired(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -98,16 +108,6 @@ public interface TypedElement extends NamedElement {
 	 * @generated
 	 */
 	boolean CompatibleBody(ValueSpecification bodySpecification);
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Required</em>' attribute.
-	 * @see #isIsRequired()
-	 * @generated
-	 */
-	void setIsRequired(boolean value);
 
 	/**
 	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this typed element.

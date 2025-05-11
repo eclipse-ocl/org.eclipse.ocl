@@ -25,6 +25,11 @@
                 <message_argument value="getNormalizedTemplateParameter_Index()"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTemplateParameterSubstitution_ActualIsRequired()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
         <filter id="1211105284">
@@ -37,11 +42,28 @@
                 <message_argument value="NORMALIZED_TEMPLATE_PARAMETER__INDEX"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_NormalizedTemplateParameter"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/TemplateParameterSubstitution.java" type="org.eclipse.ocl.pivot.TemplateParameterSubstitution">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="isActualIsRequired()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setActualIsRequired(boolean)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -231,6 +253,18 @@
         <filter id="1110441988">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TemplateParameterSubstitutionImpl.java" type="org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ACTUAL_IS_REQUIRED_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ACTUAL_IS_REQUIRED_EFLAG"/>
             </message_arguments>
         </filter>
     </resource>
