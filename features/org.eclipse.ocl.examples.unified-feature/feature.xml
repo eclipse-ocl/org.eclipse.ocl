@@ -97,21 +97,21 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ocl.examples.debug"
+         id="org.eclipse.ocl.debug"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ocl.examples.debug.ui"
+         id="org.eclipse.ocl.debug.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ocl.examples.debug.vm"
+         id="org.eclipse.ocl.debug.vm"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -125,7 +125,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ocl.examples.debug.vm.ui"
+         id="org.eclipse.ocl.debug.vm.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
