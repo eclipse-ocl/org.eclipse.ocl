@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  * http://www.eclipse.org/emf/2002/GenModel documentation detail of an EModelElement.
  * Other //www.eclipse.org/emf/2002/GenModel details are copied.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class EMF_GenModel_EAnnotationConverter extends AbstractEAnnotationConverter
 {

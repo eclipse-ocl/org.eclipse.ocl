@@ -286,7 +286,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected boolean validateExpressionInOCL(final @NonNull EnvironmentFactory environmentFactory, final @NonNull EClassifier eClassifier, final @NonNull Object value, final @Nullable DiagnosticChain diagnostics,
 			final Map<Object, Object> context, final String source, final int code, @NonNull ExpressionInOCL query) {

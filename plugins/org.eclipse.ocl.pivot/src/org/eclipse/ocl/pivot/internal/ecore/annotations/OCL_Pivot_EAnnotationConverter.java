@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
  * The OCL_Pivot_EAnnotationConverter maps the Constraint elements to the
  * http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot details of an EClass/EOperatioon/EStructuralFeature.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class OCL_Pivot_EAnnotationConverter extends AbstractEAnnotationConverter
 {

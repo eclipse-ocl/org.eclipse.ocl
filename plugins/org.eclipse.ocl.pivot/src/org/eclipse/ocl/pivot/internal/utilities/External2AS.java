@@ -30,14 +30,14 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 public interface External2AS
 {
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {		// XXX not an Adapter
 		return environmentFactory.getMetamodelManager().getES2AS(resource);
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull External2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		External2AS es2as = External2AS.findAdapter(resource, environmentFactory);		// XXX review prolific guards
@@ -81,7 +81,7 @@ public interface External2AS
 	@NonNull URI getURI();
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default void setEcoreURI(@NonNull URI uri) {}
 }

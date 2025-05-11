@@ -131,19 +131,19 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	/**
 	 * Create the CS2AS converter.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource);
 
 	/**
 	 * Create an EnvironmentFactory appropriate to the AS Resource using projectManager.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager);
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @NonNull External2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		throw new UnsupportedOperationException();
@@ -152,7 +152,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	/**
 	 * Create the LUSSID allocator for an asResource.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options);
 

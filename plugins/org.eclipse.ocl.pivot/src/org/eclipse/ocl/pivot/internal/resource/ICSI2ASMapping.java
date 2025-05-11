@@ -30,21 +30,21 @@ public interface ICSI2ASMapping
 	void dispose();
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @Nullable ASResource getASResource(@NonNull CSResource csResource) {
 		return null;
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @Nullable EObject getCSElement(@NonNull PivotObject asElement) {
 		return null;
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default void removeCSResource(@NonNull CSResource csResource) {}
 }

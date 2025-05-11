@@ -57,7 +57,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		CompletePackageInternal completePackage = null;

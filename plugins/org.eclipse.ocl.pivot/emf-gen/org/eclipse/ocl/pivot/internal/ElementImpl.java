@@ -251,7 +251,7 @@ public abstract class ElementImpl
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);
-		return (List<Element>)ECORE_closure;
+		return ECORE_closure;
 	}
 
 	/**
@@ -489,7 +489,7 @@ public abstract class ElementImpl
 	 * null is returned when no esObject is readily available. CVallewrs should make sure that all required CompleteClasses
 	 * have been created if reloading of a persisted CS resource is required.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return null;

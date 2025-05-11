@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.NamedElement;
  * The MOF_XML_EAnnotationConverter supports configuration of the Property opposites field
  * from the http://schema.omg.org/spec/MOF/2.0/emof.xml detail of an EStructuralFeature.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class MOF_XML_EAnnotationConverter extends AbstractEAnnotationConverter
 {

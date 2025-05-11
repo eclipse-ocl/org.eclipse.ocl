@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @param <V>
  *            the value-type of the pair.
  *
- * @since 1.23
+ * @since 7.0
  *
  * This revamp of org.eclipse.xtext.xbase.lib.Pair avoids the need to import Xtext in non-Xtext contexts.
  */

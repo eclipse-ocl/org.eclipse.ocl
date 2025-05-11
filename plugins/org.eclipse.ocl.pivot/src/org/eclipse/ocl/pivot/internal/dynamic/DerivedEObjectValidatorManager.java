@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.utilities.SemanticException;
 /**
  * DerivedEObjectValidatorManager support creation and loading of a derived EObjectValidator class that has a public
  * override of the validate(int, Object, org.eclipse.emf.common.util.DiagnosticChain, java.util.Map<Object, Object>) method.
- * @since 1.23
+ * @since 7.0
  */
 public final class DerivedEObjectValidatorManager
 {

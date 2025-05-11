@@ -116,7 +116,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		return new Ecore2AS(resource, environmentFactory);
@@ -131,7 +131,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @Nullable List<@NonNull ETypeParameter> getAllETypeParameters(@Nullable List<@NonNull ETypeParameter> allETypeParameters, @Nullable EObject eObject) {
 	//	EObject eContainer = eObject.eContainer();
@@ -547,7 +547,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public @Nullable Type getNormalizedType(@Nullable Type asType) {
 		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {

@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * from the http://www.eclipse.org/OCL/Collection isNullFree detail of an EModelElement.
  * Other http://www.eclipse.org/OCL/Collection details are copied.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class OCL_Collection_EAnnotationConverter extends AbstractEAnnotationConverter
 {

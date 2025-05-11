@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.NamedElement;
  * The EMF_Ecore_EAnnotationConverter supports configuration of the Constraint elements
  * from the http://www.eclipse.org/emf/2002/Ecore constrainats detail of an EModelElement.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class EMF_Ecore_EAnnotationConverter extends AbstractEAnnotationConverter
 {

@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EValidator;
 
 /**
- * @since 1.23
+ * @since 7.0
  */
 public interface DerivedEObjectValidator extends EValidator
 {

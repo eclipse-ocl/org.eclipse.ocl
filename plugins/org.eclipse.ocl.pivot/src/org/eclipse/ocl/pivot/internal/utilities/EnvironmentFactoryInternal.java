@@ -105,7 +105,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
 	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
 	 * this alternative creation mechanism is available via an EnvironmentFactory override.
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
 
@@ -173,7 +173,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@NonNull Technology getTechnology();
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default boolean isDisposing() { return false; }
 
@@ -183,7 +183,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
 	 * overheads up front. Returns the ASResource if successful.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) throws ParserException {
 		return null;			// XXX

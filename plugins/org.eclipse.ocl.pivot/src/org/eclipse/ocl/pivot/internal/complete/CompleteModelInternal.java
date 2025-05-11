@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 public interface CompleteModelInternal extends CompleteModel
 {
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) { return null; }
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);

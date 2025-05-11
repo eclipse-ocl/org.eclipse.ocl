@@ -447,7 +447,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected void appendTypedElement(@NonNull Element object, Type type) {
 		if (type instanceof NormalizedTemplateParameter) {
@@ -1072,7 +1072,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Override
 	public String visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {

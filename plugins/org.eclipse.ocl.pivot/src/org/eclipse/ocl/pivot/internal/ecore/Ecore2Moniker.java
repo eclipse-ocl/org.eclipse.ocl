@@ -48,7 +48,7 @@ public class Ecore2Moniker extends EcoreSwitch<Object> implements PivotConstants
 	 * for a package simplifies the moniker and avoids prefix variation for monikers
 	 * computed for alternate domains.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static class MonikerAliasAdapter extends AdapterImpl
 	{

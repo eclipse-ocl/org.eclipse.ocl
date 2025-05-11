@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 /**
  * The OCL_ASMetamodel_EAnnotationConverter supports the addition EPackage isASMetamodel field.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class OCL_ASMetamodel_EAnnotationConverter extends AbstractEAnnotationConverter
 {

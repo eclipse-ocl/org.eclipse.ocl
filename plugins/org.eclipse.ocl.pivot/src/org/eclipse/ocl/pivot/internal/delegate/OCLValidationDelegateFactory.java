@@ -38,7 +38,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public OCLValidationDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		super(delegateURI, isGlobal);
@@ -163,7 +163,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 	 * can be located at the EOperation.Internal.InvocationDelegate.Factory.Registry
 	 * by the DelegateResourceSetAdapter.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static class Dynamic extends OCLValidationDelegateFactory
 	{

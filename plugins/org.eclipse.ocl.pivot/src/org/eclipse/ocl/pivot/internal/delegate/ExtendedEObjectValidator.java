@@ -66,7 +66,7 @@ import org.eclipse.ocl.pivot.validation.ValidationContext;
 /**
  * An ExtendedEObjectValidator instance displaces and wraps the regular EObjectValidator entry in the EValidator.Registry.INSTANCE
  * to add support for the additional constraints and invariants supported by validation delegates.
- * @since 1.23
+ * @since 7.0
  */
 public class ExtendedEObjectValidator extends EObjectValidator
 {

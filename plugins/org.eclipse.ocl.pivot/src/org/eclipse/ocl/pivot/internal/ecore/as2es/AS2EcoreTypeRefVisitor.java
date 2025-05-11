@@ -91,7 +91,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void popScope(@Nullable Element savedASScope) {
 		if ("expressions::LiteralExp(C)".equals(String.valueOf(savedASScope))) {
@@ -101,7 +101,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public @Nullable Element pushScope(@NonNull Element asScope) {
 		if ("expressions::LiteralExp(C)".equals(String.valueOf(asScope))) {
@@ -145,7 +145,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public EObject safeVisit(@Nullable Visitable v, boolean isRequired) {
 		boolean savedIsRequired = isRequired;
@@ -170,7 +170,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public <T extends EObject> void safeVisitAll(List<T> eObjects, List<? extends Element> pivotObjects, boolean isRequired) {
 		boolean savedIsRequired = isRequired;
@@ -286,7 +286,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Override
 	public EObject visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter pivotNormalizedTemplateParameter) {

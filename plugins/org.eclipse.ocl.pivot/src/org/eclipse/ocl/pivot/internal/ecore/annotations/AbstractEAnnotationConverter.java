@@ -36,7 +36,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  * AbstractEAnnotationConverter defines the basic behaviour for EAnnotation-source-specific functionalities.
  * It also provides a global registry of known EAnnotation-source functionalities.
  *
- * @since 1.23
+ * @since 7.0
  */
 public abstract class AbstractEAnnotationConverter implements EAnnotationConverter		// XXX add extension point support
 {

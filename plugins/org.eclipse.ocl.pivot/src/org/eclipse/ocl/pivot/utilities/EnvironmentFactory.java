@@ -104,7 +104,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * Configure this as the EnvironmentFactory for the current thread.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default void activate() {}
 
@@ -180,7 +180,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull OCL createOCL();
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@NonNull ResourceSet getASResourceSet();
 
@@ -207,7 +207,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull MetamodelManager getMetamodelManager();
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @NonNull Orphanage getOrphanage() {
 		return getCompleteModel().getOrphanage();
@@ -240,7 +240,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * Return the ResourceSet provided by the user for referencing by this EnvironmentFactory.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@NonNull ResourceSet getUserResourceSet();
 

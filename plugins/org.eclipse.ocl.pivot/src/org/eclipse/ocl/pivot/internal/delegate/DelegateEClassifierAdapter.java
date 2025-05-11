@@ -35,7 +35,7 @@ public class DelegateEClassifierAdapter extends AdapterImpl
 	/**
 	 *	Return the DelegateEClassifierAdapter for eClassifier, if there is one, or null if none.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @Nullable DelegateEClassifierAdapter findAdapter(@NonNull EClassifier eClassifier) {
 		return (DelegateEClassifierAdapter) EcoreUtil.getAdapter(eClassifier.eAdapters(), DelegateEClassifierAdapter.class);
@@ -68,7 +68,7 @@ public class DelegateEClassifierAdapter extends AdapterImpl
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public synchronized @NonNull Map<@NonNull String, @NonNull ValidationDelegate> getValidationDelegates(boolean force) {
 		Map<@NonNull String, @NonNull ValidationDelegate> validationDelegateMap2 = validationDelegateMap;

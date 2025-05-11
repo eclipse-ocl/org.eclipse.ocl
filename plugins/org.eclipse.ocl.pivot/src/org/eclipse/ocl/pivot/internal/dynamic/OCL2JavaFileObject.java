@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * @since 1.23
+ * @since 7.0
  */
 public class OCL2JavaFileObject extends SimpleJavaFileObject
 {

@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * The OCL_Pivot_Dynamic_EAnnotationConverter suppresses the unwanted mapping of dynamically
  * created OCL constraints.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class OCL_Pivot_Dynamic_EAnnotationConverter extends AbstractEAnnotationConverter
 {

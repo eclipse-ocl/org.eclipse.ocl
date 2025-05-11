@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
  * which a path is defined, possibly from an example class on the entry, and in the way in which the
  * path is subsequently used. If the entries are defined from loaded classes, a further list
  * of their classloaders may be used to define additional classes.
- * @since 1.23
+ * @since 7.0
  */
 public class JavaClasspath extends ClassLoader
 {

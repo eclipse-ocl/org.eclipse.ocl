@@ -1160,7 +1160,7 @@ public abstract class ValueUtil
 	 * Creates an IntegerValue/RElaValue/UnlimitedNaturalValue representation for aValue.
 	 * @param aValue the string representation of a number
 	 * @return the numeric representation
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull NumberValue numberValueOf(@NonNull String aValue) {
 		if (aValue.contains("*")) {
@@ -1251,7 +1251,7 @@ public abstract class ValueUtil
 			stringValue = NULL_STRING;
 		}
 		else if (aValue instanceof Value) {							// Needed for Iterable Values such as CollectionValue
-			stringValue = ((Value)aValue).toString();
+			stringValue = aValue.toString();
 		}
 		else if (aValue instanceof String) {
 			stringValue = "'" + StringUtil.convertToOCLString((String)aValue) + "'";

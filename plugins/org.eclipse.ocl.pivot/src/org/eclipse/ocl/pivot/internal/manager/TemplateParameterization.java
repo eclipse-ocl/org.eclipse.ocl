@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * TemplateParameterization facilitates the use of template parameters by aggregating a containment hierarchy of
  * TemplateableElement-TemplateSignature-TemplateParameter as a simple array.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class TemplateParameterization implements IndexableIterable<@NonNull TemplateParameter>
 {

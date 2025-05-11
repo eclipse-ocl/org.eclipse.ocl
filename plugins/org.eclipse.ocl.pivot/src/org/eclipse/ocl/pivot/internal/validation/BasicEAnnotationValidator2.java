@@ -174,7 +174,7 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void addDynamicAnnotationClass(EClass dynamicAnnotationClass) {
 		if (dynamicAnnotationPackage == null) {

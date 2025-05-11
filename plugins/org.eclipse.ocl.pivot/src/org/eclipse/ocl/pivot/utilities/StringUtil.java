@@ -313,7 +313,7 @@ public class StringUtil
 	 * Return the whitespace trimmed string if the result is new-line-free, else a
 	 * multi-line string is returned untrimmed.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull String trimSingleLineText(@NonNull String string) {
 		String trimmed = string.trim();

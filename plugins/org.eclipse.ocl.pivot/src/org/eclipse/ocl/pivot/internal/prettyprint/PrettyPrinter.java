@@ -678,7 +678,7 @@ public class PrettyPrinter
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void appendTypedElement(@NonNull Element object, Type type) {
 		if (type instanceof NormalizedTemplateParameter) {

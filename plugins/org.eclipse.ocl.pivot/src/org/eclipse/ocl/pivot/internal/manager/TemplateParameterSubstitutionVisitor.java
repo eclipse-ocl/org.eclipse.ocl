@@ -81,7 +81,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	 * Create a TemplateParameterSubstitutionVisitor suitable for specializing types with respect to the parameter
 	 * substitutions present in the actualExp, with selfType as the optional kn own type of OclSelf.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull TemplateParameterSubstitutionVisitor create(@NonNull EnvironmentFactoryInternal environmentFactory,
 				@NonNull CallExp actualExp, @Nullable Type selfType) {
@@ -128,7 +128,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @Nullable TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		BasicTemplateSpecialization templateSpecialization = BasicTemplateSpecialization.basicGetTemplateSpecialization((Element)eObject);
@@ -143,7 +143,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	/**
 	 * Return true if asElement has template parameters.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static boolean hasTemplateParameters(@NonNull Element asElement) {
 		boolean hasTemplateParameters = false;
@@ -166,7 +166,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	/**
 	 * Return true if a referencedType needs specialization to resolve a template parameter.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static boolean needsSpecialization(@Nullable Type referencedType)
 	{
@@ -230,7 +230,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class specializeTypeToLowerBound(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		TemplateParameterSubstitutionVisitor visitor = createVisitor(type, environmentFactory, null, null);
@@ -281,7 +281,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void analyzeType(@Nullable Type newFormal, @Nullable Type newActual) {
 		if ((newFormal != null) && (newActual != null)) {
@@ -296,7 +296,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected void analyzeType(@Nullable Type newFormal, @Nullable TypedElement actualElement) {
 		if (actualElement != null) {
@@ -365,7 +365,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public @NonNull Type getNormalizedType(@NonNull Type asType) {
 		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
@@ -424,7 +424,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public @NonNull TemplateParameterization getTemplateParameterization() {
 		return getTemplateSpecialization().getTemplateParameterization();

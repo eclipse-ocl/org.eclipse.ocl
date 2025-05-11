@@ -93,7 +93,7 @@ public class DelegateInstaller
 	public static final @NonNull String OPTION_OMIT_SETTING_DELEGATES = "omitSettingDelegates";
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static final @NonNull String CONSTRAINTS_KEY = "constraints";
 
@@ -101,7 +101,7 @@ public class DelegateInstaller
 	 * ValidationContext entry that may be set true when validating an EObject whose ResourceSet lacks an ExtendedEObjectValidatorAdapter.
 	 * This prevents leakage of additional dynamic OCL constraints applied to an Xtext grammar leaking beyond the intended applications.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static final String SUPPRESS_DYNAMIC_OCL_DELEGATES = "suppressDynamicOCLdelegates";
 
@@ -353,7 +353,7 @@ public class DelegateInstaller
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public @Nullable EStringToStringMapEntryImpl createConstraintDelegateDetail(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint, @Nullable URI ecoreURI) {
 		LanguageExpression specification = pivotConstraint.getOwnedSpecification();
@@ -469,7 +469,7 @@ public class DelegateInstaller
 	 * and make them accessible when validating within userResourceSet.
 	 * @throws SemanticException
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void installCompleteOCLDelegates(@NonNull ResourceSet userResourceSet, @NonNull ASResource asResource) throws SemanticException {
 		assert userResourceSet == environmentFactory.getUserResourceSet();			// XXX
@@ -745,7 +745,7 @@ public class DelegateInstaller
 	/**
 	 * Remove the PivotConstants.OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL EAnnotations synthesized from asResource.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void uninstallCompleteOCLDelegates(@NonNull ResourceSet userResourceSet, @NonNull ASResource asResource) {
 		// XXX asymmetric wrt install -- if asResource had been unloaded we could share a refreshCompleteOCLDelegates

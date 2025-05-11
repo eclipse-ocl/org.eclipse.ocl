@@ -93,7 +93,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public abstract void error(@NonNull XMIException e);
 
