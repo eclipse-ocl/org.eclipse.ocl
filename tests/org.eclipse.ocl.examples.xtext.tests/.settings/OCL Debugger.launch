@@ -335,14 +335,14 @@
         <mapEntry key="org.eclipse.m2e/plugin" value="false"/>
         <mapEntry key="org.eclipse.m2m.qvt.oml.ocl/loglevel" value="Severe"/>
         <mapEntry key="org.eclipse.net4j.util/debug" value="true"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/classPath" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/compiles" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/cse/build" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/cse/places" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/cse/prune" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/cse/pullUp" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/cse/pushUp" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.codegen/cse/rewrite" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/classPath" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/compiles" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/cse/build" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/cse/places" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/cse/prune" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/cse/pullUp" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/cse/pushUp" value="false"/>
+        <mapEntry key="org.eclipse.ocl.codegen/cse/rewrite" value="false"/>
         <mapEntry key="org.eclipse.ocl.examples.debug.vm/location" value="true"/>
         <mapEntry key="org.eclipse.ocl.examples.debug.vm/post-visit" value="true"/>
         <mapEntry key="org.eclipse.ocl.examples.debug.vm/pre-visit" value="true"/>

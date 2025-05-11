@@ -19,7 +19,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
+import org.eclipse.ocl.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
 
 /**
  * The Split GenModelGenerator supports splitting the interface classes off into a separate plugin identified by the

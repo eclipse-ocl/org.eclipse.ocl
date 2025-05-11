@@ -17,7 +17,7 @@
  *   /org.eclipse.ocl.examples.xtext.tests/models/genModel/Company.ecore
  * using:
  *   /org.eclipse.ocl.examples.xtext.tests/models/genModel/CodeGenCompanySrc.genmodel
- *   org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTables
+ *   org.eclipse.ocl.codegen.oclinecore.OCLinEcoreTables
  *
  * Do not edit it.
  *******************************************************************************/

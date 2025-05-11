@@ -33,16 +33,16 @@ Workflow {
 	bean = CGValuedElementModelSpec.Register {}
 	
 	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-		genModel = "/org.eclipse.ocl.examples.codegen/model/cgmodel.genmodel"
+		genModel = "/org.eclipse.ocl.codegen/model/cgmodel.genmodel"
 		clearResourceSet = false
 	}
 	
     component = GenerateCGVisitors { resourceSet = resourceSet
-    	projectName = "org.eclipse.ocl.examples.codegen"
+    	projectName = "org.eclipse.ocl.codegen"
     	genModelFile = "model/cgmodel.genmodel"
     }
 	component = ConvertToUnixLineEndings {
-		directory = "org.eclipse.ocl.examples.codegen/emf-gen"
+		directory = "org.eclipse.ocl.codegen/emf-gen"
 	}
 }
 

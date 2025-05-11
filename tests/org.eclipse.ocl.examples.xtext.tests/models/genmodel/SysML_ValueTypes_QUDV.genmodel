@@ -10,7 +10,7 @@
   </genAnnotations>
   <foreignModel>SysML_ValueTypes_QUDV.ecore</foreignModel>
   <modelPluginVariables>org.eclipse.ocl.pivot</modelPluginVariables>
-  <modelPluginVariables>org.eclipse.ocl.examples.codegen</modelPluginVariables>
+  <modelPluginVariables>org.eclipse.ocl.codegen</modelPluginVariables>
   <modelPluginVariables>org.eclipse.jdt.annotation</modelPluginVariables>
   <genPackages prefix="SysML_ValueTypes_QUDV" disposableProviderFactory="true" ecorePackage="SysML_ValueTypes_QUDV.ecore#/">
     <genClasses ecoreClass="SysML_ValueTypes_QUDV.ecore#//ROOT_RESOURCE_SHAPE_CONTAINER">

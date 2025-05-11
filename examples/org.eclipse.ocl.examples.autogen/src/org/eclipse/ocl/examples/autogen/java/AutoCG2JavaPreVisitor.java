@@ -12,9 +12,9 @@ package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
+import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.codegen.java.CG2JavaPreVisitor;
+import org.eclipse.ocl.codegen.java.JavaGlobalContext;
 
 public class AutoCG2JavaPreVisitor extends CG2JavaPreVisitor
 {

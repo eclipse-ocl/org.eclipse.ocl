@@ -911,7 +911,7 @@
         <setEntry value="org.eclipse.ocl.doc@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.autogen@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.build@default:default"/>
-        <setEntry value="org.eclipse.ocl.examples.codegen@default:default"/>
+        <setEntry value="org.eclipse.ocl.codegen@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.common@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.consumers.tests@default:default"/>
         <setEntry value="org.eclipse.ocl.examples.domain@default:default"/>

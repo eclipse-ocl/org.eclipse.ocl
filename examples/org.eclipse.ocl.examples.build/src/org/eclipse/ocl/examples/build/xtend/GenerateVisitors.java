@@ -22,8 +22,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.build.genmodel.SplitGenModelGeneratorAdapterFactory;
-import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public abstract class GenerateVisitors extends GenerateVisitorsWorkflowComponent

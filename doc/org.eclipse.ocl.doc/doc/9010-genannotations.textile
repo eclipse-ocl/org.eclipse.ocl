@@ -23,8 +23,8 @@ h3. http://www.eclipse.org/OCL/GenModel/ToString
 
 pre. 
 <genAnnotations source="http://www.eclipse.org/OCL/GenModel/ToString">
-  <details key="org.eclipse.ocl.examples.codegen.cgmodel.CGElement"
-    value="return &lt;%org.eclipse.ocl.examples.codegen.analyzer.CG2StringVisitor%>.toString(this);"/>
+  <details key="org.eclipse.ocl.codegen.cgmodel.CGElement"
+    value="return &lt;%org.eclipse.ocl.codegen.analyzer.CG2StringVisitor%>.toString(this);"/>
 </genAnnotations>
 
 By default EMF generates a toString() method that identifies all attribute values. This cannot be suppressed, only circumvented.

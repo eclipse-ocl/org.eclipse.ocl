@@ -15,6 +15,7 @@
 
   <modules>
     <module>org.eclipse.ocl</module>
+    <module>org.eclipse.ocl.codegen</module>
     <module>org.eclipse.ocl.common</module>
     <module>org.eclipse.ocl.common.ui</module>
     <!--module>org.eclipse.ocl.control</module-->
