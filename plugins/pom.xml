@@ -19,6 +19,10 @@
     <module>org.eclipse.ocl.common</module>
     <module>org.eclipse.ocl.common.ui</module>
     <!--module>org.eclipse.ocl.control</module-->
+    <module>org.eclipse.ocl.debug</module> 
+    <module>org.eclipse.ocl.debug.ui</module>
+    <module>org.eclipse.ocl.debug.vm</module>
+    <module>org.eclipse.ocl.debug.vm.ui</module>
     <module>org.eclipse.ocl.ecore</module>
     <module>org.eclipse.ocl.ecore.edit</module>
     <module>org.eclipse.ocl.edit</module>
