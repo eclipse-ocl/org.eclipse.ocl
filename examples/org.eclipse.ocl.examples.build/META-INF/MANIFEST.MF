@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.examples.build;singleton:=true
-Bundle-Version: 2.23.0.qualifier
+Bundle-Version: 7.0.0.qualifier
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Comment: See Bug 527458. The org.eclipse.emf.codegen.ecore lowerbound inhibits mix-and-match of JET templates
@@ -24,18 +24,18 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.m2m.qvt.oml;bundle-version="[3.8.0,4.0.0)",
  org.eclipse.m2m.qvt.oml.common;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.m2m.qvt.oml.emf.util;bundle-version="[3.8.0,4.0.0)",
- org.eclipse.ocl.examples.codegen;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.ocl.pivot.uml;bundle-version="[1.2.0,2.0.0)",
- org.eclipse.ocl.xtext.completeocl;bundle-version="[1.2.0,2.0.0)",
- org.eclipse.ocl.xtext.essentialocl.ui;bundle-version="[1.2.0,2.0.0)",
- org.eclipse.ocl.xtext.oclinecore;bundle-version="[1.2.0,2.0.0)",
- org.eclipse.ocl.xtext.oclstdlib;bundle-version="[1.2.0,2.0.0)",
- org.eclipse.ocl.examples.uml25;bundle-version="[2.1.0,3.0.0)";resolution:=optional,
- org.eclipse.ocl.examples.debug.vm;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.ocl.examples.emf.validation.validity;bundle-version="[2.9.0,3.0.0)",
- org.eclipse.ocl.examples.xtext.tests;bundle-version="[3.12.0,4.0.0)",
+ org.eclipse.ocl.examples.codegen;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.pivot.uml;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.xtext.completeocl;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.xtext.essentialocl.ui;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.xtext.oclinecore;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.xtext.oclstdlib;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.examples.uml25;bundle-version="[7.0.0,8.0.0)";resolution:=optional,
+ org.eclipse.ocl.examples.debug.vm;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.examples.emf.validation.validity;bundle-version="[7.0.0,8.0.0)",
+ org.eclipse.ocl.examples.xtext.tests;bundle-version="[7.0.0,8.0.0)",
  org.eclipse.xtend.lib;bundle-version="[2.9.0,3.0.0)",
- org.eclipse.ocl.xtext.idioms;bundle-version="[1.19.0,2.0.0)"
+ org.eclipse.ocl.xtext.idioms;bundle-version="[7.0.0,8.0.0)"
 Import-Package: org.apache.commons.logging,
  org.apache.log4j;version="[1.2.15,2.0.0)"
 Bundle-Vendor: %providerName
