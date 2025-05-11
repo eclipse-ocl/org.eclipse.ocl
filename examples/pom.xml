@@ -36,6 +36,5 @@
       <module>org.eclipse.ocl.examples.uml25</module>
       <module>org.eclipse.ocl.examples.unified</module>
       <module>org.eclipse.ocl.examples.validity</module>
-      <module>org.eclipse.ocl.examples.xtext.console</module>
    </modules>
 </project>

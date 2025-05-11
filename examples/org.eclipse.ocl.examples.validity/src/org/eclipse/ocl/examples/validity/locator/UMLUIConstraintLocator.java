@@ -40,8 +40,6 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.locator.ConstraintUILocator;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.view.ValidityView;
-import org.eclipse.ocl.examples.xtext.console.XtextConsolePlugin;
-import org.eclipse.ocl.examples.xtext.console.messages.ConsoleMessages;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -54,6 +52,8 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
+import org.eclipse.ocl.xtext.console.XtextConsolePlugin;
+import org.eclipse.ocl.xtext.console.messages.ConsoleMessages;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 
