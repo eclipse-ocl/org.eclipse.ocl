@@ -140,7 +140,7 @@ public interface CompleteModel extends NamedElement
 	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constraint> rather than just a Constraint.
 	 * The multiples are most-executable first. Returns null for none.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return null; }
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
@@ -152,7 +152,7 @@ public interface CompleteModel extends NamedElement
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackagesWithUris();
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@NonNull Orphanage getOrphanage();
 	org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);

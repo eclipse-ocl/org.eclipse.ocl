@@ -67,7 +67,7 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 public abstract class AbstractContents extends PivotUtil
 {
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static abstract class AbstractMetamodelContents extends AbstractContents
 	{
@@ -447,13 +447,15 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull Model getModel(@NonNull String modelURI) {
-		@NonNull StandardLibraryContribution standardLibraryContribution = Objects.requireNonNull(StandardLibraryContribution.REGISTRY.get(modelURI));
-		Resource resource = standardLibraryContribution.getResource();
+		StandardLibraryContribution standardLibraryContribution1 = StandardLibraryContribution.REGISTRY.get(modelURI);
+		StandardLibraryContribution standardLibraryContribution2 = Objects.requireNonNull(standardLibraryContribution1);
+		Resource resource = standardLibraryContribution2.getResource();
 		return Objects.requireNonNull((Model) resource.getContents().get(0));
 	}
 
 	protected @NonNull OrderedSetType getOrderedSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
-		return (OrderedSetType) Objects.requireNonNull(asPackage.getOwnedClass(name));
+		org.eclipse.ocl.pivot.Class ownedClass = asPackage.getOwnedClass(name);
+		return (OrderedSetType) Objects.requireNonNull(ownedClass);
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getPackage(@NonNull Model asModel, @NonNull String name) {

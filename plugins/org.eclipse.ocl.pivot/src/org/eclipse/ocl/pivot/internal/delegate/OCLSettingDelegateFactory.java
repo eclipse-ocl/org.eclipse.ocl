@@ -30,7 +30,7 @@ public class OCLSettingDelegateFactory extends AbstractOCLDelegateFactory
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public OCLSettingDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		super(delegateURI, isGlobal);

@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
  * The OCL_Pivot_Operation_EAnnotationConverter maps the Operation isTransient field to the
  * http://www.eclipse.org/OCL/Pivot/Operation isTransient detail of an EOperation.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class OCL_Pivot_Operation_EAnnotationConverter extends AbstractEAnnotationConverter
 {

@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.utilities.URIUtil;
  * http://www.eclipse.org/OCL/Import documentation detail of an EModelElement.
  * Other http://www.eclipse.org/OCL/Import details are copied.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class OCL_Import_EAnnotationConverter extends AbstractEAnnotationConverter
 {

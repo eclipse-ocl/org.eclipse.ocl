@@ -51,7 +51,7 @@ public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
 		super(delegateURI);
 	}
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public OCLQueryDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		super(delegateURI, isGlobal);

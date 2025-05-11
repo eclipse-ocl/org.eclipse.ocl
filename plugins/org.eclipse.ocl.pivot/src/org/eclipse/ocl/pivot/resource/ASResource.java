@@ -116,7 +116,7 @@ public interface ASResource extends XMIResource
 	/**
 	 * Return true if this AS exists without a corresponding CS or ES.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default boolean isASonly() {
 		return false;
@@ -149,7 +149,7 @@ public interface ASResource extends XMIResource
 	 * Specify that this AS exists without a corresponding CS or ES and so avoid invocation of preUnload()
 	 * and creation CS/ES proxies when unloading.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default void setASonly(boolean isASonly) {}
 

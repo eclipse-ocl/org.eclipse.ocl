@@ -148,7 +148,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void resetESObject() {
 		assert !(this instanceof Model) : "no ESObject for Model";
@@ -169,7 +169,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	/**
 	 * Eliminate the esObject to facilitate leaking testing after a JUnit tearDown()
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void tearDownESObject() {
 		if ((esObject != null) && eIsProxy()) {

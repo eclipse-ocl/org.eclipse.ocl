@@ -176,7 +176,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static void lazyInitializeGlobalValidationRegistry(@NonNull String oclDelegateURI, boolean forceInitialization) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// Install the 'plugin' registrations
@@ -216,7 +216,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	/**
 	 * Install a local DelegateDomain.Factory and a local ValidationDelegate.Factory
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static void lazyInitializeLocalValidationRegistry(@NonNull ResourceSet resourceSet, @NonNull String oclDelegateURI, boolean forceInitialization,
 			@Nullable FactoryFactory delegateFactoryFactory) {

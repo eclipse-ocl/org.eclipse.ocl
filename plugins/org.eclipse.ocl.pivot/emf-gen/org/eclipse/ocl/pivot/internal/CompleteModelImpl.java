@@ -104,7 +104,7 @@ import com.google.common.collect.Lists;
 public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal
 {
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected static final class ConstraintExecutabilityComparator implements Comparator<@NonNull Constraint>
 	{

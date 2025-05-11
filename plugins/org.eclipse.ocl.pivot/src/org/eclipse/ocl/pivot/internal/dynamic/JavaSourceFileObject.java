@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * JavaSourceFileObject supports use of a File as a Java compilation unit.
- * @since 1.23
+ * @since 7.0
  */
 public class JavaSourceFileObject extends SimpleJavaFileObject
 {

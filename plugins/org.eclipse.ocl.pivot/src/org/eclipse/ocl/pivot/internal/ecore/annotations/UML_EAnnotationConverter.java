@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.util.DerivedConstants;
  * The UML_EAnnotationConverter maps the NamedElement name field to the
  * http://www.eclipse.org/uml2/2.0.0/UML originalName detail of an ENamedElement.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class UML_EAnnotationConverter extends AbstractEAnnotationConverter
 {

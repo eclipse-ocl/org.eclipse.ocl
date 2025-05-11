@@ -74,14 +74,14 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * If RESOLVE_PROXY is set active, the deproxification of the PivotEObjectImpl.esObject is traced.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static final TracingOption RESOLVE_PROXY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/resolve-proxy"); //$NON-NLS-1$
 
 	/**
 	 * If SET_PROXY is set active, the proxification of the PivotEObjectImpl.esObject is traced.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static final TracingOption SET_PROXY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/set-proxy"); //$NON-NLS-1$
 
@@ -561,7 +561,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * This should be invoked before unload to ensure that the full AS context is available.
 	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		assert resourceSet != null: "ResourceSet required";			// XXX

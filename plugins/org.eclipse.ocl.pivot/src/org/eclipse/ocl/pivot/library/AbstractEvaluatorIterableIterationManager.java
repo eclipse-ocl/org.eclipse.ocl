@@ -53,7 +53,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		}
 
 		/**
-		 * @since 1.23
+		 * @since 7.0
 		 */
 		protected @NonNull Iterator<@Nullable Object> createJavaIterator() {
 			return iterableValue.iterator();
@@ -119,7 +119,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		}
 
 		/**
-		 * @since 1.23
+		 * @since 7.0
 		 */
 		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement iteratorVariable, @Nullable TypedElement coIteratorVariable) {
 			super(executor, collectionValue, iteratorVariable);

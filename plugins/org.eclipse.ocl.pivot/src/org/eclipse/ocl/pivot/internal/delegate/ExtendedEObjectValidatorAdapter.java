@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
  * ExtendedEObjectValidatorAdapter adapts a ResourceSet to enable the ExtendedEObjectValidator functionality for
  * elements of the ResourceSet and provide a cache of the delegates available to an ExtendedEObjectValidator.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class ExtendedEObjectValidatorAdapter implements Adapter
 {

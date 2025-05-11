@@ -119,7 +119,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private static final Logger logger = Logger.getLogger(AbstractEnvironmentFactory.class);
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static void diagnoseLiveEnvironmentFactories() {
 		if ((liveEnvironmentFactories != null) && !liveEnvironmentFactories.isEmpty()) {
@@ -291,7 +291,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @deprecated The addition of an EnvironmentFactoryAdapter to a ResourceSet is retained for semantic
 	 * compatibility. However the tests work fine if this method is changed to a stub.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Deprecated
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
@@ -535,7 +535,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * inflicted on unsuspecting callers such as the Sample Ecore Model Editor. Copying the user resources is undesirable and
 	 * re-using impossible since they are contained by the userResourceSet. We therefore copy the resources as URIResourceMap entries.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected @NonNull ResourceSet createExternalResourceSet(@Nullable ResourceSet userResourceSet) {
 		ResourceSetImpl externalResourceSet = new ResourceSetImpl();
@@ -1264,7 +1264,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public void unload(@NonNull CSResource csResource) {
 		ICSI2ASMapping csi2asMapping2 = csi2asMapping;

@@ -226,7 +226,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected @Nullable EStringToStringMapEntryImpl copyConstraintDetail(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint) {
 		EStructuralFeature eContainingFeature = pivotConstraint.eContainingFeature();

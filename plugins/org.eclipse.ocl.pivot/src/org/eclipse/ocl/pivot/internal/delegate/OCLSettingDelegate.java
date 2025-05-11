@@ -189,7 +189,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected @NonNull ExpressionInOCL getQuery(@NonNull EnvironmentFactory environmentFactory) {
 		ExpressionInOCL query2 = query;

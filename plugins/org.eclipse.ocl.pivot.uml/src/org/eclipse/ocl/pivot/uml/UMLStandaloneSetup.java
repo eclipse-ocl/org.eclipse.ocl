@@ -107,7 +107,7 @@ public class UMLStandaloneSetup //implements ISetup
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static void initEAnnotationConverters() {
 	//	UML_EAnnotationConverter.getInstance();		-- in generic pivot

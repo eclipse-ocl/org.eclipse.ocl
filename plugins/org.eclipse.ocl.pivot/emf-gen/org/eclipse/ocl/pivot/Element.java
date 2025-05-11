@@ -145,7 +145,7 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	/**
 	 * Return the EObject whose URI (or the externalURI for a Model) that should enable the esObject to be reloaded.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return null;
@@ -154,7 +154,7 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	/**
 	 * Return the URI of an EObject that can be used to reload the ES object.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return null;

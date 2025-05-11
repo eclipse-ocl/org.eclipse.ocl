@@ -111,7 +111,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	public static final @NonNull String STEREOTYPE_EXTENSION_PREFIX = org.eclipse.uml2.uml.Extension.STEREOTYPE_ROLE_PREFIX; //"extension_";
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull UML2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		return new Outer(resource, environmentFactory);
@@ -1164,7 +1164,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	public abstract @NonNull UML2ASDeclarationSwitch getDeclarationPass();
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public Type getNormalizedType(Type asType) {
 		if (asType instanceof NormalizedTemplateParameter) {

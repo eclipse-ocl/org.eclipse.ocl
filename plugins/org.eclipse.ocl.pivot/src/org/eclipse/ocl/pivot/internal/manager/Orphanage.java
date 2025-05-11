@@ -416,7 +416,7 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @Nullable NormalizedTemplateParameter basicGetNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
 		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();
@@ -485,7 +485,7 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @NonNull TemplateParameter templateParameter) {
 		int index = templateParameter.getTemplateParameterId().getIndex();
@@ -493,7 +493,7 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
 		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();

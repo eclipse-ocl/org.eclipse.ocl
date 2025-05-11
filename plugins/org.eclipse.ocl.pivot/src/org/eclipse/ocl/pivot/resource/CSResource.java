@@ -41,7 +41,7 @@ public interface CSResource extends Resource
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
 	 * required source visibility for debugging.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default void dispose() {}
 
@@ -59,7 +59,7 @@ public interface CSResource extends Resource
 	/**
 	 * Return the CS to AS conversion manager for use with environmentFactory.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
 		throw new UnsupportedOperationException();
@@ -85,7 +85,7 @@ public interface CSResource extends Resource
 
 	/**
 	 * Return true if this CSResource is derived from an ASResource.
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Deprecated /* @deprecated only for BaseCSResource */
 	default boolean isDerived() {
@@ -93,7 +93,7 @@ public interface CSResource extends Resource
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	default ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
 		throw new UnsupportedOperationException();
@@ -101,7 +101,7 @@ public interface CSResource extends Resource
 
 	/**
 	 * Set whether this CSResource is derived from an ASResource.
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Deprecated /* @deprecated only for BaseCSResource */
 	default void setDerived(boolean isDerived) {}

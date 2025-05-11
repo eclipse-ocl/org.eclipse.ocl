@@ -23,7 +23,7 @@ public abstract class AbstractOCLDelegateFactory
 {
 	protected final @NonNull String delegateURI;	// The URI supported by delegates created by this factory
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected final boolean isGlobal;				// true if factory installed in a global registry, false if in a DelegateResourceSetRegistry
 
@@ -38,7 +38,7 @@ public abstract class AbstractOCLDelegateFactory
 
 	/**
 	 * Construct a factory for an unknown delegate domain; often the global factory.
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	protected AbstractOCLDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {
 		this.delegateURI = delegateURI;

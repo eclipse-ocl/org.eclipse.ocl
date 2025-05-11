@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  * TemplateableElement-TemplateBinding-TemplateParameterSubstitution as a simple array
  * aligned with a TemplateParameterization.
  *
- * @since 1.23
+ * @since 7.0
  */
 public class BasicTemplateSpecialization implements TemplateParameterSubstitutions, IndexableIterable<@NonNull Type>
 {

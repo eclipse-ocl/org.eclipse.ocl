@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.NamedElement;
  * during Ecore2AS and AS2Ecore conversions.
  * It also provides a global registry of known EAnnotation-source functionalities.
  *
- * @since 1.23
+ * @since 7.0
  */
 public interface EAnnotationConverter
 {
