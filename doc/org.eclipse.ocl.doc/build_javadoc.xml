@@ -128,7 +128,7 @@
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.emf.validation.validity.ui\src"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.ui\src"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.validity\src"/>
-				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.xtext.console\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.xtext.console\src"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot\emf-gen"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot\src"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot.ui\src"/>

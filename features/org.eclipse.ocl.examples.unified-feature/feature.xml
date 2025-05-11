@@ -62,7 +62,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ocl.examples.xtext.console"
+         id="org.eclipse.ocl.xtext.console"
          download-size="0"
          install-size="0"
          version="0.0.0"

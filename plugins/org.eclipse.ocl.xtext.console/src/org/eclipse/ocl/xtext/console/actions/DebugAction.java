@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2021 Willink Transformations and others.
+ * Copyright (c) 2014, 2025 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,15 +8,18 @@
  * Contributors:
  *	E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.validity.locator;
+package org.eclipse.ocl.xtext.console.actions;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
@@ -27,36 +30,40 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
+import org.eclipse.ocl.examples.debug.vm.ui.launching.LaunchingUtils;
 import org.eclipse.ocl.examples.debug.vm.ui.utils.DebugUtil;
-import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
-import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
-import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
-import org.eclipse.ocl.examples.emf.validation.validity.ui.locator.ConstraintUILocator;
-import org.eclipse.ocl.examples.emf.validation.validity.ui.view.ValidityView;
-import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
+import org.eclipse.ocl.xtext.console.OCLConsolePage;
 import org.eclipse.ocl.xtext.console.XtextConsolePlugin;
 import org.eclipse.ocl.xtext.console.messages.ConsoleMessages;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.IProgressService;
 
-public class DelegateUIConstraintLocator extends DelegateConstraintLocator implements ConstraintUILocator
+/**
+ * DebugAction launches the OCL debugger using the currently selected object as self abd the text in the Cosle Input as the OCL to execute..
+ */
+public final class DebugAction extends Action
 {
 	/**
 	 * The DebugStarter sequences the start up of the debugger off the thread.
@@ -69,9 +76,9 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 		protected final @NonNull String expression;
 		private @Nullable ILaunch launch = null;
 
-		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
+		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
 			this.shell = shell;
-			this.environmentFactory = environmentFactory;
+			this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
 			this.contextObject = contextObject;
 			this.expression = expression;
 		}
@@ -107,8 +114,25 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 		 * @throws IOException
 		 */
 		protected @Nullable BaseCSResource loadDocument(IProgressMonitor monitor, @NonNull URI documentURI) throws Exception {
-			ResourceSet resourceSet = environmentFactory.getResourceSet();
-			Resource resource = resourceSet.getResource(documentURI, true);
+			ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+			if (contextObject != null) {
+				Resource contextResource = contextObject.eResource();
+				if (contextResource != null) {
+					ResourceSet contextResourceSet = contextResource.getResourceSet();
+					if (contextResourceSet != null) {
+						environmentFactory.addExternalResources(contextResourceSet);
+					}
+					else {
+						if (externalResourceSet instanceof ResourceSetImpl) {
+							Map<URI, Resource> uriResourceMap = ((ResourceSetImpl)externalResourceSet).getURIResourceMap();
+							if (uriResourceMap != null) {
+								uriResourceMap.put(contextResource.getURI(), contextResource);
+							}
+						}
+					}
+				}
+			}
+			Resource resource = externalResourceSet.getResource(documentURI, true);
 			if (resource instanceof BaseCSResource) {
 				return (BaseCSResource)resource;
 			}
@@ -139,6 +163,7 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 		@Override
 		public void run(IProgressMonitor monitor) {
 			monitor.beginTask(NLS.bind(ConsoleMessages.Debug_Starter, expression), 3);
+			ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 			try {
 				monitor.subTask(ConsoleMessages.Debug_ProgressCreate);
 				URI documentURI;
@@ -181,6 +206,7 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 				monitor.worked(1);
 				monitor.subTask(ConsoleMessages.Debug_ProgressLoad);
 				try {
+					LaunchingUtils.loadPerspectiveManager();
 					launch = launchDebugger(monitor, contextObject, query);
 				} catch (CoreException e) {
 					openError(ConsoleMessages.Debug_FailLaunch, e);
@@ -188,49 +214,54 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 				monitor.worked(1);
 			}
 			finally {
+				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				monitor.done();
 			}
 		}
 	}
 
-	public static @NonNull DelegateUIConstraintLocator INSTANCE = new DelegateUIConstraintLocator();
+	protected final @NonNull OCLConsolePage oclConsolePage;
 
-	@Override
-	public boolean debug(@NonNull ResultConstrainingNode resultConstrainingNode, final @NonNull ValidityView validityView, @NonNull IProgressMonitor monitor) throws CoreException {
-		EObject constrainedObject = getConstrainedObject(resultConstrainingNode);
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(constrainedObject);
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		Constraint asConstraint = null;
-		try {
-			asConstraint = getConstraint(metamodelManager, resultConstrainingNode);
-		} catch (ParserException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		if (asConstraint == null) {
-			throw new IllegalStateException("no Pivot Constraint");
-			//			return false;
-		}
-		LanguageExpression specification = asConstraint.getOwnedSpecification();
-		String expression = specification != null ? PrettyPrinter.print(specification) : "";
+	public DebugAction(@NonNull OCLConsolePage oclConsolePage) {
+		super(ConsoleMessages.Debug_Title, ImageDescriptor.createFromURL(
+			FileLocator.find(XtextConsolePlugin.getInstance().getBundle(),
+				new Path("$nl$/icons/elcl16/debug.gif"), null)));
+		this.oclConsolePage = oclConsolePage;
+		setToolTipText(ConsoleMessages.Debug_ToolTip);
+	}
 
-		ValidatableNode parent = resultConstrainingNode.getResultValidatableNode().getParent();
-		if (parent == null) {
-			return false;
-		}
-		EObject eObject = parent.getConstrainedObject();
-
-		Shell shell = validityView.getSite().getShell();
+	public ILaunch launch() {
+		Control control = oclConsolePage.getControl();
+		Shell shell = control != null ? control.getShell() : null;
 		if (shell == null) {
-			return false;
+			MessageDialog.openError(shell, ConsoleMessages.Debug_Starter, ConsoleMessages.Debug_FailStart_NoShell);
+			return null;
 		}
-		DebugStarter runnable = new DebugStarter(shell, environmentFactory, eObject, expression);
-		runnable.run(monitor);
-		return runnable.getLaunch() != null;
+		EObject contextObject = oclConsolePage.getContextObject();
+		BaseDocument editorDocument = oclConsolePage.getEditorDocument();
+		String text = editorDocument.get();
+		String expression = text.trim();
+		if (expression.length() <= 0) {
+			MessageDialog.openError(shell, ConsoleMessages.Debug_Starter, ConsoleMessages.Debug_FailStart_NoOCL);
+			return null;
+		}
+		IProgressService progressService = PlatformUI.getWorkbench().getProgressService();
+		EnvironmentFactory environmentFactory = oclConsolePage.getEnvironmentFactory(contextObject);
+		DebugStarter runnable = new DebugStarter(shell, environmentFactory, contextObject, expression);
+		try {
+			progressService.run(true, true, runnable);
+		} catch (InvocationTargetException e) {
+			Throwable targetException = e.getTargetException();
+			IStatus status = new Status(IStatus.ERROR, XtextConsolePlugin.PLUGIN_ID, targetException.getLocalizedMessage(), targetException);
+			ErrorDialog.openError(shell, ConsoleMessages.Debug_Starter, ConsoleMessages.Debug_FailStart, status);
+		} catch (InterruptedException e) {
+			/* Cancel is not a problem. */
+		}
+		return runnable.getLaunch();
 	}
 
 	@Override
-	public @NonNull ConstraintLocator getInstance() {
-		return INSTANCE;
+	public void run() {
+		launch();
 	}
 }
