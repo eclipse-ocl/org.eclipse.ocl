@@ -14,15 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.emf.validation.validity.ConstrainingNode;
-import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
-import org.eclipse.ocl.examples.emf.validation.validity.locator.EClassConstraintLocator;
-import org.eclipse.ocl.examples.emf.validation.validity.locator.EClassifierConstraintLocator;
-import org.eclipse.ocl.examples.emf.validation.validity.locator.EValidatorConstraintLocator;
-import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
-import org.eclipse.ocl.examples.validity.locator.CompleteOCLCSConstraintLocator;
-import org.eclipse.ocl.examples.validity.locator.PivotConstraintLocator;
-import org.eclipse.ocl.examples.validity.locator.UMLConstraintLocator;
+import org.eclipse.ocl.emf.validation.validity.ConstrainingNode;
+import org.eclipse.ocl.emf.validation.validity.locator.ConstraintLocator;
+import org.eclipse.ocl.emf.validation.validity.locator.EClassConstraintLocator;
+import org.eclipse.ocl.emf.validation.validity.locator.EClassifierConstraintLocator;
+import org.eclipse.ocl.emf.validation.validity.locator.EValidatorConstraintLocator;
+import org.eclipse.ocl.emf.validation.validity.manager.ValidityManager;
+import org.eclipse.ocl.validity.locator.CompleteOCLCSConstraintLocator;
+import org.eclipse.ocl.validity.locator.PivotConstraintLocator;
+import org.eclipse.ocl.validity.locator.UMLConstraintLocator;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;

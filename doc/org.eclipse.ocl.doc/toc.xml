@@ -215,11 +215,11 @@
 </topic>
 </topic>
 <topic href="help/ValidityView.html#ConstraintLocators" label="Constraint Locators">
-<topic href="help/ValidityView.html#org.eclipse.ocl.examples.emf.validation.validity.locator.EClassConstraintLocator" label="org.eclipse.ocl.examples.emf.validation.validity.locator.EClassConstraintLocator"></topic>
-<topic href="help/ValidityView.html#org.eclipse.ocl.examples.emf.validation.validity.locator.EValidatorConstraintLocator" label="org.eclipse.ocl.examples.emf.validation.validity.locator.EValidatorConstraintLocator"></topic>
-<topic href="help/ValidityView.html#org.eclipse.ocl.examples.validity.locator.DelegateUIConstraintLocator" label="org.eclipse.ocl.examples.validity.locator.DelegateUIConstraintLocator"></topic>
-<topic href="help/ValidityView.html#org.eclipse.ocl.examples.validity.locator.PivotUIConstraintLocator" label="org.eclipse.ocl.examples.validity.locator.PivotUIConstraintLocator"></topic>
-<topic href="help/ValidityView.html#org.eclipse.ocl.examples.validity.locator.UMLUIConstraintLocator" label="org.eclipse.ocl.examples.validity.locator.UMLUIConstraintLocator"></topic>
+<topic href="help/ValidityView.html#org.eclipse.ocl.emf.validation.validity.locator.EClassConstraintLocator" label="org.eclipse.ocl.emf.validation.validity.locator.EClassConstraintLocator"></topic>
+<topic href="help/ValidityView.html#org.eclipse.ocl.emf.validation.validity.locator.EValidatorConstraintLocator" label="org.eclipse.ocl.emf.validation.validity.locator.EValidatorConstraintLocator"></topic>
+<topic href="help/ValidityView.html#org.eclipse.ocl.validity.locator.DelegateUIConstraintLocator" label="org.eclipse.ocl.validity.locator.DelegateUIConstraintLocator"></topic>
+<topic href="help/ValidityView.html#org.eclipse.ocl.validity.locator.PivotUIConstraintLocator" label="org.eclipse.ocl.validity.locator.PivotUIConstraintLocator"></topic>
+<topic href="help/ValidityView.html#org.eclipse.ocl.validity.locator.UMLUIConstraintLocator" label="org.eclipse.ocl.validity.locator.UMLUIConstraintLocator"></topic>
 </topic>
 </topic>
 <topic href="help/Debugger.html" label="Debugger (new in Luna)">

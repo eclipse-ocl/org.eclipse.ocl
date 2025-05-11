@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ocl.examples.emf.validation.validity.ui.view.SelectionUtil;
+import org.eclipse.ocl.emf.validation.validity.ui.view.SelectionUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;

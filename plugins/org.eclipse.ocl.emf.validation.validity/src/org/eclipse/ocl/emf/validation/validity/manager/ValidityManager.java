@@ -1,0 +1,725 @@
+/*******************************************************************************
+ * Copyright (c) 2013, 2025 CEA LIST and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *	E.D.Willink (CEA LIST) - initial API and implementation
+ *  Obeo - Optimize View Input Refresh
+ *******************************************************************************/
+package org.eclipse.ocl.emf.validation.validity.manager;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.BasicMonitor;
+import org.eclipse.emf.common.util.Monitor;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.emf.validation.validity.AbstractNode;
+import org.eclipse.ocl.emf.validation.validity.ConstrainingNode;
+import org.eclipse.ocl.emf.validation.validity.LeafConstrainingNode;
+import org.eclipse.ocl.emf.validation.validity.Result;
+import org.eclipse.ocl.emf.validation.validity.ResultConstrainingNode;
+import org.eclipse.ocl.emf.validation.validity.ResultSet;
+import org.eclipse.ocl.emf.validation.validity.ResultValidatableNode;
+import org.eclipse.ocl.emf.validation.validity.RootNode;
+import org.eclipse.ocl.emf.validation.validity.Severity;
+import org.eclipse.ocl.emf.validation.validity.ValidatableNode;
+import org.eclipse.ocl.emf.validation.validity.locator.ConstraintLocator;
+import org.eclipse.ocl.emf.validation.validity.plugin.ValidityPlugin;
+import org.eclipse.ocl.emf.validation.validity.utilities.IVisibilityFilter;
+import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidatorAdapter;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.WeakOCLReference;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.labels.ILabelGenerator;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
+import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
+
+public class ValidityManager
+{
+	private static final @NonNull Map<@Nullable String, @NonNull List<ConstraintLocator.@NonNull Descriptor>> constraintLocatorDescriptors = new HashMap<>();
+	private static final @NonNull Map<@NonNull String, @NonNull List<@NonNull ConstraintLocator>> constraintLocators = new HashMap<>();
+
+	public static final @NonNull TracingOption ANALYZE_RESOURCE = new TracingOption(ValidityPlugin.PLUGIN_ID, "analyze/resource");
+	public static final @NonNull TracingOption BUILD_TYPE = new TracingOption(ValidityPlugin.PLUGIN_ID, "build/type");
+	public static final @NonNull TracingOption CREATE_CONSTRAINING = new TracingOption(ValidityPlugin.PLUGIN_ID, "create/constraining");
+	public static final @NonNull TracingOption CREATE_RESULT = new TracingOption(ValidityPlugin.PLUGIN_ID, "create/result");
+	public static final @NonNull TracingOption CREATE_VALIDATABLE = new TracingOption(ValidityPlugin.PLUGIN_ID, "create/validatable");
+	public static final @NonNull TracingOption LOCATE_RESOURCE = new TracingOption(ValidityPlugin.PLUGIN_ID, "locate/resource");
+
+	public static final @NonNull Map<ILabelGenerator.@NonNull Option<?>, @Nullable Object> LABEL_OPTIONS = new HashMap<>();
+	static {
+		LABEL_OPTIONS.put(ILabelGenerator.Builder.SHOW_QUALIFIER, null);
+	}
+
+	private final @NonNull LinkedHashSet<@NonNull Resource> newResources = new LinkedHashSet<>();
+
+	private final @NonNull Set<@NonNull Resource> oldResources = new HashSet<>();
+
+	/**
+	 * This add the corresponding constraint locator if it exists in the list of
+	 * defined descriptors.
+	 *
+	 * @param nsURI
+	 *            the nsURI of the validated resource
+	 * @param constraintLocator
+	 *            the corresponding constraint locator
+	 */
+	public static synchronized void addConstraintLocator(/*@NonNull*/ String nsURI, ConstraintLocator.@NonNull Descriptor constraintLocator) {
+		List<ConstraintLocator.@NonNull Descriptor> list = constraintLocatorDescriptors.get(nsURI);
+		if (list == null) {
+			list = new ArrayList<>();
+			constraintLocatorDescriptors.put(nsURI, list);
+		}
+		if (!list.contains(constraintLocator)) {
+			list.add(constraintLocator);
+			constraintLocators.remove(nsURI);
+		}
+	}
+
+	public static synchronized @Nullable ConstraintLocator getConstraintLocator(@NonNull EObject validatableObject) {
+		return getConstraintLocator(validatableObject.eResource());
+	}
+
+	public static synchronized @Nullable ConstraintLocator getConstraintLocator(@Nullable Resource validatableResource) {
+		if (validatableResource != null) {
+			for (@NonNull EObject validatableObject : ClassUtil.nullFree(validatableResource.getContents())) {
+				EClass eClass = validatableObject.eClass();
+				if (eClass != null) {
+					EPackage ePackage = eClass.getEPackage();
+					if (ePackage != null) {
+						String nsURI = ePackage.getNsURI();
+						if (nsURI != null) {
+							List<@NonNull ConstraintLocator> list = getConstraintLocators(nsURI);
+							if ((list != null) && (list.size() > 0)) {
+								return list.get(0);
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public static synchronized @NonNull List<@NonNull ConstraintLocator> getConstraintLocators(@NonNull String nsURI) {
+		List<@NonNull ConstraintLocator> list = constraintLocators.get(nsURI);
+		if (list == null) {
+			list = new ArrayList<>();
+			constraintLocators.put(nsURI, list);
+			List<ConstraintLocator.@NonNull Descriptor> descriptors = constraintLocatorDescriptors.get(nsURI);
+			if (descriptors == null) {
+				descriptors = constraintLocatorDescriptors.get(null);
+			}
+			if (descriptors != null) {
+				for (ConstraintLocator.@NonNull Descriptor descriptor : descriptors) {
+					ConstraintLocator constraintLocator = descriptor.getConstraintLocator();
+					ConstraintLocator constraintLocatorInstance = constraintLocator.getInstance();
+					if (!list.contains(constraintLocatorInstance)) {
+						list.add(constraintLocatorInstance);
+					}
+				}
+			}
+		}
+		return list;
+	}
+
+	protected final @NonNull ComposedAdapterFactory adapterFactory;
+	protected final @NonNull Map<@NonNull ResultValidatableNode, @NonNull Result> resultsMap = new HashMap<>();
+	private Map<Object, Object> context = null;
+	private @Nullable ValidityModel model = null;
+	protected @Nullable ResultSet lastResultSet = null;
+	private boolean forceRefresh = false;
+	private @Nullable Object lastInput = null;
+	private boolean ignoreConstraintlessValidatableNodes = true;
+
+	public ValidityManager() {
+		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+	}
+
+	public void addConstrainingFilter(@NonNull IVisibilityFilter filter) {
+		ValidityModel model2 = model;
+		if (model2 != null) {
+			model2.addConstrainingFilter(filter);
+		}
+	}
+
+	public void addFilteredSeverity(@NonNull Severity severity) {
+		ValidityModel model2 = model;
+		if (model2 != null) {
+			model2.addFilteredSeverity(severity);
+		}
+	}
+
+	public void addValidatableFilter(@NonNull IVisibilityFilter filter) {
+		ValidityModel model2 = model;
+		if (model2 != null) {
+			model2.addValidatableFilter(filter);
+		}
+	}
+
+	protected void appendResourceURI(StringBuilder s, EObject eObject) {
+		EObject eContainer = eObject.eContainer();
+		if (eContainer == null) {
+			Resource eResource = eObject.eResource();
+			if (eResource != null) {
+				URI uri = eResource.getURI();
+				if (uri != null) {
+					ResourceSet resourceSet = eResource.getResourceSet();
+					if (resourceSet == null) {				// Probably a generated package
+						s.append(" in " + uri);
+					}
+					else {
+						Resource firstResource = resourceSet.getResources().get(0);
+						URI firstURI = firstResource.getURI();
+						URI resolvedURI = URIUtil.deresolve(uri, firstURI);
+						if (resolvedURI.segmentCount() <= 0) {
+							s.append(" in " + uri.lastSegment());
+						}
+						else if (!resolvedURI.toString().equals(s.toString())) {		// Skip redundant repetition of name for e.g. CompleteOCLDocumentCS
+							s.append(" in " + resolvedURI);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public @NonNull Map<Object, Object> createDefaultContext() {
+		Map<Object, Object> context2 = context;
+		if (context2 == null) {		// Local ValidationRegistry context normally set by setInput().
+			context = context2 = Diagnostician.INSTANCE.createDefaultContext();
+			assert context2 != null;
+		}
+		return context2;
+	}
+
+	@SuppressWarnings("null")
+	public @NonNull BasicDiagnostic createDefaultDiagnostic(@NonNull EObject eObject) {
+		return Diagnostician.INSTANCE.createDefaultDiagnostic(eObject);
+	}
+
+	protected @NonNull ValidityModel createModel(@NonNull Collection<@NonNull Resource> newResources) {
+		return new ValidityModel(this, newResources);
+	}
+
+	public /*synchronized*/ @Nullable ResultSet createResultSet(@Nullable IProgressMonitor monitor) {
+		ValidityModel model2 = model;
+		return model2 != null ? model2.createResultSet(monitor) : null;
+	}
+
+	public void dispose() {
+		model = null;
+		lastResultSet = null;
+		resultsMap.clear();
+	}
+
+	public void forceRefresh() {
+		this.forceRefresh = true;
+		setInput(lastInput, new BasicMonitor());
+		this.forceRefresh = false;
+	}
+
+	protected @Nullable Set<@NonNull ConstraintLocator> gatherConstraintLocators(@Nullable Set<@NonNull ConstraintLocator> set, @NonNull List<@NonNull ConstraintLocator> list) {
+		if (set == null) {
+			set = new HashSet<>();
+		}
+		set.addAll(list);
+		return set;
+	}
+
+	public @NonNull Iterable<@NonNull ConstraintLocator> getActiveConstraintLocators(@NonNull String nsURI) {
+		return getConstraintLocators(nsURI);
+	}
+
+	public @NonNull AdapterFactory getAdapterFactory() {
+		return adapterFactory;
+	}
+
+	private void getAllConstrainingNodeResults(@NonNull List<@NonNull Result> results, @NonNull ConstrainingNode element) {
+		if (element instanceof ResultConstrainingNode) {
+			ResultValidatableNode resultValidatableNode = ((ResultConstrainingNode)element).getResultValidatableNode();
+			Result result = resultsMap.get(resultValidatableNode);
+			if (result != null) {
+				results.add(result);
+			}
+		}
+		else {
+			for (@NonNull ConstrainingNode child : ClassUtil.nullFree(element.getChildren())) {
+				getAllConstrainingNodeResults(results, child);
+			}
+		}
+	}
+
+	private void getAllValidatableNodeResults(@NonNull List<@NonNull Result> results, @NonNull ValidatableNode element) {
+		if (element instanceof ResultValidatableNode) {
+			ResultValidatableNode resultValidatableNode = (ResultValidatableNode)element;
+			Result result = resultsMap.get(resultValidatableNode);
+			if (result != null) {
+				results.add(result);
+			}
+		}
+		else {
+			for (@NonNull ValidatableNode child : ClassUtil.nullFree(element.getChildren())) {
+				getAllValidatableNodeResults(results, child);
+			}
+		}
+	}
+
+	/**
+	 * Return the ConstrainingNode node for EObject creating any ConstrainingNodes that
+	 * are required to ensure that the returned ConstrainingNode is installed in the root.
+	 */
+	public @NonNull ConstrainingNode getConstrainingNode(@NonNull EObject eObject) {
+		ValidityModel model2 = model;
+		if (model2 == null) {
+			throw new IllegalStateException();
+		}
+		return model2.getConstrainingNode(eObject);
+	}
+
+	private @NonNull List<@NonNull ConstrainingNode> getConstrainingNodeAncestors(@NonNull ConstrainingNode constraining) {
+		ConstrainingNode ancestor = constraining.getParent();
+		List<@NonNull ConstrainingNode> ancestors = new ArrayList<>();
+		while (ancestor != null) {
+			ancestors.add(ancestor);
+			ancestor = ancestor.getParent();
+		}
+		return ancestors;
+	}
+
+	public @NonNull List<@NonNull Result> getConstrainingNodeResults(@NonNull ConstrainingNode element) {
+		List<@NonNull Result> results = new ArrayList<>();
+		if (element.getLabel().startsWith("EOperation")) {
+			getAllConstrainingNodeResults(results, element);
+		}
+		else {
+			getAllConstrainingNodeResults(results, element);
+		}
+		return results;
+	}
+
+	/**
+	 * Returns the eObject uri
+	 *
+	 * @param eObject
+	 * @return the eObject uri
+	 */
+	public @NonNull ConstrainingURI getConstrainingURI(@NonNull EObject eObject) {
+		ConstraintLocator constraintLocator = ValidityManager.getConstraintLocator(eObject);
+		if (constraintLocator != null) {
+			ConstrainingURI uri = constraintLocator.getConstrainingURI(eObject);
+			if (uri != null) {
+				return uri;
+			}
+		}
+		@NonNull URI uri = EcoreUtil.getURI(eObject);
+		return new ConstrainingURI(uri);
+	}
+
+	public @NonNull String getConstrainingLabel(@NonNull EObject eObject) {
+		StringBuilder s = new StringBuilder();
+		s.append(ILabelGenerator.Registry.INSTANCE.labelFor(eObject, LABEL_OPTIONS));
+		appendResourceURI(s, eObject);
+		return s.toString();
+	}
+
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, lastInput instanceof ResourceSet ? (ResourceSet)lastInput : null);
+		}
+		return environmentFactory;
+	}
+
+	public @Nullable ValidityModel getModel() {
+		return model;
+	}
+
+	public @Nullable RootNode getRootNode() {
+		ValidityModel model2 = model;
+		return model2 != null ? model2.getRootNode() : null;
+	}
+
+	/**
+	 * Returns the eObject uri
+	 */
+	public @NonNull TypeURI getTypeURI(@NonNull EObject constrainingObject) {
+		for (EObject eContainer = constrainingObject; eContainer != null; eContainer = eContainer.eContainer()) {
+			if (eContainer instanceof EPackage) {
+				EPackage constrainingEPackage = (EPackage) eContainer;
+				String nsURI = constrainingEPackage.getNsURI();
+				if ((nsURI != null) && !"".equals(nsURI)) {
+					Resource eResource = constrainingEPackage.eResource();
+					if (eResource != null) {
+						String fragment = eResource.getURIFragment(constrainingObject);
+						URI uri = URI.createURI(nsURI).appendFragment(fragment);
+						return new TypeURI(uri);
+					}
+				}
+			}
+		}
+		EClass eClass = constrainingObject.eClass();
+		if (eClass != null) {
+			EPackage ePackage = eClass.getEPackage();
+			if (ePackage != null) {
+				String nsURI = ePackage.getNsURI();
+				if (nsURI != null) {
+					List<@NonNull ConstraintLocator> constraintLocators = getConstraintLocators(nsURI);
+					if (constraintLocators != null) {
+						for (@NonNull ConstraintLocator constraintLocator : constraintLocators) {
+							TypeURI uri = constraintLocator.getTypeURI(this, constrainingObject);
+							if (uri != null) {
+								return uri;
+							}
+						}
+					}
+				}
+			}
+		}
+		@NonNull URI uri = EcoreUtil.getURI(constrainingObject);
+		return new TypeURI(uri);
+	}
+
+	public @NonNull String getValidatableLabel(@NonNull EObject eObject, boolean withContext) {
+		StringBuilder s = new StringBuilder();
+		s.append(LabelUtil.SIMPLE_NAME_REGISTRY.labelFor(eObject, LABEL_OPTIONS));
+		/*		if (eObject instanceof ENamedElement) {
+			s.append(((ENamedElement)eObject).getName());
+		}
+		else {
+			IItemLabelProvider itemLabelProvider = (IItemLabelProvider)adapterFactory.adapt(eObject, IItemLabelProvider.class);
+			String label = itemLabelProvider != null ? itemLabelProvider.getText(eObject) : eObject.toString();
+			s.append(label != null ? label : "");
+		}
+		if (eObject instanceof ETypedElement) {
+			EClassifier eType = ((ETypedElement)eObject).getEType();
+			s.append(" : " + eType.getName());
+		}
+		else {
+			EClass eClass = eObject.eClass();
+			if (eClass != null) {
+				s.append(" | " + eClass.getName());
+			}
+		} */
+		if (withContext) {
+			appendResourceURI(s, eObject);
+		}
+		return s.toString();
+	}
+
+	public @NonNull List<@NonNull Result> getValidatableNodeResults(@NonNull ValidatableNode element) {
+		List<@NonNull Result> results = new ArrayList<>();
+		getAllValidatableNodeResults(results, element);
+		return results;
+	}
+
+	/**
+	 * Returns the eObject uri
+	 *
+	 * @param eObject
+	 * @return the eObject uri
+	 */
+	public @NonNull ValidatableURI getValidatableURI(@NonNull EObject eObject) {
+		@NonNull URI uri = EcoreUtil.getURI(eObject);
+		return new ValidatableURI(uri);
+	}
+
+
+
+	/*	public void refreshModel(List<AbstractNode> grayedValidatableNodes,
+			List<AbstractNode> grayedConstrainingNodes) {
+		model.refreshModel(grayedValidatableNodes, grayedConstrainingNodes);
+		RootNode rootNode = validityModel.getRootNode();
+		if (rootNode != null) {
+//			System.out.format(Thread.currentThread().getName() + " %3.3f Redraw compute grays\n", (System.currentTimeMillis() - start) * 0.001);
+			for (AbstractNode abstractNode : rootNode.getConstrainingNodes()) {
+				abstractNode.getGrayedElements(grayedConstrainingNodes);
+			}
+			for (AbstractNode abstractNode : rootNode.getValidatableNodes()) {
+				abstractNode.getGrayedElements(grayedValidatableNodes);
+			}
+		}
+//		System.out.format(Thread.currentThread().getName() + " %3.3f Redraw schedule main\n", (System.currentTimeMillis() - start) * 0.001);
+
+
+	} */
+
+	protected @Nullable List<@NonNull Result> installResultSet(@NonNull ResultSet resultSet, @Nullable IProgressMonitor monitor) {
+		lastResultSet = resultSet;
+		resultsMap.clear();
+		RootNode rootNode = getRootNode();
+		if (rootNode == null) {
+			return null;
+		}
+		resetResults(ClassUtil.nullFree(rootNode.getValidatableNodes()));
+		resetResults(ClassUtil.nullFree(rootNode.getConstrainingNodes()));
+		List<@NonNull Result> results = ClassUtil.nullFree(resultSet.getResults());
+		for (@NonNull Result result : results) {
+			ResultValidatableNode resultValidatableNode = result.getResultValidatableNode();
+			assert resultValidatableNode != null;
+			resultsMap.put(resultValidatableNode, result);
+			if ((monitor != null) && monitor.isCanceled()) {
+				return null;
+			}
+		}
+		return results;
+	}
+
+	public boolean isIgnoreConstraintlessValidatableNodes() {
+		return ignoreConstraintlessValidatableNodes;
+	}
+
+	public void removeConstrainingFilter(@NonNull IVisibilityFilter filter) {
+		ValidityModel model2 = model;
+		if (model2 != null) {
+			model2.removeConstrainingFilter(filter);
+		}
+	}
+
+	public void removeFilteredSeverity(@NonNull Severity severity) {
+		ValidityModel model2 = model;
+		if (model2 != null) {
+			model2.removeFilteredSeverity(severity);
+		}
+	}
+
+	public void removeValidatableFilter(@NonNull IVisibilityFilter filter) {
+		ValidityModel model2 = model;
+		if (model2 != null) {
+			model2.removeValidatableFilter(filter);
+		}
+	}
+
+	private void resetResults(@NonNull List<@NonNull ? extends AbstractNode> nodes) {
+		for (@NonNull AbstractNode node : new ArrayList<>(nodes)) {
+			resetResults(ClassUtil.nullFree(node.getChildren()));
+			node.setWorstResult(null);
+		}
+	}
+
+	public /*@NonNull*/ IStatus runValidation(@Nullable Set<@NonNull ResultConstrainingNode> selectedNodes, @Nullable IProgressMonitor monitor) {
+		final ResultSet resultSet = createResultSet(monitor);
+		if (resultSet == null) {
+			return Status.CANCEL_STATUS;
+		}
+		List<@NonNull Result> results = installResultSet(resultSet, monitor);
+		if (results == null) {
+			return Status.CANCEL_STATUS;
+		}
+		Monitor emfMonitor = monitor != null ? BasicMonitor.toMonitor(monitor) : null;
+		try {
+			if (monitor != null) {
+				monitor.beginTask("Constraint Validation", results.size());
+			}
+			int i = 0;
+			for (@NonNull Result result : results) {
+				if ((monitor != null) && monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				if ((selectedNodes == null) || selectedNodes.contains(result.getResultConstrainingNode())) {
+					boolean refreshLabels = (i % 100) == 0;
+					try {
+						ValidatableNode validatable = result.getValidatableNode();
+						if ((monitor != null) && refreshLabels) {
+							monitor.setTaskName(i + "/" + results.size() + ": " + validatable.toString());
+						}
+						ValidatableNode validatableParent = validatable.getParent();
+						LeafConstrainingNode constraint = result.getLeafConstrainingNode();
+
+						if (constraint != null) {
+							List<@NonNull ConstrainingNode> constrainingAncestors = getConstrainingNodeAncestors(constraint);
+
+							boolean isConstrainingNodeEnabled = true;
+							for (@NonNull ConstrainingNode constrainingAncestor : constrainingAncestors) {
+								if (!constrainingAncestor.isEnabled()) {
+									isConstrainingNodeEnabled = false;
+									break;
+								}
+							}
+
+							boolean isEnabledForValidation = false;
+							if (isConstrainingNodeEnabled) {
+								if (validatable instanceof ResultValidatableNode) {
+									if (validatableParent != null && validatableParent.isEnabled()) {
+										isEnabledForValidation = true;
+									}
+								} else {
+									isEnabledForValidation = true;
+								}
+							}
+
+							if (isEnabledForValidation) {
+								ConstraintLocator constraintLocator = constraint.getConstraintLocator();
+								constraintLocator.validate(result, this, emfMonitor);
+							} else {
+								result.setSeverity(Severity.UNKNOWN);
+							}
+						} else {
+							result.setSeverity(Severity.UNKNOWN);
+						}
+					} catch (Exception e) {
+						result.setException(e);
+						result.setSeverity(Severity.FATAL);
+					}
+					finally {
+						if ((monitor != null) && refreshLabels) {
+							monitor.worked(100);
+						}
+						i++;
+					}
+				}
+			}
+			if (context != null) {
+				Object oclRef = context.get(WeakOCLReference.class);
+				if (oclRef instanceof WeakOCLReference) {
+					OCL ocl = ((WeakOCLReference)oclRef).get();
+					if (ocl != null) {
+						ocl.dispose();
+					}
+				}
+			}
+			return Status.OK_STATUS;
+		}
+		finally {
+			if (monitor != null) {
+				monitor.done();
+			}
+		}
+	}
+
+	public void setIgnoreConstraintlessValidatableNodes(boolean ignoreConstraintlessValidatableNodes) {
+		this.ignoreConstraintlessValidatableNodes = ignoreConstraintlessValidatableNodes;
+	}
+
+	public void setInput(Object newInput) {
+		setInput(newInput, new BasicMonitor());
+	}
+
+	public void setInput(Object newInput, @NonNull Monitor monitor) {
+		monitor.beginTask("Selective Validation", ValidityModel.WORK_FOR_ALL_SET_INPUT);
+		monitor.setTaskName("Clean Up");
+		ResourceSet selectedResourceSet = null;
+		Resource selectedResource = null;
+		EObject selectedObject = null;
+		newResources.clear();
+		lastInput = newInput;
+
+		if (newInput == null) {
+			ThreadLocalExecutor.resetEnvironmentFactory();
+			oldResources.clear();
+			model = null;
+			return;
+		}
+
+		if (newInput instanceof ResourceSet) {
+			selectedResourceSet = (ResourceSet) newInput;
+		} else if (newInput instanceof Resource) {
+			selectedResource = (Resource) newInput;
+			selectedResourceSet = selectedResource.getResourceSet();
+			if (selectedResourceSet == null) {
+				List<@NonNull EObject> eContents = ClassUtil.nullFree(selectedResource.getContents());
+				for (int j = 0; j < eContents.size(); j++) {		// Tolerate domain growth without a CME
+					EObject eObject = ClassUtil.nonNull(eContents.get(j));
+					EcoreUtil.resolveAll(eObject);
+				}
+				newResources.add(selectedResource);
+			}
+		} else if (newInput instanceof EObject) {
+			selectedObject = (EObject) newInput;
+			selectedResource = selectedObject.eResource();
+			if (selectedResource != null) {
+				selectedResourceSet = selectedResource.getResourceSet();
+			}
+		}
+
+		if (selectedResourceSet != null) {
+			synchronized (selectedResourceSet) {
+				ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(selectedResourceSet);
+				context = new ValidationContext(validationRegistry);
+				List<@NonNull Resource> selectedResources = ClassUtil.nullFree(selectedResourceSet.getResources());
+				for (int i = 0; i < selectedResources.size(); i++) {	// Tolerate domain growth without a CME
+					Resource eResource = ClassUtil.nonNull(selectedResources.get(i));
+					List<@NonNull EObject> eContents = eResource.getContents();
+					for (int j = 0; j < eContents.size(); j++) {		// Tolerate domain growth without a CME
+						EObject eObject = eContents.get(j);
+						EcoreUtil.resolveAll(eObject);
+					}
+				}
+				newResources.addAll(ClassUtil.nullFree(selectedResourceSet.getResources()));
+				ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = ExtendedEObjectValidatorAdapter.basicGetAdapter(selectedResourceSet);
+				if (extendedEObjectValidatorAdapter != null) {
+					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(selectedResourceSet);
+					ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+					UniqueList<@NonNull URI> delegateURIs = extendedEObjectValidatorAdapter.getDelegateURIs();
+					for (@NonNull URI delegateURI : delegateURIs) {
+						Resource resource = externalResourceSet.getResource(delegateURI, true);
+						if ((resource != null) && (resource.getResourceSet() != null)) {
+							newResources.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (newResources.isEmpty()) {
+			return;
+		}
+
+		if (!forceRefresh && !oldResources.isEmpty() && oldResources.equals(newResources)) {
+			return;
+		}
+
+	//	ThreadLocalExecutor.resetEnvironmentFactory();
+		ThreadLocalExecutor.setExecutor(null);
+		monitor.worked(ValidityModel.WORK_FOR_CLEAN_UP);
+		monitor.setTaskName("Creating model");
+		ValidityModel model2 = model = createModel(newResources);
+		monitor.worked(ValidityModel.WORK_FOR_CREATE_MODEL);
+		model2.init(monitor);
+
+		oldResources.clear();
+		if (!monitor.isCanceled()) {
+			oldResources.addAll(newResources);
+		}
+	}
+}
