@@ -13,9 +13,9 @@
  *******************************************************************************/
 module GenerateAutoCSModels
 
-import org.eclipse.ocl.examples.build.*
-import org.eclipse.ocl.examples.build.utilities.*
-import org.eclipse.ocl.examples.build.xtend.*
+import org.eclipse.ocl.build.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.ocl.build.xtend.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
@@ -37,7 +37,7 @@ Workflow {
     bean = EcoreGenModelSetup { resourceSet = resourceSet }
 
     component = CopyAndRename {
-    	script = "org.eclipse.ocl.examples.build.GenerateAutoCSModels.mwe2"
+    	script = "org.eclipse.ocl.build.GenerateAutoCSModels.mwe2"
     	fromProject = "../../../org.eclipse.qvtd/plugins/org.eclipse.qvtd.runtime/src"
     	toProject = "../../../org.eclipse.ocl/plugins/org.eclipse.ocl.pivot/src-gen"
     	packageCopy = {
@@ -62,7 +62,7 @@ Workflow {
     	}
     }
     component = CopyAndRename {
-    	script = "org.eclipse.ocl.examples.build.GenerateAutoCSModels.mwe2"
+    	script = "org.eclipse.ocl.build.GenerateAutoCSModels.mwe2"
     	fromProject = "../../../org.eclipse.qvtd/plugins/org.eclipse.qvtd.runtime/src"
     	toProject = "../../../org.eclipse.ocl/plugins/org.eclipse.ocl.xtext.base/src-gen"
     	packageCopy = {
@@ -88,7 +88,7 @@ Workflow {
     }
     
     //  Generate the CS2AS CGed transformation for BaseCS
-    component = org.eclipse.ocl.examples.build.utilities.GenerateCGedQVTiTransformation auto-inject { 
+    component = org.eclipse.ocl.build.utilities.GenerateCGedQVTiTransformation auto-inject { 
 		oclDocURI = "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS2AS.ocl"
 		// FIXME the following only works if the output project are in the same FS folder. Better use a projectName and improve generator 
 		javaFolder = "../../plugins/org.eclipse.ocl.xtext.base/src-gen"
@@ -104,7 +104,7 @@ Workflow {
 	}
 	
 	// Generate the CS2AS CGed transformation for EssentialOCLCS
-	component = org.eclipse.ocl.examples.build.utilities.GenerateCGedQVTiTransformation auto-inject {
+	component = org.eclipse.ocl.build.utilities.GenerateCGedQVTiTransformation auto-inject {
 		oclDocURI = "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS2AS.ocl"
 		extendedOclDocURIs = "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS2AS.ocl"
 		// FIXME the following only works if the output project are in the same FS folder. Better use a projectName and improve generator 

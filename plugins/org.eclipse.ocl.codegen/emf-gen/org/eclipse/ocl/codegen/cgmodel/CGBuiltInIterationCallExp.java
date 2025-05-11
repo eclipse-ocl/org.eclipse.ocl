@@ -57,7 +57,7 @@ public interface CGBuiltInIterationCallExp extends CGIterationCallExp {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$17
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$Nul$17
 	void setNonNull();
 
 } // CGWhileExp

@@ -31,6 +31,6 @@ public interface CGAccumulator extends CGIterator {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$38
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$38
 	void setNonInvalid(boolean nonInvalid);
 } // CGAccumulator

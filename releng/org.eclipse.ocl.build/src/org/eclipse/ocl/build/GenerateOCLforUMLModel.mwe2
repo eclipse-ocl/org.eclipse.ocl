@@ -1,0 +1,30 @@
+/*******************************************************************************
+ * Copyright (c) 2015 Willink Transformations Ltd., University of York and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ * ----------------------
+ * See Bug 570012 - regeration requires three minor warnings fixups to accommodate the not worth the effort fixes to
+ * OCLBuildUMLGenPackageGeneratorAdapter to support static templates.
+ * 
+ *******************************************************************************/
+module GenerateOCLforUMLModels
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.ocl.build.xtend.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = ProjectMapSetup{ resourceSet = resourceSet}
+    bean = UMLGenModelSetup { resourceSet = resourceSet }
+
+	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+    	genModel = "/org.eclipse.ocl.pivot.uml/model/OCLforUML.profile.genmodel"
+    }
+}

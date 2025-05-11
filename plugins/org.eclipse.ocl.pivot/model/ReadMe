@@ -1,5 +1,5 @@
 The model structure of the Pivot model is defined in PivotStuctural.ecore complemented by constraints in Pivot.ocl.
-The /org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/GeneratePivotModel.mwe2
+The /org.eclipse.ocl.build/src/org/eclipse/ocl/build/GeneratePivotModel.mwe2
 script supervises their merge to Pivot.ecore and the generation of the Java via Pivot.genmodel.
 
 Vintage UML-aligned content below...
@@ -33,5 +33,5 @@ A UML Editor->Package->Merge... is saved as Pivot.merged.uml
 Pivot.genmodel is Reloaded from Pivot.merged.uml to produce pivot.ecore.
 -- the genmodel reload shows pivot as the ONLY package.
 
-This is all automated by the /org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/GeneratePivotModel.mwe2
+This is all automated by the /org.eclipse.ocl.build/src/org/eclipse/ocl/build/GeneratePivotModel.mwe2
 workflow.

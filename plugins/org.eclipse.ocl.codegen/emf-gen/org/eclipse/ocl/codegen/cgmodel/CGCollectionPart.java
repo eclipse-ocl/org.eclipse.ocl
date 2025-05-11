@@ -101,7 +101,7 @@ public interface CGCollectionPart extends CGValuedElement {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$18
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$18
 	boolean isRange();
 
 } // CGCollectionPart

@@ -10,8 +10,8 @@
  *******************************************************************************
  * This code is 100% auto-generated
  * from: /org.eclipse.ocl.pivot/model/Pivot.ecore
- * by: org.eclipse.ocl.examples.build.xtend.GenerateOCLmetamodel.xtend
- * and: org.eclipse.ocl.examples.build.GeneratePivotMetamodel.mwe2
+ * by: org.eclipse.ocl.build.xtend.GenerateOCLmetamodel.xtend
+ * and: org.eclipse.ocl.build.GeneratePivotMetamodel.mwe2
  *
  * Do not edit it.
  *******************************************************************************/
@@ -213,7 +213,7 @@ public class OCLmetamodel extends ASResourceImpl
 		/**
 		 * Overridden to avoid computing proxies for the shared instance.
 		 *
-		 * @since 1.23
+		 * @since 7.0
 		 */
 		@Override
 		public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
