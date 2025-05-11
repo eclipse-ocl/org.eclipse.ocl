@@ -18,12 +18,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.ocl</groupId>
   <artifactId>org.eclipse.ocl.examples.xtext.tests</artifactId>
-  <version>3.23.0-SNAPSHOT</version>
+  <version>7.0.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <parent>
     <groupId>org.eclipse.ocl</groupId>
     <artifactId>org.eclipse.ocl.tests-folder</artifactId>
-    <version>6.23.0-SNAPSHOT</version>
+    <version>7.0.0-SNAPSHOT</version>
   </parent>
   <build>
     <plugins>

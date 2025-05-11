@@ -15,7 +15,7 @@
   </prerequisites-->
   <groupId>org.eclipse.ocl</groupId>
   <artifactId>org.eclipse.ocl.compatibility.tests</artifactId>
-  <version>6.23.0-SNAPSHOT</version>
+  <version>7.0.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <licenses>
     <license>
@@ -158,7 +158,7 @@
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
               <artifactId>org.eclipse.ocl.compatibility.tests</artifactId>
-              <version>6.23.0-SNAPSHOT</version>
+              <version>7.0.0-SNAPSHOT</version>
               <classifier>targetPlatforms/${targetRelease}</classifier>
             </artifact>
           </target>
