@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
-import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
@@ -36,7 +36,7 @@ import org.eclipse.ocl.pivot.utilities.Option;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 
-public abstract class ExecutorManager implements ExecutorExtension
+public abstract class ExecutorManager implements Executor
 {
 	// This is the same as HashMap's default initial capacity
 	private static final int DEFAULT_REGEX_CACHE_LIMIT = 16;
@@ -339,16 +339,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 */
 	@Override
 	public void popEvaluationEnvironment() {}
-
-	/**
-	 * @since 1.1
-	 * @deprecated use TypedElement argument
-	 */
-	@Deprecated
-	@Override
-	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
-		return nullEvaluationEnvironment;
-	}
 
 	/**
 	 * @since 1.3

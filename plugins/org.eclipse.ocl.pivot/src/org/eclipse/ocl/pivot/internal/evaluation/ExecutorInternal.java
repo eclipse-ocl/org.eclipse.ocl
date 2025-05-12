@@ -33,7 +33,7 @@ public interface ExecutorInternal extends Executor
 	/**
 	 * @since 1.3
 	 */
-	public interface ExecutorInternalExtension extends ExecutorInternal,Executor.ExecutorExtension
+	public interface ExecutorInternalExtension extends ExecutorInternal
 	{
 		@Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues);
 		@NonNull EvaluationCache getEvaluationCache();

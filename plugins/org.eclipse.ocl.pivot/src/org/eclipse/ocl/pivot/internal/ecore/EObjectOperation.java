@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -61,7 +60,7 @@ public class EObjectOperation extends AbstractOperation
 			}
 		}
 		ExpressionInOCL query = specification;
-		EvaluationEnvironment nestedEvaluationEnvironment = ((ExecutorExtension)executor).pushEvaluationEnvironment(query, caller);
+		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(query, caller);
 		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(query.getOwnedContext()), boxedSourceAndArgumentValues[0]);
 		List<Variable> parameterVariables = query.getOwnedParameters();
 		int iMax = Math.min(parameterVariables.size(), boxedSourceAndArgumentValues.length-1);
