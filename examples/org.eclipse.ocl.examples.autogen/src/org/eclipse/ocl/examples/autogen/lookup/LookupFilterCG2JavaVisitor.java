@@ -27,7 +27,7 @@ import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.EvaluationCache;
-import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -113,7 +113,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 		js.append("this." + JavaConstants.EXECUTOR_NAME + " = " +JavaConstants.EXECUTOR_NAME + ";\n");
 		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = " + JavaConstants.EXECUTOR_NAME + ".getIdResolver();\n");
 		js.append("this." + JavaConstants.EVALUATION_CACHE_NAME + " = ((");
-		js.appendClassReference(null, ExecutorInternalExtension.class);
+		js.appendClassReference(null, ExecutorInternal.class);
 		js.append(")" + JavaConstants.EXECUTOR_NAME + ").getEvaluationCache();\n");
 
 		js.popIndentation();

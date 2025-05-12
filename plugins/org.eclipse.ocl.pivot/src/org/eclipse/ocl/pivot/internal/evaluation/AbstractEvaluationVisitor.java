@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * </p>
  */
 public abstract class AbstractEvaluationVisitor
-extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull ExecutorInternalExtension> implements EvaluationVisitor.EvaluationVisitorExtension
+extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> implements EvaluationVisitor.EvaluationVisitorExtension
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	/** @deprecated Use environmentFactory.getMetamodelManager() */
@@ -82,7 +82,7 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	 * @since 1.1
 	 */
 	protected AbstractEvaluationVisitor(@NonNull ExecutorInternal executor) {
-		super((ExecutorInternal.ExecutorInternalExtension) executor);
+		super(executor);
 		this.environmentFactory = executor.getEnvironmentFactory();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.idResolver = environmentFactory.getIdResolver();
