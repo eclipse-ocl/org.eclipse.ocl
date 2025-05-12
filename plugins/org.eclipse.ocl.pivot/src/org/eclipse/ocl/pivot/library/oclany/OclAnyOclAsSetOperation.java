@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -26,13 +25,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
 public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull OclAnyOclAsSetOperation INSTANCE = new OclAnyOclAsSetOperation();
-	
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
-	}
 
 	/**
 	 * @since 1.1

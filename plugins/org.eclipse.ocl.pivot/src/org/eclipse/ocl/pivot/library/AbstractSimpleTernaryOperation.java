@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -28,13 +27,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractSimpleTernaryOperation extends AbstractUntypedTernaryOperation implements LibrarySimpleTernaryOperation.LibrarySimpleTernaryOperationExtension
 {
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		return dispatch(getExecutor(evaluator), callExp, sourceValue);
-	}
-
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		assert !PivotUtil.getReferredOperation(callExp).isIsValidating();
@@ -48,26 +40,12 @@ public abstract class AbstractSimpleTernaryOperation extends AbstractUntypedTern
 		return evaluate(sourceValue, firstArgument, secondArgument);
 	}
 
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue);
-	}
-
 	/**
 	 * @since 1.1
 	 */
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
 		return evaluate(sourceValue, firstArgumentValue, secondArgumentValue);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable /*@Thrown*/ Object evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		return evaluate(getExecutor(evaluator), sourceValue, firstArgumentValue, secondArgumentValue);
 	}
 
 	/**

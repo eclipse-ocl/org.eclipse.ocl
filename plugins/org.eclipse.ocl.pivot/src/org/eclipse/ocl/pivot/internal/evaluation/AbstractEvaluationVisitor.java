@@ -17,14 +17,11 @@ import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
-import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -102,20 +99,6 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 		throw new UnsupportedOperationException();
 	}
 
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return context.getCompleteEnvironment();
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {
-		return context.getDiagnosticSeverity(severityPreference, resultValue);
-	}
-
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
@@ -145,81 +128,15 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	}
 
 	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull IdResolver getIdResolver() {
-		return idResolver;
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @Nullable EvaluationLogger getLogger() {
-		return context.getLogger();
-	}
-
-	/** @deprecated moved to Evaluator */
 	@Override
 	@Deprecated
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return (PivotMetamodelManager) context.getMetamodelManager();
 	}
 
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull ModelManager getModelManager() {
-		return context.getModelManager();
-	}
-
 	@Override
 	public @Nullable Monitor getMonitor() {
 		return monitor;
-	}
-
-	/**
-	 * Return a cached matcher for a give regular expression.
-	 * @deprecated moved to Evaluator
-	 */
-	@Deprecated
-	@Override
-	public @NonNull Pattern getRegexPattern(@NonNull String regex) {
-		return context.getRegexPattern(regex);
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public int getSeverity(@Nullable Object validationKey) {
-		return context.getSeverity(validationKey);
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull StandardLibrary getStandardLibrary() {
-		return standardLibrary;
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
-		return context.getStaticTypeOf(value);
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
-		return context.getStaticTypeOf(value, values);
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
-		return context.getStaticTypeOf(value, values);
 	}
 
 	/**
@@ -249,13 +166,6 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 			monitor = new BasicMonitor();
 			monitor.setCanceled(isCanceled);
 		}
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public void setLogger(@Nullable EvaluationLogger logger) {
-		context.setLogger(logger);
 	}
 
 	@Override

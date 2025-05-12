@@ -15,9 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -28,13 +26,6 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIterable
 {
 	protected final CollectionValueIterator[] iterators;
 	protected boolean hasCurrent;
-
-	/** @deprecated supply a callExp */
-	@Deprecated
-	public EvaluatorMultipleIterationManager(@NonNull Evaluator invokingExecutor, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, TypedElement... referredIterators) {
-		this(ValueUtil.getExecutor(invokingExecutor), null, body, collectionValue, accumulator, accumulatorValue);
-	}
 
 	/**
 	 * @since 1.18

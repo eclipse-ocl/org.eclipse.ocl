@@ -1024,9 +1024,10 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return standardLibrary;
 	}
 
-	@Override
+//	@Override
 	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
+	protected org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
+		// testConsole_Bug516285 uses this
 		Type staticType = getStaticTypeOfValue(null, value);
 		org.eclipse.ocl.pivot.Class asClass = staticType.isClass();
 		if (asClass != null) {

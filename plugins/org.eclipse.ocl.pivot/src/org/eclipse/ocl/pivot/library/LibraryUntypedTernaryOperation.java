@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.library;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 
 /**
@@ -29,8 +28,4 @@ public interface LibraryUntypedTernaryOperation extends LibraryTernaryOperation,
 	{
 		@Nullable Object evaluate(@NonNull Executor executor, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
 	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Nullable Object evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
 }
