@@ -19,9 +19,9 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -58,7 +58,7 @@ public class CollectionIncludingOperation extends AbstractSimpleBinaryOperation
 							CollectionType returnCollectionType = (CollectionType)returnType;
 							if (returnCollectionType.isIsNullFree() != isNullFree) {
 								@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-								PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+								MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 								returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
 									elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
 							}

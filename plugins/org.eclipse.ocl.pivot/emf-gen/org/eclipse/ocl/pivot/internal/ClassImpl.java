@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -69,6 +68,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1453,13 +1453,13 @@ implements org.eclipse.ocl.pivot.Class {
 			TemplateSignature templateSignature = getOwnedSignature();
 			if (templateSignature != null) {
 				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 				return metamodelManager.specializeType(this, callExpr, selfType, null);
 			}
 			List<TemplateBinding> templateBindings = getOwnedBindings();
 			if ((templateBindings != null) && !templateBindings.isEmpty()) {
 				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 				return metamodelManager.specializeType(this, callExpr, selfType, null);
 			}
 		}

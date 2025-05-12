@@ -23,8 +23,8 @@ import org.eclipse.ocl.codegen.analyzer.NameManager;
 import org.eclipse.ocl.codegen.java.ImportNameManager;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
 {
@@ -32,7 +32,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE = "org.eclipse.jdt.annotation.Nullable";
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull NameManager nameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private /*@LazyNonNull*/ Set<@NonNull Operation> constrainedOperations = null;
@@ -129,7 +129,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	@Override
 	public @Nullable Operation isFinal(@NonNull Operation anOperation, org.eclipse.ocl.pivot.@NonNull Class staticType) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
 		return finalAnalysis.isFinal(anOperation, metamodelManager.getCompleteClass(staticType));
 	}

@@ -93,13 +93,13 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -334,7 +334,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setName(newName);
 		copyDataTypeOrEnum(pivotElement, eDataType);
 		if (isPrimitive) {
-			PivotMetamodelManager metamodelManager = converter.getMetamodelManager();
+			MetamodelManager metamodelManager = converter.getMetamodelManager();
 			CompleteModelInternal completeModelInternal = metamodelManager.getCompleteModel();
 			PrimitiveCompletePackageImpl primitiveCompletePackage = completeModelInternal.getPrimitiveCompletePackage();
 			CompleteClassInternal completeClass = primitiveCompletePackage.getCompleteClass(pivotElement);
@@ -344,7 +344,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		else if (instanceClass != null) {
 			try {
-				PivotMetamodelManager metamodelManager = converter.getMetamodelManager();
+				MetamodelManager metamodelManager = converter.getMetamodelManager();
 				StandardLibraryInternal standardLibrary = metamodelManager.getStandardLibrary();
 				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
 				if (behavioralClass == null) {

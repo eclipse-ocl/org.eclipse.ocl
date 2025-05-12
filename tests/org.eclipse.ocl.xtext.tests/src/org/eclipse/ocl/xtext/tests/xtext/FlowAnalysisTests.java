@@ -26,9 +26,8 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -99,7 +98,7 @@ public class FlowAnalysisTests extends XtextTestCase
 			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
 			org.eclipse.ocl.pivot.Class deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
 			Constraint asInvariant = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName));
-			return ((EnvironmentFactoryInternal)environmentFactory).parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
+			return environmentFactory.parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
 		}
 
 		public Resource doLoad_Concrete(@NonNull String stem, @NonNull String extension) throws IOException {
@@ -126,8 +125,8 @@ public class FlowAnalysisTests extends XtextTestCase
 		}
 
 		protected FlowAnalysis getFlowAnalysis(@NonNull OCLExpression asExpression) {
-			MetamodelManagerInternal metamodelManager = getMetamodelManager();
-			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getFlowAnalysis(asExpression);
+			MetamodelManager metamodelManager = getMetamodelManager();
+			return metamodelManager.getFlowAnalysis(asExpression);
 		}
 	}
 

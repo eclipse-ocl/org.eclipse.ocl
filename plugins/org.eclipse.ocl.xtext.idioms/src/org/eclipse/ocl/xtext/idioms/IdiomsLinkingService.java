@@ -25,8 +25,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
 import org.eclipse.xtext.AbstractRule;
@@ -62,7 +62,7 @@ public class IdiomsLinkingService extends DefaultLinkingService
 			List<@NonNull ClassLoader> classLoaders = null;
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 				ImplementationManager implementationManager = metamodelManager.getImplementationManager();
 				classLoaders = implementationManager.getClassLoaders();
 			}

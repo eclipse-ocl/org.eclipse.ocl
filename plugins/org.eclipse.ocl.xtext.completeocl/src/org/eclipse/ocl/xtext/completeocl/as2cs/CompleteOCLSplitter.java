@@ -35,12 +35,12 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotSwitch;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -81,7 +81,7 @@ public class CompleteOCLSplitter
 		URI oclASuri = PivotUtilInternal.getASURI(oclURI);	// xxx.ocl.ocl.oclas
 		ASResource oclResource = (ASResource) asResource.getResourceSet().createResource(oclASuri, ASResource.COMPLETE_OCL_CONTENT_TYPE);
 		if (oclResource != null) {
-			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			Separator separator = new Separator(metamodelManager, oclResource);
 			for (Constraint constraint : allConstraints) {
 				separator.doSwitch(constraint);
@@ -96,11 +96,11 @@ public class CompleteOCLSplitter
 
 	public static class Separator extends PivotSwitch<@Nullable EObject>
 	{
-		protected final @NonNull PivotMetamodelManager metamodelManager;
+		protected final @NonNull MetamodelManager metamodelManager;
 		protected final @NonNull Resource separateResource;
 		private final @NonNull Map<@NonNull NamedElement, @NonNull NamedElement> map = new HashMap<@NonNull NamedElement, @NonNull NamedElement>();
 
-		public Separator(@NonNull PivotMetamodelManager metamodelManager, @NonNull Resource separateResource) {
+		public Separator(@NonNull MetamodelManager metamodelManager, @NonNull Resource separateResource) {
 			this.metamodelManager = metamodelManager;
 			this.separateResource = separateResource;
 		}

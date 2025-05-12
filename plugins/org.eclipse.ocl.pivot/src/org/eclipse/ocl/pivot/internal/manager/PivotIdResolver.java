@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
@@ -41,7 +42,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	private static final Logger logger = Logger.getLogger(PivotIdResolver.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 
 	public PivotIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory.getMetamodelManager().getCompleteEnvironment());

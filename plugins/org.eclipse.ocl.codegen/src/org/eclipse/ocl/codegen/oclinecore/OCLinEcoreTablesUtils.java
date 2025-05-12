@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -80,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -248,7 +248,7 @@ public class OCLinEcoreTablesUtils
 
 	public static class CodeGenString
 	{
-		protected final @NonNull PivotMetamodelManager metamodelManager;
+		protected final @NonNull MetamodelManager metamodelManager;
 		protected final boolean useNullAnnotations;
 		private final @NonNull StringBuilder s = new StringBuilder();
 		//		private @NonNull Map<@NonNull String, @Nullable String> classReferences = new HashMap<>();
@@ -257,7 +257,7 @@ public class OCLinEcoreTablesUtils
 		protected final @NonNull Map<Type, String> typeNameMap = new HashMap<>();
 		protected final @NonNull Set<String> typeNameUse = new HashSet<>();
 
-		public CodeGenString(@NonNull PivotMetamodelManager metamodelManager, boolean useNullAnnotations) {
+		public CodeGenString(@NonNull MetamodelManager metamodelManager, boolean useNullAnnotations) {
 			this.metamodelManager = metamodelManager;
 			this.useNullAnnotations = useNullAnnotations;
 		}
@@ -764,7 +764,7 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	private static @NonNull PivotMetamodelManager getMetamodelManager(@NonNull GenPackage genPackage) {
+	private static @NonNull MetamodelManager getMetamodelManager(@NonNull GenPackage genPackage) {
 		Resource genModelResource = genPackage.eResource();
 		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
 		assert genModelResourceSet != null;
@@ -773,7 +773,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected final boolean useNullAnnotations;
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CodeGenString s;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;

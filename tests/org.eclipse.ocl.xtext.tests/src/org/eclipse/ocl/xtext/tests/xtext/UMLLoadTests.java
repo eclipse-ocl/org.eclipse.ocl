@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -148,7 +147,7 @@ public class UMLLoadTests extends AbstractUMLLoadTests
 				for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 					EObject obj = tit.next();
 					if (obj instanceof Type) {
-						((MetamodelManagerInternal)ocl.getMetamodelManager()).getAllInvariants((Type) obj);		// This gives the Bug 422938 CCE
+						ocl.getMetamodelManager().getAllInvariants((Type) obj);		// This gives the Bug 422938 CCE
 					}
 				}
 			}

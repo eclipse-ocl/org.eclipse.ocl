@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -48,6 +47,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -1031,7 +1031,7 @@ public class EditTests extends XtextTestCase
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		Type pivotTestClass1 = ClassUtil.nonNullState(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
 		String testClassName2 = NameUtil.qualifiedNameFor(metamodelManager.getPrimaryType("TestPackage", "TestClass2"));
 		//
@@ -1070,7 +1070,7 @@ public class EditTests extends XtextTestCase
 	public void testEdit_StaleSpecialization() throws Exception {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		String testDocument =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +

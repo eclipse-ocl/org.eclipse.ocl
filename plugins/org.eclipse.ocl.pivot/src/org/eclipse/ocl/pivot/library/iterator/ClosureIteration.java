@@ -21,9 +21,9 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
@@ -64,7 +64,7 @@ public class ClosureIteration extends AbstractIteration
 						CollectionType returnCollectionType = (CollectionType)returnType;
 						if (returnCollectionType.isIsNullFree() != isNullFree) {
 							@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-							PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+							MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 							returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
 								elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
 						}

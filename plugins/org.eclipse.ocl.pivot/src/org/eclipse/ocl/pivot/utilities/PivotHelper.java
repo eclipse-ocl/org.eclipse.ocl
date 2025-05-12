@@ -76,7 +76,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -94,12 +93,12 @@ public class PivotHelper
 {
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull StandardLibrary standardLibrary;
-	private final @NonNull PivotMetamodelManager metamodelManager;
+	private final @NonNull MetamodelManager metamodelManager;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.standardLibrary = environmentFactory.getStandardLibrary();
-		this.metamodelManager = (PivotMetamodelManager) environmentFactory.getMetamodelManager();			// FIXME avoid this cast;
+		this.metamodelManager = environmentFactory.getMetamodelManager();			// FIXME avoid this cast;
 	}
 
 	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {
@@ -548,7 +547,10 @@ public class PivotHelper
 		return environmentFactory;
 	}
 
-	protected @NonNull PivotMetamodelManager getMetamodelManager() {
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull MetamodelManager getMetamodelManager() {
 		return metamodelManager;
 	}
 
@@ -635,7 +637,7 @@ public class PivotHelper
 		return unsafeCallExps;
 	}
 
-	private void rewriteUnsafeCollectionCallExp(@NonNull PivotMetamodelManager metamodelManager, @NonNull Operation excludingOperation, @NonNull CallExp unsafeCollectionCallExp) {
+	private void rewriteUnsafeCollectionCallExp(@NonNull MetamodelManager metamodelManager, @NonNull Operation excludingOperation, @NonNull CallExp unsafeCollectionCallExp) {
 		unsafeCollectionCallExp.setIsSafe(false);
 		EObject eContainer = unsafeCollectionCallExp.eContainer();
 		EReference eContainmentFeature = unsafeCollectionCallExp.eContainmentFeature();
@@ -650,7 +652,7 @@ public class PivotHelper
 	/**
 	 * @since 1.4
 	 */
-	private  void rewriteUnsafeObjectCallExp(@NonNull PivotMetamodelManager metamodelManager, @NonNull Operation oclEqualsOperation, @NonNull CallExp unsafeObjectCallExp) {
+	private  void rewriteUnsafeObjectCallExp(@NonNull MetamodelManager metamodelManager, @NonNull Operation oclEqualsOperation, @NonNull CallExp unsafeObjectCallExp) {
 		unsafeObjectCallExp.setIsSafe(false);
 		EObject eContainer = unsafeObjectCallExp.eContainer();
 		EReference eContainmentFeature = unsafeObjectCallExp.eContainmentFeature();

@@ -32,11 +32,11 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.codegen.oclinecore.OCLinEcoreTables;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -88,7 +88,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 		URI genModelURI = URI.createPlatformResourceURI(genModelFile, true);
 		OCLInternal ocl = getOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		if (genOCLstdlib) {
 		//	final EnvironmentFactoryAdapter adapter = EnvironmentFactoryAdapter.find(resourceSet);
 		//	if (adapter != null) {

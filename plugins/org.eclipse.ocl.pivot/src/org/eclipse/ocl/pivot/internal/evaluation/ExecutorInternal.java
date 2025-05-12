@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
@@ -41,8 +40,6 @@ public interface ExecutorInternal extends Executor
 	 */
 	@NonNull EvaluationCache getEvaluationCache();
 	@NonNull EvaluationVisitor getEvaluationVisitor();
-	@Override
-	@NonNull MetamodelManagerInternal getMetamodelManager();
 	@NonNull EvaluationEnvironment getRootEvaluationEnvironment();
 	@Nullable Object getValueOf(@NonNull TypedElement referredVariable);
 	@NonNull EvaluationEnvironment initializeEvaluationEnvironment(@NonNull NamedElement executableObject);

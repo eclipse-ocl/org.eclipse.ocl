@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * ResourceSetAwareASResourceFactory provides additional ASResourceFactory capabilities to allow a reference
@@ -88,7 +89,7 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 			EnvironmentFactory environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
 			return environmentFactory.getResourceSet();
 		}
-		PivotMetamodelManager pivotMetamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
+		MetamodelManager pivotMetamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
 		if (pivotMetamodelManager != null) {
 			return pivotMetamodelManager.getEnvironmentFactory().getResourceSet();
 		}

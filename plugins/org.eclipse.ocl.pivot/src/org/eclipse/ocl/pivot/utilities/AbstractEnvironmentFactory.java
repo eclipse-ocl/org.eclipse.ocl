@@ -136,7 +136,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private final @Nullable ResourceSet userResourceSet;			// XXX may be multiple ResourceSets
 	protected final @NonNull ResourceSet externalResourceSet;
 	private final @NonNull ResourceSet asResourceSet;
-	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
+	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	private final @NonNull StandardLibraryInternal standardLibrary;
 	private @Nullable ICSI2ASMapping csi2asMapping;
@@ -393,7 +393,10 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 	}
 
-	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
+	/**
+	 * @since 7.0
+	 */
+	protected @Nullable MetamodelManager basicGetMetamodelManager() {
 		return metamodelManager;
 	}
 
@@ -572,7 +575,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull PivotMetamodelManager createMetamodelManager() {
+	public @NonNull MetamodelManager createMetamodelManager() {
 		assert metamodelManager == null;
 		metamodelManager = new PivotMetamodelManager(this, asResourceSet);
 		assert metamodelManager != null;
@@ -939,7 +942,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 *     context itself if it is a classifier
 	 */
 	protected org.eclipse.ocl.pivot.@NonNull Class getClassifier(@NonNull Object context) {
-		PivotMetamodelManager metamodelManager = getMetamodelManager();
+		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class dClass = getIdResolver().getStaticTypeOfValue(null, context);
 		return metamodelManager.getPrimaryClass(dClass);
 	}
@@ -987,8 +990,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
-		PivotMetamodelManager metamodelManager2 = metamodelManager;
+	public @NonNull MetamodelManager getMetamodelManager() {
+		MetamodelManager metamodelManager2 = metamodelManager;
 		if (metamodelManager2 == null) {
 			metamodelManager = metamodelManager2 = createMetamodelManager();
 		}

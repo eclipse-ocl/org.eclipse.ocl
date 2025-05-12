@@ -73,9 +73,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -85,6 +83,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -180,7 +179,10 @@ public class PivotUtilInternal extends PivotUtil
 		return ThreadLocalExecutor.basicGetEnvironmentFactory();
 	}
 
-	public static @Nullable PivotMetamodelManager findMetamodelManager(@NonNull Resource resource) {
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable MetamodelManager findMetamodelManager(@NonNull Resource resource) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			return null;
@@ -188,7 +190,10 @@ public class PivotUtilInternal extends PivotUtil
 		return environmentFactory.getMetamodelManager();
 	}
 
-	public static Type findTypeOf(@NonNull MetamodelManagerInternal metamodelManager, @NonNull EClassifier eClass) {
+	/**
+	 * @since 7.0
+	 */
+	public static Type findTypeOf(@NonNull MetamodelManager metamodelManager, @NonNull EClassifier eClass) {
 		Resource resource = eClass.eResource();
 		if (resource != null) {
 			External2AS adapter = External2AS.findAdapter(resource, metamodelManager.getEnvironmentFactory());

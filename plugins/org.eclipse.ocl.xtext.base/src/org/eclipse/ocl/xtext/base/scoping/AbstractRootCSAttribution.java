@@ -17,17 +17,17 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 
 public abstract class AbstractRootCSAttribution extends AbstractAttribution implements RootCSAttribution
 {
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
-		PivotMetamodelManager metamodelManager = environmentView.getEnvironmentFactory().getMetamodelManager();
+		MetamodelManager metamodelManager = environmentView.getEnvironmentFactory().getMetamodelManager();
 		if (environmentView.accepts(PivotPackage.Literals.TYPE)) {
 			for (Type type : metamodelManager.getGlobalTypes()) {
 				if (type != null) {

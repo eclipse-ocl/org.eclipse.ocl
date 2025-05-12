@@ -15,8 +15,8 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -61,7 +61,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
+			MetamodelManager metamodelManager = context.getMetamodelManager();
 			TypedRefCS csElementType = csElement.getOwnedType();
 			Type type = null;
 			String name = csElement.getName();
@@ -113,7 +113,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
+			MetamodelManager metamodelManager = context.getMetamodelManager();
 			String operatorName = csElement.getName();
 			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getInfixPrecedence(operatorName) : null;
 			//			csElement.setPrecedence(precedence);
@@ -143,7 +143,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
+			MetamodelManager metamodelManager = context.getMetamodelManager();
 			TypedRefCS csKeyType = csElement.getOwnedKeyType();
 			TypedRefCS csValueType = csElement.getOwnedValueType();
 			Type type = null;
@@ -176,7 +176,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
+			MetamodelManager metamodelManager = context.getMetamodelManager();
 			String operatorName = csElement.getName();
 			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getPrefixPrecedence(operatorName) : null;
 			//			csElement.setPrecedence(precedence);
