@@ -11,37 +11,13 @@
 
 package org.eclipse.ocl.pivot.internal.utilities;
 
-import java.util.Set;
-
-import org.eclipse.core.resources.IProject;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
-import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
-import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
-import org.eclipse.ocl.pivot.messages.StatusCodes;
-import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
  * A factory for creating OCL parser and evaluation artefacts.  Clients of the OCL
@@ -60,83 +36,11 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
  */
 public interface EnvironmentFactoryInternal extends EnvironmentFactory
 {
-	void addExternal2AS(@NonNull External2AS external2as);
-
-	/**
-	 * Add all resources in ResourceSet to the externalResourceSet.
-	 */
-	void addExternalResources(@NonNull ResourceSet externalResourceSet);
-
-	/**
-	 * Analyze all OCL functioality below eRootObject,typically a pivot Package, to populate the
-	 * allInstancesCompleteClasses and implicitOppositeProperties with the identies of all
-	 * Classes that source an allInstances() call and all unidirectional Properties that are
-	 * opposite navigated.
-	 *
-	 * @since 1.14
-	 */
-	default void analyzeExpressions(@NonNull EObject eRootObject, @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {}
-
-	void attach(@NonNull Object attachOwner);
-
-	/**
-	 * Configure the PackageRegistry associated with the (external) ResourceSet to use a load strategy that uses whichever of
-	 * the namespace or platform URI is first encountered and which suppresses diagnostics about subsequent use of the
-	 * other form of URI.
-	 */
-	void configureLoadFirstStrategy();
-
-	/**
-	 * Configure the PackageRegistry associated with the (external) ResourceSet to use a packageLoadStrategy and conflictHandler when
-	 * resolving namespace and platform URIs.
-	 */
-	void configureLoadStrategy(ProjectManager.@NonNull IResourceLoadStrategy packageLoadStrategy, ProjectManager.@Nullable IConflictHandler conflictHandler);
-
-	/**
-	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
-	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
-	 * this alternative creation mechanism is available via an EnvironmentFactory override.
-	 * @since 7.0
-	 */
-	@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
-
-	/**
-	 * Create and initialize the AS ResourceSet used by metamodelManager to contain the AS forms of CS and Ecore/UML resources.
-	 */
-	@NonNull ResourceSetImpl createASResourceSet();
-
-	/**
-	 * @since 1.7
-	 */
-	@NonNull FlowAnalysis createFlowAnalysis(@NonNull OCLExpression contextExpression);
-
-	@NonNull CompleteEnvironmentInternal createCompleteEnvironment();
-
-	/**
-	 * Create and initialize the IdResolver used by metamodelManager to convert Ids to Elements.
-	 */
-	@NonNull IdResolver createIdResolver();
-
-
-	@NonNull ImplementationManager createImplementationManager();
 
 	@NonNull PivotMetamodelManager createMetamodelManager();
 
 	@Override
 	@NonNull OCLInternal createOCL();
-
-	void detach(@NonNull Object attachOwner);
-
-	/**
-	 * Detach the ThreadLocal reference to this EnvironmentFactory if that is the sole remaining attach.
-	 *
-	 * @since 1.14
-	 */
-	default void detachRedundantThreadLocal() {}
-
-	void dispose();
-
-	@Nullable ICSI2ASMapping getCSI2ASMapping();
 
 	@Override
 	@NonNull CompleteEnvironmentInternal getCompleteEnvironment();
@@ -144,48 +48,9 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@Override
 	@NonNull CompleteModelInternal getCompleteModel();
 
-	@Nullable String getDoSetupName(@NonNull URI uri);
-
 	@Override
 	@NonNull PivotMetamodelManager getMetamodelManager();
 
 	@Override
 	@NonNull StandardLibraryInternal getStandardLibrary();
-
-	@NonNull Technology getTechnology();
-
-	/**
-	 * @since 7.0
-	 */
-	default boolean isDisposing() { return false; }
-
-	/**
-	 * Perform the loading and installation of the Complete OCL complement to ePackage, loading from
-	 * oclURI, returning true if successful.
-	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
-	 * overheads up front. Returns the ASResource if successful.
-	 *
-	 * @since 7.0
-	 */
-	default @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) throws ParserException {
-		return null;			// XXX
-	}
-
-	/**
-	 * Ensure that EPackage has been loaded in the externalResourceSet PackageRegistry.
-	 */
-	EPackage loadEPackage(@NonNull EPackage ePackage);
-
-	@Nullable Element loadResource(@NonNull Resource resource, @Nullable URI uri) throws ParserException;
-
-	void setCSI2ASMapping(ICSI2ASMapping csi2asMapping);
-
-	void setEvaluationTracingEnabled(boolean b);
-
-	/**
-	 * Specify an Eclipse project with respect to which project-specific preferences are resolved.
-	 */
-	void setProject(@Nullable IProject project);
-
-	void setSafeNavigationValidationSeverity(StatusCodes.@NonNull Severity severity);
 }
