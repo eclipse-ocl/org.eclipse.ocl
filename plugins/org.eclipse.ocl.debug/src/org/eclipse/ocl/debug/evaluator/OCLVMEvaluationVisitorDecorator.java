@@ -24,19 +24,12 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public abstract class OCLVMEvaluationVisitorDecorator extends AbstractEvaluationVisitorDecorator<EvaluationVisitor>
         implements EvaluationVisitor {
-	
-	
+
+
 	public OCLVMEvaluationVisitorDecorator(@NonNull EvaluationVisitor decorated) {
 		super(decorated);
 	}
 
-	/**
-     * Delegates to my decorated visitor.
-     */
-//	public @NonNull EvaluationVisitor getEvaluator() {
-//		return delegate.getEvaluator();
-//	}
-	
 	@Override
 	public Object safeVisit(@Nullable Visitable v) {
 		if (v == null) {

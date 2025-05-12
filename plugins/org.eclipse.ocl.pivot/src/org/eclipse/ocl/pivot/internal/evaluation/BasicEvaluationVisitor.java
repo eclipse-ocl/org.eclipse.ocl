@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -79,7 +78,6 @@ import org.eclipse.ocl.pivot.library.EvaluatorMultipleMapIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorSingleMapIterationManager;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -130,13 +128,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		Object value = body.accept(undecoratedVisitor);
 		assert ValueUtil.isBoxed(value);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 		return value;
-	}
-
-	/** @deprecated No longer used */
-	@Deprecated
-	public @NonNull LibraryFeature lookupImplementation(org.eclipse.ocl.pivot.@NonNull Class dynamicType, @NonNull Operation staticOperation) {
-		CompleteInheritance inheritance = environmentFactory.getMetamodelManager().getInheritance(dynamicType);
-		return inheritance.getPivotClass().lookupImplementation(standardLibrary, staticOperation);
 	}
 
 	@Override

@@ -27,14 +27,14 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 
-public interface VMEvaluationEnvironment extends EvaluationEnvironment.EvaluationEnvironmentExtension
+public interface VMEvaluationEnvironment extends EvaluationEnvironment
 {
 	public class StepperEntry
 	{
 		public final @NonNull IStepper stepper;
 		public final @NonNull Element element;
 		private @Nullable Map<TypedElement, Object> partialResults;
-		
+
 		public StepperEntry(@NonNull IStepper stepper, @NonNull Element element) {
 			this.stepper = stepper;
 			this.element = element;

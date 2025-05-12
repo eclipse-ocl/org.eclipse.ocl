@@ -26,15 +26,14 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.util.AbstractMergedVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
-public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Object, @NonNull Executor> implements VMEvaluationVisitor, EvaluationVisitor.EvaluationVisitorExtension
+public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Object, @NonNull Executor> implements VMEvaluationVisitor
 {
 	protected final @NonNull EvaluationVisitor evaluationVisitor;
 	protected final @NonNull VMEvaluationStepper vmEvaluationStepper;
 
 	protected OCLVMEvaluationVisitor(@NonNull VMEvaluationStepper vmEvaluationStepper, @NonNull EvaluationVisitor nestedEvaluationVisitor) {
-		super(((EvaluationVisitor.EvaluationVisitorExtension)nestedEvaluationVisitor).getExecutor());
+		super(nestedEvaluationVisitor.getExecutor());
 		this.evaluationVisitor = nestedEvaluationVisitor;
 		this.vmEvaluationStepper = vmEvaluationStepper;
 		nestedEvaluationVisitor.setUndecoratedVisitor(this);
@@ -51,27 +50,8 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 	}
 
 	@Override
-	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
-		return context.getEvaluationEnvironment();
-	}
-
-	/** @deprecated Moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull EvaluationVisitor getEvaluator() {
-		return this;
-	}
-
-	@Override
 	public @NonNull Executor getExecutor() {
 		return context;
-	}
-
-	/** @deprecated moved to Executor */
-	@Deprecated
-	@Override
-	public @NonNull MetamodelManager getMetamodelManager() {
-		return context.getMetamodelManager();
 	}
 
 	@Override
@@ -118,7 +98,7 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 		Object result = super.visitVariable(vd);
 		Type declaredType = vd.getType();
 		//		String name = vd.getName();
-		EvaluationEnvironment env = getEvaluationEnvironment();
+		EvaluationEnvironment env = context.getEvaluationEnvironment();
 		env.replace(vd, declaredType);
 		//		env.replace(name, env.getValueOf(name), declaredType);
 

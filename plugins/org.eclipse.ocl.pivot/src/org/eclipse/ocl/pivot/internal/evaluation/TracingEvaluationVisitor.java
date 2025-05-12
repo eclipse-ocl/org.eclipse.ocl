@@ -48,13 +48,12 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * A decorator for evaluation visitors that is installed when evaluation tracing
  * is enabled, to trace interim evaluation results to the console.
  */
-public class TracingEvaluationVisitor extends EvaluationVisitorDecorator implements EvaluationVisitor.EvaluationVisitorExtension {
+public class TracingEvaluationVisitor extends EvaluationVisitorDecorator implements EvaluationVisitor {
 
 	/**
 	 * Initializes me with the visitor whose evaluation I trace to the console.
@@ -65,19 +64,9 @@ public class TracingEvaluationVisitor extends EvaluationVisitorDecorator impleme
 		super(decorated);
 	}
 
-	/** @deprecated moved to Executor
-	 * @since 1.1*/
 	@Override
-	@Deprecated
 	public @NonNull Executor getExecutor() {
-		return ((EvaluationVisitor.EvaluationVisitorExtension)delegate).getExecutor();
-	}
-
-	/** @deprecated moved to Executor */
-	@Override
-	@Deprecated
-	public @NonNull MetamodelManager getMetamodelManager() {
-		return delegate.getMetamodelManager();
+		return delegate.getExecutor();
 	}
 
 	protected @Nullable Object trace(@NonNull Element expression, @Nullable Object value) {

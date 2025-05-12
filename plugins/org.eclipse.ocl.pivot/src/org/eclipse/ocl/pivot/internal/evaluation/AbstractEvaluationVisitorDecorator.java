@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.UnspecifiedValueExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -101,22 +100,6 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return delegate.getEnvironmentFactory();
-	}
-
-	/**
-	 * Obtains my delegate's evaluation environment.
-	 */
-	@Override
-	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
-		return delegate.getEvaluationEnvironment();
-	}
-
-	/** @deprecated moved to Evaluator
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @NonNull EvaluationVisitor getEvaluator() {
-		return delegate.getEvaluator();
 	}
 
 	/**

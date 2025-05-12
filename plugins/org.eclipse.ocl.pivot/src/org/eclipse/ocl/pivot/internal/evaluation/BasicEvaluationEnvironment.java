@@ -19,12 +19,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
-import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.DelegatedValue;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Option;
@@ -39,7 +36,7 @@ import org.eclipse.osgi.util.NLS;
  *
  * @author Christian W. Damus (cdamus)
  */
-public class BasicEvaluationEnvironment extends AbstractCustomizable implements EvaluationEnvironment.EvaluationEnvironmentExtension
+public class BasicEvaluationEnvironment extends AbstractCustomizable implements EvaluationEnvironment
 {
 	/**
 	 * @since 1.1
@@ -52,22 +49,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 * @since 1.3
 	 */
 	protected final @Nullable Object caller;
-	/**
-	 * @since 1.1
-	 * @deprecated use caller
-	 */
-	@Deprecated
-	protected final @Nullable OCLExpression callingObject;
 	private final @NonNull Map<TypedElement, Object> variableValues = new HashMap<TypedElement, Object>();
-	/** @deprecated use an executor */
-	@Deprecated
-	protected final @NonNull ModelManager modelManager;
-
-	/** @deprecated use an executor */
-	@Deprecated
-	public BasicEvaluationEnvironment(@NonNull EnvironmentFactory environmentFactory, @NonNull NamedElement executableObject, @NonNull ModelManager modelManager) {
-		this(((EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)environmentFactory).createExecutor(modelManager), executableObject);
-	}
 
 	/**
 	 * @since 1.1
@@ -78,36 +60,17 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 		this.parent = null;
 		this.executableObject = executableObject;
 		this.caller = null;
-		this.callingObject = null;
-		this.modelManager = executor.getModelManager();
-	}
-
-	/** @deprecated supply a callingObject */
-	@Deprecated
-	public BasicEvaluationEnvironment(@NonNull EvaluationEnvironment parent, @NonNull NamedElement executableObject) {
-		this((EvaluationEnvironment.EvaluationEnvironmentExtension)parent, executableObject, null);
 	}
 
 	/**
-	 * @since 1.3
+	 * @since 7.0
 	 */
-	public BasicEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension parent, @NonNull NamedElement executableObject, @Nullable Object caller) {
+	public BasicEvaluationEnvironment(@NonNull EvaluationEnvironment parent, @NonNull NamedElement executableObject, @Nullable Object caller) {
 		this.executor = parent.getExecutor();
 		this.environmentFactory = parent.getEnvironmentFactory();
 		this.parent = parent;
 		this.executableObject = executableObject;
 		this.caller = caller;
-		this.callingObject = caller instanceof OCLExpression ? (OCLExpression)caller : null;
-		this.modelManager = executor.getModelManager();
-	}
-
-	/**
-	 * @since 1.1
-	 * @deprecated use TypedElement argument.
-	 */
-	@Deprecated
-	public BasicEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension parent, @NonNull NamedElement executableObject, @Nullable OCLExpression caller) {
-		this(parent, executableObject, (TypedElement)caller);
 	}
 
 	/**
@@ -181,13 +144,6 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 		return executor;
 	}
 
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull ModelManager getModelManager() {
-		return executor.getModelManager();
-	}
-
 	@Override
 	public @Nullable EvaluationEnvironment getParent() {
 		return parent;
@@ -197,8 +153,8 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 * @since 1.1
 	 */
 	@Override
-	public EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment() {
-		return (EvaluationEnvironment.EvaluationEnvironmentExtension)parent;
+	public @Nullable EvaluationEnvironment getParentEvaluationEnvironment() {
+		return parent;
 	}
 
 	@Override

@@ -19,29 +19,13 @@ import org.eclipse.ocl.pivot.internal.evaluation.AbstractEvaluationVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * A specialized visitor that is used for evaluation an
  * {@linkplain OCLExpression OCL expression} by walking its AST.
- *
- * The Evaluator interface is deprecated. Its facilities should be obtained by getEvaluator().
  */
 public interface EvaluationVisitor extends Visitor<Object>
 {
-	/**
-	 * @since 1.1
-	 */
-	public interface EvaluationVisitorExtension extends EvaluationVisitor
-	{
-		@NonNull Executor getExecutor();
-
-		/**
-		 * Return the result of visiting visitable with the outer undecoratedVisitor.
-		 */
-		@Nullable Object visit(@NonNull Visitable visitable);
-	}
-
 	@Nullable Object evaluate(@NonNull OCLExpression body);
 
 	/**
@@ -52,20 +36,9 @@ public interface EvaluationVisitor extends Visitor<Object>
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	/**
-     * Obtains the evaluation environment that keeps track of variable values
-     * and knows how to call operations, navigate properties, etc.
-     *
-	 * @return the evaluation environment
+	 * @since 7.0
 	 */
-	@NonNull EvaluationEnvironment getEvaluationEnvironment();
-
-	/** @deprecated use getExecutor */
-	@Deprecated
-	@NonNull EvaluationVisitor getEvaluator();
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@NonNull MetamodelManager getMetamodelManager();
+	@NonNull Executor getExecutor();
 
 	@Nullable Monitor getMonitor();
 
@@ -94,4 +67,10 @@ public interface EvaluationVisitor extends Visitor<Object>
      * @param evaluationVisitor the evaluationVisitor that is not decorated/
      */
 	void setUndecoratedVisitor(@NonNull EvaluationVisitor evaluationVisitor);
+
+	/**
+	 * Return the result of visiting visitable with the outer undecoratedVisitor.
+	 * @since 7.0
+	 */
+	@Nullable Object visit(@NonNull Visitable visitable);
 }

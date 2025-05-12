@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -75,13 +74,8 @@ public abstract class ExecutorManager implements Executor
 			throw new UnsupportedOperationException();
 		}
 
-		//		@Override
-		//		public @NonNull ExecutorInternal getExecutor() {
-		//			throw new UnsupportedOperationException();
-		//		}
-
 		@Override
-		public @NonNull ModelManager getModelManager() {
+		public @NonNull ExecutorInternal getExecutor() {
 			throw new UnsupportedOperationException();
 		}
 
@@ -90,10 +84,10 @@ public abstract class ExecutorManager implements Executor
 			return null;
 		}
 
-		//		@Override
-		//		public EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParent() {
-		//			return null;
-		//		}
+		@Override
+		public @Nullable EvaluationEnvironment getParentEvaluationEnvironment() {
+			return null;
+		}
 
 		@Override
 		public <@Nullable T> T getValue(@NonNull Option<T> option) {
@@ -247,15 +241,6 @@ public abstract class ExecutorManager implements Executor
 		throw new UnsupportedOperationException();
 	}
 
-	//	@Override
-	//	public @NonNull Executor getExecutor() {
-	//		return this;
-	//	}
-
-	//	public @NonNull IdResolver getIdResolver() {
-	//		return standardLibrary.getIdResolver();
-	//	}
-
 	@Override
 	public @Nullable EvaluationLogger getLogger() {
 		return null;
@@ -295,11 +280,6 @@ public abstract class ExecutorManager implements Executor
 			return pattern;
 		}
 	}
-
-	//	@Override
-	//	public @NonNull EvaluationEnvironment getRootEvaluationEnvironment() {
-	//		return nullEvaluationEnvironment;
-	//	}
 
 	@Override
 	public int getSeverity(@Nullable Object validationKey) {
@@ -364,23 +344,4 @@ public abstract class ExecutorManager implements Executor
 	public void setInterpretedExecutor(@Nullable ExecutorInternal interpretedExecutor) {
 		this.interpretedExecutor = interpretedExecutor;;
 	}
-
-	/*	public DomainType typeOf(Value value, Value... values) {
-		DomainStandardLibrary standardLibrary = valueFactory.getStandardLibrary();
-		DomainType type = value.getType(standardLibrary);
-		for (Value anotherValue : values) {
-			DomainType anotherType = anotherValue.getType(standardLibrary);
-			type = type.getCommonType(standardLibrary, anotherType);
-		}
-		return type;
-	} */
-
-	//	public @NonNull NullValue throwInvalidEvaluation(InvalidValueException e) {
-	//		throw new InvalidEvaluationException(null, e);
-	//	}
-
-	//	public @NonNull NullValue throwInvalidEvaluation(Throwable e, DomainExpression expression, Object context,
-	//			String message, Object... bindings) {
-	//		throw new InvalidEvaluationException(null, NLS.bind(message, bindings), e, expression, context);
-	//	}
 }

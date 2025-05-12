@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.evaluation;
 
-import java.util.Map;
-import java.util.regex.Pattern;
-
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,13 +18,9 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
-import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -43,12 +36,9 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * </p>
  */
 public abstract class AbstractEvaluationVisitor
-extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> implements EvaluationVisitor.EvaluationVisitorExtension
+extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> implements EvaluationVisitor
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	/** @deprecated Use environmentFactory.getMetamodelManager() */
-	@Deprecated
-	protected final @NonNull PivotMetamodelManager metamodelManager;
 	/**
 	 * @since 1.1
 	 */
@@ -62,61 +52,20 @@ extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> im
 	 */
 	protected @Nullable Monitor monitor = null;
 
-	/** @deprecated Use getExecutor().getEvaluationEnvironment() */
-	@Deprecated
-	protected final @NonNull EvaluationEnvironment evaluationEnvironment;
-	/** @deprecated Use environmentFactory.getEvaluationEnvironment() */
-	@Deprecated
-	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
-	/** @deprecated Use getExecutor().getModelManager() */
-	@Deprecated
-	protected final @NonNull ModelManager modelManager;
-
-	/** @deprecated Use ExecutorInternal */
-	@Deprecated
-	protected AbstractEvaluationVisitor(@NonNull EvaluationEnvironment evaluationEnvironment) {
-		this(((EvaluationEnvironment.EvaluationEnvironmentExtension)evaluationEnvironment).getExecutor());
-	}
-
 	/**
 	 * @since 1.1
 	 */
 	protected AbstractEvaluationVisitor(@NonNull ExecutorInternal executor) {
 		super(executor);
 		this.environmentFactory = executor.getEnvironmentFactory();
-		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.idResolver = environmentFactory.getIdResolver();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.undecoratedVisitor = this;  // assume I have no decorator
-		this.evaluationEnvironment = executor.getRootEvaluationEnvironment();
-		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
-		this.modelManager = executor.getModelManager();
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	protected @NonNull Map<String, Pattern> createRegexCache() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
-		return context.getEvaluationEnvironment();
-	}
-
-	/**
-	 * @since 1.1
-	 */
-	@Override
-	public @NonNull EvaluationVisitor getEvaluator() {
-		return this;
 	}
 
 	/**
@@ -125,13 +74,6 @@ extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> im
 	@Override
 	public @NonNull ExecutorInternal getExecutor() {
 		return context;
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Override
-	@Deprecated
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
-		return (PivotMetamodelManager) context.getMetamodelManager();
 	}
 
 	@Override
@@ -190,7 +132,7 @@ extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> im
 	public String toString() {
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (evaluation environment: ");//$NON-NLS-1$
-		result.append(getEvaluationEnvironment());
+		result.append(context.getEvaluationEnvironment());
 		result.append(')');
 		return result.toString();
 	}

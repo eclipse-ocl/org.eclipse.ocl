@@ -10,12 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -35,82 +30,10 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  * that make no use of types, the default construction is lightweight deferring construction costs
  * until actually needed.
  *
- * A PivotExecutorManager and its associated caches may be attacjed to a ResourceSet for re-use by other OCL evaluations using the same ResojrceSet.
+ * A PivotExecutorManager and its associated caches may be attached to a ResourceSet for re-use by other OCL evaluations using the same ResojrceSet.
  */
 public class PivotExecutorManager extends ExecutorManager
 {
-	/**
-	 * @since 1.7
-	 */
-	public static @Nullable Adapter createAdapter(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject ecoreObject) {
-		Resource eResource = ecoreObject.eResource();
-		if (eResource == null) {
-			return null;
-		}
-		ResourceSet resourceSet = eResource.getResourceSet();
-		if (resourceSet == null) {
-			return null;
-		}
-		return new Adapter(environmentFactory, resourceSet, ecoreObject);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static @Nullable Adapter findAdapter(@NonNull ResourceSet resourceSet) {
-		for (org.eclipse.emf.common.notify.Adapter adapter : resourceSet.eAdapters()) {
-			if (adapter instanceof Adapter) {
-				return (Adapter)adapter;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Remove any OCL Executor from the ResourceSet containing an eObject. This may be necessary to prevent
-	 * re-use of the cached context of an earlier executor after a change to the models.
-	 *
-	 * @since 1.7
-	 */
-	public static void removeAdapter(@NonNull ResourceSet resourceSet) {
-		EList<org.eclipse.emf.common.notify.Adapter> eAdapters = resourceSet.eAdapters();
-		synchronized (eAdapters) {
-			for (int i = eAdapters.size(); --i >= 0; ) {		// Should be at most one, but code to handle more
-				org.eclipse.emf.common.notify.Adapter adapter = eAdapters.get(i);
-				if (adapter instanceof PivotExecutorManager) {
-					eAdapters.remove(i);
-				}
-			}
-		}
-	}
-
-	private static class Adapter extends PivotExecutorManager implements org.eclipse.emf.common.notify.Adapter
-	{
-		private @NonNull ResourceSet resourceSet;
-
-		private Adapter(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet resourceSet, @NonNull EObject contextObject) {
-			super(environmentFactory, contextObject);
-			this.resourceSet = resourceSet;
-			resourceSet.eAdapters().add(this);
-		}
-
-		@Override
-		public ResourceSet getTarget() {
-			return resourceSet;
-		}
-
-		@Override
-		public boolean isAdapterForType(Object type) {
-			return type == Adapter.class;
-		}
-
-		@Override
-		public void notifyChanged(Notification notification) {}
-
-		@Override
-		public void setTarget(Notifier newTarget) {}
-	}
-
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull IdResolver idResolver;
 	protected final @NonNull EObject contextObject;
