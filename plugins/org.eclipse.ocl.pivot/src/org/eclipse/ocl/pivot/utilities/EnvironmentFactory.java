@@ -189,6 +189,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull ImplementationManager createImplementationManager();
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull MetamodelManager createMetamodelManager();
+
+	/**
 	 * Creates an extent map for invocation of <tt>OclType.allInstances()</tt>
 	 * using the specified <code>object</code> as a context from which to find
 	 * the scope in which OCL classifier extents are defined.  This scope may

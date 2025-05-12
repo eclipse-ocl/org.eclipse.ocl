@@ -56,12 +56,12 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -684,13 +684,13 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), isNullFree, lower, upper);
 	}
 
 	@Override
 	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), false, lower, upper);
 	}
 
@@ -780,7 +780,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(keyType), keysAreNullFree, metamodelManager.getPrimaryType(valueType), valuesAreNullFree);
 	}
 
@@ -789,7 +789,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 */
 	@Override
 	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryClass(entryClass));
 	}
 
@@ -844,7 +844,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
 		CompletePackage memberPackage = completePackage.getOwnedCompletePackage(name);
 		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
@@ -852,7 +852,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
 		return completePackage.getMemberType(name);
 	}
@@ -954,7 +954,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 					Type templateArgument = substitutions.get(templateParameter);
 					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
 				}
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 				return metamodelManager.getLibraryType(unspecializedType, templateArguments);
 			}
 		}

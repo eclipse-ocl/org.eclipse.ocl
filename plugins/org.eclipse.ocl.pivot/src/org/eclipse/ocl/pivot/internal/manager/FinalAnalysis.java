@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -44,7 +45,7 @@ public class FinalAnalysis
 	protected final @NonNull CompleteModelInternal completeModel;
 	/* @Deprecated - not needed - compute from completeModel */
 	@Deprecated
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 
 	/**
 	 * Map from a CompleteClass to all its sub CompleteClasses.
@@ -58,7 +59,7 @@ public class FinalAnalysis
 
 	public FinalAnalysis(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
-		PivotMetamodelManager metamodelManager = completeModel.getMetamodelManager();
+		MetamodelManager metamodelManager = completeModel.getMetamodelManager();
 		this.metamodelManager = metamodelManager;
 		for (@NonNull CompletePackage completePackage :  completeModel.getAllCompletePackages()) {
 			for (@NonNull CompleteClass subCompleteClass :  ClassUtil.nullFree(completePackage.getOwnedCompleteClasses())) {

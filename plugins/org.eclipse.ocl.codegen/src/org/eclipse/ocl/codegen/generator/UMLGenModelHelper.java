@@ -22,13 +22,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public class UMLGenModelHelper extends AbstractGenModelHelper
 {
-	public UMLGenModelHelper(@NonNull PivotMetamodelManager metamodelManager) {
+	public UMLGenModelHelper(@NonNull MetamodelManager metamodelManager) {
 		super(metamodelManager);
 	}
 

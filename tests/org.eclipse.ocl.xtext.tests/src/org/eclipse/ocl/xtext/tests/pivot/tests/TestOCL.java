@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
@@ -890,7 +889,7 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @NonNull Type getCollectionType(@NonNull String collectionName, @NonNull Type type, boolean isNullFree) {
-		MetamodelManagerInternal metamodelManager = getMetamodelManager();
+		MetamodelManager metamodelManager = getMetamodelManager();
 		Type collectionType = metamodelManager.getCollectionType(collectionName, type, isNullFree, null, null);
 		metamodelManager.addLockedElement(collectionType);
 		return collectionType;
@@ -929,7 +928,7 @@ public class TestOCL extends OCLInternal
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Package getUMLMetamodel() {
-		MetamodelManagerInternal metamodelManager = getMetamodelManager();
+		MetamodelManager metamodelManager = getMetamodelManager();
 		return ClassUtil.nonNullState(metamodelManager.getASmetamodel());
 	}
 

@@ -75,7 +75,6 @@ import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
@@ -84,6 +83,7 @@ import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -1985,7 +1985,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						//
 						IPath genModelPath = new Path(genModelFile.getFileString());
 						final EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-						final MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
+						final MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 						// Reload ... Ecore Next Finish
 					//	System.out.println("\nReload ... Ecore Next Finish");
 						TestEcoreImporter modelImporter = new TestEcoreImporter(ocl.getResourceSet());

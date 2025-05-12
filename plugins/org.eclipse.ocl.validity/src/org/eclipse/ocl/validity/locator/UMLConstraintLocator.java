@@ -41,10 +41,10 @@ import org.eclipse.ocl.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.uml.Constraint;
@@ -323,7 +323,7 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 			return;
 		}
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlConstraint);
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Severity severity = Severity.UNKNOWN;
 		try {
 			final org.eclipse.ocl.pivot.Constraint pivotConstraint = environmentFactory.getASOf(org.eclipse.ocl.pivot.Constraint.class, umlConstraint);

@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -90,7 +91,7 @@ public class TupleTypeManager
 	}
 
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 	protected final org.eclipse.ocl.pivot.@NonNull Class oclTupleType;
 
 	/**

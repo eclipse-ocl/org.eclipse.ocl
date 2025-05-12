@@ -29,10 +29,10 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -187,7 +187,7 @@ public class AliasAnalysis extends AdapterImpl
 	 */
 	private void computePackages(@NonNull Set<@NonNull CompletePackage> localCompletePackages,
 			@NonNull Set<@NonNull CompletePackage> otherCompletePackages) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		assert target != null;
 		for (EObject eObject : new TreeIterable((Resource)target)) {
 			if (eObject instanceof ImportCS) {

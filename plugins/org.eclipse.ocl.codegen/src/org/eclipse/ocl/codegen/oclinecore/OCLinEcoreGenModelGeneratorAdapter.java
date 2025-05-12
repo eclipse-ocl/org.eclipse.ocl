@@ -72,7 +72,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -81,6 +80,7 @@ import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -425,7 +425,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
-		protected void convertConstraintsToOperations(@NonNull MetamodelManagerInternal metamodelManager) {
+		protected void convertConstraintsToOperations(@NonNull MetamodelManager metamodelManager) {
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (GenPackage genPackage : genPackages) {
 				EPackage ecorePackage = genPackage.getEcorePackage();
@@ -506,7 +506,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			return OCLinEcoreGenModelGeneratorAdapter.this;
 		}
 
-		public @NonNull MetamodelManagerInternal getMetamodelManager() {
+		public @NonNull MetamodelManager getMetamodelManager() {
 			return ocl.getMetamodelManager();
 		}
 
@@ -515,7 +515,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			return genModel;
 		}
 
-		protected void installJavaBodies(@NonNull MetamodelManagerInternal metamodelManager, @NonNull GenModel genModel, @NonNull Map<String, String> results) {
+		protected void installJavaBodies(@NonNull MetamodelManager metamodelManager, @NonNull GenModel genModel, @NonNull Map<String, String> results) {
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (GenPackage genPackage : genPackages) {
 				EPackage ecorePackage = genPackage.getEcorePackage();
@@ -701,7 +701,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				if (resourceSet == null) {
 					throw new NullPointerException("No ResourceSet for genmodel");
 				}
-				MetamodelManagerInternal metamodelManager = stateAdapter.getMetamodelManager();
+				MetamodelManager metamodelManager = stateAdapter.getMetamodelManager();
 				metamodelManager.getStandardLibrary().getOclAnyType();
 				for (GenPackage genPackage : genModel.getGenPackages()) {
 					EPackage ecorePackage = genPackage.getEcorePackage();
@@ -721,7 +721,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				stateAdapter.pruneDelegates(genModel);
 			}
 		} catch (Exception e) {
-			Throwable t = e instanceof WrappedException ? ((WrappedException)e).getCause() : e;;
+			Throwable t = e instanceof WrappedException ? e.getCause() : e;;
 			BasicDiagnostic thisDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, getClass().getPackage().getName(), 0, "Failed to pre-generate " + genModel.getModelPluginID() + " constraints", new Object[]{t});
 			Diagnostic thatDiagnostic = super.doPreGenerate(object, projectType);
 			if (thatDiagnostic.getSeverity() == Diagnostic.OK) {

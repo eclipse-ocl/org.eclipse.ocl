@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
@@ -39,7 +38,7 @@ public class PathElement
 		}
 		return iMax;
 	}
-	  
+
     public static List<PathElement> getPath(EObject element) {
         List<PathElement> path = new ArrayList<PathElement>();
         EObject parent = element;
@@ -51,7 +50,7 @@ public class PathElement
         }
         return path;
     }
-	  
+
     public static List<PathElement> getPath(EObject element, MetamodelManager metamodelManager) {
         List<PathElement> path = new ArrayList<PathElement>();
         EObject parent = element;
@@ -60,7 +59,7 @@ public class PathElement
         for (; (parent instanceof Namespace) && !(parent instanceof Model); parent = parent.eContainer()) {
             Namespace namespace = (Namespace)parent;
             if (metamodelManager != null) {
-            	namespace = ((PivotMetamodelManager)metamodelManager).getPrimaryElement(namespace);
+            	namespace = metamodelManager.getPrimaryElement(namespace);
             }
 			path.add(0, new PathElement(namespace.getName(), namespace));
         }
@@ -69,7 +68,7 @@ public class PathElement
 
 	protected final String name;
 	protected final Element element;
-	
+
 	public PathElement(String name, Element element) {
 		super();
 		this.name = name;
@@ -83,7 +82,7 @@ public class PathElement
 	public final String getName() {
 		return name;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;

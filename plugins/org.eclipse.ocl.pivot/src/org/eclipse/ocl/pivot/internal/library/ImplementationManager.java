@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -37,6 +36,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * ImplementationManager encapsulates the knowledge about known feature implementations.
@@ -47,7 +47,7 @@ public class ImplementationManager
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull Technology technology;
-	private final @NonNull PivotMetamodelManager metamodelManager;
+	private final @NonNull MetamodelManager metamodelManager;
 
 	/**
 	 * ClassLoaders that may be able to load a library implementation.

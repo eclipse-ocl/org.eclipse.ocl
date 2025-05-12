@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * TemplateParameterSubstitutionHelper instances support irregular TemplateParameterSubstitution deduction for difficult to
@@ -36,8 +37,9 @@ public abstract class TemplateParameterSubstitutionHelper
 	 * Return the actual type of te body of callExp for which the regular library modeling suggests bodyType.
 	 *
 	 * The default implementation just returns bodyType.
+	 * @since 7.0
 	 */
-	public @Nullable Type resolveBodyType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type bodyType) {
+	public @Nullable Type resolveBodyType(@NonNull MetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type bodyType) {
 		return bodyType;
 	}
 
@@ -45,9 +47,9 @@ public abstract class TemplateParameterSubstitutionHelper
 	 * Return the actual return nullity of callExp for which the regular library modeling suggests returnIsRequired.
 	 *
 	 * The default implementation just returns returnIsRequired.
-	 * @since 1.3
+	 * @since 7.0
 	 */
-	public boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+	public boolean resolveReturnNullity(@NonNull MetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
 		return returnIsRequired;
 	}
 
@@ -55,8 +57,9 @@ public abstract class TemplateParameterSubstitutionHelper
 	 * Return the actual return type of callExp for which the regular library modeling suggests returnType.
 	 *
 	 * The default implementation just returns returnType.
+	 * @since 7.0
 	 */
-	public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
+	public @Nullable Type resolveReturnType(@NonNull MetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
 		return returnType;
 	}
 

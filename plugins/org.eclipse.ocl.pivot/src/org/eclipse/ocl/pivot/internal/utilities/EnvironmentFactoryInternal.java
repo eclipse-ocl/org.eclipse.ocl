@@ -15,7 +15,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
@@ -36,9 +35,6 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
  */
 public interface EnvironmentFactoryInternal extends EnvironmentFactory
 {
-
-	@NonNull PivotMetamodelManager createMetamodelManager();
-
 	@Override
 	@NonNull OCLInternal createOCL();
 
@@ -48,8 +44,8 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@Override
 	@NonNull CompleteModelInternal getCompleteModel();
 
-	@Override
-	@NonNull PivotMetamodelManager getMetamodelManager();
+//	@Override
+//	@NonNull PivotMetamodelManager getMetamodelManager();
 
 	@Override
 	@NonNull StandardLibraryInternal getStandardLibrary();

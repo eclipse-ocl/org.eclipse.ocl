@@ -58,12 +58,12 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -311,7 +311,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void doBadLoadFromString(@NonNull OCLInternal ocl, @NonNull String fileName, @NonNull String testContents, @NonNull Bag<String> expectedErrorMessages) throws Exception {
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		metamodelManager.addClassLoader(Objects.requireNonNull(getClass().getClassLoader()));
 		InputStream inputStream = new URIConverter.ReadableInputStream(testContents, "UTF-8");
 		URI libraryURI = getTestFileURI(fileName, inputStream);

@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions.Global;
@@ -334,7 +333,7 @@ public class PrettyPrinter
 		PrecedenceManager precedenceManager = null;
 		Resource asResource = element.eResource();
 		if (asResource != null) {
-			PivotMetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
+			MetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
 			if (metamodelManager != null) {
 				precedenceManager = metamodelManager.getPrecedenceManager();
 			}
@@ -484,7 +483,7 @@ public class PrettyPrinter
 				EnvironmentFactory environmentFactory = options.getGlobalOptions().getEnvironmentFactory();
 				MetamodelManager metamodelManager = environmentFactory != null ? environmentFactory.getMetamodelManager() : null;
 				if ((metamodelManager != null) && (parent instanceof Type)) {
-					parent = ((PivotMetamodelManager)metamodelManager).getPrimaryType((Type) parent);
+					parent = metamodelManager.getPrimaryType((Type) parent);
 				}
 				if (parent == scope) {
 					return;

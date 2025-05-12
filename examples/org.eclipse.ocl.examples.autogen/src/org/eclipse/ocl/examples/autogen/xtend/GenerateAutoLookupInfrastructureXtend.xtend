@@ -21,7 +21,6 @@ import org.eclipse.ocl.codegen.generator.GenModelHelper
 import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.Operation
 import org.eclipse.ocl.pivot.Type
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory
@@ -37,6 +36,7 @@ import org.eclipse.ocl.build.xtend.GenerateVisitorsXtend
 import org.eclipse.ocl.build.xtend.MergeWriter
 import org.eclipse.emf.mwe.core.WorkflowContext
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor
+import org.eclipse.ocl.pivot.utilities.MetamodelManager
 
 class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 {
@@ -567,7 +567,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	}
 	
 	private def GenModelHelper createGenModelHelper(GenPackage genPackage) {
-		var PivotMetamodelManager mManager = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage()).metamodelManager;
+		var MetamodelManager mManager = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage()).metamodelManager;
 		return AbstractGenModelHelper.create(mManager, genPackage.getGenModel());
 	}
 	

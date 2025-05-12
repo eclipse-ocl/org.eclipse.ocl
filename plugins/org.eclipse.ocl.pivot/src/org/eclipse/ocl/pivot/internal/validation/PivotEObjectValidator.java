@@ -42,11 +42,11 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -213,7 +213,7 @@ public class PivotEObjectValidator implements EValidator
 	protected boolean validate(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
 			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
 		boolean allOk = true;
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
 		if (type != null) {
 			Iterable<@NonNull Object> allInvariantOrInvariants = environmentFactory.getCompleteModel().getAllCompleteInvariants(type);
@@ -297,7 +297,7 @@ public class PivotEObjectValidator implements EValidator
 				evaluationVisitor.setMonitor((Monitor) monitor);
 			}
 		}
-		final PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		final MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluator<Diagnostic>(query)
 		{
 			@Override

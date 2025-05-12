@@ -78,7 +78,6 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
@@ -280,7 +279,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	protected void initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
 		Resource ecoreResource = initModelWithErrors(resourceSet);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 	//	environmentFactory.adapt(resourceSet);
 		String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
@@ -507,7 +506,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	public void doTest_queryExecution(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
 		initModel(resourceSet, modelName);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
 				.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 

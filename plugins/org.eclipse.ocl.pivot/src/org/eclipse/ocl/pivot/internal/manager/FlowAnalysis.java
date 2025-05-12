@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -561,7 +560,7 @@ public class FlowAnalysis
 
 	@Deprecated /* @deprecated Use MetamodelManagerInternalExtension2.getFlowAnalysis */
 	public static @NonNull FlowAnalysis getFlowAnalysis(@NonNull EnvironmentFactory environmentFactory, @NonNull OCLExpression contextExpression) {
-		return ((MetamodelManagerInternalExtension2)environmentFactory.getMetamodelManager()).getFlowAnalysis(contextExpression);
+		return environmentFactory.getMetamodelManager().getFlowAnalysis(contextExpression);
 	}
 
 	/**
@@ -647,7 +646,7 @@ public class FlowAnalysis
 				LetExp letExp = (LetExp)eContainer;
 				Variable letVariable = PivotUtil.getOwnedVariable(letExp);
 				OCLExpression initExpression = PivotUtil.getOwnedInit(letVariable);
-				FlowAnalysis variableAnalysis = ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)environmentFactory.getMetamodelManager()).getFlowAnalysis(initExpression);
+				FlowAnalysis variableAnalysis = environmentFactory.getMetamodelManager().getFlowAnalysis(initExpression);
 				if (variableAnalysis.isNull(initExpression)) {
 					setVariable(letVariable, true);
 				}

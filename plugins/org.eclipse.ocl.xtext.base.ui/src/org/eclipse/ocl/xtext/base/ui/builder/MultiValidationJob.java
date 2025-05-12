@@ -57,7 +57,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.JavaRuntime;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.BasicDiagnosticWithRemove;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -650,7 +649,7 @@ public class MultiValidationJob extends Job
 			EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 			ClassLoader classLoader = getClassLoader(project);
 			if (classLoader != null) {
-				((MetamodelManagerInternal)environmentFactory.getMetamodelManager()).addClassLoader(classLoader);
+				environmentFactory.getMetamodelManager().addClassLoader(classLoader);
 			}
 			monitor.worked(1);			// Work Item 1 - Initialize done
 			final @NonNull String markerType = entry.getMarkerId();
@@ -717,7 +716,7 @@ public class MultiValidationJob extends Job
 			synchronized (entry) {
 				if (throwable != null) {
 					if (throwable instanceof WrappedException) {
-						entry.setThrowable(((WrappedException)throwable).getCause());
+						entry.setThrowable(throwable.getCause());
 					}
 					else {
 						entry.setThrowable(throwable);

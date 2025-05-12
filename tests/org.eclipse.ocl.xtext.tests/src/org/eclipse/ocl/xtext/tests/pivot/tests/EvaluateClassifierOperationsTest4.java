@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -75,7 +74,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
 			super(testFileSystem, testPackageName, name, projectManager, externalResourceSet);
-			MetamodelManagerInternal metamodelManager = getMetamodelManager();
+			MetamodelManager metamodelManager = getMetamodelManager();
 			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
 
 			metamodelManager.installRoot(ClassUtil.nonNullState(root));
@@ -221,7 +220,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclContents() {
 		MyOCL ocl = createOCL(OCL.NO_PROJECTS, null);
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		try {
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			org.eclipse.ocl.pivot.Class classType = environmentFactory.getStandardLibrary().getClassType();

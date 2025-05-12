@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
@@ -51,6 +50,7 @@ import org.eclipse.ocl.pivot.library.LibraryTernaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractGenModelHelper implements GenModelHelper
@@ -68,7 +68,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public static final @NonNull String TYPE_PARAMETERS_PACKAGE_NAME = "TypeParameters";
 	public static final @NonNull String TYPES_PACKAGE_NAME = "Types";
 
-	public static @NonNull GenModelHelper create(@NonNull PivotMetamodelManager metamodelManager, @Nullable GenModel genModel) {
+	public static @NonNull GenModelHelper create(@NonNull MetamodelManager metamodelManager, @Nullable GenModel genModel) {
 		if (genModel instanceof org.eclipse.uml2.codegen.ecore.genmodel.GenModel) {
 			return new UMLGenModelHelper(metamodelManager);
 		}
@@ -155,9 +155,9 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		return s.toString();
 	}
 
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 
-	protected AbstractGenModelHelper(@NonNull PivotMetamodelManager metamodelManager) {
+	protected AbstractGenModelHelper(@NonNull MetamodelManager metamodelManager) {
 		this.metamodelManager = metamodelManager;
 	}
 
@@ -672,7 +672,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
+	public @NonNull MetamodelManager getMetamodelManager() {
 		return metamodelManager;
 	}
 

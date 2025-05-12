@@ -21,12 +21,12 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin;
@@ -74,7 +74,7 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	}
 
 	@Deprecated
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
+	public @NonNull MetamodelManager getMetamodelManager() {
 		return PivotUtilInternal.getEnvironmentFactory((Notifier)null).getMetamodelManager();	// Better than nothing compatibility
 	}
 

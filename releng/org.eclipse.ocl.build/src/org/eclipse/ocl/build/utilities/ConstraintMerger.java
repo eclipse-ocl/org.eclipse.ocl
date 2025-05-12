@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -110,7 +109,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 		//		final String pivotNsURI = ClassUtil.nonNullState(ecorePivotPackage.getNsURI());
 		OCLInternal ocl = OCLInternal.newInstance(resourceSet);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
 		//		ocl.getResourceSet().getResources().add(ecoreResource);		// Don't load another copy
 		String libraryURI2 = libraryURI;

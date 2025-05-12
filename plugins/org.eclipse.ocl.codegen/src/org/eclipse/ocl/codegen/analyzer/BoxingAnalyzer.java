@@ -79,9 +79,9 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -113,7 +113,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	protected boolean hasOclInvalidOperation(@NonNull OperationId operationId) {
-		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
+		MetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
 		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclInvalidType());
 		Operation memberOperation = completeClass.getOperation(operationId);
 		if (memberOperation == null) {
@@ -128,7 +128,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	protected boolean hasOclVoidOperation(@NonNull OperationId operationId) {
-		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
+		MetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
 		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
 		Operation memberOperation = completeClass.getOperation(operationId);
 		if (memberOperation == null) {

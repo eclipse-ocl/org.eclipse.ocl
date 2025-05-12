@@ -38,11 +38,11 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.uml2.uml.util.UMLSwitch;
@@ -447,7 +447,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 				}
 			}
 		}
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return metamodelManager.getCollectionType(isOrdered, isUnique, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
 	}
 
@@ -482,7 +482,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		if (!isMultivalued) {
 			return asClass;
 		}
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return metamodelManager.getCollectionType(isOrdered, true, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
 	}
 

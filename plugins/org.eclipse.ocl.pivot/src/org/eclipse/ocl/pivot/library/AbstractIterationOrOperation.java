@@ -16,8 +16,8 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -39,7 +39,7 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				if (sourceType instanceof CollectionType) {
 					CollectionType sourceCollectionType = (CollectionType)sourceType;
 					Type elementType = PivotUtil.getElementType(sourceCollectionType);
-					PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+					MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 					returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
 						elementType, sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
 				}
@@ -73,7 +73,7 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				CollectionType collectionType = (CollectionType)returnType;
 				if ((sourceType instanceof CollectionType) && ((CollectionType)sourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
 					@SuppressWarnings("null")@NonNull Type elementType = collectionType.getElementType();
-					PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+					MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 					returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
 						elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
 				}

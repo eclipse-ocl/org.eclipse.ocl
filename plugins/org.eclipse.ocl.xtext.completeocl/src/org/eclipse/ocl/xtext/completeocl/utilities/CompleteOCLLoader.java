@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -229,7 +228,7 @@ public abstract class CompleteOCLLoader
 		//
 		//	Identify the packages which the Complete OCL document complements.
 		//
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject asElement = tit.next();
 			if (asElement instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
@@ -372,7 +371,7 @@ public abstract class CompleteOCLLoader
 		//
 		//	XXX Identify the packages which the Complete OCL document complements.
 		//
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject asElement = tit.next();
 			if (asElement instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types

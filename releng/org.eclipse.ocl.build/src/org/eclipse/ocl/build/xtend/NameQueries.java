@@ -33,8 +33,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -52,14 +51,14 @@ public class NameQueries
 		return AbstractGenModelHelper.rawEncodeName(name, arity);
 	}
 
-	protected final @NonNull MetamodelManagerInternal metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private @NonNull Map<String, Integer> counters = new HashMap<String, Integer>();
 	private @NonNull Map<Object, String> definedSymbols = new HashMap<Object, String>();
 
-	public NameQueries(@NonNull MetamodelManagerInternal metamodelManager) {
+	public NameQueries(@NonNull MetamodelManager metamodelManager) {
 		this.metamodelManager = metamodelManager;
-		this.genModelHelper = new EcoreGenModelHelper((PivotMetamodelManager)metamodelManager);
+		this.genModelHelper = new EcoreGenModelHelper(metamodelManager);
 	}
 
 	public @Nullable String basicGetSymbolName(@NonNull Object elem) {

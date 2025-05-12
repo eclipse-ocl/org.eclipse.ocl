@@ -25,8 +25,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -45,14 +43,13 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 	public static final @NonNull String NAME = "validationDelegates"; //$NON-NLS-1$
 
 	public Constraint getConstraint(@NonNull MetamodelManager metamodelManager, @NonNull EClassifier eClassifier, @NonNull String constraintName) throws OCLDelegateException {
-		MetamodelManagerInternal metamodelManagerInternal = (MetamodelManagerInternal)metamodelManager;
-		EnvironmentFactoryInternal environmentFactory = metamodelManagerInternal.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
 		Resource ecoreMetamodel = ClassUtil.nonNullEMF(eClassifier.eResource());
 		External2AS es2as = External2AS.getAdapter(ecoreMetamodel, environmentFactory);
 		Type type = es2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
 			List<@NonNull Constraint> knownInvariants = new ArrayList<>();
-			for (CompleteClass superType : ((PivotMetamodelManager)metamodelManagerInternal).getAllSuperCompleteClasses(type)) {
+			for (CompleteClass superType : metamodelManager.getAllSuperCompleteClasses(type)) {
 				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
 					if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {

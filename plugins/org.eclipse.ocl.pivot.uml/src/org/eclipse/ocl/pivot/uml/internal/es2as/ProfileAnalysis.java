@@ -22,8 +22,8 @@ import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * The ProfileAnalysis captures the overall analysis of the UML M2 Profiles and Stereotypes.
@@ -71,7 +71,7 @@ public class ProfileAnalysis
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
 	}
-	
+
 	public void addStereotype(@NonNull Stereotype asStereotype) {
 		allStereotypes.add(asStereotype);
 		org.eclipse.ocl.pivot.Package asPackage = asStereotype.getOwningPackage();
@@ -85,7 +85,7 @@ public class ProfileAnalysis
 			ownedStereotypes.add(asStereotype);
 		}
 	}
-	
+
 	public void addTypeExtension(@NonNull StereotypeExtender asTypeExtension) {
 		org.eclipse.ocl.pivot.Class extendedMetatype = asTypeExtension.getClass_();
 		Stereotype extendingStereotype = asTypeExtension.getOwningStereotype();
@@ -156,7 +156,7 @@ public class ProfileAnalysis
 						for (TypeExtension asTypeExtension : asMetatype2.getExtendedBys()) {
 							Stereotype asStereotype1 = asTypeExtension.getStereotype();
 							for (Stereotype asStereotype2 : stereotypeClosure.get(asStereotype1)) {
-								
+
 							}
 						}
 					}
@@ -346,7 +346,7 @@ public class ProfileAnalysis
 	}
 
 	private void computeMetatypeClosure() {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (org.eclipse.ocl.pivot.Package metapackage : allExtendedMetapackages) {
 			for (org.eclipse.ocl.pivot.Class subMetatype : metapackage.getOwnedClasses()) {
 				if (subMetatype != null) {
@@ -368,7 +368,7 @@ public class ProfileAnalysis
 	}
 
 	private void computeStereotypeClosure() {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (Stereotype subStereotype : allStereotypes) {
 			if (subStereotype != null) {
 				Set<Stereotype> superStereotypeClosure = new HashSet<Stereotype>();

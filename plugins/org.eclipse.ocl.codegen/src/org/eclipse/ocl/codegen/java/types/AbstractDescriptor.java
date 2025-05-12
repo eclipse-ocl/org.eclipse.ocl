@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
@@ -266,7 +266,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 
 	@Override
 	public void appendEqualsValue(@NonNull JavaStream js, @NonNull CGValuedElement thisValue, @NonNull CGValuedElement thatValue, boolean notEquals) {
-		PivotMetamodelManager metamodelManager = js.getCodeGenerator().getEnvironmentFactory().getMetamodelManager();
+		MetamodelManager metamodelManager = js.getCodeGenerator().getEnvironmentFactory().getMetamodelManager();
 		if (isBoxedType(metamodelManager, thisValue) && isBoxedType(metamodelManager, thatValue)) {
 			boolean nullSafe = thisValue.isNonNull() && thatValue.isNonNull();
 			if (!nullSafe) {
@@ -394,7 +394,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		return javaClass == Object.class;
 	}
 
-	protected boolean isBoxedType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CGValuedElement cgValue) {
+	protected boolean isBoxedType(@NonNull MetamodelManager metamodelManager, @NonNull CGValuedElement cgValue) {
 		Element ast = cgValue.getAst();
 		if (!(ast instanceof TypedElement)) {
 			return false;

@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -67,6 +66,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -881,8 +881,11 @@ public class EcoreOCLEValidator implements EValidator
 		return allOk;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Deprecated /* @deprecated not-used - use EnvironmentFactory argument */
-	protected boolean validateExpression(@NonNull MetamodelManagerInternal metamodelManager, @NonNull ENamedElement eNamedElement, @Nullable String expression, @Nullable Type unusedRequiredType, @Nullable String role, DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
+	protected boolean validateExpression(@NonNull MetamodelManager metamodelManager, @NonNull ENamedElement eNamedElement, @Nullable String expression, @Nullable Type unusedRequiredType, @Nullable String role, DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
 		Element asElement = getASOf(environmentFactory, Element.class, eNamedElement, diagnostics, context);
 		if (asElement == null) {

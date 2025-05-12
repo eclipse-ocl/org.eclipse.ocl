@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.completeocl.as2cs.CompleteOCLSplitter;
@@ -79,7 +80,7 @@ public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 		URI uri = asResource.getURI();
 		ResourceSet asResourceSet = asResource.getResourceSet();
 		assert asResourceSet != null;
-		PivotMetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResourceSet);
+		MetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResourceSet);
 		EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
 		ASResource oclResource = CompleteOCLSplitter.separate(environmentFactory, asResource);
 		URI xtextURI = oclURI != null ? URI.createPlatformResourceURI(oclURI, true) : uri.trimFileExtension().appendFileExtension("ocl");
