@@ -103,7 +103,7 @@ public class ExecutorSingleMapIterationManager extends AbstractIterationManager
 
 	@Override
 	public @Nullable Object evaluateBody() {
-		return ((LibraryTernaryOperation.LibraryTernaryOperationExtension)body).evaluate(executor, returnTypeId, accumulatorValue, get(), getValue());
+		return ((LibraryTernaryOperation)body).evaluate(executor, returnTypeId, accumulatorValue, get(), getValue());
 	}
 
 	@Override

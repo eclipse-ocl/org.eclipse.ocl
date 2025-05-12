@@ -367,9 +367,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//	Dispatch: Determine dynamic operation
 		//
 		js.append("final ");
-		js.appendClassReference(true, LibraryIteration.LibraryIterationExtension.class);
+		js.appendClassReference(true, LibraryIteration.class);
 		js.append(" " + implementationName + " = (");
-		js.appendClassReference(null, LibraryIteration.LibraryIterationExtension.class);
+		js.appendClassReference(null, LibraryIteration.class);
 		js.append( ")" + staticTypeName + ".lookupImplementation(");
 		js.appendReferenceTo(localContext.getStandardLibraryVariable(cgIterationCallExp));
 		js.append(", ");

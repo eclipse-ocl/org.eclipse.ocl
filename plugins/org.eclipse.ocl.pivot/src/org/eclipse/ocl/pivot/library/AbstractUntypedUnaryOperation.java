@@ -21,8 +21,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * AbstractUntypedUnaryOperation defines the default implementation of a unary operation redirecting the
  * type-id invocation to the type-id-less form.
  */
-public abstract class AbstractUntypedUnaryOperation extends AbstractUnaryOperation
-implements LibraryUntypedUnaryOperation.LibraryUntypedUnaryOperationExtension
+public abstract class AbstractUntypedUnaryOperation extends AbstractUnaryOperation implements LibraryUntypedUnaryOperation
 {
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

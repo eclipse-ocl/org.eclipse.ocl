@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
  */
-public abstract class AbstractProperty extends AbstractFeature implements LibraryProperty.LibraryPropertyExtension
+public abstract class AbstractProperty extends AbstractFeature implements LibraryProperty
 {
 	/**
 	 * @since 1.1
