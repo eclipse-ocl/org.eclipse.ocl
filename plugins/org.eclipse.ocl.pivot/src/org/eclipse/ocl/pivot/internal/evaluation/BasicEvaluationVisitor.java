@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -68,7 +67,6 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -129,21 +127,9 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		super(executor);
 	}
 
-	/** @deprecated Evaluator no longer nests */
-	@Deprecated
-	@Override
-	public @NonNull EvaluationVisitor createNestedEvaluator() {
-		return this;
-	}
-
-	/** @deprecated Evaluator no longer nest and so no longer dispose */
-	@Deprecated
-	@Override
-	public void dispose() {}
-
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
-		Object value = ((Element) body).accept(undecoratedVisitor);
+		Object value = body.accept(undecoratedVisitor);
 		assert ValueUtil.isBoxed(value);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 		return value;
 	}

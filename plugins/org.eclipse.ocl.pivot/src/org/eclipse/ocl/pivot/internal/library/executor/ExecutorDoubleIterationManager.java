@@ -14,7 +14,6 @@ import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractIterationManager;
@@ -41,13 +40,6 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 	private final @NonNull Iterator<? extends Object> iteratorValue2;
 	private Object currentValue1;
 	private Object currentValue2;
-
-	/** @deprecated use Executor */
-	@Deprecated
-	public ExecutorDoubleIterationManager(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @NonNull LibraryTernaryOperation body,
-			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
-		this(ValueUtil.getExecutor(evaluator), returnTypeId, body, collectionValue, accumulatorValue);
-	}
 
 	/**
 	 * @since 1.1

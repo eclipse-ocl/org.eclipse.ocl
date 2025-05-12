@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -103,12 +102,6 @@ public class EInvokeOperation extends AbstractOperation
 		return evaluate(executor, typeId, sourceValue, argumentValues);
 	}
 
-	/** @deprecated use Executor */
-	@Deprecated
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object @NonNull ... boxedArgumentValues) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, boxedArgumentValues);
-	}
-
 	/**
 	 * @since 1.1
 	 */
@@ -134,12 +127,6 @@ public class EInvokeOperation extends AbstractOperation
 		} catch (InvocationTargetException e) {
 			return createInvalidValue(e);
 		}
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	protected @Nullable Object getResultValue(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object eResult) {
-		return evaluate(getExecutor(evaluator), returnTypeId, eResult);
 	}
 
 	/**

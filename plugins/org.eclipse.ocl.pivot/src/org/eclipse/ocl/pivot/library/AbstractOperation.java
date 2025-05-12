@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
@@ -84,13 +83,6 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		else {
 			return basicEvaluate(executor, caller, sourceAndArgumentValues);
 		}
-	}
-	/** @deprecated use Executor
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		return dispatch(getExecutor(evaluator), callExp, sourceValue);
 	}
 
 	@Override

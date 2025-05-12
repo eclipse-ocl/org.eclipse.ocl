@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -51,11 +50,6 @@ public class SortedByIteration extends AbstractIteration
 		private final @NonNull ArrayList<Object> rawKeys = new ArrayList<>();		// Index to sortedBy value
 		private @Nullable ArrayList<Object> sortedValues = null;					// Sorted elements
 
-		/** @deprecated use Executor */
-		@Deprecated
-		public SortingValue(@NonNull Evaluator evaluator, @NonNull CollectionTypeId returnTypeId, @NonNull LibraryBinaryOperation implementation) {
-			this(getExecutor(evaluator), returnTypeId, implementation);
-		}
 		/**
 		 * @since 1.1
 		 */
@@ -129,13 +123,6 @@ public class SortedByIteration extends AbstractIteration
 	}
 
 	public static final @NonNull SortedByIteration INSTANCE = new SortedByIteration();
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public SortedByIteration.@NonNull SortingValue createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
-		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
-	}
 
 	/**
 	 * @since 1.1

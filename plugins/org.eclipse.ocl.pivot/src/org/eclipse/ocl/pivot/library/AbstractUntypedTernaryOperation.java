@@ -17,9 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -28,13 +26,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractUntypedTernaryOperation extends AbstractTernaryOperation implements LibraryUntypedTernaryOperation.LibraryUntypedTernaryOperationExtension
 {
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		return dispatch(getExecutor(evaluator), callExp, sourceValue);
-	}
-
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		assert !PivotUtil.getReferredOperation(callExp).isIsValidating();
@@ -46,13 +37,6 @@ public abstract class AbstractUntypedTernaryOperation extends AbstractTernaryOpe
 		Object firstArgument = executor.evaluate(argument0);
 		Object secondArgument = executor.evaluate(argument1);
 		return evaluate(executor, sourceValue, firstArgument, secondArgument);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		return evaluate(evaluator, sourceValue, firstArgumentValue, secondArgumentValue);
 	}
 
 	/**
@@ -67,9 +51,4 @@ public abstract class AbstractUntypedTernaryOperation extends AbstractTernaryOpe
 			return super.evaluate(executor, caller, boxedSourceAndArgumentValues);
 		}
 	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public abstract @Nullable /*@Thrown*/ Object evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
 }

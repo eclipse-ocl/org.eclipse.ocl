@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
@@ -25,23 +24,9 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public abstract class AbstractUntypedUnaryOperation extends AbstractUnaryOperation
 implements LibraryUntypedUnaryOperation.LibraryUntypedUnaryOperationExtension
 {
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		return dispatch(getExecutor(evaluator), callExp, sourceValue);
-	}
-
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		return evaluate(executor, sourceValue);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**
@@ -50,13 +35,6 @@ implements LibraryUntypedUnaryOperation.LibraryUntypedUnaryOperationExtension
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		return evaluate(executor, sourceValue);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), sourceValue);
 	}
 
 	/**

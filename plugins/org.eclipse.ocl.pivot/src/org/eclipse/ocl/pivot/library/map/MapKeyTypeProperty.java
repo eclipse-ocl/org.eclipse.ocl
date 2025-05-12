@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
@@ -29,13 +28,6 @@ import org.eclipse.ocl.pivot.values.MapValue;
 public class MapKeyTypeProperty extends AbstractProperty
 {
 	public static final @NonNull MapKeyTypeProperty INSTANCE = new MapKeyTypeProperty();
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Type evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
-	}
 
 	/**
 	 * @since 1.1
