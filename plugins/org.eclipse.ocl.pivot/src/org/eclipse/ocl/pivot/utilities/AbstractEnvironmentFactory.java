@@ -483,7 +483,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public @NonNull EvaluationVisitor createEvaluationVisitor(@NonNull EvaluationEnvironment evaluationEnvironment) {
-		ExecutorInternal executor = ((EvaluationEnvironment.EvaluationEnvironmentExtension)evaluationEnvironment).getExecutor();
+		ExecutorInternal executor = evaluationEnvironment.getExecutor();
 		return executor.getEvaluationVisitor();
 	}
 
