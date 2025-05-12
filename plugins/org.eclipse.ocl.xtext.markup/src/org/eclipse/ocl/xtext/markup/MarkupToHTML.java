@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.HTMLBuffer;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLHelper;
@@ -74,12 +73,12 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 	}
 
 	//	private @Nullable OCL ocl = null;
-	private @NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	private @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @Nullable Object context;
 	protected final @NonNull HTMLBuffer s = new HTMLBuffer();
 
 	public MarkupToHTML(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Object context) {
-		this.environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactory;
+		this.environmentFactory = environmentFactory;
 		this.context = context;
 	}
 

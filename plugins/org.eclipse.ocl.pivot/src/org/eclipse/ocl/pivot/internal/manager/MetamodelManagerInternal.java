@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -70,9 +69,6 @@ public interface MetamodelManagerInternal extends MetamodelManager
 
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
-
-	@Deprecated /* @deprecated use EnvironmentFactory.createParserContext() */
-	@Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) throws ParserException;
 
 	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();
 

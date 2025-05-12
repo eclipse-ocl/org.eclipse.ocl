@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -221,7 +220,7 @@ public class RoundTripTests extends XtextTestCase
 				//				System.out.println(++i + ": " + eObject);
 				ExpressionInOCL specification = (ExpressionInOCL) eObject;
 				if ((specification.getOwnedBody() != null) || (specification.getBody() != null)) {
-					((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+					environmentFactory.parseSpecification(specification);
 				}
 				tit.prune();
 			}

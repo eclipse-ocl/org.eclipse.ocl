@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -435,13 +434,13 @@ public class ElementUtil
 							for (Constraint asConstraint : asType.getOwnedInvariants()) {
 								LanguageExpression specification = asConstraint.getOwnedSpecification();
 								if (specification != null) {
-									return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
+									return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
 								}
 							}
 							for (Operation asOperation : asType.getOwnedOperations()) {
 								LanguageExpression specification = asOperation.getBodyExpression();
 								if (specification != null) {
-									return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
+									return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
 								}
 							}
 						}

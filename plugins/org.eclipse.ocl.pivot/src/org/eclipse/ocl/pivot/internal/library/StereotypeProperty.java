@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -107,7 +107,7 @@ public class StereotypeProperty extends ConstrainedProperty
 				String body = defaultExpression.getBody();
 				if (body != null) {
 					try {
-						EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) executor.getEnvironmentFactory();
+						EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) executor.getEnvironmentFactory();
 						ExpressionInOCL expr = environmentFactory.parseSpecification(defaultExpression);
 						OCLExpression bodyExpression = expr.getOwnedBody();
 						if (bodyExpression != null) {

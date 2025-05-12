@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.uml2.uml.Element;
@@ -83,7 +82,7 @@ public class UML2ASUtil
 	 * Return the metaType of umlElement using the UML meta namespace identifiable from stereotype applications.
 	 */
 	public static org.eclipse.ocl.pivot.@Nullable Class getMetaType(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.uml2.uml.@NonNull Element umlElement) {
-		EnvironmentFactoryInternalExtension environmentFactoryInternalExtension = (EnvironmentFactoryInternalExtension)environmentFactory;
+		EnvironmentFactoryInternal environmentFactoryInternalExtension = environmentFactory;
 		EClass umlEClass = umlElement.eClass();
 		for (org.eclipse.uml2.uml.Stereotype umlStereotype : umlElement.getApplicableStereotypes()) {
 			for (org.eclipse.uml2.uml.Class umlMetaclass : umlStereotype.getAllExtendedMetaclasses()) {

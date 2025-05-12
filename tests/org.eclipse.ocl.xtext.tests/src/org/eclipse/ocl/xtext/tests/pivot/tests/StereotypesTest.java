@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -80,7 +80,7 @@ public class StereotypesTest extends PivotTestSuite
 			umlInFrenchStereotype = umlProfile.getOwnedStereotype("InFrench");
 			umlInGermanStereotype = umlProfile.getOwnedStereotype("InGerman");
 			umlFace = (org.eclipse.uml2.uml.Enumeration) umlProfile.getOwnedType("Face");
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 			asProfile = environmentFactory.getASOf(Profile.class, umlProfile);
 			asInEnglishStereotype = environmentFactory.getASOf(Stereotype.class, umlInEnglishStereotype);
 			asInFrenchStereotype = environmentFactory.getASOf(Stereotype.class, umlInFrenchStereotype);
@@ -118,7 +118,7 @@ public class StereotypesTest extends PivotTestSuite
 		ElementExtension asMultiLingualClassInGerman;
 
 		public InternationalizedMetamodel(@NonNull OCL ocl, @NonNull InternationalizedProfile mmm, org.eclipse.uml2.uml.Package umlPackage) throws ParserException {
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 			this.umlPackage = umlPackage;
 			//	        umlMMM = metamodelManager.getPivotOf(Element.class, umlRoot.eClass());
 			//	        asResource = ocl.uml2as(umlResource);

@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
@@ -61,14 +60,6 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
  */
 public interface EnvironmentFactoryInternal extends EnvironmentFactory
 {
-	/**
-	 * @since 1.1
-	 */
-	@Deprecated /* @deprecated folded into EnvironmentFactoryInternal */
-	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal
-	{
-	}
-
 	void addExternal2AS(@NonNull External2AS external2as);
 
 	/**
@@ -133,15 +124,6 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 
 	@Override
 	@NonNull OCLInternal createOCL();
-
-	/**
-	 * Create a ParserContext that may be used to parse OCL expressions in the given context,
-	 * which may be an EClassifier/EOperation/EStructuralFeature or Type/Operation/Property.
-	 * Returns a ModelContext if no more specfic context can be determined if none can be created.
-	 * @throws ParserException
-	 */
-	@Deprecated /* @deprecated not used - evolving towards createParserContext(@NonNull Element) */
-	@NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException;
 
 	void detach(@NonNull Object attachOwner);
 

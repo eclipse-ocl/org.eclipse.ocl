@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -80,7 +79,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 					ResourceSet resolvedResourceSet = resolvedResource.getResourceSet();
 					assert resolvedResourceSet == externalResourceSet;
 					try {
-						resolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, resolvedProxy);
+						resolvedProxy = environmentFactory.getASOf(Element.class, resolvedProxy);
 					} catch (ParserException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -117,7 +116,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		}
 		org.eclipse.ocl.pivot.Class pivotType;
 		try {
-			pivotType = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(org.eclipse.ocl.pivot.Class.class, eType);
+			pivotType = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eType);
 			if (pivotType != null) {
 				return metamodelManager.getPrimaryClass(pivotType);
 			}

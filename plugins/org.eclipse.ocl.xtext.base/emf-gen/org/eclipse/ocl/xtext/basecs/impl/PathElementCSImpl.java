@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -527,7 +526,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				try {
-					asResolvedProxy = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eModelElement);
+					asResolvedProxy = environmentFactory.getASOf(Element.class, eModelElement);
 					if (proxy.eProxyURI().fragment() == null) {
 						asResolvedProxy = EcoreUtil.getRootContainer(asResolvedProxy);
 					}

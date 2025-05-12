@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -121,7 +120,7 @@ public abstract class AbstractPivotConstraintLocator extends AbstractConstraintL
 	protected @NonNull ExpressionInOCL getQuery(@NonNull PivotMetamodelManager metamodelManager, @NonNull Constraint constraint) throws ParserException {
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		assert specification != null;
-		return ((EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory()).parseSpecification(specification);
+		return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
 	}
 
 	@Override

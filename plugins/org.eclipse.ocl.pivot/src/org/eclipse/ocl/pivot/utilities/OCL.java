@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLDebugOptions;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -224,7 +223,7 @@ public class OCL
 		}
 		ExpressionInOCL query;
 		try {
-			query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+			query = environmentFactory.parseSpecification(specification);
 		} catch (ParserException e) {
 			//			e.printStackTrace();
 			return false;
@@ -343,7 +342,7 @@ public class OCL
 	 */
 	public Query createQuery(@NonNull Constraint constraint) throws ParserException {
 		LanguageExpression specification = ClassUtil.nonNullState(constraint.getOwnedSpecification());
-		ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 		return new QueryImpl(this, query);
 	}
 
@@ -553,7 +552,7 @@ public class OCL
 				return query;
 			}
 		}
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		return environmentFactory.parseSpecification(specification);
 	}
 
 	public @NonNull StandardLibrary getStandardLibrary() {
@@ -609,7 +608,7 @@ public class OCL
 	 * @throws ParserException if text parsing fails
 	 */
 	public @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		return environmentFactory.parseSpecification(specification);
 	}
 	/**
 	 * @throws ParserException
@@ -617,7 +616,7 @@ public class OCL
 	 */
 	@Deprecated
 	public @NonNull ExpressionInOCL parseSpecification(@Nullable Object unusedObject, @NonNull LanguageExpression specification) throws ParserException {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		return environmentFactory.parseSpecification(specification);
 	}
 
 	/**

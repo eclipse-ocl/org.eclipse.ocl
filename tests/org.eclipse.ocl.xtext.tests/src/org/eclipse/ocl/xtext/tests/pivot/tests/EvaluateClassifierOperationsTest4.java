@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -221,7 +221,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclContents() {
 		MyOCL ocl = createOCL(OCL.NO_PROJECTS, null);
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
 		try {
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			org.eclipse.ocl.pivot.Class classType = environmentFactory.getStandardLibrary().getClassType();

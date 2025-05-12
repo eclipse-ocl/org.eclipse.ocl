@@ -65,7 +65,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	// this is the same as HashMap's default load factor
 	private static final float DEFAULT_REGEX_CACHE_LOAD_FACTOR = 0.75f;
 
-	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	private /*@LazyNonNull*/ EvaluationEnvironment rootEvaluationEnvironment = null;
 	private /*@LazyNonNull*/ EvaluationEnvironment evaluationEnvironment = null;
 	private /*@LazyNonNull*/ EvaluationVisitor evaluationVisitor;
@@ -97,7 +97,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
-	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+	protected AbstractExecutor(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();

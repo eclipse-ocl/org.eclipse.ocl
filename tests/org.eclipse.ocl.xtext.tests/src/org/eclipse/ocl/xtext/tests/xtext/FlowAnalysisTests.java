@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -99,7 +99,7 @@ public class FlowAnalysisTests extends XtextTestCase
 			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
 			org.eclipse.ocl.pivot.Class deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
 			Constraint asInvariant = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName));
-			return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
+			return ((EnvironmentFactoryInternal)environmentFactory).parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
 		}
 
 		public Resource doLoad_Concrete(@NonNull String stem, @NonNull String extension) throws IOException {

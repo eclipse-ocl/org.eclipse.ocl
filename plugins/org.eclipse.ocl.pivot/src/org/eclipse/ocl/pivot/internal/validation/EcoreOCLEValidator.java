@@ -60,7 +60,7 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
@@ -280,7 +280,7 @@ public class EcoreOCLEValidator implements EValidator
 		this.mayUseNewLines = mayUseNewLines;
 	}
 
-	private <T extends Element> @Nullable T getASOf(@NonNull EnvironmentFactoryInternalExtension environmentFactory,
+	private <T extends Element> @Nullable T getASOf(@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull Class<@NonNull T> javaClass, @NonNull ENamedElement eNamedElement,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		@Nullable T asElement = null;
@@ -519,7 +519,7 @@ public class EcoreOCLEValidator implements EValidator
 		return false;
 	}
 
-	private @Nullable ExpressionInOCL parseSpecification(@NonNull EnvironmentFactoryInternalExtension environmentFactory,
+	private @Nullable ExpressionInOCL parseSpecification(@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull ENamedElement eContext, @NonNull LanguageExpression asSpecification,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		ExpressionInOCL expressionInOCL = null;
@@ -611,7 +611,7 @@ public class EcoreOCLEValidator implements EValidator
 		EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
 		if (eAnnotation != null) {
 			OCL ocl = PivotDiagnostician.getOCL(context, eClassifier);
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 			org.eclipse.ocl.pivot.Class asClass = getASOf(environmentFactory, org.eclipse.ocl.pivot.Class.class, eClassifier, diagnostics, context);
 			if (asClass == null) {
 				return false;
@@ -634,7 +634,7 @@ public class EcoreOCLEValidator implements EValidator
 		return allOk;
 	}
 
-	private boolean validateEClassifierConstraintsAnnotation(@NonNull EnvironmentFactoryInternalExtension environmentFactory,
+	private boolean validateEClassifierConstraintsAnnotation(@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull EClassifier eClassifier, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean allOk = true;
 		Object eContext = eClassifier;
@@ -694,7 +694,7 @@ public class EcoreOCLEValidator implements EValidator
 		boolean needsSettingDelegates = false;
 		boolean needsValidationDelegates = false;
 		OCL ocl = PivotDiagnostician.getOCL(context, ePackage);
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (OCLCommon.getDelegateAnnotation(eClassifier) != null) {
 				needsValidationDelegates = true;
@@ -759,7 +759,7 @@ public class EcoreOCLEValidator implements EValidator
 			return true;
 		}
 		OCL ocl = PivotDiagnostician.getOCL(context, eOperation);		// Shares a weak reference that garbage collects
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();		// XXX Use ValidationContext.getEnvironmentFactory()
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();		// XXX Use ValidationContext.getEnvironmentFactory()
 		NamedElement asElement = getASOf(environmentFactory, NamedElement.class, eOperation, diagnostics, context);
 		if (asElement == null) {
 			return false;
@@ -808,7 +808,7 @@ public class EcoreOCLEValidator implements EValidator
 		EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eStructuralFeature);
 		if (eAnnotation != null) {
 			OCL ocl = PivotDiagnostician.getOCL(context, eStructuralFeature);
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 			EMap<String, String> details = eAnnotation.getDetails();
 			int entries = 0;
 			String value = null;
@@ -883,7 +883,7 @@ public class EcoreOCLEValidator implements EValidator
 
 	@Deprecated /* @deprecated not-used - use EnvironmentFactory argument */
 	protected boolean validateExpression(@NonNull MetamodelManagerInternal metamodelManager, @NonNull ENamedElement eNamedElement, @Nullable String expression, @Nullable Type unusedRequiredType, @Nullable String role, DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)metamodelManager.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
 		Element asElement = getASOf(environmentFactory, Element.class, eNamedElement, diagnostics, context);
 		if (asElement == null) {
 			return  false;
@@ -994,7 +994,7 @@ public class EcoreOCLEValidator implements EValidator
 		return true;
 	}
 
-	private boolean validateExpressionInOCL(@NonNull EnvironmentFactoryInternalExtension environmentFactory,
+	private boolean validateExpressionInOCL(@NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull ENamedElement eNamedElement, @NonNull NamedElement asContext, @NonNull LanguageExpression asSpecification, @Nullable Type requiredType,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		ExpressionInOCL expressionInOCL = parseSpecification(environmentFactory, eNamedElement, asSpecification, diagnostics, context);
