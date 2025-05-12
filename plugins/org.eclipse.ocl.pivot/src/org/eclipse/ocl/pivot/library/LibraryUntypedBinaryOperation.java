@@ -22,10 +22,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 public interface LibraryUntypedBinaryOperation extends LibraryBinaryOperation, LibraryUntypedOperation
 {
 	/**
-	 * @since 1.1
+	 * @since 7.0
 	 */
-	public interface LibraryUntypedBinaryOperationExtension extends LibraryUntypedBinaryOperation, LibraryBinaryOperation.LibraryBinaryOperationExtension
-	{
-		@Nullable Object evaluate(@NonNull Executor executor, @Nullable Object sourceValue, @Nullable Object argumentValue);
-	}
+	@Nullable Object evaluate(@NonNull Executor executor, @Nullable Object sourceValue, @Nullable Object argumentValue);
 }

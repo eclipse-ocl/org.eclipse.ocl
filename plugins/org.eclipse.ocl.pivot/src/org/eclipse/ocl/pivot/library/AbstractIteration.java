@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.evaluation.IterationManager;
  * AbstractIteration realizes shared characteristics of library iterations by providing a
  * default iteration algorithm with a call-back at each iteration step.
  */
-public abstract class AbstractIteration extends AbstractIterationOrOperation implements LibraryIteration.LibraryIterationExtension
+public abstract class AbstractIteration extends AbstractIterationOrOperation implements LibraryIteration
 {
 	/**
 	 * An out-of-band value that can be returned by {@link #updateAccumulator} to signal

@@ -25,14 +25,9 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public interface LibraryUnaryOperation extends LibraryOperation
 {
 	/**
-	 * @since 1.1
+	 * Return the result of evaluating the operation on an argument.
+	 * An invalid return may be indicated by throwing an exception returning Java null or OCL invalid.
+	 * @since 7.0
 	 */
-	public interface LibraryUnaryOperationExtension extends LibraryUnaryOperation, LibraryOperationExtension
-	{
-		/**
-		 * Return the result of evaluating the operation on an argument.
-		 * An invalid return may be indicated by throwing an exception returning Java null or OCL invalid.
-		 */
-		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue);
-	}
+	@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue);
 }

@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 /**
  * UnsupportedOperation realises an unimplemented library operation.
  */
-public class UnsupportedOperation extends AbstractOperation implements LibraryProperty.LibraryPropertyExtension
+public class UnsupportedOperation extends AbstractOperation implements LibraryProperty
 {
 	public static final @NonNull UnsupportedOperation INSTANCE = new UnsupportedOperation();
 

@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
-import org.eclipse.ocl.pivot.library.LibraryIteration.LibraryIterationExtension;
+import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
@@ -452,7 +452,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0);
 						final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);
 						final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticTypeOfValue(null, oclAsSet);
-						final @NonNull LibraryIterationExtension IMPL_closure_0 = (LibraryIterationExtension)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
+						final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
 						final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
 						/**
 						 * Implementation of the iterator body.
@@ -763,7 +763,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						/*@Thrown*/ @NonNull Object IF_notEmpty;
 						if (notEmpty) {
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_1 = executor.getStaticTypeOfValue(null, extraProperties);
-							final @NonNull LibraryIterationExtension IMPL_sortedBy_1 = (LibraryIterationExtension)TYPE_sortedBy_1.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
+							final @NonNull LibraryIteration IMPL_sortedBy_1 = (LibraryIteration)TYPE_sortedBy_1.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
 							final @NonNull Object ACC_sortedBy_1 = IMPL_sortedBy_1.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 							/**
 							 * Implementation of the iterator body.
@@ -813,7 +813,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							/*@Thrown*/ @NonNull Object IF_notEmpty_0;
 							if (notEmpty_0) {
 								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0_0 = executor.getStaticTypeOfValue(null, missingProperties);
-								final @NonNull LibraryIterationExtension IMPL_sortedBy_0_0 = (LibraryIterationExtension)TYPE_sortedBy_0_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
+								final @NonNull LibraryIteration IMPL_sortedBy_0_0 = (LibraryIteration)TYPE_sortedBy_0_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
 								final @NonNull Object ACC_sortedBy_0_0 = IMPL_sortedBy_0_0.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 								/**
 								 * Implementation of the iterator body.

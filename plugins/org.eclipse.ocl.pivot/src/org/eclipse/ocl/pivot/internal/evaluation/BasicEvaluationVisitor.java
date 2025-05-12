@@ -59,7 +59,6 @@ import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.UnspecifiedValueExp;
 import org.eclipse.ocl.pivot.Variable;
@@ -83,7 +82,6 @@ import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -478,7 +476,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		//			return evaluationEnvironment.throwInvalidEvaluation(e);
 		//		}
 		org.eclipse.ocl.pivot.Class dynamicSourceType = idResolver.getClass(sourceValue.getTypeId(), null);
-		LibraryIteration.LibraryIterationExtension implementation = (LibraryIteration.LibraryIterationExtension) dynamicSourceType.lookupImplementation(standardLibrary, staticIteration);
+		LibraryIteration implementation = (LibraryIteration) dynamicSourceType.lookupImplementation(standardLibrary, staticIteration);
 		/*		Operation dynamicIteration = metamodelManager.getDynamicOperation((org.eclipse.ocl.pivot.Type) dynamicSourceType, staticIteration);
  		if (dynamicIteration == null) {
  			dynamicIteration = staticIteration;
@@ -576,7 +574,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		}
 		//		value = ValuesUtil.asValue(value);
 		assert expression != null;
-		EvaluationEnvironment nestedEvaluationEnvironment = context.pushEvaluationEnvironment(expression, (TypedElement)letExp);
+		EvaluationEnvironment nestedEvaluationEnvironment = context.pushEvaluationEnvironment(expression, letExp);
 		nestedEvaluationEnvironment.add(variable, value);
 		try {
 			return expression.accept(undecoratedVisitor);
@@ -693,7 +691,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
-					LibraryBinaryOperation.LibraryBinaryOperationExtension implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+					LibraryBinaryOperation implementation = (LibraryBinaryOperation) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
 					try {
 						Object result = implementation.evaluate(context, operationCallExp.getTypeId(), sourceValue, onlyArgument);
 						assert !(result instanceof NullValue);
@@ -716,7 +714,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			}
 			actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
 		}
-		LibraryOperation.LibraryOperationExtension implementation = (LibraryOperationExtension) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+		LibraryOperation implementation = (LibraryOperation)environmentFactory.getMetamodelManager().getImplementation(actualOperation);
 		try {
 			Object result = implementation.dispatch(context, operationCallExp, sourceValue);
 			assert !(result instanceof NullValue);

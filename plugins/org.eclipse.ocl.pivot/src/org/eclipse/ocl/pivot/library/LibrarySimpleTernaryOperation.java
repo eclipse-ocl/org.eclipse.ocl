@@ -19,11 +19,5 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface LibrarySimpleTernaryOperation extends LibraryUntypedTernaryOperation, LibrarySimpleOperation
 {
-	/**
-	 * @since 1.1
-	 */
-	public interface LibrarySimpleTernaryOperationExtension extends LibrarySimpleTernaryOperation, LibraryUntypedTernaryOperation.LibraryUntypedTernaryOperationExtension
-	{
-	}
 	@Nullable Object evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
 }

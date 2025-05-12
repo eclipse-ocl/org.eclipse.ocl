@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * AbstractTernaryOperation defines the default implementation of a ternary operation redirecting the
  * call-expression invocation to the return type-id form.
  */
-public abstract class AbstractTernaryOperation extends AbstractOperation implements LibraryTernaryOperation.LibraryTernaryOperationExtension
+public abstract class AbstractTernaryOperation extends AbstractOperation implements LibraryTernaryOperation
 {
 	/**
 	 * @since 1.1

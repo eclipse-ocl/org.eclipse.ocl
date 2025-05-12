@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
-public class EcoreExecutorProperty extends ExecutorProperty implements LibraryProperty.LibraryPropertyExtension
+public class EcoreExecutorProperty extends ExecutorProperty implements LibraryProperty
 {			// FIXME Eliminate spurious ExecutorProperty rather than AbstractExecutorProperty once API has evolved publicly
 
 	protected final @NonNull EStructuralFeature eFeature;

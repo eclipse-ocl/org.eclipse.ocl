@@ -45,7 +45,7 @@ public class SortedByIteration extends AbstractIteration
 	{
 		protected final @NonNull CollectionTypeId typeId;
 		private final @NonNull Executor executor;
-		private final LibraryBinaryOperation.@NonNull LibraryBinaryOperationExtension implementation;
+		private final @NonNull LibraryBinaryOperation implementation;
 		private final @NonNull ArrayList<Object> rawValues = new ArrayList<>();		// Indexed unsorted User objects
 		private final @NonNull ArrayList<Object> rawKeys = new ArrayList<>();		// Index to sortedBy value
 		private @Nullable ArrayList<Object> sortedValues = null;					// Sorted elements
@@ -56,7 +56,7 @@ public class SortedByIteration extends AbstractIteration
 		public SortingValue(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId, @NonNull LibraryBinaryOperation implementation) {
 			this.typeId = returnTypeId;
 			this.executor = executor;
-			this.implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension)implementation;
+			this.implementation = implementation;
 			// FIXME if IterationManager passed the size we could use more arrays rather than lists.
 		}
 

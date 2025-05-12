@@ -22,10 +22,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 public interface LibraryUntypedTernaryOperation extends LibraryTernaryOperation, LibraryUntypedOperation
 {
 	/**
-	 * @since 1.1
+	 * @since 7.0
 	 */
-	public interface LibraryUntypedTernaryOperationExtension extends LibraryUntypedTernaryOperation, LibraryTernaryOperation.LibraryTernaryOperationExtension
-	{
-		@Nullable Object evaluate(@NonNull Executor executor, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
-	}
+	@Nullable Object evaluate(@NonNull Executor executor, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
 }

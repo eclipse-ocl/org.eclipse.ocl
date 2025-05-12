@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * AbstractBinaryOperation defines the default implementation of a binary operation redirecting the
  * call-expression invocation to the return type-id form.
  */
-public abstract class AbstractBinaryOperation extends AbstractOperation implements LibraryBinaryOperation.LibraryBinaryOperationExtension
+public abstract class AbstractBinaryOperation extends AbstractOperation implements LibraryBinaryOperation
 {
 	/**
 	 * @since 1.1

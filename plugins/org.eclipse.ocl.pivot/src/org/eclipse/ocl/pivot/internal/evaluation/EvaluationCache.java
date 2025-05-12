@@ -44,11 +44,11 @@ public class EvaluationCache
 	 */
 	private static final class EvaluationResult
 	{
-		private final LibraryOperation.@NonNull LibraryOperationExtension2 implementation;
+		private final @NonNull LibraryOperation implementation;
 		private final @Nullable Object @NonNull [] theseValues;
 		private final @Nullable Object result;
 
-		public EvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @Nullable Object @NonNull [] theseValues, @Nullable Object result) {
+		public EvaluationResult(@NonNull LibraryOperation implementation, @Nullable Object @NonNull [] theseValues, @Nullable Object result) {
 			this.implementation = implementation;
 			this.theseValues = theseValues;
 			this.result = result;
@@ -58,7 +58,7 @@ public class EvaluationCache
 			return result;
 		}
 
-		public boolean isEqual(@NonNull IdResolver idResolver, LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @Nullable Object @NonNull [] thoseValues) {
+		public boolean isEqual(@NonNull IdResolver idResolver, @NonNull LibraryOperation implementation, @Nullable Object @NonNull [] thoseValues) {
 			if (this.implementation != implementation) {
 				return false;
 			}
@@ -97,7 +97,10 @@ public class EvaluationCache
 		hashCode2evaluations.clear();
 	}
 
-	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull TypedElement caller, @Nullable Object @NonNull ... sourceAndArgumentValues) {
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable Object getCachedEvaluationResult(@NonNull LibraryOperation implementation, @NonNull TypedElement caller, @Nullable Object @NonNull ... sourceAndArgumentValues) {
 		IdResolver.@NonNull IdResolverExtension idResolver = (IdResolver.IdResolverExtension) executor.getIdResolver();
 		int hashCode = implementation.hashCode();
 		for (@Nullable Object sourceAndArgumentValue : sourceAndArgumentValues) {

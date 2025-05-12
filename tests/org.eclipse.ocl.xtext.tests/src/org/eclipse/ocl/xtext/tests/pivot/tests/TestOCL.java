@@ -836,7 +836,7 @@ public class TestOCL extends OCLInternal
 			}
 			File targetFolder = testProject.getOutputFile("test-src").getFile();
 			String className = "TestClass" + testCounter++;
-			LibraryUnaryOperation.LibraryUnaryOperationExtension testInstance = (LibraryUnaryOperation.LibraryUnaryOperationExtension) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
+			LibraryUnaryOperation testInstance = (LibraryUnaryOperation) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
 			assert testInstance != null;
 			Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY);
 			OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();

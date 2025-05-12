@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * AbstractUntypedTernaryOperation defines the default implementation of a ternary operation redirecting the
  * type-id invocation to the type-id-less form.
  */
-public abstract class AbstractUntypedTernaryOperation extends AbstractTernaryOperation implements LibraryUntypedTernaryOperation.LibraryUntypedTernaryOperationExtension
+public abstract class AbstractUntypedTernaryOperation extends AbstractTernaryOperation implements LibraryUntypedTernaryOperation
 {
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

@@ -43,10 +43,10 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 		CompleteInheritance selfType = standardLibrary.getOclSelfType().getInheritance(standardLibrary);
 		Operation staticOperation = comparableType.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfType);
 		int intComparison;
-		LibraryBinaryOperation.LibraryBinaryOperationExtension implementation = null;
+		LibraryBinaryOperation implementation = null;
 		try {
 			if (staticOperation != null) {
-				implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension) commonType.lookupImplementation(standardLibrary, staticOperation);
+				implementation = (LibraryBinaryOperation)commonType.lookupImplementation(standardLibrary, staticOperation);
 			}
 		} catch (Exception e) {
 			throw new InvalidValueException(e, "No 'compareTo' implementation"); //$NON-NLS-1$

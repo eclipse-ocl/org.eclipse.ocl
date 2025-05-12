@@ -100,7 +100,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 
 	@Override
 	public @Nullable Object evaluateBody() {
-		return ((LibraryBinaryOperation.LibraryBinaryOperationExtension)body).evaluate(executor, returnTypeId, accumulatorValue, get());
+		return body.evaluate(executor, returnTypeId, accumulatorValue, get());
 	}
 
 	@Override

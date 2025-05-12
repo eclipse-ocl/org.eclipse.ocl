@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
  * AbstractUnaryOperation defines the default implementation of a unary operation redirecting the
  * call-expression invocation to the return type-id form.
  */
-public abstract class AbstractUnaryOperation extends AbstractOperation implements LibraryUnaryOperation.LibraryUnaryOperationExtension
+public abstract class AbstractUnaryOperation extends AbstractOperation implements LibraryUnaryOperation
 {
 	/**
 	 * @since 1.1

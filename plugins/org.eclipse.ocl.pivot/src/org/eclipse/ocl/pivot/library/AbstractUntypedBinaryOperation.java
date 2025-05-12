@@ -25,8 +25,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * AbstractUntypedBinaryOperation defines the default implementation of a binary operation redirecting the
  * type-id invocation to the type-id-less form.
  */
-public abstract class AbstractUntypedBinaryOperation extends AbstractBinaryOperation
-implements LibraryUntypedBinaryOperation.LibraryUntypedBinaryOperationExtension
+public abstract class AbstractUntypedBinaryOperation extends AbstractBinaryOperation implements LibraryUntypedBinaryOperation
 {
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

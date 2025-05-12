@@ -24,9 +24,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * AbstractPolyOperation supports arguments with a variety of argument lengths operations.
  */
 public abstract class AbstractPolyOperation extends AbstractOperation implements
-LibraryUnaryOperation.LibraryUnaryOperationExtension,
-LibraryBinaryOperation.LibraryBinaryOperationExtension,
-LibraryTernaryOperation.LibraryTernaryOperationExtension
+			LibraryUnaryOperation, LibraryBinaryOperation, LibraryTernaryOperation
 {
 	/**
 	 * @since 1.1

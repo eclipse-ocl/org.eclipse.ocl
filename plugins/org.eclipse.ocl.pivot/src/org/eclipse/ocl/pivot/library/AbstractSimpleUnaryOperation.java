@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * AbstractSimpleUnaryOperation defines the default implementation of a unary operation redirecting the
  * invocation to the argument-only form.
  */
-public abstract class AbstractSimpleUnaryOperation extends AbstractUntypedUnaryOperation implements LibrarySimpleUnaryOperation.LibrarySimpleUnaryOperationExtension
+public abstract class AbstractSimpleUnaryOperation extends AbstractUntypedUnaryOperation implements LibrarySimpleUnaryOperation
 {
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

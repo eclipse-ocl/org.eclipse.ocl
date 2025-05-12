@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * AbstractSimpleBinaryOperation defines the default implementation of a binary operation redirecting the
  * invocation to the argument-only form.
  */
-public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinaryOperation implements LibrarySimpleBinaryOperation.LibrarySimpleBinaryOperationExtension
+public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinaryOperation implements LibrarySimpleBinaryOperation
 {
 	@Override
 	@Nullable

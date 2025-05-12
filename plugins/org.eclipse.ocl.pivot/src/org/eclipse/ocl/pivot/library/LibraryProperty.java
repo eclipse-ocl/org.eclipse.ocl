@@ -23,10 +23,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public interface LibraryProperty extends LibraryFeature
 {
 	/**
-	 * @since 1.1
+	 * @since 7.0
 	 */
-	public interface LibraryPropertyExtension extends LibraryProperty
-	{
-		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue);
-	}
+	@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue);
 }

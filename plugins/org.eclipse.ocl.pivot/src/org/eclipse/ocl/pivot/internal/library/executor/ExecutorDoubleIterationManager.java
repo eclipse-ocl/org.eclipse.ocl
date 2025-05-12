@@ -78,7 +78,7 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 
 	@Override
 	public @Nullable Object evaluateBody() {
-		return ((LibraryTernaryOperation.LibraryTernaryOperationExtension)body).evaluate(executor, returnTypeId, accumulatorValue,
+		return body.evaluate(executor, returnTypeId, accumulatorValue,
 			ClassUtil.nonNullState(currentValue1), ClassUtil.nonNullState(currentValue2));
 	}
 
