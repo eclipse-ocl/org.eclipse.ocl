@@ -216,7 +216,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation,
+	public @Nullable Object getCachedEvaluationResult(@NonNull LibraryOperation implementation,
 			@NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
 		EvaluationCache evaluationCache2 = evaluationCache;
 		if (evaluationCache2 == null) {
@@ -360,7 +360,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 			return null;
 		}
 		MetamodelManagerInternal.MetamodelManagerInternalExtension metamodelManager = environmentFactory.getMetamodelManager();
-		LibraryProperty.LibraryPropertyExtension implementation = (LibraryProperty.LibraryPropertyExtension)metamodelManager.getImplementation(navigationCallExp, sourceValue, referredProperty);
+		LibraryProperty implementation = metamodelManager.getImplementation(navigationCallExp, sourceValue, referredProperty);
 		try {
 			return implementation.evaluate(this, navigationCallExp.getTypeId(), sourceValue);
 		}
@@ -428,7 +428,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		else {
 			actualOperation = apparentOperation;
 		}
-		LibraryOperation.LibraryOperationExtension2 implementation = (LibraryOperation.LibraryOperationExtension2) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+		LibraryOperation implementation = (LibraryOperation) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
 		//
 		//	Dispatch operation
 		//

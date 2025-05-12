@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * AbstractSimpleTernaryOperation defines the default implementation of a ternary operation redirecting the
  * invocation to the argument-only form.
  */
-public abstract class AbstractSimpleTernaryOperation extends AbstractUntypedTernaryOperation implements LibrarySimpleTernaryOperation.LibrarySimpleTernaryOperationExtension
+public abstract class AbstractSimpleTernaryOperation extends AbstractUntypedTernaryOperation implements LibrarySimpleTernaryOperation
 {
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

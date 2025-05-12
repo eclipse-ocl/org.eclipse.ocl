@@ -23,44 +23,35 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public interface LibraryOperation extends LibraryIterationOrOperation
 {
 	/**
-	 * @since 1.1
+	 * Return the cached evaluation from sourceAndArgumentValues, using newInstance(sourceAndArgumentValues) to
+	 * create a new evaluation instance if necessary.
+	 * @since 7.0
 	 */
-	public interface LibraryOperationExtension extends LibraryOperation
-	{
-		/**
-		 * Return the result of evaluating callExp and its arguments upon sourceValue within the environment
-		 * provided by evaluator. An invalid return may be indicated by throwing an exception,
-		 * returning Java null, or returning OCL invalid.
-		 * <p>
-		 * This invocation evaluates the arguments as required. Derived implementations may implement short circuit processing
-		 * to skip redundant evaluation of later arguments.
-		 * <p>
-		 * Invocations may bypass dispatch if a derived LibraryOperation such as LibrarySimpleBinaryOperation
-		 * makes its internal evaluate signature available for use after a type test and cast.
-		 */
-		@Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
-	}
+	@Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
 
 	/**
-	 * @since 1.3
+	 * Return the result of evaluating callExp and its arguments upon sourceValue within the environment
+	 * provided by evaluator. An invalid return may be indicated by throwing an exception,
+	 * returning Java null, or returning OCL invalid.
+	 * <p>
+	 * This invocation evaluates the arguments as required. Derived implementations may implement short circuit processing
+	 * to skip redundant evaluation of later arguments.
+	 * <p>
+	 * Invocations may bypass dispatch if a derived LibraryOperation such as LibrarySimpleBinaryOperation
+	 * makes its internal evaluate signature available for use after a type test and cast.
+	 * @since 7.0
 	 */
-	public interface LibraryOperationExtension2 extends LibraryOperationExtension
-	{
-		/**
-		 * Return the cached evaluation from sourceAndArgumentValues, using newInstance(sourceAndArgumentValues) to
-		 * create a new evaluation instance if necessary.
-		 */
-		@Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
+	@Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
 
-		/**
-		 * Evaluate this operation using the boxedSourceAndArgumentValues in conjunction with the executor. The call
-		 * to this operation is provided by the caller. The impementation of the evaluate API and related methods may
-		 * that the caller has checked that source and arguments conform to this operation's declaration.
-		 *
-		 * @throws InvalidValueException for a well-behaved failure such as an invalid value
-		 * @throws EvaluationHaltedException for an external abort request
-		 * @throws for an uncontrolled failure that should be treated as invalid
-		 */
-		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
-	}
+	/**
+	 * Evaluate this operation using the boxedSourceAndArgumentValues in conjunction with the executor. The call
+	 * to this operation is provided by the caller. The impementation of the evaluate API and related methods may
+	 * that the caller has checked that source and arguments conform to this operation's declaration.
+	 *
+	 * @throws InvalidValueException for a well-behaved failure such as an invalid value
+	 * @throws EvaluationHaltedException for an external abort request
+	 * @throws for an uncontrolled failure that should be treated as invalid
+	 * @since 7.0
+	 */
+	@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
 }

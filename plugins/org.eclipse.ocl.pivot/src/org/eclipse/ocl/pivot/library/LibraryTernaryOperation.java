@@ -25,14 +25,9 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public interface LibraryTernaryOperation extends LibraryOperation
 {
 	/**
-	 * @since 1.1
+	 * Return the result of evaluating the operation on source with arg1 and arg2.
+	 * An invalid return may be indicated by throwing an exception returning Java null or OCL invalid.
+	 * @since 7.0
 	 */
-	public interface LibraryTernaryOperationExtension extends LibraryTernaryOperation, LibraryOperationExtension
-	{
-		/**
-		 * Return the result of evaluating the operation on source with arg1 and arg2.
-		 * An invalid return may be indicated by throwing an exception returning Java null or OCL invalid.
-		 */
-		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
-	}
+	@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
 }

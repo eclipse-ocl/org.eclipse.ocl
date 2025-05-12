@@ -27,10 +27,7 @@ public interface LibraryBinaryOperation extends LibraryOperation
 	/**
 	 * Return the result of evaluating the operation on left and right arguments.
 	 * An invalid return may be indicated by throwing an exception returning Java null or OCL invalid.
-	 * @since 1.1
+	 * @since 7.0
 	 */
-	public interface LibraryBinaryOperationExtension extends LibraryBinaryOperation, LibraryOperationExtension
-	{
-		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue);
-	}
+	@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue);
 }

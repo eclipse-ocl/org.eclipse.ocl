@@ -22,13 +22,6 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public interface LibraryIteration extends LibraryIterationOrOperation
 {
 	/**
-	 * @since 1.1
-	 */
-	public interface LibraryIterationExtension extends LibraryIteration
-	{
-	}
-
-	/**
 	 * Create the value that will accumulate the iteration results.
 	 * @since 7.0
 	 */
