@@ -8,4 +8,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin
 Export-Package: org.eclipse.ocl.standalone.pivot.tests
 Bundle-Vendor: %providerName
-Require-Bundle: org.eclipse.ocl.examples.xtext.tests
+Require-Bundle: org.eclipse.ocl.xtext.tests

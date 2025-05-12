@@ -73,5 +73,5 @@ that provides slightly better labels within OCL diagnostics.
 !{width:80%}images/6320-diagnostician.png(Extended Diagnostician)!
 "[Text for cut and paste]":../references/6320-diagnostician.txt
 
-The source for these examples may be found in the org.eclipse.ocl.examples.xtext.tests plugin in model/parsingDocumentsExample.ocl and in src/org/eclipse/ocl/examples/test/xtext/PivotDocumentationExamples.java.
+The source for these examples may be found in the org.eclipse.ocl.xtext.tests plugin in model/parsingDocumentsExample.ocl and in src/org/eclipse/ocl/examples/test/xtext/PivotDocumentationExamples.java.
 

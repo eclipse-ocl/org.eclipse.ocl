@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2023 Willink Transformations and others.
+   
+    This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License 2.0
+    which accompanies this distribution, and is available at
+    https://www.eclipse.org/legal/epl-2.0/
+   
+    SPDX-License-Identifier: EPL-2.0
+   
+    Contributors:
+        E.D.Willink - initial API and implementation
+ -->
+
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.ocl</groupId>
+  <artifactId>org.eclipse.ocl.xtext.tests</artifactId>
+  <version>7.0.0-SNAPSHOT</version>
+  <packaging>eclipse-test-plugin</packaging>
+  <parent>
+    <groupId>org.eclipse.ocl</groupId>
+    <artifactId>org.eclipse.ocl.tests-folder</artifactId>
+    <version>7.0.0-SNAPSHOT</version>
+  </parent>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/AllXtextTests.java</include>
+              </includes>
+              <argLine>-DtestNameSuffix="maven" ${argLineTail}</argLine>
+              <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
+              <workingDirectory>${project.build.directory}/test-reports</workingDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-surefire-plugin</artifactId>
+        <configuration>
+          <!--debugPort>5005</debugPort-->
+          <testClass>org.eclipse.ocl.xtext.tests.AllXtextTests</testClass>
+          <useUIHarness>true</useUIHarness>
+          <useUIThread>true</useUIThread>
+          <argLine>-DtestNameSuffix="tycho" -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true ${argLineTail}</argLine>
+          <reportsDirectory>${project.build.directory}/surefire-reports/plugin</reportsDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -24,25 +24,25 @@ Workflow {
     //	Models with no script of their own.
     //
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.emf.validation.validity/model/Validity.genmodel"
+    	genModel = "org.eclipse.ocl.emf.validation.validity/model/Validity.genmodel"
     }
     //
     //	The JUnit test models
     //
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genModel/Company.genmodel"
+    	genModel = "/org.eclipse.ocl.xtext.tests/models/genModel/Company.genmodel"
     }
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genModel/CodeGenCompanySrc.genmodel"
-//    	genModel = "/org.eclipse.ocl.examples.xtext.tests/model/CodeGenCompany.genmodel" is used by the JUnit tests
+    	genModel = "/org.eclipse.ocl.xtext.tests/models/genModel/CodeGenCompanySrc.genmodel"
+//    	genModel = "/org.eclipse.ocl.xtext.tests/model/CodeGenCompany.genmodel" is used by the JUnit tests
     }
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genModel/NoReflectionCompany.genmodel"
+    	genModel = "/org.eclipse.ocl.xtext.tests/models/genModel/NoReflectionCompany.genmodel"
     }
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genmodel/Bug477283A.genmodel"
+    	genModel = "/org.eclipse.ocl.xtext.tests/models/genmodel/Bug477283A.genmodel"
     }
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.examples.xtext.tests/models/genmodel/Bug477283B.genmodel"
+    	genModel = "/org.eclipse.ocl.xtext.tests/models/genmodel/Bug477283B.genmodel"
     }
 }

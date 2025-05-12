@@ -15,7 +15,6 @@
 
   <modules>
       <module>org.eclipse.ocl.examples</module>
-      <!--module>org.eclipse.ocl.examples.build</module-->
       <module>org.eclipse.ocl.examples.classic</module>
       <module>org.eclipse.ocl.examples.eventmanager</module>
       <module>org.eclipse.ocl.examples.extlibrary</module>

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
+import org.eclipse.ocl.xtext.tests.pivot.tests.PivotTestSuite;
 
 public class StandaloneClassPathTests extends PivotTestSuite
 {

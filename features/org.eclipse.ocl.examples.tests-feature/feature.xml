@@ -36,13 +36,6 @@
    </url>
 
    <plugin
-         id="org.eclipse.ocl.examples.tests"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ocl.examples.eventmanager.tests"
          download-size="0"
          install-size="0"
@@ -85,7 +78,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ocl.examples.xtext.tests"
+         id="org.eclipse.ocl.xtext.tests"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -93,13 +86,6 @@
 
    <plugin
          id="org.eclipse.ocl.examples.uml25"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ocl.validity.tests"
          download-size="0"
          install-size="0"
          version="0.0.0"
