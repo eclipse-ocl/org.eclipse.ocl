@@ -45,7 +45,6 @@ public interface Executor
 	void dispose();
 	@Nullable Object evaluate(@NonNull OCLExpression body);
 	@NonNull CompleteEnvironment getCompleteEnvironment();
-	//	@Override
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@NonNull EvaluationEnvironment getEvaluationEnvironment();
 	@NonNull IdResolver getIdResolver();
