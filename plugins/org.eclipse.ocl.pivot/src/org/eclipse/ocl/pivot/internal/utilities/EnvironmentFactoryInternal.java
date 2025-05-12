@@ -44,9 +44,6 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@Override
 	@NonNull CompleteModelInternal getCompleteModel();
 
-//	@Override
-//	@NonNull PivotMetamodelManager getMetamodelManager();
-
 	@Override
 	@NonNull StandardLibraryInternal getStandardLibrary();
 }

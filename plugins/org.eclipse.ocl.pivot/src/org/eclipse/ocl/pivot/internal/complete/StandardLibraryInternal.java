@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.VoidType;
 /**
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface StandardLibraryInternal extends StandardLibrary.StandardLibraryExtension
+public interface StandardLibraryInternal extends StandardLibrary
 {
 	/**
 	 * @since 1.17
