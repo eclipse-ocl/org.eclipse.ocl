@@ -66,12 +66,10 @@ import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.options.PivotConsoleOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory.EnvironmentFactoryExtension;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLHelper;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -206,7 +204,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					ModelManager modelManager = environmentFactory.createModelManager(contextObject);
 					//				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(expressionInOCL, modelManager);
 					assert ThreadLocalExecutor.basicGetExecutor() == null;
-					ExecutorInternal executor = ((EnvironmentFactoryExtension)environmentFactory).createExecutor(modelManager);
+					ExecutorInternal executor = environmentFactory.createExecutor(modelManager);
 					ThreadLocalExecutor.setExecutor(executor);
 					executor.initializeEvaluationEnvironment(expressionInOCL);
 					EvaluationEnvironment evaluationEnvironment = executor.getRootEvaluationEnvironment();
@@ -827,7 +825,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					}
 					EObject instanceContext = contextObject;
 					if ((instanceContext != null) && !(instanceContext instanceof Element)) {
-						instanceContext = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, instanceContext);
+						instanceContext = environmentFactory.getASOf(Element.class, instanceContext);
 					}
 					parserContext = new ClassContext(environmentFactory, null, contextType, (instanceContext instanceof Type) && !(instanceContext instanceof ElementExtension) ? (Type)instanceContext : null);
 					EssentialOCLCSResource csResource = (EssentialOCLCSResource) resource;

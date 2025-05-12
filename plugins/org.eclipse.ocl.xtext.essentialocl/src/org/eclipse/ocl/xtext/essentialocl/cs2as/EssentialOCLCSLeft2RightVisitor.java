@@ -97,7 +97,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.iterator.ClosureIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory.EnvironmentFactoryExtension2;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -1578,7 +1577,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected StateExp resolveStateExp(@NonNull ExpCS csExp, @NonNull State state) {
 		StateExp expression = context.refreshModelElement(StateExp.class, PivotPackage.Literals.STATE_EXP, csExp);
-		helper.setType(expression, ((EnvironmentFactoryExtension2)environmentFactory).getASClass("State"), true, null);		// FIXME What should this be
+		helper.setType(expression, environmentFactory.getASClass("State"), true, null);		// FIXME What should this be
 		expression.setReferredState(state);
 		expression.setName(state.getName());
 		return expression;

@@ -65,7 +65,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * @since 1.1
 	 */
 	@Deprecated /* @deprecated folded into EnvironmentFactoryInternal */
-	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal, EnvironmentFactoryExtension2
+	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal
 	{
 	}
 
