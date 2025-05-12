@@ -156,7 +156,6 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -2688,7 +2687,7 @@ extends EObjectValidator {
 			assert context != null;
 			OCL ocl = PivotDiagnostician.getOCL(context, expressionInOCL);
 			try {
-				((EnvironmentFactory.EnvironmentFactoryExtension2)ocl.getEnvironmentFactory()).parseSpecification(expressionInOCL);
+				ocl.getEnvironmentFactory().parseSpecification(expressionInOCL);
 			} catch (ParserException e) {
 				if (diagnostics != null) {
 					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,

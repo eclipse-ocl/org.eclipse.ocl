@@ -72,7 +72,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -726,7 +725,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					return null;
 				}
 				try {
-					return ((EnvironmentFactory.EnvironmentFactoryExtension2)environmentFactory).getASOf(requiredClass, eObject);
+					return environmentFactory.getASOf(requiredClass, eObject);
 				} catch (ParserException e) {
 					return null;		// Never happens since UML element will never be a parsed one such as an OCLExpression
 				}
