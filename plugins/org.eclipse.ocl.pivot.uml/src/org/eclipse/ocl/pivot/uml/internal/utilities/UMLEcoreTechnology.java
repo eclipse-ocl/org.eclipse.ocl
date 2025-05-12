@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -215,7 +214,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		if (eObject instanceof Element) {
 			return (Element) eObject;
 		}
-		EnvironmentFactoryInternalExtension environmentFactoryInternalExtension = (EnvironmentFactoryInternalExtension)environmentFactory;
+		EnvironmentFactoryInternal environmentFactoryInternalExtension = environmentFactory;
 		pivotElement = environmentFactoryInternalExtension.getASOf(Element.class, eObject);
 		if ((eObject instanceof org.eclipse.uml2.uml.Constraint) && (pivotElement instanceof Constraint) && (pivotElement.eContainer() == null)) {
 			pivotElement = environmentFactoryInternalExtension.getASOf(Element.class, ((org.eclipse.uml2.uml.Constraint)eObject).getSpecification());

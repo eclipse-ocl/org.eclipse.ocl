@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -62,7 +62,7 @@ public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 		if (specification == null) {
 			throw new IOException("Missing OCL expression " + eObject.eClass().getName() + " expected as '" + constraintURI + "'");
 		}
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		return ((EnvironmentFactoryInternal)environmentFactory).parseSpecification(specification);
 	}
 
 	protected final @NonNull IVMContext vmContext;

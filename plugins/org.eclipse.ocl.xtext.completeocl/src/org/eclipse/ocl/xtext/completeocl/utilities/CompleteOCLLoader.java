@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -114,7 +113,7 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadMetamodels(@Nullable StringBuilder sErrors) {
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		List<@NonNull Resource> esResources = ocl.getResourceSet().getResources();
 		for (int index = 0; index < esResources.size(); index++) {		// Tolerate 'concurrent' profile resolution
 			@NonNull Resource resource = esResources.get(index);
@@ -209,7 +208,7 @@ public abstract class CompleteOCLLoader
 		//
 		//	Install validation for all the complemented packages that need a distinct PivotEObjectValidator (e.g. UML but not Ecore).
 		//
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		@SuppressWarnings("unused") ValidationRegistryAdapter localValidationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		for (@NonNull EPackage mmPackage : mmPackage2completePackage.keySet()) {

@@ -71,10 +71,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 */
 	@NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull NamedElement executableObject, @NonNull ModelManager modelManager);
 
-	/** @deprecated no longer used */
-	@Deprecated
-	@NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull EvaluationEnvironment parent, @NonNull NamedElement executableObject);
-
 	/**
 	 * Creates a new evaluation visitor, for the evaluation of an OCL expression on a context using an environment and a modelManager.
 	 * If environment is null, a root environment is created and used.

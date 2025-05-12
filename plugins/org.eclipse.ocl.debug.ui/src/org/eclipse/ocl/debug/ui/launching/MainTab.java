@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -313,7 +312,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 					LanguageExpression specification = ((Constraint) eObject).getOwnedSpecification();
 					if (specification != null) {
 						try {
-							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)getEnvironmentFactory()).parseSpecification(specification);
+							ExpressionInOCL query = getEnvironmentFactory().parseSpecification(specification);
 							String displayString = getDisplayString(query);
 							int index = expressionCombo.indexOf(displayString);
 							expressionCombo.select(index);

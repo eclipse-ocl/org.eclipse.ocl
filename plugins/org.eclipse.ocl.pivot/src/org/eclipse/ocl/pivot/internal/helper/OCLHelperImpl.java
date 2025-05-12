@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -57,7 +56,7 @@ public class OCLHelperImpl implements OCLHelper
 			asContext =  (Element)context;
 		}
 		else {
-			asContext = ((EnvironmentFactoryInternalExtension)getEnvironmentFactory()).getASOf(Element.class, context);
+			asContext = getEnvironmentFactory().getASOf(Element.class, context);
 		}
 		if (asContext instanceof org.eclipse.ocl.pivot.Class) {
 			contextClass = (org.eclipse.ocl.pivot.Class)asContext;

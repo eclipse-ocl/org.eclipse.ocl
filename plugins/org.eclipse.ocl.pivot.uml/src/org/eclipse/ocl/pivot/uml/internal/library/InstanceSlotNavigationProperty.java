@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -73,7 +73,7 @@ public class InstanceSlotNavigationProperty extends AbstractProperty
 						ValueSpecification valueSpecification = values.get(0);
 						if (valueSpecification instanceof OpaqueExpression) {
 							try {
-								EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) executor.getEnvironmentFactory();
+								EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) executor.getEnvironmentFactory();
 								ExpressionInOCL specification = environmentFactory.getASOf(ExpressionInOCL.class, valueSpecification);
 								if (specification == null) {
 									throw new InvalidValueException("Missing spec for " + specification);
@@ -105,7 +105,7 @@ public class InstanceSlotNavigationProperty extends AbstractProperty
 			throw new InvalidValueException("null ValueSpecification in Slot");
 		}
 		if (valueSpecification instanceof LiteralBoolean) {
-			return ((LiteralBoolean)valueSpecification).booleanValue();
+			return valueSpecification.booleanValue();
 		}
 		if (valueSpecification instanceof LiteralInteger) {
 			return ValueUtil.integerValueOf(((LiteralInteger)valueSpecification).getValue());
@@ -120,7 +120,7 @@ public class InstanceSlotNavigationProperty extends AbstractProperty
 			return ((LiteralString)valueSpecification).getValue();
 		}
 		if (valueSpecification instanceof LiteralUnlimitedNatural) {
-			int unlimitedValue = ((LiteralUnlimitedNatural)valueSpecification).unlimitedValue();
+			int unlimitedValue = valueSpecification.unlimitedValue();
 			return unlimitedValue < 0 ? ValueUtil.UNLIMITED_VALUE : ValueUtil.integerValueOf(unlimitedValue);
 		}
 		if (valueSpecification instanceof InstanceValue) {

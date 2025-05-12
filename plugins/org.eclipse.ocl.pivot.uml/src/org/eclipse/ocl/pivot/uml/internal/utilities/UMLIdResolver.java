@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASUtil;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLElementExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -63,7 +62,7 @@ public class UMLIdResolver extends PivotIdResolver
 	 */
 	protected @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @NonNull EObject eObject) {
 		try {
-			return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(pivotClass, eObject);
+			return environmentFactory.getASOf(pivotClass, eObject);
 		} catch (ParserException e) {
 			Resource resource = eObject.eResource();
 			if (resource != null) {
