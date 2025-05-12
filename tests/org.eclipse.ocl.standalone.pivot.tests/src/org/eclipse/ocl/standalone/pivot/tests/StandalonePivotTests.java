@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.standalone.pivot.tests;
 
-import org.eclipse.ocl.examples.test.xtext.AllXtextTests;
+import org.eclipse.ocl.xtext.tests.AllXtextTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

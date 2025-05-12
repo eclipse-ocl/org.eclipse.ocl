@@ -11,7 +11,6 @@
 package org.eclipse.ocl.build.xtend;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
-import org.eclipse.ocl.build.xtend.GenerateCSVisitors;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 

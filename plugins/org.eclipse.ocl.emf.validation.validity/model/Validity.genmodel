@@ -13,8 +13,8 @@
     <details key="Use Null Annotations" value="true"/>
   </genAnnotations>
   <foreignModel>Validity.ecore</foreignModel>
-  <genPackages prefix="Validity" basePackage="org.eclipse.ocl.examples.emf.validation"
-      disposableProviderFactory="true" ecorePackage="Validity.ecore#/">
+  <genPackages prefix="Validity" basePackage="org.eclipse.ocl.emf.validation" disposableProviderFactory="true"
+      ecorePackage="Validity.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Validity.ecore#//Severity">
       <genEnumLiterals ecoreEnumLiteral="Validity.ecore#//Severity/UNKNOWN"/>
       <genEnumLiterals ecoreEnumLiteral="Validity.ecore#//Severity/OK"/>

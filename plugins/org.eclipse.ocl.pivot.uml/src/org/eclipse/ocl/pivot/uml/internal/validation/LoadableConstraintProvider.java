@@ -61,7 +61,7 @@ import org.eclipse.uml2.uml.Stereotype;
  * model source of the loadable constraints. These will be loaded by the first validation
  * run and repopulate the Preference page with their content.
  * <p>
- * See org.eclipse.ocl.examples.xtext.tests/plugin.xml for an example.
+ * See org.eclipse.ocl.xtext.tests/plugin.xml for an example.
  * <p>
  * Derived implementations such as UMLProfileConstraintProvider should implement load
  * to load the modeled constraints.

@@ -6,6 +6,6 @@ Bundle-Version: 7.0.0.qualifier
 Automatic-Module-Name: org.eclipse.ocl.codegen.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.ocl.examples.xtext.tests
+Require-Bundle: org.eclipse.ocl.xtext.tests
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.ocl.codegen.tests;x-internal:=true

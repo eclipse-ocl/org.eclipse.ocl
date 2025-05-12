@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.ocl.xtext.tests/emf-gen" modelPluginID="org.eclipse.ocl.xtext.tests"
+    templateDirectory="/org.eclipse.ocl.codegen/templates" modelName="B" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="8.0"
+    copyrightFields="false" usedGenPackages="Bug477283A.genmodel#//a" operationReflection="true"
+    importOrganizing="true" pluginKey="">
+  <genAnnotations source="http://www.eclipse.org/OCL/GenModel">
+    <details key="Use Delegates" value="false"/>
+    <details key="Use Null Annotations" value="true"/>
+  </genAnnotations>
+  <foreignModel>Bug477283B.ecore</foreignModel>
+  <genPackages prefix="Bug477283B" basePackage="org.eclipse.ocl.xtext.tests.bug477283"
+      disposableProviderFactory="true" ecorePackage="Bug477283B.ecore#/">
+    <genClasses ecoreClass="Bug477283B.ecore#//B">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Bug477283B.ecore#//B/ref"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
