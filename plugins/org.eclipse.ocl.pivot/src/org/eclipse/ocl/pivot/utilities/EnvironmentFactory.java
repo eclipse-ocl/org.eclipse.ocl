@@ -12,27 +12,45 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
+import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 
 /**
@@ -49,6 +67,8 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
  * It is highly recommended to extend the {@link AbstractEnvironmentFactory}
  * class, instead.
  * </p>
+ * @since 7.0
+ * @since 7.0
  */
 public interface EnvironmentFactory extends Adaptable, Customizable
 {
@@ -62,6 +82,58 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@Deprecated /* @deprecated only ResourceSet adapters are used and only internally - 3 calls without JUnit coverage remain
 		now that ThreadLocalExecutor.getEnvironmentFactory is available, the 3 adaptions are probably redundant */
 	@NonNull Adapter adapt(@NonNull Notifier notifier);
+
+	/**
+	 * @since 7.0
+	 */
+	void addExternal2AS(@NonNull External2AS external2as);
+
+	/**
+	 * Add all resources in ResourceSet to the externalResourceSet.
+	 * @since 7.0
+	 */
+	void addExternalResources(@NonNull ResourceSet externalResourceSet);
+
+	/**
+	 * Analyze all OCL functioality below eRootObject,typically a pivot Package, to populate the
+	 * allInstancesCompleteClasses and implicitOppositeProperties with the identies of all
+	 * Classes that source an allInstances() call and all unidirectional Properties that are
+	 * opposite navigated.
+	 *
+	 * @since 7.0
+	 */
+	default void analyzeExpressions(@NonNull EObject eRootObject, @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {}
+
+	/**
+	 * @since 7.0
+	 */
+	void attach(@NonNull Object attachOwner);
+
+	/**
+	 * Configure the PackageRegistry associated with the (external) ResourceSet to use a load strategy that uses whichever of
+	 * the namespace or platform URI is first encountered and which suppresses diagnostics about subsequent use of the
+	 * other form of URI.
+	 * @since 7.0
+	 */
+	void configureLoadFirstStrategy();
+
+	/**
+	 * Configure the PackageRegistry associated with the (external) ResourceSet to use a packageLoadStrategy and conflictHandler when
+	 * resolving namespace and platform URIs.
+	 * @since 7.0
+	 */
+	void configureLoadStrategy(ProjectManager.@NonNull IResourceLoadStrategy packageLoadStrategy, ProjectManager.@Nullable IConflictHandler conflictHandler);
+
+	/**
+	 * Create and initialize the AS ResourceSet used by metamodelManager to contain the AS forms of CS and Ecore/UML resources.
+	 * @since 7.0
+	 */
+	@NonNull ResourceSetImpl createASResourceSet();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompleteEnvironmentInternal createCompleteEnvironment();
 
 	/**
 	 * Creates a new evaluation environment to track the values of variables in
@@ -95,11 +167,26 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 */
 	@NonNull ExecutorInternal createExecutor(@NonNull ModelManager modelManager);
 
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlowAnalysis createFlowAnalysis(@NonNull OCLExpression contextExpression);
 
 	/**
 	 * Return a Helper that provides a variety of useful API facilities.
 	 *
 	@NonNull PivotHelper createHelper(); */	// FIXME Bug 509309 wait for major version
+
+	/**
+	 * Create and initialize the IdResolver used by metamodelManager to convert Ids to Elements.
+	 * @since 7.0
+	 */
+	@NonNull IdResolver createIdResolver();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull ImplementationManager createImplementationManager();
 
 	/**
 	 * Creates an extent map for invocation of <tt>OclType.allInstances()</tt>
@@ -150,6 +237,31 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@Nullable ParserContext createParserContext(@NonNull Element element);
 
 	/**
+	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
+	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
+	 * this alternative creation mechanism is available via an EnvironmentFactory override.
+	 * @since 7.0
+	 */
+	@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
+
+	/**
+	 * @since 7.0
+	 */
+	void detach(@NonNull Object attachOwner);
+
+	/**
+	 * Detach the ThreadLocal reference to this EnvironmentFactory if that is the sole remaining attach.
+	 *
+	 * @since 7.0
+	 */
+	default void detachRedundantThreadLocal() {}
+
+	/**
+	 * @since 7.0
+	 */
+	void dispose();
+
+	/**
 	 * Return the pivot model class for className with the Pivot Model.
 	 * @since 7.0
 	 */
@@ -166,7 +278,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull ResourceSet getASResourceSet();
 
 	/**
+	 * @since 7.0
+	 */
+	@Nullable ICSI2ASMapping getCSI2ASMapping();
+
+	/**
 	 * Return the CompleteEnvironment that supervises the additional types need for collections specializations and tuples.
+	 * @since 7.0
 	 */
 	@NonNull CompleteEnvironment getCompleteEnvironment();
 
@@ -175,6 +293,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * define the merge of individual Packages and Classes.
 	 */
 	@NonNull CompleteModel getCompleteModel();
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable String getDoSetupName(@NonNull URI uri);
 
 	/**
 	 * Return the IdResolver that performs the resolution of the lightweight usage-independent Ids of types and packages
@@ -210,6 +333,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * Return the StatusCodes severity with which the validation identified by validationKey is reported.
 	 * StatusCodes.OK severity suppresses the validation altogether.
 	 * StatusCodes.Warning is returned for any null or unknown key.
+	 * @since 7.0
 	 */
 	StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationKey);
 
@@ -217,6 +341,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * Return the (OCL) Standard Library that provides the build-in language facilities such as the OclAny and Set types.
 	 */
 	@NonNull StandardLibrary getStandardLibrary();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Technology getTechnology();
 
 	/**
 	 * Return the ResourceSet provided by the user for referencing by this EnvironmentFactory.
@@ -235,7 +364,35 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * @since 7.0
 	 */
+	default boolean isDisposing() { return false; }
+
+	/**
+	 * @since 7.0
+	 */
 	boolean isEvaluationTracingEnabled();
+
+	/**
+	 * Perform the loading and installation of the Complete OCL complement to ePackage, loading from
+	 * oclURI, returning true if successful.
+	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
+	 * overheads up front. Returns the ASResource if successful.
+	 *
+	 * @since 7.0
+	 */
+	default @Nullable ASResource loadCompleteOCLResource(@NonNull EPackage ePackage, @NonNull URI oclURI) throws ParserException {
+		return null;			// XXX
+	}
+
+	/**
+	 * Ensure that EPackage has been loaded in the externalResourceSet PackageRegistry.
+	 * @since 7.0
+	 */
+	EPackage loadEPackage(@NonNull EPackage ePackage);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Element loadResource(@NonNull Resource resource, @Nullable URI uri) throws ParserException;
 
 	/**
 	 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
@@ -250,6 +407,27 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 1.17
 	 */
 	default void preDispose() {}
+
+	/**
+	 * @since 7.0
+	 */
+	void setCSI2ASMapping(ICSI2ASMapping csi2asMapping);
+
+	/**
+	 * @since 7.0
+	 */
+	void setEvaluationTracingEnabled(boolean b);
+
+	/**
+	 * Specify an Eclipse project with respect to which project-specific preferences are resolved.
+	 * @since 7.0
+	 */
+	void setProject(@Nullable IProject project);
+
+	/**
+	 * @since 7.0
+	 */
+	void setSafeNavigationValidationSeverity(StatusCodes.@NonNull Severity severity);
 
 	/**
 	 * Define the StatusCodes severity with which the validation identified by validationKey is reported.
