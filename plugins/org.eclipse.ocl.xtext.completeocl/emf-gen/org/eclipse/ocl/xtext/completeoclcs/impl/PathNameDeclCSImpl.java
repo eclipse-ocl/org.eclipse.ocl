@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -213,11 +213,11 @@ public abstract class PathNameDeclCSImpl
 	@Override
 	public @NonNull Iterable<Element> getMorePivots() {
 		if (ownedPathName == null) {
-			return PivotMetamodelManager.EMPTY_ELEMENT_LIST;
+			return PivotConstants.EMPTY_ELEMENT_LIST;
 		}
 		Element pElement = ownedPathName.getReferredElement();
 		if ((pElement == null) || pElement.eIsProxy()) {
-			return PivotMetamodelManager.EMPTY_ELEMENT_LIST;
+			return PivotConstants.EMPTY_ELEMENT_LIST;
 		}
 		@NonNull List<Element> singletonList = Collections
 			.<Element> singletonList(pElement);

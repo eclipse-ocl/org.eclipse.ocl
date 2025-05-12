@@ -25,7 +25,6 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
@@ -128,7 +127,7 @@ public class OCLAdapter extends EnvironmentFactoryAdapter implements AdapterFact
 			if (notifier instanceof IEditingDomainProvider) {
 				for (Adapter eAdapter : notifier.eAdapters()) {
 					if (eAdapter instanceof EContentAdapter) {
-						for (Library asLibrary : ((PivotMetamodelManager)ocl2.getMetamodelManager()).getLibraries()) {
+						for (Library asLibrary : ocl2.getMetamodelManager().getLibraries()) {
 							Resource resource = asLibrary.eResource();
 							if ((resource != null) && (resource.getResourceSet() == null)){
 								resource.eAdapters().remove(eAdapter);

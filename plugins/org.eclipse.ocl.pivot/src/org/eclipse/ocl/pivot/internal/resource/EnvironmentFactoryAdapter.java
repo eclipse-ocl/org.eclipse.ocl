@@ -18,8 +18,8 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * An EnvironmentFactoryAdapter associates an EnvironmentFactory with a Resource or ResourceSet so
@@ -68,7 +68,7 @@ public class EnvironmentFactoryAdapter implements Adapter.Internal
 		return environmentFactory;
 	}
 
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
+	public @NonNull MetamodelManager getMetamodelManager() {
 		return environmentFactory.getMetamodelManager();
 	}
 

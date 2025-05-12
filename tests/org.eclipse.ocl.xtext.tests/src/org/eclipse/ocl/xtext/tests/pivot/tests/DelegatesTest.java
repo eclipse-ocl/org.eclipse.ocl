@@ -55,16 +55,6 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.extlibrary.EXTLibraryFactory;
 import org.eclipse.ocl.examples.extlibrary.EXTLibraryPackage;
 import org.eclipse.ocl.examples.extlibrary.Library;
-import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyFactory;
-import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyPackage;
-import org.eclipse.ocl.xtext.tests.codegen.company.util.CodegencompanyValidator;
-import org.eclipse.ocl.xtext.tests.company.Bug418716;
-import org.eclipse.ocl.xtext.tests.company.CompanyFactory;
-import org.eclipse.ocl.xtext.tests.company.CompanyPackage;
-import org.eclipse.ocl.xtext.tests.company.util.CompanyValidator;
-import org.eclipse.ocl.xtext.tests.noreflectioncompany.NoreflectioncompanyFactory;
-import org.eclipse.ocl.xtext.tests.noreflectioncompany.NoreflectioncompanyPackage;
-import org.eclipse.ocl.xtext.tests.noreflectioncompany.util.NoreflectioncompanyValidator;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -88,7 +78,6 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
@@ -115,6 +104,16 @@ import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.ocl.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.xtext.tests.TestUtil;
 import org.eclipse.ocl.xtext.tests.XtextVersionUtil;
+import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyFactory;
+import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyPackage;
+import org.eclipse.ocl.xtext.tests.codegen.company.util.CodegencompanyValidator;
+import org.eclipse.ocl.xtext.tests.company.Bug418716;
+import org.eclipse.ocl.xtext.tests.company.CompanyFactory;
+import org.eclipse.ocl.xtext.tests.company.CompanyPackage;
+import org.eclipse.ocl.xtext.tests.company.util.CompanyValidator;
+import org.eclipse.ocl.xtext.tests.noreflectioncompany.NoreflectioncompanyFactory;
+import org.eclipse.ocl.xtext.tests.noreflectioncompany.NoreflectioncompanyPackage;
+import org.eclipse.ocl.xtext.tests.noreflectioncompany.util.NoreflectioncompanyValidator;
 import org.junit.AfterClass;
 
 import junit.framework.TestCase;
@@ -280,7 +279,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	protected void initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
 		Resource ecoreResource = initModelWithErrors(resourceSet);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 	//	environmentFactory.adapt(resourceSet);
 		String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
@@ -506,7 +505,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	public void doTest_queryExecution(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
 		initModel(resourceSet, modelName);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
-		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
 				.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 

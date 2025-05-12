@@ -25,9 +25,9 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -58,7 +58,10 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 	@NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
-	@NonNull PivotMetamodelManager getMetamodelManager();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull MetamodelManager getMetamodelManager();
 	@Override
 	@NonNull OrphanCompletePackageImpl getOrphanCompletePackage();
 	@Override

@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -66,6 +65,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -564,7 +564,7 @@ public class DelegateInstaller
 	 */
 	private boolean installDelegates(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		boolean hasDelegates = false;
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type primaryType = metamodelManager.getPrimaryType(pivotType);
 		EObject eTarget = primaryType.getESObject();
 		if (eTarget instanceof EClassifier) {
@@ -661,7 +661,7 @@ public class DelegateInstaller
 	public void installDelegates(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		List<@NonNull String> constraintNameSet = null;
 		StringBuilder s = null;
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (Constraint pivotConstraint : metamodelManager.getLocalInvariants(pivotType)) {
 			assert pivotConstraint != null;
 			String constraintName = getAnnotationKey(pivotConstraint);

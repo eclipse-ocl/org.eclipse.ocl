@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -379,7 +380,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	protected @NonNull TupleType getSpecializedTupleType(@NonNull TupleType type) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		TupleType specializedTupleType = type;
 		Map<String, Type> resolutions =  null;
 		List<Property> parts = specializedTupleType.getOwnedProperties();
@@ -476,7 +477,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	public @NonNull Type specializeType(@NonNull Type type) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		if (type instanceof NormalizedTemplateParameter) {
 			Type actualType = getTemplateSpecialization().get(((NormalizedTemplateParameter)type).getIndex());
 			if (!(actualType instanceof NormalizedTemplateParameter) && (actualType instanceof TemplateParameter) && ((TemplateParameter)actualType).getConstrainingClasses().isEmpty()) {

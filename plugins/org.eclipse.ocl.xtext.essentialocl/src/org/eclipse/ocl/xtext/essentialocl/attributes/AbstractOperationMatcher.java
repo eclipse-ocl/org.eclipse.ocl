@@ -31,10 +31,10 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSLeft2RightVisitor.CS2ASContext;
@@ -90,7 +90,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 
 	protected @Nullable CS2ASContext cs2asContext;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @Nullable Type sourceType;
 	private @Nullable List<@NonNull Operation> ambiguities = null;
 

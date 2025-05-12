@@ -38,13 +38,13 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 {
-	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull MetamodelManager metamodelManager;
 
-	protected Id2EClassVisitor(@NonNull PivotMetamodelManager metamodelManager) {
+	protected Id2EClassVisitor(@NonNull MetamodelManager metamodelManager) {
 		this.metamodelManager = metamodelManager;
 	}
 

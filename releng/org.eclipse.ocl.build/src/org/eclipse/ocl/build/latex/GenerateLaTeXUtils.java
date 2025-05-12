@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -74,8 +73,9 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 {
 	protected final @NonNull Comparator<Iteration> iterationComparator = new Comparator<Iteration>()
 	{
+		@Override
 		public int compare(Iteration o1, Iteration o2) {
-			String m1 = o1.getName(); 
+			String m1 = o1.getName();
 			String m2 = o2.getName();
 			if (m1 == null) m1 = "";
 			if (m2 == null) m2 = "";
@@ -89,8 +89,9 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 
 	protected final @NonNull Comparator<AbstractMetamodelDeclaration> metamodelComparator = new Comparator<AbstractMetamodelDeclaration>()
 	{
+		@Override
 		public int compare(AbstractMetamodelDeclaration o1, AbstractMetamodelDeclaration o2) {
-			String m1 = o1.getAlias(); 
+			String m1 = o1.getAlias();
 			String m2 = o2.getAlias();
 			if (m1 == null) m1 = "";
 			if (m2 == null) m2 = "";
@@ -100,30 +101,33 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 
 	protected final @NonNull Comparator<Nameable> nameableComparator = new Comparator<Nameable>()
 	{
+		@Override
 		public int compare(Nameable o1, Nameable o2) {
-			String m1 = o1.getName(); 
+			String m1 = o1.getName();
 			String m2 = o2.getName();
 			if (m1 == null) m1 = "";
 			if (m2 == null) m2 = "";
 			return m1.compareTo(m2);
 		}
 	};
-	
+
 	protected final @NonNull Comparator<ENamedElement> namedComparator = new Comparator<ENamedElement>()
 	{
+		@Override
 		public int compare(ENamedElement o1, ENamedElement o2) {
-			String m1 = o1.getName(); 
+			String m1 = o1.getName();
 			String m2 = o2.getName();
 			if (m1 == null) m1 = "";
 			if (m2 == null) m2 = "";
 			return m1.compareTo(m2);
 		}
 	};
-	
+
 	protected final @NonNull Comparator<AbstractRule> ruleComparator = new Comparator<AbstractRule>()
 	{
+		@Override
 		public int compare(AbstractRule o1, AbstractRule o2) {
-			String m1 = o1.getName(); 
+			String m1 = o1.getName();
 			String m2 = o2.getName();
 			if (m1 == null) m1 = "";
 			if (m2 == null) m2 = "";
@@ -145,8 +149,9 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 			nameMap.put(">", " 6");
 		}
 
+		@Override
 		public int compare(Operation o1, Operation o2) {
-			String m1 = o1.getName(); 
+			String m1 = o1.getName();
 			String m2 = o2.getName();
 			if (m1 == null) m1 = "";
 			if (m2 == null) m2 = "";
@@ -166,10 +171,10 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 	{
 		@SuppressWarnings("unused") private final Namespace scope;
 		private final StringBuilder s = new StringBuilder();
-		
+
 		private enum BulletState { NO_ITEMIZE, IN_ITEM, IN_ITEMIZE };
 		private BulletState bulletState = BulletState.NO_ITEMIZE;
-		
+
 		public MarkupToLaTeX(Namespace scope) {
 			this.scope = scope;
 		}
@@ -263,7 +268,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 			return s.toString();
 		}
 	};
-	
+
 	public static PrettyPrintOptions.@NonNull Global createOptions(@Nullable Namespace scope) {
 		PrettyPrintOptions.Global options = new PrettyPrintOptions.Global(scope)
 		{
@@ -275,7 +280,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 			@Override
 			public @Nullable Set<String> getRestrictedNames() {
 				return null;
-			}			
+			}
 		};
 		return options;
 	}
@@ -324,12 +329,12 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		s.append("#\\end#{alltt#}");
 		return s.toString();
 	}
-	
+
 	protected String emitBeginDefinition() {
 //		return "#\\begin#{oclDefinition#}";
 		return "#\\begin#{verbatim#}";
 	}
-	
+
 	protected String emitCharacters(@NonNull String string) {
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < string.length(); i++) {
@@ -374,7 +379,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		if (packageName == null) packageName = "<<anon>>";
 		return  "#\\hyperlink#{" + encodeLabelText(packageName) + ":" + encodeLabelText(className) + "#}#{" + encodeLabelText(className) + "#}";
 	}
-	
+
 	protected String emitComment(@NonNull EObject eObject) {
 		ICompositeNode node = NodeModelUtils.getNode(eObject);
 		List<ILeafNode> documentationNodes = null;
@@ -419,44 +424,44 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 				s.append(text.trim());
 			}
 		}
-		s.append("\n\n");	
+		s.append("\n\n");
 		@NonNull String body = s.toString();
 		return decode(body, null);
 	}
-	
+
 	protected String emitEmphasis(@NonNull String name) {
 		return "#\\oclEmph#{" + encodeSectionText(name) + "#}";
 	}
-	
+
 	protected String emitEndDefinition() {
 //		return "#\\end#{oclDefinition#}";
 		return "#\\end#{verbatim#}";
 	}
-	
+
 	protected String emitHeading0a(String name) {
 		return name != null ? "#\\oclHeadingZero#{" + encodeSectionText(name) + "#}" : "";
 	}
-	
+
 	protected String emitHeading0b(String name) {
 		return name != null ? "#\\oclHeadingZero#{\t" + encodeSectionText(name) + "#}" : "";
 	}
-	
+
 	protected String emitHeading1(String name, @Nullable String label) {
 		return name != null ? "#\\oclHeadingOne#{" + encodeSectionText(name) + "#}" + emitLabel(label) : "";
 	}
-	
+
 	protected String emitHeading2(String name, @Nullable String label) {
 		return name != null ? "#\\oclHeadingTwo#{" + encodeSectionText(name) + "#}" + emitLabel(label) : "";
 	}
-	
+
 	protected String emitHeading3(String name, @Nullable String label) {
 		return name != null ? "#\\oclHeadingThree#{" + encodeSectionText(name) + "#}" + emitLabel(label) : "";
 	}
-	
+
 	protected String emitHeading4(String name, @Nullable String label) {
 		return name != null ? "#\\oclHeadingFour#{" + encodeSectionText(name) + "#}" + emitLabel(label) : "";
 	}
-	
+
 	protected String emitLabel(@Nullable String label) {
 		return label != null ? "#\\label#{" + encodeLabelText(label) + "#}" : "";
 	}
@@ -550,7 +555,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		}
 		return s.toString();
 	}
-	
+
 	protected String encodeLabelText(@NonNull String string) {
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < string.length(); i++) {
@@ -564,7 +569,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		}
 		return s.toString();
 	}
-	
+
 	protected String encodeSectionText(@NonNull String string) {
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < string.length(); i++) {
@@ -578,7 +583,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		}
 		return s.toString();
 	}
-	
+
 	protected @Nullable Library getLibrary(@NonNull Model root) {
 		TreeIterator<EObject> tit = root.eAllContents();
 		while (tit.hasNext()) {
@@ -589,13 +594,13 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		}
 		return null;
 	}
-	
+
 	protected Iterable<Precedence> getPrecedences(@NonNull Library asLibrary) {
 		List<Precedence> precedences = new ArrayList<Precedence>(asLibrary.getOwnedPrecedences());
 		return precedences;
 	}
-	
-	protected org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull PivotMetamodelManager metamodelManager, @Nullable Resource oclResource) {
+
+	protected org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull MetamodelManager metamodelManager, @Nullable Resource oclResource) {
 		if (oclResource != null) {
 			for (EObject eContent : oclResource.getContents()) {
 				if (eContent instanceof RootCS) {
@@ -610,7 +615,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		}
 		return null;
 	}
-	
+
 	protected org.eclipse.ocl.pivot.@Nullable Package getSecondaryPackage(@NonNull MetamodelManager metamodelManager, @Nullable Resource oclResource) {
 		if (oclResource != null) {
 			for (EObject eContent : oclResource.getContents()) {
@@ -669,7 +674,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		Collections.sort(sortedElements, nameableComparator);
 		return sortedElements;
 	}
-	
+
 	protected @NonNull List<EClass> getSortedEClasses(@NonNull EPackage ePackage) {
 		Set<EClass> allElements = new HashSet<EClass>();
 		TreeIterator<EObject> tit = ePackage.eAllContents();
@@ -695,7 +700,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		Collections.sort(sortedElements, iterationComparator);
 		return sortedElements;
 	}
-	
+
 	protected @NonNull List<ReferencedMetamodel> getSortedMetamodelDeclarations(@NonNull Grammar grammar) {
 		List<ReferencedMetamodel> sortedMetamodels = new ArrayList<ReferencedMetamodel>();
 		for (AbstractMetamodelDeclaration metamodelDeclaration : grammar.getMetamodelDeclarations()) {
@@ -779,7 +784,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		}
 		return decode(body, scope);
 	}
-	
+
 	protected String prettyPrint(@NonNull Constraint constraint, Namespace scope) {
 		PrettyPrintOptions options = createOptions(scope);
 //		PrettyPrintExprVisitor visitor = new PrettyPrintExprVisitor(options);

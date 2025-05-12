@@ -56,13 +56,14 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -408,7 +409,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 
 	private void gatherAllStereotypes(@NonNull Set<Stereotype> allStereotypes, @NonNull Iterable<Stereotype> moreStereotypes) {
 		Set<Stereotype> newStereotypes = null;
-		PivotMetamodelManager metamodelManager = getMetamodelManager();
+		MetamodelManager metamodelManager = getMetamodelManager();
 		for (@SuppressWarnings("null")@NonNull Stereotype stereotype : moreStereotypes) {
 			stereotype = metamodelManager.getPrimaryElement(stereotype);
 			if (allStereotypes.add(stereotype)) {
@@ -477,7 +478,10 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		});
 	}
 
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull MetamodelManager getMetamodelManager() {
 		return getCompleteClass().getMetamodelManager();
 	}
 
@@ -536,7 +540,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		PartialOperations partialOperations = name2partialOperations2.get(name);
 		if (partialOperations == null) {
-			return PivotMetamodelManager.EMPTY_OPERATION_LIST;
+			return PivotConstants.EMPTY_OPERATION_LIST;
 		}
 		return partialOperations.getOperationOverloads(featureFilter);
 	}
@@ -601,7 +605,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		PartialProperties partials = name2partialProperties2.get(name);
 		if ((partials == null) || partials.isEmpty()) {
-			return PivotMetamodelManager.EMPTY_PROPERTY_LIST;
+			return PivotConstants.EMPTY_PROPERTY_LIST;
 		}
 //		@SuppressWarnings("null")
 //		@NonNull List<DomainProperty> singletonList = partials; //Collections.singletonList(partials.get(0));
@@ -712,7 +716,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		State state = name2states2.get(name);
 		if (state == null) {
-			return PivotMetamodelManager.EMPTY_STATE_LIST;
+			return PivotConstants.EMPTY_STATE_LIST;
 		}
 		else {
 			return Collections.singletonList(state);
@@ -732,7 +736,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 
 	@Deprecated /* @deprecated no longer used */
 	protected void initExtensionPropertiesFrom(org.eclipse.ocl.pivot.@NonNull Class baseType, @NonNull Stereotype stereotype) {
-		PivotMetamodelManager metamodelManager = getMetamodelManager();
+		MetamodelManager metamodelManager = getMetamodelManager();
 		ElementExtension elementExtension = metamodelManager.getElementExtension(baseType, stereotype);
 		Map<String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		assert name2partialProperties2 != null;

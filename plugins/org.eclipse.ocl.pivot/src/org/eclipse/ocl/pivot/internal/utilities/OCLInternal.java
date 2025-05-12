@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 public class OCLInternal extends OCL
@@ -84,7 +84,7 @@ public class OCLInternal extends OCL
 	}
 
 	@Override
-	public @NonNull MetamodelManagerInternal getMetamodelManager() {
+	public @NonNull MetamodelManager getMetamodelManager() {
 		assert environmentFactory != null;
 		return environmentFactory.getMetamodelManager();
 	}

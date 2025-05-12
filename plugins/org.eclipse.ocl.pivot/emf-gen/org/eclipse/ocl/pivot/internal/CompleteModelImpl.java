@@ -68,11 +68,11 @@ import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
@@ -667,8 +667,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return ownedCompletePackages;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
+	public @NonNull MetamodelManager getMetamodelManager() {
 		return environmentFactory.getMetamodelManager();
 	}
 

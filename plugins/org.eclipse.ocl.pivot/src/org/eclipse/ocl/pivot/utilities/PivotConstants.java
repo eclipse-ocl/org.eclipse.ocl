@@ -10,8 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.Type;
 
 /**
  * @noimplement This interface is not intended to be implemented by clients.
@@ -219,4 +229,32 @@ public interface PivotConstants
 	 * @since 7.0
 	 */
 	static final String DUMMY_COMPLETE_OCL_BODY = "$$complete-ocl$$";
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull List<@NonNull Constraint> EMPTY_CONSTRAINT_LIST = Collections.<@NonNull Constraint>emptyList();
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull List<@NonNull Element> EMPTY_ELEMENT_LIST = Collections.<@NonNull Element>emptyList();
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull List<@NonNull Operation> EMPTY_OPERATION_LIST = Collections.<@NonNull Operation>emptyList();
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull List<@NonNull Property> EMPTY_PROPERTY_LIST = Collections.<@NonNull Property>emptyList();
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull List<@NonNull State> EMPTY_STATE_LIST = Collections.<@NonNull State>emptyList();
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull List<@NonNull TemplateParameter> EMPTY_TEMPLATE_PARAMETER_LIST = Collections.emptyList();
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull List<@NonNull Type> EMPTY_TYPE_LIST = Collections.<@NonNull Type>emptyList();
 }

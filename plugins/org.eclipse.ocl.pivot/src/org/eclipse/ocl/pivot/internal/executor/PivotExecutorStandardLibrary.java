@@ -27,13 +27,13 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 @Deprecated /* @deprecated not used */
 public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
@@ -83,7 +83,10 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 		return environmentFactory.getMetamodelManager().getInheritance(type);
 	}
 
-	public @NonNull PivotMetamodelManager getMetamodelManager() {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull MetamodelManager getMetamodelManager() {
 		return environmentFactory.getMetamodelManager();
 	}
 
@@ -131,7 +134,7 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 		}
 		org.eclipse.ocl.pivot.Package domainPackage = ((org.eclipse.ocl.pivot.Class)typeType).getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotPackage = packageMap.get(domainPackage);
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		if (pivotPackage == null) {
 			String nsURI = domainPackage.getURI();
 			if (nsURI != null) {
