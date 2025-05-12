@@ -38,20 +38,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public interface StandardLibrary extends Element
 {
 	/**
-	 * @since 1.1
-	 */
-	public interface StandardLibraryExtension extends StandardLibrary {
-
-		/**
-		 * Obtains the single instance of the Class metatype, named
-		 * <tt>OclEnumeration</tt>.
-		 *
-		 * @return the <tt>OclEnumeration</tt> type (an instance of Class)
-		 */
-		org.eclipse.ocl.pivot.@NonNull Class getOclEnumerationType();
-	}
-
-	/**
 	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}'.
 	 * <!-- begin-user-doc -->
@@ -187,6 +173,15 @@ public interface StandardLibrary extends Element
 	 * @return the <tt>OclElement</tt> type (an instance of Class)
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getOclElementType();
+
+	/**
+	 * Obtains the single instance of the Class metatype, named
+	 * <tt>OclEnumeration</tt>.
+	 *
+	 * @return the <tt>OclEnumeration</tt> type (an instance of Class)
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getOclEnumerationType();
 
 	@NonNull Operation getOclInvalidOperation();
 
