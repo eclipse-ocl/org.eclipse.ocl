@@ -530,15 +530,6 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		return nestedEvaluationEnvironment;
 	}
 
-	/**
-	 * @deprecated use TypedElement argument
-	 */
-	@Deprecated
-	@Override
-	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
-		return pushEvaluationEnvironment(executableObject, (TypedElement)callingObject);
-	}
-
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
 		evaluationEnvironment.replace(referredVariable, value);

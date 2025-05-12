@@ -30,14 +30,6 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  */
 public interface Executor
 {
-	/**
-	 * @since 1.3
-	 */
-	public interface ExecutorExtension extends Executor
-	{
-		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller);
-		void resetCaches();
-	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
 
 	/**
@@ -83,11 +75,14 @@ public interface Executor
 	}
 	void popEvaluationEnvironment();
 	/**
-	 * @deprecated use Object argument in ExecutorInternalExtension
+	 * @since 7.0
 	 */
-	@Deprecated
-	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject);
+	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller);
 	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
+	/**
+	 * @since 7.0
+	 */
+	void resetCaches();
 
 	/**
 	 * @since 1.18
