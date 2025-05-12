@@ -57,7 +57,7 @@ import org.eclipse.ocl.pivot.values.NullValue;
 /**
  * @since 1.1
  */
-public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInternalExtension
+public abstract class AbstractExecutor implements ExecutorInternal
 {
 
 	// This is the same as HashMap's default initial capacity

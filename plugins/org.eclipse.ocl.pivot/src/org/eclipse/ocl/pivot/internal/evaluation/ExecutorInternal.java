@@ -31,17 +31,15 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 public interface ExecutorInternal extends Executor
 {
 	/**
-	 * @since 1.3
+	 * @since 7.0
 	 */
-	public interface ExecutorInternalExtension extends ExecutorInternal
-	{
-		@Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues);
-		@NonNull EvaluationCache getEvaluationCache();
-		@Nullable Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues);
-		@Nullable Object internalExecuteShadowExp(@NonNull ShadowExp asShadowExp);
-	}
+	@Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues);
 	@Override
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EvaluationCache getEvaluationCache();
 	@NonNull EvaluationVisitor getEvaluationVisitor();
 	@Override
 	@NonNull MetamodelManagerInternal getMetamodelManager();
@@ -49,4 +47,12 @@ public interface ExecutorInternal extends Executor
 	@Nullable Object getValueOf(@NonNull TypedElement referredVariable);
 	@NonNull EvaluationEnvironment initializeEvaluationEnvironment(@NonNull NamedElement executableObject);
 	@Nullable Object internalExecuteNavigationCallExp(@NonNull NavigationCallExp propertyCallExp, @NonNull Property referredProperty, @Nullable Object sourceValue);
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues);
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Object internalExecuteShadowExp(@NonNull ShadowExp asShadowExp);
 }
