@@ -252,46 +252,6 @@ public class PivotUtil
 	}
 
 	/**
-	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
-	 *
-	 * @since 1.14
-	 */
-	public static @Nullable Executor basicGetExecutor() {
-		return ThreadLocalExecutor.basicGetExecutor();
-	}
-	@Deprecated /* @deprecated omit obsolete argument */
-	public static @Nullable Executor basicGetExecutor(@NonNull EObject eObject) {
-		return ThreadLocalExecutor.basicGetExecutor();
-	}
-
-	/**
-	 * Locate an OCL Executor from the Executor.class slot in validationContext, else
-	 * from the Resource containing an eObject, else return null.
-	 *
-	 * The returned executor is cached at the Executor.class slot in validationContext for re-use.
-	 *
-	 * @since 1.7
-	 */
-	public static @Nullable Executor basicGetExecutor(@NonNull EObject eObject, @Nullable  Map<Object, Object> validationContext) {
-		Executor executor = ThreadLocalExecutor.basicGetExecutor();
-		if (executor != null) {
-			return executor;
-		}
-		Resource asResource = eObject.eResource();
-		if (asResource != null) {
-			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if ((environmentFactory != null) && !environmentFactory.isDisposed()) {
-				executor = PivotExecutorManager.createAdapter(environmentFactory, eObject);
-				if (executor != null) {
-					ThreadLocalExecutor.setExecutor(executor);
-				}
-				return executor;
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * @since 1.7
 	 */
 	public static org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter templateParameter) {
@@ -2216,26 +2176,6 @@ public class PivotUtil
 			PivotUtilInternal.resetContainer(oldChild);
 			eContainer.eSet(eContainmentFeature, newChild);
 		}
-	}
-
-	/**
-	 * Remove any OCL Executor from the ResourceSet containing an eObject. This may be necessary to prevent
-	 * re-use of the cached context of an earlier executor after a change to the models.
-	 *
-	 * @since 1.7
-	 *
-	 * @deprecated use resetExecutor
-	 */
-	@Deprecated
-	public static void removeExecutor(@NonNull EObject eObject) {
-		Resource eResource = eObject.eResource();
-		if (eResource != null) {
-			ResourceSet resourceSet = eResource.getResourceSet();
-			if (resourceSet != null) {
-				PivotExecutorManager.removeAdapter(resourceSet);
-			}
-		}
-		resetExecutor();
 	}
 
 	/**
