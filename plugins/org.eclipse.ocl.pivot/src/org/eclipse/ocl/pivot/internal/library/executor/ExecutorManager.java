@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
@@ -27,7 +26,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
@@ -36,7 +34,6 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.Option;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Value;
 
 public abstract class ExecutorManager implements ExecutorExtension
@@ -149,11 +146,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 	protected final @NonNull StandardLibrary standardLibrary;
 
 	/**
-	 * Set true by {@link #setCanceled} to terminate execution at next call to {@link #getValuefactory()}.
-	 */
-	private boolean isCanceled = false;
-
-	/**
 	 * Lazily-created cache of reusable regex patterns to avoid
 	 * repeatedly parsing the same regexes.
 	 */
@@ -182,14 +174,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 	@Override
 	public @Nullable ExecutorInternal basicGetInterpretedExecutor() {
 		return interpretedExecutor;
-	}
-
-	/** @deprecated Evaluator no longer nests
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @NonNull Evaluator createNestedEvaluator() {
-		return this;
 	}
 
 	/**
@@ -244,19 +228,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 	@Override
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return environment;
-	}
-
-	@Override
-	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {
-		if (resultValue == null) {
-			return Diagnostic.ERROR;
-		}
-		else if (resultValue instanceof InvalidValueException) {
-			return Diagnostic.CANCEL;
-		}
-		else {
-			return severityPreference;
-		}
 	}
 
 	public @NonNull Type getDynamicTypeOf(@Nullable Object value) {
@@ -341,12 +312,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 	}
 
 	@Override
-	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
-		return getIdResolver().getStaticTypeOf(value);
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
 		return getIdResolver().getStaticTypeOf(value, values);
 	}
@@ -362,28 +327,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		return getIdResolver().getStaticTypeOfValue(staticType, value);
-	}
-
-	//	public @NonNull ValueFactory getValueFactory() {
-	//		if (isCanceled) {
-	//			throw new EvaluationHaltedException("Canceled"); //$NON-NLS-1$
-	//		}
-	//		return valueFactory;
-	//	}
-
-	//	@Override
-	//	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
-	//		return null;
-	//	}
-
-	@Override
-	public boolean isCanceled() {
-		return isCanceled;
-	}
-
-	@Override
-	public void setCanceled(boolean isCanceled) {
-		this.isCanceled = isCanceled;
 	}
 
 	@Override

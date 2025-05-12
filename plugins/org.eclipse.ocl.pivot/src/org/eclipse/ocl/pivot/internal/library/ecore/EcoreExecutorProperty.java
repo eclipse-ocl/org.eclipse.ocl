@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
@@ -31,13 +30,6 @@ public class EcoreExecutorProperty extends ExecutorProperty implements LibraryPr
 	public EcoreExecutorProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type executorType, int propertyIndex) {
 		super(ClassUtil.nonNullModel(eFeature.getName()), executorType, propertyIndex);
 		this.eFeature = eFeature;
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(evaluator, returnTypeId, sourceValue);
 	}
 
 	/**

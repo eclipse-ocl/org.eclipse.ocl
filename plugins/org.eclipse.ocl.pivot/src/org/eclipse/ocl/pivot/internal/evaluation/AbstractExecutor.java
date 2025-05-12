@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
@@ -38,7 +37,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.IndentingLogger;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -194,13 +192,6 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		return createNestedEvaluationEnvironment(evaluationEnvironment, executableObject, (TypedElement)callingObject);
 	}
 
-	/** @deprecated Evaluator no longer nests */
-	@Deprecated
-	@Override
-	public @NonNull Evaluator createNestedEvaluator() {
-		return this;
-	}
-
 	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
 		return new BasicEvaluationEnvironment(this, executableObject);
 	}
@@ -237,19 +228,6 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return environmentFactory.getCompleteEnvironment();
-	}
-
-	@Override
-	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {
-		if (resultValue == null) {
-			return Diagnostic.ERROR;
-		}
-		else if (resultValue instanceof InvalidValueException) {
-			return Diagnostic.CANCEL;
-		}
-		else {
-			return severityPreference;
-		}
 	}
 
 	@Override
@@ -344,12 +322,6 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public @NonNull StandardLibrary getStandardLibrary() {
 		return environmentFactory.getStandardLibrary();
-	}
-
-	@Override
-	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
-		return idResolver.getStaticTypeOf(value);
 	}
 
 	@Override
@@ -543,11 +515,6 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	@Override
-	public boolean isCanceled() {
-		return evaluationVisitor.isCanceled();
-	}
-
-	@Override
 	public void popEvaluationEnvironment() {
 		evaluationEnvironment = ClassUtil.nonNullState(evaluationEnvironment.getParentEvaluationEnvironment());
 	}
@@ -590,11 +557,6 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			shadowCache.dispose();
 			shadowCache = null;
 		}
-	}
-
-	@Override
-	public void setCanceled(boolean isCanceled) {
-		evaluationVisitor.setCanceled(isCanceled);
 	}
 
 	/**

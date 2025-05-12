@@ -14,7 +14,6 @@ import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -63,13 +62,6 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 	private @Nullable Object accumulatorValue;
 	protected final @NonNull Iterator<? extends Object> iteratorValue;
 	private Object currentValue;		// 'null' is a valid value so 'iteratorValue' is used as end of iteration
-
-	/** @deprecated use Executor */
-	@Deprecated
-	public ExecutorSingleIterationManager(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @NonNull LibraryBinaryOperation body,
-			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
-		this(ValueUtil.getExecutor(evaluator), returnTypeId, body, collectionValue, accumulatorValue);
-	}
 
 	/**
 	 * @since 1.1

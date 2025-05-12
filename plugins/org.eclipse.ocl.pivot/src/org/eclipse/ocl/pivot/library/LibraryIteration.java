@@ -12,11 +12,9 @@ package org.eclipse.ocl.pivot.library;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -28,17 +26,13 @@ public interface LibraryIteration extends LibraryIterationOrOperation
 	 */
 	public interface LibraryIterationExtension extends LibraryIteration
 	{
-		/**
-		 * Create the value that will accumulate the iteration results.
-		 */
-		@NonNull Object createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId);
 	}
 
-	/** @deprecated use Executor */
-	@Deprecated
-	default @NonNull Object createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
-		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
-	}
+	/**
+	 * Create the value that will accumulate the iteration results.
+	 * @since 7.0
+	 */
+	@NonNull Object createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId);
 
 	/**
 	 * Evaluate the iteration under the supervision of an iterationManager.

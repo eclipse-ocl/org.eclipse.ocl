@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -45,16 +44,10 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		private Object value;		// 'null' is a valid value so 'this' is used as end of iteration
 		private int coIndex = 1;
 
-		/** @deprecated use Executor */
-		@Deprecated
-		public ValueIterator(@NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
-			this(ValueUtil.getExecutor(evaluator), collectionValue, variable);
-		}
-
 		/**
 		 * @since 1.1
 		 */
-		@Deprecated /* @deprected specify coVariable */
+		@Deprecated /* @deprecated specify coVariable */
 		public ValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
 			this(executor, collectionValue, variable, null);
 		}
@@ -106,12 +99,6 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		}
 	}
 
-	/** @deprecated use Executor */
-	@Deprecated /* @deprecated not used */
-	protected static @NonNull ValueIterator @Nullable [] createIterators(@NonNull TypedElement @NonNull [] referredIterators, @NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue) {
-		return createIterators(referredIterators, ValueUtil.getExecutor(evaluator), collectionValue);
-	}
-
 	/**
 	 * @since 1.1
 	 */
@@ -138,13 +125,6 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	protected final @NonNull OCLExpression body;
 	protected final @Nullable TypedElement accumulatorVariable;
 	private @Nullable Object accumulatorValue;
-
-	/** deprecated supply a callExp */
-	@Deprecated
-	public AbstractEvaluatorIterationManager(@NonNull Evaluator evaluator, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
-		this(ValueUtil.getExecutor(evaluator), null, body, collectionValue, accumulatorVariable, accumulatorValue);
-	}
 
 	/**
 	 * @since 1.1

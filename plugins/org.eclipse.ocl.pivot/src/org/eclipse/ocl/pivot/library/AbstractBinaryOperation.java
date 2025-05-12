@@ -17,9 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -28,13 +26,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractBinaryOperation extends AbstractOperation implements LibraryBinaryOperation.LibraryBinaryOperationExtension
 {
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		return dispatch(getExecutor(evaluator), callExp, sourceValue);
-	}
-
 	/**
 	 * @since 1.1
 	 */
@@ -46,13 +37,6 @@ public abstract class AbstractBinaryOperation extends AbstractOperation implemen
 		assert argument0 != null;
 		Object firstArgument = executor.evaluate(argument0);
 		return evaluate(executor, callExp.getTypeId(), sourceValue, firstArgument);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable /*@Thrown*/ Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue);
 	}
 
 	/**

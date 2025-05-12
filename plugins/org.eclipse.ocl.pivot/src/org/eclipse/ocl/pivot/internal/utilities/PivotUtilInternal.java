@@ -73,7 +73,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
@@ -318,12 +317,6 @@ public class PivotUtilInternal extends PivotUtil
 	@Deprecated /* @deprecated use Notifier argument */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
 		return getEnvironmentFactory((Notifier)resource);
-	}
-
-	/** @deprecated use getExecutor() */
-	@Deprecated
-	public static @NonNull Evaluator getEvaluator(@NonNull EObject eObject) {
-		return getExecutor(eObject);
 	}
 
 	/**

@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -68,14 +67,6 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 		Object fifthArgument = executor.evaluate(argument4);
 		Object sixthArgument = executor.evaluate(argument5);
 		return evaluate(executor, callExp.getTypeId(), sourceValue, firstArgument, secondArgument, thirdArgument, fourthArgument, fifthArgument, sixthArgument); */
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	public @NonNull Boolean evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object constraintName,
-			@Nullable Object object, @Nullable Object diagnostics, @Nullable Object context,
-			@Nullable Object severity, @Nullable Object status, @Nullable Object code) {
-		return evaluate(getExecutor(evaluator), returnTypeId, constraintName, object, diagnostics, context, severity, status, code);
 	}
 
 	/**
@@ -147,47 +138,5 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 			((DiagnosticChain) diagnostics).add(new BasicDiagnostic(emfSeverity, PivotValidator.DIAGNOSTIC_SOURCE, emfCode, emfMessage, emfData));
 		}
 		return ValueUtil.FALSE_VALUE;
-	}
-
-	/**
-	 * @since 1.1
-	 * @deprecated Add feature/message arguments
-	 */
-	@Deprecated
-	public @NonNull /*@Thrown*/ Boolean evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @NonNull String constraintName,
-			@NonNull Object object, @Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context,
-			@Nullable IntegerValue severity, @Nullable Object status, @Nullable Object code) {
-		return evaluate(executor, returnTypeId, constraintName, object, null, diagnostics, context, null, severity, status, code);
-		/*		if (status == Boolean.TRUE) {
-		    return ValueUtil.TRUE_VALUE;
-		}
-		if (diagnostics instanceof DiagnosticChain) {
-			Object objectLabel;
-			if (object instanceof EObject) {
-				EObject eObject = (EObject) object;
-				if (context instanceof Map<?,?>) {
-				    @SuppressWarnings("unchecked") Map<Object, Object> castContext = (Map<Object, Object>) context;
-					objectLabel = EObjectValidator.getObjectLabel(eObject, castContext);
-				}
-				else {
-					objectLabel = EObjectValidator.getObjectLabel(eObject, null);
-				}
-			}
-			else {
-				objectLabel = "<<unknown>>";
-			}
-			String message = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, new Object[]{constraintName, objectLabel});
-		    int intSeverity = ValueUtil.asIntegerValue(severity).intValue();
-		    int intCode = ValueUtil.asIntegerValue(code).intValue();
-			((DiagnosticChain)diagnostics).add(new BasicDiagnostic(intSeverity, PivotValidator.DIAGNOSTIC_SOURCE, intCode, message, new Object [] { object }));
-		}
-		return ValueUtil.FALSE_VALUE; */
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	public @NonNull Boolean evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId,
-			String constraintName, DiagnosticChain diagnostics, Object severity, Object object) {
-		return evaluate(getExecutor(evaluator), returnTypeId, constraintName, diagnostics, severity, object);
 	}
 }

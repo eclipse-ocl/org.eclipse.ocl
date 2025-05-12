@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.library;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
@@ -20,14 +19,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  */
 public abstract class AbstractProperty extends AbstractFeature implements LibraryProperty.LibraryPropertyExtension
 {
-	/** @deprecated use Executor 
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
-	}
-	
 	/**
 	 * @since 1.1
 	 */

@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
@@ -60,35 +59,6 @@ LibraryTernaryOperation.LibraryTernaryOperationExtension
 			argumentValues[i] = executor.evaluate(argument);
 		}
 		return evaluate(executor, typeId, sourceValue, argumentValues);
-	}
-
-	/** @deprecated use Executor
-	 * @since 1.1
-	 */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
-	}
-
-	/** @deprecated use Executor
-	 * @since 1.1
-	 */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId,
-			@Nullable Object sourceValue, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argVal);
-	}
-
-	/** @deprecated use Executor
-	 * @since 1.1
-	 */
-	@Deprecated
-	@Override
-	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId,
-			@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue);
 	}
 
 	/**

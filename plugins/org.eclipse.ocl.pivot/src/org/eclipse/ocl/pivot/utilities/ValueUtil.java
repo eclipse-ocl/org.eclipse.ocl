@@ -44,8 +44,6 @@ import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -268,12 +266,6 @@ public abstract class ValueUtil
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.MAP_NAME, getTypeName(value));
 		}
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	public static @NonNull EObject asNavigableObject(@Nullable Object value, @NonNull Object navigation, @Nullable Evaluator evaluator) {
-		return asNavigableObject(value, navigation, evaluator != null ? getExecutor(evaluator) : null);
 	}
 
 	/**
@@ -836,16 +828,6 @@ public abstract class ValueUtil
 			name = name.substring(METAMODEL_NAME_PREFIX.length());
 		}
 		return name;
-	}
-
-	/** @deprecated only used to support deprecated code
-	 * @since 1.1*/
-	@Deprecated
-	public static @NonNull Executor getExecutor(@NonNull Evaluator evaluator) {
-		if (evaluator instanceof Executor) {
-			return (Executor)evaluator;
-		}
-		return ((EvaluationVisitor.EvaluationVisitorExtension)evaluator).getExecutor();
 	}
 
 	public static String getTypeName(@Nullable Object value) {

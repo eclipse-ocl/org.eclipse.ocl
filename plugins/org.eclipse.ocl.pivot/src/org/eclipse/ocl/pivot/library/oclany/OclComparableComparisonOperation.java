@@ -15,7 +15,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -29,14 +28,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * OclComparableComparisonOperation provides the abstract support for a comparison operation.
  */
 public abstract class OclComparableComparisonOperation extends AbstractUntypedBinaryOperation
-{	
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable Boolean evaluate(@NonNull Evaluator evaluator, @Nullable Object left, @Nullable Object right) {
-		return evaluate(getExecutor(evaluator), left, right); 
-	}
-
+{
 	/**
 	 * @since 1.1
 	 */

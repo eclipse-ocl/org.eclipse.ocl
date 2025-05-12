@@ -15,10 +15,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
 
@@ -57,15 +55,6 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIt
 
 	protected final @NonNull TypedElement referredIterator;
 	protected final @NonNull CollectionValueIterator iterator;
-
-	/** @deprecated supply a callExp */
-	@Deprecated
-	public EvaluatorSingleIterationManager(@NonNull Evaluator invokingEvaluator,
-			@NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
-			@NonNull TypedElement referredIterator) {
-		this(ValueUtil.getExecutor(invokingEvaluator), null, body, collectionValue, accumulator, accumulatorValue, referredIterator);
-	}
 
 	/**
 	 * @since 1.1

@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractTernaryOperation;
@@ -26,13 +25,6 @@ import org.eclipse.ocl.pivot.library.AbstractTernaryOperation;
 public class StringReplaceAllOperation extends AbstractTernaryOperation
 {
 	public static final @NonNull StringReplaceAllOperation INSTANCE = new StringReplaceAllOperation();
-	
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable String evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue); 
-	}
 
 	/**
 	 * @since 1.1

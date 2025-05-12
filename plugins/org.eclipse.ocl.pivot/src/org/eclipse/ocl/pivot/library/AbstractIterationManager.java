@@ -13,11 +13,9 @@ package org.eclipse.ocl.pivot.library;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.evaluation.IterationManager.IterationManagerExtension2;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
 
@@ -27,23 +25,12 @@ public abstract class AbstractIterationManager implements IterationManagerExtens
 	 * @since 1.1
 	 */
 	protected final @NonNull Executor executor;
-	/** @deprecated use executor */
-	@Deprecated
-	protected final @NonNull Evaluator evaluator;
-
-
-	/** @deprecated use Executor */
-	@Deprecated
-	public AbstractIterationManager(@NonNull Evaluator evaluator) {
-		this(ValueUtil.getExecutor(evaluator));
-	}
 
 	/**
 	 * @since 1.1
 	 */
 	protected AbstractIterationManager(@NonNull Executor executor) {
 		this.executor = executor;
-		this.evaluator = executor;
 	}
 
 	@Override
@@ -62,13 +49,6 @@ public abstract class AbstractIterationManager implements IterationManagerExtens
 	@Override
 	public @Nullable Object get() {
 		throw new UnsupportedOperationException();	// Only required for single iterator managers
-	}
-
-	/** @deprecated use getExecutor() */
-	@Deprecated
-	@Override
-	public @NonNull Evaluator getEvaluator() {
-		return executor;
 	}
 
 	/**

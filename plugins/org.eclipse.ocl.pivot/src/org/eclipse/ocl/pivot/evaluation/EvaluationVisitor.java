@@ -15,7 +15,6 @@ import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractEvaluationVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -28,7 +27,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  *
  * The Evaluator interface is deprecated. Its facilities should be obtained by getEvaluator().
  */
-public interface EvaluationVisitor extends Visitor<Object>, Evaluator
+public interface EvaluationVisitor extends Visitor<Object>
 {
 	/**
 	 * @since 1.1
@@ -43,12 +42,6 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 		@Nullable Object visit(@NonNull Visitable visitable);
 	}
 
-	/** @deprecated no longer used */
-	@Deprecated
-	@Override
-	@NonNull EvaluationVisitor createNestedEvaluator();
-
-	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
 
 	/**
@@ -64,7 +57,6 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
      *
 	 * @return the evaluation environment
 	 */
-	@Override
 	@NonNull EvaluationEnvironment getEvaluationEnvironment();
 
 	/** @deprecated use getExecutor */
@@ -75,22 +67,18 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	@Deprecated
 	@NonNull MetamodelManager getMetamodelManager();
 
-	/** @deprecated moved to Evaluator */
-	@Override
-	@Deprecated
-	@NonNull ModelManager getModelManager();
-
 	@Nullable Monitor getMonitor();
 
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	@NonNull StandardLibrary getStandardLibrary();
-
-	@Override
+	/**
+	 * Return true if the evaluation has been canceled.
+	 */
 	boolean isCanceled();
 
-	@Override
+	/**
+	 * Request cancelation of the current the evaluation, or reset the request for a new evaluation.
+	 * Cancelation occurs by throwing an {@link EvaluationHaltedException} when an expression,
+	 * operation or iteration is next invoked.
+	 */
 	void setCanceled(boolean isCanceled);
 
 	void setMonitor(@Nullable Monitor monitor);

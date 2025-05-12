@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -61,26 +60,12 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 		return evaluate(executor, (CollectionTypeId)typeId, sourceValue, delims, returnDelims);
 	}
 
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
-	}
-
 	/**
 	 * @since 1.1
 	 */
 	@Override
 	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, DELIMS, false);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue);
 	}
 
 	/**
@@ -90,14 +75,6 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		String delims = asString(argumentValue);
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, delims, false);
-	}
-
-	/** @deprecated use Executor
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue);
 	}
 
 	/**
