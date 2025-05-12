@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 
 /**
  * An EnvironmentFactoryAdapter associates an EnvironmentFactory with a Resource or ResourceSet so
@@ -47,7 +46,7 @@ public class EnvironmentFactoryAdapter implements Adapter.Internal
 			for (Adapter adapter : eAdapters) {
 				if (adapter instanceof EnvironmentFactoryAdapter) {
 					EnvironmentFactoryAdapter environmentFactoryAdapter = (EnvironmentFactoryAdapter)adapter;
-					EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactoryAdapter.getEnvironmentFactory();
+					EnvironmentFactoryInternal environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
 					if (!environmentFactory.isDisposed()) {
 						return environmentFactoryAdapter;
 					}

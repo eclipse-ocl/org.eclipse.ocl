@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -47,7 +46,7 @@ public class ExtensionProperty extends AbstractProperty
 		}
 		else {
 			try {
-				element = ((EnvironmentFactoryInternalExtension)executor.getEnvironmentFactory()).getASOf(Element.class, (EObject)sourceValue);
+				element = executor.getEnvironmentFactory().getASOf(Element.class, (EObject)sourceValue);
 			} catch (ParserException e) {
 				throw new InvalidValueException(e, "Failed to access Stereotype extensions");
 			}

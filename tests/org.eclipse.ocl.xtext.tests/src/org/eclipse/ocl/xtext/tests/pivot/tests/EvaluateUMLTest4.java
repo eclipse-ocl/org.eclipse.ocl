@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -295,7 +294,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		MyOCL ocl = createOCLWithProjectMap();
 		EObject umlTrain = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zKtRgLUyEeWSV7DXeOPrdA"); //RootElement.Train1");
 		assert umlTrain != null;
-		org.eclipse.ocl.pivot.Class asTrain = ((EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory()).getASOf(org.eclipse.ocl.pivot.Class.class, umlTrain);
+		org.eclipse.ocl.pivot.Class asTrain = ocl.getEnvironmentFactory().getASOf(org.eclipse.ocl.pivot.Class.class, umlTrain);
 		assert asTrain != null;
 		//
 		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(Train1)");

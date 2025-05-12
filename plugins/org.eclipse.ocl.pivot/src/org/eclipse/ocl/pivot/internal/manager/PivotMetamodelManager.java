@@ -108,7 +108,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.CompleteElementIterable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -124,7 +123,6 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -594,17 +592,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return Orphanage.getOrphanage(asResourceSet);
 	}
 
-	/**
-	 * Return a parserContext suitable for parsing OCL expressions in the context of a pivot element.
-	 *
-	 * @deprecated not used - use AbstractEnvironmentFactory.createParserContext()
-	 */
-	@Deprecated
-	@Override
-	public @Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters) {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).createParserContext(element);
-	}
-
 	protected @NonNull PrecedenceManager createPrecedenceManager() {
 		PrecedenceManager precedenceManager = new PrecedenceManager();
 		List<@NonNull String> errors = precedenceManager.compilePrecedences(asLibraries);
@@ -775,7 +762,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Deprecated
 	@Override
 	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(pivotClass, eObject);
+		return environmentFactory.getASOf(pivotClass, eObject);
 	}
 
 	@Override
@@ -921,7 +908,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					throw new IllegalStateException("Multiple bodies for " + operation);
 				}
 				try {
-					bodyExpression = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(anExpression);
+					bodyExpression = environmentFactory.parseSpecification(anExpression);
 				} catch (ParserException e) {
 					String message = e.getMessage();
 					if (message == null) {
@@ -1043,7 +1030,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					throw new IllegalStateException("Multiple derivations for " + property);
 				}
 				try {
-					defaultExpression = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(anExpression);
+					defaultExpression = environmentFactory.parseSpecification(anExpression);
 				} catch (ParserException e) {
 					String message = e.getMessage();
 					if (message == null) {
@@ -1270,7 +1257,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
 					if (owningType != null) {
 						try {
-							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+							ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 							implementation = new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
@@ -1317,7 +1304,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
 					if (owningType != null) {
 						try {
-							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+							ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 							implementation = new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
@@ -2090,7 +2077,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			//
 			EPackage ePackage = packageRegistry.getEPackage(uriString);
 			if (ePackage != null) {
-				return ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, ePackage);
+				return environmentFactory.getASOf(Element.class, ePackage);
 			}
 			//
 			//	fragment-less URI may be an OCL Standard Library
@@ -2119,7 +2106,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				Resource eResource = ePackage.eResource();
 				EObject eObject = eResource.getEObject(fragment);
 				if (eObject != null) {
-					Element asElement = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, eObject);
+					Element asElement = environmentFactory.getASOf(Element.class, eObject);
 					if (asElement != null) {
 						return asElement;
 					}
@@ -2234,7 +2221,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Deprecated
 	@Override
 	public @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
-		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		return environmentFactory.parseSpecification(specification);
 	}
 
 	public void removeExternalResource(@NonNull External2AS external2as) {
