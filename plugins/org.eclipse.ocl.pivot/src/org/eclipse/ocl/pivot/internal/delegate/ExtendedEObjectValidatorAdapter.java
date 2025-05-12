@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory.EnvironmentFactoryExtension2;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -175,7 +174,7 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 				else if ((eObject instanceof EAnnotation) && EcorePackage.eNS_URI.equals(((EAnnotation)eObject).getSource())) {		// EMF Java-implemented constraint(s)
 					EClassifier eConstrainedClass = (EClassifier)eObject.eContainer();
 					assert eConstrainedClass != null;
-					org.eclipse.ocl.pivot.Class asConstrainedClass = ((EnvironmentFactoryExtension2)environmentFactory).getASOf(org.eclipse.ocl.pivot.Class.class, eConstrainedClass);
+					org.eclipse.ocl.pivot.Class asConstrainedClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eConstrainedClass);
 					assert asConstrainedClass != null;
 					for (String constraintKey : DelegateInstaller.getConstraintNames(eConstrainedClass)) {
 						asConstraint = NameUtil.getNameable(asConstrainedClass.getOwnedInvariants(), constraintKey);
@@ -184,7 +183,7 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 					}
 				}
 				else if (eObject instanceof EOperation) {									// EMF OCL-implemented invariant
-					Element asElement = ((EnvironmentFactoryExtension2)environmentFactory).getASOf(Element.class, eObject);
+					Element asElement = environmentFactory.getASOf(Element.class, eObject);
 					asConstraint = (Constraint)asElement;
 					assert asConstraint != null;
 					asConstraints.add(asConstraint);
@@ -193,7 +192,7 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 					EStringToStringMapEntryImpl eDetail = (EStringToStringMapEntryImpl)eObject;
 					EAnnotation eAnnotation = (EAnnotation)eObject.eContainer();
 					assert OCLCommon.isDelegateURI(eAnnotation.getSource());
-					asConstraint = ((EnvironmentFactoryExtension2)environmentFactory).getASOf(Constraint.class, eDetail);
+					asConstraint = environmentFactory.getASOf(Constraint.class, eDetail);
 					assert asConstraint != null;
 					asConstraints.add(asConstraint);			// XXX name clashes
 				}
