@@ -26,30 +26,12 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 public interface CSResource extends Resource
 {
 	/**
-	 * @since 1.1
-	 */
-	@Deprecated /* @deprecated obsolete - folded into super interface */
-	public interface CSResourceExtension extends CSResource {}
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated obsolete - folded into super interface */
-	public interface CSResourceExtension2 extends CSResourceExtension {}
-
-	/**
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
 	 * required source visibility for debugging.
 	 *
 	 * @since 7.0
 	 */
 	default void dispose() {}
-
-	/**
-	 * Return the Abstract Syntax representation of this Concrete Syntax resource.
-	 */
-	@Deprecated /* @deprecated use getCS2AS(getEnvironmentFactory()).getASResource() since EnvironmentFactory usually known */
-	@NonNull ASResource getASResource();
 
 	/**
 	 * Return the ASResourceFactory corresponding to this CS Resource.
@@ -76,14 +58,6 @@ public interface CSResource extends Resource
 	@NonNull ParserContext getParserContext();
 
 	/**
-	 * Return the map of known projects.
-	 */
-	@Deprecated /* @deprecated use getEnvironmentFactory().getProjectManager() */
-	default @NonNull ProjectManager getProjectManager() {
-		return getEnvironmentFactory().getProjectManager();
-	}
-
-	/**
 	 * Return true if this CSResource is derived from an ASResource.
 	 * @since 7.0
 	 */
@@ -108,12 +82,6 @@ public interface CSResource extends Resource
 
 	@Deprecated /* @deprecated only for BaseCSResource */
 	void setParserContext(@Nullable ParserContext parserContext);
-
-	/**
-	 * Set the map of known projects.
-	 */
-	@Deprecated /* @deprecated ProjectManager is inferred from implicit/explicit setParserContext() */
-	void setProjectManager(@Nullable ProjectManager projectManager);
 
 	@Deprecated /* @deprecated only for BaseCSResource */
 	void update(int index, int length, String newString);
