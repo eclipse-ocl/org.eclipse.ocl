@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.context.Base2ASConversion;
-import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.resource.CSResource;
 
 /**
@@ -31,10 +30,8 @@ import org.eclipse.ocl.pivot.resource.CSResource;
  * install the derived context into the ExpressionInOCL.
  *
  * The derived ExtendedParserContext provides a richer API that exploits knwoledge of the CS classes.
- *
- * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface ParserContext // extends Adapter
+public interface ParserContext
 {
 	/**
 	 * Create a Concrete Syntax resource containing the parsed expression.
@@ -47,12 +44,6 @@ public interface ParserContext // extends Adapter
 	 * @throws ParserException
 	 */
 	@NonNull CSResource createBaseResource(@NonNull String expression) throws IOException, ParserException;
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated use Attribution.REGISTRY.getAttribution(eObject) */
-	@NonNull Attribution getAttribution(@NonNull EObject eObject);
 
 	/**
 	 * Return the type of the self variable.

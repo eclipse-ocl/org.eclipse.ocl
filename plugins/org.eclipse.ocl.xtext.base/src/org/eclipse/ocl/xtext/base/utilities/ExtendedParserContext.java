@@ -25,8 +25,6 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
  * a corresponding Abstract Syntax ExpressionInOCL. initialize is invoked during the parse to
  * install the derived context into the ExpressionInOCL.
  *
- * @noimplement This interface is not intended to be implemented by clients.
- *
  * FIXME Currently only implemented for UMLXParserContext.
  */
 public interface ExtendedParserContext extends ParserContext

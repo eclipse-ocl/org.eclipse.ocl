@@ -27,6 +27,9 @@ public interface CompleteClassInternal extends CompleteClass
 	@NonNull CompleteInheritanceImpl getCompleteInheritance();
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	/**
+	 * @since 7.0
+	 */
 	@NonNull MetamodelManager getMetamodelManager();
 	@Override
 	CompletePackageInternal getOwningCompletePackage();

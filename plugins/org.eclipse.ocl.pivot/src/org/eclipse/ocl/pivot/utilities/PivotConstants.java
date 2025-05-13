@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 
 /**
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface PivotConstants
 {

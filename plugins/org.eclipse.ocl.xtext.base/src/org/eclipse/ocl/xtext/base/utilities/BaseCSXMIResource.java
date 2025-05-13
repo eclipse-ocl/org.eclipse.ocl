@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -265,11 +264,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	@Override
-	public @NonNull ParserContext getParserContext() {		// CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {
 		super.handleLoadResponse(response, options);
 		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(getResourceSet());
@@ -282,29 +276,4 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	 * to be created satisfactorily.
 	 */
 	protected void initializeResourceFactory(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {}
-
-	@Override
-	public boolean isDerived() {												// CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setDerived(boolean isDerived) {									// CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setParserContext(@Nullable ParserContext parserContext) {		// CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void update(int index, int length, String newString) {				// CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory) {
-		throw new UnsupportedOperationException();
-	}
 }
