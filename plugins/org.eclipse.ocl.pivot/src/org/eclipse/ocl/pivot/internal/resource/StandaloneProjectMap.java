@@ -62,7 +62,6 @@ import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.AbstractProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor.IProjectDescriptorExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -2120,7 +2119,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		}
 	}
 
-	public static class ProjectDescriptor implements IProjectDescriptorExtension
+	public static class ProjectDescriptor implements IProjectDescriptor
 	{
 		/**
 		 * The overall ProjectMap

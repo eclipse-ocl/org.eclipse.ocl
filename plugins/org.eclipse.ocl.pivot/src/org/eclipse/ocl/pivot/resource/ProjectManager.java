@@ -173,17 +173,6 @@ public interface ProjectManager extends Adapter
 	public static interface IProjectDescriptor
 	{
 		/**
-		 * @since 1.1
-		 */
-		public static interface IProjectDescriptorExtension extends IProjectDescriptor
-		{
-			/**
-			 * Return all the package descriptors for this project.
-			 */
-			@Nullable Iterable<@NonNull IPackageDescriptor> getPackageDescriptors();
-		}
-
-		/**
 		 * Call back to add a packageDescriptor to the project.
 		 */
 		void addPackageDescriptor(@NonNull IPackageDescriptor packageDescriptor);
@@ -223,6 +212,12 @@ public interface ProjectManager extends Adapter
 		 * Return project name.
 		 */
 		@NonNull String getName();
+
+		/**
+		 * Return all the package descriptors for this project.
+		 * @since 7.0
+		 */
+		@Nullable Iterable<@NonNull IPackageDescriptor> getPackageDescriptors();
 
 		/**
 		 * Return the location of this project as a platform:/plugin URI.
