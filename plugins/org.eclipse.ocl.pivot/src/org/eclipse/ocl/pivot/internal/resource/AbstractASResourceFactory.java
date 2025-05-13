@@ -56,7 +56,7 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil.IdResourceEntityHandler;
  * AbstractASResourceFactory provides the abstract functionality for creating and maintaining
  * Pivot Abstract Syntax Resources via the standard EMF contentType/fileExtension Resource creation APIs.
  */
-public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory, ASResourceFactory.ASResourceFactoryExtension2
+public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory
 {
 	/**
 	 * @since 1.10
@@ -262,7 +262,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	@Override
 	public @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
-		return ((EnvironmentFactoryInternal) environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, selfTypeValue);
+		return environmentFactory.createTemplateParameterSubstitutionVisitor(selfType, selfTypeValue);
 	}
 
 	@Override

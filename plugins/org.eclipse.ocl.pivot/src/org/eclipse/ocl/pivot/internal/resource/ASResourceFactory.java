@@ -50,22 +50,6 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryContribution
 {
 	/**
-	 * @since 1.4
-	 */
-	@Deprecated /* @deprecated obsolete - folded into super interface */
-	interface ASResourceFactoryExtension extends ASResourceFactory
-	{
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@Deprecated /* @deprecated obsolete - folded into super interface */
-	interface ASResourceFactoryExtension2 extends ASResourceFactoryExtension
-	{
-	}
-
-	/**
 	 * Configure the MetamodelManager's external ResourceSet. Implementations may install
 	 * any required extension or content to factory mappings in the resource factory registry.
 	 */
