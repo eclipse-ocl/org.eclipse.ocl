@@ -20,8 +20,9 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 
 /**
- * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource.
- * The derived BaseCSResource provides a richer interface with Xtext parsing dependencies.
+ * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource
+ * suitable for access from AS-only contexts. The derived BaseCSResource provides a richer interface
+ * with Xtext parsing dependencies.
  */
 public interface CSResource extends Resource
 {
@@ -44,7 +45,7 @@ public interface CSResource extends Resource
 	 * @since 7.0
 	 */
 	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
-		throw new UnsupportedOperationException();
+		throw new IllegalStateException("BaseCSResource expected.");
 	}
 
 	/**
@@ -54,37 +55,15 @@ public interface CSResource extends Resource
 		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
 	}
 
-	@Deprecated /* @deprecated only for BaseCSResource */
-	@NonNull ParserContext getParserContext();
-
 	/**
-	 * Return true if this CSResource is derived from an ASResource.
-	 * @since 7.0
+	 * Define the ParserContext associated with this BaseCSResource.
+	 * (This CS-functionality has to be in the AS-plugin to break a dependency loop.)
 	 */
-	@Deprecated /* @deprecated only for BaseCSResource */
-	default boolean isDerived() {
-		return false;
+	default void setParserContext(@Nullable ParserContext parserContext) {
+		throw new IllegalStateException("BaseCSResource expected.");
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	default ASResource reloadIn(@NonNull EnvironmentFactory environmentFactory) {			// XXX
-		throw new UnsupportedOperationException();
+	default void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory) {
+		throw new IllegalStateException("BaseCSResource expected.");
 	}
-
-	/**
-	 * Set whether this CSResource is derived from an ASResource.
-	 * @since 7.0
-	 */
-	@Deprecated /* @deprecated only for BaseCSResource */
-	default void setDerived(boolean isDerived) {}
-
-	@Deprecated /* @deprecated only for BaseCSResource */
-	void setParserContext(@Nullable ParserContext parserContext);
-
-	@Deprecated /* @deprecated only for BaseCSResource */
-	void update(int index, int length, String newString);
-
-	void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory);
 }

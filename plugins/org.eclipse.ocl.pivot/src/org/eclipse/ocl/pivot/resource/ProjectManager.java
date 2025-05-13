@@ -32,7 +32,6 @@ import org.eclipse.jdt.annotation.Nullable;
  *		<li>{@link ProjectManager#CLASS_PATH} - A shared Heavyweight including classpath analysis</li>
  *		<li>{@link BasicProjectManager#createDefaultProjectManager()} - Convenient method to create local heavyweight local managers</li>
  * </ul>
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ProjectManager extends Adapter
 {

@@ -544,14 +544,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	@Deprecated /* @deprecated not used - Pass known EnvironmentFactory to avoid generally redundant deduction */
-	/*final*/ public @NonNull CS2AS getCS2AS() {			// deprecated and assert trapped
-		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".getCS2AS()");
-		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
-		return getCS2AS(environmentFactory);
-	}
-
-	@Override
 	public @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
 		EnvironmentFactoryInternal environmentFactoryInternal = (EnvironmentFactoryInternal)environmentFactory;
 		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactoryInternal);
@@ -895,12 +887,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	@Override
 	public @NonNull String toString() {
 		return NameUtil.debugSimpleName(this) + " '" + uri + "'";
-	}
-
-	@Override
-	public final void update(@NonNull IDiagnosticConsumer diagnosticConsumer) {
-		assert PivotUtilInternal.debugDeprecation(getClass().getName() + ".update");
-		update(getEnvironmentFactory(), diagnosticConsumer);
 	}
 
 	@Override

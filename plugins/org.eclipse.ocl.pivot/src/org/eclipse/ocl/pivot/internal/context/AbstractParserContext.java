@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -33,7 +32,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -84,14 +82,6 @@ public abstract class AbstractParserContext implements ParserContext
 		}
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated dynamic Attribution entries no longer required. */
-	protected void addAttribution(/*@NonNull*/ EClass eClass, @NonNull Attribution attribution) {
-		assert PivotUtilInternal.debugDeprecation("AbstractParserContext.addAttribution");
-	}
-
 	@Override
 	public @NonNull CSResource createBaseResource(@Nullable String expression) throws IOException, ParserException {
 		InputStream inputStream = expression != null ? new URIConverter.ReadableInputStream(expression, "UTF-8") : null;
@@ -124,14 +114,6 @@ public abstract class AbstractParserContext implements ParserContext
 				inputStream.close();
 			}
 		}
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override @Deprecated /* @deprecated use Attribution.REGISTRY.getAttribution(eObject) */
-	public @NonNull Attribution getAttribution(@NonNull EObject eObject) {
-		return Attribution.REGISTRY.getAttribution(eObject);
 	}
 
 	@Override
