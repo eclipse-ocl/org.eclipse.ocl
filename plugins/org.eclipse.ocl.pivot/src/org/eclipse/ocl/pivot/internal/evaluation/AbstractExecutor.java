@@ -97,6 +97,9 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
+	/**
+	 * @since 7.0
+	 */
 	protected AbstractExecutor(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;

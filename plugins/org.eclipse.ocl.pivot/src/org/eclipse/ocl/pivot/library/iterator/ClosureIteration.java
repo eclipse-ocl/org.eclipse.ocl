@@ -80,7 +80,6 @@ public class ClosureIteration extends AbstractIteration
 	 */
 	@Override
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		IterationManager.IterationManagerExtension2 iterationManager2 = (IterationManager.IterationManagerExtension2)iterationManager;
 		// The parent is the iterator
 		Object value = iterationManager.get();
 		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
@@ -100,12 +99,12 @@ public class ClosureIteration extends AbstractIteration
 			collectionValue = (CollectionValue) bodyVal;
 		}
 		else {
-			Executor executor = iterationManager2.getExecutor();
+			Executor executor = iterationManager.getExecutor();
 			Type elementType = executor.getStaticTypeOfValue(null, bodyVal);
 			CollectionTypeId sequenceId = TypeId.SEQUENCE.getSpecializedId(elementType.getTypeId());
 			collectionValue = executor.getIdResolver().createSequenceOfEach(sequenceId, bodyVal);
 		}
-		evaluateIteration(iterationManager2.createNestedIterationManager(collectionValue));
+		evaluateIteration(iterationManager.createNestedIterationManager(collectionValue));
 		return CARRY_ON;
 	}
 }
