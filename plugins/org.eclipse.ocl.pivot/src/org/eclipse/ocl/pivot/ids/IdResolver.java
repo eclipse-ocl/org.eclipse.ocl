@@ -39,21 +39,16 @@ import org.eclipse.ocl.pivot.values.SetValue;
 /**
  * IdResolver supports discovery/creation of rich Pivot-based objects from limited
  * descriptors such as ElementIds, or from Ecore objects or from Java objects.
+ * @since 7.0
  */
 public interface IdResolver extends IdVisitor<Element>
 {
-	/**
-	 * @since 1.1
-	 */
-	public interface IdResolverExtension extends IdResolver
-	{
-		org.eclipse.ocl.pivot.@Nullable Package basicGetPackage(@NonNull PackageId packageId);
-		@NonNull <T> EList<T> ecoreValueOfAll(@Nullable Class<T> instanceClass, @NonNull Iterable<? extends Object> values);
-		@Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> getModelClassesOf(@NonNull Object value);
-		int oclHashCode(@Nullable Object anObject);
-	}
-
 	void addRoot(@NonNull EObject eObject);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Package basicGetPackage(@NonNull PackageId packageId);
 
 	@Nullable Object boxedValueOf(@Nullable Object unboxedValue);
 
@@ -70,9 +65,6 @@ public interface IdResolver extends IdVisitor<Element>
 	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<?> unboxedValues);
 
 	@Nullable Object createInstance(@NonNull TypeId typeId, @NonNull String stringValue);
-
-	@Deprecated
-	@NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<?, ?> mapEntries);
 
 	/**
 	 * @since 1.18
@@ -101,16 +93,14 @@ public interface IdResolver extends IdVisitor<Element>
 	 * An enumeration literal is converted to an Enumerator.
 	 * <p>
 	 * Collections are converted to EcoreEList.UnmodifiableEList
+	 * @since 7.0
 	 */
 	@Nullable Object ecoreValueOf(@Nullable Class<?> instanceClass, @Nullable Object value);
 
-	/** @deprecated no longer used */
-	@Deprecated
-	@NonNull EList<Object> ecoreValuesOfAll(@Nullable Class<?> instanceClass, @NonNull Iterable<Object> values);
-
-	/** @deprecated no longer used */
-	@Deprecated
-	@NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object @NonNull ... values);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull <T> EList<T> ecoreValueOfAll(@Nullable Class<T> instanceClass, @NonNull Iterable<? extends Object> values);
 
 	org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypeId typeId, @Nullable Object context);
 
@@ -132,7 +122,15 @@ public interface IdResolver extends IdVisitor<Element>
 
 	org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass);
 
+	/**
+	 * @since 7.0
+	 */
 	@NonNull Type getMapType(@NonNull MapTypeId typeId);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> getModelClassesOf(@NonNull Object value);
 
 	@NonNull Operation getOperation(@NonNull OperationId operationId);
 
@@ -164,10 +162,21 @@ public interface IdResolver extends IdVisitor<Element>
 	 */
 	@NonNull Type getType(@NonNull TypeId typeId);
 
+	/**
+	 * @since 7.0
+	 */
 	@Deprecated /* @deprecated omit redundant context argument */
 	@NonNull Type/*Class*/ getType(@NonNull TypeId typeId, @Nullable Object/*Type*/ context);
 
+	/**
+	 * @since 7.0
+	 */
 	boolean oclEquals(@Nullable Object thisValue, @Nullable Object thatValue);
+
+	/**
+	 * @since 7.0
+	 */
+	int oclHashCode(@Nullable Object anObject);
 
 	@Nullable Object unboxedValueOf(@Nullable Object boxedValue);
 

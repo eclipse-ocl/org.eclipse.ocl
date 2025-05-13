@@ -41,7 +41,7 @@ public class OclElementOclModelTypesOperation extends AbstractUnaryOperation
 		if (sourceVal instanceof InvalidValueException) {
 			throw (InvalidValueException)sourceVal;
 		}
-		IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)executor.getIdResolver();
+		IdResolver idResolver = executor.getIdResolver();
 		Type sourceType = idResolver.getDynamicTypeOf(sourceVal);
 		if (sourceVal == null) {
 			throw new InvalidValueException(PivotMessages.NullNavigation, "source value", "oclModelTypes");

@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -45,7 +44,7 @@ public class OclElementOclModelTypeOperation extends AbstractUntypedUnaryOperati
 		if (sourceVal == null) {
 			throw new InvalidValueException(PivotMessages.NullNavigation, "source value", "oclModelType");
 		}
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> modelClasses = ((IdResolver.IdResolverExtension)executor.getIdResolver()).getModelClassesOf(sourceVal);
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> modelClasses = executor.getIdResolver().getModelClassesOf(sourceVal);
 		if (modelClasses == null) {
 			throw new InvalidValueException(PivotMessages.IncompatibleModelType, sourceType);
 		}

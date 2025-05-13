@@ -73,7 +73,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 			js.appendReferenceTo(nonEcoreValue);
 			js.append(" == null ? null : ");
 		}
-		js.appendAtomicReferenceTo(IdResolver.IdResolverExtension.class, localContext.getIdResolverVariable(cgEcoreExp));
+		js.appendAtomicReferenceTo(IdResolver.class, localContext.getIdResolverVariable(cgEcoreExp));
 		js.append(".ecoreValueOfAll(");
 		//		js.appendIdReference(typeId);
 		js.appendClassReference(null, elementEcoreDescriptor);
