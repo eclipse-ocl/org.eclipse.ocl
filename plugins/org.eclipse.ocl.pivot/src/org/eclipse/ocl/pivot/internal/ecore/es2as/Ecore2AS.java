@@ -80,7 +80,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
-import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor.IProjectDescriptorExtension;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -886,12 +885,12 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (uri.isPlatformPlugin() && Objects.equals(ePackage.getNsURI(), String.valueOf(ePackage.eResource().getURI())) && (uri.segmentCount() >= 1)) {
 			@NonNull String projectName = uri.segment(1);
 			IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor(projectName);
-			if (projectDescriptor instanceof IProjectDescriptorExtension) {
+			if (projectDescriptor != null) {
 				Collection<IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
 				if (resourceDescriptors != null) {
 					for (IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 						if (Objects.equals(uri.trimFragment(), resourceDescriptor.getPlatformPluginURI())) {
-							Iterable<@NonNull IPackageDescriptor> packageDescriptors = ((IProjectDescriptorExtension)projectDescriptor).getPackageDescriptors();
+							Iterable<@NonNull IPackageDescriptor> packageDescriptors = projectDescriptor.getPackageDescriptors();
 							if (packageDescriptors != null) {
 								for (IPackageDescriptor packageDescriptor : packageDescriptors) {
 									uri = packageDescriptor.getNsURI();
