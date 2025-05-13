@@ -10,49 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
-import java.util.List;
-
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 public class OCLInternal extends OCL
 {
-	public static @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
-		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
-		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
-		if (adapter == null) {
-			ProjectManager projectMap = null;
-			ResourceSet resourceSet = null;
-			if (notifier instanceof ResourceSet) {
-				resourceSet = (ResourceSet) notifier;
-				projectMap = BasicProjectManager.findAdapter(resourceSet);
-			}
-			if (projectMap == null) {
-				projectMap = BasicProjectManager.createDefaultProjectManager();
-			}
-			EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectMap, resourceSet);
-			adapter = EnvironmentFactoryAdapter.find(notifier);
-			if (adapter == null) {
-				adapter = new EnvironmentFactoryAdapter(environmentFactory, notifier);
-				eAdapters.add(adapter);
-			}
-			assert adapter != null;
-			assert adapter.getEnvironmentFactory() == environmentFactory;
-		}
-		return adapter;
-	}
-
 	public static @NonNull OCLInternal newInstance() {
 		return newInstance((ResourceSet)null);
 	}

@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -152,10 +151,6 @@ public class TestOCL extends OCLInternal
 			}
 		} catch (IOException e) {
 			TestCase.fail(e.getMessage());
-		} finally {
-			if (resource != null) {
-				EnvironmentFactoryAdapter.disposeAll(resource);
-			}
 		}
 	}
 
@@ -187,10 +182,6 @@ public class TestOCL extends OCLInternal
 			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);
 		} catch (IOException e) {
 			TestCase.fail(e.getMessage());
-		} finally {
-			if (csResource != null) {
-				EnvironmentFactoryAdapter.disposeAll(csResource);
-			}
 		}
 	}
 
@@ -664,10 +655,6 @@ public class TestOCL extends OCLInternal
 			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);
 		} catch (IOException e) {
 			TestCase.fail(e.getMessage());
-		} finally {
-			if (csResource != null) {
-				EnvironmentFactoryAdapter.disposeAll(csResource);
-			}
 		}
 	}
 
@@ -709,10 +696,6 @@ public class TestOCL extends OCLInternal
 			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);
 		} catch (Exception e) {
 			TestCase.fail(e.getMessage());
-		} finally {
-			if (csResource != null) {
-				EnvironmentFactoryAdapter.disposeAll(csResource);
-			}
 		}
 	}
 

@@ -152,7 +152,6 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 	protected @Nullable Resource exportEmbeddedOCL(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory,
 			@NonNull ASResource asResource, @NonNull URI exportURI) {
 		ResourceSetImpl csResourceSet = new ResourceSetImpl();
-		environmentFactory.adapt(csResourceSet);
 		BaseCSResource oclResource = (BaseCSResource) csResourceSet.createResource(exportURI, CompleteOCLCSPackage.eCONTENT_TYPE);
 		if (oclResource == null) {
 			MessageDialog.openError(shell, BaseUIMessages.ExportError_Title, "Failed to create:\n" + exportURI);

@@ -85,7 +85,6 @@ public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 		ASResource oclResource = CompleteOCLSplitter.separate(environmentFactory, asResource);
 		URI xtextURI = oclURI != null ? URI.createPlatformResourceURI(oclURI, true) : uri.trimFileExtension().appendFileExtension("ocl");
 		ResourceSetImpl csResourceSet = new ResourceSetImpl();
-		environmentFactory.adapt(csResourceSet);
 		BaseCSResource xtextResource = (BaseCSResource) csResourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		if (oclResource != null) {
 			xtextResource.updateFrom(oclResource, environmentFactory);

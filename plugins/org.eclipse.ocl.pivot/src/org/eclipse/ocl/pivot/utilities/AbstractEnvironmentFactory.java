@@ -21,7 +21,6 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -87,7 +86,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -258,46 +256,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			ThreadLocalExecutor.resetEnvironmentFactory();
 		}
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
-	}
-
-	/**
-	 * @deprecated The addition of an EnvironmentFactoryAdapter to a non-ResourceSet is inefficient.
-	 * Addition to a ResopurceSet is better but now redundant.
-	 */
-	@Deprecated
-	@Override
-	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
-		assert PivotUtilInternal.debugDeprecation("AbstractEnvironmentFactory.adapt");
-		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
-		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
-		if (adapter != null) {
-			assert adapter.getEnvironmentFactory() == this;
-		}
-		else {
-			adapter = new EnvironmentFactoryAdapter(this, notifier);
-			eAdapters.add(adapter);
-		}
-		return adapter;
-	}
-
-	/**
-	 * @deprecated The addition of an EnvironmentFactoryAdapter to a ResourceSet is retained for semantic
-	 * compatibility. However the tests work fine if this method is changed to a stub.
-	 *
-	 * @since 7.0
-	 */
-	@Deprecated
-	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull ResourceSet resourceSet) {
-		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resourceSet.eAdapters());
-		EnvironmentFactoryAdapter adapter = ClassUtil.getAdapter(EnvironmentFactoryAdapter.class, eAdapters);
-		if (adapter == null) {
-			adapter = new EnvironmentFactoryAdapter(this, resourceSet);
-			eAdapters.add(adapter);
-		}
-		else {
-			assert adapter.getEnvironmentFactory() == this : "ResourceSet already has an EnvironmentFactoryAdapter for a diffent EnvironmentFactory.";
-		}
-		return adapter;
 	}
 
 	@Override
