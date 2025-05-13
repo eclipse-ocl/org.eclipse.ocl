@@ -21,6 +21,9 @@ public class BasicOCLExecutor extends AbstractExecutor implements OCLExecutor
 {
 	protected final @NonNull ModelManager modelManager;
 
+	/**
+	 * @since 7.0
+	 */
 	public BasicOCLExecutor(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ModelManager modelManager) {
 		super(environmentFactory);
 		this.modelManager = modelManager;
@@ -28,9 +31,7 @@ public class BasicOCLExecutor extends AbstractExecutor implements OCLExecutor
 
 	@Override
 	public void dispose() {
-		if (modelManager instanceof ModelManager.ModelManagerExtension) {
-			((ModelManager.ModelManagerExtension)modelManager).dispose();
-		}
+		modelManager.dispose();
 		super.dispose();
 	}
 
