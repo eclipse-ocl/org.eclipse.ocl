@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -216,11 +215,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	@Override
-	public @NonNull ASResource getASResource() {				// deprecated CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public @NonNull ASResourceFactory getASResourceFactory() {
 		return asResourceFactory;
 	}
@@ -301,11 +295,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 
 	@Override
 	public void setParserContext(@Nullable ParserContext parserContext) {		// CSResource method demoted to BaseCSResource
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setProjectManager(@Nullable ProjectManager projectManager) {	// Obsolete CSResource method
 		throw new UnsupportedOperationException();
 	}
 
