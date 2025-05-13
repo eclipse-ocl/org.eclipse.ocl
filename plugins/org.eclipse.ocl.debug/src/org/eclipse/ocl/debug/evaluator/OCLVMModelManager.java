@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.debug.evaluator;
 
-import java.util.Set;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -50,7 +48,7 @@ public class OCLVMModelManager extends AbstractModelManager
 	}
 
 	@Override
-	public @NonNull Set<@NonNull EObject> get(org.eclipse.ocl.pivot.@NonNull Class type) {
+	public @NonNull Iterable<@NonNull EObject> getInstances(org.eclipse.ocl.pivot.@NonNull Class type) {
 		throw new UnsupportedOperationException();
 	}
 

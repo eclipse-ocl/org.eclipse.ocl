@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
@@ -179,7 +180,7 @@ public class EcoreExecutorManager extends ExecutorManager
 						modelManager2 = new LazyEcoreModelManager(allRootContents, allInstancesClassesList, implicitOppositesList);
 					}
 					else {
-						modelManager2 = ModelManager.NULL;
+						modelManager2 = NullModelManager.INSTANCE;
 					}
 					modelManager = modelManager2;
 				}

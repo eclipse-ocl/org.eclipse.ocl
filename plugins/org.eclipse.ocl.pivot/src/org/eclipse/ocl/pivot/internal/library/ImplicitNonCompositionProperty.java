@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.evaluation.EcoreModelManager;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
-import org.eclipse.ocl.pivot.evaluation.ModelManager.EcoreModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -72,8 +72,7 @@ public class ImplicitNonCompositionProperty extends AbstractProperty
 		}
 		if (results == null) {	// Never happens always an EcoreModelManager
 			results = new ArrayList<>();
-			ModelManager.ModelManagerExtension2 modelManager2 = (ModelManager.ModelManagerExtension2)modelManager;
-			results = modelManager2.getOpposite(oppositeProperty, sourceValue);
+		//	results = modelManager.getOpposite(oppositeProperty, sourceValue);
 		}
 		if (returnTypeId instanceof CollectionTypeId) { // property.isIsMany()
 			return idResolver.createCollectionOfAll(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED,

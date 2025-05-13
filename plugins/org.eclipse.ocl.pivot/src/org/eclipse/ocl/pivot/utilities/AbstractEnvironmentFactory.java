@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -587,7 +588,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	protected @NonNull ModelManager createModelManager() {
-		return ModelManager.NULL;
+		return NullModelManager.INSTANCE;
 	}
 
 	/**
@@ -601,7 +602,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (object instanceof EObject) {
 			return new LazyEcoreModelManager((EObject)object);
 		}
-		return ModelManager.NULL;
+		return NullModelManager.INSTANCE;
 	}
 
 	@Override
