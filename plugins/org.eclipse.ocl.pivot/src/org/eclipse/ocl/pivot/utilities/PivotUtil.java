@@ -117,18 +117,15 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -2190,17 +2187,6 @@ public class PivotUtil
 	}
 
 	/**
-	 * Rewrite asTree and all its descendants to replace all "?." and "?->" navigations by their safe counterparts.
-	 * @since 1.3
-	 * @deprecated use PivotHelper
-	 */
-	@Deprecated	// All callers have been a local version for QVTd M3
-	public static void rewriteSafeNavigations(@NonNull EnvironmentFactory environmentFactory, @NonNull Element asTree) {
-		PivotHelper helper = new PivotHelper(environmentFactory);
-		helper.rewriteSafeNavigations(asTree);
-	}
-
-	/**
 	 * Define oclExpression as the bodyExpression of an expressionInOCL, and if non-null
 	 * also define stringExpression as the OCL-languaged body.
 	 */
@@ -2209,30 +2195,5 @@ public class PivotUtil
 		expressionInOCL.setOwnedBody(oclExpression);
 		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
 		expressionInOCL.setIsRequired((oclExpression != null) && oclExpression.isIsRequired());;
-	}
-
-	/**
-	 * Configure resource to support parsing in the context of an eObject. Throws a ParserException
-	 * if a pivot element cannot be identified for eObject.eClass(). Return false if a pivot element
-	 * can be identified, but it is not one that supports constraint parsing.
-	 *
-	 * @throws ParserException if eObject cannot be converted to a Pivot element
-	 */
-	@Deprecated /* @deprecated not used - try CSResource.setParserContext */
-	public static boolean setParserContext(@NonNull CSResource csResource, @NonNull EObject eObject, Object... unusedParameters) throws ParserException {
-		EnvironmentFactoryAdapter adapter = OCLInternal.adapt(csResource);
-		EnvironmentFactoryInternal environmentFactory = adapter.getEnvironmentFactory();
-		Element pivotElement = environmentFactory.getTechnology().getParseableElement(environmentFactory, eObject);
-		if (pivotElement == null) {
-			return false;
-		}
-		ParserContext parserContext = environmentFactory.createParserContext(pivotElement);
-	//	if (parserContext == null) {
-	//		return false;
-	//	}
-	//	else {
-			csResource.setParserContext(parserContext);
-			return true;
-	//	}
 	}
 }

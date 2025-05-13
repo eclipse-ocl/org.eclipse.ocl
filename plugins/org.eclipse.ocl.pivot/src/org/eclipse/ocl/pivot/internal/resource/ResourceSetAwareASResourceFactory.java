@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
@@ -84,11 +83,6 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 	}
 
 	protected @NonNull ResourceSet getCSResourceSet(@NonNull ResourceSet resourceSet) {
-		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-		if (environmentFactoryAdapter != null) {
-			EnvironmentFactory environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
-			return environmentFactory.getResourceSet();
-		}
 		MetamodelManager pivotMetamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
 		if (pivotMetamodelManager != null) {
 			return pivotMetamodelManager.getEnvironmentFactory().getResourceSet();

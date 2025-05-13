@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidator;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -683,12 +682,6 @@ public class AbstractPivotTestCase extends TestCase
 		StandaloneProjectMap projectMap = StandaloneProjectMap.findAdapter(resourceSet);
 		if (projectMap != null) {
 			projectMap.unload(resourceSet);
-		}
-		EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-		if (environmentFactoryAdapter != null) {
-			EnvironmentFactoryInternal environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
-			ProjectManager projectManager = environmentFactory.getProjectManager();
-			projectManager.unload(resourceSet);
 		}
 		EList<@NonNull Resource> resources = resourceSet.getResources();
 		for (int i = 0; i < resources.size(); i++) {		// Avoid rare CME - see Bug 582925

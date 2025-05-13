@@ -75,7 +75,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -131,17 +130,7 @@ public class PivotUtilInternal extends PivotUtil
 	 */
 	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Object object) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory != null) {
-			return environmentFactory;
-		}
-		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(object);
-		if (resourceSet != null) {		// null if working with installed resources
-			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-			if (environmentFactoryAdapter != null) {
-				return environmentFactoryAdapter.getEnvironmentFactory();
-			}
-		}
-		return null;
+		return environmentFactory;
 	}
 
 	/**
@@ -282,12 +271,6 @@ public class PivotUtilInternal extends PivotUtil
 		ProjectManager projectManager = null;
 		ResourceSet resourceSet = PivotUtil.basicGetResourceSet(notifier);
 		if (resourceSet != null) {		// null if working with installed resources
-			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(resourceSet);
-			if (environmentFactoryAdapter != null) {
-				environmentFactory = environmentFactoryAdapter.getEnvironmentFactory();
-				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
-				return environmentFactory;
-			}
 			projectManager = ProjectMap.findAdapter(resourceSet);
 		}
 		if (projectManager == null) {

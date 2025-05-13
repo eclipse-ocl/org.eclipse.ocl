@@ -25,8 +25,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
@@ -120,14 +118,13 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 		}
 
 		@Override
-		protected @Nullable EnvironmentFactoryAdapter createEditor(Composite s1) {
-			EnvironmentFactoryInternal testEnvironmentFactory = new TestEnvironmentFactory();
-		//	ThreadLocalExecutor.attachEnvironmentFactory(testEnvironmentFactory);
-			return super.createEditor(s1);
+		protected void createEditor(Composite s1) {
+			new TestEnvironmentFactory();	// has thread assigning side effect
+			super.createEditor(s1);
 		}
 
 		@Override
-		public boolean evaluate(String expression) {
+		public boolean evaluate(String expression) {		// Make public
 			return super.evaluate(expression);
 		}
 
@@ -149,7 +146,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 		}
 
 		@Override
-		public void refreshSelection(Object selected) {
+		public void refreshSelection(Object selected) {		// Make public
 			super.refreshSelection(selected);
 		}
 
