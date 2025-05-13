@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNull OperationId> implements OperationId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, ParametersId>
+public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNull OperationId> implements OperationId
 {
 	private static class OperationIdValue extends AbstractKeyAndValue<@NonNull OperationId>
 	{
@@ -73,12 +73,6 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 	protected final @NonNull TypeId parentId;
 	protected final @NonNull ParametersId parametersId;
 
-	@Deprecated /* @deprecated use simpler constructor */
-	public GeneralizedOperationIdImpl(@NonNull Integer hashCode, @NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-		this(parentId, templateParameters, name, parametersId);
-		assert hashCode == this.hashCode;
-	}
-
 	private GeneralizedOperationIdImpl(@NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
 		super(computeHashCode(parentId, templateParameters, name, parametersId), templateParameters, name);
 		this.parentId = parentId;
@@ -124,8 +118,7 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 		return parentId;
 	}
 
-	@Override
-	public boolean matches(@NonNull Integer thoseTemplateParameters, @NonNull String thatName, @NonNull ParametersId thatParametersId) {
+	private boolean matches(@NonNull Integer thoseTemplateParameters, @NonNull String thatName, @NonNull ParametersId thatParametersId) {
 		if (this.parametersId != thatParametersId) {
 			return false;
 		}

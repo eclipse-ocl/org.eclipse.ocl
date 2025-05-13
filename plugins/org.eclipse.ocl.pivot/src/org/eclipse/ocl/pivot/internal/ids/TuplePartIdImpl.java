@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, TypeId>
+public class TuplePartIdImpl implements TuplePartId
 {
 	private static class TuplePartIdValue extends AbstractKeyAndValue<@NonNull TuplePartId>
 	{
@@ -71,11 +71,6 @@ public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakRefe
 	protected final int index;
 	protected final @NonNull String name;
 	protected final @NonNull TypeId typeId;
-
-	@Deprecated /* @deprecated use simpler constructor */
-	public TuplePartIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, int index, @NonNull String name, @NonNull TypeId typeId) {
-		this(idManager, index, name, typeId);
-	}
 
 	/**
 	 * @since 1.18
@@ -135,20 +130,6 @@ public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakRefe
 	@Override
 	public int hashCode() {
 		return hashCode;
-	}
-
-	@Override
-	public boolean matches(@NonNull Integer thatIndex, @NonNull String thatName, @NonNull TypeId thatTypeid) {
-		if (this.typeId != thatTypeid) {
-			return false;
-		}
-		if (this.index != thatIndex) {
-			return false;
-		}
-		if (!this.name.equals(thatName)) {
-			return false;
-		}
-		return true;
 	}
 
 	@Override
