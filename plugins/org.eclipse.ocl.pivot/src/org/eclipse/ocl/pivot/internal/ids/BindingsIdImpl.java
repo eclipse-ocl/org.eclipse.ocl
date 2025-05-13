@@ -23,29 +23,8 @@ import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 /**
  * BindingsIdImpl provides a hashable list of elementIds suitable for use when indexing specializations.
  */
-public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakReference2.MatchableId<@NonNull ElementId @NonNull []>
+public class BindingsIdImpl implements BindingsId
 {
-	@Deprecated /* @deprecated no longer used */
-	protected class Iterator implements java.util.Iterator<@NonNull ElementId>
-	{
-		private int index = 0;
-
-		@Override
-		public boolean hasNext() {
-			return index < elementIds.length;
-		}
-
-		@Override
-		public @NonNull ElementId next() {
-			return elementIds[index++];
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-	}
-
 	private static class BindingsIdValue extends AbstractKeyAndValue<@NonNull BindingsId>
 	{
 		private final @NonNull IdManager idManager;
@@ -94,17 +73,6 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 	private final @NonNull Object @Nullable [] values;
 	private final @NonNull Integer hashCode;
 
-	/**
-	 * Construct a BindingsId for an idManager that has computed the hashCode for the typeIds.
-	 */
-	@Deprecated /* @deprecated no longer used */
-	public BindingsIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, @NonNull ElementId @NonNull [] elementIds) {
-		this.hashCode = hashCode;
-		this.elementIds = elementIds;
-		this.values = null;
-		assert hashCode == this.hashCode;
-	}
-
 	private BindingsIdImpl(@NonNull IdManager idManager, @NonNull ElementId @NonNull [] elementIds, @NonNull Object @Nullable [] values) {
 		this.hashCode = computeHashCode(elementIds, values);
 		this.elementIds = elementIds;
@@ -126,11 +94,6 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 		}
 	}
 
-	@Override @Deprecated /* @deprecated use getElementId() and/or getValue() */
-	public @NonNull ElementId get(int i) {
-		return getElementId(i);
-	}
-
 	@Override
 	public @NonNull ElementId getElementId(int i) {
 		return elementIds[i];
@@ -145,16 +108,6 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 	@Override
 	public int hashCode() {
 		return hashCode;
-	}
-
-	@Override @Deprecated /* @deprecated use elementIdSize()/getElementId() and/or valuesSize()/getValue() */
-	public java.util.@NonNull Iterator<@NonNull ElementId> iterator() {
-		return new Iterator();
-	}
-
-	@Override @Deprecated
-	public boolean matches(@NonNull ElementId @NonNull [] value) {
-		throw new UnsupportedOperationException();			// Only here for API compatibility
 	}
 
 	private boolean matches(@NonNull ElementId @NonNull [] thoseElementIds, @NonNull Object @Nullable [] thoseValues) {
@@ -190,11 +143,6 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 		return true;
 	}
 
-	@Override @Deprecated /* @deprecated use elementIdSize() and/or valuesSize() */
-	public int size() {
-		return elementIdSize();
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
@@ -208,9 +156,7 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 		@NonNull Object[] values2 = values;
 		if (values2 != null) {
 			for (int i = 0; i < values2.length; i++) {
-			//	if (i > 0) {
-					s.append(',');
-			//	}
+				s.append(',');
 				s.append(String.valueOf(values2[i]));
 			}
 		}

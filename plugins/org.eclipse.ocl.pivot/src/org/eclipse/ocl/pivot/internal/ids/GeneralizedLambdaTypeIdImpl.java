@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, ParametersId>
+public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId
 {
 	private static class LambdaTypeIdValue extends AbstractKeyAndValue<@NonNull LambdaTypeId>
 	{
@@ -69,13 +69,6 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 	}
 
 	protected final @NonNull ParametersId parametersId;
-
-	@Deprecated /* @deprecated use simpler constructor */
-	public GeneralizedLambdaTypeIdImpl(@NonNull Integer hashCode, @NonNull String name, @NonNull ParametersId parametersId) {
-		super(hashCode, 0, name);
-		this.parametersId = parametersId;
-		assert this.hashCode == computeHashCode(name, parametersId);
-	}
 
 	private GeneralizedLambdaTypeIdImpl(@NonNull IdManager idManager, @NonNull String name, @NonNull ParametersId parametersId) {
 		super(computeHashCode(name, parametersId), 0, name);
@@ -157,17 +150,6 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 	@Override
 	public @NonNull ParametersId getParametersId() {
 		return parametersId;
-	}
-
-	@Override
-	public boolean matches(@NonNull String thatName, @NonNull ParametersId thatParametersId) {
-		if (parametersId != thatParametersId) {
-			return false;
-		}
-		if (!this.name.equals(thatName)) {
-			return false;
-		}
-		return true;
 	}
 
 	@Override
