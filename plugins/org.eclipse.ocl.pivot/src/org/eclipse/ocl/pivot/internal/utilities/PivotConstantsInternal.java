@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface PivotConstantsInternal
 {

@@ -66,9 +66,6 @@ public interface BaseCSResource extends CSResource
 	 */
 	@NonNull URI getASURI(@NonNull URI csURI);
 
-	@Deprecated /* @deprecated not used - Pass known EnvironmentFactory to avoid generally redundant deduction */
-	@NonNull CS2AS getCS2AS();
-
 	/**
 	 * Return the CS2AS adapter to convert this CSResource to its (new) AS Resource equivalent.
 	 */
@@ -87,14 +84,12 @@ public interface BaseCSResource extends CSResource
 	 */
 	@NonNull String getEditorName();
 
-	@Override
 	@NonNull ParserContext getParserContext();
 
 	/**
 	 * Return true if this BaseCSResource is derived from an ASResource.
 	 * @since 1.22
 	 */
-	@Override
 	boolean isDerived();
 
 	/**
@@ -116,11 +111,9 @@ public interface BaseCSResource extends CSResource
 	 * Set whether this BaseCSResource is derived from an ASResource.
 	 * @since 1.22
 	 */
-	@Override
 	void setDerived(boolean isDerived);
 
-	@Deprecated /* @deprecated Pass known EnvironmentFactory to avoid generally redundant deduction */
-	void update(@NonNull IDiagnosticConsumer diagnosticConsumer);
+	void update(int index, int length, String newString);
 
 	void update(@NonNull EnvironmentFactory environmentFactory, @NonNull IDiagnosticConsumer diagnosticConsumer);
 }

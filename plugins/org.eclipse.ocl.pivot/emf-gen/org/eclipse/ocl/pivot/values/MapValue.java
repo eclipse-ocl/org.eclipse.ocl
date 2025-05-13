@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 public interface MapValue extends IterableValue {
 	/**
 	 * @generated NOT
-	 * @noimplement This interface is not intended to be implemented by clients.
 	 */
 	interface Accumulator extends MapValue {
 		@Deprecated /* @deprecated erroneous never-used signature */

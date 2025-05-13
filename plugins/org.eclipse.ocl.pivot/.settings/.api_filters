@@ -127,12 +127,4 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/Ecore2Moniker.java" type="org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="PivotConstantsInternal"/>
-                <message_argument value="Ecore2Moniker"/>
-            </message_arguments>
-        </filter>
-    </resource>
 </component>

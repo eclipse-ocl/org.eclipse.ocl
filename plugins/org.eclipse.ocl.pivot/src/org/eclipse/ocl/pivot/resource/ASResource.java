@@ -25,8 +25,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * A resource for an OCL Abstract Syntax (Pivot) Model
- *
- * @noimplement This interface is not intended to be implemented by clients. Extend ASResourceImpl.
  */
 public interface ASResource extends XMIResource
 {
