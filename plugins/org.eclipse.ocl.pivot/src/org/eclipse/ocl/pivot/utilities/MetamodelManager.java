@@ -162,9 +162,6 @@ public interface MetamodelManager
 	 */
 	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();
 
-	@Deprecated /* @deprecated use PivotHelper.getASOf() */
-	@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
-
 	@Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> pivotClass, @Nullable EObject eObject);
 
 	@NonNull ResourceSet getASResourceSet();

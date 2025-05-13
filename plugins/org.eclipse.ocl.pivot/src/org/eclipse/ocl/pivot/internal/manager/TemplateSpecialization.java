@@ -51,12 +51,6 @@ public class TemplateSpecialization extends BasicTemplateSpecialization
 		return null;
 	}
 
-//	@Deprecated /* @deprecated use getTemplateParameterization */
-//	public static @Nullable List<@NonNull TemplateParameter> basicGetTemplateParameters(@NonNull Element element) {
-//		List<@NonNull TemplateParameter> templateParameters = basicGetTemplateParameters(null, element);
-//		return templateParameters;
-//	}
-
 	private static @Nullable List<@NonNull TemplateParameterSubstitution> basicGetTemplateParameterSubstitutions(@Nullable List<@NonNull TemplateParameterSubstitution> templateParameterSubstitutions, @NonNull EObject element) {
 		EObject eContainer = element.eContainer();
 		if (eContainer != null) {

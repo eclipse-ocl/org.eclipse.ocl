@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -101,30 +100,6 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			visitor.exclude(actualExp);
 			visitor.visit(actualExp);
 		}
-		return visitor;
-	}
-
-	@Deprecated /* @deprecated no longer used */
-	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Type formalType, @NonNull Type actualType) {
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(actualType, environmentFactory, null, null);
-		if (visitor == null) {
-			return TemplateParameterSubstitutions.EMPTY;
-		}
-		visitor.analyzeType(formalType, actualType);
-		return visitor;
-	}
-
-	@Deprecated /* @deprecated no longer used */
-	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type zzsourceTypeValue, @NonNull Operation candidateOperation) {
-		// assert sourceTypeValue == null;			// Bug 580791  Enforcing redundant argument
-		if (!hasTemplateParameters(candidateOperation)) {
-			return TemplateParameterSubstitutions.EMPTY;
-		}
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(candidateOperation, environmentFactory, sourceType, null);
-		if (visitor == null) {
-			return TemplateParameterSubstitutions.EMPTY;
-		}
-		visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);
 		return visitor;
 	}
 
@@ -267,20 +242,6 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
-	@Deprecated /* @deprecated no longer used */
-	protected void analyzeFeature(@Nullable Feature formalFeature, @Nullable TypedElement actualElement) {
-		if ((formalFeature != null) && (actualElement != null)) {
-			Type formalType = formalFeature.getOwningClass();
-			Type actualType = actualElement.getType();
-			analyzeType(formalType, actualType);
-		}
-	}
-
-	@Deprecated /* @deprecated argument should be Type */
-	protected void analyzeType(@Nullable Type newFormal, @Nullable Element newActual) {
-		analyzeType(newFormal, (Type)newActual);
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -360,11 +321,6 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		return getTemplateSpecialization().get(templateParameter);
 	}
 
-	@Deprecated /* @deprecated all functionality moved to LibraryOperation */
-	protected @Nullable TemplateParameterSubstitutionHelper getHelper(@NonNull Operation operation) {
-		return  null;
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -438,12 +394,6 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	@Override
 	public boolean isEmpty() {
 		return getTemplateSpecialization().isEmpty();
-	}
-
-	@Deprecated /* @deprecated no longer used */
-	public void put(int templateParameterIndex, @Nullable Type actualType) {
-		assert false;
-	//	getTemplateSpecialization().put(templateParameterIndex, actualType);
 	}
 
 	@Override

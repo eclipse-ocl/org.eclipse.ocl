@@ -59,7 +59,6 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -314,14 +313,6 @@ public class EnvironmentView
 	private int contentsSize = 0; // Deep size of contentsByName;
 
 	private List<@NonNull ScopeFilter> matchers = null;	// Prevailing filters for matching
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated not used */
-	public EnvironmentView(@NonNull ParserContext parserContext, @NonNull EStructuralFeature reference, @Nullable String name) {
-		this((EnvironmentFactoryInternal)parserContext.getEnvironmentFactory(), reference, name);
-	}
 
 	public EnvironmentView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
 		this.environmentFactory = environmentFactory;
@@ -879,14 +870,6 @@ public class EnvironmentView
 	public void computeQualifiedLookups(@NonNull Element target) {
 		ScopeView parentScopeView = new PivotScopeView(environmentFactory, target, null, true);
 		addElementsOfScope(target, parentScopeView);
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated use Attribution.REGISTRY.getAttribution(eObject) */
-	public @NonNull Attribution getAttribution(@NonNull EObject eObject) {
-		return Attribution.REGISTRY.getAttribution(eObject);
 	}
 
 	public @Nullable EObject getContent() {

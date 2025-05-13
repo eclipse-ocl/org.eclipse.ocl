@@ -610,19 +610,6 @@ public class Orphanage extends PackageImpl
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
 
-	/**
-	 * Return true if asPackage is a local or shared orphanage for synthesized model elements.
-	 */
-	@Deprecated /* @deprecated use isOrphanage() */
-	public static boolean isTypeOrphanage(org.eclipse.ocl.pivot.@Nullable Package asPackage) {
-		if (asPackage == null) {
-			return false;
-		}
-		else {
-			return isOrphanage(asPackage);
-		}
-	}
-
 	public Orphanage(@NonNull String name, @NonNull String nsURI) {
 		//		super(uri);
 		//		setLoaded(true);

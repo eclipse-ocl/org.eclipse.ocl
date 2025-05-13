@@ -100,11 +100,6 @@ public class ASResourceFactoryRegistry
 		return oldASResourceFactory1;
 	}
 
-	@Deprecated /* @deprecated Use two argument version */
-	public void configureResourceSet(@NonNull ResourceSet resourceSet) {
-		configureResourceSets(null, resourceSet);
-	}
-
 	/**
 	 * @since 1.10
 	 */
@@ -131,14 +126,6 @@ public class ASResourceFactoryRegistry
 				asResourceFactory.configureResourceFactoryRegistry(resourceSet);
 			}
 		}
-	}
-
-	/**
-	 * Create a new EnvironmentFactory appropriate to the resources in ResourceSet.
-	 */
-	@Deprecated
-	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
-		return createEnvironmentFactory(projectManager, externalResourceSet, null);
 	}
 
 	/**

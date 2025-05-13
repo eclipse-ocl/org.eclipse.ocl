@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 
 /**
  * ScopeViews support access to some or all of the elements in a scope.
@@ -73,14 +72,6 @@ public class PivotScopeView implements ScopeView
 	protected final boolean isQualified;								// True of the lookup has an explicit namespace qualification
 	private ScopeView parent = null;									// Lazily computed scope view for target's parent
 	private Attribution attribution = null;								// Lazily computed attributes helper for the target CS node
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated ParserContext not required */
-	protected PivotScopeView(@NonNull ParserContext parserContext, @NonNull Element target, @Nullable Element child, boolean isQualified) {
-		this((EnvironmentFactoryInternal) parserContext.getEnvironmentFactory(), target, child, isQualified);
-	}
 
 	protected PivotScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Element target, @Nullable Element child, boolean isQualified) {
 		this.environmentFactory = environmentFactory;

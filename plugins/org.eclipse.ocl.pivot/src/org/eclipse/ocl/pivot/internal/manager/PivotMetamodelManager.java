@@ -68,7 +68,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -485,11 +484,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return asBoolean;
 	}
 
-	// @Deprecated but retained for API compatibility.
-	public @NonNull IfExp createIfExp(@NonNull OperationCallExp asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
-		return createIfExp((OCLExpression)asCondition, asThen, asElse);
-	}
-
 	/**
 	 * @since 1.1
 	 */
@@ -742,15 +736,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 	}
 
-	/*
-	 * @deprecated use EnvironmentFactoryInternalExtension.getASOf()
-	 */
-	@Deprecated
-	@Override
-	public @Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException {
-		return environmentFactory.getASOf(pivotClass, eObject);
-	}
-
 	@Override
 	public @Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> pivotClass, @Nullable EObject eObject) {
 		if (eObject == null) {
@@ -923,14 +908,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public @NonNull CollectionType getCollectionType(boolean isOrdered, boolean isUnique, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return completeEnvironment.getCollectionType(getCollectionType(isOrdered, isUnique), elementType, isNullFree, lower, upper);
-	}
-
-	/**
-	 * @deprecated add isNullFree argument
-	 */
-	@Deprecated
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull String collectionTypeName, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(collectionTypeName, elementType, false, lower, upper);
 	}
 
 	@Override

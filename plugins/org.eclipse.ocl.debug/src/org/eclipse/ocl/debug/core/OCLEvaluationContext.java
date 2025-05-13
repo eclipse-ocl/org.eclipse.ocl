@@ -31,7 +31,7 @@ public class OCLEvaluationContext extends EvaluationContext
 	protected static @NonNull IVMContext createVMContext(@Nullable ExpressionInOCL expressionObject, @Nullable EObject contextObject) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null);
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null, null);
 		}
 		return new VMContext(environmentFactory);
 	}
