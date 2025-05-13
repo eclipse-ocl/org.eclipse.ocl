@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.IndentingLogger;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -72,7 +71,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	/**
 	 * @since 1.3
 	 */
-	protected final IdResolver.@NonNull IdResolverExtension idResolver;
+	protected final @NonNull IdResolver idResolver;
 
 	/**
 	 * Lazily-created cache of reusable regex patterns to avoid
@@ -103,7 +102,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	protected AbstractExecutor(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
-		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();
+		this.idResolver = environmentFactory.getIdResolver();
 	//	System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
@@ -238,13 +237,8 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		return evaluationVisitor2;
 	}
 
-	//	@Override
-	//	public @NonNull ExecutorInternal getExecutor() {
-	//		return this;
-	//	}
-
 	@Override
-	public IdResolver.@NonNull IdResolverExtension getIdResolver() {
+	public @NonNull IdResolver getIdResolver() {
 		return idResolver;
 	}
 

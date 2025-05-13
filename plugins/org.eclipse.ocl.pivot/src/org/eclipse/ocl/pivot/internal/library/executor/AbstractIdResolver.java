@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Stack;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.util.EList;
@@ -112,7 +111,7 @@ import org.eclipse.ocl.pivot.values.Value;
 
 import com.google.common.collect.Iterables;
 
-public abstract class AbstractIdResolver implements IdResolver.IdResolverExtension
+public abstract class AbstractIdResolver implements IdResolver
 {
 	public static final class Id2InstanceVisitor implements IdVisitor<Object>
 	{
@@ -279,14 +278,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 * Mapping from root package name to corresponding Pivot Package. (used to resolve RootPackageId).
 	 */
 	protected final @NonNull Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package> roots2package = new HashMap<>();
-
-	/**
-	 * Push-down stack of static types that may be used to resolve TemplateParameterIds.
-	 *
-	 * @since 1.7
-	 */
-	@Deprecated /* @Deprecated rendered obsolete by use of TemplateParameterization */
-	protected final @NonNull Stack<@Nullable Type> staticTypeStack = new Stack<>();
 
 	public AbstractIdResolver(@NonNull CompleteEnvironment environment) {
 		this.environment = environment;
@@ -610,11 +601,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return typeId.accept(visitor);
 	}
 
-	@Override @Deprecated
-	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<?, ?> unboxedValues) {
-		return createMapOfAll(TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, false, false), unboxedValues);
-	}
-
 	/**
 	 * @since 1.18
 	 */
@@ -760,24 +746,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return new EcoreEList.UnmodifiableEList<>(null, null, ecoreValues.length, ecoreValues);
 	}
 
-	/** @deprecated no longer used */
-	@Deprecated
-	@Override
-	public @NonNull EList<Object> ecoreValuesOfAll(@Nullable Class<?> instanceClass, @NonNull Iterable<Object> values) {
+	private @NonNull EList<Object> ecoreValuesOfAll(@Nullable Class<?> instanceClass, @NonNull Iterable<Object> values) {
 
 		Object[] ecoreValues = new Object[Iterables.size(values)];
-		int i= 0;
-		for (Object value : values) {
-			ecoreValues[i++] = ecoreValueOf(instanceClass, value);
-		}
-		return new EcoreEList.UnmodifiableEList<>(null, null, ecoreValues.length, ecoreValues);
-	}
-
-	/** @deprecated no longer used */
-	@Deprecated
-	@Override
-	public @NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object @NonNull ... values) {
-		Object[] ecoreValues = new Object[values.length];
 		int i= 0;
 		for (Object value : values) {
 			ecoreValues[i++] = ecoreValueOf(instanceClass, value);

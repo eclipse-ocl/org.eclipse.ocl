@@ -30,13 +30,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyPackage;
-import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyTables;
-import org.eclipse.ocl.xtext.tests.codegen.company.Company;
-import org.eclipse.ocl.xtext.tests.codegen.company.Employee;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
@@ -57,6 +52,10 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue.Accumulator;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
+import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyPackage;
+import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyTables;
+import org.eclipse.ocl.xtext.tests.codegen.company.Company;
+import org.eclipse.ocl.xtext.tests.codegen.company.Employee;
 
 /**
  * <!-- begin-user-doc -->
@@ -298,7 +297,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 				accumulator.add(_1);
 			}
 		}
-		final /*@NonInvalid*/ @NonNull List<Employee> ECORE_select = ((IdResolverExtension)idResolver).ecoreValueOfAll(Employee.class, select);
+		final /*@NonInvalid*/ @NonNull List<Employee> ECORE_select = idResolver.ecoreValueOfAll(Employee.class, select);
 		return (EList<Employee>)ECORE_select;
 	}
 
@@ -335,7 +334,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 				accumulator.add(_1);
 			}
 		}
-		final /*@NonInvalid*/ @NonNull List<Employee> ECORE_select = ((IdResolverExtension)idResolver).ecoreValueOfAll(Employee.class, select);
+		final /*@NonInvalid*/ @NonNull List<Employee> ECORE_select = idResolver.ecoreValueOfAll(Employee.class, select);
 		return (EList<Employee>)ECORE_select;
 	}
 
@@ -380,7 +379,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			final /*@Thrown*/ @NonNull OrderedSetValue prepend = (@Nullable OrderedSetValue)OrderedCollectionPrependOperation.INSTANCE.evaluate(safe_reportingChain_source, manager_2);
 			IF_oclIsUndefined = prepend;
 		}
-		final /*@Thrown*/ @NonNull List<Employee> ECORE_IF_oclIsUndefined = ((IdResolverExtension)idResolver).ecoreValueOfAll(Employee.class, IF_oclIsUndefined);
+		final /*@Thrown*/ @NonNull List<Employee> ECORE_IF_oclIsUndefined = idResolver.ecoreValueOfAll(Employee.class, IF_oclIsUndefined);
 		return (EList<Employee>)ECORE_IF_oclIsUndefined;
 	}
 

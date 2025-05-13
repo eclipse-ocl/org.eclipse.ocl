@@ -101,7 +101,7 @@ public class EvaluationCache
 	 * @since 7.0
 	 */
 	public @Nullable Object getCachedEvaluationResult(@NonNull LibraryOperation implementation, @NonNull TypedElement caller, @Nullable Object @NonNull ... sourceAndArgumentValues) {
-		IdResolver.@NonNull IdResolverExtension idResolver = (IdResolver.IdResolverExtension) executor.getIdResolver();
+		@NonNull IdResolver idResolver = executor.getIdResolver();
 		int hashCode = implementation.hashCode();
 		for (@Nullable Object sourceAndArgumentValue : sourceAndArgumentValues) {
 			hashCode = 3 * hashCode + idResolver.oclHashCode(sourceAndArgumentValue);
