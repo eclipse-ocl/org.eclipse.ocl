@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.evaluation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
 
@@ -23,37 +22,6 @@ import org.eclipse.ocl.pivot.values.IterableValue;
  */
 public interface IterationManager
 {
-	/**
-	 * @since 1.1
-	 */
-	public interface IterationManagerExtension extends IterationManager
-	{
-		@NonNull Executor getExecutor();
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	public interface IterationManagerExtension2 extends IterationManagerExtension
-	{
-		/**
-		 * Create a nested iteration supervisor.
-		 * <br>
-		 * This method supports the closure iteration for which there is only a single iterator,
-		 * and so this method need only be supported by single iterator managers.
-		 *
-		 * @param value the nested iteration domain
-		 * @return the iteration space
-		 * @throws InvalidValueException
-		 */
-		@NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value);
-
-		/**
-		 * Return the source iteravle over which this iteration iterates.
-		 */
-		@NonNull IterableValue getSourceIterable();
-	}
-
 	/**
 	 * Advance the iterators to the next iteration, returning false once all possible
 	 * iterator states have been exhausted.
@@ -69,11 +37,9 @@ public interface IterationManager
 	 * @param value the nested iteration domain
 	 * @return the iteration space
 	 * @throws InvalidValueException
-	 *
-	 * @deprecated use IterationManagerExtension2 and IterableValue
+	 * @since 7.0
 	 */
-	@Deprecated
-	@NonNull IterationManager createNestedIterationManager(@NonNull CollectionValue value);
+	@NonNull IterationManager createNestedIterationManager(@NonNull IterableValue value);
 
 	void dispose();
 
@@ -99,12 +65,15 @@ public interface IterationManager
 	@Nullable Object getAccumulatorValue();
 
 	/**
-	 * Return the source collection over which this (nested) iteration iterates.
-	 *
-	 * @deprecated replaced by getSourceIterable
+	 * @since 7.0
 	 */
-	@Deprecated
-	@NonNull CollectionValue getSourceCollection();
+	@NonNull Executor getExecutor();
+
+	/**
+	 * Return the source iterable over which this iteration iterates.
+	 * @since 7.0
+	 */
+	@NonNull IterableValue getSourceIterable();
 
 	@NonNull StandardLibrary getStandardLibrary();
 
