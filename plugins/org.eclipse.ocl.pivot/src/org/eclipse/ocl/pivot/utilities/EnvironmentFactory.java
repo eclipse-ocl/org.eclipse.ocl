@@ -15,8 +15,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -78,10 +76,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	default void activate() {}
-
-	@Deprecated /* @deprecated only ResourceSet adapters are used and only internally - 3 calls without JUnit coverage remain
-		now that ThreadLocalExecutor.getEnvironmentFactory is available, the 3 adaptions are probably redundant */
-	@NonNull Adapter adapt(@NonNull Notifier notifier);
 
 	/**
 	 * @since 7.0

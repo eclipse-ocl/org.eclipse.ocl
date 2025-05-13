@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -239,7 +238,6 @@ public abstract class AbstractParserContext implements ParserContext
 				if (resourceSet != null) {
 					resourceSet.getResources().remove(resource);
 				}
-				EnvironmentFactoryAdapter.disposeAll(resource);
 			}
 		}
 	}

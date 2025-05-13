@@ -58,7 +58,6 @@ import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -265,7 +264,7 @@ public class EmbeddedXtextEditor
 				lock= new Object();
 				((ISynchronizable)document).setLockObject(lock);
 			}
-			((ISynchronizable) annotationModel).setLockObject(lock);
+			annotationModel.setLockObject(lock);
 		}
 		fSourceViewer.setDocument(document, annotationModel);
 	}
@@ -738,10 +737,6 @@ public class EmbeddedXtextEditor
 			//	Eliminate old OCL facade/handle
 			//
 			if (xtextResourceSet != null) {
-				EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(xtextResourceSet);
-				if (environmentFactoryAdapter != null) {
-					xtextResourceSet.eAdapters().remove(environmentFactoryAdapter);
-				}
 				for (Resource resource : xtextResourceSet.getResources()) {
 					if (resource instanceof BaseCSResource) {
 						((BaseCSResource)resource).setParserContext(null);
@@ -754,10 +749,6 @@ public class EmbeddedXtextEditor
 			//	Create new OCL facade/handle
 			//
 			ocl = OCLInternal.newInstance(projectManager, esResourceSet);
-			if (xtextResourceSet != null) {
-				EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-				environmentFactory.adapt(xtextResourceSet);
-			}
 			contextResourceSet = esResourceSet;
 		}
 	}

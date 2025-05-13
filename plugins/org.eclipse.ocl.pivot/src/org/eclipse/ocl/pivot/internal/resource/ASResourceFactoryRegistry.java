@@ -136,13 +136,8 @@ public class ASResourceFactoryRegistry
 	/**
 	 * Create a new EnvironmentFactory appropriate to the resources in ResourceSet.
 	 */
+	@Deprecated
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
-		if (externalResourceSet != null) {
-			EnvironmentFactoryAdapter environmentFactoryAdapter = EnvironmentFactoryAdapter.find(externalResourceSet);
-			if (environmentFactoryAdapter != null) {
-				return environmentFactoryAdapter.getEnvironmentFactory();
-			}
-		}
 		return createEnvironmentFactory(projectManager, externalResourceSet, null);
 	}
 
