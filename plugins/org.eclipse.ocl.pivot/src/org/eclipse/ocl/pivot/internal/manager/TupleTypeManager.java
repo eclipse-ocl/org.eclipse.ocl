@@ -46,14 +46,6 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  */
 public class TupleTypeManager
 {
-	@Deprecated /* @deprecated unhelpful functionality */
-	protected static class TupleIdResolver extends PivotIdResolver
-	{
-		private TupleIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
-			super(environmentFactory);
-		}
-	}
-
 	/**
 	 * TuplePart provides a convenient descriptor for a tuple part complying with the full EMF model protocols.
 	 */

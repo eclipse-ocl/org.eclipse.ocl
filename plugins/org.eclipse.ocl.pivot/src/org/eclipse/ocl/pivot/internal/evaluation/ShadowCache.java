@@ -103,7 +103,7 @@ public class ShadowCache
 	}
 
 	public @Nullable Object getCachedShadowObject(org.eclipse.ocl.pivot.@NonNull Class thisClass, @NonNull Property @NonNull [] theseProperties, @Nullable Object @NonNull [] theseValues) {
-		IdResolver.@NonNull IdResolverExtension idResolver = (IdResolver.IdResolverExtension) executor.getIdResolver();
+		@NonNull IdResolver idResolver = executor.getIdResolver();
 		int hashCode = thisClass.hashCode();
 		assert theseValues.length == theseProperties.length;
 		int iMax = theseValues.length;

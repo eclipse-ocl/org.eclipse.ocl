@@ -15,14 +15,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * OclElementOclAsModelTypeOperation realises the OclElement::oclAsModelType() library operation.
- * 
+ *
  * @since 1.1
  */
 public class OclElementOclAsModelTypeOperation extends AbstractUntypedBinaryOperation
@@ -42,7 +41,7 @@ public class OclElementOclAsModelTypeOperation extends AbstractUntypedBinaryOper
 		if (sourceVal == null) {
 			throw new InvalidValueException(PivotMessages.NullNavigation, "source value", "oclAsModelType");
 		}
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> modelClasses = ((IdResolver.IdResolverExtension)executor.getIdResolver()).getModelClassesOf(sourceVal);
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> modelClasses = executor.getIdResolver().getModelClassesOf(sourceVal);
 		if (modelClasses == null) {
 			throw new InvalidValueException(PivotMessages.IncompatibleModelType, sourceType);
 		}

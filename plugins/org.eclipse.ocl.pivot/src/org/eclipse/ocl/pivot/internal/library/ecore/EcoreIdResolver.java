@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 {
-	//	protected @NonNull Map<ElementId, DomainElement> id2element = new HashMap<>();
 	private @NonNull Map<EClassifier, WeakReference<CompleteInheritance>> typeMap = new WeakHashMap<>();
 
 	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull ExecutorStandardLibrary standardLibrary) {

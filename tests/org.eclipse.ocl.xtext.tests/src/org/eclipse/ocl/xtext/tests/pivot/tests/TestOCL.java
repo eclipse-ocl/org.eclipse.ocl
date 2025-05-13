@@ -259,7 +259,7 @@ public class TestOCL extends OCLInternal
 	 * an AssertionFailedError is thrown with the given message.
 	 */
 	public void assertOCLEquals(String message, Object expected, Object actual) {
-		IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)getIdResolver();
+		IdResolver idResolver = getIdResolver();
 		if (idResolver.oclEquals(expected, actual)) {
 			int expectedHash = idResolver.oclHashCode(expected);
 			int actualHash = idResolver.oclHashCode(actual);
