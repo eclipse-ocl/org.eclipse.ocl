@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -534,14 +533,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return ASResource.ESSENTIALOCL_CONTENT_TYPE;
 	}
 
-	@Override @Deprecated /* @deprecated use getCS2AS(getEnvironmentFactory()).getASResource() since EnvironmentFactory usually known */
-	public final @NonNull ASResource getASResource() {
-		assert PivotUtilInternal.debugDeprecation("EssentialOCLCSResource.getASResource()");
-		CS2AS cs2as = getCS2AS(getEnvironmentFactory());
-		ASResource asResource = cs2as.getASResource();
-		return asResource;
-	}
-
 	@Override
 	public @NonNull ASResourceFactory getASResourceFactory() {
 		return EssentialOCLASResourceFactory.getInstance();
@@ -899,12 +890,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 				return;
 			}
 		}
-	}
-
-	@Deprecated /* @deprecated ProjectManager is inferred from implicit/explicit setParserContext() */
-	@Override
-	public void setProjectManager(@Nullable ProjectManager projectMap) {
-		assert projectMap == getEnvironmentFactory().getProjectManager();
 	}
 
 	@Override
