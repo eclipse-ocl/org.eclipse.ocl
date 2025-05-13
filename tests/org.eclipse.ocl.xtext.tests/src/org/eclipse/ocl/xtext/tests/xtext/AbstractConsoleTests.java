@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -184,7 +185,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 				List<@NonNull EObject> rootList = Collections.singletonList(rootContainer);
 				return new LazyEcoreModelManager(rootList, null, null);
 			}
-			return ModelManager.NULL;
+			return NullModelManager.INSTANCE;
 		}
 	}
 

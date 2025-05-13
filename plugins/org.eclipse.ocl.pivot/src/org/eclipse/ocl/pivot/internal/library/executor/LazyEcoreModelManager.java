@@ -29,9 +29,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.evaluation.EcoreModelManager;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -65,18 +64,18 @@ import com.google.common.collect.Lists;
  * </p>
  * @since 1.14
  */
-public class LazyEcoreModelManager extends LazyModelManager implements ModelManager.EcoreModelManager
+public class LazyEcoreModelManager extends AbstractModelManager implements EcoreModelManager
 {
 	/**
 	 * EClassAnalysis caches the results of EClas instances foynd during a model search.
 	 * <p>
 	 * The minimal EClassAnalysisWithoutInstances directs the instances to a super-EClassAnalysis
 	 * if the instances are not used in their own right unless cahing of the derived allInstances()
-	 * is necessary to avoid double cahing of a multiple inheritance.
+	 * is necessary to avoid double caching of a multiple inheritance.
 	 * </p>
 	 * <p>
 	 * The full EClassAnalysisWithInstances keeps track of all instances of its EClass. Instances
-	 * of non-allInstances() derived ECLasses aree cached locally. Instances of allInstances() derived
+	 * of non-allInstances() derived ECLasses are cached locally. Instances of allInstances() derived
 	 * ECLasses aree cached indirectly and aggregated as the instances of this EClass.
 	 * </p>
 	 * <p>
@@ -640,28 +639,6 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 			assert eReferenceAnalysis != null;
 		}
 		return eReferenceAnalysis.basicGetOpposites(eTarget);
-	}
-
-
-	@Override
-	public @NonNull Iterable<@NonNull Object> getOpposite(@NonNull Property target2sourceProperty, @NonNull Object sourceObject) {
-		EReference eReference = (EReference)target2sourceProperty.getESObject();
-		assert eReference != null;
-		Iterable<@NonNull ?> objects = getOpposites(eReference, (EObject)sourceObject);
-		if (objects != null) {
-			@SuppressWarnings("unchecked")
-			Iterable<@NonNull Object> castObjects = (Iterable<@NonNull Object>)objects;
-			return castObjects;
-		}
-		else {
-			return NO_OBJECTS;
-		}
-	}
-
-	@Deprecated
-	@Override
-	protected boolean isInstance(@NonNull Type type, @NonNull EObject element) {
-		throw new UnsupportedOperationException("Not used for Ecore conformance");
 	}
 
 	@Override

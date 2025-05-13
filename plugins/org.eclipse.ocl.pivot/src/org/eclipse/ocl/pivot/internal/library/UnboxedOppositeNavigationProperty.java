@@ -22,9 +22,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.EcoreModelManager;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
-import org.eclipse.ocl.pivot.evaluation.ModelManager.EcoreModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -72,14 +72,16 @@ public class UnboxedOppositeNavigationProperty extends AbstractProperty
 			}
 			if (thatType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class thatClass = (org.eclipse.ocl.pivot.Class)thatType;
-				ModelManager.ModelManagerExtension modelManager2 = (ModelManager.ModelManagerExtension)modelManager;
-				for (@NonNull Object eObject : modelManager.get(thatClass)) {	// FIXME Use a cache
-					EClass eClass = modelManager2.eClass(eObject);
-					EStructuralFeature eFeature = eClass.getEStructuralFeature(oppositeProperty.getName());
-					assert eFeature != null;
-					Object eGet = modelManager2.eGet(eObject, eFeature);
-					if (eGet == sourceValue) {
-						results.add(eObject);
+				Iterable<@NonNull ? extends Object> instances = modelManager.getInstances(thatClass);
+				if (instances != null) {
+					for (@NonNull Object eObject : instances) {	// FIXME Use a cache
+						EClass eClass = modelManager.eClass(eObject);
+						EStructuralFeature eFeature = eClass.getEStructuralFeature(oppositeProperty.getName());
+						assert eFeature != null;
+						Object eGet = modelManager.eGet(eObject, eFeature);
+						if (eGet == sourceValue) {
+							results.add(eObject);
+						}
 					}
 				}
 			}
