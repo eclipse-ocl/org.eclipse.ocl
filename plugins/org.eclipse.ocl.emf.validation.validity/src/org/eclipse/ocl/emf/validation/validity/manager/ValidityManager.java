@@ -366,7 +366,7 @@ public class ValidityManager
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, lastInput instanceof ResourceSet ? (ResourceSet)lastInput : null);
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, lastInput instanceof ResourceSet ? (ResourceSet)lastInput : null, null);
 		}
 		return environmentFactory;
 	}

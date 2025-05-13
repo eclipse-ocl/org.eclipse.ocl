@@ -43,9 +43,6 @@ public class FinalAnalysis
 	public static final @NonNull TracingOption FINAL_ANALYSIS = new TracingOption(PivotPlugin.PLUGIN_ID, "finalAnalysis");
 
 	protected final @NonNull CompleteModelInternal completeModel;
-	/* @Deprecated - not needed - compute from completeModel */
-	@Deprecated
-	protected final @NonNull MetamodelManager metamodelManager;
 
 	/**
 	 * Map from a CompleteClass to all its sub CompleteClasses.
@@ -60,7 +57,6 @@ public class FinalAnalysis
 	public FinalAnalysis(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
 		MetamodelManager metamodelManager = completeModel.getMetamodelManager();
-		this.metamodelManager = metamodelManager;
 		for (@NonNull CompletePackage completePackage :  completeModel.getAllCompletePackages()) {
 			for (@NonNull CompleteClass subCompleteClass :  ClassUtil.nullFree(completePackage.getOwnedCompleteClasses())) {
 				for (@NonNull CompleteClass superCompleteClass : subCompleteClass.getSuperCompleteClasses()) {

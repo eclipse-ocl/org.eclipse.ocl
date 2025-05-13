@@ -112,7 +112,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 
 	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
-		TestFile oclInEcoreFile = createOCLinEcoreFile(inputName, fileContent);
+		TestFile oclInEcoreFile = createFile(inputName, fileContent);
 		URI inputURI = oclInEcoreFile.getFileURI();
 		URI ecoreURI = getTestFileURI(fileName + ".ecore");
 		ResourceSet resourceSet2 = ocl.getResourceSet();
@@ -142,11 +142,6 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		writer.append(fileContent);
 		writer.close();
 		return outFile;
-	}
-
-	@Deprecated /* @deprecated use createFile */
-	public @NonNull TestFile createOCLinEcoreFile(@NonNull String filePath, @NonNull String fileContent) throws IOException {
-		return createFile(filePath, fileContent);
 	}
 
 	/**

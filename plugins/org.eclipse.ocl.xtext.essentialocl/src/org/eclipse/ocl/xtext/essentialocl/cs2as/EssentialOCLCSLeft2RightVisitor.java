@@ -2125,7 +2125,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							keysAreNullFree = false;
 						}
 						@SuppressWarnings("deprecation")
-						FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, asKey);
+						FlowAnalysis flowAnalysis = environmentFactory.getMetamodelManager().getFlowAnalysis(asKey);
 						if (!flowAnalysis.isNonNull(asKey)) {
 							keysAreNullFree = false;
 						}
@@ -2147,7 +2147,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							valuesAreNullFree = false;
 						}
 						@SuppressWarnings("deprecation")
-						FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, asValue);
+						FlowAnalysis flowAnalysis = environmentFactory.getMetamodelManager().getFlowAnalysis(asValue);
 						if (!flowAnalysis.isNonNull(asValue)) {
 							valuesAreNullFree = false;
 						}

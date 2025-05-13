@@ -61,7 +61,7 @@ public class OCLLaunchConfigurationDelegate extends LaunchConfigurationDelegate 
 
 				@Override
 				public void run() throws Exception {
-					EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null);
+					EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null, null);
 					IVMContext vmContext = new VMContext(environmentFactory);
 					OCLVMExecutor vmExecutor = new OCLVMExecutor(vmContext, oclURI, elementURI);
 					vmExecutor.execute();

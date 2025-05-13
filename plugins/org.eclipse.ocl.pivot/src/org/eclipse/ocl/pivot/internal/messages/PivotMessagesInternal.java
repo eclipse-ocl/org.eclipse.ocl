@@ -257,10 +257,6 @@ public class PivotMessagesInternal
 	public static String UnresolvedOperation_ERROR_;
 	public static String UnresolvedOperationCall_ERROR_;
 	public static String UnresolvedProperty_ERROR_;
-	@Deprecated /* @deprecated static distinction eleminated */
-	public static String UnresolvedStaticOperationCall_ERROR_;
-	@Deprecated /* @deprecated ststic distinction eleminated */
-	public static String UnresolvedStaticProperty_ERROR_;
 	public static String UnresolvedType_ERROR_;
 	public static String Unresolved_ERROR_;
 	public static String UnstableXMIid_ERROR_;

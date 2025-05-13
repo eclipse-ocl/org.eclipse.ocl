@@ -11,12 +11,9 @@
 package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -24,9 +21,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.emf.ecore.impl.EValidatorRegistryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
@@ -35,102 +30,15 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
-import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 public abstract class PivotDiagnostician extends Diagnostician
 {
 	private static Boolean diagnosticianHasDoValidate = null; // Use 2.9/2.8 Diagnostician
-
-	@Deprecated /* @deprecated no longer used thanks to local ValidationRegistyAdapter */
-	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
-			AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
-		return createDiagnostician(resourceSet, null, adapterFactory, progressMonitor);
-
-	}
-
-	/**
-	 * @since 1.4
-	 */
-	@Deprecated /* @deprecated no longer used thanks to local ValidationRegistryAdapter */
-	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
-			EValidator.@Nullable Registry globalEValidatorRegistry, AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
-		EValidatorRegistryImpl localEValidatorRegistry = new EValidatorRegistryImpl();
-		for (ASResourceFactory asResourceFactory : ASResourceFactoryRegistry.INSTANCE.getExternalResourceFactories()) {
-			asResourceFactory.initializeEValidatorRegistry(localEValidatorRegistry);
-		}
-		if (globalEValidatorRegistry != null) {
-			// If we are unlucky, this validation could occur in a builder more or less
-			// concurrently with a launch that lazily loads new EPackages (see Bug 544245).
-			Iterable<EPackage> stableKeySet = new ArrayList<>(globalEValidatorRegistry.keySet());
-			for (EPackage ePackage : stableKeySet) {
-				if (ePackage != null) {
-					Object localEValidator = localEValidatorRegistry.get(ePackage);
-					Object globalEValidator = globalEValidatorRegistry.get(ePackage);
-					if (localEValidator == null) {
-						if (globalEValidator != null) {
-							localEValidatorRegistry.put(ePackage, globalEValidator);
-						}
-					}
-					else {
-						if (globalEValidator != null) {
-							ComposedEValidator composedEValidator = null;
-							if (localEValidator instanceof ComposedEValidator) {
-								composedEValidator = (ComposedEValidator)localEValidator;
-							}
-							else if (localEValidator instanceof EValidator.Descriptor) {
-								composedEValidator = new ComposedEValidator(((EValidator.Descriptor)localEValidator).getEValidator());
-								localEValidatorRegistry.put(ePackage, composedEValidator);
-							}
-							else if (localEValidator instanceof EValidator) {
-								composedEValidator = new ComposedEValidator((EValidator)localEValidator);
-								localEValidatorRegistry.put(ePackage, composedEValidator);
-							}
-							if (composedEValidator != null) {
-								if (globalEValidator instanceof EValidator.Descriptor) {
-									composedEValidator.addChild(((EValidator.Descriptor)globalEValidator).getEValidator());
-								}
-								else if (globalEValidator instanceof EValidator) {
-									composedEValidator.addChild((EValidator)globalEValidator);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		if (diagnosticianHasDoValidate == null) {
-			diagnosticianHasDoValidate = false;
-			for (Method method : Diagnostician.class.getDeclaredMethods()) {
-				if ("doValidate".equals(method.getName())) {
-					diagnosticianHasDoValidate = true;
-				}
-			}
-		}
-		if (diagnosticianHasDoValidate) {
-			return new Diagnostician_2_9(localEValidatorRegistry, resourceSet, adapterFactory,
-				progressMonitor != null ? progressMonitor : new NullProgressMonitor());
-		}
-		else {
-			return new Diagnostician_2_8(localEValidatorRegistry, resourceSet, adapterFactory);
-		}
-	}
-
-	/**
-	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by
-	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
-	 *
-	 * @deprecated pass a null eObject to getOCL(context, eObject)
-	 */
-	@Deprecated
-	public static @NonNull OCL getOCL(@NonNull Map<Object, Object> context) {
-		return getOCL(context, null);
-	}
 
 	/**
 	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by

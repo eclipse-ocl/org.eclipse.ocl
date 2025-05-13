@@ -116,7 +116,6 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
@@ -2036,14 +2035,6 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
 		return Objects.requireNonNull(lambdaType.getResultType());
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Deprecated /* @deprecated use getTemplateParameterization */
-	public static @Nullable List<@NonNull TemplateParameter> getTemplateParameters(@NonNull Element element) {
-		return TemplateParameterization.basicGetTemplateParameters(element);
 	}
 
 	/**

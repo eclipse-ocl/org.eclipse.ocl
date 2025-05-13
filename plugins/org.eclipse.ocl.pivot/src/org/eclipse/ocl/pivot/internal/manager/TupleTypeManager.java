@@ -21,7 +21,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -33,7 +32,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.TypedElementImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -66,19 +64,6 @@ public class TupleTypeManager
 		@Override
 		public String toString() {
 			return String.valueOf(name) + " : " + String.valueOf(type);
-		}
-	}
-
-	/**
-	 * The TemplateParameterReferencesVisitor remembers the formal TemplateParameter for re-use during Tuple instantiation.
-	 */
-	@Deprecated /* @deprecated unhelpful functionality */
-	protected static class TemplateParameterReferencesVisitor extends TemplateParameterSubstitutionVisitor
-	{
-		protected final @NonNull Map<@NonNull Integer, @NonNull TemplateParameter> templateParameters = new HashMap<>();
-
-		public TemplateParameterReferencesVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, Collection<? extends Type> partValues) {
-			super(environmentFactory, null, null);
 		}
 	}
 

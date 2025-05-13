@@ -358,7 +358,7 @@ public class SerializeTests extends XtextTestCase
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n" +
 						"";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug382956.ecore", testFile);		// FIXME rename as createTextFile
+		TestFile ecoreFile = createFile("Bug382956.ecore", testFile);		// FIXME rename as createTextFile
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
@@ -377,7 +377,7 @@ public class SerializeTests extends XtextTestCase
 						"  </eSubpackages>\n" +
 						"</ecore:EPackage>\n" +
 						"\n";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug388282.ecore", testFile);		// FIXME rename as createTextFile
+		TestFile ecoreFile = createFile("Bug388282.ecore", testFile);		// FIXME rename as createTextFile
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
@@ -401,7 +401,7 @@ public class SerializeTests extends XtextTestCase
 						"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"to\" lowerBound=\"1\" eType=\"#//Node\" eOpposite=\"#//Node/incoming\" eKeys=\"#//Node/uuid\"/>\n" +
 						" </eClassifiers>\n" +
 						"</ecore:EPackage>";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug397917.ecore", testFile);		// FIXME rename as createTextFile
+		TestFile ecoreFile = createFile("Bug397917.ecore", testFile);		// FIXME rename as createTextFile
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
@@ -426,7 +426,7 @@ public class SerializeTests extends XtextTestCase
 						"    </eStructuralFeatures>\n" +
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug404493.ecore", testFile);
+		TestFile ecoreFile = createFile("Bug404493.ecore", testFile);
 		doSerialize(ecoreFile.getFileURI(), new SerializeTestHelper()
 		{
 			@Override
@@ -477,7 +477,7 @@ public class SerializeTests extends XtextTestCase
 						"    </eOperations>\n" +
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n" ;
-		TestFile ecoreFile = createOCLinEcoreFile("Bug425506.ecore", testFile);
+		TestFile ecoreFile = createFile("Bug425506.ecore", testFile);
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
@@ -490,7 +490,7 @@ public class SerializeTests extends XtextTestCase
 						"    <details key=\"documentation\"/>\n" +
 						"  </eAnnotations>\n" +
 						"</ecore:EPackage>\n";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug457043.ecore", testFile);
+		TestFile ecoreFile = createFile("Bug457043.ecore", testFile);
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
@@ -503,7 +503,7 @@ public class SerializeTests extends XtextTestCase
 						"    <eStructuralFeatures xsi:type=\"ecore:EReference\"/>\n" +
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug463877.ecore", testFile);
+		TestFile ecoreFile = createFile("Bug463877.ecore", testFile);
 		doSerialize(ecoreFile.getFileURI(), new SerializeTestHelper()
 		{
 			@Override
@@ -538,7 +538,7 @@ public class SerializeTests extends XtextTestCase
 						"  </eClassifiers>\n" +
 						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Element\" abstract=\"true\"/>\n" +
 						"</ecore:EPackage>\n";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug464062.ecore", testFile);
+		TestFile ecoreFile = createFile("Bug464062.ecore", testFile);
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
@@ -561,7 +561,7 @@ public class SerializeTests extends XtextTestCase
 						"    </eGenericSuperTypes>\n" +
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug516274.ecore", testFile);		// FIXME rename as createTextFile
+		TestFile ecoreFile = createFile("Bug516274.ecore", testFile);		// FIXME rename as createTextFile
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 	public void testSerialize_Bug516301() throws Exception {
@@ -594,7 +594,7 @@ public class SerializeTests extends XtextTestCase
 						"    </eOperations>\n" +
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>";
-		TestFile ecoreFile = createOCLinEcoreFile("Bug516301.ecore", testFile);
+		TestFile ecoreFile = createFile("Bug516301.ecore", testFile);
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
@@ -640,7 +640,7 @@ public class SerializeTests extends XtextTestCase
 						"    </eAnnotations>\n" +
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n";
-		TestFile ecoreFile = createOCLinEcoreFile("Expressions.ecore", testFile);
+		TestFile ecoreFile = createFile("Expressions.ecore", testFile);
 		doSerialize(ecoreFile.getFileURI(), DEFAULT_HELPER);
 	}
 
