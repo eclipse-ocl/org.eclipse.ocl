@@ -113,11 +113,6 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		private Object currentValue;
 		private int currentIndex = 0;
 
-		@Deprecated /* @deprecated no longer used */
-		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement keyVariable) {
-			this(executor, collectionValue, keyVariable, null);
-		}
-
 		/**
 		 * @since 7.0
 		 */

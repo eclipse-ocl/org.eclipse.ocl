@@ -43,7 +43,7 @@ public class MapRejectIteration extends AbstractIteration
 		}
 		else if (bodyVal == Boolean.FALSE) {
 			Object key = iterationManager.get();
-			MapValue mapValue = (MapValue)((IterationManager.IterationManagerExtension2)iterationManager).getSourceIterable();
+			MapValue mapValue = (MapValue)iterationManager.getSourceIterable();
 			Object value = mapValue.at(key);
 			MapValue.Accumulator accumulatorValue = (MapValue.Accumulator)iterationManager.getAccumulatorValue();
 			assert accumulatorValue != null;												// createAccumulatorValue is @NonNull

@@ -40,12 +40,6 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 	private @NonNull List<@NonNull Iterator<@Nullable Object>> iteratorValues;
 	private final @Nullable Object @NonNull [] arguments;
 
-	@Deprecated /* @deprecated specify co-iterators */
-	public ExecutorMultipleMapIterationManager(@NonNull Executor executor, int iterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
-			@Nullable MapValue mapValue, @Nullable Object accumulatorValue) {
-		this(executor, iterators, false, returnTypeId, body, mapValue, accumulatorValue);
-	}
-
 	/**
 	 * @since 1.18
 	 */

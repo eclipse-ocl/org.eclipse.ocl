@@ -48,25 +48,13 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterableIt
 		}
 
 		@Override
-		public @NonNull CollectionValue getSourceCollection() {
-			return rootIterationManager.getSourceCollection();
+		public @NonNull IterableValue getSourceIterable() {
+			return rootIterationManager.getSourceIterable();
 		}
 	}
 
 	protected final @NonNull TypedElement referredIterator;
 	protected final @NonNull CollectionValueIterator iterator;
-
-	/**
-	 * @since 1.1
-	 */
-	@Deprecated /* @deprecated specify indexIterator */
-	public EvaluatorSingleIterationManager(@NonNull Executor invokingExecutor,
-			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
-			@NonNull TypedElement referredIterator) {
-		this(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue, referredIterator, null);
-	}
-
 
 	/**
 	 * @since 1.18

@@ -40,12 +40,6 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 	private int @Nullable [] iteratorIndexes;
 	private final @Nullable Object @NonNull [] arguments;
 
-	@Deprecated /* @deprecated specify co-iterators */
-	public ExecutorMultipleIterationManager(@NonNull Executor executor, int iterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
-			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
-		this(executor, iterators, false, returnTypeId, body, collectionValue, accumulatorValue);
-	}
-
 	/**
 	 * @since 1.18
 	 */
@@ -125,11 +119,6 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 	@Override
 	public @Nullable Object getAccumulatorValue() {
 		return accumulatorValue;
-	}
-
-	@Override
-	public @NonNull CollectionValue getSourceCollection() {
-		return collectionValue;
 	}
 
 	@Override

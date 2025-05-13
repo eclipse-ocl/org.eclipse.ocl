@@ -51,8 +51,8 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		}
 
 		@Override
-		public @NonNull CollectionValue getSourceCollection() {
-			return rootIterationManager.getSourceCollection();
+		public @NonNull IterableValue getSourceIterable() {
+			return rootIterationManager.getSourceIterable();
 		}
 	}
 
@@ -119,11 +119,6 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 
 	public @NonNull ExecutorSingleIterationManager getRootIterationManager() {
 		return this;
-	}
-
-	@Override
-	public @NonNull CollectionValue getSourceCollection() {
-		return collectionValue;
 	}
 
 	/**

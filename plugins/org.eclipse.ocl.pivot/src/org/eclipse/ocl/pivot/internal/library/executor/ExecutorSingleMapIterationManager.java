@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.library.AbstractIterationManager;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryTernaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 
@@ -55,8 +54,8 @@ public class ExecutorSingleMapIterationManager extends AbstractIterationManager
 		}
 
 		@Override
-		public @NonNull CollectionValue getSourceCollection() {
-			return rootIterationManager.getSourceCollection();
+		public @NonNull IterableValue getSourceIterable() {
+			return rootIterationManager.getSourceIterable();
 		}
 	}
 
@@ -129,7 +128,6 @@ public class ExecutorSingleMapIterationManager extends AbstractIterationManager
 		return mapValue;
 	}
 
-	//	@Override
 	public @Nullable Object getValue() {
 		return currentValueValue;
 	}

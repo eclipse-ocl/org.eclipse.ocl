@@ -87,11 +87,6 @@ public class ExecutorDoubleIterationManager extends AbstractIterationManager
 		return accumulatorValue;
 	}
 
-	@Override
-	public @NonNull CollectionValue getSourceCollection() {
-		return collectionValue;
-	}
-
 	/**
 	 * @since 1.6
 	 */

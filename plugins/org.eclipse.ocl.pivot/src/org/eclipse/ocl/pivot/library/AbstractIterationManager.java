@@ -15,11 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
-import org.eclipse.ocl.pivot.evaluation.IterationManager.IterationManagerExtension2;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
 
-public abstract class AbstractIterationManager implements IterationManagerExtension2
+public abstract class AbstractIterationManager implements IterationManager
 {
 	/**
 	 * @since 1.1
@@ -31,11 +29,6 @@ public abstract class AbstractIterationManager implements IterationManagerExtens
 	 */
 	protected AbstractIterationManager(@NonNull Executor executor) {
 		this.executor = executor;
-	}
-
-	@Override
-	public @NonNull IterationManager createNestedIterationManager(@NonNull CollectionValue value) {
-		return createNestedIterationManager((IterableValue)value);
 	}
 
 	@Override
@@ -57,11 +50,6 @@ public abstract class AbstractIterationManager implements IterationManagerExtens
 	@Override
 	public @NonNull Executor getExecutor() {
 		return executor;
-	}
-
-	@Override
-	public @NonNull CollectionValue getSourceCollection() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
