@@ -135,11 +135,6 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	 */
 	private final @Nullable String asFileExtension;		// FIXME refactor to protected, @NonNull.
 
-	@Deprecated /* @deprecated (no longer used) provide null asFileExtension argument */
-	protected AbstractASResourceFactory(@NonNull String asContentType) {
-		this(asContentType, null);
-	}
-
 	/**
 	 * @since 1.10
 	 */

@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -38,12 +37,6 @@ public interface Attribution
 	{
 		private static final long serialVersionUID = 1L;
 		private static final Logger logger = Logger.getLogger(AttributionRegistry.class);
-
-		@Override @Deprecated /* @deprecated use new AttributionRegistryInstaller().install() for better debugging */
-		public @NonNull Attribution put(@NonNull EClassifier key, @NonNull Attribution newValue) {
-			assert PivotUtilInternal.debugDeprecation("AttributionRegistry.put");
-			return install(key,  newValue, null);
-		}
 
 		// Bug 583509 - the GlobalState save and restore should include this registry.
 		@SuppressWarnings("null")

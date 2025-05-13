@@ -558,11 +558,6 @@ public class FlowAnalysis
 		}
 	}
 
-	@Deprecated /* @deprecated Use MetamodelManagerInternalExtension2.getFlowAnalysis */
-	public static @NonNull FlowAnalysis getFlowAnalysis(@NonNull EnvironmentFactory environmentFactory, @NonNull OCLExpression contextExpression) {
-		return environmentFactory.getMetamodelManager().getFlowAnalysis(contextExpression);
-	}
-
 	/**
 	 * Return the ancestor of contextExpression that shares the same FlowAnalysis as contextExpression
 	 */

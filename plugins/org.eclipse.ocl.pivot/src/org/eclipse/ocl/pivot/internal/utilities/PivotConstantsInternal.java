@@ -142,20 +142,14 @@ public interface PivotConstantsInternal
 	 * @since 1.4
 	 */
 	static final @NonNull String BODY_ROLE = "«body»";
-	@Deprecated
-	static final @NonNull String BODY_EXPRESSION_ROLE = BODY_ROLE;
 	/**
 	 * @since 1.4
 	 */
 	static final @NonNull String CONSTRAINT_ROLE = "«constraint»";
-	@Deprecated
-	static final @NonNull String OWNED_CONSTRAINT_ROLE = CONSTRAINT_ROLE;
 	/**
 	 * @since 1.4
 	 */
 	static final @NonNull String INITIALIZER_ROLE = "«initializer»";
-	@Deprecated
-	static final @NonNull String DEFAULT_EXPRESSION_ROLE = INITIALIZER_ROLE;
 	/**
 	 * @since 1.4
 	 */

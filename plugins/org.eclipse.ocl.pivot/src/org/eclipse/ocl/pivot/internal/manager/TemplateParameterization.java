@@ -63,16 +63,6 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 		return null;
 	}
 
-	@Deprecated /* @deprecated use getTemplateParameterization */
-	public static @Nullable List<@NonNull TemplateParameter> basicGetTemplateParameters(@NonNull Element element) {
-		List<@NonNull TemplateParameter> templateParameters = basicGetTemplateParameters(null, element);
-		return templateParameters;
-	}
-
-	public static @NonNull List<@NonNull TemplateParameter> getTemplateParameters(@NonNull Element element) {
-		return Objects.requireNonNull(basicGetTemplateParameters(null, element));
-	}
-
 	private static @Nullable List<@NonNull TemplateParameter> basicGetTemplateParameters(@Nullable List<@NonNull TemplateParameter> templateParameters, @NonNull EObject element) {
 		EObject eContainer = element.eContainer();
 		if (eContainer != null) {
@@ -100,6 +90,10 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 			}
 		}
 		throw new NullPointerException("No TemplateableElement scope for " + element);
+	}
+
+	public static @NonNull List<@NonNull TemplateParameter> getTemplateParameters(@NonNull Element element) {
+		return Objects.requireNonNull(basicGetTemplateParameters(null, element));
 	}
 
 	protected final @NonNull TemplateableElement templateableElement;

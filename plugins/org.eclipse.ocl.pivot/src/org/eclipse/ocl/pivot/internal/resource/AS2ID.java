@@ -22,8 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
-import com.google.common.collect.Lists;
-
 /**
  * AS2ID computes the predictable xmi:ids for ASResources using LUSSIDs.
  *
@@ -51,18 +49,6 @@ public class AS2ID
 	public static void assignIds(@NonNull ASResource resource, @Nullable Map<@NonNull Object, @Nullable Object> options) {
 		AS2ID as2id = new AS2ID(options);
 		as2id.assignLUSSIDs(resource);
-		as2id.assignXMIIDs();
-		as2id.assignErrors();
-	}
-
-	@Deprecated /* @deprecated pass List to avoid CME hazard */
-	public static void assignIds(@NonNull Iterable</*@NonNull*/ Resource> resources, @Nullable Map<@NonNull Object, @Nullable Object> options) {
-		AS2ID as2id = new AS2ID(options);
-		for (Resource resource : Lists.newArrayList(resources)) {		// Proxy resolution may add new resources
-			if (resource instanceof ASResource) {
-				as2id.assignLUSSIDs((ASResource) resource);
-			}
-		}
 		as2id.assignXMIIDs();
 		as2id.assignErrors();
 	}
