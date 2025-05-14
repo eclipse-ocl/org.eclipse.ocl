@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -24,19 +24,21 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegate;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 
 /**
  * An implementation of the dynamic validation delegate API, maintaining a cache
  * of compiled constraints and invariants.
  */
 public class OCLDebugValidationDelegate extends OCLValidationDelegate
-{	
+{
 	public OCLDebugValidationDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier classifier) {
 		super(delegateDomain, classifier);
 	}
-	
+
+	@Override
 	protected boolean validateExpressionInOCL(final @NonNull EClassifier eClassifier, final @NonNull Object value, final @Nullable DiagnosticChain diagnostics,
 			final Map<Object, Object> context, String constraintName, final String source, final int code, @NonNull ExpressionInOCL query) {
 		AbstractConstraintEvaluator<Boolean> constraintEvaluator = new CheckingConstraintEvaluator(eClassifier, query)
@@ -61,8 +63,8 @@ public class OCLDebugValidationDelegate extends OCLValidationDelegate
 				return Boolean.FALSE;
 			}
 		};
-		OCL ocl = delegateDomain.getOCL();
-		EvaluationVisitor evaluationVisitor = ocl.createEvaluationVisitor(value, query);
+		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(eClassifier);
+		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, null);
 		return constraintEvaluator.evaluate(evaluationVisitor);
 	}
 }

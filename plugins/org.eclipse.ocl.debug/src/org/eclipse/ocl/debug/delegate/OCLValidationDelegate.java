@@ -37,10 +37,10 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
@@ -268,8 +268,8 @@ public class OCLValidationDelegate implements ValidationDelegate
 				return Boolean.FALSE;
 			}
 		};
-		OCL ocl = delegateDomain.getOCL();
-		EvaluationVisitor evaluationVisitor = ocl.createEvaluationVisitor(value, query);
+		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(eClassifier);
+		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, null);
 		return constraintEvaluator.evaluate(evaluationVisitor);
 	}
 
