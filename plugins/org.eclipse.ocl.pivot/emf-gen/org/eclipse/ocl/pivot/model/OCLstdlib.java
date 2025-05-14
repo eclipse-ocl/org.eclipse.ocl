@@ -25,7 +25,6 @@ import java.util.Objects;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
@@ -63,11 +62,9 @@ import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
- 
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -157,7 +154,7 @@ public class OCLstdlib extends ASResourceImpl
 	 * extension when running within Eclipse.
 	 */
 	public static void install() {
-		EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, OCLstdlibPackage.eINSTANCE);
+		PivotStandaloneSetup.init(OCLstdlibPackage.eINSTANCE);
 		Loader contribution = new Loader();
 		StandardLibraryContribution.REGISTRY.put(STDLIB_URI, contribution);
 		OCLASResourceFactory.REGISTRY.put(STDLIB_AS_URI, contribution);

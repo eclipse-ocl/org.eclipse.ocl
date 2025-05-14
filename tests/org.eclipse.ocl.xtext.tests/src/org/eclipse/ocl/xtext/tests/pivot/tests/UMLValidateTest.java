@@ -98,10 +98,10 @@ public class UMLValidateTest extends AbstractValidateTests
 	//
 	@Override
 	@Before public void setUp() throws Exception {
-		super.setUp();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			UMLStandaloneSetup.init();
 		}
+		super.setUp();
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 		//			"xmi", new EcoreResourceFactoryImpl());
 		OCLstdlib.install();
@@ -205,8 +205,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
 		EnvironmentFactoryInternal environmentFactory = helper.getEnvironmentFactory();
 	//	environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
-		ProjectManager projectMap = environmentFactory.getProjectManager();
-		projectMap.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
+		configureProjectMap(environmentFactory, StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 		//
 		//	Load all the documents
 		//
