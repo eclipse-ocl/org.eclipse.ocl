@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
@@ -62,6 +64,8 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IConflictHandler;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceLoadStrategy;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -108,10 +112,10 @@ public class AbstractPivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusiastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-	//	PivotUtilInternal.noDebug = false;
-	//	DEBUG_GC = true;
-	//	DEBUG_ID = true;
-	//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+		//	PivotUtilInternal.noDebug = false;
+		//	DEBUG_GC = true;
+		//	DEBUG_ID = true;
+		//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 		//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
 		//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
 		//	ResourceSetImpl.liveResourceSets = new WeakHashMap<>();						// Requires edw-debug private EMF branch
@@ -131,6 +135,10 @@ public class AbstractPivotTestCase extends TestCase
 		private @NonNull HashMap<String, Object> contentTypeIdentifierToServiceProviderMap;
 
 		public GlobalStateMemento() {
+			if (EPackage.Registry.INSTANCE.containsKey("http://www.eclipse.org/ocl/test/Pivot/Company.ecore")) {
+				System.err.println("Oops GlobalStateMemento ctor found " + "http://www.eclipse.org/ocl/test/Pivot/Company.ecore");
+			}
+
 			validatorReg = new HashMap<>(EValidator.Registry.INSTANCE);
 			epackageReg = new HashMap<>(EPackage.Registry.INSTANCE);
 			protocolToFactoryMap = new HashMap<>(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
@@ -143,9 +151,12 @@ public class AbstractPivotTestCase extends TestCase
 		}
 
 		public void restoreGlobalState() {
+		//	System.out.println("restoreGlobalState " + NameUtil.debugSimpleName(EPackage.Registry.INSTANCE) + " " + EPackage.Registry.INSTANCE.size());
 			for (String nsURI : EPackage.Registry.INSTANCE.keySet()) {
 				if (!epackageReg.containsKey(nsURI)) {
-					System.err.println("Memento restore corrupts the " + nsURI + " INSTANCE installation");
+					System.err.println("Memento restore corrupts the " + nsURI + " INSTANCE installation\n" +
+						"\tEither: install " + nsURI + " before a GlobalStateMemento is constructed\n" +
+						"\t or: invoke AbstractPivotTestCase.registerEPackage() to use dynamically.");
 				}
 			}
 			clearGlobalRegistries();
@@ -611,6 +622,17 @@ public class AbstractPivotTestCase extends TestCase
 		}
 	}
 
+	protected void configureProjectMap(@NonNull EnvironmentFactory environmentFactory, @NonNull IResourceLoadStrategy loadStrategy, @NonNull IConflictHandler conflictHandler) {
+		Set<String> nsURIs = new HashSet<>(EPackage.Registry.INSTANCE.keySet());
+		ProjectManager projectMap = environmentFactory.getProjectManager();
+		projectMap.configure(environmentFactory.getResourceSet(), loadStrategy, conflictHandler);
+		for (String nsURI : EPackage.Registry.INSTANCE.keySet()) {
+			if (!nsURIs.contains(nsURI)) {
+				registerEPackage(EPackage.Registry.INSTANCE.getEPackage(nsURI));
+			}
+		}
+	}
+
 	public static boolean eclipseIsRunning() {
 		try {
 			Class<?> platformClass = Class.forName("org.eclipse.core.runtime.Platform");
@@ -755,17 +777,25 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	/**
-	 * Register the temporary use of EPackage by the test, ensuring correctr installation and de-instalation for
+	 * Register the temporary use of EPackage by the test, ensuring correct installation and de-instalation for
 	 * repeated usage and defeating the missing registration check in restoreMemento.
 	 */
 	protected void registerEPackage(EPackage ePackage) {
-		List<EPackage> registeredEPackages2 = registeredEPackages;
-		if (registeredEPackages2 == null) {
-			registeredEPackages = registeredEPackages2 = new ArrayList<>();
-		}
-		registeredEPackages2.add(ePackage);
-		Object old = EPackageRegistryImpl.INSTANCE.put(ePackage.getNsURI(), ePackage);
-		assert (old == null) || (old == ePackage) || (old instanceof EPackage.Descriptor);
+		String nsURI = ePackage.getNsURI();
+	//	if (EPackageRegistryImpl.INSTANCE.containsKey(nsURI)) {
+	//		System.err.println("registerEPackage invoked when '" + nsURI + "' already registered\n" +
+	//				"\tEither: use registerEPackage consistently in all applicable tests\n" +
+	//				"\t or: register consistently before super.setup().");
+	//	}
+	//	else {
+			List<EPackage> registeredEPackages2 = registeredEPackages;
+			if (registeredEPackages2 == null) {
+				registeredEPackages = registeredEPackages2 = new ArrayList<>();
+			}
+			registeredEPackages2.add(ePackage);
+			Object old = EPackageRegistryImpl.INSTANCE.put(nsURI, ePackage);
+			assert (old == null) || (old == ePackage) || (old instanceof EPackage.Descriptor);
+	//	}
 	}
 
 	private static @Nullable String SETUP_TEST_NAME = null;		// Debug flag to detect enforcement of init before memento

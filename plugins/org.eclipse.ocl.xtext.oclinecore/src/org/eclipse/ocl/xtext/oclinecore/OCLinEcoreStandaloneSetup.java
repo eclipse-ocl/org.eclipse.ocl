@@ -12,7 +12,7 @@
 package org.eclipse.ocl.xtext.oclinecore;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.utilities.OCLinEcoreASResourceFactory;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 
@@ -56,7 +56,7 @@ public class OCLinEcoreStandaloneSetup extends OCLinEcoreStandaloneSetupGenerate
 	public static void init() {
 		OCLinEcoreASResourceFactory.getInstance();
 //		OCLinEcoreAS2CS.FACTORY.getClass();
-		EPackage.Registry.INSTANCE.put(OCLinEcoreCSPackage.eNS_URI, OCLinEcoreCSPackage.eINSTANCE);
+		PivotStandaloneSetup.init(OCLinEcoreCSPackage.eINSTANCE);
 	}
 
 	@Override
