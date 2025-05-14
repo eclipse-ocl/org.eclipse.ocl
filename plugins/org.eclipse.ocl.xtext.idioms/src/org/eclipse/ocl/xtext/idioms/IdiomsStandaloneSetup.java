@@ -13,7 +13,7 @@
 package org.eclipse.ocl.xtext.idioms;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -52,7 +52,7 @@ public class IdiomsStandaloneSetup extends IdiomsStandaloneSetupGenerated
 	}
 
 	public static void init() {
-		EPackage.Registry.INSTANCE.put(IdiomsPackage.eNS_URI, IdiomsPackage.eINSTANCE);
+		PivotStandaloneSetup.init(IdiomsPackage.eINSTANCE);
 	}
 
 	@Override

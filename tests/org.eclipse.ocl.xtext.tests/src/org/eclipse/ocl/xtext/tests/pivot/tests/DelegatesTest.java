@@ -319,14 +319,17 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ValidationRegistryAdapter.getAdapter(resourceSet).put(CodegencompanyPackage.eINSTANCE, CodegencompanyValidator.INSTANCE);
 	}
 
-	/*	protected void removePackageRegistrations() {
-		resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);
+	protected void removePackageRegistrations() {
+		EPackage.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);
+		EPackage.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);
+		EPackage.Registry.INSTANCE.remove(CodegencompanyPackage.eNS_URI);
+	/*	resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);
 		resourceSet.getPackageRegistry().remove(NoreflectioncompanyPackage.eNS_URI);
 		resourceSet.getPackageRegistry().remove(CodegencompanyPackage.eNS_URI);
 		ValidationRegistryAdapter.getAdapter(resourceSet).remove(CompanyPackage.eNS_URI);
 		ValidationRegistryAdapter.getAdapter(resourceSet).remove(NoreflectioncompanyPackage.eNS_URI);
-		ValidationRegistryAdapter.getAdapter(resourceSet).remove(CodegencompanyPackage.eNS_URI);
-	} */
+		ValidationRegistryAdapter.getAdapter(resourceSet).remove(CodegencompanyPackage.eNS_URI); */
+	}
 	//
 	// Test framework
 	//
@@ -338,6 +341,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUtil.doEssentialOCLSetup();
 		TestUtil.doCompleteOCLSetup();
+		removePackageRegistrations();
 		super.setUp();
 		TestCaseAppender.INSTANCE.install();
 		//
@@ -345,9 +349,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		/**
 		 * Ensure that there is support for custom messages and severities.
 		 */
-		EPackage.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);						// Reference and nullify the side effect of the reference
+	//	EPackage.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);						// Reference and nullify the side effect of the reference
 		//		resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);				// In case previous test failed
-		EPackage.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);			// Reference and nullify the side effect of the reference
+	//	EPackage.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);			// Reference and nullify the side effect of the reference
 		//		resourceSet.getPackageRegistry().remove(NoreflectioncompanyPackage.eNS_URI);	// In case previous test failed
 		//		PivotUtilInternal.debugPrintln("Done Setup");
 	}
@@ -376,7 +380,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				adapter.unloadDelegates();
 			}
 		}
-	//	gc("GC-ed3");
+		removePackageRegistrations();
+		//	gc("GC-ed3");
 		autoTearDown();
 	//	gc("GC-ed4");
 		TestCaseAppender.INSTANCE.uninstall();

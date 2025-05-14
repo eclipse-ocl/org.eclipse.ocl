@@ -66,9 +66,28 @@ public class PivotStandaloneSetup //implements ISetup
 		EcorePackage.eINSTANCE.getClass();
 		PivotScoping.init();
 		ToStringVisitor.FACTORY.getClass();
-		EPackage.Registry.INSTANCE.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
+		init(PivotPackage.eINSTANCE);
 		EValidator.Registry.INSTANCE.put(PivotPackage.eINSTANCE, PivotValidator.INSTANCE);
 		LabelGeneratorRegistry.initialize(ILabelGenerator.Registry.INSTANCE);
+	}
+
+	/**
+	 * Ensure that ePackage is registered in the global EPackage.Registry.INSTANCE.
+	 *
+	 * @since 7.0
+	 */
+	public static void init(/*@NonNull*/ EPackage ePackage) {
+		String eNSuri = ePackage.getNsURI();
+		Object knownEPackage = EPackage.Registry.INSTANCE.get(eNSuri);
+		if (knownEPackage == null) {
+			EPackage.Registry.INSTANCE.put(eNSuri, ePackage);
+		}
+		else if (knownEPackage == ePackage) {
+			// Required package already registered.
+		}
+		else {
+			System.err.println("Conflicting registrations for '" + eNSuri + "'");
+		}
 	}
 
 	/**
@@ -98,8 +117,7 @@ public class PivotStandaloneSetup //implements ISetup
 		if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xmi"))
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
 				"xmi", new org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl());
-		if (!EPackage.Registry.INSTANCE.containsKey(PivotPackage.eNS_URI))
-			EPackage.Registry.INSTANCE.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
+		init(PivotPackage.eINSTANCE);
 
 		Injector injector = createInjector();
 		register(injector);

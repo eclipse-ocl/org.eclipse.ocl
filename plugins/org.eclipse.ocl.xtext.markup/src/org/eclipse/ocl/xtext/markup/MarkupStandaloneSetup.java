@@ -11,7 +11,7 @@
 package org.eclipse.ocl.xtext.markup;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
 
 import com.google.inject.Guice;
@@ -52,7 +52,7 @@ public class MarkupStandaloneSetup extends MarkupStandaloneSetupGenerated
 	}
 
 	public static void init() {
-		EPackage.Registry.INSTANCE.put(MarkupPackage.eNS_URI, MarkupPackage.eINSTANCE);
+		PivotStandaloneSetup.init(MarkupPackage.eINSTANCE);
 	}
 
 	@Override

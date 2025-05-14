@@ -17,7 +17,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
@@ -96,7 +95,7 @@ public class UMLStandaloneSetup //implements ISetup
 			UMLASResourceFactory.getInstance();
 			UML2AS.initialize();
 			UML2AS.initializeUMLglobals();
-			EPackage.Registry.INSTANCE.put(OCLforUMLPackage.eNS_URI, OCLforUMLPackage.eINSTANCE);
+			PivotStandaloneSetup.init(OCLforUMLPackage.eINSTANCE);
 			URI ocl4umlProfileURI = URI.createURI(OCL4UML_PROFILE_URI);
 			UMLPlugin.getEPackageNsURIToProfileLocationMap().put(OCLforUMLPackage.eNS_URI, ocl4umlProfileURI);
 			URI baseURI = getBaseOCLResourceURI();

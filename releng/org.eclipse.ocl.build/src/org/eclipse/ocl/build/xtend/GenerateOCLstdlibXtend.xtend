@@ -143,6 +143,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.model.OCLmetamodel;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
+			import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
 
 			«FOR externalPackage : externalPackages»
@@ -240,7 +241,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 * extension when running within Eclipse.
 				 */
 				public static void install() {
-					EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, OCLstdlibPackage.eINSTANCE);
+					PivotStandaloneSetup.init(OCLstdlibPackage.eINSTANCE);
 					Loader contribution = new Loader();
 					StandardLibraryContribution.REGISTRY.put(STDLIB_URI, contribution);
 					OCLASResourceFactory.REGISTRY.put(STDLIB_AS_URI, contribution);

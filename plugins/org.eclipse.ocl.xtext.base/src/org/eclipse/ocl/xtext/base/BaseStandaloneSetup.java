@@ -14,7 +14,6 @@ package org.eclipse.ocl.xtext.base;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -64,7 +63,7 @@ public class BaseStandaloneSetup extends BaseStandaloneSetupGenerated
 	public static void init() {
 		PivotStandaloneSetup.doSetup();
 		BaseScoping.init();
-		EPackage.Registry.INSTANCE.put(BaseCSPackage.eNS_URI, BaseCSPackage.eINSTANCE);
+		PivotStandaloneSetup.init(BaseCSPackage.eINSTANCE);
 		EValidator.Registry.INSTANCE.put(BaseCSPackage.eINSTANCE, BaseCSValidator.INSTANCE);
 		NamedElementCSLabelGenerator.initialize(ILabelGenerator.Registry.INSTANCE);
 

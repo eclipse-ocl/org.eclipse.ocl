@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -44,13 +45,12 @@ import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCLLoaderWithLog;
 import org.eclipse.ocl.xtext.tests.ecoreTest.EcoreTestPackage;
 import org.eclipse.ocl.xtext.tests.ecoreTest2.EcoreTest2Package;
-
-import junit.framework.TestCase;
+import org.eclipse.ocl.xtext.tests.pivot.tests.AbstractPivotTestCase;
 
 /**
  * Abstract shared functionality for testing.
  */
-public abstract class AbstractValidityTestCase extends TestCase
+public abstract class AbstractValidityTestCase extends AbstractPivotTestCase
 {
 	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.tests"; //$NON-NLS-1$
 	public static final @NonNull TracingOption TEST_PROGRESS = new TracingOption(PLUGIN_ID, "test/progress");
@@ -225,14 +225,8 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected RootNode rootNode;
 	protected ResultSet resultSet;
 
-	@Override
-	public String getName() {
-		String testNameSuffix = System.getProperty("testNameSuffix", "");
-		return getTestName() + " <" + testNameSuffix + ">";
-	}
-
-	public String getTestName() {
-		return super.getName();
+	protected AbstractValidityTestCase() {
+		super(TestHelper.INSTANCE);
 	}
 
 	public void initTestModels() throws Exception {
@@ -284,6 +278,8 @@ public abstract class AbstractValidityTestCase extends TestCase
 			TEST_PROGRESS.println("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
 		}
 		super.setUp();
+		EPackage.Registry.INSTANCE.remove(EcoreTestPackage.eNS_URI);
+		registerEPackage(EcoreTestPackage.eINSTANCE);
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			CompleteOCLStandaloneSetup.doSetup();
 			EcoreTestPackage.eINSTANCE.getClass();
@@ -317,5 +313,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 		if (TEST_PROGRESS.isActive()) {
 			TEST_PROGRESS.println("==> Finish " + getName());
 		}
+		EPackage.Registry.INSTANCE.remove(EcoreTestPackage.eNS_URI);
+		super.tearDown();
 	}
 }

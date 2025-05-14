@@ -12,7 +12,7 @@
 package org.eclipse.ocl.xtext.essentialocl;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScoping;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLASResourceFactory;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -59,7 +59,7 @@ public class EssentialOCLStandaloneSetup extends EssentialOCLStandaloneSetupGene
 		EssentialOCLASResourceFactory.getInstance();
 //		EssentialOCLCS2AS.FACTORY.getClass();
 //		EssentialOCLAS2CS.FACTORY.getClass();
-		EPackage.Registry.INSTANCE.put(EssentialOCLCSPackage.eNS_URI, EssentialOCLCSPackage.eINSTANCE);
+		PivotStandaloneSetup.init(EssentialOCLCSPackage.eINSTANCE);
 //		EValidator.Registry.INSTANCE.put(EssentialOCLCSPackage.eINSTANCE, EssentialOCLCSValidator.INSTANCE);
 	}
 
