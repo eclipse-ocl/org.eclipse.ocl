@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 //import org.eclipse.ocl.pivot.internal.validation.BasicEAnnotationValidator2;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
@@ -169,7 +168,6 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 
 	@Override
 	protected void tearDown() throws Exception {
-		GlobalEnvironmentFactory.disposeInstance();
 		TestCaseAppender.INSTANCE.uninstall();
 		super.tearDown();
 	}
