@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -238,7 +237,6 @@ public class AbstractPivotTestCase extends TestCase
 			MarkupStandaloneSetup.doTearDown();
 			OCLinEcoreStandaloneSetup.doTearDown();
 			OCLstdlibStandaloneSetup.doTearDown();
-			GlobalEnvironmentFactory.disposeInstance();
 			GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
 			GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
 			//		OCLstdlib.uninstall(); // should be able to persist
@@ -586,8 +584,7 @@ public class AbstractPivotTestCase extends TestCase
 	} */
 
 	public static @Nullable StandaloneProjectMap basicGetProjectMap() {
-		EnvironmentFactory globalEnvironmentFactory = GlobalEnvironmentFactory.basicGetInstance();
-		return globalEnvironmentFactory != null ? (StandaloneProjectMap)globalEnvironmentFactory.getProjectManager() : null; //projectMap;
+		return null; //projectMap;
 	}
 
 	/**
@@ -777,7 +774,6 @@ public class AbstractPivotTestCase extends TestCase
 	protected void setUp() throws Exception {
 		SETUP_TEST_NAME = getTestName();
 		PivotUtilInternal.debugReset();
-		GlobalEnvironmentFactory.resetSafeNavigationValidations();
 		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
 		ThreadLocalExecutor.reset();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -790,7 +786,7 @@ public class AbstractPivotTestCase extends TestCase
 		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
 		if (DEBUG_GC) {
 			//
-			//	Ensure that widely used built-in models are regfistered before saving the global state.
+			//	Ensure that widely used built-in models are registered before saving the global state.
 			//
 			XMLNamespacePackage.eINSTANCE.getClass();
 			GenModelPackage.eINSTANCE.getName();

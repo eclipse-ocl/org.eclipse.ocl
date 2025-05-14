@@ -151,7 +151,6 @@ public class UML25LoadTests extends AbstractUMLLoadTests
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
 		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("UML.xmi");
-	//XXX	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		doLoadUML(null, modelURI, false, true, null /*new @NonNull String[] {		// FIXME BUG 551915 validation disabled
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::Classification::Operation::returnResult() : Set(UML::Classification::Parameter)'", // needs ->asSet()
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::StructuredClassifiers::Association::endType() : Set(UML::CommonStructure::Type[+|1])'", // needs ->oclAsType(Set(uml::CommonStructure::Type[+|1]))
@@ -162,7 +161,6 @@ public class UML25LoadTests extends AbstractUMLLoadTests
 	public void testLoad_UML_2_5_Final_UMLDI() throws IOException, InterruptedException, ParserException {
 		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
 		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("DI.xmi");
-	//XXX	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		doLoadUML(null, modelURI, false, true, NO_MESSAGES, null);		// FIXME BUG 419132 eliminate last argument; always true
 	}
 

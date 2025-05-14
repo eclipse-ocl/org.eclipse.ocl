@@ -10,13 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.delegate;
 
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -33,24 +29,17 @@ import org.eclipse.ocl.common.delegate.DelegateResourceSetAdapter;
 import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * An implementation of a delegate domain for an OCL enhanced package. The domain
  * maintains an OCL facade to be shared by all delegates within the package.
  */
-public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFactory.Listener
+public class OCLDelegateDomain implements DelegateDomain
 {
 	public static class FactoryFactory
 	{
@@ -301,8 +290,6 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 	protected final @NonNull String uri;
 	protected final @NonNull EPackage ePackage;
-	@Deprecated /* @deprecated replaced getEnvironmentFactory() from local thread */
-	protected OCL ocl = null;				// Lazily initialized and re-initialized
 	// FIXME Introduce a lightweight function (? a lambda function) to avoid the need for a CompleteEnvironment for queries
 	//	private Map<CompletePackage, org.eclipse.ocl.pivot.Package> queryPackages = null;
 	//	private Map<CompleteType, org.eclipse.ocl.pivot.Class> queryTypes = null;
@@ -323,80 +310,8 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		this.ePackage = ePackage;
 	}
 
-	@Override
-	public void environmentFactoryDisposed(@NonNull EnvironmentFactory environmentFactory) {
-		reset();
-	}
-
-	/**
-	 * @since 1.14
-	 */
-	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
-	public @NonNull EnvironmentFactory getEnvironmentFactory() {		// cf PivotUtilInternal.getEnvironmentFactory
-		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(ProjectManager.NO_PROJECTS, null, null);
-			ThreadLocalExecutor.setUsesFinalizer();			// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
-		}
-		return environmentFactory;
-	}
-
-	/*	private @NonNull EnvironmentFactory getEnvironmentFactory() {
-		Resource res = ePackage.eResource();
-		EnvironmentFactory envFactory = null;
-		if (res != null) {
-			MetamodelManager metamodelManager = null;
-			ResourceSet resourceSet = res.getResourceSet();
-			if (resourceSet != null) {
-				EnvironmentFactoryResourceSetAdapter rsAdapter = EnvironmentFactoryResourceSetAdapter.findAdapter(resourceSet);
-				if (rsAdapter != null) {
-					metamodelManager = rsAdapter.getMetamodelManager();
-				}
-				// it's a dynamic package. Use the local package registry
-//				EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
-				if (metamodelManager != null) {
-					envFactory = metamodelManager.getEnvironmentFactory();
-				}
-				else {
-					envFactory = OCL.Internal.createEnvironmentFactory(null);
-				}
-				DelegateResourceAdapter.getAdapter(res);
-			}
-		}
-		if (envFactory == null) {
-			// the shared instance uses the static package registry
-			envFactory = OCL.Internal.getGlobalEnvironmentFactory();
-		}
-		return envFactory;
-	} */
-
-	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
-	public final @NonNull MetamodelManager getMetamodelManager() {
-		return getEnvironmentFactory().getMetamodelManager();
-	}
-
-	@Deprecated /* @deprecated use getEnvironmentFactory() */
-	public @NonNull OCL getOCL() {
-		OCL ocl2 = ocl;
-		if (ocl2 == null) {
-			EnvironmentFactory localEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (localEnvironmentFactory != null) {
-				ocl2 = ocl = localEnvironmentFactory.createOCL();
-			}
-			else {
-				// Delegates are an application-independent extension of EMF
-				//  so we must use the neutral/global context see Bug 338501
-				//			EnvironmentFactory environmentFactory = getEnvironmentFactory();
-				GlobalEnvironmentFactory environmentFactory = GlobalEnvironmentFactory.getInstance();
-				ocl2 = ocl = environmentFactory.createOCL();
-				environmentFactory.addListener(this);
-			}
-		}
-		return ocl2;
-	}
-
 	public <T extends Element> @Nullable T getPivot(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		EnvironmentFactoryInternal eEnvironmentFactory = (EnvironmentFactoryInternal)PivotUtilInternal.getEnvironmentFactory(eObject);
+		EnvironmentFactoryInternal eEnvironmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
 		try {
 			return eEnvironmentFactory.getASOf(requiredClass, eObject);
 		} catch (ParserException e) {
@@ -410,35 +325,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	}
 
 	@Override
-	public synchronized void reset() {
-		OCL ocl2 = ocl;
-		if (ocl2 != null) {
-			ocl = null;
-			for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-				List<Adapter> eClassifierAdapters = eClassifier.eAdapters();
-				for (Adapter adapter : eClassifierAdapters) {
-					if (adapter instanceof DelegateEClassifierAdapter) {
-						eClassifierAdapters.remove(adapter);
-						break;
-					}
-				}
-				if (eClassifier instanceof EClass) {
-					EClass eClass = (EClass) eClassifier;
-					for (EOperation eOperation : eClass.getEOperations()) {
-						((EOperation.Internal) eOperation).setInvocationDelegate(null);
-					}
-					for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures()) {
-						((EStructuralFeature.Internal) eStructuralFeature).setSettingDelegate(null);
-					}
-				}
-			}
-			EnvironmentFactory environmentFactory = ocl2.getEnvironmentFactory();
-			if (environmentFactory instanceof GlobalEnvironmentFactory) {
-				((GlobalEnvironmentFactory)environmentFactory).removeListener(this);
-			}
-			ocl2.dispose();
-		}
-	}
+	public synchronized void reset() {}
 
 	@Override
 	public String toString() {

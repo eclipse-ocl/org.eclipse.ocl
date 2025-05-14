@@ -80,7 +80,6 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -114,7 +113,6 @@ import org.eclipse.ocl.xtext.tests.company.util.CompanyValidator;
 import org.eclipse.ocl.xtext.tests.noreflectioncompany.NoreflectioncompanyFactory;
 import org.eclipse.ocl.xtext.tests.noreflectioncompany.NoreflectioncompanyPackage;
 import org.eclipse.ocl.xtext.tests.noreflectioncompany.util.NoreflectioncompanyValidator;
-import org.junit.AfterClass;
 
 import junit.framework.TestCase;
 
@@ -360,7 +358,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		if (testResource != null) {
 			testResource.unload();
 		}
-		//		OCL.Internal.disposeGlobalEnvironmentFactory();
 		if (EPackage.Registry.INSTANCE.getEFactory(CompanyPackage.eNS_URI) instanceof CompanyFactory) {
 			DelegateEPackageAdapter adapter = DelegateEPackageAdapter.findAdapter(CompanyPackage.eINSTANCE);
 			if (adapter != null) {
@@ -387,11 +384,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	//	gc("GC-ed9");
 	//	System.gc();
 	//	System.runFinalization();
-	}
-
-	@AfterClass
-	protected void tearDownClass() throws Exception {
-		GlobalEnvironmentFactory.disposeInstance();
 	}
 
 	public void doTest_allInstances(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
@@ -615,7 +607,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				doTest_allInstances(resourceSet, COMPANY_XMI);
 				assertTrue(usedLocalRegistry);
@@ -628,7 +619,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_allInstances(resourceSet, COMPANY_XMI);
@@ -861,7 +851,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_constraintValidation(resourceSet, COMPANY_XMI);
@@ -916,7 +905,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
 				unloadResourceSet(resourceSet);
@@ -935,7 +923,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
 				unloadResourceSet(resourceSet);
@@ -947,7 +934,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
@@ -1064,7 +1050,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws InvocationTargetException {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
 				assertTrue(usedLocalRegistry);
@@ -1077,7 +1062,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws InvocationTargetException {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_invariantValidation(resourceSet, COMPANY_XMI, true, Diagnostic.ERROR);
@@ -1214,7 +1198,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws InvocationTargetException {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				doTest_operationInvocation(resourceSet, COMPANY_XMI);
 				assertTrue(usedLocalRegistry);
@@ -1376,7 +1359,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				doTest_queryExecution(resourceSet, COMPANY_XMI);
 				assertTrue(usedLocalRegistry);
@@ -1390,7 +1372,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_queryExecution(resourceSet, COMPANY_XMI);
@@ -1404,7 +1385,6 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				doTest_queryExecution(resourceSet, COMPANY_XMI);
@@ -1481,16 +1461,12 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws InterruptedException {
-				GlobalEnvironmentFactory.disposeInstance();
 				validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
 				ThreadLocalExecutor.resetEnvironmentFactory();
-				GlobalEnvironmentFactory.disposeInstance();
 				validateTutorial("models/documentation/Tutorial2.ecore", "There are 3 loans for the 2 copies of ''b2''");		// Doubled quotes for NLS.bind
 				ThreadLocalExecutor.resetEnvironmentFactory();
-				GlobalEnvironmentFactory.disposeInstance();
 				validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
 				ThreadLocalExecutor.resetEnvironmentFactory();
-				GlobalEnvironmentFactory.disposeInstance();
 			}
 		});
 	}
@@ -1637,7 +1613,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			doTestRunnable(new TestRunnable() {
 				@Override
 				public void runWithThrowable() {
-					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null); //GlobalEnvironmentFactory.getInstance();
+					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
 					OCL ocl = environmentFactory.createOCL();
 					//
 					//	Projects on classpath should be accessible as platform:/plugin or platform:/project

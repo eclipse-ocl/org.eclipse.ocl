@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -59,7 +58,6 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//	ASResourceImpl.RESOLVE_PROXY.setState(true);
 		//	ASResourceImpl.SET_PROXY.setState(true);
 		ResourceSet resourceSet = new ResourceSetImpl();				// The Sample Ecore Model Editor ResourceSet
-		GlobalEnvironmentFactory.disposeInstance();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
