@@ -59,11 +59,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.w3c.dom.Document;
@@ -2551,7 +2551,7 @@ public class StandaloneProjectMap implements ProjectManager
 		this.isGlobal = isGlobal;
 		if (liveStandaloneProjectMaps != null) {
 			liveStandaloneProjectMaps.put(this, null);
-			PivotUtilInternal.debugPrintln("Create " + getClass().getSimpleName()
+			PivotUtil.debugPrintln("Create " + getClass().getSimpleName()
 				+ "@" + Integer.toHexString(System.identityHashCode(this)) + (isGlobal ? " global" : " local"));
 		}
 	}
@@ -2600,7 +2600,7 @@ public class StandaloneProjectMap implements ProjectManager
 	protected void finalize() throws Throwable {
 		WeakHashMap<@NonNull StandaloneProjectMap, @Nullable Object> liveStandaloneProjectMaps2 = liveStandaloneProjectMaps;
 		if (liveStandaloneProjectMaps2 != null) {
-			PivotUtilInternal.debugPrintln("Finalize " + getClass().getSimpleName()
+			PivotUtil.debugPrintln("Finalize " + getClass().getSimpleName()
 				+ "@" + Integer.toHexString(System.identityHashCode(this)));
 			List<@NonNull StandaloneProjectMap> keySet = new ArrayList<>(liveStandaloneProjectMaps2.keySet());
 			if (!keySet.isEmpty()) {

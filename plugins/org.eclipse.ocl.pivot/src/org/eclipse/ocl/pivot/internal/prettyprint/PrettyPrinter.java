@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions.Global;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -333,7 +332,7 @@ public class PrettyPrinter
 		PrecedenceManager precedenceManager = null;
 		Resource asResource = element.eResource();
 		if (asResource != null) {
-			MetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
+			MetamodelManager metamodelManager = PivotUtil.findMetamodelManager(asResource);
 			if (metamodelManager != null) {
 				precedenceManager = metamodelManager.getPrecedenceManager();
 			}
@@ -572,8 +571,8 @@ public class PrettyPrinter
 							else {
 								uri = rootElement.eResource().getURI();
 								if (uri != null) {
-									if (PivotUtilInternal.isASURI(uri)) {
-										uri = PivotUtilInternal.getNonASURI(uri);
+									if (PivotUtil.isASURI(uri)) {
+										uri = PivotUtil.getNonASURI(uri);
 									}
 								}
 							}
@@ -768,7 +767,7 @@ public class PrettyPrinter
 	}
 
 	public String getName(@Nullable String name, @Nullable Set<String> keywords) {
-		if ((keywords == null) || (!keywords.contains(name)) && PivotUtilInternal.isValidIdentifier(name)) {
+		if ((keywords == null) || (!keywords.contains(name)) && PivotUtil.isValidIdentifier(name)) {
 			return name;
 		}
 		StringBuilder s = new StringBuilder();

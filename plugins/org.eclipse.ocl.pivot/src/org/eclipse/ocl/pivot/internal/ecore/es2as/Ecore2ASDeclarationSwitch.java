@@ -96,7 +96,6 @@ import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -499,7 +498,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				newList.add(pivotObject);
 			}
 		}
-		PivotUtilInternal.refreshList(pivotElement.getOwnedClasses(), newList);
+		PivotUtil.refreshList(pivotElement.getOwnedClasses(), newList);
 		return pivotElement;
 	}
 
@@ -608,7 +607,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				if (key.equals("body")) {
 					bodyName = "";
 					if (value != null) {
-						value = PivotUtilInternal.getBodyExpression(value);	// Workaround Bug 419324
+						value = PivotUtil.getBodyExpression(value);	// Workaround Bug 419324
 					}
 				}
 				else if (key.startsWith("body_")) {
@@ -784,7 +783,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			T pivotObject = (T) doSwitch(eObject);
 			newList.add(pivotObject);
 		}
-		PivotUtilInternal.refreshList(pivotObjects, newList);
+		PivotUtil.refreshList(pivotObjects, newList);
 	}
 
 	public <T extends Element> void doSwitchAll(List<? extends EObject> eObjects) {

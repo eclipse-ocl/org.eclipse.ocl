@@ -36,7 +36,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -369,8 +369,8 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		if (uri == null) {
 			uri = EcoreUtil.getURI(object);
 		}
-		if (PivotUtilInternal.isASURI(uri)) {
-			uri = PivotUtilInternal.getNonASURI(uri);
+		if (PivotUtil.isASURI(uri)) {
+			uri = PivotUtil.getNonASURI(uri);
 		}
 		return uri.toString();
 	}

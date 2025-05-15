@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -762,8 +761,8 @@ public class EnvironmentView
 	}
 
 	public void addImportedElement(@NonNull URI baseURI) {
-		if (PivotUtilInternal.isASURI(baseURI)) {
-			baseURI = PivotUtilInternal.getNonASURI(baseURI);
+		if (PivotUtil.isASURI(baseURI)) {
+			baseURI = PivotUtil.getNonASURI(baseURI);
 		}
 		String name = getName();
 		if (name != null) {

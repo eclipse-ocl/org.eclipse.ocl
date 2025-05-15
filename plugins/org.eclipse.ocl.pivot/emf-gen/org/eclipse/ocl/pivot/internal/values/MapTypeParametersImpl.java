@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -71,8 +70,8 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 		this.valueType = valueType;
 		this.valuesAreNullFree = valuesAreNullFree;
 		hashCode = 5*keyType.hashCode() + (keysAreNullFree ? 9876 : 0) + 7*valueType.hashCode() + (valuesAreNullFree ? 5432 : 0);
-		assert PivotUtilInternal.assertIsNormalizedType(keyType);
-		assert PivotUtilInternal.assertIsNormalizedType(valueType);
+		assert PivotUtil.assertIsNormalizedType(keyType);
+		assert PivotUtil.assertIsNormalizedType(valueType);
 	}
 
 	/**
@@ -92,8 +91,8 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 		this.valueType = castValueType;
 		this.valuesAreNullFree = valueProperty.isIsRequired();
 		hashCode = entryClass.hashCode() + 5*keyType.hashCode() + (keysAreNullFree ? 9876 : 0) + 7*valueType.hashCode() + (valuesAreNullFree ? 5432 : 0);
-		assert PivotUtilInternal.assertIsNormalizedType(keyType);
-		assert PivotUtilInternal.assertIsNormalizedType(valueType);
+		assert PivotUtil.assertIsNormalizedType(keyType);
+		assert PivotUtil.assertIsNormalizedType(valueType);
 	}
 
 	@Override

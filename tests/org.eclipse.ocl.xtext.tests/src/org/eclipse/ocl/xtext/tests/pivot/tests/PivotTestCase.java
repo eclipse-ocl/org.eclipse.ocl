@@ -223,7 +223,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		//		Resource eResource = ClassUtil.requireNonNull(eObject.eResource());
-		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
+		//		PivotUtil.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 		BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostics.getChildren();
 		if (children.size() <= 0) {

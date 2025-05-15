@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -63,7 +63,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 		hash = 111 * hash + this.lower.hashCode();
 		hash = 111 * hash + this.upper.hashCode();
 		hashCode = hash;
-		assert PivotUtilInternal.assertIsNormalizedType(elementType);
+		assert PivotUtil.assertIsNormalizedType(elementType);
 	}
 
 	@Override

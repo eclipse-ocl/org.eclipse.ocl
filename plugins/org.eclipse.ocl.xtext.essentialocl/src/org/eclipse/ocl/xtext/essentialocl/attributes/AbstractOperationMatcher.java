@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -146,15 +145,15 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		if (comparedSourceType != specializedCandidateType) {
 			candidateConversions++;
 		}
-		List<@NonNull Parameter> candidateParameters = PivotUtilInternal.getOwnedParametersList(candidate);
-		List<@NonNull Parameter> referenceParameters = PivotUtilInternal.getOwnedParametersList(reference);
+		List<@NonNull Parameter> candidateParameters = PivotUtil.getOwnedParametersList(candidate);
+		List<@NonNull Parameter> referenceParameters = PivotUtil.getOwnedParametersList(reference);
 		for (int i = 0; i < candidateParameters.size(); i++) {
 			OCLExpression pivotArgument = getArgument(i);
 			Type argumentType = pivotArgument.getType();
 			Parameter referenceParameter = referenceParameters.get(i);
 			Parameter candidateParameter = candidateParameters.get(i);
-			referenceType = PivotUtilInternal.getType(referenceParameter);//.behavioralType();
-			candidateType = PivotUtilInternal.getType(candidateParameter);//.behavioralType();
+			referenceType = PivotUtil.getTypeInternal(referenceParameter);//.behavioralType();
+			candidateType = PivotUtil.getTypeInternal(candidateParameter);//.behavioralType();
 			specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
 			specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
 			if (argumentType != specializedReferenceType) {
@@ -263,7 +262,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	}
 
 	protected @Nullable TemplateParameterSubstitutions matches(@NonNull Operation candidateOperation, boolean useCoercions) {
-		List<@NonNull Parameter> candidateParameters = PivotUtilInternal.getOwnedParametersList(candidateOperation);
+		List<@NonNull Parameter> candidateParameters = PivotUtil.getOwnedParametersList(candidateOperation);
 		int iSize = getArgumentCount();
 		if (iSize != candidateParameters.size()) {
 			return null;
@@ -282,8 +281,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		for (int i = 0; i < iSize; i++) {
 			Parameter candidateParameter = candidateParameters.get(i);
 			OCLExpression expression = getArgument(i);
-			Type candidateType = PivotUtilInternal.getType(candidateParameter);
-			Type expressionType = PivotUtilInternal.getType(expression);
+			Type candidateType = PivotUtil.getTypeInternal(candidateParameter);
+			Type expressionType = PivotUtil.getTypeInternal(expression);
 			if ((cs2asContext != null) && (expressionType instanceof NormalizedTemplateParameter)) {
 				expressionType = cs2asContext.resolveTemplateParameter((NormalizedTemplateParameter)expressionType);
 			}

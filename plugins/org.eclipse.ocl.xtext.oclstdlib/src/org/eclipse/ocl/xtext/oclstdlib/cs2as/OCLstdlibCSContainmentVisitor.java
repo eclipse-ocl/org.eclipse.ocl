@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -219,7 +218,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 				}
 			}
 			if (pivotElement instanceof PrimitiveType) {
-				PivotUtilInternal.refreshList(((PrimitiveType)pivotElement).getCoercions(), coercions);
+				PivotUtil.refreshList(((PrimitiveType)pivotElement).getCoercions(), coercions);
 			}
 		}
 		return null;

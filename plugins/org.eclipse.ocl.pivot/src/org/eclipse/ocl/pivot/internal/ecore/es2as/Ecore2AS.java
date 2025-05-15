@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSin
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
@@ -223,7 +222,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public static @Nullable Ecore2AS loadFromEcore(@NonNull ASResource ecoreASResource, @NonNull URI ecoreURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreASResource.getResourceSet());
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(ecoreASResource.getResourceSet());
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
 		if (ecoreResource == null) {
@@ -382,13 +381,13 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	protected @NonNull URI createPivotURI() {
 		if (ecoreURI != null) {
-			return PivotUtilInternal.getASURI(ecoreURI.trimFragment());
+			return PivotUtil.getASURI(ecoreURI.trimFragment());
 		}
 		URI uri = ecoreResource.getURI();
 		if (uri == null) {
 			throw new IllegalStateException("Missing resource URI");
 		}
-		return PivotUtilInternal.getASURI(uri);
+		return PivotUtil.getASURI(uri);
 	}
 
 	@Override
@@ -984,7 +983,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	protected void resolveDeclarations(@NonNull Resource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
 		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
-		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.requireNonNull(pivotModel)));
+		PivotUtil.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.requireNonNull(pivotModel)));
 		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
 		for (EObject eObject : ecoreContents) {
 			EClass eClass = eObject.eClass();
@@ -1001,7 +1000,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 			}
 		}
-		PivotUtilInternal.refreshList(pivotModel.getOwnedPackages(), newPackages);
+		PivotUtil.refreshList(pivotModel.getOwnedPackages(), newPackages);
 	}
 
 	/**

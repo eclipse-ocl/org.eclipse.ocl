@@ -12,8 +12,8 @@ package org.eclipse.ocl.xtext.base.ui.model;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.ui.editor.GlobalURIEditorOpener;
 
@@ -23,8 +23,8 @@ public class BaseURIEditorOpener extends GlobalURIEditorOpener
 	public IEditorPart open(URI uri, boolean select) {
 		if (uri != null) {
 			URI trimFragment = ClassUtil.requireNonNull(uri.trimFragment());
-			if (PivotUtilInternal.isASURI(trimFragment)) {
-				uri = PivotUtilInternal.getNonASURI(trimFragment);		// FIXME map AST to CST URI too
+			if (PivotUtil.isASURI(trimFragment)) {
+				uri = PivotUtil.getNonASURI(trimFragment);		// FIXME map AST to CST URI too
 			}
 		}
 		return super.open(uri, select);
@@ -33,7 +33,7 @@ public class BaseURIEditorOpener extends GlobalURIEditorOpener
 	@Override
 	public IEditorPart open(URI referenceOwnerURI, EReference reference, int indexInList, boolean select) {
 		if (referenceOwnerURI != null) {
-			referenceOwnerURI = PivotUtilInternal.isASURI(referenceOwnerURI) ? PivotUtilInternal.getNonASURI(referenceOwnerURI) : referenceOwnerURI;
+			referenceOwnerURI = PivotUtil.isASURI(referenceOwnerURI) ? PivotUtil.getNonASURI(referenceOwnerURI) : referenceOwnerURI;
 		}
 		return super.open(referenceOwnerURI, reference, indexInList, select);
 	}

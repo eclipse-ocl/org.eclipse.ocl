@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -142,7 +141,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	 */
 	@Override
 	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> operationParameterVariables) {
-		List<@NonNull Variable> oldSpecificationVariables = PivotUtilInternal.getOwnedParametersList(pivotSpecification);
+		List<@NonNull Variable> oldSpecificationVariables = PivotUtil.getOwnedParametersList(pivotSpecification);
 		List<@NonNull Variable> residualSpecificationVariables = new ArrayList<>(oldSpecificationVariables);
 		List<@NonNull Variable> newSpecificationVariables = new ArrayList<>();
 		for (Parameter operationParameterVariable : operationParameterVariables) {
@@ -172,7 +171,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 
 	@Override
 	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<String, Type> parameters) {
-		List<@NonNull Variable> oldSpecificationVariables = PivotUtilInternal.getOwnedParametersList(pivotSpecification);
+		List<@NonNull Variable> oldSpecificationVariables = PivotUtil.getOwnedParametersList(pivotSpecification);
 		List<@NonNull Variable> residualSpecificationVariables = new ArrayList<>(oldSpecificationVariables);
 		List<@NonNull Variable> newSpecificationVariables = new ArrayList<>();
 		for (String name : parameters.keySet()) {

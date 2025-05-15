@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -767,7 +766,7 @@ public class OCLinEcoreTablesUtils
 		Resource genModelResource = genPackage.eResource();
 		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
 		assert genModelResourceSet != null;
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(genModelResourceSet);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(genModelResourceSet);
 		return environmentFactory.getMetamodelManager();
 	}
 
@@ -820,7 +819,7 @@ public class OCLinEcoreTablesUtils
 			for (org.eclipse.ocl.pivot.Class type : oclstdlibPackage.getOwnedClasses()) {
 				assert type != null;
 				CompleteClass completeClass = metamodelManager.getCompleteClass(type);
-				if ((elementType == null) || !PivotUtilInternal.isElementType(completeClass, elementType, oclVoidType)) {
+				if ((elementType == null) || !PivotUtil.isElementType(completeClass, elementType, oclVoidType)) {
 					types.add(type);
 				}
 			}

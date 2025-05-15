@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -293,7 +292,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static UML2AS loadFromUML(@NonNull ASResource umlASResource, @NonNull URI umlURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlASResource.getResourceSet());
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(umlASResource.getResourceSet());
 		Resource umlResource = environmentFactory.getResourceSet().getResource(umlURI, true);
 		if (umlResource == null) {
 			return null;
@@ -908,7 +907,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			for (org.eclipse.ocl.pivot.@NonNull Class pivotType : type2properties.keySet()) {
 				List<@NonNull Property> asProperties = type2properties.get(pivotType);
 				Collections.sort(asProperties, NameUtil.NAMEABLE_COMPARATOR);
-				refreshList(PivotUtilInternal.getOwnedPropertiesList(pivotType), asProperties);
+				refreshList(PivotUtil.getOwnedPropertiesList(pivotType), asProperties);
 			}
 		}
 
@@ -1091,7 +1090,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		if (uri == null) {
 			throw new IllegalStateException("Missing resource URI");
 		}
-		return PivotUtilInternal.getASURI(uri);
+		return PivotUtil.getASURI(uri);
 	}
 
 //	@Override
@@ -1307,7 +1306,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 				error("Bad UML content : " + eObject.eClass().getName());
 			}
 		}
-		PivotUtilInternal.refreshList(pivotModel2.getOwnedPackages(), rootPackages);
+		PivotUtil.refreshList(pivotModel2.getOwnedPackages(), rootPackages);
 		return pivotModel2;
 	}
 
@@ -1404,7 +1403,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					if (eContainerContainer instanceof org.eclipse.uml2.uml.Operation) {
 						org.eclipse.uml2.uml.Operation umlOperation = (org.eclipse.uml2.uml.Operation)eContainerContainer;
 						if (umlOperation.getBodyCondition() == eContainer) {
-							umlBody = PivotUtilInternal.getBodyExpression(umlBody);
+							umlBody = PivotUtil.getBodyExpression(umlBody);
 						}
 					}
 				}

@@ -23,7 +23,6 @@ import java.util.Map;
 
 import org.eclipse.core.expressions.Expression;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -60,11 +59,11 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.swt.SWT;
@@ -222,7 +221,7 @@ public class EmbeddedXtextEditor
 
 		injector.injectMembers(this);
 		if (currentEnvironmentFactory == null) {
-			currentEnvironmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
+			currentEnvironmentFactory = PivotUtil.getEnvironmentFactory(null);
 		}
 		ocl = OCLInternal.newInstance(currentEnvironmentFactory);
 		ResourceSet xtextResourceSet = getResourceSet();

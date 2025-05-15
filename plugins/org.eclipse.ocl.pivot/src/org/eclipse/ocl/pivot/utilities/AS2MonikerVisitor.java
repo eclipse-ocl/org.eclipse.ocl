@@ -77,7 +77,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -352,7 +351,7 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visitConstraint(@NonNull Constraint object) {
 		context.appendParent(object, MONIKER_SCOPE_SEPARATOR);
-		context.append(PivotUtilInternal.getStereotype(object));
+		context.append(PivotUtil.getStereotype(object));
 		Object container = object.eContainer().eGet(object.eContainingFeature());
 		if (container instanceof List<?>) {
 			int index = 0;
@@ -363,7 +362,7 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 				}
 				if (content instanceof Constraint) {
 					Constraint sibling = (Constraint) content;
-					if (PivotUtilInternal.getStereotype(sibling).equals(PivotUtilInternal.getStereotype(object))) {
+					if (PivotUtil.getStereotype(sibling).equals(PivotUtil.getStereotype(object))) {
 						String name1 = sibling.getName();
 						if (name1 != name2) {
 							if ((name1 == null) || !name1.equals(name2)) {

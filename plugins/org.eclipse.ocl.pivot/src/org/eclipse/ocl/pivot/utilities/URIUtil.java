@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
 /**
  * @since 1.4
@@ -108,8 +107,8 @@ public class URIUtil
 	 * If uri is for an AS resource, return is non-AS equivalent. Otherwise just return uri.
 	 */
 	public static @NonNull URI getNonASURI(@NonNull URI uri) {
-		if (PivotUtilInternal.isASURI(uri)) {
-			uri = PivotUtilInternal.getNonASURI(uri);
+		if (PivotUtil.isASURI(uri)) {
+			uri = PivotUtil.getNonASURI(uri);
 		}
 		return uri;
 	}

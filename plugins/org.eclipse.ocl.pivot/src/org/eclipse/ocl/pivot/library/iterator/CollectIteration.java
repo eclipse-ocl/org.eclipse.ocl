@@ -22,9 +22,9 @@ import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -52,7 +52,7 @@ public class CollectIteration extends AbstractIteration
 		LoopExp loopExp = (LoopExp)callExp;
 		OCLExpression body = loopExp.getOwnedBody();
 		Type asType = body != null ? body.getType() : null;
-		Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
+		Type bodyType = asType != null ? PivotUtil.getNonLambdaType(asType) : null;
 		if (bodyType != null) {
 			@NonNull Type elementType = bodyType;
 			//				if (bodyType instanceof CollectionType) {
@@ -78,7 +78,7 @@ public class CollectIteration extends AbstractIteration
 		LoopExp loopExp = (LoopExp)callExp;
 		OCLExpression body = loopExp.getOwnedBody();
 		Type asType = body != null ? body.getType() : null;
-		Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
+		Type bodyType = asType != null ? PivotUtil.getNonLambdaType(asType) : null;
 		if (bodyType != null) {
 			@NonNull Type elementType = bodyType;
 			//				if (bodyType instanceof CollectionType) {

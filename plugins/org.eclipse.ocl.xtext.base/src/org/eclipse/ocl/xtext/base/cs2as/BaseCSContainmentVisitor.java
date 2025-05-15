@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -581,7 +580,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				newPivotTemplateParameters.add(pivotTemplateParameter);
 			}
 		}
-		PivotUtilInternal.refreshList(pivotElement.getOwnedParameters(), newPivotTemplateParameters);
+		PivotUtil.refreshList(pivotElement.getOwnedParameters(), newPivotTemplateParameters);
 		return null;
 	}
 

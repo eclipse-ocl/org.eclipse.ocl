@@ -24,9 +24,9 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegate;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * An implementation of the dynamic validation delegate API, maintaining a cache
@@ -62,7 +62,7 @@ public class OCLDebugValidationDelegate extends OCLValidationDelegate
 				return Boolean.FALSE;
 			}
 		};
-		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(eClassifier);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(eClassifier);
 		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, null);
 		return constraintEvaluator.evaluate(evaluationVisitor);
 	}

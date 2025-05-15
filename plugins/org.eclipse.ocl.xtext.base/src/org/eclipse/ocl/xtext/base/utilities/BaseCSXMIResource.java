@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -258,15 +257,15 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	@Override
-	@Deprecated /* @deprecated caller should PivotUtilInternal.getEnvironmentFactory(Notifier) */ // XXX
+	@Deprecated /* @deprecated caller should PivotUtil.getEnvironmentFactory(Notifier) */ // XXX
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+		return PivotUtil.getEnvironmentFactory(getResourceSet());
 	}
 
 	@Override
 	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {
 		super.handleLoadResponse(response, options);
-		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(getResourceSet());
 		CS2AS cs2as = getCS2AS(environmentFactory);
 		cs2as.update();
 	}

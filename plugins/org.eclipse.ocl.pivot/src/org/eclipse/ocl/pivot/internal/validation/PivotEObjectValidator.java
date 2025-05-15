@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -90,7 +89,7 @@ public class PivotEObjectValidator implements EValidator
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 
 		public ValidationAdapter(@Nullable EnvironmentFactoryInternal environmentFactory) {
-			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtilInternal.getEnvironmentFactory((Notifier)null);
+			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtil.getEnvironmentFactory(null);
 		}
 
 		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {

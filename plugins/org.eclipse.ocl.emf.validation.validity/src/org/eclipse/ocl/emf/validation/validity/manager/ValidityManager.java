@@ -58,12 +58,12 @@ import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidatorAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.WeakOCLReference;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
@@ -688,7 +688,7 @@ public class ValidityManager
 				newResources.addAll(ClassUtil.nullFree(selectedResourceSet.getResources()));
 				ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = ExtendedEObjectValidatorAdapter.basicGetAdapter(selectedResourceSet);
 				if (extendedEObjectValidatorAdapter != null) {
-					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(selectedResourceSet);
+					EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(selectedResourceSet);
 					ResourceSet externalResourceSet = environmentFactory.getResourceSet();
 					UniqueList<@NonNull URI> delegateURIs = extendedEObjectValidatorAdapter.getDelegateURIs();
 					for (@NonNull URI delegateURI : delegateURIs) {

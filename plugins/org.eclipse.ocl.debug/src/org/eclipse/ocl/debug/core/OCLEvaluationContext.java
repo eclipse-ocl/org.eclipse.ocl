@@ -62,7 +62,7 @@ public class OCLEvaluationContext extends EvaluationContext
 		if (expressionObject2 != null) {
 			Resource eResource = expressionObject2.eResource();
 			if (eResource != null) {
-				MetamodelManager metamodelManager = PivotUtilInternal.getMetamodelManager(eResource);
+				MetamodelManager metamodelManager = PivotUtil.getMetamodelManager(eResource);
 				if (metamodelManager != null) {
 					return metamodelManager;
 				}
@@ -72,7 +72,7 @@ public class OCLEvaluationContext extends EvaluationContext
 		if (contextObject2 != null) {
 			Resource eResource = contextObject2.eResource();
 			if (eResource != null) {
-				MetamodelManager metamodelManager = PivotUtilInternal.getMetamodelManager(eResource);
+				MetamodelManager metamodelManager = PivotUtil.getMetamodelManager(eResource);
 				if (metamodelManager != null) {
 					return metamodelManager;
 				}

@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.AbstractTernaryOperation;
@@ -581,7 +580,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			assert pivotMetamodel != null;
 			if (oclstdlibPackage == asPackage) {
 				CompleteClass completeClass = metamodelManager.getCompleteClass(asClass);
-				if (PivotUtilInternal.isElementType(completeClass, elementType, oclVoidType)) {
+				if (PivotUtil.isElementType(completeClass, elementType, oclVoidType)) {
 					return getGenPackage(pivotMetamodel);
 				}
 				else {
@@ -593,7 +592,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
 					if (partialPackage == oclstdlibPackage) {
-						if (!PivotUtilInternal.isElementType(completeClass, elementType, oclVoidType)) {
+						if (!PivotUtil.isElementType(completeClass, elementType, oclVoidType)) {
 							return getGenPackage(oclstdlibPackage);
 						}
 					}
