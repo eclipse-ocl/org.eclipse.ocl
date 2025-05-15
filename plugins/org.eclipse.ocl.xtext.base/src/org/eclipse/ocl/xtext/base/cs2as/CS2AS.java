@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -600,7 +599,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 				}
 			}
 		}
-		assert PivotUtilInternal.debugDeprecation("CS2AS.lookupSelf");			// never happens
+		assert PivotUtil.debugDeprecation("CS2AS.lookupSelf");			// never happens
 		BaseCSResource baseCSResource = (BaseCSResource)csResource;
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
 		ParserContext parserContext = baseCSResource.getParserContext();				// The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
@@ -666,7 +665,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		if ((pivotElement != null)
 				&& pivotClass.isAssignableFrom(pivotElement.getClass())					// Avoid resetting container of incidental reference
 				&& ((csElement == null) || (csElement.eContainer() != null))) {			// Avoid resetting container of potentially re-used root
-			PivotUtilInternal.resetContainer(pivotElement);		// Bypass child-stealing detector
+			PivotUtil.resetContainer(pivotElement);		// Bypass child-stealing detector
 		}
 		if ((pivotElement == null) || (pivotEClass != pivotElement.eClass())) {
 			EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();

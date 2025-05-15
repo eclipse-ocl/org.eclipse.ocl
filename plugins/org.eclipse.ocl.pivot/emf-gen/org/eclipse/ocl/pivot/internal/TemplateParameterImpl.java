@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -439,7 +438,7 @@ public class TemplateParameterImpl
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp expr, @Nullable Type selfType) {
 		assert expr != null;
 		if (selfType != null) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory();
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			return metamodelManager.specializeType(this, expr, selfType, null);
 		}

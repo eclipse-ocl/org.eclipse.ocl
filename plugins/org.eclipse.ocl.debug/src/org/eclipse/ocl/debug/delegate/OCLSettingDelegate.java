@@ -23,9 +23,9 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 
@@ -54,7 +54,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	@Override
 	protected Object get(InternalEObject owner, boolean resolve, boolean coreType) {
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(owner);
+			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(owner);
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL specification2 = specification;
 			if (specification2 == null) {

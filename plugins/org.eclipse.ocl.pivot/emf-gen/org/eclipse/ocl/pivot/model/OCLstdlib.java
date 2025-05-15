@@ -20,12 +20,10 @@ package	org.eclipse.ocl.pivot.model;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
@@ -62,13 +60,11 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -290,7 +286,7 @@ public class OCLstdlib extends ASResourceImpl
 	 */
 	private OCLstdlib(@NonNull String asURI, @NonNull Model libraryModel) {
 		super(ClassUtil.requireNonNull(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
-		assert PivotUtilInternal.isASURI(uri);
+		assert PivotUtil.isASURI(uri);
 		getContents().add(libraryModel);
 	}
 

@@ -20,7 +20,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -62,14 +61,12 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -190,16 +187,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return invalidLiteralExp;
 	}
 
-	@Deprecated /* @deprecated use addError */
-	public void addDiagnostic(@NonNull ModelElementCS csElement, @NonNull Diagnostic diagnostic) {
-		addError(csElement, diagnostic.getMessage());
-	}
-
-	@Deprecated /* @deprecated use addError */
-	public void addDiagnostic(@NonNull ElementCS csElement, @NonNull String boundMessage) {
-		addError(csElement, boundMessage);
-	}
-
 	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
 		INode node = NodeModelUtils.getNode(csElement);
 		addError(csElement, node, message, bindings);
@@ -235,17 +222,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			return false;
 		}
 		return true;
-	}
-
-	/** @deprecated no longer used - code null test in caller */
-	@Deprecated
-	public Dependency createTypeIsReferenceableDependency(@NonNull TypeRefCS csTemplateParameter) {
-		if (csTemplateParameter instanceof WildcardTypeRefCS) {
-			return null;
-		}
-		else {
-			return new PivotDependency(csTemplateParameter);
-		}
 	}
 
 	protected void diagnoseContinuationFailure(@NonNull List<BasicContinuation<?>> continuations) {
@@ -1057,13 +1033,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	@Deprecated
 	public <T extends Element> void refreshList(@NonNull Class<T> pivotClass, List<T> pivotElements, /*@NonNull*/ List<? extends PivotableElementCS> csElements) {
 		assert csElements != null;
-		boolean isContainment = PivotUtilInternal.isContainmentEList(pivotElements);
+		boolean isContainment = PivotUtil.isContainmentEList(pivotElements);
 		refreshList(pivotClass, pivotElements, isContainment, csElements);
 	}
 
 	public <T extends Element> void refreshList(@NonNull Class<T> pivotClass, List<T> pivotElements, boolean isContainment, /*@NonNull*/ List<? extends PivotableElementCS> csElements) {
 		assert csElements != null;
-		assert isContainment == PivotUtilInternal.isContainmentEList(pivotElements);	// XXX debugging
+		assert isContainment == PivotUtil.isContainmentEList(pivotElements);	// XXX debugging
 		if (!pivotElements.isEmpty() ||!csElements.isEmpty()) {
 			List<T> newPivotElements = new ArrayList<>();
 			for (PivotableElementCS csElement : csElements) {
@@ -1089,24 +1065,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return converter.refreshModelElement(pivotClass, pivotEClass, csElement);
 	}
 
-	/* @deprecated no longer used / use PivotHelper.refreshName() */
-	@Deprecated
-	@Override
-	public void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
-		getHelper().refreshName(pivotNamedElement, newName);
-	}
-
-	/* @deprecated no longer used / use PivotHelper.refreshNsURI() */
-	@Deprecated
-	@Override
-	public void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
-		getHelper().refreshNsURI(pivotPackage, newNsURI);
-	}
-
 	public <T extends Element> void refreshPivotList(@NonNull Class<T> pivotClass, /*@NonNull*/ List<? super T> pivotElements,
 			/*@NonNull*/ Iterable<? extends ModelElementCS> csElements) {
 		assert pivotElements != null;
-		assert PivotUtilInternal.isContainmentEList(pivotElements);	// XXX debugging
+		assert PivotUtil.isContainmentEList(pivotElements);	// XXX debugging
 		assert csElements != null;
 		if (pivotElements.isEmpty() && Iterables.isEmpty(csElements)) {
 			return;
@@ -1197,20 +1159,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
-	/* @deprecated no longer used / use PivotHelper.setBehavioralType() */
-	@Deprecated
-	@Override
-	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
-		getHelper().setBehavioralType(targetElement, sourceElement);
-	}
-
-	/* @deprecated use PivotHelper.setContextVariable() */
-	@Override
-	@Deprecated
-	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance) {
-		getHelper().setContextVariable(pivotSpecification, selfVariableName, contextType, contextInstance);
-	}
-
 	public void setReferredIteration(@NonNull LoopExp expression, @Nullable Iteration iteration) {
 		expression.setReferredIteration(iteration);
 		expression.setName(iteration != null ? iteration.getName() : null);
@@ -1219,27 +1167,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public void setReferredOperation(@NonNull OperationCallExp expression, @Nullable Operation operation) {
 		expression.setReferredOperation(operation);
 		expression.setName(operation != null ? operation.getName() : null);
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setType() */
-	@Deprecated
-	@Override
-	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
-		getHelper().setType(pivotElement, type, isRequired, typeValue);
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setType() */
-	@Deprecated
-	@Override
-	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
-		getHelper().setType(pivotElement, type, isRequired, typeValue);
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setType() */
-	@Deprecated
-	@Override
-	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
-		getHelper().setType(pivotElement, type, isRequired);
 	}
 
 	/**

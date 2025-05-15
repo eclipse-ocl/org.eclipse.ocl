@@ -12,21 +12,21 @@ package org.eclipse.ocl.pivot.internal.labels;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class ExpressionInOCLLabelGenerator extends AbstractLabelGenerator<ExpressionInOCL>
 {
 	public static void initialize(Registry registry) {
-		registry.install(ExpressionInOCL.class, new ExpressionInOCLLabelGenerator());		
+		registry.install(ExpressionInOCL.class, new ExpressionInOCLLabelGenerator());
 	}
-	
+
 	public ExpressionInOCLLabelGenerator() {
 		super(ExpressionInOCL.class);
 	}
 
 	@Override
 	public void buildLabelFor(@NonNull Builder labelBuilder, @NonNull ExpressionInOCL object) {
-		labelBuilder.appendString(PivotUtilInternal.getSpecificationRole(object));
+		labelBuilder.appendString(PivotUtil.getSpecificationRole(object));
 	}
 }

@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -320,7 +319,7 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	public ElementCS visitTemplateParameter(@NonNull TemplateParameter object) {
 		TypeParameterCS csElement = context.refreshElement(TypeParameterCS.class, BaseCSPackage.Literals.TYPE_PARAMETER_CS, object);
 		csElement.setName(object.getName());
-		List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtilInternal.getConstrainingClassesList(object);
+		List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtil.getConstrainingClassesList(object);
 		if (asConstrainingClasses.size() > 0) {
 			List<TypedRefCS> csExtends = new ArrayList<TypedRefCS>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asConstrainingClass : asConstrainingClasses) {

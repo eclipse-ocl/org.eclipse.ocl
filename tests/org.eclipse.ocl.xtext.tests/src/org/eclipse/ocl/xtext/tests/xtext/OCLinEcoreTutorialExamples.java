@@ -14,7 +14,6 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EMap;
@@ -41,13 +40,13 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -72,7 +71,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorialForLPG.xmi"), true);
 	}
 	public void testOCLinEcoreTutorialUsingLPGForPivot() throws Exception {
-		PivotUtilInternal.getEnvironmentFactory((Notifier)null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		PivotUtil.getEnvironmentFactory(null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi"), true);
 	}
@@ -87,7 +86,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		doTestOCLinEcoreTutorialUsingPivot(getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi"));
 	}
 	public void testOCLinEcoreTutorialUsingLPGForDefault() throws Exception {
-		PivotUtilInternal.getEnvironmentFactory((Notifier)null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		PivotUtil.getEnvironmentFactory(null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi"), true);
 	}

@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLQueryDelegateFactory;
 import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -67,7 +66,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	 */
 	public OCLQueryDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier context, @Nullable Map<String, EClassifier> parameters, @NonNull String expression) {
 		this.delegateDomain = delegateDomain;
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(context);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(context);
 		this.parserContext = new EInvocationContext(environmentFactory, null, context, parameters);
 		this.expression = expression;
 	}

@@ -138,7 +138,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-			import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+			import org.eclipse.ocl.pivot.internal.utilities.PivotUtil;
 			import org.eclipse.ocl.pivot.model.OCLmetamodel;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -372,7 +372,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 */
 				private «javaClassName»(@NonNull String asURI, @NonNull Model libraryModel) {
 					super(ClassUtil.requireNonNull(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
-					assert PivotUtilInternal.isASURI(uri);
+					assert PivotUtil.isASURI(uri);
 					getContents().add(libraryModel);
 				}
 			

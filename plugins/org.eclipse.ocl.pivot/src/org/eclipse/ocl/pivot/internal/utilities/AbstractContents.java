@@ -114,7 +114,7 @@ public abstract class AbstractContents extends PivotUtil
 		List<TemplateParameterSubstitution> parameterSubstitutions = templateBinding.getOwnedSubstitutions();
 		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
 		assert templateSignature != null;
-		List<@NonNull TemplateParameter> templateParameters = PivotUtilInternal.getOwnedParametersList(templateSignature);
+		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedParametersList(templateSignature);
 		TemplateParameter templateParameter = templateParameters.get(parameterSubstitutions.size());
 		assert templateParameter != null;
 		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, actualType);

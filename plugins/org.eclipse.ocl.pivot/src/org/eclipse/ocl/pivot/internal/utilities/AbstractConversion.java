@@ -94,6 +94,6 @@ public abstract class AbstractConversion
 
 	@Deprecated /* @deprecated not used */
 	protected <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
-		PivotUtilInternal.refreshSet(oldElements, newElements);
+		PivotUtil.refreshSet(oldElements, newElements);
 	}
 }

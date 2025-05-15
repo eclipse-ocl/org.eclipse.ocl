@@ -48,7 +48,7 @@ public class CS2ASLinker extends LazyLinker
 	@Override
 	protected void afterModelLinked(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
 		Resource eResource = model.eResource();		// FIXME Try to do a narrower refresh
-		//		PivotUtilInternal.debugPrintln("afterModelLinking " + NameUtil.debugSimpleName(eResource));
+		//		PivotUtil.debugPrintln("afterModelLinking " + NameUtil.debugSimpleName(eResource));
 		//		System.out.println(Thread.currentThread().getName() + " afterModelLinked " + getClass().getSimpleName() + "@" + hashCode()
 		//			+ " " + eResource.getClass().getSimpleName() + "@" + eResource.hashCode() + " " + eResource.getURI());
 		if ((diagnosticsConsumer != null) && eResource instanceof BaseCSResource) {
@@ -94,6 +94,6 @@ public class CS2ASLinker extends LazyLinker
 				//				System.out.println("Finished refreshPivotMappings for " + eResource.getURI());
 			}
 		}
-		//		PivotUtilInternal.debugPrintln("afterModelLinked " + NameUtil.debugSimpleName(eResource));
+		//		PivotUtil.debugPrintln("afterModelLinked " + NameUtil.debugSimpleName(eResource));
 	}
 }

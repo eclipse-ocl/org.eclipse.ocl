@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.delegate;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.BasicSettingDelegate;
@@ -32,7 +31,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -127,7 +125,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	protected Object get(InternalEObject ecoreObject, boolean resolve, boolean coreType) {
 		assert ecoreObject != null;
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreObject);
+			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(ecoreObject);
 			Executor executor = PivotUtil.getExecutor(ecoreObject);
 			ModelManager modelManager = executor.getModelManager();
 			ExpressionInOCL query = getQuery(environmentFactory);
@@ -180,7 +178,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		if ((query2 == null) || query2.eIsProxy()) {
 		//	OCL ocl = delegateDomain.getOCL();
 		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
+			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(null);
 			Property property2 = getProperty();
 			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
 			SettingBehavior.INSTANCE.validate(property2);

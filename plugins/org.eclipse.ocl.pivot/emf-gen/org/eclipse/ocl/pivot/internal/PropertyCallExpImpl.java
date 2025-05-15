@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -471,7 +470,7 @@ implements PropertyCallExp {
 		if (!TemplateParameterSubstitutionVisitor.needsSpecialization(owningType)) {
 			return owningType;
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(this);
 		TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.create(environmentFactory, this, owningType);
 		return visitor.specializeType(owningType);
 	}
@@ -492,7 +491,7 @@ implements PropertyCallExp {
 		if (!TemplateParameterSubstitutionVisitor.needsSpecialization(referencedType)) {
 			return referencedType;
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(this);
 		TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.create(environmentFactory, this, referencedType);
 		return visitor.specializeType(referencedType);
 	}

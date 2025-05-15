@@ -148,7 +148,7 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 	/*	TEST_START.setState(true);
 		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
-		PivotUtilInternal.noDebug = false;
+		PivotUtil.noDebug = false;
 		DEBUG_GC = true;
 		DEBUG_ID = true;
 		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory

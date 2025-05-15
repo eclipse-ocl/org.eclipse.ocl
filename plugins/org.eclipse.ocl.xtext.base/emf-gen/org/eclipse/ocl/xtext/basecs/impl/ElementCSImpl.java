@@ -29,12 +29,12 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -302,7 +302,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		}
 		ResourceSet resourceSet = csResource.getResourceSet();
 		URI resourceURI = eProxyURI.trimFragment();
-		if (PivotUtilInternal.isASURI(resourceURI)) {				// XXX review
+		if (PivotUtil.isASURI(resourceURI)) {				// XXX review
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				try {

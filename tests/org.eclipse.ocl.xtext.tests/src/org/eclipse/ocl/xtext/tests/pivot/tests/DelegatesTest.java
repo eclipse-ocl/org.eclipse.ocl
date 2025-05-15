@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ECollections;
@@ -82,7 +81,6 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -159,7 +157,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		if (delegateDomain == null) {
 			delegateDomain = adapter.loadDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(resourceSet);
 		return OCLInternal.newInstance(environmentFactory);
 	}
 
@@ -353,7 +351,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		//		resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);				// In case previous test failed
 	//	EPackage.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);			// Reference and nullify the side effect of the reference
 		//		resourceSet.getPackageRegistry().remove(NoreflectioncompanyPackage.eNS_URI);	// In case previous test failed
-		//		PivotUtilInternal.debugPrintln("Done Setup");
+		//		PivotUtil.debugPrintln("Done Setup");
 	}
 
 	@SuppressWarnings("null")
@@ -522,7 +520,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		Map<String, Object> badArguments = new HashMap<String, Object>();
 		badArguments.put(n, amy);
 		executeWithException(delegate, acme, badArguments,
-			PivotMessagesInternal.MismatchedArgumentType_ERROR_, n, getType(ocl, amy), PivotUtilInternal.findTypeOf(metamodelManager, EcorePackage.Literals.ESTRING));
+			PivotMessagesInternal.MismatchedArgumentType_ERROR_, n, getType(ocl, amy), PivotUtil.findTypeOf(metamodelManager, EcorePackage.Literals.ESTRING));
 
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put(n, "Amy");
@@ -1618,7 +1616,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			doTestRunnable(new TestRunnable() {
 				@Override
 				public void runWithThrowable() {
-					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
+					/*Global*/EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(null);
 					OCL ocl = environmentFactory.createOCL();
 					//
 					//	Projects on classpath should be accessible as platform:/plugin or platform:/project

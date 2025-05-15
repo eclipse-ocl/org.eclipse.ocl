@@ -13,7 +13,7 @@ package org.eclipse.ocl.xtext.oclinecore.services;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.services.BaseValueConverterService;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -46,7 +46,7 @@ public class OCLinEcoreValueConverterService extends BaseValueConverterService
 			if (enumerationLiteralKeywords.contains(value)) {
 				return escapeIdentifier(value);
 			}
-			else if (!PivotUtilInternal.isValidIdentifier(value)) {
+			else if (!PivotUtil.isValidIdentifier(value)) {
 				return escapeIdentifier(value);
 			}
 			else {

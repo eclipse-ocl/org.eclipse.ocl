@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -240,7 +239,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 		List<Constraint> primaryInvariants = primaryType.getOwnedInvariants();
 		for (Constraint mergeInvariant : new ArrayList<>(mergeInvariants)) {
 			mergeInvariant.setIsCallable(true);
-			PivotUtilInternal.resetContainer(mergeInvariant);
+			PivotUtil.resetContainer(mergeInvariant);
 			primaryInvariants.add(mergeInvariant);
 		}
 		List<Property> mergeProperties = mergeType.getOwnedProperties();
@@ -260,7 +259,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				{
 					//					boolean b1 = primaryProperty.isIsImplicit();
 					//					boolean b2 = mergeProperty.isIsImplicit();
-					PivotUtilInternal.resetContainer(mergeProperty);
+					PivotUtil.resetContainer(mergeProperty);
 					primaryProperties.add(mergeProperty);
 				}
 			}
@@ -274,14 +273,14 @@ public class ConstraintMerger extends AbstractProjectComponent
 					LanguageExpression pivotBodyExpression = mergeOperation.getBodyExpression();
 					LanguageExpression primaryBodyExpression = primaryOperation.getBodyExpression();
 					if ((primaryBodyExpression == null) && (pivotBodyExpression != null)) {
-						PivotUtilInternal.resetContainer(pivotBodyExpression);
+						PivotUtil.resetContainer(pivotBodyExpression);
 						primaryOperation.setBodyExpression(pivotBodyExpression);
 					}
 					mergeComments(primaryOperation, mergeOperation);
 				}
 				else											// Else simple promotion
 				{
-					PivotUtilInternal.resetContainer(mergeOperation);
+					PivotUtil.resetContainer(mergeOperation);
 					primaryOperations.add(mergeOperation);
 				}
 			}
@@ -293,7 +292,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 			Iterable<@NonNull Comment> mergeComments = PivotUtil.getOwnedComments(mergeElement);
 			if (!Iterables.isEmpty(mergeComments)) {
 				for (Comment mergeComment : Lists.newArrayList(mergeComments)) {
-					PivotUtilInternal.resetContainer(mergeComment);
+					PivotUtil.resetContainer(mergeComment);
 					primaryElement.getOwnedComments().add(mergeComment);
 				}
 			}

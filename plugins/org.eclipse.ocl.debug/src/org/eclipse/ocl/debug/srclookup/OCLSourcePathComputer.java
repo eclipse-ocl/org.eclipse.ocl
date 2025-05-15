@@ -22,16 +22,18 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.debug.vm.srclookup.VMSourcePathComputer;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class OCLSourcePathComputer extends VMSourcePathComputer
 {
 	public static final @NonNull String ID = "org.eclipse.ocl.debug.srclookup.OCLSourcePathComputer";  //$NON-NLS-1$
-	
+
+	@Override
 	public @NonNull String getId() {
 		return ID;
 	}
 
+	@Override
 	protected URI getModuleFile(@NonNull ILaunchConfiguration configuration) throws CoreException {
 //      String moduleFileName = configuration.getAttribute(LaunchConstants.MODULE, ""); //$NON-NLS-1$
 		Map<String, Object> attributes = configuration.getAttributes();
@@ -46,15 +48,15 @@ public class OCLSourcePathComputer extends VMSourcePathComputer
 			uri = URI.createURI(moduleFileName);
 		}
 		@NonNull URI trimFragment = uri.trimFragment();
-		URI moduleURI = PivotUtilInternal.getNonASURI(trimFragment);
+		URI moduleURI = PivotUtil.getNonASURI(trimFragment);
 		return moduleURI;
 //      IFile moduleFile = getWorkspaceFile(moduleUri);
 //      if (moduleFile == null) {
-      	//IStatus errorStatus = MiscUtil.makeErrorStatus( 
+      	//IStatus errorStatus = MiscUtil.makeErrorStatus(
       		//	NLS.bind(Messages.VMLaunchConfigurationDelegate_transformationFileNotFound, moduleFileName));
       	//throw new CoreException(errorStatus);
 //      }
-      
+
 //      return moduleFile;
 	}
 }

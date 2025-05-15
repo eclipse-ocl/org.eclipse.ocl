@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -207,7 +206,7 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 			//			return false;
 		}
 		org.eclipse.uml2.uml.Constraint umlConstraint = (org.eclipse.uml2.uml.Constraint)object;
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(umlConstraint);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(umlConstraint);
 		Constraint constraint = null;
 		try {
 			constraint = environmentFactory.getASOf(Constraint.class, umlConstraint);

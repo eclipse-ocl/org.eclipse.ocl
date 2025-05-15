@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 
@@ -43,7 +42,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = PivotUtilInternal.getSuperClassesList(object);
+		List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = PivotUtil.getSuperClassesList(object);
 		for (int i = 0; i < superClasses.size(); i++) {
 			org.eclipse.ocl.pivot.Class referredClass = superClasses.get(i);
 			org.eclipse.ocl.pivot.Class resolvedClass = context.resolveType(referredClass);
@@ -116,7 +115,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitTemplateParameter(@NonNull TemplateParameter object) {
-		List<org.eclipse.ocl.pivot.@NonNull Class> constrainingTypes = PivotUtilInternal.getConstrainingClassesList(object);
+		List<org.eclipse.ocl.pivot.@NonNull Class> constrainingTypes = PivotUtil.getConstrainingClassesList(object);
 		for (int i = 0; i < constrainingTypes.size(); i++) {
 			org.eclipse.ocl.pivot.Class referredType = constrainingTypes.get(i);
 			org.eclipse.ocl.pivot.Class resolvedType = context.resolveType(referredType);

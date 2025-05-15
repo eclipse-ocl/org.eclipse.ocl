@@ -307,8 +307,8 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) { // XXX add EnvironmentFactory
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
-	//	assert PivotUtilInternal.isASURI(uri);				// Disabled since some standalone tests use *.xml
-	//	PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
+	//	assert PivotUtil.isASURI(uri);				// Disabled since some standalone tests use *.xml
+	//	PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
 	}
 
 	/**

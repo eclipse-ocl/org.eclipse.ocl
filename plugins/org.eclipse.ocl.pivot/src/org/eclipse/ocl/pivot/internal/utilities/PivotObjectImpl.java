@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
@@ -66,7 +67,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			s.append(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(proxy) + " " + proxyURI);
 		}
 		EObject resolvedProxy = null;
-		if (!PivotUtilInternal.isASURI(proxyURI)) {
+		if (!PivotUtil.isASURI(proxyURI)) {
 			//
 			//	A non-AS (ES) proxy must try to resolve in the externalResourceSet.
 			//

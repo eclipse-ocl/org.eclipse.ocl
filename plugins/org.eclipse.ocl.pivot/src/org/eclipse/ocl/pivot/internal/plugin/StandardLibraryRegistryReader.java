@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A plugin extension reader that populates the
@@ -50,7 +50,7 @@ public class StandardLibraryRegistryReader extends RegistryReader
 			} else if (add) {
 				StandardLibraryContribution.Descriptor contribution = new StandardLibraryContribution.Descriptor(element, ATT_CLASS);
 				Object previous = StandardLibraryContribution.REGISTRY.put(uri, contribution);
-				OCLASResourceFactory.REGISTRY.put(PivotUtilInternal.getASURI(URI.createURI(uri)), contribution);
+				OCLASResourceFactory.REGISTRY.put(PivotUtil.getASURI(URI.createURI(uri)), contribution);
 				if (previous instanceof StandardLibraryContribution.Descriptor) {
 					StandardLibraryContribution.Descriptor descriptor = (StandardLibraryContribution.Descriptor) previous;
 					EcorePlugin.INSTANCE.log("Both '"

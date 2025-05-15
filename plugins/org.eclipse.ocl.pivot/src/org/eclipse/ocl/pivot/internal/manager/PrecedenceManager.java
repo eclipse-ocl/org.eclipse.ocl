@@ -23,8 +23,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * PrecedenceManager encapsulates the knowledge about known precedences.
@@ -168,7 +168,7 @@ public class PrecedenceManager
 		//			compilePrecedencePackage(errors, nestedPackage);
 		//		}
 		for (org.eclipse.ocl.pivot.Class type : library.getOwnedClasses()) {
-			if ((type != null) && !PivotUtilInternal.isOrphanType(type)) {
+			if ((type != null) && !PivotUtil.isOrphanType(type)) {
 				compilePrecedenceType(errors, type);
 			}
 		}

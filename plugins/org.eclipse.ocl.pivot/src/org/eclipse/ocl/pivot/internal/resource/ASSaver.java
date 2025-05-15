@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
@@ -90,7 +89,7 @@ public class ASSaver extends AbstractASSaver
 	}
 
 	public boolean addSpecializingElement(@NonNull Element object, org.eclipse.ocl.pivot.@NonNull Class referredType) {
-		if (!PivotUtilInternal.isOrphanType(referredType)) {
+		if (!PivotUtil.isOrphanType(referredType)) {
 			return false;
 		}
 		else {
@@ -113,7 +112,7 @@ public class ASSaver extends AbstractASSaver
 	 * @since 1.3
 	 */
 	public boolean addSpecializingElement(@NonNull Element object, @NonNull Property referredProperty) {
-		if (!PivotUtilInternal.isOrphanProperty(referredProperty)) {
+		if (!PivotUtil.isOrphanProperty(referredProperty)) {
 			return false;
 		}
 		else {
@@ -287,7 +286,7 @@ public class ASSaver extends AbstractASSaver
 	 * @since 1.3
 	 */
 	public @NonNull Property resolveProperty(@NonNull Property referredProperty) {
-		if (!PivotUtilInternal.isOrphanProperty(referredProperty)) {
+		if (!PivotUtil.isOrphanProperty(referredProperty)) {
 			return referredProperty;
 		}
 		org.eclipse.ocl.pivot.Class referredClass = PivotUtil.getOwningClass(referredProperty);
@@ -301,7 +300,7 @@ public class ASSaver extends AbstractASSaver
 	 * of a local copy of a specialization.
 	 */
 	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T resolveType(@NonNull T referredType) {
-		if (!PivotUtilInternal.isOrphanType(referredType)) {
+		if (!PivotUtil.isOrphanType(referredType)) {
 			return referredType;
 		}
 		org.eclipse.ocl.pivot.Class resolvedType = specializations.get(referredType);

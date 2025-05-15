@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -198,7 +197,7 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 	@Override
 	public boolean debug(@NonNull ResultConstrainingNode resultConstrainingNode, final @NonNull ValidityView validityView, @NonNull IProgressMonitor monitor) throws CoreException {
 		EObject constrainedObject = getConstrainedObject(resultConstrainingNode);
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(constrainedObject);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Constraint asConstraint = null;
 		try {

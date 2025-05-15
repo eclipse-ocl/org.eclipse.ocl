@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.internal.dynamic.DerivedEObjectValidatorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -296,7 +295,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 			if (reloadableURI.toString().equals("file:/E:/Development/Workspace/_OCL_ValidateTests__testValidate_Simple_oclinecore_and_ocl/Simple.ecore#//Simple/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%2FOCL%2FPivot%/@details.0")) {		// XXX
 				asConstraint.getReloadableURI(environmentFactory);
 			}
-			assert !PivotUtilInternal.isASURI(reloadableURI);
+			assert !PivotUtil.isASURI(reloadableURI);
 			delegateURIs.add(reloadableURI);
 		}
 		else if (esObject instanceof EOperation) {									// invariant operation e.g. validateYYY

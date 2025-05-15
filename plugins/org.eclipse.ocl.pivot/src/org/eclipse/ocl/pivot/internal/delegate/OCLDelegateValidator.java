@@ -47,7 +47,7 @@ public class OCLDelegateValidator extends EObjectValidator
 
 	public OCLDelegateValidator(@Nullable EObjectValidator eValidator) {
 		this.eValidator = eValidator;
-//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));
+//		PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	protected void reportWrappedException(@Nullable Object object, @NonNull DiagnosticChain diagnostics, Map<Object, Object> context,
@@ -83,7 +83,7 @@ public class OCLDelegateValidator extends EObjectValidator
 
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-//		PivotUtilInternal.debugPrintln("Validating " + LabelUtil.getLabel(eClass));
+//		PivotUtil.debugPrintln("Validating " + LabelUtil.getLabel(eClass));
 		assert eClass != null;
 		assert eObject != null;
 		boolean result = validateDelegatedInvariants(eClass, eObject, diagnostics, context);
@@ -98,7 +98,7 @@ public class OCLDelegateValidator extends EObjectValidator
 						: validate(eSuperTypes.get(0), eObject, diagnostics, context);
 			}
 		}
-//		PivotUtilInternal.debugPrintln("Validated " + LabelUtil.getLabel(eClass));
+//		PivotUtil.debugPrintln("Validated " + LabelUtil.getLabel(eClass));
 		return result;
 	}
 

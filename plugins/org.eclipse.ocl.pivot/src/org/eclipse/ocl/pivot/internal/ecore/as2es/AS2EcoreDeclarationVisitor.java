@@ -80,7 +80,6 @@ import org.eclipse.ocl.pivot.internal.ecore.annotations.OCL_Pivot_Operation_EAnn
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -573,7 +572,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		EModelElement firstElement = null;
 		List<EObject> outputObjects = new ArrayList<>();
 		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package pivotObject : pivotModel.getOwnedPackages()) {
-			if (!Orphanage.isOrphanage(pivotObject) && !PivotUtilInternal.isImplicitPackage(pivotObject)) {
+			if (!Orphanage.isOrphanage(pivotObject) && !PivotUtil.isImplicitPackage(pivotObject)) {
 				Object ecoreObject = safeVisit(pivotObject);
 				if (ecoreObject instanceof EObject) {
 					outputObjects.add((EObject) ecoreObject);

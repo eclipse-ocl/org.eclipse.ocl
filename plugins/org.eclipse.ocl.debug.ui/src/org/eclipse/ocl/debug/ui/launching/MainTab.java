@@ -38,11 +38,11 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -305,7 +305,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 			if (constraintUri.length() > 0) {
 				URI constraintURI = URI.createURI(constraintUri);
 				@NonNull URI oclASURI = constraintURI.trimFragment();
-				URI oclNonASURI = PivotUtilInternal.getNonASURI(oclASURI);
+				URI oclNonASURI = PivotUtil.getNonASURI(oclASURI);
 				oclPath.setText(String.valueOf(oclNonASURI));
 				EObject eObject = getEnvironmentFactory().getMetamodelManager().getASResourceSet().getEObject(constraintURI, true);
 				if (eObject instanceof Constraint) {

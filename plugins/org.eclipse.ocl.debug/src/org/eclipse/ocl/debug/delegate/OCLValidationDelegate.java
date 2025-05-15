@@ -35,12 +35,12 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
@@ -151,7 +151,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		if (eObject == null) {
 			throw new NullPointerException("Null EObject");
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
@@ -178,7 +178,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull EOperation invariant, String expression, int severity, String source, int code) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
@@ -268,7 +268,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 				return Boolean.FALSE;
 			}
 		};
-		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(eClassifier);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(eClassifier);
 		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, null);
 		return constraintEvaluator.evaluate(evaluationVisitor);
 	}

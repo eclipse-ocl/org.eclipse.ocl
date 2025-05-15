@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -187,7 +187,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		previousCancelIndicator = thisCancelIndicator;
 		boolean locallyCreatedEnvironmentFactory = false;
 		if (environmentFactory == null) {			// XXX revise
-			environmentFactory = PivotUtilInternal.getEnvironmentFactory(resource.getResourceSet());		// GC will eventually clean up
+			environmentFactory = PivotUtil.getEnvironmentFactory(resource.getResourceSet());		// GC will eventually clean up
 			locallyCreatedEnvironmentFactory = true;
 		}
 		assert environmentFactory != null;

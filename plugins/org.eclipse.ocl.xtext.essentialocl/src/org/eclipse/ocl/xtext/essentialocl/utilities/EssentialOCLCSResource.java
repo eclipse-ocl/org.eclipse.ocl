@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
@@ -62,6 +61,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -308,7 +308,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	public EssentialOCLCSResource() {
 		super();
-		//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));
+		//		PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	protected void addLibraryError(List<Diagnostic> errors, IllegalLibraryException e) {
@@ -611,7 +611,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			environmentFactory = ((EnvironmentFactoryProvider)resourceSet).getEnvironmentFactory();
 		}
 		if (environmentFactory == null) {
-			environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+			environmentFactory = PivotUtil.getEnvironmentFactory(resourceSet);
 		}
 		return (EnvironmentFactoryInternal)environmentFactory;
 	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();

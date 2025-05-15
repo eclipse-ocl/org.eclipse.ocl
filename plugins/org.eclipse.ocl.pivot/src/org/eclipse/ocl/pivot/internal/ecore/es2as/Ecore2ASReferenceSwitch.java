@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -55,7 +56,6 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -465,7 +465,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (pivotElement == null) {
 			return this;
 		}
-		doSwitchAll(org.eclipse.ocl.pivot.Class.class, PivotUtilInternal.getConstrainingClassesList(pivotElement), eTypeParameter.getEBounds());
+		doSwitchAll(org.eclipse.ocl.pivot.Class.class, PivotUtil.getConstrainingClassesList(pivotElement), eTypeParameter.getEBounds());
 		return pivotElement;
 	}
 

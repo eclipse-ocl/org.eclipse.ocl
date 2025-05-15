@@ -664,7 +664,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			assert !"Annotation".equals(reference.getName());
 			//			hasComplements = hasComplements((Type) reference);
 		/*	The following now loads existing classes when we are generating new ones for GeneratePivotModel.
-		 * EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(reference);
+		 * EnvironmentFactoryInternal environmentFactory = PivotUtil.findEnvironmentFactory(reference);
 			//			assert environmentFactory == this.environmentFactory;
 			if (environmentFactory != null) {	// FIXME this conveniently does not relocate the built-in PrimitiveTypes
 				CompleteClassInternal completeClass = environmentFactory.getMetamodelManager().getCompleteClass((Type)reference);

@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.resource;
 
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -21,10 +20,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * ResourceSetAwareASResourceFactory provides additional ASResourceFactory capabilities to allow a reference
@@ -69,7 +68,7 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 			if (!uriConverter.exists(uri, null)) {						// If AS URI is missing
 				URI csURI = getCSuri(uri);
 				if (uriConverter.exists(csURI, null)) {					// If CS URI exists, create AS by loading CS
-					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);	// There may be no EF if an AS is loaded directly
+					EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(null);	// There may be no EF if an AS is loaded directly
 					ResourceSet csResourceSet = environmentFactory.getResourceSet();
 					CSResource csResource = (CSResource)csResourceSet.getResource(csURI, true);
 					ICS2AS cs2as = csResource.getCS2AS(environmentFactory);
@@ -91,7 +90,7 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 	//	if (projectManager == null) {
 	//		projectManager = OCL.CLASS_PATH;
 	//	}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);		// XXX revise
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(null);		// XXX revise
 //		environmentFactory.getMetamodelManager();		// Create the AS ResourceSet adapter
 		return environmentFactory.getResourceSet();		// Return the auto-created CS ResourceSet
 	}

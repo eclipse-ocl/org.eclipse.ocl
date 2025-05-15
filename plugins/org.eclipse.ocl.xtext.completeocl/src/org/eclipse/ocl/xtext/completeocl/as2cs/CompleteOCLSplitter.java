@@ -37,13 +37,13 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotSwitch;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *
@@ -78,8 +78,8 @@ public class CompleteOCLSplitter
 			return null;
 		}
 		URI uri = ClassUtil.requireNonNull(asResource.getURI());
-		URI oclURI = PivotUtilInternal.getNonASURI(uri).appendFileExtension("ocl");
-		URI oclASuri = PivotUtilInternal.getASURI(oclURI);	// xxx.ocl.ocl.oclas
+		URI oclURI = PivotUtil.getNonASURI(uri).appendFileExtension("ocl");
+		URI oclASuri = PivotUtil.getASURI(oclURI);	// xxx.ocl.ocl.oclas
 		ASResource oclResource = (ASResource) asResource.getResourceSet().createResource(oclASuri, ASResource.COMPLETE_OCL_CONTENT_TYPE);
 		if (oclResource != null) {
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -119,7 +119,7 @@ public class CompleteOCLSplitter
 			NamedElement parent = (NamedElement) ClassUtil.requireNonNull(object.eContainer());
 			NamedElement separateParent = getSeparate(parent);
 			EStructuralFeature eContainingFeature = object.eContainingFeature();
-			PivotUtilInternal.resetContainer(object);		// Avoid a child-stealing detection
+			PivotUtil.resetContainer(object);		// Avoid a child-stealing detection
 			if (!eContainingFeature.isMany()) {
 				separateParent.eSet(eContainingFeature, object);
 			}
@@ -135,11 +135,11 @@ public class CompleteOCLSplitter
 			NamedElement parent = (NamedElement) ClassUtil.requireNonNull(object.eContainer());
 			NamedElement separateParent = getSeparate(parent);
 			if (separateParent instanceof Operation) {
-				PivotUtilInternal.resetContainer(object);
+				PivotUtil.resetContainer(object);
 				((Operation)separateParent).setBodyExpression(object);
 			}
 			if (separateParent instanceof Property) {
-				PivotUtilInternal.resetContainer(object);
+				PivotUtil.resetContainer(object);
 				((Property)separateParent).setOwnedExpression(object);
 			}
 			return object;

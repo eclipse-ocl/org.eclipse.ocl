@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -112,7 +111,7 @@ public class AbstractPivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusiastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-		//	PivotUtilInternal.noDebug = false;
+		//	PivotUtil.noDebug = false;
 		//	DEBUG_GC = true;
 		//	DEBUG_ID = true;
 		//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
@@ -803,7 +802,7 @@ public class AbstractPivotTestCase extends TestCase
 	@Override
 	protected void setUp() throws Exception {
 		SETUP_TEST_NAME = getTestName();
-		PivotUtilInternal.debugReset();
+		PivotUtil.debugReset();
 		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
 		ThreadLocalExecutor.reset();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -812,7 +811,7 @@ public class AbstractPivotTestCase extends TestCase
 		}
 
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
-		PivotUtilInternal.DEBUG_DEPRECATIONS.setState(true);
+		PivotUtil.DEBUG_DEPRECATIONS.setState(true);
 		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
 		if (DEBUG_GC) {
 			//
@@ -832,7 +831,7 @@ public class AbstractPivotTestCase extends TestCase
 		}
 		super.setUp();
 		if (DEBUG_ID) {
-			PivotUtilInternal.debugPrintln("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
+			PivotUtil.debugPrintln("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
 		}
 		//	TracingOption.resetAll();
 		ThreadLocalExecutor.reset();
@@ -845,7 +844,7 @@ public class AbstractPivotTestCase extends TestCase
 	protected void tearDown() throws Exception {
 		try {
 			//		if (DEBUG_ID) {
-			//			PivotUtilInternal.debugPrintln("==> Done " + getName());
+			//			PivotUtil.debugPrintln("==> Done " + getName());
 			//		}
 			List<EPackage> registeredEPackages2 = registeredEPackages;
 			if (registeredEPackages2 != null) {
@@ -863,7 +862,7 @@ public class AbstractPivotTestCase extends TestCase
 				//			MetamodelManagerResourceAdapter.INSTANCES.show();
 			}
 			if (DEBUG_ID) {
-				PivotUtilInternal.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
+				PivotUtil.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
 			}
 			AbstractEnvironmentFactory.diagnoseLiveEnvironmentFactories();
 			/**
