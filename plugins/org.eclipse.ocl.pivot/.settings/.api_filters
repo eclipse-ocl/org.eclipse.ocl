@@ -45,6 +45,188 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/ASLibrary_EPackage.java" type="org.eclipse.ocl.pivot.annotations.ASLibrary_EPackage">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.ASLibrary_EPackage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/ASMetamodel_EPackage.java" type="org.eclipse.ocl.pivot.annotations.ASMetamodel_EPackage">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.ASMetamodel_EPackage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Collection_EClass.java" type="org.eclipse.ocl.pivot.annotations.Collection_EClass">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.Collection_EClass"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Collection_EPackage.java" type="org.eclipse.ocl.pivot.annotations.Collection_EPackage">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.Collection_EPackage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Collection_ETypedElement.java" type="org.eclipse.ocl.pivot.annotations.Collection_ETypedElement">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.Collection_ETypedElement"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Ecore_OCL_EClassifier.java" type="org.eclipse.ocl.pivot.annotations.Ecore_OCL_EClassifier">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.Ecore_OCL_EClassifier"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Ecore_OCL_EOperation.java" type="org.eclipse.ocl.pivot.annotations.Ecore_OCL_EOperation">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.Ecore_OCL_EOperation"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Ecore_OCL_EStructuralFeature.java" type="org.eclipse.ocl.pivot.annotations.Ecore_OCL_EStructuralFeature">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.Ecore_OCL_EStructuralFeature"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Import_EPackage.java" type="org.eclipse.ocl.pivot.annotations.Import_EPackage">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.Import_EPackage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/MetaAnnotation_EAnnotation.java" type="org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/PivotAnnotationsFactory.java" type="org.eclipse.ocl.pivot.annotations.PivotAnnotationsFactory">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.PivotAnnotationsFactory"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/PivotAnnotationsPackage.java" type="org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/ASLibrary_EPackageImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.ASLibrary_EPackageImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.ASLibrary_EPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/ASMetamodel_EPackageImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.ASMetamodel_EPackageImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.ASMetamodel_EPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/Collection_EClassImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.Collection_EClassImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.Collection_EClassImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/Collection_EPackageImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.Collection_EPackageImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.Collection_EPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/Collection_ETypedElementImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.Collection_ETypedElementImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/Ecore_OCL_EClassifierImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EClassifierImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EClassifierImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/Ecore_OCL_EOperationImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EOperationImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EOperationImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/Ecore_OCL_EStructuralFeatureImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EStructuralFeatureImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.Ecore_OCL_EStructuralFeatureImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/Import_EPackageImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.Import_EPackageImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.Import_EPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/MetaAnnotation_EAnnotationImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.MetaAnnotation_EAnnotationImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.MetaAnnotation_EAnnotationImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/PivotAnnotationsFactoryImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsFactoryImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsFactoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/impl/PivotAnnotationsPackageImpl.java" type="org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.impl.PivotAnnotationsPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/util/PivotAnnotationsAdapterFactory.java" type="org.eclipse.ocl.pivot.annotations.util.PivotAnnotationsAdapterFactory">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.util.PivotAnnotationsAdapterFactory"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/util/PivotAnnotationsSwitch.java" type="org.eclipse.ocl.pivot.annotations.util.PivotAnnotationsSwitch">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.annotations.util.PivotAnnotationsSwitch"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NormalizedTemplateParameterImpl.java" type="org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl">
         <filter id="1110441988">
             <message_arguments>
