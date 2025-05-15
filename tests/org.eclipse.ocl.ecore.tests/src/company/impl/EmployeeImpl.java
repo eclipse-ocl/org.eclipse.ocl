@@ -153,6 +153,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -162,6 +163,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -174,6 +176,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Employee getManager() {
 		if (manager != null && manager.eIsProxy()) {
 			InternalEObject oldManager = (InternalEObject)manager;
@@ -200,6 +203,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setManager(Employee newManager) {
 		Employee oldManager = manager;
 		manager = newManager;
@@ -212,6 +216,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Company getCompany() {
 		if (eContainerFeatureID() != CompanyPackage.EMPLOYEE__COMPANY) return null;
 		return (Company)eInternalContainer();
@@ -232,6 +237,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCompany(Company newCompany) {
 		if (newCompany != eInternalContainer() || (eContainerFeatureID() != CompanyPackage.EMPLOYEE__COMPANY && newCompany != null)) {
 			if (EcoreUtil.isAncestor(this, newCompany))
@@ -253,6 +259,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public EList<Employee> getDirectReports() {
 		return (EList<Employee>)DIRECT_REPORTS__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
@@ -263,6 +270,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public EList<Employee> getAllReports() {
 		return (EList<Employee>)ALL_REPORTS__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
@@ -273,6 +281,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public EList<Employee> getReportingChain() {
 		return (EList<Employee>)REPORTING_CHAIN__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
@@ -283,6 +292,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isHasNameAsAttribute() {
 		return (Boolean)HAS_NAME_AS_ATTRIBUTE__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
 	}
@@ -302,6 +312,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean reportsTo(Employee manager) {
 		try {
 			return (Boolean)REPORTS_TO_EMPLOYEE__EINVOCATION_DELEGATE.dynamicInvoke(this, new BasicEList.UnmodifiableEList<Object>(1, new Object[]{manager}));
@@ -326,6 +337,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean noManagerImpliesDirectReports(DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return
 			CompanyValidator.validate
@@ -356,6 +368,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean hasNameAsOperation() {
 		try {
 			return (Boolean)HAS_NAME_AS_OPERATION__EINVOCATION_DELEGATE.dynamicInvoke(this, null);

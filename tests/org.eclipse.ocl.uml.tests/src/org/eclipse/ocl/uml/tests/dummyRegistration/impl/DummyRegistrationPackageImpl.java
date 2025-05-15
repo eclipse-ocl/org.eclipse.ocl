@@ -101,6 +101,7 @@ public class DummyRegistrationPackageImpl extends EPackageImpl implements DummyR
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDummyClass() {
 		return dummyClassEClass;
 	}
@@ -110,6 +111,7 @@ public class DummyRegistrationPackageImpl extends EPackageImpl implements DummyR
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DummyRegistrationFactory getDummyRegistrationFactory() {
 		return (DummyRegistrationFactory)getEFactoryInstance();
 	}

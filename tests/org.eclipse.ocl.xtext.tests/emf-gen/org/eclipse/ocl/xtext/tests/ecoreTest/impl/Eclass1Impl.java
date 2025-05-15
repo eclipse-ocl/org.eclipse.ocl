@@ -115,6 +115,7 @@ public class Eclass1Impl extends MinimalEObjectImpl.Container implements Eclass1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getEAttribute1() {
 		return eAttribute1;
 	}
@@ -124,6 +125,7 @@ public class Eclass1Impl extends MinimalEObjectImpl.Container implements Eclass1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEAttribute1(String newEAttribute1) {
 		String oldEAttribute1 = eAttribute1;
 		eAttribute1 = newEAttribute1;
@@ -136,6 +138,7 @@ public class Eclass1Impl extends MinimalEObjectImpl.Container implements Eclass1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getEAttribute2() {
 		return eAttribute2;
 	}
@@ -145,6 +148,7 @@ public class Eclass1Impl extends MinimalEObjectImpl.Container implements Eclass1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEAttribute2(String newEAttribute2) {
 		String oldEAttribute2 = eAttribute2;
 		eAttribute2 = newEAttribute2;
@@ -157,6 +161,7 @@ public class Eclass1Impl extends MinimalEObjectImpl.Container implements Eclass1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EClass2> getClasses2() {
 		if (classes2 == null) {
 			classes2 = new EObjectContainmentEList<EClass2>(EClass2.class, this, EcoreTestPackage.ECLASS1__CLASSES2);
