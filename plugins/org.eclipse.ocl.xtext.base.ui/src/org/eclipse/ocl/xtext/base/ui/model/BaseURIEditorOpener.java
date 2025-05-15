@@ -22,7 +22,7 @@ public class BaseURIEditorOpener extends GlobalURIEditorOpener
 	@Override
 	public IEditorPart open(URI uri, boolean select) {
 		if (uri != null) {
-			URI trimFragment = ClassUtil.nonNullEMF(uri.trimFragment());
+			URI trimFragment = ClassUtil.requireNonNull(uri.trimFragment());
 			if (PivotUtilInternal.isASURI(trimFragment)) {
 				uri = PivotUtilInternal.getNonASURI(trimFragment);		// FIXME map AST to CST URI too
 			}

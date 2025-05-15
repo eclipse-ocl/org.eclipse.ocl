@@ -174,7 +174,7 @@ public class ValidityModel
 			Map<@NonNull EPackage, @NonNull Set<@NonNull Resource>> ePackage2resources = new HashMap<>();
 			int allResourcesCount = allResources.size();
 			for (int i = 0; i < allResourcesCount; i++) {
-				Resource resource = ClassUtil.nonNull(allResources.get(i));
+				Resource resource = ClassUtil.requireNonNull(allResources.get(i));
 				@NonNull String uri = String.valueOf(resource.getURI());
 				monitor.subTask("'" + uri + "'");
 				ValidityManager.ANALYZE_RESOURCE.println(uri);
@@ -190,9 +190,9 @@ public class ValidityModel
 				}
 				Set<@NonNull EPackage> ePackages = new HashSet<>();
 				for (@NonNull EClass eClass : eClasses) {
-					ePackages.add(ClassUtil.nonNull(eClass.getEPackage()));
+					ePackages.add(ClassUtil.requireNonNull(eClass.getEPackage()));
 					for (@NonNull EClass eSuperClass : ClassUtil.nullFree(eClass.getEAllSuperTypes())) {
-						ePackages.add(ClassUtil.nonNull(eSuperClass.getEPackage()));
+						ePackages.add(ClassUtil.requireNonNull(eSuperClass.getEPackage()));
 					}
 				}
 				for (@NonNull EPackage ePackage : ePackages) {
@@ -506,7 +506,7 @@ public class ValidityModel
 	 */
 	protected boolean createResults(@NonNull List<@NonNull Result> results, @NonNull List<@NonNull ? extends ValidatableNode> validatableNodes, @Nullable IProgressMonitor monitor) {
 		for (int i = 0; i < validatableNodes.size(); i++) {		// Avoid CME from domain growth
-			ValidatableNode validatable = ClassUtil.nonNull(validatableNodes.get(i));
+			ValidatableNode validatable = ClassUtil.requireNonNull(validatableNodes.get(i));
 			AbstractNode parent = validatable.getParent();
 			if (validatable.isEnabled() && (parent == null || parent.isEnabled())) {
 				if (validatable instanceof ResultValidatableNode) {

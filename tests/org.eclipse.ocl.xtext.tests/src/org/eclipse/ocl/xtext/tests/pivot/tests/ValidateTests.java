@@ -138,7 +138,7 @@ public class ValidateTests extends AbstractValidateTests
 		URI inputURI = getTestFile("Simple.oclinecore", ocl, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
 		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
 		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
-		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		EPackage simplePackage = ClassUtil.requireNonNull((EPackage) ecoreResource.getContents().get(0));
 		//
 		//	Create test model
 		//
@@ -172,7 +172,7 @@ public class ValidateTests extends AbstractValidateTests
 		URI inputURI = getTestFile("Simple.oclinecore", ocl, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
 		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
 		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
-		EPackage simplePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		EPackage simplePackage = ClassUtil.requireNonNull((EPackage) ecoreResource.getContents().get(0));
 		//
 		//	Create an instance of Simple.
 		//
@@ -379,7 +379,7 @@ public class ValidateTests extends AbstractValidateTests
 		ResourceSet resourceSet = ocl.getResourceSet();
 		URI xmiURI = getTestModelURI("models/ecore/Bug543187.xmi");
 		Resource resource = resourceSet.getResource(xmiURI, true);
-		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
+		assertNoValidationErrors("Validating", ClassUtil.requireNonNull(resource));
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
 		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 0, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 0 - no longer used, 1 for outer validation, 2 more for inner validations
@@ -399,7 +399,7 @@ public class ValidateTests extends AbstractValidateTests
 		TestFile xmiTestFile = createFile("IsPrimeNumber.xmi", xmiDocument);
 		URI xmiURI = xmiTestFile.getFileURI();
 		Resource ecoreResource = ocl.getResourceSet().getResource(xmiURI, true);
-		EPackage testPackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		EPackage testPackage = ClassUtil.requireNonNull((EPackage) ecoreResource.getContents().get(0));
 		String oclTestDocument =
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/'\n"
 				+ "\n"
@@ -543,7 +543,7 @@ public class ValidateTests extends AbstractValidateTests
 		URI inputURI = testFile.getFileURI();
 		URI ecoreURI = getTestFile("IsPrimeNumber.ecore").getFileURI();
 		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
-		EPackage validatePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		EPackage validatePackage = ClassUtil.requireNonNull((EPackage) ecoreResource.getContents().get(0));
 		try {
 			ResourceSet testResourceSet = new ResourceSetImpl();
 			Resource testResource = testResourceSet.createResource(URI.createURI("test:test.test"));
@@ -607,7 +607,7 @@ public class ValidateTests extends AbstractValidateTests
 		getProjectMap().initializeResourceSet(resourceSet);
 		//		}
 		Resource resource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true), true);
-		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
+		assertNoValidationErrors("Validating", ClassUtil.requireNonNull(resource));
 	}
 
 	public void testValidate_Pivot_oclas() throws IOException, InterruptedException {
@@ -617,7 +617,7 @@ public class ValidateTests extends AbstractValidateTests
 		OCLASResourceFactory.getInstance().configure(resourceSet);
 		//		}
 		Resource resource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true), true);
-		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
+		assertNoValidationErrors("Validating", ClassUtil.requireNonNull(resource));
 	}
 
 	public void testValidate_Validate_completeocl() throws IOException, InterruptedException {
@@ -634,11 +634,11 @@ public class ValidateTests extends AbstractValidateTests
 		URI inputURI = getTestFile("Validate.oclinecore", ocl1, getTestModelURI("models/oclinecore/Validate.oclinecore")).getFileURI();
 		URI ecoreURI = getTestFile("Validate.ecore").getFileURI();
 		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
-		EPackage validatePackage1 = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
+		EPackage validatePackage1 = ClassUtil.requireNonNull((EPackage) ecoreResource1.getContents().get(0));
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCL ocl2 = createOCL();
 		Resource ecoreResource2 = doLoadOCLinEcore(ocl2, inputURI, ecoreURI);
-		EPackage validatePackage2 = ClassUtil.nonNullState((EPackage) ecoreResource2.getContents().get(0));
+		EPackage validatePackage2 = ClassUtil.requireNonNull((EPackage) ecoreResource2.getContents().get(0));
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCL ocl0 = createOCL();
 		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
@@ -820,7 +820,7 @@ public class ValidateTests extends AbstractValidateTests
 							"endpackage\n";
 			TestFile testFile = createFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
 			//
-			Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
+			Resource resource = ClassUtil.requireNonNull(resourceSet.getResource(xmiURI, true));
 //			assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
 //				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
 //				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
@@ -895,7 +895,7 @@ public class ValidateTests extends AbstractValidateTests
 				"endpackage\n";
 		TestFile testFile = createFile("Bug422583.ocl", testDocument);
 		//
-		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(umlURI, true));
+		Resource resource = ClassUtil.requireNonNull(resourceSet.getResource(umlURI, true));
 		org.eclipse.uml2.uml.Class uNamed = null;
 		for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();

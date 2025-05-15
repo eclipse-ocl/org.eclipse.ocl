@@ -42,7 +42,7 @@ public class RegistryTests extends TestCase
 {
 	@Override
 	public String getName() {
-		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
+		return TestUtil.getName(ClassUtil.requireNonNull(super.getName()));
 	}
 
 	@Override

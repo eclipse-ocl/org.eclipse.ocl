@@ -37,7 +37,7 @@ public class EcoreReflectivePackage extends ExecutorPackage
 	protected @Nullable Map<String, EcoreReflectivePackage> nestedPackages = null;
 
 	public EcoreReflectivePackage(@NonNull EPackage ePackage, @NonNull IdResolver idResolver, @NonNull PackageId packageId) {
-		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
+		super(ClassUtil.requireNonNull(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
 		this.idResolver = idResolver;
 //		this.standardLibrary = idResolver.getStandardLibrary();
 		this.ePackage = ePackage;

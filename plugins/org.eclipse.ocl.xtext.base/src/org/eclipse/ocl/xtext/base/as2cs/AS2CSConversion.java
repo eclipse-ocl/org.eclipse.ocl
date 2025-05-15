@@ -128,7 +128,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public void createImports(@NonNull RootCS documentCS, @NonNull Map<@NonNull Namespace, @NonNull List<@NonNull String>> importedNamespaces) {
-		BaseCSResource csResource = (BaseCSResource) ClassUtil.nonNullState(documentCS.eResource());
+		BaseCSResource csResource = (BaseCSResource) ClassUtil.requireNonNull(documentCS.eResource());
 		AliasAnalysis.dispose(csResource);			// Force reanalysis
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {

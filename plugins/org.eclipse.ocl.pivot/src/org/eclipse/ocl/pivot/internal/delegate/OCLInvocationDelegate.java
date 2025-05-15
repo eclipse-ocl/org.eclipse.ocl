@@ -78,7 +78,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 			ExpressionInOCL query2 = query;
 			if ((query2 == null) || query2.eIsProxy()) {
 				Operation operation2 = operation;
-				NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(eOperation));
+				NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(eOperation));
 				if (namedElement instanceof Operation) {
 					operation2 = operation = (Operation) namedElement;
 					query2 = query = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, operation2);
@@ -131,7 +131,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 				for (int i = 0; i < parms.size(); i++) {
 					Object argument = arguments.get(i);
 					Object boxedArgument = idResolver.boxedValueOf(argument);
-					evaluationEnvironment.add(ClassUtil.nonNullModel(parms.get(i)), boxedArgument);
+					evaluationEnvironment.add(ClassUtil.requireNonNull(parms.get(i)), boxedArgument);
 				}
 			}
 			//			Variable resultVariable = specification.getResultVariable();
@@ -154,7 +154,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	public @NonNull Operation getOperation() {
 		Operation operation2 = operation;
 		if ((operation2 == null) || operation2.eIsProxy()) {
-			NamedElement pivot = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(eOperation));
+			NamedElement pivot = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(eOperation));
 			if (pivot instanceof Operation) {
 				operation2 = operation = (Operation) pivot;
 			}

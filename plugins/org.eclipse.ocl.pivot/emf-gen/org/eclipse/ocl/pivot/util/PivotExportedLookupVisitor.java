@@ -31,7 +31,7 @@ extends AbstractPivotCommonLookupVisitor
 
 	public PivotExportedLookupVisitor(@NonNull LookupEnvironment context, @NonNull Object importer) {
 		super(context);
-		this.executor = ClassUtil.nonNullState(context.getExecutor());
+		this.executor = ClassUtil.requireNonNull(context.getExecutor());
 		this.idResolver = executor.getIdResolver();
 		this.importer = importer;
 	}

@@ -265,7 +265,7 @@ public class FieldingAnalyzer
 		public @NonNull Boolean visitCGElement(@NonNull CGElement cgElement) {
 			boolean isCaught = false;
 			for (@NonNull CGElement cgChild : cgElement.getChildren()) {
-				if (ClassUtil.nonNullState(cgChild.accept(this))) {
+				if (ClassUtil.requireNonNull(cgChild.accept(this))) {
 					isCaught = true;
 				}
 			}
@@ -277,9 +277,9 @@ public class FieldingAnalyzer
 			CGValuedElement cgCondition = cgElement.getCondition();
 			CGValuedElement cgThen = cgElement.getThenExpression();
 			CGValuedElement cgElse = cgElement.getElseExpression();
-			boolean conditionIsCaught = (cgCondition != null) && ClassUtil.nonNullState(cgCondition.accept(this));
-			boolean thenIsCaught = (cgThen != null) && ClassUtil.nonNullState(cgThen.accept(this));
-			boolean elseIsCaught = (cgElse != null) && ClassUtil.nonNullState(cgElse.accept(this));
+			boolean conditionIsCaught = (cgCondition != null) && ClassUtil.requireNonNull(cgCondition.accept(this));
+			boolean thenIsCaught = (cgThen != null) && ClassUtil.requireNonNull(cgThen.accept(this));
+			boolean elseIsCaught = (cgElse != null) && ClassUtil.requireNonNull(cgElse.accept(this));
 			// if works for caught or thrown condition
 			if (!conditionIsCaught || (thenIsCaught != elseIsCaught)) {
 				if ((cgThen != null) && thenIsCaught) {
@@ -436,7 +436,7 @@ public class FieldingAnalyzer
 			boolean isCaught = false;
 			CGValuedElement cgInit = cgElement.getInit();
 			if (cgInit != null) {
-				if (ClassUtil.nonNullState(cgInit.accept(this))) {	// If explicitly caught
+				if (ClassUtil.requireNonNull(cgInit.accept(this))) {	// If explicitly caught
 					isCaught = true;								// then just propagate caught
 				}
 				else if (externalVariables.contains(cgElement)) {		// If not caught but needs to be

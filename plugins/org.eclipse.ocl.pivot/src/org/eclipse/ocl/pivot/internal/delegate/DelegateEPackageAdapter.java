@@ -70,7 +70,7 @@ public class DelegateEPackageAdapter extends AdapterImpl
 	protected /*@LazyNonNull*/ Map<@NonNull String, @NonNull DelegateDomain> delegateDomainMap = null;
 
 	protected @NonNull DelegateDomain createDelegateDomain(@NonNull String delegateURI) {
-		EPackage ePackage = ClassUtil.nonNullState(getTarget());
+		EPackage ePackage = ClassUtil.requireNonNull(getTarget());
 		Class<DelegateDomain.Factory.@NonNull Registry> castClass = DelegateDomain.Factory.Registry.class;
 		DelegateDomain.Factory.@NonNull Registry registry = OCLDelegateDomain.getDelegateResourceSetRegistry(ePackage, castClass, DelegateDomain.Factory.Registry.INSTANCE);
 		DelegateDomain.Factory factory = registry.getFactory(delegateURI);

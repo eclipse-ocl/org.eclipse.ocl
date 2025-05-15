@@ -44,7 +44,7 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 
 	public Constraint getConstraint(@NonNull MetamodelManager metamodelManager, @NonNull EClassifier eClassifier, @NonNull String constraintName) throws OCLDelegateException {
 		EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
-		Resource ecoreMetamodel = ClassUtil.nonNullEMF(eClassifier.eResource());
+		Resource ecoreMetamodel = ClassUtil.requireNonNull(eClassifier.eResource());
 		External2AS es2as = External2AS.getAdapter(ecoreMetamodel, environmentFactory);
 		Type type = es2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
@@ -87,12 +87,12 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 
 	@Override
 	public EValidator.ValidationDelegate.@NonNull Registry getDefaultRegistry() {
-		return ClassUtil.nonNullEMF(ValidationDelegate.Factory.Registry.INSTANCE);
+		return ClassUtil.requireNonNull(ValidationDelegate.Factory.Registry.INSTANCE);
 	}
 
 	@Override
 	public @NonNull EPackage getEPackage(@NonNull EClassifier eClassifier) {
-		return ClassUtil.nonNullEMF(eClassifier.getEPackage());
+		return ClassUtil.requireNonNull(eClassifier.getEPackage());
 	}
 
 	/*	public ExpressionInOCL getExpressionInOCL(MetamodelManager metamodelManager, EClassifier eClassifier, String constraintName) throws OCLDelegateException {

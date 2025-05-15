@@ -84,7 +84,7 @@ public class IdiomGrammarMatch implements IdiomMatch
 		if (subIdiomIndex >= locatedElements.length) {
 			for (int i = 0; i < locatedElements.length; i++) {
 				AbstractElement grammarElement = locatedElements[i];
-				SubIdiom subIdiom = ClassUtil.nonNullState(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
+				SubIdiom subIdiom = ClassUtil.requireNonNull(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
 				if (subIdiom.getOwnedSegments().size() > 0) {		// Locator-only subidioms are trivislly 'mixed-in'
 					List<@NonNull SubIdiom> subIdioms = grammarElement2subIdioms.get(grammarElement);
 					if (subIdioms == null) {

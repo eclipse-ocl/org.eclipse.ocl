@@ -85,7 +85,7 @@ public abstract class AbstractBuilderTests extends XtextTestCase
 	}
 	protected void doValidation(@NonNull IFile file, @Nullable Class<?> exceptionClass, @Nullable List<@NonNull String> expectedMarkerTexts) {
 		ValidationEntry validationEntry = new ValidationEntry(file, EValidator.MARKER);
-		MultiValidationJob multiValidationJob = ClassUtil.nonNullState(BaseUIActivator.getMultiValidationJob());
+		MultiValidationJob multiValidationJob = ClassUtil.requireNonNull(BaseUIActivator.getMultiValidationJob());
 		multiValidationJob.addValidations(Collections.singletonList(validationEntry));
 		try {
 			Throwable throwable = null;

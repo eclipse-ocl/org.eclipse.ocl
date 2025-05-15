@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.serializer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -19,7 +20,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder.SerializationMetaDataDiagnosticStringBuilder;
 import org.eclipse.ocl.xtext.base.serializer.SerializationSegment.ValueSerializationSegment;
 import org.eclipse.xtext.AbstractElement;
@@ -149,7 +149,7 @@ public abstract class SerializationStep
 				EObject grammarElement = node.getGrammarElement();
 				if (grammarElement instanceof Keyword) {
 					String value = ((Keyword)grammarElement).getValue();
-					return ClassUtil.safeEquals(value, eStructuralFeature.getName());
+					return Objects.equals(value, eStructuralFeature.getName());
 				}
 			}
 			return false;
@@ -574,7 +574,7 @@ public abstract class SerializationStep
 				return ((RuleCall)thisTerminal).getRule() == ((RuleCall)thatTerminal).getRule();
 			}
 			else {
-				return ClassUtil.safeEquals(thisTerminal, thatTerminal);		// Never happens
+				return Objects.equals(thisTerminal, thatTerminal);		// Never happens
 			}
 		}
 

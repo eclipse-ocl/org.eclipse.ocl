@@ -187,7 +187,7 @@ public final class DebugAction extends Action
 					openError(debug_FailLoad);
 					return;
 				}
-				String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(csResource.getErrors()), debug_FailLoad, "\n\t");
+				String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(csResource.getErrors()), debug_FailLoad, "\n\t");
 				if (message != null) {
 					openError(message);
 					return;

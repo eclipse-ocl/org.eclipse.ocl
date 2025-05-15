@@ -34,7 +34,7 @@ public class OCLDebugInvocationDelegateFactory extends AbstractOCLDelegateFactor
 		if (operation == null) {
 			return null;
 		}
-		EPackage ePackage = ClassUtil.nonNullEMF(operation.getEContainingClass().getEPackage());
+		EPackage ePackage = ClassUtil.requireNonNull(operation.getEContainingClass().getEPackage());
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 		return delegateDomain != null ? new OCLDebugInvocationDelegate(delegateDomain, operation) : null;
 	}

@@ -225,7 +225,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 
 	@Override
 	public @NonNull EvaluationEnvironment getEvaluationEnvironment() {
-		return ClassUtil.nonNullState(evaluationEnvironment);
+		return ClassUtil.requireNonNull(evaluationEnvironment);
 	}
 
 	@Override
@@ -281,7 +281,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 
 	@Override
 	public @NonNull EvaluationEnvironment getRootEvaluationEnvironment() {
-		return ClassUtil.nonNullState(rootEvaluationEnvironment);
+		return ClassUtil.requireNonNull(rootEvaluationEnvironment);
 	}
 
 	@Override
@@ -431,7 +431,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		if (shadowCache == null) {
 			shadowCache = new ShadowCache(this);
 		}
-		org.eclipse.ocl.pivot.Class asClass = ClassUtil.nonNullState(asShadowExp.getType());
+		org.eclipse.ocl.pivot.Class asClass = ClassUtil.requireNonNull(asShadowExp.getType());
 		//		String value = asShadowExp.getValue();
 		Object object;
 		//		if (value == null) {
@@ -487,7 +487,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 
 	@Override
 	public void popEvaluationEnvironment() {
-		evaluationEnvironment = ClassUtil.nonNullState(evaluationEnvironment.getParentEvaluationEnvironment());
+		evaluationEnvironment = ClassUtil.requireNonNull(evaluationEnvironment.getParentEvaluationEnvironment());
 	}
 
 	/**
@@ -495,7 +495,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	 */
 	@Override
 	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
-		EvaluationEnvironment evaluationEnvironment2 = ClassUtil.nonNullState(evaluationEnvironment);
+		EvaluationEnvironment evaluationEnvironment2 = ClassUtil.requireNonNull(evaluationEnvironment);
 		EvaluationEnvironment nestedEvaluationEnvironment = createNestedEvaluationEnvironment(evaluationEnvironment2, executableObject, caller);
 		evaluationEnvironment = nestedEvaluationEnvironment;
 		return nestedEvaluationEnvironment;

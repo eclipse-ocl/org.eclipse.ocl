@@ -47,7 +47,7 @@ public abstract class GenerateLaTeXForLibrary extends GenerateLaTeXUtils
 			log.info("Loading OCL library '" + fileURI);
 			ResourceSet resourceSet = getResourceSet();
 			Resource xtextResource = resourceSet.getResource(fileURI, true);
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;
@@ -58,12 +58,12 @@ public abstract class GenerateLaTeXForLibrary extends GenerateLaTeXUtils
 //			if (asResource == null) {
 //				return;
 //			}
-			EObject pivotModel = ClassUtil.nonNullState(asResource.getContents().get(0));
+			EObject pivotModel = ClassUtil.requireNonNull(asResource.getContents().get(0));
 //			ASSaver saver = new ASSaver(asResource);
 //			saver.localizeSpecializations();
 			String fileName = folder + "/" + latexFileName + ".tex";
 			log.info("Generating '" + fileName + "'");
-			String latexContent = generateLaTeX(ClassUtil.nonNullState((Library) ((Model)pivotModel).getOwnedPackages().get(0)));
+			String latexContent = generateLaTeX(ClassUtil.requireNonNull((Library) ((Model)pivotModel).getOwnedPackages().get(0)));
 			String encodedContent = encodeForLaTeX(latexContent);
 			FileWriter fw = new FileWriter(fileName);
 			fw.append(encodedContent);

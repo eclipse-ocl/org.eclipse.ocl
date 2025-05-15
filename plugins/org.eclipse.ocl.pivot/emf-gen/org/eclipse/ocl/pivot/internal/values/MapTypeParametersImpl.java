@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -80,8 +81,8 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	public MapTypeParametersImpl(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		this.entryClass = entryClass;
 		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
-		Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
-		Property valueProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "value"));
+		Property keyProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
+		Property valueProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
 		@SuppressWarnings("unchecked")
 		K castKeyType = (K) PivotUtil.getType(keyProperty);
 		this.keyType = castKeyType;
@@ -104,7 +105,7 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 		if (this.hashCode != that.hashCode){
 			return false;
 		}
-		if (!ClassUtil.safeEquals(this.entryClass, that.entryClass)) {
+		if (!Objects.equals(this.entryClass, that.entryClass)) {
 			return false;
 		}
 		if (!this.keyType.equals(that.keyType)) {

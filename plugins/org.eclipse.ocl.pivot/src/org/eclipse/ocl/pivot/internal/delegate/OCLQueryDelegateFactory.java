@@ -72,7 +72,7 @@ public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
 				}
 			}
 		}
-		OCLDelegateDomain delegateDomain = loadDelegateDomain(ClassUtil.nonNullEMF(context.getEPackage()));
+		OCLDelegateDomain delegateDomain = loadDelegateDomain(ClassUtil.requireNonNull(context.getEPackage()));
 		if (delegateDomain == null) {
 			return null;
 		}

@@ -121,7 +121,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		'''
 
 		«emitHeading0a("Abstract Syntax Synthesis")»
-		«FOR asOperation : ClassUtil.nonNullState(cs2asClass).getOwnedOperations()»
+		«FOR asOperation : ClassUtil.requireNonNull(cs2asClass).getOwnedOperations()»
 
 			«emitHeading0b(prettyPrint(asOperation, cs2asClass))»
 			«emitComment(asOperation, asClass)»
@@ -139,7 +139,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		'''
 
 		«emitHeading0a("Concrete Syntax Disambiguation")»
-		«FOR asOperation : ClassUtil.nonNullState(cs2csClass).getOwnedOperations()»
+		«FOR asOperation : ClassUtil.requireNonNull(cs2csClass).getOwnedOperations()»
 
 			«emitHeading0b(prettyPrint(asOperation, cs2csClass))»
 			«emitComment(asOperation, asClass)»
@@ -184,10 +184,10 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 			«emitOperations(asClass)»
 			«emitParserRules(asClass, grammar)»
 			«IF cs2csPackage !== null»
-			«emitCS2CS(asClass, ClassUtil.nonNullState(cs2csPackage))»
+			«emitCS2CS(asClass, ClassUtil.requireNonNull(cs2csPackage))»
 			«ENDIF»
 			«IF cs2asPackage !== null»
-			«emitCS2AS(asClass, ClassUtil.nonNullState(cs2asPackage))»
+			«emitCS2AS(asClass, ClassUtil.requireNonNull(cs2asPackage))»
 			«ENDIF»
 		«ENDFOR»
 		'''

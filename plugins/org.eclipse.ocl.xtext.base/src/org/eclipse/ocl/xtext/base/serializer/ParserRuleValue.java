@@ -10,9 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.serializer;
 
+import java.util.Objects;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class ParserRuleValue extends GrammarRuleValue
 {
@@ -49,7 +50,7 @@ public class ParserRuleValue extends GrammarRuleValue
 			return false;
 		}
 		ParserRuleValue that = (ParserRuleValue)obj;
-		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name) && ClassUtil.safeEquals(this.subParserRuleValueIndexes, that.subParserRuleValueIndexes);
+		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name) && Objects.equals(this.subParserRuleValueIndexes, that.subParserRuleValueIndexes);
 	}
 
 	public @NonNull SerializationSegment @NonNull []  @NonNull [] getInnerFormattingSegments() {

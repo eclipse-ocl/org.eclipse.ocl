@@ -208,7 +208,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					executor.initializeEvaluationEnvironment(expressionInOCL);
 					EvaluationEnvironment evaluationEnvironment = executor.getRootEvaluationEnvironment();
 					Object contextValue = executor.getIdResolver().boxedValueOf(contextObject);
-					evaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), contextValue);
+					evaluationEnvironment.add(ClassUtil.requireNonNull(expressionInOCL.getOwnedContext()), contextValue);
 					monitor.worked(2);
 					monitor.subTask(ConsoleMessages.Progress_Evaluating);
 					try {

@@ -1992,7 +1992,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						ResourceSet resourceSet = openEditor.getEditingDomain().getResourceSet();
 						EList<Resource> resources = resourceSet.getResources();
 						assertEquals(1, resources.size());
-						Resource resource2 = ClassUtil.nonNullState(resources.get(0));
+						Resource resource2 = ClassUtil.requireNonNull(resources.get(0));
 						assertNoResourceErrors("Load", resource2);
 						assertNoValidationErrors("Validate", resource2);
 						openEditor.getSite().getPage().closeEditor(openEditor, false);
@@ -2065,7 +2065,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						ResourceSet resourceSet = umlEditor.getEditingDomain().getResourceSet();
 						EList<Resource> resources = resourceSet.getResources();
 						assertEquals(2, resources.size());
-						Resource umlResource = ClassUtil.nonNullState(resources.get(0));
+						Resource umlResource = ClassUtil.requireNonNull(resources.get(0));
 						Model model = (Model) umlResource.getContents().get(0);
 						org.eclipse.uml2.uml.Type xx = model.getOwnedType("Class1");
 						assertNoResourceErrors("Load", umlResource);

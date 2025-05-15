@@ -38,11 +38,11 @@ public class LookupCGUtil {
 		@NonNull URI nameResoURI = URI.createURI(oclDocFilePath).resolve(projectResourceURI);
 		OCL ocl = envFact.createOCL();
 		try {
-			Resource resource = ClassUtil.nonNullState(ocl.parse(nameResoURI));
+			Resource resource = ClassUtil.requireNonNull(ocl.parse(nameResoURI));
 			for (EObject root : resource.getContents()) {
 				if (root instanceof Model) {
 					
-					Package asPackage = ClassUtil.nonNullState(getPackage(genPackage, genPackage.getPrefix(), envFact));
+					Package asPackage = ClassUtil.requireNonNull(getPackage(genPackage, genPackage.getPrefix(), envFact));
 					for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package oclDocPackage : ((Model)root).getOwnedPackages()) {
 						if (samePrimaryPackage(oclDocPackage, asPackage, envFact)) {
 							result.add(oclDocPackage);

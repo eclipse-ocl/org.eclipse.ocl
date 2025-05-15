@@ -130,7 +130,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		//		pivotSpecification.getParameterVariable().clear();
 		if ((contextVariable != null) && !contextOperation.eIsProxy()) {
 			getHelper().setType(contextVariable, contextOperation.getOwningClass(), true);
-			setParameterVariables(pivotSpecification, ClassUtil.nonNullEMF(contextOperation.getOwnedParameters()));
+			setParameterVariables(pivotSpecification, ClassUtil.requireNonNull(contextOperation.getOwnedParameters()));
 		}
 		if (resultName != null) {
 			setResultVariable(pivotSpecification, contextOperation, resultName);

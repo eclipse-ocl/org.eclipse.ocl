@@ -51,7 +51,7 @@ public class OCLInvocationDelegateFactory extends AbstractOCLDelegateFactory
 				}
 			}
 		}
-		EPackage ePackage = ClassUtil.nonNullEMF(operation.getEContainingClass().getEPackage());
+		EPackage ePackage = ClassUtil.requireNonNull(operation.getEContainingClass().getEPackage());
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 		return delegateDomain != null ? new OCLInvocationDelegate(delegateDomain, operation) : null;
 	}

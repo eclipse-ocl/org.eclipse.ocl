@@ -78,7 +78,7 @@ public abstract class AbstractParserContext implements ParserContext
 			this.uri = uri;
 		}
 		else {
-			this.uri = ClassUtil.nonNullEMF(URI.createURI(EcoreUtil.generateUUID() + "." + PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION));
+			this.uri = ClassUtil.requireNonNull(URI.createURI(EcoreUtil.generateUUID() + "." + PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION));
 		}
 	}
 

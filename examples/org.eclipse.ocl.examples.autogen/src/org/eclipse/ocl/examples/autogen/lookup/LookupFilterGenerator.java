@@ -174,12 +174,12 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		}
 
 		// Filtering op context is translated as asOperation parameter
-		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(filteringOp.getOwningClass());
+		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(filteringOp.getOwningClass());
 		Variable asParamVar = helper.createParameterVariable(LookupFilterClassContext.ELEMENT_NAME, asType,true);
 		newExpressionInOCL.getOwnedParameters().add(asParamVar);
 		redefinitions.put(oldExpressionInOCL.getOwnedContext(), asParamVar);
 
-		OCLExpression asExpression = RereferencingCopier.copy(ClassUtil.nonNullState(oldExpressionInOCL.getOwnedBody()), redefinitions);
+		OCLExpression asExpression = RereferencingCopier.copy(ClassUtil.requireNonNull(oldExpressionInOCL.getOwnedBody()), redefinitions);
 		if ((letRoot != null) && (letLeaf != null)) {
 			for (LetExp letExp = letRoot; letExp != null; letExp = (LetExp) letExp.getOwnedIn()) {
 				letExp.setType(asExpression.getType());
@@ -326,7 +326,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			Property prop = createNativeProperty(JavaConstants.EXECUTOR_NAME, Executor.class, true, true);
 			cgEvaluatorVariable = as2cgVisitor.visitProperty(prop);
 		}
-		return ClassUtil.nonNullState(cgEvaluatorVariable);
+		return ClassUtil.requireNonNull(cgEvaluatorVariable);
 	}
 
 
@@ -344,7 +344,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			Property prop = createNativeProperty(JavaConstants.ID_RESOLVER_NAME, IdResolver.class, true, true);
 			cgIdResolverVariable = as2cgVisitor.visitProperty(prop);
 		}
-		return ClassUtil.nonNullState(cgIdResolverVariable);
+		return ClassUtil.requireNonNull(cgIdResolverVariable);
 	}
 
 	public @NonNull List<@NonNull CGProperty> getFilteringVars(CGClass cgClass) {

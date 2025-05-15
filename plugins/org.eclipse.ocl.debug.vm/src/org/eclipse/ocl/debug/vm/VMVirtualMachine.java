@@ -218,7 +218,7 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 				int exitCode = -1;
 				try {
 					fExecutor.connect(fDebuggerShell);
-					exitCode = execute(ClassUtil.nonNullState(fExecutor), startRequest);
+					exitCode = execute(ClassUtil.requireNonNull(fExecutor), startRequest);
 				} catch(Throwable e) {
 					getDebugCore().log(e);
 				} finally {
@@ -277,7 +277,7 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 	}
 
 	public @NonNull DebuggableRunner getRunner() {
-		return ClassUtil.nonNullState(runner);
+		return ClassUtil.requireNonNull(runner);
 	}
 
 	public @NonNull IDebuggableRunnerFactory getRunnerFactory() {

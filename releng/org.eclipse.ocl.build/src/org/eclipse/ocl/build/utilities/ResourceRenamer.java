@@ -58,7 +58,7 @@ public class ResourceRenamer extends AbstractProjectComponent
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
-		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectDescriptor());
+		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.requireNonNull(getProjectDescriptor());
 		ResourceSet resourceSet = getResourceSet();
 		Map<@NonNull String, @NonNull Resource> from2resource = new HashMap<>();
 		List<@NonNull String> froms = new ArrayList<>(resourceRenameMap.keySet());

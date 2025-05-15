@@ -176,8 +176,8 @@ public class PivotHelper
 	}
 
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
-		Type commonType = metamodelManager.getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
-			ClassUtil.nonNullState(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
+		Type commonType = metamodelManager.getCommonType(ClassUtil.requireNonNull(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
+			ClassUtil.requireNonNull(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);
 		asIf.setOwnedThen(asThen);
@@ -309,7 +309,7 @@ public class PivotHelper
 	}
 
 	public @NonNull OperationCallExp createOperationCallExp(@NonNull OCLExpression asSourceExpression, @NonNull String opName, @NonNull OCLExpression... asArguments) {
-		Type asType = ClassUtil.nonNullState(asSourceExpression.getType());
+		Type asType = ClassUtil.requireNonNull(asSourceExpression.getType());
 		CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(asType);
 		int argumentCount = asArguments != null ? asArguments.length : 0;
 		int bestMatches = -1;
@@ -320,7 +320,7 @@ public class PivotHelper
 				int exactMatches = 0;
 				boolean gotOne = true;
 				for (int i = 0; i < argumentCount; i++) {
-					Type asParameterType = ClassUtil.nonNullState(asParameters.get(i).getType());
+					Type asParameterType = ClassUtil.requireNonNull(asParameters.get(i).getType());
 					OCLExpression asArgument = asArguments[i];
 					Type asArgumentType = asArgument.getType();
 					if (asParameterType instanceof SelfType) {
@@ -387,8 +387,8 @@ public class PivotHelper
 	}
 
 	public @NonNull Parameter createParameter(@NonNull TypedElement typedElement) {
-		String name = ClassUtil.nonNullState(typedElement.getName());
-		Type type = ClassUtil.nonNullState(typedElement.getType());
+		String name = ClassUtil.requireNonNull(typedElement.getName());
+		Type type = ClassUtil.requireNonNull(typedElement.getType());
 		Parameter asParameter = PivotUtil.createParameter(name, type, typedElement.isIsRequired());
 		return asParameter;
 	}
@@ -524,8 +524,8 @@ public class PivotHelper
 	/** @deprecated Use appropriate derived Variable */
 	@Deprecated
 	public @NonNull Variable createVariable(@NonNull TypedElement typedElement) {
-		String name = ClassUtil.nonNullState(typedElement.getName());
-		Type type = ClassUtil.nonNullState(typedElement.getType());
+		String name = ClassUtil.requireNonNull(typedElement.getName());
+		Type type = ClassUtil.requireNonNull(typedElement.getType());
 		Variable asVariable = PivotUtil.createVariable(name, type, typedElement.isIsRequired(), null);
 		return asVariable;
 	}
@@ -536,11 +536,11 @@ public class PivotHelper
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
-		return ClassUtil.nonNullState(metamodelManager.getASClass(TypeId.DATA_TYPE_NAME));
+		return ClassUtil.requireNonNull(metamodelManager.getASClass(TypeId.DATA_TYPE_NAME));
 	}
 
 	public @NonNull Property getDataTypeValueProperty() {
-		return ClassUtil.nonNullState(NameUtil.getNameable(getDataTypeClass().getOwnedProperties(), PivotConstants.DATA_TYPE_VALUE_NAME));
+		return ClassUtil.requireNonNull(NameUtil.getNameable(getDataTypeClass().getOwnedProperties(), PivotConstants.DATA_TYPE_VALUE_NAME));
 	}
 
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {

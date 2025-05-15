@@ -35,7 +35,7 @@ public class OCLDebugSettingDelegateFactory extends AbstractOCLDelegateFactory
 			return null;
 		}
 		EPackage ePackage = structuralFeature.getEContainingClass().getEPackage();
-		OCLDelegateDomain delegateDomain = getDelegateDomain(ClassUtil.nonNullEMF(ePackage));
+		OCLDelegateDomain delegateDomain = getDelegateDomain(ClassUtil.requireNonNull(ePackage));
 		if (delegateDomain == null) {
 			return null;
 		}

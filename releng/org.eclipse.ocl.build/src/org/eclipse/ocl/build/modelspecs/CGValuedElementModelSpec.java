@@ -682,7 +682,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			return "return booleanValue == true;";
 		}};
 		public static final @NonNull Cvl EL_ID = new Cvl() { @Override public @Nullable String generateGetConstantValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(ClassUtil.class) + ".nonNullState(elementId);";
+			return "return " + classRef(ClassUtil.class) + ".requireNonNull(elementId);";
 		}};
 		public static final @NonNull Cvl INVLD = new Cvl() { @Override public @Nullable String generateGetConstantValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return " + classRef(ValueUtil.class) + ".INVALID_VALUE;";
@@ -691,16 +691,16 @@ public class CGValuedElementModelSpec extends ModelSpec
 			return "return " + classRef(ValueUtil.class) + ".NULL_VALUE;";
 		}};
 		public static final @NonNull Cvl NUMBR = new Cvl() { @Override public @Nullable String generateGetConstantValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(ClassUtil.class) + ".nonNullState(numericValue);";
+			return "return " + classRef(ClassUtil.class) + ".requireNonNull(numericValue);";
 		}};
 		public static final @NonNull Cvl ROOT = new Cvl() { @Override public @Nullable String generateGetConstantValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return null;
 		}};
 		public static final @NonNull Cvl STRNG = new Cvl() { @Override public @Nullable String generateGetConstantValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(ClassUtil.class) + ".nonNullState(stringValue);";
+			return "return " + classRef(ClassUtil.class) + ".requireNonNull(stringValue);";
 		}};
 		public static final @NonNull Cvl TEXT = new Cvl() { @Override public @Nullable String generateGetConstantValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(ClassUtil.class) + ".nonNullState(textValue);";
+			return "return " + classRef(ClassUtil.class) + ".requireNonNull(textValue);";
 		}};
 		public static final @NonNull Cvl UNLMT = new Cvl() { @Override public @Nullable String generateGetConstantValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return " + classRef(ValueUtil.class) + ".UNLIMITED_VALUE;";
@@ -966,7 +966,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"		if (this.index != thatIndex) {\n" +
 						"			return Boolean.FALSE;\n" +
 						"		}\n" +
-						"		return templateableElement.isEquivalentTo(" + classRef(ClassUtil.class) + ".nonNullState(thatExp.getTemplateableElement()));";
+						"		return templateableElement.isEquivalentTo(" + classRef(ClassUtil.class) + ".requireNonNull(thatExp.getTemplateableElement()));";
 			}
 		};
 

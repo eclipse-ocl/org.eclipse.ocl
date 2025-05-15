@@ -306,23 +306,23 @@ public class SerializationUtils
 	}
 
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
-		return ClassUtil.nonNullState(eObject.eClass());
+		return ClassUtil.requireNonNull(eObject.eClass());
 	}
 
 	public static @NonNull EStructuralFeature eContainingFeature(@NonNull EObject eObject) {
-		return ClassUtil.nonNullState(eObject.eContainingFeature());
+		return ClassUtil.requireNonNull(eObject.eContainingFeature());
 	}
 
 	public static @NonNull EReference eContainmentFeature(@NonNull EObject eObject) {
-		return ClassUtil.nonNullState(eObject.eContainmentFeature());
+		return ClassUtil.requireNonNull(eObject.eContainmentFeature());
 	}
 
 	public static @NonNull EObject eContainer(@NonNull EObject eObject) {
-		return ClassUtil.nonNullState(eObject.eContainer());
+		return ClassUtil.requireNonNull(eObject.eContainer());
 	}
 
 	public static @NonNull AbstractElement getAlternatives(@NonNull AbstractRule abstractRule) {
-		return ClassUtil.nonNullState(abstractRule.getAlternatives());
+		return ClassUtil.requireNonNull(abstractRule.getAlternatives());
 	}
 
 	public static @NonNull Iterable<@NonNull INode> getChildren(@NonNull ICompositeNode compositeNode) {
@@ -330,7 +330,7 @@ public class SerializationUtils
 	}
 
 	public static @NonNull EClassifier getClassifier(TypeRef type) {
-		return ClassUtil.nonNullState(type.getClassifier());
+		return ClassUtil.requireNonNull(type.getClassifier());
 	}
 
 	public static @NonNull EClass getEClassScope(@NonNull AbstractElement abstractElement) {
@@ -363,11 +363,11 @@ public class SerializationUtils
 	}
 
 	public static @NonNull EClass getEContainingClass(@NonNull EStructuralFeature eFeature) {
-		return ClassUtil.nonNullState(eFeature.getEContainingClass());
+		return ClassUtil.requireNonNull(eFeature.getEContainingClass());
 	}
 
 	public static @NonNull EPackage getEPackage(@NonNull EClassifier eClassifier) {
-		return ClassUtil.nonNullState(eClassifier.getEPackage());
+		return ClassUtil.requireNonNull(eClassifier.getEPackage());
 	}
 
 	public static @NonNull List<@NonNull AbstractElement> getElements(@NonNull CompoundElement compoundElement) {
@@ -384,11 +384,11 @@ public class SerializationUtils
 	}
 
 	public static @NonNull EClass getEReferenceType(@NonNull EReference eReference) {
-		return ClassUtil.nonNullState(eReference.getEReferenceType());
+		return ClassUtil.requireNonNull(eReference.getEReferenceType());
 	}
 
 	public static @NonNull EStructuralFeature getEStructuralFeature(@NonNull EClass eClass, @NonNull String featureName) {
-		return ClassUtil.nonNullState(eClass.getEStructuralFeature(featureName));
+		return ClassUtil.requireNonNull(eClass.getEStructuralFeature(featureName));
 	}
 
 	public static @NonNull EStructuralFeature getEStructuralFeature(@NonNull Action action) {
@@ -415,11 +415,11 @@ public class SerializationUtils
 	}
 
 	public static @NonNull String getFeature(@NonNull Action action) {
-		return ClassUtil.nonNullState(action.getFeature());
+		return ClassUtil.requireNonNull(action.getFeature());
 	}
 
 	public static @NonNull String getFeature(@NonNull Assignment assignment) {
-		return ClassUtil.nonNullState(assignment.getFeature());
+		return ClassUtil.requireNonNull(assignment.getFeature());
 	}
 
 	public static @NonNull String getIndent(int indent) {
@@ -432,25 +432,25 @@ public class SerializationUtils
 	}
 
 	public static @NonNull Keyword getLeft(@NonNull CharacterRange characterRange) {
-		return ClassUtil.nonNullState(characterRange.getLeft());
+		return ClassUtil.requireNonNull(characterRange.getLeft());
 	}
 
 	public static @NonNull String getName(@NonNull AbstractRule abstractRule) {
-		return ClassUtil.nonNullState(abstractRule.getName());
+		return ClassUtil.requireNonNull(abstractRule.getName());
 	}
 
 	public static @NonNull String getName(@NonNull ENamedElement eNamedElement) {
-		return ClassUtil.nonNullState(eNamedElement.getName());
+		return ClassUtil.requireNonNull(eNamedElement.getName());
 	}
 
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
-		return ClassUtil.nonNullState(eObject.eResource());
+		return ClassUtil.requireNonNull(eObject.eResource());
 	}
 	public static @NonNull Keyword getRight(@NonNull CharacterRange characterRange) {
-		return ClassUtil.nonNullState(characterRange.getRight());
+		return ClassUtil.requireNonNull(characterRange.getRight());
 	}
 	public static @NonNull AbstractRule getRule(@NonNull RuleCall ruleCall) {
-		return ClassUtil.nonNullState(ruleCall.getRule());
+		return ClassUtil.requireNonNull(ruleCall.getRule());
 	}
 	public static @NonNull String getSafeName(@Nullable Nameable aNameable) {
 		if (aNameable == null) {
@@ -464,23 +464,23 @@ public class SerializationUtils
 	}
 
 	public static @NonNull AbstractElement getTerminal(@NonNull Assignment assignment) {
-		return ClassUtil.nonNullState(assignment.getTerminal());
+		return ClassUtil.requireNonNull(assignment.getTerminal());
 	}
 
 	public static @NonNull AbstractElement getTerminal(@NonNull CrossReference crossReference) {
-		return ClassUtil.nonNullState(crossReference.getTerminal());
+		return ClassUtil.requireNonNull(crossReference.getTerminal());
 	}
 
 	public static @NonNull AbstractElement getTerminal(@NonNull UntilToken untilToken) {
-		return ClassUtil.nonNullState(untilToken.getTerminal());
+		return ClassUtil.requireNonNull(untilToken.getTerminal());
 	}
 
 	public static @NonNull TypeRef getType(@NonNull AbstractRule abstractRule) {
-		return ClassUtil.nonNullState(abstractRule.getType());
+		return ClassUtil.requireNonNull(abstractRule.getType());
 	}
 
 	public static @NonNull TypeRef getType(@NonNull Action action) {
-		return ClassUtil.nonNullState(action.getType());
+		return ClassUtil.requireNonNull(action.getType());
 	}
 
 	public static @NonNull Iterable<@NonNull Grammar> getUsedGrammars(@NonNull Grammar grammar) {
@@ -488,6 +488,6 @@ public class SerializationUtils
 	}
 
 	public static @NonNull String getValue(@NonNull Keyword keyword) {
-		return ClassUtil.nonNullState(keyword.getValue());
+		return ClassUtil.requireNonNull(keyword.getValue());
 	}
 }

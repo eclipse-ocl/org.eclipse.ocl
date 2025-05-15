@@ -68,12 +68,12 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 			if (i > 0) {
 				js.append(", ");
 			}
-			ElementId elementId = ClassUtil.nonNullModel(templateBindings.getElementId(i));
+			ElementId elementId = ClassUtil.requireNonNull(templateBindings.getElementId(i));
 			js.appendIdReference(elementId);
 		}
 		for (int i = 0; i < templateBindings.valuesSize(); i++) {
 			js.append(", ");
-			Object value = ClassUtil.nonNullModel(templateBindings.getValue(i));
+			Object value = ClassUtil.requireNonNull(templateBindings.getValue(i));
 			if (value instanceof Boolean) {				// FIXME Re-use constant functionality
 				js.appendBooleanString((boolean) value);
 			}

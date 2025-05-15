@@ -281,7 +281,7 @@ public class SerializeTests extends XtextTestCase
 		//		assertNull(problem);
 		UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
 		Model pivotModel = uml2as.getASModel();
-		Resource asResource = ClassUtil.nonNullState(pivotModel.eResource());
+		Resource asResource = ClassUtil.requireNonNull(pivotModel.eResource());
 		assertNoResourceErrors("Normalisation failed", asResource);
 		assertValidationDiagnostics("Normalisation invalid", asResource, asValidationMessages);
 		return asResource;
@@ -293,7 +293,7 @@ public class SerializeTests extends XtextTestCase
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			uriMap.putAll(EcorePlugin.computePlatformURIMap(true));
 		}
-		Resource ecoreResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
+		Resource ecoreResource = ClassUtil.requireNonNull(resourceSet.getResource(inputURI, true));
 		mapOwnURI(ecoreResource);
 		//		List<String> conversionErrors = new ArrayList<String>();
 		//		RootPackageCS documentCS = Ecore2OCLinEcore.importFromEcore(resourceSet, null, ecoreResource);

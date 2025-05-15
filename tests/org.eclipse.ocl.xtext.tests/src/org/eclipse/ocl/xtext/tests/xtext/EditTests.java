@@ -778,7 +778,7 @@ public class EditTests extends XtextTestCase
 		//	Load and instrument test document
 		//
 		OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
-		XMLResource ecoreResource = (XMLResource) ClassUtil.nonNullEMF(ocl1.getResourceSet().getResource(ecoreURI, true));
+		XMLResource ecoreResource = (XMLResource) ClassUtil.requireNonNull(ocl1.getResourceSet().getResource(ecoreURI, true));
 		assertNoResourceErrors("Ecore load", ecoreResource);
 		assertNoValidationErrors("Ecore load", ecoreResource);
 		ASResource asResource = ocl1.ecore2as(ecoreResource);
@@ -820,7 +820,7 @@ public class EditTests extends XtextTestCase
 		assertNoResourceErrors("Ecore reload", ecoreResource);
 		assertNoValidationErrors("Ecore reload", ecoreResource);
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, ocl1.getEnvironmentFactory());
-		ecore2as.update(asResource, ClassUtil.nonNullEMF(ecoreResource.getContents()));
+		ecore2as.update(asResource, ClassUtil.requireNonNull(ecoreResource.getContents()));
 		assertNoResourceErrors("Pivot reload", ecoreResource);
 		assertNoValidationErrors("Pivot reload", ecoreResource);
 		Set<EObject> newPivotContent = new HashSet<>();
@@ -930,13 +930,13 @@ public class EditTests extends XtextTestCase
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
-		BaseCSResource xtextResource = (BaseCSResource)ClassUtil.nonNullState(ocl.getCSResource(outputURI, testDocument));
+		BaseCSResource xtextResource = (BaseCSResource)ClassUtil.requireNonNull(ocl.getCSResource(outputURI, testDocument));
 		Resource asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 		{
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
-		Type pivotTestClass1 = ClassUtil.nonNullState(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));
+		Type pivotTestClass1 = ClassUtil.requireNonNull(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the invariant.
 		//
@@ -1032,7 +1032,7 @@ public class EditTests extends XtextTestCase
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		Type pivotTestClass1 = ClassUtil.nonNullState(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
+		Type pivotTestClass1 = ClassUtil.requireNonNull(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
 		String testClassName2 = NameUtil.qualifiedNameFor(metamodelManager.getPrimaryType("TestPackage", "TestClass2"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
@@ -1049,7 +1049,7 @@ public class EditTests extends XtextTestCase
 		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
 		//
 		TestUtil.assertSameModel(ecoreResource0, doRename(environmentFactory, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
-		pivotTestClass1 = ClassUtil.nonNullState(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
+		pivotTestClass1 = ClassUtil.requireNonNull(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
 		//
@@ -1086,7 +1086,7 @@ public class EditTests extends XtextTestCase
 		assertResourceErrors("Loading input", xtextResource);
 		assertNoResourceErrors("Loading input", asResource);
 		//
-		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
+		Type myType = ClassUtil.requireNonNull(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
 		SequenceType sequenceType = ocl.getStandardLibrary().getSequenceType();
 		CollectionTypeParameters<@NonNull Type> typeParameters = new CollectionTypeParametersImpl<>(myType, true, null, null);
 		CompleteClassInternal sequenceCompleteClass = metamodelManager.getCompleteClass(sequenceType);

@@ -45,7 +45,7 @@ public abstract class AutoVisitorsCodeGenerator extends AutoCodeGenerator
 	
 	protected org.eclipse.ocl.pivot.@NonNull Class getVisitablePivotClass() {
 		
-//		return ClassUtil.nonNullState(metamodelManager.getASClass(visitableClass)); 
+//		return ClassUtil.requireNonNull(metamodelManager.getASClass(visitableClass)); 
 		for (GenPackage genPackage : genModel.getAllGenAndUsedGenPackagesWithClassifiers()) {
 			if (getBasePrefix().equals(genPackage.getPrefix()) &&
 				getBaseVisitorPackageName().startsWith(genPackage.getQualifiedPackageName())) {

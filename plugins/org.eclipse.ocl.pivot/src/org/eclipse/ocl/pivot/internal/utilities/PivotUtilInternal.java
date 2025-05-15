@@ -16,8 +16,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
@@ -257,7 +255,7 @@ public class PivotUtilInternal extends PivotUtil
 	 * @since 7.0
 	 */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return Objects.requireNonNull(ThreadLocalExecutor.basicGetEnvironmentFactory());
+		return ClassUtil.requireNonNull(ThreadLocalExecutor.basicGetEnvironmentFactory());
 	}
 
 	/**

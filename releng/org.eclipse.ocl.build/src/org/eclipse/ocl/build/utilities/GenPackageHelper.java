@@ -31,23 +31,23 @@ public class GenPackageHelper {
 		public @NonNull String getVisitorPackageName(GenPackage genPackage) {
 
 			String visitorClass = getVisitorClass(genPackage);
-			return ClassUtil.nonNullState(visitorClass.substring(0,visitorClass.lastIndexOf('.')));
+			return ClassUtil.requireNonNull(visitorClass.substring(0,visitorClass.lastIndexOf('.')));
 		}
 
 		public @NonNull String getVisitorClassName(GenPackage genPackage) {
 
 			String visitorClass = getVisitorClass(genPackage);
-			return ClassUtil.nonNullState(visitorClass.substring(visitorClass.lastIndexOf('.')+1,visitorClass.length()));
+			return ClassUtil.requireNonNull(visitorClass.substring(visitorClass.lastIndexOf('.')+1,visitorClass.length()));
 		}
 
 		public @NonNull String getVisitablePackageName(GenPackage genPackage) {
 			String visitableClass = getVisitableClass(genPackage);
-			return ClassUtil.nonNullState(visitableClass.substring(0,visitableClass.lastIndexOf('.')));
+			return ClassUtil.requireNonNull(visitableClass.substring(0,visitableClass.lastIndexOf('.')));
 		}
 
 		public @NonNull String getVisitableClassName(GenPackage genPackage) {
 			String visitableClass = getVisitableClass(genPackage);
-			return ClassUtil.nonNullState(visitableClass.substring(visitableClass.lastIndexOf('.')+1,visitableClass.length()));
+			return ClassUtil.requireNonNull(visitableClass.substring(visitableClass.lastIndexOf('.')+1,visitableClass.length()));
 		}
 
 		protected @NonNull String getVisitorClass(GenPackage genPackage) {
@@ -128,6 +128,6 @@ public class GenPackageHelper {
 
 	public @NonNull String getSrcJavaFolder() {
 		// We assume we have one, or we will generate in the first one
-		return ClassUtil.nonNullState(genPackage.getGenModel().getModelSourceFolders().get(0));
+		return ClassUtil.requireNonNull(genPackage.getGenModel().getModelSourceFolders().get(0));
 	}
 }

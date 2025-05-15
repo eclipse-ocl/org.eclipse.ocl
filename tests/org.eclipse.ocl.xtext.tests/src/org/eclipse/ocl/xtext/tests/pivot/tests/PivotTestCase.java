@@ -124,7 +124,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 
 	public static @NonNull XtextResource as2cs(@NonNull OCL ocl, @NonNull ASResource asResource, @NonNull URI outputURI) throws IOException {
 		@NonNull ResourceSet resourceSet = ocl.getResourceSet();
-		XtextResource xtextResource = ClassUtil.nonNullState((XtextResource) resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE));
+		XtextResource xtextResource = ClassUtil.requireNonNull((XtextResource) resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE));
 		//		ResourceSet csResourceSet = resourceSet; //new ResourceSetImpl();
 		//		csResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("cs", new EcoreResourceFactoryImpl());
 		//		csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
@@ -136,7 +136,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		//
 		//	CS save and reload
 		//
-		URI savedURI = ClassUtil.nonNullState(asResource.getURI());
+		URI savedURI = ClassUtil.requireNonNull(asResource.getURI());
 		//		asResource.setURI(PivotUtil.getNonPivotURI(savedURI).appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
 		if (asResource.isSaveable()) {
 			asResource.setURI(outputURI.trimFileExtension().trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
@@ -145,7 +145,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		}
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
 		try {
-			DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
+			DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.requireNonNull(xtextResource.getURI().toString()));
 			xtextResource.save(null);
 			debugTimestamp.log("Serialization save done");
 		}
@@ -173,10 +173,10 @@ public class PivotTestCase extends AbstractPivotTestCase
 	}
 
 	public static void assertNoResourceErrorsOrWarnings(@NonNull String prefix, @NonNull Resource resource) {
-		String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), prefix, "\n\t");
+		String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(resource.getErrors()), prefix, "\n\t");
 		if (message != null)
 			fail(message);
-		message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getWarnings()), prefix, "\n\t");
+		message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(resource.getWarnings()), prefix, "\n\t");
 		if (message != null)
 			fail(message);
 	}
@@ -186,7 +186,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
 		try {
 			for (EObject eObject : resource.getContents()) {
-				assertNoValidationErrorsInternal(string + " " + resource.getURI(), ClassUtil.nonNullEMF(eObject));
+				assertNoValidationErrorsInternal(string + " " + resource.getURI(), ClassUtil.requireNonNull(eObject));
 			}
 		}
 		finally {
@@ -222,7 +222,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 	protected static void assertNoValidationErrorsInternal(@NonNull String prefix, @NonNull EObject eObject) {
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(eObject);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
-		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
+		//		Resource eResource = ClassUtil.requireNonNull(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 		BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostics.getChildren();
@@ -236,7 +236,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 	}
 
 	public static void assertResourceErrors(@NonNull String prefix, @NonNull Resource resource, String... messages) {
-		assertResourceDiagnostics(prefix, ClassUtil.nonNullEMF(resource.getErrors()), messages);
+		assertResourceDiagnostics(prefix, ClassUtil.requireNonNull(resource.getErrors()), messages);
 	}
 
 	public static void assertResourceDiagnostics(@NonNull String prefix, @NonNull List<Resource.Diagnostic> resourceDiagnostics, String... messages) {
@@ -335,7 +335,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = new ResourceSetImpl();
-		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
+		EssentialOCLCSResource xtextResource = ClassUtil.requireNonNull((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
 	// XXX	environmentFactory.adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
@@ -349,7 +349,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = new ResourceSetImpl();
-		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
+		EssentialOCLCSResource xtextResource = ClassUtil.requireNonNull((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
 	// XXX	environmentFactory.adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
@@ -494,7 +494,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 	protected @NonNull URI getProjectFileURI(@NonNull String referenceName) {
 		throw new UnsupportedOperationException();
 		//		File projectFile = getProjectFile();
-		//		return ClassUtil.nonNullState(URI.createFileURI(projectFile.toString() + "/" + referenceName));
+		//		return ClassUtil.requireNonNull(URI.createFileURI(projectFile.toString() + "/" + referenceName));
 	}
 
 	protected PivotTestCase() {

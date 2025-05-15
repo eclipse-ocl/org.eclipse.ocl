@@ -528,7 +528,7 @@ public class DeclarativeFormatter extends AbstractNodeModelFormatter
 				oldWhitespace = rootText.substring(selectedNode.getOffset(), followingNode2.getOffset());			// Include following multi-whitespace
 			}
 			else {
-				oldWhitespace = ClassUtil.nonNull(selectedNode.getText());
+				oldWhitespace = ClassUtil.requireNonNull(selectedNode.getText());
 			}
 			int selectedOffset = selectedNode.getOffset();
 			this.prePosition = new Position(0, 0).createPosition(rootText, 0, selectedOffset, false);

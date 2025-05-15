@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -57,6 +56,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -362,7 +362,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
 				partIds.add(tuplePartId);
 			}
-			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(Objects.requireNonNull(type.getName()), partIds);
+			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.requireNonNull(type.getName()), partIds);
 			specializedTupleType = metamodelManager.getCompleteModel().getTupleManager().getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}
@@ -388,7 +388,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	private @NonNull BasicTemplateSpecialization getTemplateSpecialization() {
-		return Objects.requireNonNull(templateSpecialization);
+		return ClassUtil.requireNonNull(templateSpecialization);
 	}
 
 	@Override

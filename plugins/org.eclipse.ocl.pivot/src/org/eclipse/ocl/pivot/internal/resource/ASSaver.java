@@ -267,7 +267,7 @@ public class ASSaver extends AbstractASSaver
 			T castOperation = (T) operation;
 			return castOperation;
 		}
-		T resolvedOperation = ClassUtil.nonNullEMF(EcoreUtil.copy(referredOperation));
+		T resolvedOperation = ClassUtil.requireNonNull(EcoreUtil.copy(referredOperation));
 		if (orphanageClass == null) {
 			org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
 			if (localOrphanage2 == null) {
@@ -293,7 +293,7 @@ public class ASSaver extends AbstractASSaver
 		org.eclipse.ocl.pivot.Class referredClass = PivotUtil.getOwningClass(referredProperty);
 		org.eclipse.ocl.pivot.Class resolvedClass = resolveType(referredClass);
 		Property resolvedProperty = NameUtil.getNameable(resolvedClass.getOwnedProperties(), PivotUtil.getName(referredProperty));
-		return ClassUtil.nonNullState(resolvedProperty);
+		return ClassUtil.requireNonNull(resolvedProperty);
 	}
 
 	/**
@@ -306,7 +306,7 @@ public class ASSaver extends AbstractASSaver
 		}
 		org.eclipse.ocl.pivot.Class resolvedType = specializations.get(referredType);
 		if (resolvedType == null) {
-			resolvedType = ClassUtil.nonNullEMF(EcoreUtil.copy(referredType));	// FIXME cast
+			resolvedType = ClassUtil.requireNonNull(EcoreUtil.copy(referredType));	// FIXME cast
 			specializations.put(referredType, resolvedType);	// FIXME cast
 			specializations.put(resolvedType, resolvedType);
 			EObject eContainer = resolvedType.eContainer();

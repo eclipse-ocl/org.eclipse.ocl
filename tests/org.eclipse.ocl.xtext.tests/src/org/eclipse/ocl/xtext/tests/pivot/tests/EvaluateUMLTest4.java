@@ -328,10 +328,10 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		MyOCL ocl = createOCLWithProjectMap();
 		URI umlURI = getTestModelURI("models/uml/Bug496210.uml");
 		Resource umlResource = ocl.getResourceSet().getResource(umlURI, true);
-		EObject umlClass1 = ClassUtil.nonNullState(umlResource.getEObject("Class1"));
+		EObject umlClass1 = ClassUtil.requireNonNull(umlResource.getEObject("Class1"));
 		ExpressionInOCL expr1 = ocl.createInvariant(umlClass1, "Class1.allInstances()->size()");
 		assertEquals("test::Class1.allInstances()->size()", expr1.toString());
-		EObject umlSignal2 = ClassUtil.nonNullState(umlResource.getEObject("Signal2"));
+		EObject umlSignal2 = ClassUtil.requireNonNull(umlResource.getEObject("Signal2"));
 		ExpressionInOCL expr2 = ocl.createInvariant(umlSignal2, "Signal2.allInstances()->size()");
 		assertEquals("test::Signal2.allInstances()->size()", expr2.toString());
 		ocl.dispose();

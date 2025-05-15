@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -256,7 +257,7 @@ public class LabelUtil
 	 */
 	public static @Nullable EOperation getEcoreInvariant(@NonNull EClass eClass, @NonNull String name) {
 		for (EOperation eOperation : eClass.getEOperations()) {
-			if (ClassUtil.safeEquals(name, eOperation.getName()) && EcoreUtil.isInvariant(eOperation)) {
+			if (Objects.equals(name, eOperation.getName()) && EcoreUtil.isInvariant(eOperation)) {
 				return eOperation;
 			}
 		}

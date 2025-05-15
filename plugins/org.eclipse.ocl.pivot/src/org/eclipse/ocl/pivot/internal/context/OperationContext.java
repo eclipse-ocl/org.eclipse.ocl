@@ -28,7 +28,7 @@ public class OperationContext extends ClassContext
 	private final @Nullable String resultVariableName;		// Null for none
 
 	public OperationContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, @NonNull Operation operation, @Nullable String resultVariableName) {
-		super(environmentFactory, uri, ClassUtil.nonNullModel(operation.getOwningClass()), null);
+		super(environmentFactory, uri, ClassUtil.requireNonNull(operation.getOwningClass()), null);
 		this.operation = operation;
 		this.resultVariableName = resultVariableName;
 	}
@@ -41,7 +41,7 @@ public class OperationContext extends ClassContext
 	@Override
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		super.initialize(conversion, expression);
-		conversion.setParameterVariables(expression, ClassUtil.nonNullEMF(operation.getOwnedParameters()));
+		conversion.setParameterVariables(expression, ClassUtil.requireNonNull(operation.getOwnedParameters()));
 		String resultVariableName2 = resultVariableName;
 		if (resultVariableName2 != null) {
 			conversion.setResultVariable(expression, operation, resultVariableName2);

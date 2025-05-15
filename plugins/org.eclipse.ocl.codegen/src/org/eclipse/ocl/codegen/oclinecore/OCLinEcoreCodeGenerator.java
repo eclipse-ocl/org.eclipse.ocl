@@ -368,7 +368,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	protected OCLinEcoreCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GenPackage genPackage) {
 		super(environmentFactory, genPackage.getGenModel());
 		this.standardLibrary = environmentFactory.getStandardLibrary();
-		GenModel genModel = ClassUtil.nonNullModel(genPackage.getGenModel());
+		GenModel genModel = ClassUtil.requireNonNull(genPackage.getGenModel());
 		genModel.reconcile();
 		metamodelManager.addGenModel(genModel);
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
@@ -405,7 +405,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
 			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(cgAnalyzer, globalContext);
-			CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
+			CGPackage cgPackage = (CGPackage) ClassUtil.requireNonNull(asPackage.accept(as2cgVisitor));
 			optimize(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
 			Map<String, String> results = cg2java.generateBodies();
@@ -475,7 +475,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			}
 			asSynthesizedQuery.setBody(null);
 		}
-		Variable asSelfVariable = ClassUtil.nonNullState(asSynthesizedQuery.getOwnedContext());
+		Variable asSelfVariable = ClassUtil.requireNonNull(asSynthesizedQuery.getOwnedContext());
 		Variable asDiagnosticsVariable = asHelper.createParameterVariable("diagnostics", oclAnyType, false);
 		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
 		asSynthesizedQuery.getOwnedParameters().add(asDiagnosticsVariable);

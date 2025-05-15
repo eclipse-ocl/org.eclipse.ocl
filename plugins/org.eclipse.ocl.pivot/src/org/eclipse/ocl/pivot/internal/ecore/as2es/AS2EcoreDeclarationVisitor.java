@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EMap;
@@ -142,7 +143,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			if (aProperty.getRedefinedProperties().size() == 0) {
 				return false;
 			}
-			return ClassUtil.safeEquals(aProperty.getName(), aProperty.getRedefinedProperties().get(0).getName());
+			return Objects.equals(aProperty.getName(), aProperty.getRedefinedProperties().get(0).getName());
 		}
 	}
 
@@ -188,7 +189,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			if (aProperty.getRedefinedProperties().size() == 0) {
 				return true;
 			}
-			return !ClassUtil.safeEquals(aProperty.getName(), aProperty.getRedefinedProperties().get(0).getName());
+			return !Objects.equals(aProperty.getName(), aProperty.getRedefinedProperties().get(0).getName());
 			//			return (aProperty != null) && (aProperty.getRedefinedProperty().size() == 0);
 		}
 	}
@@ -268,7 +269,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	protected void copyModelElement(@NonNull EModelElement eModelElement, @NonNull Element pivotModelElement) {
 		context.putCreated(pivotModelElement, eModelElement);
-		safeVisitAll(ClassUtil.nonNullState(eModelElement.getEAnnotations()), pivotModelElement.getOwnedAnnotations());
+		safeVisitAll(ClassUtil.requireNonNull(eModelElement.getEAnnotations()), pivotModelElement.getOwnedAnnotations());
 		AS2Ecore.copyCommentsAndDocumentation(eModelElement, pivotModelElement);
 	}
 

@@ -37,7 +37,7 @@ public class ControlPlace extends LocalPlace
 {
 	public static @NonNull AbstractPlace createControlPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
 		if (cgElement.isGlobal()) {
-			return ClassUtil.nonNullState(element2place.get(null));
+			return ClassUtil.requireNonNull(element2place.get(null));
 		}
 		CGElement cgParent = cgElement.getParent();
 		AbstractPlace parentPlace = element2place.get(cgParent);

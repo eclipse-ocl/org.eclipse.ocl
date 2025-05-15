@@ -185,10 +185,10 @@ public class TypeUtil
 		int iParameter = 0;
 		List<? extends Type> ownedParameters = lambdaType.getParameterTypes();
 		@NonNull Type @NonNull [] parameterTypes = new @NonNull Type[ownedParameters.size() + 2];
-		parameterTypes[iParameter++] = ClassUtil.nonNullState(lambdaType.getContextType());
-		parameterTypes[iParameter++] = ClassUtil.nonNullState(lambdaType.getResultType());
+		parameterTypes[iParameter++] = ClassUtil.requireNonNull(lambdaType.getContextType());
+		parameterTypes[iParameter++] = ClassUtil.requireNonNull(lambdaType.getResultType());
 		for (Type parameterType : ownedParameters) {
-			parameterTypes[iParameter++] = ClassUtil.nonNullState(parameterType);
+			parameterTypes[iParameter++] = ClassUtil.requireNonNull(parameterType);
 		}
 		return parameterTypes;
 	}
@@ -254,17 +254,17 @@ public class TypeUtil
 			List<@NonNull ? extends TypedElement> ownedAccumulators = ClassUtil.nullFree(anIteration.getOwnedAccumulators());
 			parameterTypes = new @NonNull Type[ownedIterators.size() + ownedAccumulators.size() + ownedParameters.size()];
 			for (@NonNull TypedElement ownedIterator : ownedIterators) {
-				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedIterator.getType());
+				parameterTypes[iParameter++] = ClassUtil.requireNonNull(ownedIterator.getType());
 			}
 			for (@NonNull TypedElement ownedAccumulator : ownedAccumulators) {
-				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedAccumulator.getType());
+				parameterTypes[iParameter++] = ClassUtil.requireNonNull(ownedAccumulator.getType());
 			}
 		}
 		else {
 			parameterTypes = new @NonNull Type[ownedParameters.size()];
 		}
 		for (@NonNull TypedElement ownedParameter : ownedParameters) {
-			parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedParameter.getType());
+			parameterTypes[iParameter++] = ClassUtil.requireNonNull(ownedParameter.getType());
 		}
 		return parameterTypes;
 	}

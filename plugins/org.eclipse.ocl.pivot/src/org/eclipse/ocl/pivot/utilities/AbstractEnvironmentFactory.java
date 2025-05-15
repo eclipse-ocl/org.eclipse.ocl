@@ -1110,7 +1110,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if ((specification instanceof ExpressionInOCL) && ((ExpressionInOCL)specification).getOwnedBody() != null) {
 			return (ExpressionInOCL)specification;
 		}
-		EObject contextElement = ClassUtil.nonNullState(specification.eContainer());
+		EObject contextElement = ClassUtil.requireNonNull(specification.eContainer());
 		String expression = specification.getBody();
 		if (expression == null) {
 			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));

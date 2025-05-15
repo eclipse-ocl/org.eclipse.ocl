@@ -107,7 +107,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	}
 
 	public @NonNull EObject eCreate(EClass cClass) {
-		return ClassUtil.nonNullEMF(cClass.getEPackage().getEFactoryInstance().create(cClass));
+		return ClassUtil.requireNonNull(cClass.getEPackage().getEFactoryInstance().create(cClass));
 	}
 
 	public void eSet(@NonNull EObject eObject, @NonNull String featureName, @Nullable Object value) {
@@ -155,7 +155,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 						"}\n";
 		Resource metamodel = cs2ecore(ocl.getEnvironmentFactory(), metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
-		EClass eClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifiers().get(0));
+		EClass eClass = ClassUtil.requireNonNull((EClass) ePackage.getEClassifiers().get(0));
 		//        helper.setContext(metamodelManager.getIdResolver().getType(eClass));
 		EObject eObject = eCreate(eClass);
 		//
@@ -294,7 +294,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 						"}\n";
 		Resource metamodel = cs2ecore(ocl.getEnvironmentFactory(), metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
-		EClass aClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("A"));
+		EClass aClass = ClassUtil.requireNonNull((EClass) ePackage.getEClassifier("A"));
 		EClass bClass = (EClass) ePackage.getEClassifier("B");
 		EClass cClass = (EClass) ePackage.getEClassifier("C");
 		EObject c1 = eCreate(cClass);
@@ -361,11 +361,11 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		OCL ocl1 = createOCL();
 		Resource metamodel = cs2ecore(ocl1.getEnvironmentFactory(), metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
-		EClass parentClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Parent"));
-		EClass child1Class = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Child1"));
-		EClass child2Class = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Child2"));
-		EClass children1Class = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Children1"));
-		EClass children2Class = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Children2"));
+		EClass parentClass = ClassUtil.requireNonNull((EClass) ePackage.getEClassifier("Parent"));
+		EClass child1Class = ClassUtil.requireNonNull((EClass) ePackage.getEClassifier("Child1"));
+		EClass child2Class = ClassUtil.requireNonNull((EClass) ePackage.getEClassifier("Child2"));
+		EClass children1Class = ClassUtil.requireNonNull((EClass) ePackage.getEClassifier("Children1"));
+		EClass children2Class = ClassUtil.requireNonNull((EClass) ePackage.getEClassifier("Children2"));
 		EObject parent = eCreate(parentClass);
 		EObject child1 = eCreate(child1Class);
 		EObject child2 = eCreate(child2Class);
@@ -489,7 +489,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		Resource metamodel = cs2ecore(ocl.getEnvironmentFactory(), metamodelText, getTestFileURI("test.ecore"));
 		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
 		EClass parentClass = (EClass) ePackage.getEClassifier("Parent");
-		EClass childClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Child"));
+		EClass childClass = ClassUtil.requireNonNull((EClass) ePackage.getEClassifier("Child"));
 		EObject parent = eCreate(parentClass);
 		EObject leftChild = eCreate(childClass);
 		EObject rightChild = eCreate(childClass);

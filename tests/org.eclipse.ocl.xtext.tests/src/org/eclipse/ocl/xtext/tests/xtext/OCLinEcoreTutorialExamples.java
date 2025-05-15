@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.tests.xtext;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
@@ -44,7 +45,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.util.PivotValidator;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -266,7 +266,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 					for (String key : details.keySet()) {
 						String value = details.get(key);
 						String unsafeValue = value.replace("?.", ".").replace("?->", "->");
-						if (!ClassUtil.safeEquals(unsafeValue, value)) {
+						if (!Objects.equals(unsafeValue, value)) {
 							details.put(key, unsafeValue);
 						}
 					}

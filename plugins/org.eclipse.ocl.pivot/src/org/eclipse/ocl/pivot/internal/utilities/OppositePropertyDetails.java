@@ -245,8 +245,8 @@ public class OppositePropertyDetails
 
 	public static @NonNull OppositePropertyDetails createImplicitFromEReference(@NonNull EReference eReference) {
 		assert eReference.getEOpposite() == null;
-		EClass eClass = ClassUtil.nonNullState(eReference.getEContainingClass());
-		String oppositeName = ClassUtil.nonNullState(eClass.getName());
+		EClass eClass = ClassUtil.requireNonNull(eReference.getEContainingClass());
+		String oppositeName = ClassUtil.requireNonNull(eClass.getName());
 		IntegerValue oppositeLower = null;
 		Boolean oppositeOrdered = null;
 		Boolean oppositeUnique = null;
@@ -405,23 +405,23 @@ public class OppositePropertyDetails
 	}
 
 	public @NonNull IntegerValue getLower() {
-		return ClassUtil.nonNullState(lower);
+		return ClassUtil.requireNonNull(lower);
 	}
 
 	public @NonNull UnlimitedNaturalValue getUpper() {
-		return ClassUtil.nonNullState(upper);
+		return ClassUtil.requireNonNull(upper);
 	}
 
 	public @NonNull String getName() {
-		return ClassUtil.nonNullState(name);
+		return ClassUtil.requireNonNull(name);
 	}
 
 	public @NonNull Boolean isOrdered() {
-		return ClassUtil.nonNullState(ordered);
+		return ClassUtil.requireNonNull(ordered);
 	}
 
 	public @NonNull Boolean isUnique() {
-		return ClassUtil.nonNullState(unique);
+		return ClassUtil.requireNonNull(unique);
 	}
 
 	@Override
