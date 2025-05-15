@@ -54,7 +54,7 @@ public class ErrorTests extends XtextTestCase
 		InputStream inputStream = new URIConverter.ReadableInputStream(metamodelText, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = ocl.getResourceSet();
-		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
+		EssentialOCLCSResource xtextResource = ClassUtil.requireNonNull((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
 			StringUtil.bind(PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Set(test::Test)", "iterate", "w, h; acc : String = ''| true"));
@@ -78,7 +78,7 @@ public class ErrorTests extends XtextTestCase
 		InputStream inputStream = new URIConverter.ReadableInputStream(metamodelText, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = ocl.getResourceSet();
-		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
+		EssentialOCLCSResource xtextResource = ClassUtil.requireNonNull((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
 			StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, "test::Test", "allInstances"));

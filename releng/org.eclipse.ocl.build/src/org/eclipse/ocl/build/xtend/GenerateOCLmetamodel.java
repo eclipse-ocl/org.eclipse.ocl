@@ -17,8 +17,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -162,7 +160,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 
 	@Override
 	protected @NonNull Model getThisModel() {
-		return Objects.requireNonNull(thisModel);
+		return ClassUtil.requireNonNull(thisModel);
 	}
 
 	@Override
@@ -185,8 +183,8 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
 		//	ResourceSet asResourceSet = metamodelManager.getASResourceSet();
 			ResourceSet externalResourceSet = ocl.getEnvironmentFactory().getResourceSet();
-			Resource ecoreResource = Objects.requireNonNull(externalResourceSet.getResource(inputURI, true));
-			String ecoreErrorsString = PivotUtil.formatResourceDiagnostics(Objects.requireNonNull(ecoreResource.getErrors()), "Loading " + inputURI, "\n");
+			Resource ecoreResource = ClassUtil.requireNonNull(externalResourceSet.getResource(inputURI, true));
+			String ecoreErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(ecoreResource.getErrors()), "Loading " + inputURI, "\n");
 			if (ecoreErrorsString != null) {
 				issues.addError(this, ecoreErrorsString, null, null, null);
 				return;
@@ -194,7 +192,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, getEnvironmentFactory());
 			Model pivotModel = ecore2as.getASModel();
 			ASResource asResource = (ASResource) pivotModel.eResource();
-			String pivotErrorsString = PivotUtil.formatResourceDiagnostics(Objects.requireNonNull(asResource.getErrors()), "Converting " + inputURI, "\n");
+			String pivotErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(asResource.getErrors()), "Converting " + inputURI, "\n");
 			if (pivotErrorsString != null) {
 				issues.addError(this, pivotErrorsString, null, null, null);
 				return;
@@ -248,7 +246,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			asResource.setSaveable(true);
 			asResource.save(options);
 			for (Resource resource : asResource.getResourceSet().getResources()) {
-				String saveMessage = PivotUtil.formatResourceDiagnostics(Objects.requireNonNull(resource.getErrors()), "Save", "\n\t");
+				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(resource.getErrors()), "Save", "\n\t");
 				if (saveMessage != null) {
 					issues.addError(this, saveMessage, null, null, null);
 					return;

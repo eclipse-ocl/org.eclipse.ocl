@@ -321,7 +321,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				}
 			}
 			else {
-				oclPath.setText(ClassUtil.nonNullState(configuration.getAttribute(OCL_KEY, "")));
+				oclPath.setText(ClassUtil.requireNonNull(configuration.getAttribute(OCL_KEY, "")));
 			}
 			String contextUri = configuration.getAttribute(CONTEXT_URI, "");
 			if (contextUri.length() > 0) {
@@ -335,7 +335,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				}
 			}
 			else {
-				modelPath.setText(ClassUtil.nonNullState(configuration.getAttribute(MODEL_URI, "")));
+				modelPath.setText(ClassUtil.requireNonNull(configuration.getAttribute(MODEL_URI, "")));
 			}
 		} catch (CoreException e) {
 			//Ignore

@@ -27,7 +27,7 @@ public abstract class LocalPlace extends AbstractPlace
 	public static @NonNull AbstractPlace createLocalPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
 		boolean isGlobal = cgElement.isGlobal();
 		if (isGlobal) {
-			return ClassUtil.nonNullState(element2place.get(null));
+			return ClassUtil.requireNonNull(element2place.get(null));
 		}
 		else {
 			return ControlPlace.createControlPlace(element2place, cgElement);

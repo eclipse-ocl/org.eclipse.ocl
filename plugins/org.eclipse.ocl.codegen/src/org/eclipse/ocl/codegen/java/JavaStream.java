@@ -1088,10 +1088,10 @@ public class JavaStream
 	public boolean appendThrowBooleanInvalidValueException(/*@NonNull*/ String message, @NonNull String... arguments) {
 		appendClassReference(null, ValueUtil.class);
 		append(".throwBooleanInvalidValueException(");
-		appendString(ClassUtil.nonNullState(message));
+		appendString(ClassUtil.requireNonNull(message));
 		for (String argument : arguments) {
 			append(", ");
-			appendString(ClassUtil.nonNullState(argument));
+			appendString(ClassUtil.requireNonNull(argument));
 		}
 		append(");\n");
 		return false;
@@ -1101,10 +1101,10 @@ public class JavaStream
 		append("throw new ");
 		appendClassReference(null, InvalidValueException.class);
 		append("(");
-		appendString(ClassUtil.nonNullState(message));
+		appendString(ClassUtil.requireNonNull(message));
 		for (String argument : arguments) {
 			append(", ");
-			appendString(ClassUtil.nonNullState(argument));
+			appendString(ClassUtil.requireNonNull(argument));
 		}
 		append(");\n");
 		return false;

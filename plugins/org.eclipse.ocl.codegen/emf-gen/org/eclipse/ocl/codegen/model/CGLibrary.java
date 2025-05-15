@@ -228,7 +228,7 @@ public class CGLibrary extends ASResourceImpl
 	 *	Construct an OCL Standard Library with specified resource URI and library content.
 	 */
 	private CGLibrary(@NonNull String asURI, @NonNull Model libraryModel) {
-		super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
+		super(ClassUtil.requireNonNull(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 		assert PivotUtilInternal.isASURI(uri);
 		getContents().add(libraryModel);
 	}

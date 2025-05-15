@@ -78,8 +78,8 @@ public abstract class CardinalityExpression implements Nameable
 		public boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 			UserElementAnalysis elementAnalysis = dynamicRuleMatch.getElementAnalysis();
 			for (Entry<@NonNull EnumerationValue, @NonNull CardinalityExpression> entry : enumerationValue2cardinalityExpression.entrySet()) {
-				EnumerationValue value = SerializationUtils.nonNullState(entry.getKey());
-				CardinalityExpression nestedExpression = SerializationUtils.nonNullState(entry.getValue());
+				EnumerationValue value = ClassUtil.requireNonNull(entry.getKey());
+				CardinalityExpression nestedExpression = ClassUtil.requireNonNull(entry.getValue());
 				int requiredCount = nestedExpression.solve(dynamicRuleMatch);
 				int actualCount = elementAnalysis.getSize(eAttribute, value);
 				if (requiredCount != actualCount) {
@@ -172,8 +172,8 @@ public abstract class CardinalityExpression implements Nameable
 			UserElementAnalysis elementAnalysis = dynamicRuleMatch.getElementAnalysis();
 			for (Entry<@NonNull GrammarRuleVector, @NonNull CardinalityExpression> entry : grammarRuleVector2cardinalityExpression.entrySet()) {
 				assert entry != null;
-				@NonNull GrammarRuleVector grammarRuleVector = SerializationUtils.nonNullState(entry.getKey());
-				@NonNull CardinalityExpression nestedExpression = SerializationUtils.nonNullState(entry.getValue());
+				@NonNull GrammarRuleVector grammarRuleVector = ClassUtil.requireNonNull(entry.getKey());
+				@NonNull CardinalityExpression nestedExpression = ClassUtil.requireNonNull(entry.getValue());
 				int requiredCount = nestedExpression.solve(dynamicRuleMatch);
 				int actualCount = elementAnalysis.getSize(eReference, grammarRuleVector);
 				if (requiredCount != actualCount) {
@@ -876,7 +876,7 @@ public abstract class CardinalityExpression implements Nameable
 				return false;		// Two variables is not trivial
 			}
 			else {
-				CardinalityVariable unknownVariable = ClassUtil.nonNullState(unknownVariables.get(0));
+				CardinalityVariable unknownVariable = ClassUtil.requireNonNull(unknownVariables.get(0));
 				if (linearVariable == null) {
 					linearVariable = unknownVariable;
 					grammarRuleVector = product.getGrammarRuleVector();

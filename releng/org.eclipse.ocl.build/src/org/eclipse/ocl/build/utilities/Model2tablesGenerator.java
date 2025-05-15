@@ -118,7 +118,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 		//	projectMap.initializeResourceSet(resourceSet);
 			resourceSet.getPackageRegistry().put(GenModelPackage.eNS_URI, GenModelPackage.eINSTANCE);
 			Resource genModelResource = resourceSet.getResource(genModelURI, true);
-			List<Diagnostic> genModelErrors = ClassUtil.nonNullEMF(genModelResource.getErrors());
+			List<Diagnostic> genModelErrors = ClassUtil.requireNonNull(genModelResource.getErrors());
 			String errorsString = PivotUtil.formatResourceDiagnostics(genModelErrors, "Loading " + genModelURI, "\n");
 			if (errorsString != null) {
 				issues.addError(this, errorsString, null, null, null);

@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -83,7 +84,7 @@ public class RoundTripTests extends XtextTestCase
 	public @NonNull ASResource createPivotFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource) throws IOException {
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
-		ASResource asResource = (ASResource) ClassUtil.nonNullState(pivotModel.eResource());
+		ASResource asResource = (ASResource) ClassUtil.requireNonNull(pivotModel.eResource());
 		assertNoResourceErrors("Ecore2AS failed", asResource);
 		assertNoValidationErrors("Ecore2AS invalid", asResource);
 		return asResource;
@@ -96,7 +97,7 @@ public class RoundTripTests extends XtextTestCase
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			List<EObject> pivotContents = asResource.getContents();
 			assertEquals(expectedContentCount, pivotContents.size());
-			assertNoValidationErrors("Pivot validation errors", ClassUtil.nonNullState(pivotContents.get(0)));
+			assertNoValidationErrors("Pivot validation errors", ClassUtil.requireNonNull(pivotContents.get(0)));
 			return asResource;
 		}
 		finally {
@@ -107,7 +108,7 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		XtextResource xtextResource = (XtextResource)resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		((BaseCSResource)xtextResource).updateFrom(asResource, environmentFactory);
-		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
+		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.requireNonNull(xtextResource.getURI().toString()));
 		xtextResource.save(XMIUtil.createSaveOptions());
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
@@ -119,7 +120,7 @@ public class RoundTripTests extends XtextTestCase
 		//		ProjectMap.initializeURIResourceMap(resourceSet2);
 		ProjectMap.initializeURIResourceMap(null);
 		//		UMLUtils.initializeContents(resourceSet2);
-		BaseCSResource xtextResource = (BaseCSResource) ClassUtil.nonNullState(resourceSet.getResource(xtextURI, true));
+		BaseCSResource xtextResource = (BaseCSResource) ClassUtil.requireNonNull(resourceSet.getResource(xtextURI, true));
 		assertNoResourceErrors("Load failed", xtextResource);
 		return xtextResource;
 	}
@@ -128,7 +129,7 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
-		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
+		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.requireNonNull(xtextResource.getURI().toString()));
 		xtextResource.save(XMIUtil.createSaveOptions());
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
@@ -148,8 +149,8 @@ public class RoundTripTests extends XtextTestCase
 				return;
 			}
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-				StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(projectMap.getProjectDescriptor("org.eclipse.uml2.uml"));
-				projectDescriptor.initializeURIMap(ClassUtil.nonNullState(URIConverter.URI_MAP));		// *.ecore2xml must be global
+				StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.requireNonNull(projectMap.getProjectDescriptor("org.eclipse.uml2.uml"));
+				projectDescriptor.initializeURIMap(ClassUtil.requireNonNull(URIConverter.URI_MAP));		// *.ecore2xml must be global
 			}
 			//			UMLUtils.initializeContentHandlers(resourceSet);
 			//			UMLUtils.initializeContents(resourceSet);
@@ -162,7 +163,7 @@ public class RoundTripTests extends XtextTestCase
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
 			pivotResource1.save(XMIUtil.createSaveOptions());
-			ASResource pivotResource2 = ClassUtil.nonNullState(CompleteOCLSplitter.separate(environmentFactory1, pivotResource1));
+			ASResource pivotResource2 = ClassUtil.requireNonNull(CompleteOCLSplitter.separate(environmentFactory1, pivotResource1));
 			@SuppressWarnings("unused")
 			CSResource xtextResource2 = createCompleteOCLXtextFromPivot(environmentFactory1, pivotResource2, outputURI);
 			ocl1.dispose();
@@ -203,7 +204,7 @@ public class RoundTripTests extends XtextTestCase
 		URI pivotURI = getTestFileURI(pivotName);
 		URI outputURI = getTestFileURI(outputName);
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		Resource inputResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
+		Resource inputResource = ClassUtil.requireNonNull(resourceSet.getResource(inputURI, true));
 		assertNoResourceErrors("Ecore load", inputResource);
 		assertNoValidationErrors("Ecore load", inputResource);
 
@@ -252,7 +253,7 @@ public class RoundTripTests extends XtextTestCase
 		if (referenceURI != null) {
 			ResourceSetImpl resourceSet2 = new ResourceSetImpl();
 			StandaloneProjectMap.getAdapter(resourceSet).initializeResourceSet(resourceSet2);
-			Resource referenceResource = ClassUtil.nonNullState(resourceSet2.getResource(referenceURI, true));
+			Resource referenceResource = ClassUtil.requireNonNull(resourceSet2.getResource(referenceURI, true));
 			TestUtil.assertSameModel(referenceResource, outputResource);
 			unloadResourceSet(resourceSet2);
 		}
@@ -323,7 +324,7 @@ public class RoundTripTests extends XtextTestCase
 		URI inputURI = getProjectFileURI(inputName);
 		URI pivotURI = getTestFileURI(pivotName);
 		URI outputURI = getTestFileURI(outputName);
-		Resource inputResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
+		Resource inputResource = ClassUtil.requireNonNull(resourceSet.getResource(inputURI, true));
 		assertNoResourceErrors("UML load", inputResource);
 		assertNoValidationErrors("UML load", inputResource);
 
@@ -342,7 +343,7 @@ public class RoundTripTests extends XtextTestCase
 		List<? extends org.eclipse.uml2.uml.@NonNull NamedElement> castOutputObjects = (List<? extends org.eclipse.uml2.uml.@NonNull NamedElement>)outputObjects;
 		outputObjects.remove(getNamedElement(castOutputObjects, "orphanage"));
 		if (outputObjects.size() == 1) {
-			org.eclipse.uml2.uml.Package outputPackages = ClassUtil.nonNullState(((org.eclipse.uml2.uml.Package)outputObjects.get(0)));
+			org.eclipse.uml2.uml.Package outputPackages = ClassUtil.requireNonNull(((org.eclipse.uml2.uml.Package)outputObjects.get(0)));
 			outputObjects = ClassUtil.nullFree(outputPackages.getNestedPackages());
 		}
 		Resource outputResource = resourceSet.createResource(outputURI);
@@ -358,7 +359,7 @@ public class RoundTripTests extends XtextTestCase
 		if (elements == null)
 			return null;
 		for (T element : elements)
-			if (ClassUtil.safeEquals(name, ClassUtil.nonNullState(element).getName()))
+			if (Objects.equals(name, ClassUtil.requireNonNull(element).getName()))
 				return element;
 		return null;
 	}
@@ -783,13 +784,13 @@ public class RoundTripTests extends XtextTestCase
 	/* BUG 528359
 	public void testUML25RoundTrip() throws IOException, InterruptedException, ParserException {
 		UMLStandaloneSetup.init();
-		OCLDelegateDomain.lazyInitializeGlobals(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), true);
+		OCLDelegateDomain.lazyInitializeGlobals(ClassUtil.requireNonNull(OCLConstants.OCL_DELEGATE_URI), true);
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/UML.ecore", true);
 		Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 		options.put(AS2Ecore.OPTION_ADD_INVARIANT_COMMENTS, true);
 		options.put(DelegateInstaller.OPTION_BOOLEAN_INVARIANTS, true);
-		options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), OCLConstants.OCL_DELEGATE_URI);
+		options.put(ClassUtil.requireNonNull(OCLConstants.OCL_DELEGATE_URI), OCLConstants.OCL_DELEGATE_URI);
 		options.put(DelegateInstaller.OPTION_OMIT_SETTING_DELEGATES, true);
 		options.put(AS2ES_VALIDATION_ERRORS, new @NonNull String[] {
 			// FIXME result conformance invariant is inadequate
@@ -808,13 +809,13 @@ public class RoundTripTests extends XtextTestCase
 	/* BUG 528359
 	public void testUMLRoundTrip() throws IOException, InterruptedException, ParserException {
 		UMLStandaloneSetup.init();
-		OCLDelegateDomain.lazyInitializeGlobals(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), true);
+		OCLDelegateDomain.lazyInitializeGlobals(ClassUtil.requireNonNull(OCLConstants.OCL_DELEGATE_URI), true);
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.uml2.uml/model/UML.ecore", true);
 		Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 		options.put(AS2Ecore.OPTION_ADD_INVARIANT_COMMENTS, true);
 		options.put(DelegateInstaller.OPTION_BOOLEAN_INVARIANTS, true);
-		options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), OCLConstants.OCL_DELEGATE_URI);
+		options.put(ClassUtil.requireNonNull(OCLConstants.OCL_DELEGATE_URI), OCLConstants.OCL_DELEGATE_URI);
 		options.put(DelegateInstaller.OPTION_OMIT_SETTING_DELEGATES, true);
 		options.put(AS2ES_VALIDATION_ERRORS, new @NonNull String[] {
 			// FIXME result conformance invariant is inadequate

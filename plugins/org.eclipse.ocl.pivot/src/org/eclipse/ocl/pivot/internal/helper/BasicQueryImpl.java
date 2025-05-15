@@ -62,7 +62,7 @@ public class BasicQueryImpl implements Query, ProblemAware
 	public BasicQueryImpl(@NonNull EnvironmentFactory environmentFactory, @NonNull ExpressionInOCL query) {
 		this.environmentFactory = environmentFactory;
 		this.query = query;
-		this.expression = ClassUtil.nonNullState(query.getOwnedBody());
+		this.expression = ClassUtil.requireNonNull(query.getOwnedBody());
 //		this.modelManager = ocl.getModelManager();
 	}
 
@@ -145,7 +145,7 @@ public class BasicQueryImpl implements Query, ProblemAware
 			// lazily create the evaluation environment, if not already done by
 			//    the client.  Initialize it with the "self" context variable
 			EvaluationEnvironment myEnv = getEvaluationEnvironment(environmentFactory.getIdResolver().unboxedValueOf(boxedValue));
-			Variable contextVariable = ClassUtil.nonNullState(query.getOwnedContext());
+			Variable contextVariable = ClassUtil.requireNonNull(query.getOwnedContext());
 			myEnv.add(contextVariable, boxedValue);
 	//		Variable resultVariable = specification.getResultVariable();
 	//		if (resultVariable != null) {

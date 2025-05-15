@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -46,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -399,7 +399,7 @@ public class Orphanage extends PackageImpl
 		}
 	}
 
-	public static final @NonNull URI ORPHANAGE_URI = Objects.requireNonNull(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
+	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.requireNonNull(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 	@Deprecated /* @deprecated The global Orphanage is never used */
 	private static Orphanage ORPHAN_PACKAGE = null;
 

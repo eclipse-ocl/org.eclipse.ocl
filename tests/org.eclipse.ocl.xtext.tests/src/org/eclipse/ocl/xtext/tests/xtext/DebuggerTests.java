@@ -216,23 +216,23 @@ public class DebuggerTests extends XtextTestCase
 		TestFile oclFile = copyFile(testProject, uriConverter, getTestModelURI("models/ecore/RoyalAndLoyal.ocl"));
 		//
 		Resource xmiResource = ocl.getResourceSet().getResource(xmiFile.getURI(), true);
-		EObject xmiRoot = ClassUtil.nonNullState(xmiResource.getContents().get(0));
+		EObject xmiRoot = ClassUtil.requireNonNull(xmiResource.getContents().get(0));
 		assertNoResourceErrors("Load failed", xmiResource);
 		assertNoUnresolvedProxies("Unresolved proxies", xmiResource);
 		assertNoValidationErrors("Validation errors", xmiRoot);
-		Resource oclResource = ClassUtil.nonNullState(ocl.getResourceSet().getResource(oclFile.getURI(), true));
+		Resource oclResource = ClassUtil.requireNonNull(ocl.getResourceSet().getResource(oclFile.getURI(), true));
 		assertNoResourceErrors("Load failed", oclResource);
 		assertNoUnresolvedProxies("Unresolved proxies", oclResource);
-		assertNoValidationErrors("Validation errors", ClassUtil.nonNullState(oclResource.getContents().get(0)));
+		assertNoValidationErrors("Validation errors", ClassUtil.requireNonNull(oclResource.getContents().get(0)));
 
 		EStructuralFeature ref_RandL_Customer = xmiRoot.eClass().getEStructuralFeature("ref_RandL_Customer");
 		@SuppressWarnings("unchecked")List<EObject> customers = (List<EObject>) xmiRoot.eGet(ref_RandL_Customer);
 		EObject eObject = customers.get(0);
 
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		org.eclipse.ocl.pivot.Class customerClass = ClassUtil.nonNullState(environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eObject.eClass()));
+		org.eclipse.ocl.pivot.Class customerClass = ClassUtil.requireNonNull(environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eObject.eClass()));
 		Iterable<Constraint> customerInvariants = environmentFactory.getMetamodelManager().getAllInvariants(customerClass);
-		Constraint constraint = ClassUtil.nonNullState(NameUtil.getNameable(customerInvariants, "invariant_sizesAgree"));
+		Constraint constraint = ClassUtil.requireNonNull(NameUtil.getNameable(customerInvariants, "invariant_sizesAgree"));
 
 		ThreadLocalExecutor.resetEnvironmentFactory();
 

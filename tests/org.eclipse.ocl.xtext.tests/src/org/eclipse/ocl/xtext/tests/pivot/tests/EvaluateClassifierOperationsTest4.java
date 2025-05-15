@@ -75,10 +75,10 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
 			super(testFileSystem, testPackageName, name, projectManager, externalResourceSet);
 			MetamodelManager metamodelManager = getMetamodelManager();
-			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
+			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.requireNonNull(metamodelManager.getASmetamodel()));
 
-			metamodelManager.installRoot(ClassUtil.nonNullState(root));
-			//	        helper.setContext(ClassUtil.nonNullState(metamodelManager.getPivotType("Package")));
+			metamodelManager.installRoot(ClassUtil.requireNonNull(root));
+			//	        helper.setContext(ClassUtil.requireNonNull(metamodelManager.getPivotType("Package")));
 		}
 	}
 
@@ -224,7 +224,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		try {
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			org.eclipse.ocl.pivot.Class classType = environmentFactory.getStandardLibrary().getClassType();
-			@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
+			@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 			CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 			ocl.assertSemanticErrorQuery(classType, "invalid.oclContents()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "OclInvalid", "oclContents");
 			ocl.assertQueryInvalid(ocl.pkg2, "let s : OclElement = invalid in s.oclContents()");

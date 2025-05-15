@@ -486,7 +486,7 @@ public class IdiomImpl
 	}
 
 	public @NonNull SubIdiom getSubidiom(int subIdiomIndex) {
-		return ClassUtil.nonNullState(getOwnedSubIdioms().get(subIdiomIndex));
+		return ClassUtil.requireNonNull(getOwnedSubIdioms().get(subIdiomIndex));
 	}
 
 	@Override

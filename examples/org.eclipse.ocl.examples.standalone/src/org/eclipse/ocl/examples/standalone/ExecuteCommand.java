@@ -419,7 +419,7 @@ public class ExecuteCommand extends StandaloneCommand
 				//	PivotTestSuite.assertNoValidationErrors(expression, query);
 				ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(query);
 				ValidationContext validationContext = new ValidationContext(validationRegistry);
-				//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
+				//		Resource eResource = ClassUtil.requireNonNull(eObject.eResource());
 				//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 				BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(query, validationContext);
 				List<Diagnostic> children = diagnostics.getChildren();

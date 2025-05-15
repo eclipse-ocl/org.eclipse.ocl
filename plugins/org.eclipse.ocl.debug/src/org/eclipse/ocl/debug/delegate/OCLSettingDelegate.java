@@ -74,7 +74,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	public @NonNull Property getProperty() {
 		Property property2 = property;
 		if (property2 == null) {
-			property2 = property = delegateDomain.getPivot(Property.class, ClassUtil.nonNullEMF(eStructuralFeature));
+			property2 = property = delegateDomain.getPivot(Property.class, ClassUtil.requireNonNull(eStructuralFeature));
 			if (property2 == null) {
 				throw new OCLDelegateException(new SemanticException("No pivot property for " + eStructuralFeature)) ;
 			}

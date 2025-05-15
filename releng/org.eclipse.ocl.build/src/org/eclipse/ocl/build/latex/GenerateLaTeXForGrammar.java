@@ -46,12 +46,12 @@ public abstract class GenerateLaTeXForGrammar extends GenerateLaTeXUtils
 			log.info("Loading Grammar '" + fileURI);
 			ResourceSet resourceSet = getResourceSet();
 			Resource xtextResource = resourceSet.getResource(fileURI, true);
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(xtextResource.getErrors()), "Grammar parse failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(xtextResource.getErrors()), "Grammar parse failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;
 			}
-			EObject xtextModel = ClassUtil.nonNullState(xtextResource.getContents().get(0));
+			EObject xtextModel = ClassUtil.requireNonNull(xtextResource.getContents().get(0));
 			String fileName = folder + "/" + latexFileName + ".tex";
 			log.info("Generating '" + fileName + "'");
 			String latexContent = generateLaTeX((Grammar)xtextModel);

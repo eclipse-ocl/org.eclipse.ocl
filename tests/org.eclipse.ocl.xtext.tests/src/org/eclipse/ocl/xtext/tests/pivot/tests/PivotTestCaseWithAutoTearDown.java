@@ -24,7 +24,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Objects;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -40,6 +39,7 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -116,12 +116,12 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		URI inputURI = oclInEcoreFile.getFileURI();
 		URI ecoreURI = getTestFileURI(fileName + ".ecore");
 		ResourceSet resourceSet2 = ocl.getResourceSet();
-		BaseCSResource xtextResource = Objects.requireNonNull((BaseCSResource) resourceSet2.getResource(inputURI, true));
+		BaseCSResource xtextResource = ClassUtil.requireNonNull((BaseCSResource) resourceSet2.getResource(inputURI, true));
 		assertNoResourceErrors("Load failed", xtextResource);
 		CS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
 		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
-		assertNoValidationErrors("Pivot validation errors", Objects.requireNonNull(asResource.getContents().get(0)));
+		assertNoValidationErrors("Pivot validation errors", ClassUtil.requireNonNull(asResource.getContents().get(0)));
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
 		if (assignIds) {
@@ -149,7 +149,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	 * the same as the bundle name. Override when this assumption is unjustified.
 	 */
 	protected @NonNull String getTestBundleName() {
-		return Objects.requireNonNull(getClass().getPackage().getName());
+		return ClassUtil.requireNonNull(getClass().getPackage().getName());
 	}
 	protected @NonNull URI getTestBundleURI() {
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -173,7 +173,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	 */
 	protected @NonNull TestFile getTestFile(@NonNull String filePath, @NonNull OCL ocl, @NonNull URI sourceURI) throws IOException {
 		URIConverter uriConverter = ocl.getResourceSet().getURIConverter();
-		InputStream inputStream = Objects.requireNonNull(uriConverter.createInputStream(sourceURI));
+		InputStream inputStream = ClassUtil.requireNonNull(uriConverter.createInputStream(sourceURI));
 		return getTestProject().getOutputFile(filePath, inputStream);
 	}
 
@@ -200,7 +200,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	 */
 	protected @NonNull URI getTestFileURI(@NonNull String outputPath, @NonNull OCL ocl, @NonNull URI sourceURI) throws IOException {
 		URIConverter uriConverter = ocl.getResourceSet().getURIConverter();
-		InputStream inputStream = Objects.requireNonNull(uriConverter.createInputStream(sourceURI));
+		InputStream inputStream = ClassUtil.requireNonNull(uriConverter.createInputStream(sourceURI));
 		return getTestFileURI(outputPath, inputStream);
 	}
 

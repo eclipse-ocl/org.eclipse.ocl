@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -52,6 +51,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -105,7 +105,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 
 	@Override
 	protected @NonNull Model getThisModel() {
-		return Objects.requireNonNull(thisModel);
+		return ClassUtil.requireNonNull(thisModel);
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				environmentFactory.getStandardLibrary().getOclAnyType();
 			}
 			BaseCSResource xtextResource = (BaseCSResource)resourceSet.getResource(fileURI, true);
-			String message = PivotUtil.formatResourceDiagnostics(Objects.requireNonNull(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;
@@ -148,7 +148,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			//			if (asResource == null) {
 			//				return;
 			//			}
-			Model pivotModel = (Model)Objects.requireNonNull(asResource.getContents().get(0));
+			Model pivotModel = (Model)ClassUtil.requireNonNull(asResource.getContents().get(0));
 		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
 			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
 			saver.localizeOrphans();
@@ -167,7 +167,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			asResource.setSaveable(true);
 			asResource.save(options);
 			for (Resource resource : asResource.getResourceSet().getResources()) {
-				String saveMessage = PivotUtil.formatResourceDiagnostics(Objects.requireNonNull(resource.getErrors()), "Save", "\n\t");
+				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(resource.getErrors()), "Save", "\n\t");
 				if (saveMessage != null) {
 					issues.addError(this, saveMessage, null, null, null);
 					return;
@@ -178,7 +178,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				@NonNull URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
 				AS2Ecore converter = new AS2Ecore(environmentFactory, asResource, ecoreURI, null);
 				XMLResource eResource = converter.getEcoreResource();
-				EPackage ePackage = (EPackage) Objects.requireNonNull(eResource.getContents().get(0));
+				EPackage ePackage = (EPackage) ClassUtil.requireNonNull(eResource.getContents().get(0));
 				if (libraryName != null) {
 					ePackage.setName(libraryName);
 				}

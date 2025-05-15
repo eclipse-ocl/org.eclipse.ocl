@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -85,6 +84,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -168,7 +168,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	public OCLinEcoreTables(@NonNull GenPackage genPackage) {
 		super(genPackage);
-		GenModel genModel = Objects.requireNonNull(genPackage.getGenModel());
+		GenModel genModel = ClassUtil.requireNonNull(genPackage.getGenModel());
 		this.tablesPostamble = OCLinEcoreGenModelGeneratorAdapter.tablesPostamble(genModel);
 		this.importManager = new ImportManager(getTablesPackageName());
 	}
@@ -407,12 +407,12 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	public static class " + AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME);
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
-			EClassifier eClassifier = Objects.requireNonNull((EClassifier)asClass.getESObject());
+			EClassifier eClassifier = ClassUtil.requireNonNull((EClassifier)asClass.getESObject());
 			if (asClass instanceof Enumeration) {
 				s.append("\n");
 				List<EnumerationLiteral> asEnumerationLiterals = ((Enumeration)asClass).getOwnedLiterals();
 				for (int i = 0; i < asEnumerationLiterals.size(); i++) {
-					EnumerationLiteral asEnumerationLiteral = Objects.requireNonNull(asEnumerationLiterals.get(i));
+					EnumerationLiteral asEnumerationLiteral = ClassUtil.requireNonNull(asEnumerationLiterals.get(i));
 					s.append("		public static final ");
 					s.appendClassReference(true, EcoreExecutorEnumerationLiteral.class);
 					s.append(" ");
@@ -433,7 +433,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				asClass.accept(emitLiteralVisitor);
 				s.append(" = {");
 				for (int i = 0; i < asEnumerationLiterals.size(); i++) {
-					EnumerationLiteral asEnumerationLiteral = Objects.requireNonNull(asEnumerationLiterals.get(i));
+					EnumerationLiteral asEnumerationLiteral = ClassUtil.requireNonNull(asEnumerationLiterals.get(i));
 					if (i > 0) {
 						s.append(",");
 					}
@@ -521,7 +521,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					else {
 						s.append("{");
 						for (int i = 0; i < sortedOperations.size(); i++) {
-							Operation op = Objects.requireNonNull(sortedOperations.get(i));
+							Operation op = ClassUtil.requireNonNull(sortedOperations.get(i));
 							Operation overloadOp = getOverloadOp(asClass, op);
 							if (i > 0) {
 								s.append(",");
@@ -725,7 +725,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(" = new ");
 				s.appendClassReference(null, ExecutorOperation.class);
 				s.append("(");
-				s.appendString(Objects.requireNonNull(op.getName()));
+				s.appendString(ClassUtil.requireNonNull(op.getName()));
 				s.append(", ");
 				appendParameterTypesName(op.getParameterTypes());
 				s.append(", ");
@@ -846,7 +846,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			List<@NonNull Property> sortedProperties = getLocalPropertiesSortedByName(pClass);
 			for (int i = 0; i < sortedProperties.size(); i++) {
-				Property prop = Objects.requireNonNull(sortedProperties.get(i));
+				Property prop = ClassUtil.requireNonNull(sortedProperties.get(i));
 				if (isProperty(prop)) {
 					s.append("\n");
 					if (isFirst) {
@@ -858,7 +858,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(" ");
 					prop.accept(emitLiteralVisitor);
 					s.append(" = new ");
-					String name = Objects.requireNonNull(prop.getName());
+					String name = ClassUtil.requireNonNull(prop.getName());
 					if (prop.getImplementationClass() != null) {
 						s.appendClassReference(null, ExecutorPropertyWithImplementation.class);
 						s.append("(");
@@ -870,7 +870,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append(".INSTANCE)");
 					}
 					else if (hasEcore(prop)) {
-						EStructuralFeature eStructuralFeature = Objects.requireNonNull((EStructuralFeature)prop.getESObject());
+						EStructuralFeature eStructuralFeature = ClassUtil.requireNonNull((EStructuralFeature)prop.getESObject());
 						s.appendClassReference(null, EcoreExecutorProperty.class);
 						s.append("(");
 						s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
@@ -881,7 +881,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					} else {
 						Property opposite = prop.getOpposite();
 						if ((opposite != null) && hasEcore(opposite)) {
-							EStructuralFeature eStructuralFeature = Objects.requireNonNull((EStructuralFeature)opposite.getESObject());
+							EStructuralFeature eStructuralFeature = ClassUtil.requireNonNull((EStructuralFeature)opposite.getESObject());
 							s.appendClassReference(null, ExecutorPropertyWithImplementation.class);
 							s.append("(");
 							s.appendString(name);
@@ -913,7 +913,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	protected void declareType(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		Class<?> typeClass = getEcoreExecutorClass(asClass);
-		EClassifier eClassifier = Objects.requireNonNull((EClassifier)asClass.getESObject());
+		EClassifier eClassifier = ClassUtil.requireNonNull((EClassifier)asClass.getESObject());
 		s.append("		public static final ");
 		s.appendClassReference(true, typeClass);
 		s.append(" ");
@@ -929,7 +929,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(genModelHelper.getEcoreLiteralName(eClassifier));
 			}
 			else {
-				s.appendString(Objects.requireNonNull(asClass.getName()));
+				s.appendString(ClassUtil.requireNonNull(asClass.getName()));
 			}
 		}
 		else {
@@ -1139,7 +1139,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			//	s.append("(");
 			//	s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
 			//	s.append(", ");
-			//	s.appendString(Objects.requireNonNull(asTemplateParameter.getName()));
+			//	s.appendString(ClassUtil.requireNonNull(asTemplateParameter.getName()));
 			//	s.append(");\n");
 			}
 		}

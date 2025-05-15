@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
-import java.util.Objects;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
@@ -22,6 +20,7 @@ import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -115,7 +114,7 @@ public class BaseCSLeft2RightVisitor extends AbstractExtendingBaseCSVisitor<Elem
 	}
 
 	public @NonNull CS2ASContext getCS2ASContext() {
-		return Objects.requireNonNull(cs2asContext);
+		return ClassUtil.requireNonNull(cs2asContext);
 	}
 
 	public <T extends Element> @Nullable T newVisit(@NonNull Class<T> pivotClass, @NonNull ElementCS csElement) {

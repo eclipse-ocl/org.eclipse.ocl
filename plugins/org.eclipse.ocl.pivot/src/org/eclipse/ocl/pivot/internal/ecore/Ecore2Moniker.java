@@ -60,7 +60,7 @@ public class Ecore2Moniker extends EcoreSwitch<Object> implements PivotConstants
 		}
 
 		public static @NonNull MonikerAliasAdapter getAdapter(@NonNull Resource resource) {
-			List<Adapter> eAdapters = ClassUtil.nonNullEMF(resource.eAdapters());
+			List<Adapter> eAdapters = ClassUtil.requireNonNull(resource.eAdapters());
 			MonikerAliasAdapter adapter = ClassUtil.getAdapter(MonikerAliasAdapter.class, eAdapters);
 			if (adapter == null) {
 				adapter = new MonikerAliasAdapter();

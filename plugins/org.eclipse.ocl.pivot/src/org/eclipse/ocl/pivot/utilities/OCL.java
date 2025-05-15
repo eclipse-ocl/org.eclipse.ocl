@@ -340,7 +340,7 @@ public class OCL
 	 * @see #createQuery(ExpressionInOCL)
 	 */
 	public Query createQuery(@NonNull Constraint constraint) throws ParserException {
-		LanguageExpression specification = ClassUtil.nonNullState(constraint.getOwnedSpecification());
+		LanguageExpression specification = ClassUtil.requireNonNull(constraint.getOwnedSpecification());
 		ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 		return new QueryImpl(this, query);
 	}
@@ -408,7 +408,7 @@ public class OCL
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
 		ASResource asResource = (ASResource) pivotModel.eResource();
-		return ClassUtil.nonNullModel(asResource);
+		return ClassUtil.requireNonNull(asResource);
 	}
 
 	/**
@@ -525,7 +525,7 @@ public class OCL
 	}
 
 	public EPackage.@NonNull Registry getPackageRegistry() {
-		return ClassUtil.nonNullEMF(getResourceSet().getPackageRegistry());
+		return ClassUtil.requireNonNull(getResourceSet().getPackageRegistry());
 	}
 
 	public @NonNull ProjectManager getProjectManager() {

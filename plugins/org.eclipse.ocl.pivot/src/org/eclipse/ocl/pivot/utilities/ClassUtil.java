@@ -135,7 +135,7 @@ public class ClassUtil
 	}
 
 	public static <T> @Nullable T getAdapter(@NonNull Class<T> adapterClass, @NonNull Notifier notifier) {
-		List<Adapter> eAdapters = nonNullEMF(notifier.eAdapters());
+		List<Adapter> eAdapters = requireNonNull(notifier.eAdapters());
 		return getAdapter(adapterClass, eAdapters);
 	}
 
@@ -239,69 +239,6 @@ public class ClassUtil
 	}
 
 	/**
-	 * Check for an in appropriate program state. This should not happen, but is not impossible. For instance
-	 * a Resource should be contained in a ResourceSet, but that doesn't mean it always is.
-	 *<p>
-	 * If the inappropriate state really cannot happen, an assertion should be used instead to avoid non-debug
-	 * run-time cost.
-	 * <p>
-	 * Return aT, throwing an IllegalStateException if null.
-	 * @since 1.1
-	 */
-	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
-	public static @NonNull <T> T nonNull(@Nullable T aT) {
-		assert aT != null;
-		return aT;
-	}
-
-	/**
-	 * Return aT, checking the assertion that this call would not be necessary if EMF had comprehensive @NonNull annotations.
-	 */
-	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
-	public static @NonNull <T> T nonNullEMF(@Nullable T aT) {// FIXME remove once EMF guarantees non-null
-		assert aT != null;
-		return aT;
-	}
-
-	/**
-	 * Check for an in appropriate model state which should have been detected by a model validation pass. Typical problems
-	 * that nonNullModel detects are null mandatory model elements.
-	 *<p>
-	 * Return aT, checking the assertion that this call would not be necessary if the Ecore model was guaranteed to be valid.
-	 */
-	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
-	public static @NonNull <T> T nonNullModel(@Nullable T aT) {
-		assert aT != null;			// FIXME Change to InvalidModelException
-		return aT;
-	}
-
-	/**
-	 * Return aT, checking the assertion that this call would not be necessary if the Pivot model was guaranteed to be valid.
-	 */
-	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
-	public static @NonNull <T> T nonNullPivot(@Nullable T aT) {
-		assert aT != null;			// FIXME Change to InvalidModelException
-		return aT;
-	}
-
-	/**
-	 * Check for an in appropriate program state. This should not happen, but is not impossible. For instance
-	 * a Resource should be contained in a ResourceSet, but that doesn't mean it always is.
-	 *<p>
-	 * If the inappropriate state really cannot happen, an assertion should be used instead to avoid non-debug
-	 * run-time cost.
-	 * <p>
-	 * Return aT, throwing an IllegalStateException if null.
-	 */
-	@Deprecated /* @deprecated Use java.util.Objects.requireNonNull since we are now past Java 7 */
-	public static @NonNull <T> T nonNullState(@Nullable T aT) {
-		if (aT == null) {
-			throw new IllegalStateException();
-		}
-		return aT;
-	}
-
-	/**
 	 * Cast a logically nullFreeList such as EMF collection to a declared null free list.
 	 * @since 1.1
 	 */
@@ -325,6 +262,26 @@ public class ClassUtil
 	}
 
 	/**
+	 * Check for an in appropriate program state. This should not happen, but is not impossible. For instance
+	 * a Resource should be contained in a ResourceSet, but that doesn't mean it always is.
+	 *<p>
+	 * If the inappropriate state really cannot happen, an assertion should be used instead to avoid non-debug
+	 * run-time cost.
+	 * <p>
+	 * Return aT, throwing an IllegalStateException if null.
+	 * <p>
+	 * THis method is in principle identical to ClassUtil.requireNonNull, but avoids the limitations whereby
+	 * "This ethod is designed primarily for doing parameter validation in methods and constructors"
+	 * which seems to justify bad optimization when used more generally.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull <T> T requireNonNull(@Nullable T aT) {
+		assert aT != null;
+		return aT;
+	}
+
+	/**
 	 * Safely determines the relative order of <code>object</code> and
 	 * <code>otherObject</code>, i.e. without throwing an exception if
 	 * <code>object</code> is <code>null</code>.
@@ -339,25 +296,6 @@ public class ClassUtil
 	}
 
 	/**
-	 * Safely determines whether <code>object</code> equals
-	 * <code>otherObject</code>, i.e. without throwing an exception if
-	 * <code>object</code> is <code>null</code>.
-	 *
-	 * @param object
-	 *            The first object to compare.
-	 * @param otherObject
-	 *            The second object to compare.
-	 * @return <code>true</code> if <code>object</code> equals
-	 *         <code>otherObject</code>; <code>false</code> otherwise.
-	 */
-	@Deprecated /* @deprecated Use java.util.Objects.equals since we are now past Java 7 */
-	public static boolean safeEquals(@Nullable Object object, @Nullable Object otherObject) {
-		return object == null
-				? otherObject == null
-				: object.equals(otherObject);
-	}
-
-	/**
 	 * Sort aList using comparator, using an Ecollections.sort if aLIst is an EList.
 	 */
 	public static <T> void sort(@NonNull List<? extends T> aList, @NonNull Comparator<T> comparator) {
@@ -369,14 +307,5 @@ public class ClassUtil
 				Collections.sort(aList, comparator);
 			}
 		}
-	}
-
-	/**
-	 * @since 1.1
-	 * @deprecated String.valueOf()now annotated to be @NonNull
-	 */
-	@Deprecated
-	public static @NonNull String toString(Object anObject) {
-		return String.valueOf(anObject);
 	}
 }

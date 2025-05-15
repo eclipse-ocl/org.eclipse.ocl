@@ -60,14 +60,14 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 			org.eclipse.ocl.pivot.Package cs2csPackage = null;
 			if ((cs2asFile != null) && (cs2asFile.length() > 0)) {
 				String cs2asSourceFile = "/" + projectName + "/" + cs2asFile;
-				URI cs2asURI = ClassUtil.nonNullState(URI.createPlatformResourceURI(cs2asSourceFile, true));
+				URI cs2asURI = ClassUtil.requireNonNull(URI.createPlatformResourceURI(cs2asSourceFile, true));
 				log.info("Loading Model '" + cs2asURI);
 				Resource oclResource = ocl.getCSResource(cs2asURI);
 				cs2asPackage = getSecondaryPackage(metamodelManager, oclResource);
 			}
 			if ((cs2csFile != null) && (cs2csFile.length() > 0)) {
 				String cs2csSourceFile = "/" + projectName + "/" + cs2csFile;
-				URI cs2csURI = ClassUtil.nonNullState(URI.createPlatformResourceURI(cs2csSourceFile, true));
+				URI cs2csURI = ClassUtil.requireNonNull(URI.createPlatformResourceURI(cs2csSourceFile, true));
 				log.info("Loading Model '" + cs2csURI);
 				Resource oclResource = ocl.getCSResource(cs2csURI);
 				cs2csPackage = getSecondaryPackage(metamodelManager, oclResource);
@@ -97,19 +97,19 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 			log.info("Loading Grammar '" + fileURI);
 //			ResourceSet resourceSet = getResourceSet();
 			Resource xtextResource = resourceSet.getResource(fileURI, true);
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(xtextResource.getErrors()), "Grammar parse failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(xtextResource.getErrors()), "Grammar parse failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;
 			}
-			EObject xtextModel = ClassUtil.nonNullState(xtextResource.getContents().get(0));
+			EObject xtextModel = ClassUtil.requireNonNull(xtextResource.getContents().get(0));
 
 
 
 			EObject eObject = asPackage.getESObject();
 			Resource eResource = eObject.eResource();
 			if (eResource != null) {
-				String message2 = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(eResource.getErrors()), "OCLstdlib parse failure", "\n");
+				String message2 = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(eResource.getErrors()), "OCLstdlib parse failure", "\n");
 				if (message2 != null) {
 					issues.addError(this, message, null, null, null);
 					return;

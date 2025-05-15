@@ -644,7 +644,7 @@ implements CollectionType {
 		if (type instanceof CollectionType) {
 			CollectionType thatCollectionType = (CollectionType)type;
 			Type thisElementType = this.getElementType();
-			Type thatElementType = ClassUtil.nonNullEMF(thatCollectionType.getElementType());
+			Type thatElementType = ClassUtil.requireNonNull(thatCollectionType.getElementType());
 			boolean commonIsNullFree = this.isIsNullFree() && thatCollectionType.isIsNullFree();
 			Type commonElementType = thisElementType.getCommonType(idResolver, thatElementType);
 			if ((commonInheritance instanceof CompleteInheritanceImpl) && !((CompleteInheritanceImpl)commonInheritance).isIsAbstract()) {

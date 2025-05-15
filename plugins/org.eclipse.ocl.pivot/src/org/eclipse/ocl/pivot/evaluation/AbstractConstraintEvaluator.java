@@ -57,7 +57,7 @@ public abstract class AbstractConstraintEvaluator<T>
 				body = propertyCallExp.getOwnedSource();
 			}
 		}
-		return ClassUtil.nonNullState(body);
+		return ClassUtil.requireNonNull(body);
 	}
 
 	protected final @NonNull ExpressionInOCL query;

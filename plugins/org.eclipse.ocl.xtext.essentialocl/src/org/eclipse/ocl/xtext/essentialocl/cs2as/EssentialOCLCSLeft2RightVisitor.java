@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -216,7 +214,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 		@Override
 		public @NonNull Type getSourceType() {
-			return Objects.requireNonNull(invocation.getOwningClass());
+			return ClassUtil.requireNonNull(invocation.getOwningClass());
 		}
 
 		@Override
@@ -749,7 +747,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * Resolve an invocation such as source.name  or source-&gt;name
 	 */
 	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp) {
-		PathNameCS ownedPathName = Objects.requireNonNull(csNameExp.getOwnedPathName());
+		PathNameCS ownedPathName = ClassUtil.requireNonNull(csNameExp.getOwnedPathName());
 		ScopeFilter propertyScopeFilter = AbstractAttribution.NOT_STATIC_SCOPE_FILTER;
 		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
 		if (csSquareBracketedClauses.size() > 0) {
@@ -869,7 +867,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//	invocations = getInvocations(sourceExp != null ? sourceExp.getType() : null,			// debugging
 		//		sourceExp != null ? sourceExp.getTypeValue() : null, csRoundBracketedClause);
 			checkForInvalidImplicitSourceType(csNameExp);
-			CS2AS.setPathElement(Objects.requireNonNull(csPathName), null, null);
+			CS2AS.setPathElement(ClassUtil.requireNonNull(csPathName), null, null);
 		}
 		if (sourceExp == null) {
 			sourceExp = createImplicitSourceVariableExp(csNameExp, standardLibrary.getOclAnyType());

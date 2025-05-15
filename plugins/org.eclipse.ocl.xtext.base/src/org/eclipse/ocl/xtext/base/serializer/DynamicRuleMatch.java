@@ -220,7 +220,7 @@ public class DynamicRuleMatch implements RuleMatch
 
 	public @NonNull Integer getValue(int variableIndex) {
 		assert variableIndex >= 0;
-		return ClassUtil.nonNullState(variableIndex2value.get(variableIndex));
+		return ClassUtil.requireNonNull(variableIndex2value.get(variableIndex));
 	}
 
 	public boolean matchFailed() {

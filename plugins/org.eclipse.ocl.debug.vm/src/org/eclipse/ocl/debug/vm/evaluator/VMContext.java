@@ -33,7 +33,7 @@ public class VMContext implements IVMContext
 
 	@Override
 	public @NonNull IVMDebuggerShell getShell() {
-		return ClassUtil.nonNullState(shell);
+		return ClassUtil.requireNonNull(shell);
 	}
 
 	@Override

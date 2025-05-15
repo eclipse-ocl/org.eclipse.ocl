@@ -237,7 +237,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		conversion.pivotModel = PivotUtil.createModel(ecoreURI.toString());
 		//		conversion.installImports();
-		conversion.update(ecoreASResource, Objects.requireNonNull(ecoreResource.getContents()));
+		conversion.update(ecoreASResource, ClassUtil.requireNonNull(ecoreResource.getContents()));
 
 		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
 		if (ecoreAdapter != null) {
@@ -274,7 +274,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @return the pivot element
 	 */
 	public static Element importFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, String alias, @NonNull EObject eObject) {
-		Resource ecoreResource = Objects.requireNonNull(eObject.eResource());
+		Resource ecoreResource = ClassUtil.requireNonNull(eObject.eResource());
 		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
 		@SuppressWarnings("unused")
 		Model pivotModel = conversion.getASModel();
@@ -433,7 +433,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		Model pivotModel2 = pivotModel;
 		if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
 			loadImports(ecoreResource);
-			pivotModel2 = pivotModel = importObjects(Objects.requireNonNull(ecoreResource.getContents()), createPivotURI());
+			pivotModel2 = pivotModel = importObjects(ClassUtil.requireNonNull(ecoreResource.getContents()), createPivotURI());
 			ASResource asResource = (ASResource) pivotModel.eResource();
 			boolean wasUpdating = asResource.setUpdating(true);
 			installImports();
@@ -565,7 +565,7 @@ public class Ecore2AS extends AbstractExternal2AS
 
 	@Override
 	public @NonNull URI getURI() {
-		return Objects.requireNonNull(ecoreResource.getURI());
+		return ClassUtil.requireNonNull(ecoreResource.getURI());
 	}
 
 	public @NonNull Model importObjects(@NonNull Collection<@NonNull EObject> ecoreContents, @NonNull URI pivotURI) {
@@ -586,7 +586,7 @@ public class Ecore2AS extends AbstractExternal2AS
 					}
 				}
 				Model containingRoot = PivotUtil.getContainingModel(asLibrary);
-				return Objects.requireNonNull(containingRoot);
+				return ClassUtil.requireNonNull(containingRoot);
 			}
 		}
 		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
@@ -644,11 +644,11 @@ public class Ecore2AS extends AbstractExternal2AS
 					}
 				}
 			}
-			createMap.put(Objects.requireNonNull(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
-			createMap.put(Objects.requireNonNull(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
-			createMap.put(Objects.requireNonNull(PivotPackage.Literals.REAL), standardLibrary.getRealType());
-			createMap.put(Objects.requireNonNull(PivotPackage.Literals.STRING), standardLibrary.getStringType());
-			createMap.put(Objects.requireNonNull(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
+			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
+			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
+			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.REAL), standardLibrary.getRealType());
+			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.STRING), standardLibrary.getStringType());
+			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
 			return createMap;
 		}
 		else if (asResource instanceof OCLstdlib) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
@@ -753,7 +753,7 @@ public class Ecore2AS extends AbstractExternal2AS
 								allImports.add(anImport);
 							}
 						} catch (ParserException e) {
-							error(Objects.requireNonNull(e.getMessage()));
+							error(ClassUtil.requireNonNull(e.getMessage()));
 						}
 					}
 				}
@@ -984,7 +984,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	protected void resolveDeclarations(@NonNull Resource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
 		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
-		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(Objects.requireNonNull(pivotModel)));
+		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.requireNonNull(pivotModel)));
 		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
 		for (EObject eObject : ecoreContents) {
 			EClass eClass = eObject.eClass();

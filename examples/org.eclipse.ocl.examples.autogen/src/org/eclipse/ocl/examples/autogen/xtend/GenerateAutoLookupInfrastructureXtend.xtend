@@ -573,7 +573,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	
 	private def String getTypeLiteral(Type type) {
 		var GenClassifier genClassifier = genModelHelper.getGenClassifier(type as Class);
-		return ClassUtil.nonNullState(genClassifier).classifierID; 
+		return ClassUtil.requireNonNull(genClassifier).classifierID; 
 	}
 	
 	private def String getTypeFQName(Type type) {

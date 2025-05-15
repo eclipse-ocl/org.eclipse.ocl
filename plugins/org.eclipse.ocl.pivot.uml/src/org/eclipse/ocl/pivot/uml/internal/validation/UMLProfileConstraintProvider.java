@@ -75,7 +75,7 @@ public class UMLProfileConstraintProvider extends LoadableConstraintProvider
 		try {
 			UML2AS uml2as = UML2AS.getAdapter(umlResource, (EnvironmentFactoryInternal)environmentFactory);
 			Model pivotModel = uml2as.getASModel();
-			asResource = ClassUtil.nonNullState(pivotModel.eResource());
+			asResource = ClassUtil.requireNonNull(pivotModel.eResource());
 		} catch (ParserException e) {
 			logger.error("Failed to load Pivot from '" + uri + "': ", e);
 			return false;

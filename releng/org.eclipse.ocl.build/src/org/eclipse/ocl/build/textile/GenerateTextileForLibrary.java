@@ -109,7 +109,7 @@ public abstract class GenerateTextileForLibrary extends AbstractWorkflowComponen
 			log.info("Loading OCL library '" + fileURI);
 			ResourceSet resourceSet = getResourceSet();
 			BaseCSResource xtextResource = (BaseCSResource)resourceSet.getResource(fileURI, true);
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;
@@ -119,7 +119,7 @@ public abstract class GenerateTextileForLibrary extends AbstractWorkflowComponen
 //			if (asResource == null) {
 //				return;
 //			}
-			EObject pivotModel = ClassUtil.nonNullState(asResource.getContents().get(0));
+			EObject pivotModel = ClassUtil.requireNonNull(asResource.getContents().get(0));
 //			ASSaver saver = new ASSaver(asResource);
 //			saver.localizeSpecializations();
 			String fileName = folder + "/" + textileFileName + ".textile";

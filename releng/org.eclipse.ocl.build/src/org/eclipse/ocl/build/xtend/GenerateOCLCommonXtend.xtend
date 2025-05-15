@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants
 import org.eclipse.ocl.pivot.ids.TypeId
 import org.eclipse.ocl.pivot.utilities.NameUtil
 import org.eclipse.ocl.pivot.Constraint
-import java.util.Objects
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
@@ -282,7 +281,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		if (externals.isEmpty()) return "";
 		'''
 
-			«FOR name : externals»«var element = Objects.requireNonNull(name2external.get(name))»
+			«FOR name : externals»«var element = ClassUtil.requireNonNull(name2external.get(name))»
 			«IF element instanceof Package»
 			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof PrimitiveType»
@@ -411,7 +410,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			
 			private void installLambdaTypes() {
-				final List<Class> orphanTypes = «Objects.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
+				final List<Class> orphanTypes = «ClassUtil.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
 				LambdaType type;
 				List<Class> superClasses;
 				«FOR type : allLambdaTypes»
@@ -709,7 +708,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installTupleTypes() {
-				final List<Class> orphanTypes = «Objects.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
+				final List<Class> orphanTypes = «ClassUtil.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
 				TupleType type;
 				List<Class> superClasses;
 				«FOR type : allTupleTypes»

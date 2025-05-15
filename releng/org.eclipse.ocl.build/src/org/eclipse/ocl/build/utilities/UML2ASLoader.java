@@ -37,7 +37,7 @@ public class UML2ASLoader extends WorkflowComponentWithModelSlot
 		OCLstdlib.install();
 		Resource resource = (Resource) ctx.get(getUmlSlot());
 		log.info("Pivoting '" + resource.getURI() + "'");
-		ResourceSet asResourceSet = ClassUtil.nonNullState(resource.getResourceSet());
+		ResourceSet asResourceSet = ClassUtil.requireNonNull(resource.getResourceSet());
 		MetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResourceSet);
 		UML2AS uml2as = UML2AS.getAdapter(resource, metamodelManager.getEnvironmentFactory());
 		Model root;

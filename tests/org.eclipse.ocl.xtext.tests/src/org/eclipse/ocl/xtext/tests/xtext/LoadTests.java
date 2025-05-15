@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.log4j.Appender;
 import org.eclipse.emf.common.EMFPlugin;
@@ -55,6 +54,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -1083,7 +1083,7 @@ public class LoadTests extends AbstractLoadTests
 			String id = reloadedAsResource.getID(eObject);
 			if (id != null) {
 				EObject eObject1 = id2eObject.get(id);
-				EObject eObject2 = Objects.requireNonNull(eObject1);
+				EObject eObject2 = ClassUtil.requireNonNull(eObject1);
 				assertEquals(eObject2.getClass(), eObject.getClass());
 				newIdCount++;
 			}

@@ -216,7 +216,7 @@ public class UserElementMatcher
 	}
 
 	public int getValue(int variableIndex) {
-		return ClassUtil.nonNullState(dynamicRuleMatch.getValue(variableIndex)).intValue();
+		return ClassUtil.requireNonNull(dynamicRuleMatch.getValue(variableIndex)).intValue();
 	}
 
 	public boolean hasFailed() {

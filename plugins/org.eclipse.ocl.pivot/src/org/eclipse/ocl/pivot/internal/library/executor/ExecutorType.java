@@ -79,13 +79,13 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public final @NonNull FragmentIterable getAllProperSuperFragments() {
-		@NonNull InheritanceFragment @NonNull [] fragments2 = ClassUtil.nonNullState(fragments);
+		@NonNull InheritanceFragment @NonNull [] fragments2 = ClassUtil.requireNonNull(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
 
 	@Override
 	public @NonNull FragmentIterable getAllSuperFragments() {
-		return new FragmentIterable(ClassUtil.nonNullState(fragments));
+		return new FragmentIterable(ClassUtil.requireNonNull(fragments));
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public @NonNull ExecutorFragment getFragment(int fragmentNumber) {
-		return ClassUtil.nonNullState(fragments)[fragmentNumber];
+		return ClassUtil.requireNonNull(fragments)[fragmentNumber];
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public @NonNull ExecutorFragment getSelfFragment() {
-		return getFragment(ClassUtil.nonNullState(fragments).length-1);
+		return getFragment(ClassUtil.requireNonNull(fragments).length-1);
 	}
 
 	public @NonNull StandardLibrary getStandardLibrary() {
@@ -199,7 +199,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
-		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes[depth], indexes[depth+1]);
+		return new FragmentIterable(ClassUtil.requireNonNull(fragments), indexes[depth], indexes[depth+1]);
 	}
 
 //	public @NonNull TypeId getTypeId() {

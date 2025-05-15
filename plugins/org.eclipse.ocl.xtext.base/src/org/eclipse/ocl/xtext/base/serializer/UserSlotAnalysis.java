@@ -266,7 +266,7 @@ public interface UserSlotAnalysis
 
 		@Override
 		public int asCounted() {
-			return ClassUtil.nonNullState(enumerationValue2count.get(EnumerationValueAny.INSTANCE));
+			return ClassUtil.requireNonNull(enumerationValue2count.get(EnumerationValueAny.INSTANCE));
 		}
 
 		@Override

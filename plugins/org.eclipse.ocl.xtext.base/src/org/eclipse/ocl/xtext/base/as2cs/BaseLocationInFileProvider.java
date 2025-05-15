@@ -54,7 +54,7 @@ public class BaseLocationInFileProvider extends DefaultLocationInFileProvider
 		if (obj instanceof Element) {
 			ModelElementCS csModelElement = ElementUtil.getCsElement((Element) obj);
 			if (csModelElement != null) {
-				return ClassUtil.nonNullState(super.getTextRegion(csModelElement, isSignificant));
+				return ClassUtil.requireNonNull(super.getTextRegion(csModelElement, isSignificant));
 			}
 		}
 		else if (obj instanceof Comment) {
@@ -76,6 +76,6 @@ public class BaseLocationInFileProvider extends DefaultLocationInFileProvider
 				}
 			}
 		}
-		return ClassUtil.nonNullState(super.getTextRegion(obj, isSignificant));
+		return ClassUtil.requireNonNull(super.getTextRegion(obj, isSignificant));
 	}
 }

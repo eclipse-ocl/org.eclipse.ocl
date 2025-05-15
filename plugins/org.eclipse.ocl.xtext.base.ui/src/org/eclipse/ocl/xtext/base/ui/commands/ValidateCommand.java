@@ -62,7 +62,7 @@ public class ValidateCommand extends ValidateAction
 
 	@Override
 	protected Diagnostician createDiagnostician(AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
-		ResourceSet resourceSet = ClassUtil.nonNullEMF(domain.getResourceSet());
+		ResourceSet resourceSet = ClassUtil.requireNonNull(domain.getResourceSet());
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 	//	ValidationContext validationContext = new ValidationContext(validationRegistry);
 		ValidationContext validationContext = new ValidationContext();

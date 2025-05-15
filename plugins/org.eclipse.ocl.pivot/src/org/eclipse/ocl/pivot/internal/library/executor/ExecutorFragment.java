@@ -43,7 +43,7 @@ public class ExecutorFragment extends AbstractFragment
 	public @NonNull LibraryFeature getImplementation(@NonNull Operation staticOperation) {
 		int index = staticOperation.getIndex();
 		if (index >= 0) {
-			return ClassUtil.nonNullState(operations[index].implementation);
+			return ClassUtil.requireNonNull(operations[index].implementation);
 		}
 		else {
 			throw new UnsupportedOperationException();		// WIP

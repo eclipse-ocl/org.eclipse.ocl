@@ -271,7 +271,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	}
 
 	protected @NonNull OCLinEcoreLocalContext getLocalContext() {
-		return ClassUtil.nonNullState((OCLinEcoreLocalContext) localContext);
+		return ClassUtil.requireNonNull((OCLinEcoreLocalContext) localContext);
 	}
 
 	protected String getRuleName(@NonNull Constraint constraint) {

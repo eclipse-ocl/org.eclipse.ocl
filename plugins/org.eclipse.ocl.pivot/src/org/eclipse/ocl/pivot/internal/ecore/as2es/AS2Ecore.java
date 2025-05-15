@@ -130,7 +130,7 @@ public class AS2Ecore extends AbstractConversion
 
 		@Override
 		public @NonNull URI getURI() {
-			return ClassUtil.nonNullState(getEcoreResource().getURI());
+			return ClassUtil.requireNonNull(getEcoreResource().getURI());
 		}
 
 		public void putCreated(@NonNull EModelElement eObject, @NonNull Element pivotElement) {

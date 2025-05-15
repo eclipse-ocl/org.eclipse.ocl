@@ -95,13 +95,13 @@ public class JUnitPluginFileSystem extends TestFileSystem
 		protected final @NonNull IContainer container;
 
 		public JUnitPluginTestFolder(@NonNull URI platformURI, @NonNull IContainer container) {
-			super(platformURI, ClassUtil.nonNullState(container.getLocation().toFile()));
+			super(platformURI, ClassUtil.requireNonNull(container.getLocation().toFile()));
 			this.container = container;
 		}
 
 		public @NonNull JUnitPluginTestFile createFile(@NonNull String name, @Nullable InputStream inputStream) {
 			URI newURI = platformURI.appendSegment(name);
-			IFile newFile = ClassUtil.nonNullState(container.getFile(new Path(name)));
+			IFile newFile = ClassUtil.requireNonNull(container.getFile(new Path(name)));
 			if (inputStream != null) {
 				try {
 					newFile.create(inputStream, true, null);
@@ -109,12 +109,12 @@ public class JUnitPluginFileSystem extends TestFileSystem
 					throw new WrappedException(e);
 				}
 			}
-			return new JUnitPluginTestFile(newURI, ClassUtil.nonNullState(newFile.getLocation().toFile()));
+			return new JUnitPluginTestFile(newURI, ClassUtil.requireNonNull(newFile.getLocation().toFile()));
 		}
 
 		public @NonNull JUnitPluginTestFolder createFolder(@NonNull String name) {
 			URI newURI = platformURI.appendSegment(name);
-			IFolder newFolder = ClassUtil.nonNullState(container.getFolder(new Path(name)));
+			IFolder newFolder = ClassUtil.requireNonNull(container.getFolder(new Path(name)));
 			if (!newFolder.exists()) {
 				//				container.refreshLocal(IResource.DEPTH_INFINITE, null);
 				try {

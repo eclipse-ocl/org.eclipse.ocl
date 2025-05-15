@@ -188,7 +188,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
-		URI uri = ClassUtil.nonNullState(getURI());
+		URI uri = ClassUtil.requireNonNull(getURI());
 		URI asURI = getASURI(uri);
 	//	if (uri.fileExtension().equals(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION)) {	// FIXME use csResource.getASResource(metamodelManager);
 	//		return new TransientASResource(asResourceSet, asURI);

@@ -493,7 +493,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			}
 			//			else if (sourceText.length() <= 0) {		// Empty document
 			else if (inputStream.available() == 0) {		// Empty document
-				URI uri = ClassUtil.nonNullState(uriMap.get(document));
+				URI uri = ClassUtil.requireNonNull(uriMap.get(document));
 				Resource.Factory factory = Resource.Factory.Registry.INSTANCE.getFactory(uri);
 				if (factory instanceof OCLASResourceFactory) {
 					persistAs = PERSIST_AS_PIVOT;

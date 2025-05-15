@@ -45,12 +45,12 @@ public class ConstrainedOperation extends AbstractOperation
 	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		PivotUtil.checkExpression(expressionInOCL);
 		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(expressionInOCL, caller);
-		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), boxedSourceAndArgumentValues[0]);
+		nestedEvaluationEnvironment.add(ClassUtil.requireNonNull(expressionInOCL.getOwnedContext()), boxedSourceAndArgumentValues[0]);
 		List<Variable> parameters = expressionInOCL.getOwnedParameters();
 		if (!parameters.isEmpty()) {
 			for (int i = 0; i < parameters.size(); i++) {
 				Object value = boxedSourceAndArgumentValues[i+1];
-				nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(parameters.get(i)), value);
+				nestedEvaluationEnvironment.add(ClassUtil.requireNonNull(parameters.get(i)), value);
 			}
 		}
 		try {

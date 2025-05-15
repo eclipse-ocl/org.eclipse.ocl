@@ -115,7 +115,7 @@ public class ASSaverNew extends AbstractASSaver
 		}
 
 		public @NonNull EObject getSource(@NonNull EObject target) {
-			return ClassUtil.nonNullState(target2source.get(target));
+			return ClassUtil.requireNonNull(target2source.get(target));
 		}
 	}
 
@@ -175,7 +175,7 @@ public class ASSaverNew extends AbstractASSaver
 	}
 
 	public @NonNull EObject getTarget(@NonNull EObject source) {
-		return ClassUtil.nonNullState(copier.get(source));
+		return ClassUtil.requireNonNull(copier.get(source));
 	}
 
 	protected void loadOrphanage(org.eclipse.ocl.pivot.@NonNull Package localOrphanage, @NonNull Orphanage sharedOrphanage) {

@@ -204,7 +204,7 @@ public class PrecedenceManager
 	 * @since 1.5
 	 */
 	public int getOrder(@NonNull Precedence precedence) {
-		return ClassUtil.nonNullState(precedence2order.get(precedence));
+		return ClassUtil.requireNonNull(precedence2order.get(precedence));
 	}
 
 	public @Nullable Precedence getPrefixPrecedence(@NonNull String operatorName) {

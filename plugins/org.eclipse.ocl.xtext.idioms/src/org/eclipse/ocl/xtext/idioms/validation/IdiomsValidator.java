@@ -12,7 +12,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.idioms.validation;
 
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import java.util.Objects;
+
 import org.eclipse.ocl.xtext.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.idioms.LocatorDeclaration;
 import org.eclipse.ocl.xtext.idioms.SegmentDeclaration;
@@ -27,7 +28,7 @@ public class IdiomsValidator extends AbstractIdiomsValidator {
 	void checkUniqueLocatorDeclarationName(LocatorDeclaration locatorDeclaration) {
 		String name = locatorDeclaration.getName();
 		for (LocatorDeclaration aLocatorDeclaration : locatorDeclaration.getOwningIdiomsModel().getOwnedLocatorDeclarations()) {
-			if ((aLocatorDeclaration != locatorDeclaration) && ClassUtil.safeEquals(aLocatorDeclaration.getName(), name)) {
+			if ((aLocatorDeclaration != locatorDeclaration) && Objects.equals(aLocatorDeclaration.getName(), name)) {
 		 		warning("Duplicate locator name", locatorDeclaration, IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME);
 				break;
 			}
@@ -37,7 +38,7 @@ public class IdiomsValidator extends AbstractIdiomsValidator {
 	void checkUniqueSegmentDeclarationName(SegmentDeclaration segmentDeclaration) {
 		String name = segmentDeclaration.getName();
 		for (SegmentDeclaration aSegmentDeclaration : segmentDeclaration.getOwningIdiomsModel().getOwnedSegmentDeclarations()) {
-			if ((aSegmentDeclaration != segmentDeclaration) && ClassUtil.safeEquals(aSegmentDeclaration.getName(), name)) {
+			if ((aSegmentDeclaration != segmentDeclaration) && Objects.equals(aSegmentDeclaration.getName(), name)) {
 		 		warning("Duplicate locator name", segmentDeclaration, IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME);
 				break;
 			}

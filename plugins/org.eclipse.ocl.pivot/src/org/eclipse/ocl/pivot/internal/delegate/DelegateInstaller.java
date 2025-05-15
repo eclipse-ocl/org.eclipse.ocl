@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -176,10 +177,10 @@ public class DelegateInstaller
 	public static @Nullable String getDelegateURI(@NonNull EPackage ePackage) {
 		Set<String> allURIs = new HashSet<String>();
 		//		allURIs.addAll(EcoreUtil.getConversionDelegates(ePackage));
-		allURIs.addAll(ClassUtil.nonNull(EcoreUtil.getInvocationDelegates(ePackage)));
+		allURIs.addAll(ClassUtil.requireNonNull(EcoreUtil.getInvocationDelegates(ePackage)));
 		//		allURIs.addAll(EcoreUtil.getQueryDelegates(ePackage));
-		allURIs.addAll(ClassUtil.nonNull(EcoreUtil.getSettingDelegates(ePackage)));
-		allURIs.addAll(ClassUtil.nonNull(EcoreUtil.getValidationDelegates(ePackage)));
+		allURIs.addAll(ClassUtil.requireNonNull(EcoreUtil.getSettingDelegates(ePackage)));
+		allURIs.addAll(ClassUtil.requireNonNull(EcoreUtil.getValidationDelegates(ePackage)));
 		String theURI = null;
 		for (String uri : allURIs) {
 			if (uri.startsWith(OCLConstants.OCL_DELEGATE_URI)) {
@@ -504,7 +505,7 @@ public class DelegateInstaller
 				String old = eDetails.put(constraintName, PivotConstants.DUMMY_COMPLETE_OCL_BODY);			// XXX toString
 				for (int i = eDetails.size(); --i >= 0; ) {		// Reverse search since new entry typically last
 					EStringToStringMapEntryImpl eDetail = (EStringToStringMapEntryImpl)eDetails.get(i);
-					if (ClassUtil.safeEquals(eDetail.getKey(), constraintName)) {
+					if (Objects.equals(eDetail.getKey(), constraintName)) {
 						((ConstraintImpl)asConstraint).setESObject(eDetail);
 						break;
 					}

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.completeocl.utilities;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -19,7 +20,6 @@ import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 @SuppressWarnings("deprecation")
 public class CompleteOCLAS2XMIidVisitor extends org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor
@@ -41,7 +41,7 @@ public class CompleteOCLAS2XMIidVisitor extends org.eclipse.ocl.pivot.utilities.
 					}
 					if (sibling instanceof NamedElement) {
 						String siblingName = ((NamedElement)sibling).getName();
-						if (ClassUtil.safeEquals(objectName, siblingName)) {
+						if (Objects.equals(objectName, siblingName)) {
 							index++;
 						}
 					}

@@ -155,7 +155,7 @@ public class SerializationRule implements Nameable
 		}
 
 		public @NonNull GrammarCardinality getGrammarCardinality(@Nullable EnumerationValue enumerationValue) {
-			return ClassUtil.nonNullState(basicGetGrammarCardinality(enumerationValue));
+			return ClassUtil.requireNonNull(basicGetGrammarCardinality(enumerationValue));
 		}
 
 		@Override
@@ -254,7 +254,7 @@ public class SerializationRule implements Nameable
 	//	}
 
 		public @NonNull GrammarCardinality getGrammarCardinality(int grammarRuleIndex) {
-			return ClassUtil.nonNullState(basicGetGrammarCardinality(grammarRuleIndex));
+			return ClassUtil.requireNonNull(basicGetGrammarCardinality(grammarRuleIndex));
 		}
 
 		public int @NonNull [] getGrammarRuleIndexes() {
@@ -541,7 +541,7 @@ public class SerializationRule implements Nameable
 	}
 
 	public @NonNull SerializationAttribute getSerializationAttribute(@NonNull EAttribute eAttribute) {
-		return ClassUtil.nonNullState(basicGetSerializationAttribute(eAttribute));
+		return ClassUtil.requireNonNull(basicGetSerializationAttribute(eAttribute));
 	}
 
 	public @Nullable SerializationFeature getSerializationFeature(@NonNull EStructuralFeature eStructuralFeature) {
@@ -566,7 +566,7 @@ public class SerializationRule implements Nameable
 	}
 
 	public @NonNull SerializationReference getSerializationReference(@NonNull EReference eReference) {
-		return ClassUtil.nonNullState(basicGetSerializationReference(eReference));
+		return ClassUtil.requireNonNull(basicGetSerializationReference(eReference));
 	}
 
 	public @NonNull SerializationStep @NonNull [] getSerializationSteps() {

@@ -53,7 +53,7 @@ public abstract class AbstractId2JavaClassVisitor implements IdVisitor<Class<?>>
 	}
 
 	public @NonNull Class<?> doVisit(@NonNull ElementId elementId) {
-		return ClassUtil.nonNullState(elementId.accept(this));
+		return ClassUtil.requireNonNull(elementId.accept(this));
 	}
 
 	@Override

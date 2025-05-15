@@ -56,7 +56,7 @@ public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 				}
 			}
 		}
-		EPackage ePackage = ClassUtil.nonNullEMF(classifier.getEPackage());
+		EPackage ePackage = ClassUtil.requireNonNull(classifier.getEPackage());
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 		if (delegateDomain == null) {
 			return null;

@@ -98,14 +98,14 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		org.eclipse.ocl.pivot.Class asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
 		CompleteClass asElementCompleteClass = metamodelManager.getCompletePackage(metamodelManager.getStandardLibrary().getPackage()).getCompleteClass(asOclElement);
 
-		String parentEnvOpName = ClassUtil.nonNull(envOperationName.replace(LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME, LookupVisitorsClassContext.PARENT_ENV_NAME));
+		String parentEnvOpName = ClassUtil.requireNonNull(envOperationName.replace(LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME, LookupVisitorsClassContext.PARENT_ENV_NAME));
 		OperationId parentEnvOperationId = asOclElement.getTypeId().getOperationId(0, parentEnvOpName , emptyParametersId);
-		this.asElementParentEnvOperation = ClassUtil.nonNullState(asElementCompleteClass.getOperation(parentEnvOperationId));
+		this.asElementParentEnvOperation = ClassUtil.requireNonNull(asElementCompleteClass.getOperation(parentEnvOperationId));
 		CompleteClass asEnvironmentCompleteClass = metamodelManager.getCompleteClass(asEnvironmentType);
 		OperationId nestedEnvOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsClassContext.NESTED_ENV_NAME, emptyParametersId);
-		this.asEnvironmentNestedEnvOperation = ClassUtil.nonNullState(asEnvironmentCompleteClass.getOperation(nestedEnvOperationId));
+		this.asEnvironmentNestedEnvOperation = ClassUtil.requireNonNull(asEnvironmentCompleteClass.getOperation(nestedEnvOperationId));
 		OperationId hasFinalResultOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsClassContext.HAS_FINAL_RESULT_NAME, emptyParametersId);
-		this.asEnvironmentHasFinalResultOperation = ClassUtil.nonNullState(asEnvironmentCompleteClass.getOperation(hasFinalResultOperationId));
+		this.asEnvironmentHasFinalResultOperation = ClassUtil.requireNonNull(asEnvironmentCompleteClass.getOperation(hasFinalResultOperationId));
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		EObject eContainer = asOuterCallExp.eContainer();
 		EReference eContainingFeature = asOuterCallExp.eContainmentFeature();		// This is not isMany()
 		eContainer.eSet(eContainingFeature, null);									// asOuterCallExp becomes an orphan
-		OCLExpression asSource = ClassUtil.nonNullState(asOperationCallExp.getOwnedSource());
+		OCLExpression asSource = ClassUtil.requireNonNull(asOperationCallExp.getOwnedSource());
 		if (asOuterCallExp != asOperationCallExp) {
 			CallExp asInnerCallExp = (CallExp)asOperationCallExp.eContainer();
 			VariableExp asContextExp = helper.createVariableExp(asContextVariable);
@@ -227,7 +227,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 					for (EStructuralFeature.Setting setting : entry.getValue()) {
 						EObject eObject = setting.getEObject();
 						if (eObject instanceof OperationCallExp) {
-							rewriteEnvOperationCall((OperationCallExp)eObject, ClassUtil.nonNullState(asVisitorEnvOperation)
+							rewriteEnvOperationCall((OperationCallExp)eObject, ClassUtil.requireNonNull(asVisitorEnvOperation)
 								, asThisVariable);
 						}
 					}
@@ -275,12 +275,12 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
-		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
+		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(operation.getOwningClass());
 		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asChildSource = createThisVariableExp(asThisVariable);
-		PropertyCallExp asChildAccess = PivotUtil.createPropertyCallExp(asChildSource, ClassUtil.nonNullState(asChildProperty));
+		PropertyCallExp asChildAccess = PivotUtil.createPropertyCallExp(asChildSource, ClassUtil.requireNonNull(asChildProperty));
 		Variable asChild = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asChildAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asChild);
 		//
@@ -297,6 +297,6 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 	}
 
 	public @NonNull CGProperty getChildProperty() {
-		return ClassUtil.nonNullState(cgChildProperty);
+		return ClassUtil.requireNonNull(cgChildProperty);
 	}
 }

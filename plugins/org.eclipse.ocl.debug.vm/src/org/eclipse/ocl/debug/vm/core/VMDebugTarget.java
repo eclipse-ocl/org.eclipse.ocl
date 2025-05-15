@@ -158,7 +158,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 						vmBp);
 				try {
 					String unitURI = vmBp.getUnitURI().toString();
-					@SuppressWarnings("null")@NonNull String targetURI = computeBreakpointURI(ClassUtil.nonNullEMF(URI.createURI(unitURI, true))).toString();
+					@SuppressWarnings("null")@NonNull String targetURI = computeBreakpointURI(ClassUtil.requireNonNull(URI.createURI(unitURI, true))).toString();
 					VMNewBreakpointData data = vmBp.createNewBreakpointData(targetURI);
 
 					allBpData.add(data);

@@ -151,10 +151,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 		@Override
 		public int compare(@NonNull SerializationStep s1, @NonNull SerializationStep s2) {
-			String k1 = ClassUtil.nonNullState(step2key.get(s1));
-			String k2 = ClassUtil.nonNullState(step2key.get(s2));
-			Class<?> c1 = ClassUtil.nonNullState(key2indexOrIndexes.get(k1)).getClass();
-			Class<?> c2 = ClassUtil.nonNullState(key2indexOrIndexes.get(k2)).getClass();
+			String k1 = ClassUtil.requireNonNull(step2key.get(s1));
+			String k2 = ClassUtil.requireNonNull(step2key.get(s2));
+			Class<?> c1 = ClassUtil.requireNonNull(key2indexOrIndexes.get(k1)).getClass();
+			Class<?> c2 = ClassUtil.requireNonNull(key2indexOrIndexes.get(k2)).getClass();
 			if (c1 != c2) {
 				return c1 == Integer.class ? -1 : 1;
 			}
@@ -194,8 +194,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 		@Override
 		public int compare(@NonNull SubstringStep s1, @NonNull SubstringStep s2) {
-			String k1 = ClassUtil.nonNullState(step2key.get(s1));
-			String k2 = ClassUtil.nonNullState(step2key.get(s2));
+			String k1 = ClassUtil.requireNonNull(step2key.get(s1));
+			String k2 = ClassUtil.requireNonNull(step2key.get(s2));
 			int comparison = k1.compareTo(k2);
 			if (comparison != 0) {
 				return comparison;
@@ -420,7 +420,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	protected @NonNull String emitQualifiedLiteral(@NonNull EPackage ePackage) {
-		return ClassUtil.nonNullState(getGenModelHelper().getQualifiedPackageInterfaceName(ePackage));
+		return ClassUtil.requireNonNull(getGenModelHelper().getQualifiedPackageInterfaceName(ePackage));
 	}
 
 	private void gatherFormattingTexts(@NonNull AbstractElement grammarElement, @NonNull List<@NonNull String> formattingTexts) {
@@ -688,7 +688,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		@NonNull SerializationSegment @NonNull [] @NonNull [] innerFormattingSegmentsArray = grammarAnalysis.getInnerFormattingSegments(parserRuleValue);
 		List<@NonNull List<@NonNull SerializationSegment>> serializationSegmentsList = new ArrayList<>(innerFormattingSegmentsArray.length);
 		for (@NonNull SerializationSegment @NonNull [] innerFormattingSegments : innerFormattingSegmentsArray) {
-			serializationSegmentsList.add(ClassUtil.nonNullState(Lists.newArrayList(innerFormattingSegments)));
+			serializationSegmentsList.add(ClassUtil.requireNonNull(Lists.newArrayList(innerFormattingSegments)));
 		}
 		return serializationSegmentsList;
 	}
@@ -698,7 +698,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		@NonNull SerializationSegment @NonNull [] @NonNull [] outerFormattingSegmentsArray = grammarAnalysis.getOuterFormattingSegments(parserRuleValue);
 		List<@NonNull List<@NonNull SerializationSegment>> serializationSegmentsList = new ArrayList<>(outerFormattingSegmentsArray.length);
 		for (@NonNull SerializationSegment @NonNull [] outerFormattingSegments : outerFormattingSegmentsArray) {
-			serializationSegmentsList.add(ClassUtil.nonNullState(Lists.newArrayList(outerFormattingSegments)));
+			serializationSegmentsList.add(ClassUtil.requireNonNull(Lists.newArrayList(outerFormattingSegments)));
 		}
 		return serializationSegmentsList;
 	}
@@ -860,7 +860,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			int i = 0;
 			for (@NonNull GrammarRuleVector grammarRuleVector : grammarRuleVectors2) {
 				if (i > 0) {
-					GrammarRuleVector prevGrammarRuleVector = ClassUtil.nonNullState(grammarRuleVectors2.get(i-1));
+					GrammarRuleVector prevGrammarRuleVector = ClassUtil.requireNonNull(grammarRuleVectors2.get(i-1));
 					if (!(grammarRuleVector.compareTo(prevGrammarRuleVector) > 0)) {
 						assert grammarRuleVector.compareTo(prevGrammarRuleVector) > 0;
 					}

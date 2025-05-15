@@ -804,8 +804,8 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			IProject modelProject = workspace.getRoot().getProject(modelProjectDirectory);
 			IPath javaSource = new Path(modelDirectory);
 			IFolder folder = modelProject.getParent().getFolder(javaSource);
-			java.net.URI locationURI = ClassUtil.nonNullState(folder.getLocationURI());
-			return ClassUtil.nonNullState(URIUtil.toFile(locationURI));
+			java.net.URI locationURI = ClassUtil.requireNonNull(folder.getLocationURI());
+			return ClassUtil.requireNonNull(URIUtil.toFile(locationURI));
 		}
 		else {
 			URI locationURI = URI.createPlatformResourceURI(modelDirectory, true);

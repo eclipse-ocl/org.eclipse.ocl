@@ -109,8 +109,8 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		// org.eclipse.ocl.pivot.Class asOclAny = metamodelManager.getStandardLibrary().getOclAnyType();
 		CompleteClass asElementCompleteClass = metamodelManager.getCompletePackage(metamodelManager.getStandardLibrary().getPackage()).getCompleteClass(asOclElement);
 		OperationId envOperationId = asOclElement.getTypeId().getOperationId(0, envOpName, IdManager.getParametersId(asOclElement.getTypeId()));
-		this.asElementEnvOperation = ClassUtil.nonNullState(asElementCompleteClass.getOperation(envOperationId));
-		this.asEnvironmentType = ClassUtil.nonNullState(asElementEnvOperation.getType().isClass());
+		this.asElementEnvOperation = ClassUtil.requireNonNull(asElementCompleteClass.getOperation(envOperationId));
+		this.asEnvironmentType = ClassUtil.requireNonNull(asElementEnvOperation.getType().isClass());
 
 		//
 		//	Create new AS elements
@@ -287,7 +287,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	abstract protected @NonNull String getLookupVisitorClassName(@NonNull String prefix);
 
 	public @NonNull CGValuedElement getEvaluatorVariable() {
-		return ClassUtil.nonNullState(cgEvaluatorVariable);
+		return ClassUtil.requireNonNull(cgEvaluatorVariable);
 	}
 
 	@Override
@@ -297,11 +297,11 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 
 	@Override
 	public @NonNull CGValuedElement getIdResolverVariable() {
-		return ClassUtil.nonNullState(cgIdResolverVariable);
+		return ClassUtil.requireNonNull(cgIdResolverVariable);
 	}
 
 	protected @NonNull String getSuperLookupVisitorClassName() {
-		String superProjectPrefix = ClassUtil.nonNullState(getSuperProjectPrefix());
+		String superProjectPrefix = ClassUtil.requireNonNull(getSuperProjectPrefix());
 		String superLangVisitorName = getLookupVisitorClassName(superProjectPrefix);
 		return getSuperVisitorPackageName() + "." + superLangVisitorName;
 	}
@@ -336,10 +336,10 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		for (@SuppressWarnings("null")@NonNull Operation envOperation : envOperation2asOperation.keySet()) {
 			Operation asOperation = envOperation2asOperation.get(envOperation);
 			assert asOperation != null;
-			LanguageExpression envSpecification = ClassUtil.nonNullState(envOperation.getBodyExpression());
+			LanguageExpression envSpecification = ClassUtil.requireNonNull(envOperation.getBodyExpression());
 			ExpressionInOCL envExpressionInOCL = environmentFactory.parseSpecification(envSpecification);
 			Variable asElement = (Variable) reDefinitions.get(envExpressionInOCL.getOwnedContext());
-			OCLExpression asExpression = RereferencingCopier.copy(ClassUtil.nonNullState(envExpressionInOCL.getOwnedBody()), reDefinitions);
+			OCLExpression asExpression = RereferencingCopier.copy(ClassUtil.requireNonNull(envExpressionInOCL.getOwnedBody()), reDefinitions);
 			ExpressionInOCL asExpressionInOCL = PivotUtil.createExpressionInOCL(null, asExpression, asElement);
 			PivotUtil.initOperation(asOperation, asExpressionInOCL);
 			asOperation.setType(asEnvironmentType);

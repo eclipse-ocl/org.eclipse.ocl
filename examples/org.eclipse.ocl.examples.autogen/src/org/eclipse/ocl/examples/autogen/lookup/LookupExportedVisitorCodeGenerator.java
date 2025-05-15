@@ -110,12 +110,12 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 			Map<Element, Element> reDefinitions, Operation operation) {
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
-		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
+		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(operation.getOwningClass());
 		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asImporterSource = createThisVariableExp(asThisVariable);
-		PropertyCallExp asImporterAccess = PivotUtil.createPropertyCallExp(asImporterSource, ClassUtil.nonNull(asImporterProperty));
+		PropertyCallExp asImporterAccess = PivotUtil.createPropertyCallExp(asImporterSource, ClassUtil.requireNonNull(asImporterProperty));
 		Variable asImporter = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asImporterAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asImporter);
 
@@ -139,6 +139,6 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 	}
 
 	public @NonNull CGProperty getImporterProperty() {
-		return ClassUtil.nonNullState(cgImporterProperty);
+		return ClassUtil.requireNonNull(cgImporterProperty);
 	}
 }

@@ -370,7 +370,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	protected @NonNull ASResource createASResource(@NonNull ResourceSet asResourceSet) {
-		URI uri = ClassUtil.nonNullState(getURI());
+		URI uri = ClassUtil.requireNonNull(getURI());
 		URI asURI = getASURI(uri);
 		if (uri.fileExtension().equals(PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION)) {	// FIXME use csResource.getASResource(metamodelManager);
 			return new TransientASResource(asResourceSet, asURI);
@@ -606,7 +606,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
 	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
-			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
+			ResourceSet csResourceSet = ClassUtil.requireNonNull(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
 			ProjectManager projectManager = ProjectMap.findAdapter(csResourceSet);
 			if (projectManager == null) {
 				projectManager = ProjectManager.CLASS_PATH;

@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * AssociationClassProperties manages the AS properties for an AS AssociationClass, supporting random access
@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 class AssociationClassProperties
 {
 	private final @NonNull List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds;
-	private final Property[][] properties;		// [0][x] is from AC, [x][0] is to AC, [0][0] is null, 
+	private final Property[][] properties;		// [0][x] is from AC, [x][0] is to AC, [0][0] is null,
 
 	public AssociationClassProperties(@NonNull List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds) {
 		this.umlMemberEnds = umlMemberEnds;
@@ -69,7 +69,7 @@ class AssociationClassProperties
 					int searchIndex = 0;
 					String name = umlProperty.getName();
 					for (org.eclipse.uml2.uml.Property umlNamedProperty : umlMemberEnds) {
-						if (ClassUtil.safeEquals(name, umlNamedProperty.getName())) {
+						if (Objects.equals(name, umlNamedProperty.getName())) {
 							break;
 						}
 						searchIndex++;
@@ -127,7 +127,7 @@ class AssociationClassProperties
 				for (org.eclipse.uml2.uml.Property redefiningProperty : redefiningMemberEnds) {
 					String name = redefiningProperty.getName();
 					for (org.eclipse.uml2.uml.Property redefinedProperty : redefinedMemberEnds) {
-						if (ClassUtil.safeEquals(name, redefinedProperty.getName())) {
+						if (Objects.equals(name, redefinedProperty.getName())) {
 							org.eclipse.uml2.uml.Property oldProperty = propertyToRedefinedPropertyMapping.put(redefiningProperty, redefinedProperty);
 							assert oldProperty == null;
 							break;

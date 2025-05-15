@@ -42,14 +42,14 @@ public class OCLDebugInvocationDelegate extends OCLInvocationDelegate
 		EvaluationEnvironment env = query2.getEvaluationEnvironment(target);
 		Object object = target;
 		Object value = idResolver.boxedValueOf(target);
-		env.add(ClassUtil.nonNullModel(query.getOwnedContext()), value);
+		env.add(ClassUtil.requireNonNull(query.getOwnedContext()), value);
 		List<Variable> parms = query.getOwnedParameters();
 		if (!parms.isEmpty()) {
 			// bind arguments to parameter names
 			for (int i = 0; i < parms.size(); i++) {
 				object = arguments.get(i);
 				value = idResolver.boxedValueOf(object);
-				env.add(ClassUtil.nonNullModel(parms.get(i)), value);
+				env.add(ClassUtil.requireNonNull(parms.get(i)), value);
 			}
 		}
 		Object ecoreResult = query2.evaluateEcore(eOperation.getEType().getInstanceClass(), target);
