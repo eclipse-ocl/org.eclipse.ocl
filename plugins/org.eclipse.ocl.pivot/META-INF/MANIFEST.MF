@@ -13,9 +13,9 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)";resolu
  org.eclipse.ocl.common;bundle-version="[1.4.0,2.0.0)";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.pivot,
- org.eclipse.ocl.pivot.annotations;x-internal:=true,
- org.eclipse.ocl.pivot.annotations.impl;x-internal:=true,
- org.eclipse.ocl.pivot.annotations.util;x-internal:=true,
+ org.eclipse.ocl.pivot.annotations,
+ org.eclipse.ocl.pivot.annotations.impl,
+ org.eclipse.ocl.pivot.annotations.util,
  org.eclipse.ocl.pivot.evaluation,
  org.eclipse.ocl.pivot.ids,
  org.eclipse.ocl.pivot.internal,

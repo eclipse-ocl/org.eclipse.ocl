@@ -17,9 +17,6 @@ package	org.eclipse.ocl.xtext.oclinecorecs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-/**
- * @noimplement This interface is not intended to be implemented by clients.
- */
 public interface OCLinEcoreCSVisitor<R> extends org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor<R>
 {
 	R visitDummyOCLinEcoreConstraintClass(org.eclipse.ocl.xtext.oclinecorecs.@NonNull DummyOCLinEcoreConstraintClass object);

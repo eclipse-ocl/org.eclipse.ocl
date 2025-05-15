@@ -15,7 +15,17 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.annotations.*;
+import org.eclipse.ocl.pivot.annotations.ASLibrary_EPackage;
+import org.eclipse.ocl.pivot.annotations.ASMetamodel_EPackage;
+import org.eclipse.ocl.pivot.annotations.Collection_EClass;
+import org.eclipse.ocl.pivot.annotations.Collection_EPackage;
+import org.eclipse.ocl.pivot.annotations.Collection_ETypedElement;
+import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EClassifier;
+import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EOperation;
+import org.eclipse.ocl.pivot.annotations.Ecore_OCL_EStructuralFeature;
+import org.eclipse.ocl.pivot.annotations.Import_EPackage;
+import org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation;
+import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
 
 /**
  * <!-- begin-user-doc -->
