@@ -16,13 +16,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
@@ -51,7 +50,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
@@ -68,22 +66,16 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
-import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -132,14 +124,6 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-	 * @since 1.4
-	 */
-	@Deprecated /* @deprecated FIXME BUG 509309 move to EnvironmentFactory.createHelper() */
-	public static @NonNull PivotHelper createHelper(@NonNull EnvironmentFactory environmentFactory) {
-		return new PivotHelper(environmentFactory);
-	}
-
-	/**
 	 * Emit string to System.out and return false if DEBUG_DEPRECATIONS active.
 	 * This method is typically invoked as assert PivotUtilInternal.debugDeprecation("className.methodName"); so
 	 * that with -ea compilation an assertion failure occurs without imposing any costs when -ea not in use.
@@ -149,21 +133,6 @@ public class PivotUtilInternal extends PivotUtil
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);
 		return DEBUG_DEPRECATIONS.isActive() ? false : true; 		// False to crash
-	}
-
-	@Deprecated /* @deprecated Use ThreadLocalExecutor.basicGetEnvironmentFactory() */
-	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@Nullable EObject eObject) {
-		return ThreadLocalExecutor.basicGetEnvironmentFactory();
-	}
-
-	@Deprecated /* @deprecated Use ThreadLocalExecutor.basicGetEnvironmentFactory() */
-	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@NonNull Resource resource) {
-		return ThreadLocalExecutor.basicGetEnvironmentFactory();
-	}
-
-	@Deprecated /* @deprecated Use ThreadLocalExecutor.basicGetEnvironmentFactory() */
-	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@NonNull ResourceSet resourceSet) {
-		return ThreadLocalExecutor.basicGetEnvironmentFactory();
 	}
 
 	/**
@@ -205,25 +174,6 @@ public class PivotUtilInternal extends PivotUtil
 		}
 		assert isASURI(asURI);
 		return asURI;
-	}
-
-	/**
-	 * @deprecated use Attribution.REGISTRY.getAttribution(eObject)
-	 */
-	@Deprecated
-	public static @NonNull Attribution getAttribution(@NonNull EObject eObject) {
-		return Attribution.REGISTRY.getAttribution(eObject);
-	}
-
-	@Deprecated /* @deprecated not used, use PivotUtil.getBehavioralType */
-	public static @NonNull Type getBehavioralType(@NonNull Type type) {
-		return PivotUtil.getBehavioralType(type);
-	}
-
-	@Deprecated /* @deprecated not used, use PivotUtil.getBehavioralType */
-	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
-		Type type = element != null ? getType(element) : null;
-		return type != null ? PivotUtil.getBehavioralType(type) : null;
 	}
 
 	/**
@@ -277,38 +227,6 @@ public class PivotUtilInternal extends PivotUtil
 		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
 		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
 		return environmentFactory;
-	}
-
-	/**
-	 * @since 1.14
-	 */
-	@Deprecated /* @deprecated use Notifier argument */		// XXX
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Object object) {
-		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory2 != null) {
-			return environmentFactory2;
-		}
-		return getEnvironmentFactory((Notifier)object);
-	}
-
-	@Deprecated /* @deprecated use Notifier argument */
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
-		return getEnvironmentFactory((Notifier)resource);
-	}
-
-	/**
-	 * @since 1.1
-	 */
-	@Deprecated /* @deprecated promoted to PivotUtil */
-	public static @NonNull Executor getExecutor(@NonNull EObject eObject) {
-		Resource asResource = eObject.eResource();
-		if (asResource != null) {
-			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory != null) {
-				return new PivotExecutorManager(environmentFactory, eObject);
-			}
-		}
-		return new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
 	}
 
 	public static @Nullable LibraryFeature getImplementation(@NonNull Operation localOperation) {
@@ -365,110 +283,6 @@ public class PivotUtilInternal extends PivotUtil
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
 		return castElement;
-	}
-
-	/**
-	 * Return a URI based on the nsURI of the immediate parent package.
-	 */
-	public static String getNsURI(@NonNull EModelElement element) {
-		if (element instanceof EPackage) {
-			String nsURI = ((EPackage)element).getNsURI();
-			if (nsURI != null) {
-				return nsURI;
-			}
-		}
-		StringBuilder s = new StringBuilder();
-		getNsURI(s, element);
-		return s.toString();
-	}
-
-	/**
-	 * Return a URI based on the nsURI of the immediate parent package.
-	 *
-	 * @deprecated only used by AS2Moniker - gives unpleasant long location-dependent results for uri-less packages
-	 */
-	@Deprecated
-	public static String getNsURI(@NonNull Element element) {
-		if (element instanceof org.eclipse.ocl.pivot.Package) {
-			String nsURI = ((org.eclipse.ocl.pivot.Package)element).getURI();
-			if (nsURI != null) {
-				return nsURI;
-			}
-		}
-		StringBuilder s = new StringBuilder();
-		s.append("u_r_i:");
-		getNsURI(s, element);
-		return s.toString();
-	}
-
-	private static void getNsURI(@NonNull StringBuilder s, @NonNull EObject element) {
-		if (element instanceof org.eclipse.ocl.pivot.Package) {
-			String nsURI = ((org.eclipse.ocl.pivot.Package)element).getURI();
-			if (nsURI != null) {
-				s.append(nsURI);
-				return;
-			}
-		}
-		else if (element instanceof Model) {
-			String nsURI = ((Model)element).getExternalURI();
-			if (nsURI != null) {
-				s.append(nsURI);
-				return;
-			}
-		}
-		else if (element instanceof EPackage) {
-			String nsURI = ((EPackage)element).getNsURI();
-			if (nsURI != null) {
-				s.append(nsURI);
-				return;
-			}
-		}
-		EObject eContainer = element.eContainer();
-		if ((eContainer instanceof org.eclipse.ocl.pivot.Package) || (eContainer instanceof Model)) {
-			String nsURI = ((org.eclipse.ocl.pivot.Package)element).getURI();
-			if (nsURI != null) {
-				s.append(nsURI);
-				s.append("#/");
-			}
-			else {
-				getNsURI(s, eContainer);
-			}
-		}
-		else if (eContainer instanceof EPackage) {
-			String nsURI = ((EPackage)element).getNsURI();
-			if (nsURI != null) {
-				s.append(nsURI);
-				s.append("#/");
-			}
-			else {
-				getNsURI(s, eContainer);
-			}
-		}
-		else if (eContainer == null) {
-			String name = null;
-			if (element instanceof org.eclipse.ocl.pivot.Package) {
-				name = ((org.eclipse.ocl.pivot.Package)element).getName();
-			}
-			else if (element instanceof EPackage) {
-				name = ((EPackage)element).getName();
-			}
-			if (name == null) {
-				name = PivotConstantsInternal.NULL_ROOT;
-			}
-			s.append(name);
-			return;
-		}
-		else {
-			getNsURI(s, eContainer);
-		}
-		EReference eFeature = element.eContainmentFeature();
-		s.append("@");
-		s.append(eFeature.getName());
-		if (eFeature.isMany()) {
-			int index = ((List<?>) eContainer.eGet(element.eContainingFeature())).indexOf(element);
-			s.append(".");
-			s.append(index);
-		}
 	}
 
 	/**
@@ -727,24 +541,6 @@ public class PivotUtilInternal extends PivotUtil
 		return type;
 	}
 
-	@Deprecated /* @deprecated not used, use getReturnType or getBehavioralType or getBehavioralReturnType */
-	public static @NonNull Type getType(@NonNull Type type) {
-		assert !(type instanceof LambdaType);
-		Type type1 = getNonLambdaType(type);
-		assert type1 == type;
-		Type type2 = PivotUtil.getBehavioralType(type1);
-		return type2;
-	}
-
-	@Deprecated /* @deprecated use URI argument that support fragments */
-	public static boolean isASURI(@Nullable String uri) {
-		if (uri == null) {
-			return false;
-		}
-		assert !uri.contains("#");
-		return uri.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
-	}
-
 	public static boolean isASURI(@Nullable URI uri) {
 		if (uri == null) {
 			return false;
@@ -821,25 +617,6 @@ public class PivotUtilInternal extends PivotUtil
 			}
 		}
 		return hasImplicits;
-	}
-
-	/**
-	 * @deprecated use the inverse of isOrphanType
-	 */
-	@Deprecated
-	public static boolean isLibraryType(@NonNull Type type) {	// FIXME org.eclipse.ocl.pivot.Class
-		if (type instanceof LambdaType) {
-			return false;
-		}
-		else if (type instanceof TupleType) {
-			return false;
-		}
-		else if (type instanceof TemplateableElement){
-			return ((TemplateableElement)type).getOwnedBindings().isEmpty();
-		}
-		else {
-			return false;
-		}
 	}
 
 	/**

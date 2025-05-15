@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
@@ -171,6 +173,90 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 		context.appendParent(object, MONIKER_SCOPE_SEPARATOR);
 		context.appendRole(object);
 		context.append(MONIKER_OPERATOR_SEPARATOR);
+	}
+
+	/**
+	 * Return a URI based on the nsURI of the immediate parent package.
+	 */
+	private String getNsURI(org.eclipse.ocl.pivot.@NonNull Package element) {
+		String nsURI = element.getURI();
+		if (nsURI != null) {
+			return nsURI;
+		}
+		StringBuilder s = new StringBuilder();
+		s.append("u_r_i:");
+		getNsURI(s, element);
+		return s.toString();
+	}
+
+	private void getNsURI(@NonNull StringBuilder s, @NonNull EObject element) {
+		if (element instanceof org.eclipse.ocl.pivot.Package) {
+			String nsURI = ((org.eclipse.ocl.pivot.Package)element).getURI();
+			if (nsURI != null) {
+				s.append(nsURI);
+				return;
+			}
+		}
+		else if (element instanceof Model) {
+			String nsURI = ((Model)element).getExternalURI();
+			if (nsURI != null) {
+				s.append(nsURI);
+				return;
+			}
+		}
+		else if (element instanceof EPackage) {
+			String nsURI = ((EPackage)element).getNsURI();
+			if (nsURI != null) {
+				s.append(nsURI);
+				return;
+			}
+		}
+		EObject eContainer = element.eContainer();
+		if ((eContainer instanceof org.eclipse.ocl.pivot.Package) || (eContainer instanceof Model)) {
+			String nsURI = ((org.eclipse.ocl.pivot.Package)element).getURI();
+			if (nsURI != null) {
+				s.append(nsURI);
+				s.append("#/");
+			}
+			else {
+				getNsURI(s, eContainer);
+			}
+		}
+		else if (eContainer instanceof EPackage) {
+			String nsURI = ((EPackage)element).getNsURI();
+			if (nsURI != null) {
+				s.append(nsURI);
+				s.append("#/");
+			}
+			else {
+				getNsURI(s, eContainer);
+			}
+		}
+		else if (eContainer == null) {
+			String name = null;
+			if (element instanceof org.eclipse.ocl.pivot.Package) {
+				name = ((org.eclipse.ocl.pivot.Package)element).getName();
+			}
+			else if (element instanceof EPackage) {
+				name = ((EPackage)element).getName();
+			}
+			if (name == null) {
+				name = PivotConstantsInternal.NULL_ROOT;
+			}
+			s.append(name);
+			return;
+		}
+		else {
+			getNsURI(s, eContainer);
+		}
+		EReference eFeature = element.eContainmentFeature();
+		s.append("@");
+		s.append(eFeature.getName());
+		if (eFeature.isMany()) {
+			int index = ((List<?>) eContainer.eGet(element.eContainingFeature())).indexOf(element);
+			s.append(".");
+			s.append(index);
+		}
 	}
 
 	@Override
@@ -490,7 +576,7 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 		//		if (!object.hasMoniker()) {
 		//			throw new IllegalStateException("No moniker has been configured for " + object);
 		//		}
-		context.append(PivotUtilInternal.getNsURI(object));
+		context.append(getNsURI(object));
 		return true;
 	}
 

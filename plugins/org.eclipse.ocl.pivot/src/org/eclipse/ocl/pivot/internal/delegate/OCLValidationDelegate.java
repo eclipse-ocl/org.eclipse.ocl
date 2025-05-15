@@ -278,13 +278,6 @@ public class OCLValidationDelegate implements ValidationDelegate
 		return validatePivot(eDataType, value, diagnostics, context, constraintName, source, code);
 	}
 
-	@Deprecated /* @deprecated pass known EnvironmentFactory */
-	protected boolean validateExpressionInOCL(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
-			Map<Object, Object> context, String constraintName, String source, int code, @NonNull ExpressionInOCL query) {
-		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value);
-		return validateExpressionInOCL(environmentFactory, eClassifier, value, diagnostics, context, source, code, query);
-	}
-
 	/**
 	 * @since 7.0
 	 */

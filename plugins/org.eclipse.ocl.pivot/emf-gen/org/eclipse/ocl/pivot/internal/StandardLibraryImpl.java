@@ -18,6 +18,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -1010,7 +1011,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	@Override
 	public void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI) {
-		assert !PivotUtilInternal.isASURI(defaultStandardLibraryURI);
+		assert !PivotUtilInternal.isASURI(URI.createURI(defaultStandardLibraryURI));
 		this.defaultStandardLibraryURI = defaultStandardLibraryURI;
 		this.explicitDefaultStandardLibraryURI = true;
 	}
