@@ -75,6 +75,7 @@ public class Eclass5Impl extends MinimalEObjectImpl.Container implements Eclass5
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getEAttribute5() {
 		return eAttribute5;
 	}
@@ -84,6 +85,7 @@ public class Eclass5Impl extends MinimalEObjectImpl.Container implements Eclass5
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEAttribute5(String newEAttribute5) {
 		String oldEAttribute5 = eAttribute5;
 		eAttribute5 = newEAttribute5;
