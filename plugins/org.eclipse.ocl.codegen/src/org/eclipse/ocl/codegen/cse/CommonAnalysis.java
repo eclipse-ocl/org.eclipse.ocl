@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -24,7 +24,7 @@ import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class CommonAnalysis extends AbstractAnalysis
 {
@@ -104,12 +104,12 @@ public class CommonAnalysis extends AbstractAnalysis
 	public int getStructuralHashCode() {
 		return primaryAnalysis.getStructuralHashCode();
 	}
-	
+
 	@Override
 	public boolean isStructurallyEqualTo(@NonNull AbstractAnalysis thatAnalysis) {
 		return primaryAnalysis.isStructurallyEqualTo(thatAnalysis);
 	}
-	
+
 	@Override
 	public boolean isStructurallyEqualTo(@NonNull SimpleAnalysis thatAnalysis) {
 		return primaryAnalysis.isStructurallyEqualTo(thatAnalysis);
@@ -137,13 +137,13 @@ public class CommonAnalysis extends AbstractAnalysis
 			}
 			rewriteAsLet(controlElement, cgVariable);
 			if (cgCSE.eResource() == null) {
-				PivotUtilInternal.resetContainer(cgCSE);
+				PivotUtil.resetContainer(cgCSE);
 			}
 			else if (cgCSE instanceof CGExecutorType) {
-				PivotUtilInternal.resetContainer(cgCSE);			// FIXME Bug 439603 is this reparenting valid?
+				PivotUtil.resetContainer(cgCSE);			// FIXME Bug 439603 is this reparenting valid?
 			}
 			else {
-				PivotUtilInternal.resetContainer(cgCSE);			// FIXME Bug 439603 is this reparenting valid?
+				PivotUtil.resetContainer(cgCSE);			// FIXME Bug 439603 is this reparenting valid?
 //				CGConstantExp cgConstExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 //				cgConstExp.setReferredConstant(cgCSE);
 //				cgCSE = cgConstExp;

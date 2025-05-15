@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -342,7 +341,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		List<Property> parts = specializedTupleType.getOwnedProperties();
 		for (Property part : parts) {
 			if (part != null) {
-				Type propertyType = PivotUtilInternal.getType(part);
+				Type propertyType = PivotUtil.getTypeInternal(part);
 				Type resolvedPropertyType = specializeType(propertyType);
 				if (resolvedPropertyType != propertyType) {
 					if (resolutions == null) {
@@ -534,12 +533,12 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		TemplateSignature formalTemplateSignature = object.getOwnedSignature();
 		if (formalTemplateSignature != null) {
 			assert object.getOwnedBindings().isEmpty();
-			List<@NonNull TemplateParameter> formalParameters = PivotUtilInternal.getOwnedParametersList(formalTemplateSignature);
+			List<@NonNull TemplateParameter> formalParameters = PivotUtil.getOwnedParametersList(formalTemplateSignature);
 			if (actual instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class actualClass = (org.eclipse.ocl.pivot.Class)actual;
 				TemplateSignature actualTemplateSignature = actualClass.getOwnedSignature();
 				if (actualTemplateSignature != null) {
-					List<@NonNull TemplateParameter> actualParameters = PivotUtilInternal.getOwnedParametersList(actualTemplateSignature);
+					List<@NonNull TemplateParameter> actualParameters = PivotUtil.getOwnedParametersList(actualTemplateSignature);
 					int iMax = actualParameters.size();
 					assert iMax == formalParameters.size();
 					for (int i = 0; i < iMax; i++) {
@@ -549,7 +548,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 					}
 				}
 				else {
-					List<@NonNull TemplateParameterSubstitution> actualSubstitutions = PivotUtilInternal.getOwnedSubstitutionsList(actualClass);
+					List<@NonNull TemplateParameterSubstitution> actualSubstitutions = PivotUtil.getOwnedSubstitutionsList(actualClass);
 					int iMax = actualSubstitutions.size();
 					assert iMax == formalParameters.size();
 					for (int i = 0; i < iMax; i++) {

@@ -41,8 +41,8 @@ import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.StringBufferLog;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
@@ -331,7 +331,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
 		Diagnostician diagnostician = validationContext.getDiagnostician();
 		for (EObject eObject : resource.getContents()) {
-			PivotUtilInternal.getEnvironmentFactory(resource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
+			PivotUtil.getEnvironmentFactory(resource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 			Diagnostic diagnostic = diagnostician.validate(eObject, validationContext);
 			List<Diagnostic> children = diagnostic.getChildren();
 			if (children.size() <= 0) {

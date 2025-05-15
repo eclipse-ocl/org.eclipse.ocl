@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.internal.PivotFactoryImpl;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * The OCL_Pivot_EAnnotationConverter maps the Constraint elements to the
@@ -99,7 +99,7 @@ public class OCL_Pivot_EAnnotationConverter extends AbstractEAnnotationConverter
 				if (key.equals("body")) {
 					bodyName = "";
 					if (value != null) {
-						value = PivotUtilInternal.getBodyExpression(value);	// Workaround Bug 419324
+						value = PivotUtil.getBodyExpression(value);	// Workaround Bug 419324
 					}
 				}
 				else if (key.startsWith("body_")) {

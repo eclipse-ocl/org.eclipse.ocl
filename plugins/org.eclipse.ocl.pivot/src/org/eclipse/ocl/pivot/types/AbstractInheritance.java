@@ -20,11 +20,11 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorNamedElement;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractInheritance extends AbstractExecutorNamedElement implements CompleteInheritance
 {
@@ -265,7 +265,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 				}
 			}
 		}
-		LibraryFeature implementation = PivotUtilInternal.getImplementation(apparentOperation);	// invoke apparent op for null and invalid
+		LibraryFeature implementation = PivotUtil.getImplementation(apparentOperation);	// invoke apparent op for null and invalid
 		if (implementation == null) {
 			implementation = UnsupportedOperation.INSTANCE;
 		}

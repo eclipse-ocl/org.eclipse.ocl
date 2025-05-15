@@ -63,7 +63,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -1011,7 +1010,7 @@ public class EcoreOCLEValidator implements EValidator
 			if (!environmentFactory.getMetamodelManager().conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, requiredType, TemplateParameterSubstitutions.EMPTY)) {
 				allOk = false;
 				if (diagnostics != null) {
-					String role = PivotUtilInternal.getSpecificationRole(asSpecification);
+					String role = PivotUtil.getSpecificationRole(asSpecification);
 					String message = StringUtil.bind(INCOMPATIBLE_TYPE_2, asExpressionType, role, NameUtil.qualifiedNameFor(eNamedElement));
 					diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), EcoreValidator.DIAGNOSTIC_SOURCE,
 						0, message,  new Object[] { getDetailContext(asSpecification, eNamedElement) }));
@@ -1029,7 +1028,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedValidationContext)) {
 			allOk = false;
 			if (diagnostics != null) {
-				String role = PivotUtilInternal.getSpecificationRole(asSpecification);
+				String role = PivotUtil.getSpecificationRole(asSpecification);
 				String contextName = NameUtil.qualifiedNameFor(eNamedElement);
 				StringBuilder s = new StringBuilder();
 				String body = expressionInOCL.getBody();

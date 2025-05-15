@@ -21,7 +21,6 @@ import org.eclipse.ocl.codegen.generator.GenModelHelper
 import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.Operation
 import org.eclipse.ocl.pivot.Type
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory
 import org.eclipse.ocl.pivot.CollectionType
@@ -37,6 +36,7 @@ import org.eclipse.ocl.build.xtend.MergeWriter
 import org.eclipse.emf.mwe.core.WorkflowContext
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor
 import org.eclipse.ocl.pivot.utilities.MetamodelManager
+import org.eclipse.ocl.pivot.utilities.PivotUtil
 
 class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 {
@@ -521,7 +521,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	private def List<Operation> getLookupMethods(GenPackage genPackage) {
 		
 		var List<Operation> result = new ArrayList<Operation>;
-		var EnvironmentFactory envFact = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage)
+		var EnvironmentFactory envFact = PivotUtil.getEnvironmentFactory(genPackage.getEcorePackage)
 		for (oclPackage : LookupCGUtil.getTargetPackages(genPackage, envFact, lookupFilePath, projectName)) {
 			for (oclClass : oclPackage.ownedClasses) {
 				for (oclOp : oclClass.ownedOperations) {
@@ -567,7 +567,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	}
 	
 	private def GenModelHelper createGenModelHelper(GenPackage genPackage) {
-		var MetamodelManager mManager = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage()).metamodelManager;
+		var MetamodelManager mManager = PivotUtil.getEnvironmentFactory(genPackage.getEcorePackage()).metamodelManager;
 		return AbstractGenModelHelper.create(mManager, genPackage.getGenModel());
 	}
 	

@@ -20,7 +20,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.BasicContinuation;
@@ -73,10 +72,10 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 						PivotUtil.setBody(asSpecification, asExpression, statusText);
 					}
 					else {
-						TupleLiteralPart asStatusTuplePart = PivotUtilInternal.getNonNullAst(TupleLiteralPart.class, csStatusSpecification);
+						TupleLiteralPart asStatusTuplePart = PivotUtil.getNonNullAst(TupleLiteralPart.class, csStatusSpecification);
 						OCLExpression asStatusExpression = context.visitLeft2Right(OCLExpression.class, csStatusExpression);
 						asStatusTuplePart.setOwnedInit(asStatusExpression);
-						TupleLiteralPart asMessageTuplePart = PivotUtilInternal.getNonNullAst(TupleLiteralPart.class, csMessageSpecification);
+						TupleLiteralPart asMessageTuplePart = PivotUtil.getNonNullAst(TupleLiteralPart.class, csMessageSpecification);
 						ExpCS csMessageExpression = csMessageSpecification.getOwnedExpression();
 						OCLExpression asMessageExpression = csMessageExpression != null ? context.visitLeft2Right(OCLExpression.class, csMessageExpression) : null;
 						asMessageTuplePart.setOwnedInit(asMessageExpression);

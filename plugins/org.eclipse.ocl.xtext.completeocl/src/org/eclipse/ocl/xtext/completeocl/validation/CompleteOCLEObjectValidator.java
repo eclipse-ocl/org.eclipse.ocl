@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.completeocl.validation;
 
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -22,11 +21,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin;
@@ -71,11 +68,6 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	//	@Override
 	protected EPackage getEPackage() {
 		return ePackage;
-	}
-
-	@Deprecated
-	public @NonNull MetamodelManager getMetamodelManager() {
-		return PivotUtilInternal.getEnvironmentFactory((Notifier)null).getMetamodelManager();	// Better than nothing compatibility
 	}
 
 	/**

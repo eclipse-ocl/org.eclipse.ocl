@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * ValidationContext reifies the Map<Object,Object> context argument for the EValidator API.
@@ -36,7 +36,7 @@ public class ValidationContext extends HashMap<Object,Object>
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtilInternal.basicGetEnvironmentFactory(Notifier).
+	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtil.basicGetEnvironmentFactory(Notifier).
 	 * Returns null if no EnvironmentFactory available.
 	 *
 	 * @since 7.0
@@ -48,7 +48,7 @@ public class ValidationContext extends HashMap<Object,Object>
 				return (EnvironmentFactoryInternal)environmentFactory;
 			}
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(object);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.basicGetEnvironmentFactory(object);
 		if ((environmentFactory != null) && (validationContext != null)) {
 			validationContext.put(EnvironmentFactory.class, environmentFactory);
 		}
@@ -56,7 +56,7 @@ public class ValidationContext extends HashMap<Object,Object>
 	}
 
 	/**
-	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtilInternal.getEnvironmentFactory(Notifier)
+	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtil.getEnvironmentFactory(Notifier)
 	 * and caching the result for subsequent use.
 	 *
 	 * @since 7.0
@@ -70,7 +70,7 @@ public class ValidationContext extends HashMap<Object,Object>
 		}
 		EnvironmentFactoryInternal environmentFactory;
 		if (object instanceof Notifier) {
-			environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)object);
+			environmentFactory = PivotUtil.getEnvironmentFactory((Notifier)object);
 			if (validationContext != null) {
 				validationContext.put(EnvironmentFactory.class, environmentFactory);
 			}
@@ -79,7 +79,7 @@ public class ValidationContext extends HashMap<Object,Object>
 			// In the unlikely (? impossible) event that an EDataType validation occurs before an EClass validation caches an appropriate
 			//  ResourceSet-specific EnvironmentFactory, use but do not cache a global EnvironmentFactory.
 			System.out.println("EDataType validation without prior eClass validation");
-			environmentFactory = PivotUtilInternal.getEnvironmentFactory((Notifier)null);
+			environmentFactory = PivotUtil.getEnvironmentFactory(null);
 		}
 		return environmentFactory;
 	}

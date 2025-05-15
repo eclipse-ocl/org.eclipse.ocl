@@ -30,10 +30,10 @@ import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * An implementation of a delegate domain for an OCL enhanced package. The domain
@@ -311,7 +311,7 @@ public class OCLDelegateDomain implements DelegateDomain
 	}
 
 	public <T extends Element> @Nullable T getPivot(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		EnvironmentFactoryInternal eEnvironmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+		EnvironmentFactoryInternal eEnvironmentFactory = PivotUtil.getEnvironmentFactory(eObject);
 		try {
 			return eEnvironmentFactory.getASOf(requiredClass, eObject);
 		} catch (ParserException e) {

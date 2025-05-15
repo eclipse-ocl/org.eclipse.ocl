@@ -39,9 +39,9 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.validity.plugin.OCLValidityPlugin;
 import org.eclipse.ocl.xtext.console.XtextConsolePlugin;
@@ -129,7 +129,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 		ValidatableNode validatableNode = resultConstrainingNode.getResultValidatableNode().getParent();
 		assert validatableNode != null;
 		EObject constrainedObject = validatableNode.getConstrainedObject();
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(constrainedObject);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
 		Constraint asConstraint = null;
 		Object constrainingObject = resultConstrainingNode.getParent().getConstrainingObject();
 		if (constrainingObject instanceof Constraint) {

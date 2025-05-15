@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -153,7 +152,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitConstraint(@NonNull Constraint object) {
-		String stereotype = PivotUtilInternal.getStereotype(object);
+		String stereotype = PivotUtil.getStereotype(object);
 		if (PivotConstants.BODY_NAME.equals(stereotype)) {
 			context.append("body");
 		}
@@ -303,7 +302,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.appendName(referredIteration);
 			context.push("(", "");
 			String prefix = null;
-			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(object);
+			List<@NonNull Variable> iterators = PivotUtil.getOwnedIteratorsList(object);
 			List<IteratorVariable> coIterators = object.getOwnedCoIterators();
 			int iteratorsSize = iterators.size();
 			int coIteratorsSize = coIterators.size();
@@ -479,7 +478,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 	@Override
 	public Object visitOperationCallExp(@NonNull OperationCallExp object) {
 		OCLExpression source = object.getOwnedSource();
-		List<@NonNull OCLExpression> arguments = PivotUtilInternal.getOwnedArgumentsList(object);
+		List<@NonNull OCLExpression> arguments = PivotUtil.getOwnedArgumentsList(object);
 		Operation referredOperation = object.getReferredOperation();
 		if (context.showNames()) {
 			Precedence precedence = referredOperation != null ? referredOperation.getPrecedence() : null;
@@ -516,7 +515,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				}
 				if (arguments.size() == 0) {			// Prefix
 					context.appendName(referredOperation, null);
-					if ((referredOperation != null) && PivotUtilInternal.isValidIdentifier(referredOperation.getName())) {
+					if ((referredOperation != null) && PivotUtil.isValidIdentifier(referredOperation.getName())) {
 						context.append(" ");			// No space for unary minus
 					}
 					context.precedenceVisit(source, precedence);

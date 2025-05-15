@@ -108,7 +108,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
@@ -317,7 +316,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		//		initializePivotResourceSet(asResourceSet);
 		if (liveMetamodelManagers != null) {
 			liveMetamodelManagers.put(this, null);
-			PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this)
+			PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this)
 			+ " " + NameUtil.debugSimpleName(asResourceSet));
 		}
 	}
@@ -697,7 +696,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	protected void finalize() throws Throwable {
 		if (liveMetamodelManagers != null) {
-			PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
+			PivotUtil.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
 			List<@NonNull PivotMetamodelManager> keySet = new ArrayList<>(liveMetamodelManagers.keySet());
 			if (!keySet.isEmpty()) {
 				StringBuilder s = new StringBuilder();
@@ -1043,7 +1042,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		URI ecoreURI;
 		String externalUri = root.getExternalURI();
 		URI externalURI = URI.createURI(externalUri);
-		if (PivotUtilInternal.isASURI(externalURI)) {
+		if (PivotUtil.isASURI(externalURI)) {
 			ecoreURI = ClassUtil.requireNonNull(externalURI.trimFileExtension());
 		}
 		else {
@@ -1750,7 +1749,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		for (org.eclipse.ocl.pivot.Class type : asLibrary.getOwnedClasses()) {
 			if (type != null) {
 				org.eclipse.ocl.pivot.Class primaryType = getPrimaryClass(type);
-				if ((type == primaryType) && !PivotUtilInternal.isOrphanType(type)) {
+				if ((type == primaryType) && !PivotUtil.isOrphanType(type)) {
 					if (asClasses == null) {
 						asClasses = new ArrayList<>();
 					}
@@ -1960,7 +1959,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			asModel = OCLmetamodel.getDefaultModel();
 			for (org.eclipse.ocl.pivot.Package asPartialPackage : PivotUtil.getOwnedPackages(asModel))	// Workaround the spurious implicit ecore package (fixed on a wip branch)
 			{
-				if (!PivotUtilInternal.isImplicitPackage(asPartialPackage)) {
+				if (!PivotUtil.isImplicitPackage(asPartialPackage)) {
 					asPackage = asPartialPackage;
 					break;
 				}
@@ -2032,7 +2031,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public @Nullable Element loadResource(@NonNull URI uri, String zzalias, @Nullable ResourceSet resourceSet) throws ParserException {
 		// FIXME alias not used
 		URI resourceURI = uri.trimFragment();
-		if (PivotUtilInternal.isASURI(resourceURI)) {
+		if (PivotUtil.isASURI(resourceURI)) {
 			Element asElement = getASElement(uri);
 			if (asElement instanceof Model) {
 				for (EObject eObject : ((Model)asElement).getOwnedPackages()) {

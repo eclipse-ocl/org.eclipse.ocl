@@ -18,7 +18,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Grammar;
@@ -130,7 +130,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			if (allKeywords.contains(value)) {
 				return escapeIdentifier(value);
 			}
-			else if (!PivotUtilInternal.isValidIdentifier(value)) {
+			else if (!PivotUtil.isValidIdentifier(value)) {
 				return escapeIdentifier(value);
 			}
 			else {
@@ -182,7 +182,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			if (nameKeywords.contains(value)) {
 				return escapeIdentifier(value);
 			}
-			else if (!PivotUtilInternal.isValidIdentifier(value)) {
+			else if (!PivotUtil.isValidIdentifier(value)) {
 				return escapeIdentifier(value);
 			}
 			else {
@@ -300,7 +300,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			if (reservedKeywords.contains(value)) {
 				return escapeIdentifier(value);
 			}
-			else if (!PivotUtilInternal.isValidIdentifier(value)) {
+			else if (!PivotUtil.isValidIdentifier(value)) {
 				return escapeIdentifier(value);
 			}
 			else {
@@ -331,7 +331,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			if (restrictedKeywords.contains(value)) {
 				return escapeIdentifier(value);
 			}
-			else if (!PivotUtilInternal.isValidIdentifier(value)) {
+			else if (!PivotUtil.isValidIdentifier(value)) {
 				return escapeIdentifier(value);
 			}
 			else {
@@ -382,7 +382,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			Object ele = tit.next();
 			if (ele instanceof Keyword) {
 				String value = ((Keyword)ele).getValue();
-				if (!validIdentifiersOnly || PivotUtilInternal.isValidIdentifier(value)) {
+				if (!validIdentifiersOnly || PivotUtil.isValidIdentifier(value)) {
 					kws.add(value);
 				}
 			}

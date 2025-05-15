@@ -21,8 +21,8 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion.Predicate;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.DetailCS;
@@ -42,7 +42,7 @@ public class OCLinEcoreDeclarationVisitor extends EssentialOCLDeclarationVisitor
 	{
 		@Override
 		public boolean filter(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-			return !PivotUtilInternal.isImplicitPackage(asPackage);
+			return !PivotUtil.isImplicitPackage(asPackage);
 		}
 	};
 

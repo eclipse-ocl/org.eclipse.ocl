@@ -86,7 +86,7 @@ public class OCLUI
 	 * @return the metamodelManager
 	 *
 	protected MetamodelManager getMetamodelManager(EObject contextObject) {
-		MetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(contextObject);
+		MetamodelManager metamodelManager = PivotUtil.findMetamodelManager(contextObject);
 		if (metamodelManager != null) {
 			return metamodelManager;
 		}
@@ -100,7 +100,7 @@ public class OCLUI
 	 * Evaluate an oclExpression using selfObject as the OCL self object. Returns a boxed value.
 	 *
 	public static Object evaluate(@Nullable EObject selfObject, @NonNull String oclExpression) throws Exception {
-		MetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(selfObject);
+		MetamodelManager metamodelManager = PivotUtil.findMetamodelManager(selfObject);
 		if (metamodelManager == null) {
 			metamodelManager = OCL.createEnvironmentFactory(null).getMetamodelManager();
 			// FIXME install

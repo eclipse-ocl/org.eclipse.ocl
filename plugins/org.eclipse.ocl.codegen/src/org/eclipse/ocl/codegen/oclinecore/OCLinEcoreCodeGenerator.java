@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -92,7 +91,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			super.visitCGOperation(cgOperation);
 			Element asOperation = cgOperation.getAst();
 			if (asOperation instanceof Operation) {
-				EObject eObject = ((Operation)asOperation).getESObject();
+				EObject eObject = asOperation.getESObject();
 				if (eObject instanceof ETypedElement) {
 					EClassifier eType = ((ETypedElement)eObject).getEType();
 					if (eType != null) {
@@ -108,7 +107,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			super.visitCGProperty(cgProperty);
 			Element asProperty = cgProperty.getAst();
 			if (asProperty instanceof Property) {
-				EObject eObject = ((Property)asProperty).getESObject();
+				EObject eObject = asProperty.getESObject();
 				if (eObject instanceof ETypedElement) {
 					EClassifier eType = ((ETypedElement)eObject).getEType();
 					if (eType != null) {
@@ -314,7 +313,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			if (ownedSource instanceof TupleLiteralExp){
 				TupleLiteralExp tupleLiteralExp = (TupleLiteralExp)ownedSource;
 				TupleType tupleType = PivotUtil.getType(tupleLiteralExp);
-				Property statusPart = PivotUtilInternal.getStatusTupleTypeStatusPart(tupleType);
+				Property statusPart = PivotUtil.getStatusTupleTypeStatusPart(tupleType);
 				if (statusPart != null){
 					statusAccesses.add(object);
 					return true;
@@ -329,7 +328,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 		@Override
 		public @Nullable Boolean visitTupleLiteralExp(@NonNull TupleLiteralExp object) {
-			Property statusPart = PivotUtilInternal.getStatusTupleTypeStatusPart(PivotUtil.getType(object));
+			Property statusPart = PivotUtil.getStatusTupleTypeStatusPart(PivotUtil.getType(object));
 			if (statusPart != null){
 				return true;
 			}
@@ -349,7 +348,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 	public static void generatePackage(@NonNull GenPackage genPackage,
 			@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(genPackage);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(genPackage);
 		OCLinEcoreCodeGenerator generator = new OCLinEcoreCodeGenerator(environmentFactory, genPackage);
 		generator.generate(uri2body, constantsTexts);
 	}
@@ -421,7 +420,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 				ExpressionInOCL newQuery = entry.getKey();
 				ExpressionInOCL oldQuery = entry.getValue();
 				Constraint eContainer = (Constraint) newQuery.eContainer();
-				PivotUtilInternal.resetContainer(newQuery);
+				PivotUtil.resetContainer(newQuery);
 				eContainer.setOwnedSpecification(oldQuery);
 			}
 			newQuery2oldQuery = null;
@@ -453,7 +452,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 				OCLExpression asExpression = rewriteTupleLiteralExp(asTupleValue);
 				EObject eContainer = asPropertyCallExp.eContainer();
 				EReference eContainmentFeature = asPropertyCallExp.eContainmentFeature();
-				PivotUtilInternal.resetContainer(asPropertyCallExp);
+				PivotUtil.resetContainer(asPropertyCallExp);
 				eContainer.eSet(eContainmentFeature, asExpression);		// FIXME isMany
 			}
 			for (@NonNull OCLExpression asExpression : statusAnalyzer.canBeOclAnyExpressions) {
@@ -465,12 +464,12 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 				OCLExpression conditionExpression = PivotUtil.getOwnedSource(impliesExpression);
 				OCLExpression thenExpression = PivotUtil.getOwnedArgument(impliesExpression, 0);
 				OCLExpression elseExpression = asHelper.createBooleanLiteralExp(true);
-				PivotUtilInternal.resetContainer(conditionExpression);
-				PivotUtilInternal.resetContainer(thenExpression);
+				PivotUtil.resetContainer(conditionExpression);
+				PivotUtil.resetContainer(thenExpression);
 				OCLExpression ifExpression = asHelper.createIfExp(conditionExpression, thenExpression, elseExpression);
 				EObject eContainer = impliesExpression.eContainer();
 				EReference eContainmentFeature = impliesExpression.eContainmentFeature();
-				PivotUtilInternal.resetContainer(impliesExpression);
+				PivotUtil.resetContainer(impliesExpression);
 				eContainer.eSet(eContainmentFeature, ifExpression);		// FIXME isMany
 			}
 			asSynthesizedQuery.setBody(null);
@@ -517,7 +516,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//	Install replacment query in the original Constraint.
 		//
 		Constraint eContainer = (Constraint) oldQuery.eContainer();
-		PivotUtilInternal.resetContainer(oldQuery);
+		PivotUtil.resetContainer(oldQuery);
 		eContainer.setOwnedSpecification(asSynthesizedQuery);
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery;
 		assert newQuery2oldQuery2 != null;
@@ -539,13 +538,13 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//
 		//	Cache the status in a let-variable
 		//
-		PivotUtilInternal.resetContainer(asStatusInit);
+		PivotUtil.resetContainer(asStatusInit);
 		asStatusVariable = asHelper.createLetVariable("status", standardLibrary.getBooleanType(), asStatusInit.isIsRequired(), asStatusInit);
 		asStatusPart.setOwnedInit(asHelper.createVariableExp(asStatusVariable));
 		//
 		//	Wrap the tuple in a status guard for failure.
 		//
-		PivotUtilInternal.resetContainer(asTupleLiteralExp);
+		PivotUtil.resetContainer(asTupleLiteralExp);
 		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asStatusVariable), "=", asHelper.createBooleanLiteralExp(true));
 		OCLExpression asStatusExp = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asTupleLiteralExp);
 		return asHelper.createLetExp(asStatusVariable, asStatusExp);

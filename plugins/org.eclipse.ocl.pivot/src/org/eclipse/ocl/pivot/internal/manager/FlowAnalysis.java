@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -238,8 +237,8 @@ public class FlowAnalysis
 				if (firstCollectionLiteralExp.getKind() != secondCollectionLiteralExp.getKind()) {
 					return false;
 				}
-				List<@NonNull CollectionLiteralPart> firstParts = PivotUtilInternal.getOwnedPartsList(firstCollectionLiteralExp);
-				List<@NonNull CollectionLiteralPart> secondParts = PivotUtilInternal.getOwnedPartsList(secondCollectionLiteralExp);
+				List<@NonNull CollectionLiteralPart> firstParts = PivotUtil.getOwnedPartsList(firstCollectionLiteralExp);
+				List<@NonNull CollectionLiteralPart> secondParts = PivotUtil.getOwnedPartsList(secondCollectionLiteralExp);
 				int iSize = firstParts.size();
 				if (iSize != secondParts.size()) {
 					return false;
@@ -314,8 +313,8 @@ public class FlowAnalysis
 				if (!isSameTerm(PivotUtil.getOwnedBody(firstIterateExp), PivotUtil.getOwnedBody(secondIterateExp), firstVariable2secondVariable))	{
 					return false;
 				}
-				List<@NonNull Variable> firstIterators = PivotUtilInternal.getOwnedIteratorsList(firstIterateExp);
-				List<@NonNull Variable> secondIterators = PivotUtilInternal.getOwnedIteratorsList(secondIterateExp);
+				List<@NonNull Variable> firstIterators = PivotUtil.getOwnedIteratorsList(firstIterateExp);
+				List<@NonNull Variable> secondIterators = PivotUtil.getOwnedIteratorsList(secondIterateExp);
 				int iSize = firstIterators.size();
 				if (iSize != secondIterators.size()) {
 					return false;
@@ -341,8 +340,8 @@ public class FlowAnalysis
 				if (!isSameTerm(PivotUtil.getOwnedSource(firstIterateExp), PivotUtil.getOwnedSource(secondIterateExp), firstVariable2secondVariable))	{
 					return false;
 				}
-				List<@NonNull Variable> firstIterators = PivotUtilInternal.getOwnedIteratorsList(firstIterateExp);
-				List<@NonNull Variable> secondIterators = PivotUtilInternal.getOwnedIteratorsList(secondIterateExp);
+				List<@NonNull Variable> firstIterators = PivotUtil.getOwnedIteratorsList(firstIterateExp);
+				List<@NonNull Variable> secondIterators = PivotUtil.getOwnedIteratorsList(secondIterateExp);
 				int iSize = firstIterators.size();
 				if (iSize != secondIterators.size()) {
 					return false;
@@ -371,8 +370,8 @@ public class FlowAnalysis
 				if (!isSameTerm(PivotUtil.getOwnedSource(firstIteratorExp), PivotUtil.getOwnedSource(secondIteratorExp), firstVariable2secondVariable))	{
 					return false;
 				}
-				List<@NonNull Variable> firstIterators = PivotUtilInternal.getOwnedIteratorsList(firstIteratorExp);
-				List<@NonNull Variable> secondIterators = PivotUtilInternal.getOwnedIteratorsList(secondIteratorExp);
+				List<@NonNull Variable> firstIterators = PivotUtil.getOwnedIteratorsList(firstIteratorExp);
+				List<@NonNull Variable> secondIterators = PivotUtil.getOwnedIteratorsList(secondIteratorExp);
 				int iSize = firstIterators.size();
 				if (iSize != secondIterators.size()) {
 					return false;
@@ -405,8 +404,8 @@ public class FlowAnalysis
 				}
 				MapLiteralExp firstMapLiteralExp = (MapLiteralExp)firstExpression;
 				MapLiteralExp secondMapLiteralExp = (MapLiteralExp)secondExpression;
-				List<@NonNull MapLiteralPart> firstParts = PivotUtilInternal.getOwnedPartsList(firstMapLiteralExp);
-				List<@NonNull MapLiteralPart> secondParts = PivotUtilInternal.getOwnedPartsList(secondMapLiteralExp);
+				List<@NonNull MapLiteralPart> firstParts = PivotUtil.getOwnedPartsList(firstMapLiteralExp);
+				List<@NonNull MapLiteralPart> secondParts = PivotUtil.getOwnedPartsList(secondMapLiteralExp);
 				int iSize = firstParts.size();
 				if (iSize != secondParts.size()) {
 					return false;
@@ -449,8 +448,8 @@ public class FlowAnalysis
 				if (firstOperationCallExp.getReferredOperation() != secondOperationCallExp.getReferredOperation()) {
 					return false;
 				}
-				List<@NonNull OCLExpression> firstArguments = PivotUtilInternal.getOwnedArgumentsList(firstOperationCallExp);
-				List<@NonNull OCLExpression> secondArguments = PivotUtilInternal.getOwnedArgumentsList(secondOperationCallExp);
+				List<@NonNull OCLExpression> firstArguments = PivotUtil.getOwnedArgumentsList(firstOperationCallExp);
+				List<@NonNull OCLExpression> secondArguments = PivotUtil.getOwnedArgumentsList(secondOperationCallExp);
 				int iSize = firstArguments.size();
 				if (iSize != secondArguments.size()) {
 					return false;
@@ -479,8 +478,8 @@ public class FlowAnalysis
 				if (firstShadowExp.getType() != secondShadowExp.getType()) {
 					return false;
 				}
-				List<@NonNull ShadowPart> firstParts = PivotUtilInternal.getOwnedPartsList(firstShadowExp);
-				List<@NonNull ShadowPart> secondParts = PivotUtilInternal.getOwnedPartsList(secondShadowExp);
+				List<@NonNull ShadowPart> firstParts = PivotUtil.getOwnedPartsList(firstShadowExp);
+				List<@NonNull ShadowPart> secondParts = PivotUtil.getOwnedPartsList(secondShadowExp);
 				int iSize = firstParts.size();
 				if (iSize != secondParts.size()) {
 					return false;

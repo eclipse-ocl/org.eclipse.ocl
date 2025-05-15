@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -176,7 +175,7 @@ public abstract class AbstractParserContext implements ParserContext
 	 */
 	protected @NonNull String getRole() {
 		if (rootElement instanceof LanguageExpression) {
-			return PivotUtilInternal.getSpecificationRole((LanguageExpression) rootElement);
+			return PivotUtil.getSpecificationRole((LanguageExpression) rootElement);
 		}
 		else {
 			return PivotConstantsInternal.UNKNOWN_ROLE;

@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource
@@ -52,7 +52,7 @@ public interface CSResource extends Resource
 	 * @since 1.15
 	 */
 	default @NonNull EnvironmentFactory getEnvironmentFactory() {
-		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+		return PivotUtil.getEnvironmentFactory(getResourceSet());
 	}
 
 	/**

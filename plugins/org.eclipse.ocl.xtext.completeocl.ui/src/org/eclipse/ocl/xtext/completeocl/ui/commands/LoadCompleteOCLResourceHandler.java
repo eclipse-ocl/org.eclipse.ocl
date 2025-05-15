@@ -43,8 +43,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.utilities.PDEUtils;
 import org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLUiModule;
@@ -235,7 +235,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			this.resourceSet = resourceSet;
 			// Ensure EnvironmentFactory created on main part-thread (Bug 574041) so that load resources remain loaded
 			//  until invoking EMF application terminates.
-			this.environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+			this.environmentFactory = PivotUtil.getEnvironmentFactory(resourceSet);
 			int shellStyle = getShellStyle();
 			int newShellStyle = shellStyle & ~(SWT.APPLICATION_MODAL | SWT.PRIMARY_MODAL | SWT.SYSTEM_MODAL);
 			setShellStyle(newShellStyle);

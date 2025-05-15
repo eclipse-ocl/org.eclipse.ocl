@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractConversion
 {
@@ -87,10 +88,10 @@ public abstract class AbstractConversion
 	}
 
 	public <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
-		PivotUtilInternal.refreshList(oldElements, newElements);
+		PivotUtil.refreshList(oldElements, newElements);
 	}
 
 	protected <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
-		PivotUtilInternal.refreshSet(oldElements, newElements);
+		PivotUtil.refreshSet(oldElements, newElements);
 	}
 }

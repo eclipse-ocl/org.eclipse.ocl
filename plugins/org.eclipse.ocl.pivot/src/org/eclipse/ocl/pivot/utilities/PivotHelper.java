@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
@@ -78,7 +79,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -296,9 +296,24 @@ public class PivotHelper
 		return mapLiteralPart;
 	}
 
-	@SuppressWarnings("deprecation")
-	public @NonNull NavigationCallExp createNavigationCallExp(@NonNull OCLExpression asSourceExpression, @NonNull Property asProperty) {
-		return PivotUtil.createNavigationCallExp(asSourceExpression, asProperty);
+	// XXX specialize return type
+	public @NonNull NavigationCallExp createNavigationCallExp(@NonNull OCLExpression asSource, @NonNull Property asProperty) {
+		NavigationCallExp asNavigationCallExp;
+		if (asProperty.isIsImplicit()) {
+			OppositePropertyCallExp asCallExp = PivotFactory.eINSTANCE.createOppositePropertyCallExp();
+			asCallExp.setReferredProperty(asProperty.getOpposite());
+			asNavigationCallExp = asCallExp;
+		}
+		else {
+			PropertyCallExp asCallExp = PivotFactory.eINSTANCE.createPropertyCallExp();
+			asCallExp.setReferredProperty(asProperty);
+			asNavigationCallExp = asCallExp;
+		}
+		asNavigationCallExp.setName(asProperty.getName());
+		asNavigationCallExp.setOwnedSource(asSource);
+		asNavigationCallExp.setType(asProperty.getType());
+		asNavigationCallExp.setIsRequired(asProperty.isIsRequired());
+		return asNavigationCallExp;
 	}
 
 	public @NonNull NullLiteralExp createNullLiteralExp() {
@@ -357,10 +372,6 @@ public class PivotHelper
 		}
 		return createOperationCallExp(asSourceExpression, bestOperation, asArguments != null ? Lists.newArrayList(asArguments) : null);
 	}
-
-	//	public @NonNull OperationCallExp createOperationCallExp(@Nullable OCLExpression asSourceExpression, @NonNull Operation asOperation, @NonNull OCLExpression... asArguments) {
-	//		return createOperationCallExp(asSourceExpression, asOperation, asArguments != null ? Lists.newArrayList(asArguments) : null);
-	//	}
 
 	public @NonNull OperationCallExp createOperationCallExp(@Nullable OCLExpression asSourceExpression, @NonNull Operation asOperation, @Nullable List<@NonNull OCLExpression> asArguments) {
 		OperationCallExp asOperationCallExp = PivotFactory.eINSTANCE.createOperationCallExp();
@@ -507,29 +518,6 @@ public class PivotHelper
 		return asUnlimitedNatural;
 	}
 
-	/** @deprecated Use appropriate derived Variable */
-	@Deprecated
-	public @NonNull Variable createVariable(@NonNull String name, @NonNull OCLExpression asInitExpression) {
-		Variable asVariable = PivotUtil.createVariable(name, asInitExpression);
-		return asVariable;
-	}
-
-	/** @deprecated Use appropriate derived Variable */
-	@Deprecated
-	public @NonNull Variable createVariable(@NonNull String name, @NonNull Type asType, boolean isRequired, @Nullable OCLExpression asInitExpression) {
-		Variable asVariable = PivotUtil.createVariable(name, asType, isRequired, asInitExpression);
-		return asVariable;
-	}
-
-	/** @deprecated Use appropriate derived Variable */
-	@Deprecated
-	public @NonNull Variable createVariable(@NonNull TypedElement typedElement) {
-		String name = ClassUtil.requireNonNull(typedElement.getName());
-		Type type = ClassUtil.requireNonNull(typedElement.getType());
-		Variable asVariable = PivotUtil.createVariable(name, type, typedElement.isIsRequired(), null);
-		return asVariable;
-	}
-
 	public @NonNull VariableExp createVariableExp(@NonNull VariableDeclaration asVariable) {
 		VariableExp asVariableExp = PivotUtil.createVariableExp(asVariable);
 		return asVariableExp;
@@ -562,7 +550,7 @@ public class PivotHelper
 	 * @since 1.4
 	 */
 	public <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
-		PivotUtilInternal.refreshList(oldElements, newElements);
+		PivotUtil.refreshList(oldElements, newElements);
 	}
 
 	/**
@@ -641,7 +629,7 @@ public class PivotHelper
 		unsafeCollectionCallExp.setIsSafe(false);
 		EObject eContainer = unsafeCollectionCallExp.eContainer();
 		EReference eContainmentFeature = unsafeCollectionCallExp.eContainmentFeature();
-		PivotUtilInternal.resetContainer(unsafeCollectionCallExp);
+		PivotUtil.resetContainer(unsafeCollectionCallExp);
 		//
 		OCLExpression nullExpression = metamodelManager.createNullLiteralExp();
 		OCLExpression safeCollectionCallExp = createOperationCallExp(unsafeCollectionCallExp, excludingOperation, Collections.singletonList(nullExpression));
@@ -656,7 +644,7 @@ public class PivotHelper
 		unsafeObjectCallExp.setIsSafe(false);
 		EObject eContainer = unsafeObjectCallExp.eContainer();
 		EReference eContainmentFeature = unsafeObjectCallExp.eContainmentFeature();
-		PivotUtilInternal.resetContainer(unsafeObjectCallExp);
+		PivotUtil.resetContainer(unsafeObjectCallExp);
 		OCLExpression oldSourceExpression = unsafeObjectCallExp.getOwnedSource();
 		assert oldSourceExpression != null;
 		//
@@ -674,24 +662,6 @@ public class PivotHelper
 		LetExp safeExp = createLetExp(unsafeSourceVariable, safeObjectCallExp);
 		//
 		eContainer.eSet(eContainmentFeature, safeExp);
-	}
-
-	/**
-	 * @since 1.4
-	 */
-	@Deprecated /* @deprecated not used -doesn't set behavioral type */
-	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
-		if (!sourceElement.eIsProxy()) {
-			Type type = PivotUtil.getType(sourceElement);
-			if (type instanceof SelfType) {
-				type = standardLibrary.getOclAnyType();
-			}
-			if (type.eIsProxy()) {
-				type = null;
-			}
-			boolean isRequired = sourceElement.isIsRequired();
-			setType(targetElement, type, isRequired);
-		}
 	}
 
 	/**

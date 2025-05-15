@@ -92,7 +92,6 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
@@ -193,7 +192,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
-			PivotUtilInternal.debugPrintln("Create " + toDebugString()
+			PivotUtil.debugPrintln("Create " + toDebugString()
 			+ " " + NameUtil.debugSimpleName(userResourceSet) + " " + NameUtil.debugSimpleName(zzASResourceSet));
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
@@ -815,7 +814,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		//	standardLibrary = null;
 		//	completeModel = null;
 			//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + toDebugString() + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
+			//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + toDebugString() + " => " + NameUtil.debugSimpleName(PivotUtil.findEnvironmentFactory(externalResourceSet)));
 			//		}
 
 			projectManager.unload(asResourceSet);
@@ -834,7 +833,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 /*	@Override
 	protected void finalize() throws Throwable {
-//		PivotUtilInternal.debugPrintln("Finalize " + toDebugString());
+//		PivotUtil.debugPrintln("Finalize " + toDebugString());
 		diagnoseLiveEnvironmentFactories(this);
 	} */
 
@@ -1113,12 +1112,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		EObject contextElement = ClassUtil.requireNonNull(specification.eContainer());
 		String expression = specification.getBody();
 		if (expression == null) {
-			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
+			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtil.getSpecificationRole(specification));
 		}
-	//	expression = PivotUtilInternal.getBodyExpression(expression);
+	//	expression = PivotUtil.getBodyExpression(expression);
 		ParserContext parserContext = createParserContext(specification);
 		if (parserContext == null) {
-			throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
+			throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtil.getSpecificationRole(specification));
 		}
 		parserContext.setRootElement(specification);
 		return parserContext.parse(contextElement, expression);

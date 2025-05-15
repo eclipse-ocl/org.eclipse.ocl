@@ -298,7 +298,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		ResourceSet reloadResourceSet = ocl.getMetamodelManager().getASResourceSet();
 		//		reloadResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("pivot", new EcoreResourceFactoryImpl());
 		Resource reloadedPivotResource = reloadResourceSet.getResource(pivotURI, true);
-		//		MetamodelManager metamodelManager = PivotUtilInternal.getMetamodelManager(reloadedPivotResource);
+		//		MetamodelManager metamodelManager = PivotUtil.getMetamodelManager(reloadedPivotResource);
 		assertNoValidationErrors("Pivot reload validation problems", reloadedPivotResource);
 	//	unloadResourceSet(reloadResourceSet);
 		((ASResource)reloadedPivotResource).setASonly(true);

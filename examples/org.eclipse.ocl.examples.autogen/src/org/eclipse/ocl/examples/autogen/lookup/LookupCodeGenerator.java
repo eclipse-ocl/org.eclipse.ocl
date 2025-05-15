@@ -25,8 +25,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * LookupCodeGenerator supports generation of the content of a JavaClassFile for the Lookup visitor.
@@ -44,7 +44,7 @@ public class LookupCodeGenerator
 		EPackage ePackage = genPackage.getEcorePackage();
 		assert ePackage != null;
 
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ePackage);
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(ePackage);
 
 		List<org.eclipse.ocl.pivot.@NonNull Package> targetPackages = LookupCGUtil.getTargetPackages(genPackage,environmentFactory, lookupFilePath, projectName);
 		for (org.eclipse.ocl.pivot.Package oclDocPackage : targetPackages){

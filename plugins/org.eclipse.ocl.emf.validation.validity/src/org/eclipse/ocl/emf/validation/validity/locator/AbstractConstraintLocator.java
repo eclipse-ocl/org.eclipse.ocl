@@ -60,7 +60,7 @@ public abstract class AbstractConstraintLocator implements ConstraintLocator, Co
 		if (map == null) {
 			map = new HashMap<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>>();
 		}
-/*		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(constrainingType);
+/*		EnvironmentFactoryInternal environmentFactory = PivotUtil.findEnvironmentFactory(constrainingType);
 		if (environmentFactory != null) {
 			try {
 				Type asType = environmentFactory.getMetamodelManager().getASOf(Type.class, constrainingType);

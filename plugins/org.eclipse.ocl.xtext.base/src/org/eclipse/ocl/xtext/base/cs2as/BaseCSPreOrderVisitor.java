@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Element;
@@ -32,7 +33,6 @@ import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -339,7 +339,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						asExtends.add(asExtend);
 					}
 				}
-				PivotUtilInternal.refreshList(PivotUtilInternal.getConstrainingClassesList(pivotElement), asExtends);
+				PivotUtil.refreshList(PivotUtil.getConstrainingClassesList(pivotElement), asExtends);
 			}
 			return null;
 		}

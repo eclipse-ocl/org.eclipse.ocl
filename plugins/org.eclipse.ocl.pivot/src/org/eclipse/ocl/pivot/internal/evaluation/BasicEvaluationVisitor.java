@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleMapIterationManager;
@@ -389,7 +388,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			IterationManager iterationManager;
 			VariableDeclaration accumulatorVariable = accumulator;
 			OCLExpression body = ClassUtil.requireNonNull(iterateExp.getOwnedBody());
-			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iterateExp);
+			List<@NonNull Variable> iterators = PivotUtil.getOwnedIteratorsList(iterateExp);
 			int iSize = iterators.size();
 			if (sourceValue instanceof MapValue) {
 				List<IteratorVariable> coIterators = iterateExp.getOwnedCoIterators();
@@ -491,7 +490,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			Type iterationType = PivotUtil.getType(iteratorExp);//.behavioralType();
 			Type bodyType = PivotUtil.getType(body);//.behavioralType();
 			Object accumulatorValue = implementation.createAccumulatorValue(context, iterationType.getTypeId(), bodyType.getTypeId());
-			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iteratorExp);
+			List<@NonNull Variable> iterators = PivotUtil.getOwnedIteratorsList(iteratorExp);
 			int iSize = iterators.size();
 			List<IteratorVariable> coIterators = iteratorExp.getOwnedCoIterators();
 			int coSize = coIterators.size();

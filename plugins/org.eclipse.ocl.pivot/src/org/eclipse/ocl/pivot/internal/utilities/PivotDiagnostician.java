@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
@@ -57,7 +58,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 		}
 		if (ocl == null) {
 			if (eObject != null) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.basicGetEnvironmentFactory(eObject);	// XXX ValidationContext.getEnvironmentFactory(eObject
+				EnvironmentFactoryInternal environmentFactory = PivotUtil.basicGetEnvironmentFactory(eObject);	// XXX ValidationContext.getEnvironmentFactory(eObject
 				if (environmentFactory != null) {
 					ocl = environmentFactory.createOCL();
 				}

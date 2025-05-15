@@ -103,7 +103,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -699,7 +698,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			append(" ");
 		}
 
-		String stereo = PivotUtilInternal.getStereotype(constraint);
+		String stereo = PivotUtil.getStereotype(constraint);
 		append(stereo);
 		String name = constraint.getName();
 		if (name != null) {
@@ -1176,7 +1175,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(precedence);
 		Resource asResource = precedence.eResource();
 		if (asResource != null) {
-			MetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
+			MetamodelManager metamodelManager = PivotUtil.findMetamodelManager(asResource);
 			if (metamodelManager != null) {
 				append("(" + metamodelManager.getPrecedenceManager().getOrder(precedence) + ")");
 			}

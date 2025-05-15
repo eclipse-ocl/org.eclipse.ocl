@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -90,7 +91,6 @@ import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.iterator.ClosureIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -781,7 +781,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @NonNull OCLExpression resolveImplicitAsSet(@NonNull OCLExpression sourceExp, @NonNull Type sourceType, @NonNull InfixExpCS csOperator) {
 		OperationCallExp expression = context.refreshModelElement(OperationCallExp.class, PivotPackage.Literals.OPERATION_CALL_EXP, null);
 		expression.setIsImplicit(true);
-		PivotUtilInternal.resetContainer(sourceExp);
+		PivotUtil.resetContainer(sourceExp);
 		expression.setOwnedSource(sourceExp);
 		expression.setName("oclAsSet");
 		resolveOperationCall(expression, csOperator);
@@ -823,7 +823,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		boolean isSafe = PivotConstants.SAFE_OBJECT_NAVIGATION_OPERATOR.equals(csOperator.getName());
 		IteratorExp implicitCollectExp = context.refreshModelElement(IteratorExp.class, PivotPackage.Literals.ITERATOR_EXP, null);
 		implicitCollectExp.setIsImplicit(true);
-		PivotUtilInternal.resetContainer(sourceExp);
+		PivotUtil.resetContainer(sourceExp);
 		implicitCollectExp.setOwnedSource(sourceExp);
 		implicitCollectExp.setName(asIteration.getName());
 		implicitCollectExp.setIsSafe(isSafe);
@@ -975,8 +975,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		List<@NonNull OCLExpression> pivotBodies = new ArrayList<>();
 		Iteration asIteration = PivotUtil.getReferredIteration(expression);
-		List<@NonNull Parameter> asIterators = PivotUtilInternal.getOwnedIteratorsList(asIteration);
-		List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asIteration);
+		List<@NonNull Parameter> asIterators = PivotUtil.getOwnedIteratorsList(asIteration);
+		List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParametersList(asIteration);
 		boolean hasIteratorOrAccumulator = false;
 		for (NavigatingArgCS csArgument : csRoundBracketedClause.getOwnedArguments()) {
 			if (csArgument.getRole() == NavigationRole.ITERATOR) {
@@ -1004,7 +1004,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.createVisitor(asIteration, environmentFactory, sourceType, null);
 						if (visitor != null) {
 							visitor.analyzeType(asIteration.getOwningClass(), sourceType);
-							List<@NonNull Variable> iteratorVariables = PivotUtilInternal.getOwnedIteratorsList(expression);
+							List<@NonNull Variable> iteratorVariables = PivotUtil.getOwnedIteratorsList(expression);
 							int iMax = Math.max(asIterators.size(), iteratorVariables.size());
 							for (int i = 0; i < iMax; i++) {
 								Type formalType = PivotUtil.getType(asIterators.get(i));
@@ -1393,7 +1393,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (asOperation == null) {
 			StringBuilder s = new StringBuilder();
 			for (OCLExpression argument : PivotUtil.getOwnedArguments(expression)) {
-				Type argumentType = PivotUtilInternal.getType(argument);
+				Type argumentType = PivotUtil.getTypeInternal(argument);
 				if (s.length() > 0) {
 					s.append(",");
 				}
@@ -1434,14 +1434,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		@SuppressWarnings("unused")		// Should never happen; just for debugging
 		boolean isConformant = true;
 		if (callExp instanceof OperationCallExp) {
-			List<@NonNull Parameter> parameters = PivotUtilInternal.getOwnedParametersList(operation);
-			List<@NonNull OCLExpression> arguments = PivotUtilInternal.getOwnedArgumentsList((OperationCallExp)callExp);
+			List<@NonNull Parameter> parameters = PivotUtil.getOwnedParametersList(operation);
+			List<@NonNull OCLExpression> arguments = PivotUtil.getOwnedArgumentsList((OperationCallExp)callExp);
 			int iMax = Math.min(parameters.size(), arguments.size());
 			for (int i = 0; i < iMax; i++) {
 				Parameter parameter = parameters.get(i);
 				OCLExpression argument = arguments.get(i);
-				Type parameterType = PivotUtilInternal.getType(parameter);
-				Type argumentType = PivotUtilInternal.getType(argument);
+				Type parameterType = PivotUtil.getTypeInternal(parameter);
+				Type argumentType = PivotUtil.getTypeInternal(argument);
 				if (!metamodelManager.conformsTo(argumentType, TemplateParameterSubstitutions.EMPTY, parameterType, templateSubstitutions)) {
 					isConformant = false;
 				}
@@ -1449,23 +1449,23 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		else if (callExp instanceof LoopExp) {
 			if (callExp instanceof IterateExp) {
-				List<@NonNull Parameter> accumulators = PivotUtilInternal.getOwnedAccumulatorsList(((Iteration)operation));
+				List<@NonNull Parameter> accumulators = PivotUtil.getOwnedAccumulatorsList(((Iteration)operation));
 				if (accumulators.size() >= 1) {
 					Parameter accumulator = accumulators.get(0);
 					Variable result = PivotUtil.getOwnedResult((IterateExp)callExp);
-					Type accumulatorType = PivotUtilInternal.getType(accumulator);
-					Type resultType = PivotUtilInternal.getType(result);
+					Type accumulatorType = PivotUtil.getTypeInternal(accumulator);
+					Type resultType = PivotUtil.getTypeInternal(result);
 					if (!metamodelManager.conformsTo(resultType, TemplateParameterSubstitutions.EMPTY, accumulatorType, templateSubstitutions)) {
 						isConformant = false;
 					}
 				}
 			}
-			List<@NonNull Parameter> parameters = PivotUtilInternal.getOwnedParametersList(operation);
+			List<@NonNull Parameter> parameters = PivotUtil.getOwnedParametersList(operation);
 			if (parameters.size() >= 1) {
 				Parameter parameter = parameters.get(0);
 				OCLExpression body = PivotUtil.getOwnedBody((LoopExp)callExp);
-				Type parameterType = PivotUtilInternal.getType(parameter);
-				Type bodyType = PivotUtilInternal.getType(body);
+				Type parameterType = PivotUtil.getTypeInternal(parameter);
+				Type bodyType = PivotUtil.getTypeInternal(body);
 				if (!metamodelManager.conformsTo(bodyType, TemplateParameterSubstitutions.EMPTY, parameterType, templateSubstitutions)) {
 					isConformant = false;
 				}
@@ -1901,8 +1901,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression argument = revisit(OCLExpression.class, csArgument);
 				List<? extends OCLExpression> newElements = argument != null ? Collections.singletonList(argument) : Collections.<OCLExpression>emptyList();
 				helper.refreshList(expression.getOwnedArguments(), newElements);
-				Type sourceType = source != null ? PivotUtilInternal.getType(source) : null;
-				Type argumentType = argument != null ? PivotUtilInternal.getType(argument) : null;
+				Type sourceType = source != null ? PivotUtil.getTypeInternal(source) : null;
+				Type argumentType = argument != null ? PivotUtil.getTypeInternal(argument) : null;
 				if ((sourceType != null) && (argumentType != null)) {
 					resolveOperationCall(expression, csOperator);
 				}

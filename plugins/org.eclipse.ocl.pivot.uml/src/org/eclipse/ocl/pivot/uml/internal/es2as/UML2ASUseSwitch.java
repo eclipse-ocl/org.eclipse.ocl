@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -201,7 +200,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
 				newSuperTypes.add(oclElementType);
 			}
-			PivotUtilInternal.refreshList(pivotElement.getSuperClasses(), newSuperTypes);
+			PivotUtil.refreshList(pivotElement.getSuperClasses(), newSuperTypes);
 		}
 		return pivotElement;
 	}

@@ -19,9 +19,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -49,7 +49,7 @@ public class CS2ASLinker extends LazyLinker
 	@Override
 	protected void afterModelLinked(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
 		Resource eResource = model.eResource();		// FIXME Try to do a narrower refresh
-		//		PivotUtilInternal.debugPrintln("afterModelLinking " + NameUtil.debugSimpleName(eResource));
+		//		PivotUtil.debugPrintln("afterModelLinking " + NameUtil.debugSimpleName(eResource));
 		//		System.out.println(Thread.currentThread().getName() + " afterModelLinked " + getClass().getSimpleName() + "@" + hashCode()
 		//			+ " " + eResource.getClass().getSimpleName() + "@" + eResource.hashCode() + " " + eResource.getURI());
 		if ((diagnosticsConsumer != null) && eResource instanceof BaseCSResource) {
@@ -58,7 +58,7 @@ public class CS2ASLinker extends LazyLinker
 				//				System.out.println("Starting to refreshPivotMappings for " + eResource.getURI());
 				BaseCSResource csResource = (BaseCSResource) eResource;
 				try {
-					EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(csResource.getResourceSet());
+					EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(csResource.getResourceSet());
 					CS2AS cs2as = csResource.getCS2AS(environmentFactory);
 					ParserContext parserContext = ElementUtil.basicGetParserContext(model);
 					if (parserContext != null) {
@@ -95,6 +95,6 @@ public class CS2ASLinker extends LazyLinker
 				//				System.out.println("Finished refreshPivotMappings for " + eResource.getURI());
 			}
 		}
-		//		PivotUtilInternal.debugPrintln("afterModelLinked " + NameUtil.debugSimpleName(eResource));
+		//		PivotUtil.debugPrintln("afterModelLinked " + NameUtil.debugSimpleName(eResource));
 	}
 }
