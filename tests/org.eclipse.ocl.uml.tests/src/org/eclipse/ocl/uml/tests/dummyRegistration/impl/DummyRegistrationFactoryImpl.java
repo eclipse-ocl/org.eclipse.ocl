@@ -77,6 +77,7 @@ public class DummyRegistrationFactoryImpl extends EFactoryImpl implements DummyR
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DummyClass createDummyClass() {
 		DummyClassImpl dummyClass = new DummyClassImpl();
 		return dummyClass;
@@ -87,6 +88,7 @@ public class DummyRegistrationFactoryImpl extends EFactoryImpl implements DummyR
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DummyRegistrationPackage getDummyRegistrationPackage() {
 		return (DummyRegistrationPackage)getEPackage();
 	}

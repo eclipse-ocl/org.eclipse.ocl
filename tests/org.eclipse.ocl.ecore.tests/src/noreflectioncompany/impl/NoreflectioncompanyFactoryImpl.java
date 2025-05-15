@@ -100,6 +100,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Company createCompany() {
 		CompanyImpl company = new CompanyImpl();
 		return company;
@@ -110,6 +111,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Employee createEmployee() {
 		EmployeeImpl employee = new EmployeeImpl();
 		return employee;
@@ -140,6 +142,7 @@ public class NoreflectioncompanyFactoryImpl extends EFactoryImpl implements Nore
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NoreflectioncompanyPackage getNoreflectioncompanyPackage() {
 		return (NoreflectioncompanyPackage)getEPackage();
 	}

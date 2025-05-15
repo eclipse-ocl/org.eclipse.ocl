@@ -92,6 +92,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeWithInitital() {
 		return (Integer)ATTRIBUTE_WITH_INITITAL__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
 	}
@@ -101,6 +102,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeWithInitital(int newAttributeWithInitital) {
 		ATTRIBUTE_WITH_INITITAL__ESETTING_DELEGATE.dynamicSet(this, null, 0, newAttributeWithInitital);
 	}
@@ -110,6 +112,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeWithoutInitital() {
 		return attributeWithoutInitital;
 	}
@@ -119,6 +122,7 @@ public class Bug418716Impl extends EObjectImpl implements Bug418716 {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeWithoutInitital(int newAttributeWithoutInitital) {
 		int oldAttributeWithoutInitital = attributeWithoutInitital;
 		attributeWithoutInitital = newAttributeWithoutInitital;
