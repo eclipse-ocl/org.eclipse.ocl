@@ -17,9 +17,6 @@ package	org.eclipse.ocl.xtext.essentialoclcs.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-/**
- * @noimplement This interface is not intended to be implemented by clients.
- */
 public interface EssentialOCLCSVisitor<R> extends org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor<R>
 {
 	R visitAbstractNameExpCS(org.eclipse.ocl.xtext.essentialoclcs.@NonNull AbstractNameExpCS object);

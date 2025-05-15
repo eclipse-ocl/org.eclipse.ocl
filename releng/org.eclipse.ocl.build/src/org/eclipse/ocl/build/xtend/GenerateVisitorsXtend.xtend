@@ -851,9 +851,6 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			import org.eclipse.jdt.annotation.Nullable;
 			«ENDIF»
 
-			/**
-			 * @noimplement This interface is not intended to be implemented by clients.
-			 */
 			public interface «visitorClassName2»<R>«IF isDerived» extends «superVisitorPackageName».«superVisitorClassName»<R>«ENDIF»
 			{
 				«IF !isDerived»
