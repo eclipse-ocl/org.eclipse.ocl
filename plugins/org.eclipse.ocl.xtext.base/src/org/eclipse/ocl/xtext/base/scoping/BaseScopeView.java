@@ -165,7 +165,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	public @NonNull Attribution getAttribution() {
 		Attribution attribution2 = attribution;
 		if (attribution2 == null) {
-			attribution2 = PivotUtilInternal.getAttribution(target);
+			attribution2 = Attribution.REGISTRY.getAttribution(target);
 			attribution = attribution2;
 		}
 		return attribution2;

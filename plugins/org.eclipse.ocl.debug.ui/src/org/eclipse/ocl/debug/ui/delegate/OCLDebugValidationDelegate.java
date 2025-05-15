@@ -38,7 +38,6 @@ public class OCLDebugValidationDelegate extends OCLValidationDelegate
 		super(delegateDomain, classifier);
 	}
 
-	@Override
 	protected boolean validateExpressionInOCL(final @NonNull EClassifier eClassifier, final @NonNull Object value, final @Nullable DiagnosticChain diagnostics,
 			final Map<Object, Object> context, String constraintName, final String source, final int code, @NonNull ExpressionInOCL query) {
 		AbstractConstraintEvaluator<Boolean> constraintEvaluator = new CheckingConstraintEvaluator(eClassifier, query)
