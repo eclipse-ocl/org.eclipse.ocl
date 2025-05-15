@@ -38,7 +38,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public DomainReflectiveType(@NonNull DomainReflectivePackage evaluationPackage, org.eclipse.ocl.pivot.@NonNull Class domainClass) {
-		super(ClassUtil.nonNullModel(domainClass.getName()), computeFlags(domainClass));
+		super(ClassUtil.requireNonNull(domainClass.getName()), computeFlags(domainClass));
 		this.evaluationPackage = evaluationPackage;
 		this.domainClass = domainClass;
 	}

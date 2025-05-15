@@ -54,7 +54,7 @@ public class OCLInstanceSetup extends AbstractWorkflowComponent
 	}
 
 	public @NonNull OCLInternal getOCL() {
-		return ClassUtil.nonNullState(ocl);
+		return ClassUtil.requireNonNull(ocl);
 	}
 
 	public @NonNull ResourceSet getResourceSet() {

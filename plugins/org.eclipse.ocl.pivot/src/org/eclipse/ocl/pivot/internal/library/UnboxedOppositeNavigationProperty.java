@@ -66,7 +66,7 @@ public class UnboxedOppositeNavigationProperty extends AbstractProperty
 		}
 		if (results == null) {	// Never happens always an EcoreModelManager
 			results = new ArrayList<>();
-			Type thatType = ClassUtil.nonNullModel(oppositeProperty.getType());
+			Type thatType = ClassUtil.requireNonNull(oppositeProperty.getType());
 			if (thatType instanceof CollectionType) {
 				thatType = ((CollectionType)thatType).getElementType();
 			}

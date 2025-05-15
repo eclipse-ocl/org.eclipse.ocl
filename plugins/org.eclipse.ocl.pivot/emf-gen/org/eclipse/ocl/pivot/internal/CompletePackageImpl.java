@@ -520,7 +520,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		return ClassUtil.nonNullState(getOwnedCompleteClass(pivotType.getName()));
+		return ClassUtil.requireNonNull(getOwnedCompleteClass(pivotType.getName()));
 	}
 
 	@Override
@@ -718,7 +718,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		//		assert false;
 		// If there are no pivot packages (e.g. for an orphan) return the metamodel to avoid an NPE constructing a CompleteInheritance
 		Package partialPackage = getCompleteModel().getStandardLibrary().getOclAnyType().getOwningPackage();
-		return ClassUtil.nonNullState(partialPackage);
+		return ClassUtil.requireNonNull(partialPackage);
 	}
 
 	@Override

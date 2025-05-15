@@ -68,7 +68,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 
 		@Override
 		public @NonNull InheritanceFragment get(int index) {
-			return ClassUtil.nonNullState(array[firstIndex + index]);
+			return ClassUtil.requireNonNull(array[firstIndex + index]);
 		}
 
 		@Override
@@ -237,7 +237,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+		int apparentDepth = ClassUtil.requireNonNull(apparentInheritance).getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {
@@ -255,7 +255,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+		int apparentDepth = ClassUtil.requireNonNull(apparentInheritance).getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {

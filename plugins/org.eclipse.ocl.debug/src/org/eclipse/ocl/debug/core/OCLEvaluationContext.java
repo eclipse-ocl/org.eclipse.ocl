@@ -45,7 +45,7 @@ public class OCLEvaluationContext extends EvaluationContext
 		super(createVMContext(expressionObject, contextObject));
 		this.expressionObject = expressionObject;
 		this.contextObject = contextObject;
-		this.constraintURI = ClassUtil.nonNullState(EcoreUtil.getURI(expressionObject));
+		this.constraintURI = ClassUtil.requireNonNull(EcoreUtil.getURI(expressionObject));
 		this.contextURI = contextObject != null ? EcoreUtil.getURI(contextObject) : null;
 	}
 

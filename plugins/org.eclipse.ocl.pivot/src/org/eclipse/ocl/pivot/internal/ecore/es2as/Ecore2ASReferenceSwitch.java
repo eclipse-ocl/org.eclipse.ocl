@@ -16,8 +16,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -427,8 +425,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
 						Property keyProperty1 = NameUtil.getNameable(ownedProperties, "key");
 						Property valueProperty1 = NameUtil.getNameable(ownedProperties, "value");
-						Property keyProperty2 = Objects.requireNonNull(keyProperty1);
-						Property valueProperty2 = Objects.requireNonNull(valueProperty1);
+						Property keyProperty2 = ClassUtil.requireNonNull(keyProperty1);
+						Property valueProperty2 = ClassUtil.requireNonNull(valueProperty1);
 						if (keyProperty2.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}

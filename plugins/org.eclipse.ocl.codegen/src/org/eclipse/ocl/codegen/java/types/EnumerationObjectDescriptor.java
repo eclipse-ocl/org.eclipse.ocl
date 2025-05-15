@@ -41,7 +41,7 @@ public class EnumerationObjectDescriptor extends UnboxedValueDescriptor
 		js.appendIdReference(typeId);
 		js.append(".getEnumerationLiteralId(");
 		js.appendClassReference(null, ClassUtil.class);
-		js.append(".nonNullState(");
+		js.append(".requireNonNull(");
 		js.appendReferenceTo(unboxedValue);
 		js.append(".getName()))");
 		js.append(";\n");
@@ -60,7 +60,7 @@ public class EnumerationObjectDescriptor extends UnboxedValueDescriptor
 		js.appendIdReference(typeId);
 		js.append(".getEnumerationLiteralId(");
 		js.appendClassReference(null, ClassUtil.class);
-		js.append(".nonNullState(");
+		js.append(".requireNonNull(");
 		js.appendReferenceTo(unboxedValue);
 		js.append(".getName()))");
 		js.append(";\n");

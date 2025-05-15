@@ -78,7 +78,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			CollectionType specializedType = (CollectionType) eFactoryInstance.create(eClass);
 			specializedType.setName(typeName);
 			TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-			TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
+			TemplateParameter formalParameter = ClassUtil.requireNonNull(templateParameters.get(0));
 			assert formalParameter != null;
 			Type elementType = typeParameters.getElementType();
 			TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, elementType);

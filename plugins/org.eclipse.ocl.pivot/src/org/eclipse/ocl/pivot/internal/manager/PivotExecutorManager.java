@@ -44,7 +44,7 @@ public class PivotExecutorManager extends ExecutorManager
 		this.environmentFactory = environmentFactory;
 		this.idResolver = environmentFactory.getIdResolver();
 		this.contextObject = contextObject;
-		idResolver.addRoot(ClassUtil.nonNullEMF(EcoreUtil.getRootContainer(contextObject)));
+		idResolver.addRoot(ClassUtil.requireNonNull(EcoreUtil.getRootContainer(contextObject)));
 	}
 
 	protected @NonNull IdResolver createIdResolver() {

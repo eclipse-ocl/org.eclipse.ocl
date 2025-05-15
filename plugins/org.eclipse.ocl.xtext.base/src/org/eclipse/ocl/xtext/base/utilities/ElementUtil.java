@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -50,6 +49,7 @@ import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -303,7 +303,7 @@ public class ElementUtil
 	}
 
 	public static @NonNull Namespace getContainingNamespace(@NonNull ElementCS csElement) {
-		return Objects.requireNonNull(basicGetContainingNamespace(csElement));
+		return ClassUtil.requireNonNull(basicGetContainingNamespace(csElement));
 	}
 
 	public static @Nullable ModelElementCS getCsElement(@NonNull Element asElement) {

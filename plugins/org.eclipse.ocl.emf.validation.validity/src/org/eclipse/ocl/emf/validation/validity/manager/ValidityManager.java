@@ -659,7 +659,7 @@ public class ValidityManager
 			if (selectedResourceSet == null) {
 				List<@NonNull EObject> eContents = ClassUtil.nullFree(selectedResource.getContents());
 				for (int j = 0; j < eContents.size(); j++) {		// Tolerate domain growth without a CME
-					EObject eObject = ClassUtil.nonNull(eContents.get(j));
+					EObject eObject = ClassUtil.requireNonNull(eContents.get(j));
 					EcoreUtil.resolveAll(eObject);
 				}
 				newResources.add(selectedResource);
@@ -678,7 +678,7 @@ public class ValidityManager
 				context = new ValidationContext(validationRegistry);
 				List<@NonNull Resource> selectedResources = ClassUtil.nullFree(selectedResourceSet.getResources());
 				for (int i = 0; i < selectedResources.size(); i++) {	// Tolerate domain growth without a CME
-					Resource eResource = ClassUtil.nonNull(selectedResources.get(i));
+					Resource eResource = ClassUtil.requireNonNull(selectedResources.get(i));
 					List<@NonNull EObject> eContents = eResource.getContents();
 					for (int j = 0; j < eContents.size(); j++) {		// Tolerate domain growth without a CME
 						EObject eObject = eContents.get(j);

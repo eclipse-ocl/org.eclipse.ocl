@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -100,7 +101,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	public static final @NonNull TracingOption CONVERT_RESOURCE = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/convertResource");
 	public static final @NonNull TracingOption TYPE_EXTENSIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/typeExtensions");
 
-	protected static final @NonNull String OCLforUML = Objects.requireNonNull(NameUtil.getOriginalName(Objects.requireNonNull(OCLforUMLPackage.eINSTANCE)));
+	protected static final @NonNull String OCLforUML = ClassUtil.requireNonNull(NameUtil.getOriginalName(ClassUtil.requireNonNull(OCLforUMLPackage.eINSTANCE)));
 	protected static final @NonNull String OCLforUML_COLLECTION = "OCLforUML::" + OCLforUMLPackage.Literals.COLLECTION.getName();
 	protected static final @SuppressWarnings("null")@NonNull String OCLforUML_COLLECTION_IS_NULL_FREE_NAME = OCLforUMLPackage.Literals.COLLECTION__IS_NULL_FREE.getName();
 	protected static final @NonNull String OCLforUML_COLLECTIONS = "OCLforUML::" + OCLforUMLPackage.Literals.COLLECTIONS.getName();
@@ -184,8 +185,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static void initialize() {
-		IdManager.addMetamodelEPackage(Objects.requireNonNull(UMLPackage.eNS_URI), PivotConstants.UML_METAMODEL_NAME);
-		IdManager.addMetamodelEPackage(Objects.requireNonNull(TypesPackage.eNS_URI), PivotConstants.TYPES_METAMODEL_NAME);
+		IdManager.addMetamodelEPackage(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotConstants.UML_METAMODEL_NAME);
+		IdManager.addMetamodelEPackage(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotConstants.TYPES_METAMODEL_NAME);
 	}
 
 	/**
@@ -844,7 +845,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 //					System.out.println("Install " + umlProperty);
 //				}
 				Type pivotType = null;
-				EObject umlOwner = Objects.requireNonNull(umlProperty.eContainer());
+				EObject umlOwner = ClassUtil.requireNonNull(umlProperty.eContainer());
 				if (umlOwner instanceof org.eclipse.uml2.uml.Association) {
 //					String name = ((org.eclipse.uml2.uml.NamedElement)umlProperty.eContainer()).getName();
 //					if (name != null) {
@@ -855,7 +856,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 //					}
 					org.eclipse.uml2.uml.Property opposite = getOtherEnd(umlProperty);
 					if (opposite != null) {
-						pivotType = getCreated(Type.class, Objects.requireNonNull(opposite.getType()));
+						pivotType = getCreated(Type.class, ClassUtil.requireNonNull(opposite.getType()));
 					}
 					else {
 //						System.out.println("*****************Missing opposite");
@@ -896,7 +897,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 				else {
 					org.eclipse.uml2.uml.Property opposite = getOtherEnd(umlProperty);
 					if (opposite != null) {
-						org.eclipse.uml2.uml.Type oppositeType = Objects.requireNonNull(opposite.getType());
+						org.eclipse.uml2.uml.Type oppositeType = ClassUtil.requireNonNull(opposite.getType());
 						pivotType = getCreated(Type.class, oppositeType);
 					}
 //					System.out.println("*****************Missing opposite type");
@@ -1021,8 +1022,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 		environmentFactory.addExternal2AS(this);
 		//		metamodelManager.addListener(this);
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		completeModel.addPackageURI2completeURI(Objects.requireNonNull(UMLPackage.eNS_URI), PivotConstants.UML_METAMODEL_NAME);
-		completeModel.addPackageURI2completeURI(Objects.requireNonNull(TypesPackage.eNS_URI), PivotConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
+		completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotConstants.UML_METAMODEL_NAME);
+		completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
 		// FIXME All known synonyms
 	}
 
@@ -1288,7 +1289,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	@Override
 	public @NonNull URI getURI() {
-		return Objects.requireNonNull(umlResource.getURI());
+		return ClassUtil.requireNonNull(umlResource.getURI());
 	}
 
 	protected @NonNull Model installDeclarations(@NonNull Resource asResource) {
@@ -1424,7 +1425,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	 * to the UML profile, so we have to locate the UML profile by URI and name.
 	 */
 	public @Nullable Stereotype resolveStereotype(@NonNull EObject umlStereotypeApplication, @NonNull List<org.eclipse.uml2.uml.Element> umlStereotypedElements) {
-		Objects.requireNonNull(pivotModel);
+		ClassUtil.requireNonNull(pivotModel);
 		EClass umlStereotypeEClass = umlStereotypeApplication.eClass();
 		if (!(umlStereotypeApplication instanceof DynamicEObjectImpl)) {					// If stereotyped element has been genmodelled
 			Stereotype asStereotype = metamodelManager.getASOfEcore(Stereotype.class, umlStereotypeEClass);

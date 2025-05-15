@@ -57,7 +57,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 	protected void doMoreClassMethods(@NonNull CGClass cgClass) {
 		for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
 			if (cgOperation instanceof CGCachedOperation) {
-				Operation asOperation = ClassUtil.nonNullState((Operation) cgOperation.getAst());
+				Operation asOperation = ClassUtil.requireNonNull((Operation) cgOperation.getAst());
 				Iterable<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 				Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
 				js.append("\n");
@@ -65,7 +65,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 				js.append("protected ");
 				js.appendClassReference(isRequiredReturn, cgOperation);
 				js.append(" ");
-				js.append(ClassUtil.nonNullState(asOperation.getName()));
+				js.append(ClassUtil.requireNonNull(asOperation.getName()));
 				js.append("(");
 				boolean isFirst = true;
 				for (@NonNull CGParameter cgParameter : cgParameters) {

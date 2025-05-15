@@ -135,7 +135,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		if (fragments == null) {
 			initialize();
 		}
-		@NonNull InheritanceFragment[] fragments2 = ClassUtil.nonNullState(fragments);
+		@NonNull InheritanceFragment[] fragments2 = ClassUtil.requireNonNull(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
 
@@ -144,7 +144,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		if (fragments == null) {
 			initialize();
 		}
-		return new FragmentIterable(ClassUtil.nonNullState(fragments));
+		return new FragmentIterable(ClassUtil.requireNonNull(fragments));
 	}
 
 	@Override
@@ -214,7 +214,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
-		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes2[depth], indexes2[depth+1]);
+		return new FragmentIterable(ClassUtil.requireNonNull(fragments), indexes2[depth], indexes2[depth+1]);
 	}
 
 	protected synchronized void initialize() {

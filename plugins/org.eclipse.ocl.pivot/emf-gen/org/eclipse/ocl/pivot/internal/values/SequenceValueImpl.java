@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
@@ -23,7 +24,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -138,7 +138,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		while (theseElements.hasNext() && thoseElements.hasNext()) {
 			Object thisValue = theseElements.next();
 			Object thatValue = thoseElements.next();
-			if (!ClassUtil.safeEquals(thisValue, thatValue)) {
+			if (!Objects.equals(thisValue, thatValue)) {
 				return false;
 			}
 		}

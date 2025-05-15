@@ -109,7 +109,7 @@ public abstract class GenerateTextileForModel extends AbstractWorkflowComponent
 			log.info("Loading model '" + fileURI);
 			ResourceSet resourceSet = getResourceSet();
 			Resource ecoreResource = resourceSet.getResource(fileURI, true);
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(ecoreResource.getErrors()), "OCLstdlib parse failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(ecoreResource.getErrors()), "OCLstdlib parse failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;
@@ -119,7 +119,7 @@ public abstract class GenerateTextileForModel extends AbstractWorkflowComponent
 			//			if (asResource == null) {
 			//				return;
 			//			}
-			EObject pivotModel = ClassUtil.nonNullState(asResource.getContents().get(0));
+			EObject pivotModel = ClassUtil.requireNonNull(asResource.getContents().get(0));
 			//			ASSaver saver = new ASSaver(asResource);
 			//			saver.localizeSpecializations();
 			String fileName = folder + "/" + textileFileName + ".textile";

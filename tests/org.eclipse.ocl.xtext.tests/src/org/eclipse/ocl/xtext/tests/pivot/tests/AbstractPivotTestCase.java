@@ -395,14 +395,14 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull Resource resource) {
-		String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), prefix, "\n\t");
+		String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(resource.getErrors()), prefix, "\n\t");
 		if (message != null)
 			fail(message);
 	}
 
 	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull ResourceSet resourceSet) {
 		for (Resource resource : resourceSet.getResources()) {
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), prefix + " for " + resource.getURI(), "\n\t");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(resource.getErrors()), prefix + " for " + resource.getURI(), "\n\t");
 			if (message != null) {
 				fail(message);
 			}

@@ -150,7 +150,7 @@ public class UserModelAnalysis
 	 * Return the analysis of a user model element.
 	 */
 	public @NonNull UserElementAnalysis getElementAnalysis(@NonNull EObject element) {
-		return ClassUtil.nonNullState(element2elementAnalysis.get(element));
+		return ClassUtil.requireNonNull(element2elementAnalysis.get(element));
 	}
 
 	public @NonNull String getIndent() {

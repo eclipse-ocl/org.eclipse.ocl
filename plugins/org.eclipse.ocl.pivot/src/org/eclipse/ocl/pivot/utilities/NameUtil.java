@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.utilities;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.ENamedElement;
@@ -175,7 +176,7 @@ public class NameUtil
 		if (elements == null)
 			return null;
 		for (T element : elements)
-			if ((element != null) && ClassUtil.safeEquals(name, element.getName()))
+			if ((element != null) && Objects.equals(name, element.getName()))
 				return element;
 		return null;
 	}
@@ -189,7 +190,7 @@ public class NameUtil
 		if (returnClass == null)
 			return null;
 		for (T element : elements)
-			if ((element != null) && returnClass.isAssignableFrom(element.getClass()) && ClassUtil.safeEquals(name, element.getName()))
+			if ((element != null) && returnClass.isAssignableFrom(element.getClass()) && Objects.equals(name, element.getName()))
 				return (R) element;
 		return null;
 	}
@@ -198,7 +199,7 @@ public class NameUtil
 		if (elements == null)
 			return null;
 		for (T element : elements)
-			if ((element != null) && ClassUtil.safeEquals(name, element.getName()))
+			if ((element != null) && Objects.equals(name, element.getName()))
 				return element;
 		return null;
 	}

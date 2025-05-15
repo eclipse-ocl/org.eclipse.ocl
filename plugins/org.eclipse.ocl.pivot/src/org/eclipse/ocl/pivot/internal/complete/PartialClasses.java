@@ -467,7 +467,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
-		final @NonNull Iterable<@NonNull CompleteClassInternal> iterable = ClassUtil.nonNull(computeSuperCompleteClasses());						// FIXME Use local cache
+		final @NonNull Iterable<@NonNull CompleteClassInternal> iterable = ClassUtil.requireNonNull(computeSuperCompleteClasses());						// FIXME Use local cache
 		return Iterables.transform(iterable, new Function<@NonNull CompleteClassInternal, @NonNull CompleteInheritance>()
 		{
 			@Override

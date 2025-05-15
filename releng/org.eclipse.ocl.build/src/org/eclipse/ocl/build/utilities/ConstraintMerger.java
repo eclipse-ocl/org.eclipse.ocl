@@ -103,10 +103,10 @@ public class ConstraintMerger extends AbstractProjectComponent
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
 		ResourceSet resourceSet = getResourceSet();
-		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectDescriptor());
+		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.requireNonNull(getProjectDescriptor());
 		//		Resource ecoreResource = (Resource) ctx.get(getModelSlot());
 		//		EPackage ecorePivotPackage = (EPackage) ecoreResource.getContents().get(0);
-		//		final String pivotNsURI = ClassUtil.nonNullState(ecorePivotPackage.getNsURI());
+		//		final String pivotNsURI = ClassUtil.requireNonNull(ecorePivotPackage.getNsURI());
 		OCLInternal ocl = OCLInternal.newInstance(resourceSet);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
@@ -135,7 +135,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				}
 				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 				Model pivotModel = ecore2as.getASModel();
-				ASResource asResource = ClassUtil.nonNullState((ASResource)pivotModel.eResource());
+				ASResource asResource = ClassUtil.requireNonNull((ASResource)pivotModel.eResource());
 				ResourceUtils.checkResource(asResource);
 			}
 			EcoreUtil.resolveAll(resourceSet);

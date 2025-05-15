@@ -52,9 +52,9 @@ public class OCLVMRootEvaluationEnvironment extends VMRootEvaluationEnvironment 
 		myCurrentIP = executableObject;
 		myOperation = executableObject;
 		this.id = id;
-		pcVariable = ClassUtil.nonNullEMF(PivotFactory.eINSTANCE.createVariable());
+		pcVariable = ClassUtil.requireNonNull(PivotFactory.eINSTANCE.createVariable());
 		pcVariable.setName(VMVirtualMachine.PC_NAME);
-		String typeName = ClassUtil.nonNullEMF(PivotPackage.Literals.OCL_EXPRESSION.getName());
+		String typeName = ClassUtil.requireNonNull(PivotPackage.Literals.OCL_EXPRESSION.getName());
 		pcVariable.setType(((EnvironmentFactoryInternal)environmentFactory).getASClass(typeName));
 	}
 

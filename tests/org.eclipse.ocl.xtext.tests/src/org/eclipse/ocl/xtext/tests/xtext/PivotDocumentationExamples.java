@@ -233,7 +233,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		URI uri = getInputURI("/models/documentation/parsingDocumentsExample.ocl");
 
 		// parse the contents as an OCL document
-		Resource asResource = ClassUtil.nonNullState(ocl.parse(uri));
+		Resource asResource = ClassUtil.requireNonNull(ocl.parse(uri));
 
 		// accumulate the document constraints in constraintMap and print all constraints
 		Map<String, ExpressionInOCL> constraintMap = new HashMap<String, ExpressionInOCL>();
@@ -268,7 +268,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		debugPrintf("Got book: %s%n\n", book);
 
 		// use the unique_title constraint to validate the book
-		boolean isValid = ocl.check(book, ClassUtil.nonNullState(constraintMap.get("unique_title")));
+		boolean isValid = ocl.check(book, ClassUtil.requireNonNull(constraintMap.get("unique_title")));
 		debugPrintf("Validate book: %b%n\n", isValid);
 
 		//-------------------------------------------------------------------------

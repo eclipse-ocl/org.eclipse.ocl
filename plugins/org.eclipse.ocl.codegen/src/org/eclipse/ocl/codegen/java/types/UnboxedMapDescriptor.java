@@ -94,7 +94,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 
 	@Override
 	public @NonNull String getClassName() {
-		return ClassUtil.nonNullModel(keyType.getName());
+		return ClassUtil.requireNonNull(keyType.getName());
 	}
 
 	@Override

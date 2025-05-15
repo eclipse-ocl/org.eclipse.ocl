@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
@@ -607,7 +606,7 @@ public class OCLinEcoreTablesUtils
 			s.append("new ");
 			s.appendClassReference(null, ExecutorTupleType.class);
 			s.append("(");
-			s.appendString(Objects.requireNonNull(tupleType.getName()));
+			s.appendString(ClassUtil.requireNonNull(tupleType.getName()));
 			s.append(", ");
 			for (Property part : tupleType.getOwnedProperties()) {
 				s.append(", ");
@@ -678,7 +677,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitConstraint(@NonNull Constraint constraint) {
-			Type type = Objects.requireNonNull((Type) constraint.eContainer());
+			Type type = ClassUtil.requireNonNull((Type) constraint.eContainer());
 			s.append("_");
 			s.appendAndEncodeName(type);
 			s.append("__");
@@ -789,14 +788,14 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull GenModelHelper genModelHelper;
 
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
-		GenModel genModel = Objects.requireNonNull(genPackage.getGenModel());
+		GenModel genModel = ClassUtil.requireNonNull(genPackage.getGenModel());
 		this.useNullAnnotations = OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
 		this.metamodelManager = getMetamodelManager(genPackage);
 		this.s = new CodeGenString(metamodelManager, useNullAnnotations);
 		this.environmentFactory = metamodelManager.getEnvironmentFactory();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genPackage = genPackage;
-		this.asPackage = Objects.requireNonNull(getPivotPackage(genPackage));
+		this.asPackage = ClassUtil.requireNonNull(getPivotPackage(genPackage));
 		this.declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
 		this.emitLiteralVisitor = new EmitLiteralVisitor(s, 0);
 		this.emitScopedLiteralVisitor = new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE);
@@ -1026,7 +1025,7 @@ public class OCLinEcoreTablesUtils
 		else {
 			//		    List<Constraint> constraints = operation.getOwnedRule();
 			//			if (constraints.size() > 0) {
-			//				return getQualifiedBodiesClassName(Objects.requireNonNull(operation.getOwningType())) + "._" + operation.getName() + "_" + constraints.get(0).getStereotype() + "_.INSTANCE";
+			//				return getQualifiedBodiesClassName(ClassUtil.requireNonNull(operation.getOwningType())) + "._" + operation.getName() + "_" + constraints.get(0).getStereotype() + "_.INSTANCE";
 			//			}
 			//			else {
 			return "null";
@@ -1058,10 +1057,10 @@ public class OCLinEcoreTablesUtils
 		if (templateParameter != null) {
 			TemplateableElement template = templateParameter.getOwningSignature().getOwningElement();
 			if (template instanceof Operation) {
-				s.append(AbstractGenModelHelper.encodeName(Objects.requireNonNull(((Operation) template).getOwningClass())));
+				s.append(AbstractGenModelHelper.encodeName(ClassUtil.requireNonNull(((Operation) template).getOwningClass())));
 				s.append("_");
 			}
-			s.append(AbstractGenModelHelper.encodeName(Objects.requireNonNull((NamedElement) template)));
+			s.append(AbstractGenModelHelper.encodeName(ClassUtil.requireNonNull((NamedElement) template)));
 			s.append("_");
 		}
 		s.append(AbstractGenModelHelper.encodeName(element));
@@ -1128,8 +1127,8 @@ public class OCLinEcoreTablesUtils
 		for (org.eclipse.ocl.pivot.Class aClass : results.keySet()) {
 			Integer aDepth = results.get(aClass);
 			assert aDepth != null;
-			for (Operation op : getOperations(Objects.requireNonNull(aClass))) {
-				if (baseSignature.equals(getSignature(Objects.requireNonNull(op))) && (aDepth > bestDepth)) {
+			for (Operation op : getOperations(ClassUtil.requireNonNull(aClass))) {
+				if (baseSignature.equals(getSignature(ClassUtil.requireNonNull(op))) && (aDepth > bestDepth)) {
 					bestDepth = aDepth;
 					best = op;
 				}

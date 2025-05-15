@@ -57,7 +57,7 @@ public class Ecore2UMLConverter extends AbstractWorkflowComponent
 		Resource resource = (Resource) ctx.get(getEcoreSlot());
 		URI ecoreURI = resource.getURI();
 		log.info("Converting '" + ecoreURI + "'");
-		ResourceSet resourceSet = ClassUtil.nonNullState(resource.getResourceSet());
+		ResourceSet resourceSet = ClassUtil.requireNonNull(resource.getResourceSet());
 
 		EPackage ePackage = (EPackage) resource.getContents().get(0);
 		Map<String, String> options = new HashMap<String, String>();

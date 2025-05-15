@@ -73,7 +73,7 @@ public class DelegateEClassifierAdapter extends AdapterImpl
 	public synchronized @NonNull Map<@NonNull String, @NonNull ValidationDelegate> getValidationDelegates(boolean force) {
 		Map<@NonNull String, @NonNull ValidationDelegate> validationDelegateMap2 = validationDelegateMap;
 		if (force || (validationDelegateMap2 == null)) {
-			EClassifier eClassifier = ClassUtil.nonNullState(getTarget());
+			EClassifier eClassifier = ClassUtil.requireNonNull(getTarget());
 			validationDelegateMap = validationDelegateMap2 = new HashMap<>();
 			List<ValidationDelegate.@NonNull Factory> factories = ValidationBehavior.INSTANCE.getFactories(eClassifier);
 			if (eClassifier instanceof EClass) {

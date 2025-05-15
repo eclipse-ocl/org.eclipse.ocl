@@ -70,7 +70,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 			ExpressionInOCL specification2 = specification;
 			if (specification2 == null) {
 				Operation operation2 = operation;
-				NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(eOperation));
+				NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(eOperation));
 				if (namedElement instanceof Operation) {
 					operation2 = operation = (Operation) namedElement;
 					specification2 = specification = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, operation2);
@@ -92,14 +92,14 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 			EvaluationEnvironment env = query.getEvaluationEnvironment(target);
 			Object object = target;
 			Object value = idResolver.boxedValueOf(target);
-			env.add(ClassUtil.nonNullModel(specification2.getOwnedContext()), value);
+			env.add(ClassUtil.requireNonNull(specification2.getOwnedContext()), value);
 			List<Variable> parms = specification2.getOwnedParameters();
 			if (!parms.isEmpty()) {
 				// bind arguments to parameter names
 				for (int i = 0; i < parms.size(); i++) {
 					object = arguments.get(i);
 					value = idResolver.boxedValueOf(object);
-					env.add(ClassUtil.nonNullModel(parms.get(i)), value);
+					env.add(ClassUtil.requireNonNull(parms.get(i)), value);
 				}
 			}
 			Object result = query.evaluateEcore(eOperation.getEType().getInstanceClass(), target);
@@ -126,7 +126,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	public @NonNull Operation getOperation() {
 		Operation operation2 = operation;
 		if (operation2 == null) {
-			NamedElement pivot = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(eOperation));
+			NamedElement pivot = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(eOperation));
 			if (pivot instanceof Operation) {
 				operation2 = operation = (Operation) pivot;
 			}

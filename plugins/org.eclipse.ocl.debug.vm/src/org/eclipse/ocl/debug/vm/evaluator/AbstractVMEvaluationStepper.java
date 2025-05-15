@@ -76,9 +76,9 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		fIterateBPHelper = new IterateBreakpointHelper(fBPM);
 		fCurrentLocation = getCurrentLocation();
 		fCurrentStepMode = VMSuspension.UNSPECIFIED;
-		invalidVariable = ClassUtil.nonNullEMF(PivotFactory.eINSTANCE.createVariable());
+		invalidVariable = ClassUtil.requireNonNull(PivotFactory.eINSTANCE.createVariable());
 		invalidVariable.setName(VMVirtualMachine.EXCEPTION_NAME);
-		String typeName = ClassUtil.nonNullEMF(PivotPackage.Literals.OCL_EXPRESSION.getName());
+		String typeName = ClassUtil.requireNonNull(PivotPackage.Literals.OCL_EXPRESSION.getName());
 		invalidVariable.setType(((EnvironmentFactoryInternal)vmExecutor.getEnvironmentFactory()).getASClass(typeName));
 	}
 
@@ -149,7 +149,7 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		if (name == null) {
 			return "<null>"; //$NON-NLS-1$
 		}
-		return ClassUtil.nonNullState(name);
+		return ClassUtil.requireNonNull(name);
 	}
 
 	@Override

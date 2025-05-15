@@ -90,7 +90,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 			Map<Element, Element> reDefinitions, Operation operation) {
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
-		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
+		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(operation.getOwningClass());
 		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 

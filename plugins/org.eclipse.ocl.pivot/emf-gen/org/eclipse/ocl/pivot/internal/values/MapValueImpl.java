@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -29,7 +30,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -218,7 +218,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 		for (Object key : theseKeys){
 			Object thisValue = this.at(key);
 			Object thatValue = that.at(key);
-			if (!ClassUtil.safeEquals(thisValue, thatValue)) {
+			if (!Objects.equals(thisValue, thatValue)) {
 				return false;
 			}
 		}
@@ -284,7 +284,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 					if (e2 == null) {
 						Object thisValue = at(e2);
 						Object thatValue = m.at(e2);
-						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+						if (Objects.equals(thisValue,  thatValue)) {
 							return false;
 						}
 					}
@@ -295,7 +295,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 					if (e1.equals(e2)) {
 						Object thisValue = at(e2);
 						Object thatValue = m.at(e2);
-						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+						if (Objects.equals(thisValue,  thatValue)) {
 							return false;
 						}
 					}
@@ -311,7 +311,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 			throw (InvalidValueException)thatValue;
 		}
 		for (Object thisValue : boxedValues.values()) {
-			if (ClassUtil.safeEquals(thisValue, thatValue)) {
+			if (Objects.equals(thisValue, thatValue)) {
 				return false;
 			}
 		}
@@ -338,7 +338,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 		}
 		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
 		Object actualValue = newBoxedValues.get(key);
-		if (ClassUtil.safeEquals(actualValue, value)) {
+		if (Objects.equals(actualValue, value)) {
 			newBoxedValues.remove(key);
 		}
 		return new MapValueImpl(typeId, newBoxedValues);
@@ -359,7 +359,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 		for (Map.Entry<Object, Object> entry : map.entrySet()) {
 			Object key = entry.getKey();
 			Object actualValue = newBoxedValues.get(key);
-			if (ClassUtil.safeEquals(actualValue, entry.getValue())) {
+			if (Objects.equals(actualValue, entry.getValue())) {
 				newBoxedValues.remove(key);
 			}
 		}
@@ -484,7 +484,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 					if (e2 == null) {
 						Object thisValue = at(e2);
 						Object thatValue = m.at(e2);
-						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+						if (Objects.equals(thisValue,  thatValue)) {
 							gotIt = true;
 							break;
 						}
@@ -496,7 +496,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 					if (e1.equals(e2)) {
 						Object thisValue = at(e2);
 						Object thatValue = m.at(e2);
-						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+						if (Objects.equals(thisValue,  thatValue)) {
 							gotIt = true;
 							break;
 						}
@@ -516,7 +516,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 			throw (InvalidValueException)thatValue;
 		}
 		for (Object thisValue : boxedValues.values()) {
-			if (ClassUtil.safeEquals(thisValue, thatValue)) {
+			if (Objects.equals(thisValue, thatValue)) {
 				return true;
 			}
 		}

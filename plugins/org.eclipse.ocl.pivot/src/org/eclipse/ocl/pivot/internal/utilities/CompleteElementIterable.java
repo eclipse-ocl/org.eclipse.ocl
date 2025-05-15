@@ -42,14 +42,14 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 			while (true) {
 				if (innerIterator != null) {
 					while (innerIterator.hasNext()) {
-						nextValue = getInnerValue(ClassUtil.nonNullState(innerIterator.next()));
+						nextValue = getInnerValue(ClassUtil.requireNonNull(innerIterator.next()));
 						if (nextValue != null) {
 							return true;
 						}
 					}
 				}
 				if (outerIterator.hasNext()) {
-					Iterable<I> innerIterable = getInnerIterable(ClassUtil.nonNullState(outerIterator.next()));
+					Iterable<I> innerIterable = getInnerIterable(ClassUtil.requireNonNull(outerIterator.next()));
 					if (innerIterable != null) {
 						innerIterator = innerIterable.iterator();
 					}

@@ -12,8 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Element;
@@ -116,15 +114,15 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	protected static class LambdaContinuation extends SingleContinuation<LambdaTypeCS>
 	{
 		private static @NonNull Dependency @NonNull [] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
-			TypedRefCS ownedContextType = Objects.requireNonNull(csElement.getOwnedContextType());
-			TypedRefCS ownedResultType = Objects.requireNonNull(csElement.getOwnedResultType());
+			TypedRefCS ownedContextType = ClassUtil.requireNonNull(csElement.getOwnedContextType());
+			TypedRefCS ownedResultType = ClassUtil.requireNonNull(csElement.getOwnedResultType());
 			List<TypedRefCS> csParameterTypes = csElement.getOwnedParameterTypes();
 			int iMax = csParameterTypes.size();
 			@NonNull Dependency @NonNull [] dependencies = new @NonNull Dependency[2 + iMax];
 			dependencies[0] = new PivotDependency(ownedContextType);
 			dependencies[1] = new PivotDependency(ownedResultType);
 			for (int i = 0; i < iMax; i++) {
-				TypedRefCS csParameterType = Objects.requireNonNull(csParameterTypes.get(i));
+				TypedRefCS csParameterType = ClassUtil.requireNonNull(csParameterTypes.get(i));
 				dependencies[i+2] = new PivotDependency(csParameterType);
 			}
 			return dependencies;

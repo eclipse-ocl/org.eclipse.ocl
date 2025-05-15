@@ -815,7 +815,7 @@ public abstract class ValueUtil
 		else {
 			try {
 				EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)executor.getEnvironmentFactory();
-				return ClassUtil.nonNullState(environmentFactory.getASOf(jClass, (EObject)value));
+				return ClassUtil.requireNonNull(environmentFactory.getASOf(jClass, (EObject)value));
 			} catch (Throwable e) {
 				throw new InvalidValueException(e, "Failed to access AS of " + value);
 			}

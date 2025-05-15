@@ -112,7 +112,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 	 */
 	@Override
 	protected void init(XMLResource resource, Map<?, ?> options) {
-		XMLResource asResource = ClassUtil.nonNullState(resource);
+		XMLResource asResource = ClassUtil.requireNonNull(resource);
 		EList<@NonNull EObject> contents = asResource.getContents();
 		if (contents.size() > 0) {
 			EObject root = contents.get(0);
@@ -143,7 +143,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 					lookupTable.add(null);
 				}
 			}
-			saveOptions.put(ClassUtil.nonNullState(XMLResource.OPTION_USE_CACHED_LOOKUP_TABLE), lookupTable);
+			saveOptions.put(ClassUtil.requireNonNull(XMLResource.OPTION_USE_CACHED_LOOKUP_TABLE), lookupTable);
 		}
 		ResourceSet asResourceSet = asResource.getResourceSet();
 		if (asResourceSet != null) {

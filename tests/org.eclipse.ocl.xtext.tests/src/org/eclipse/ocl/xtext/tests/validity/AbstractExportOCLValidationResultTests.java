@@ -52,7 +52,7 @@ public abstract class AbstractExportOCLValidationResultTests extends AbstractVal
 			}
 		}
 		catch (Throwable e) {}
-		return ClassUtil.nonNullState(projectURL);
+		return ClassUtil.requireNonNull(projectURL);
 	}
 
 	protected @NonNull String getProjectFileName(String referenceName) throws IOException {

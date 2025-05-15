@@ -482,7 +482,7 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 
 	@Override
 	public @NonNull EClassValue getEClassValue(@NonNull EClass eClass) {
-		return ClassUtil.nonNullState(basicGetEClassValue(eClass));
+		return ClassUtil.requireNonNull(basicGetEClassValue(eClass));
 	}
 
 	/**

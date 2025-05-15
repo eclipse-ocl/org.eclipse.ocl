@@ -55,7 +55,7 @@ public class EcoreExecutorType extends ExecutorType
 	 * Construct an executable type descriptor for a known EClassifier.
 	 */
 	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
-		super(ClassUtil.nonNullModel(eClassifier.getName()), evaluationPackage, flags, typeParameters);
+		super(ClassUtil.requireNonNull(eClassifier.getName()), evaluationPackage, flags, typeParameters);
 		this.eClassifier = eClassifier;
 	}
 
@@ -66,7 +66,7 @@ public class EcoreExecutorType extends ExecutorType
 			EClass eClass = (EClass)eClassifier2;
 			EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
 //			TypeId typeId = IdManager.getTypeId(eClass);
-			return /*ValuesUtil.createObjectValue(typeId, */ClassUtil.nonNullEMF(element); //);
+			return /*ValuesUtil.createObjectValue(typeId, */ClassUtil.requireNonNull(element); //);
 		}
 		throw new UnsupportedOperationException();
 	}
@@ -77,7 +77,7 @@ public class EcoreExecutorType extends ExecutorType
 		if (eClassifier2 instanceof EDataType) {
 			EDataType eDataType = (EDataType) eClassifier2;
 			Object element = eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
-			return /*ValuesUtil.valueOf(*/ClassUtil.nonNullEMF(element); //);
+			return /*ValuesUtil.valueOf(*/ClassUtil.requireNonNull(element); //);
 		}
 		throw new UnsupportedOperationException();
 	}
@@ -94,7 +94,7 @@ public class EcoreExecutorType extends ExecutorType
 	@Override
 	public @NonNull String getMetaTypeName() {
 		if (eClassifier != null) {					// FIXME Enforce @NonNull
-			return ClassUtil.nonNullModel(ClassUtil.nonNullState(eClassifier).getName());
+			return ClassUtil.requireNonNull(ClassUtil.requireNonNull(eClassifier).getName());
 		}
 		else {
 			return getTypeId().getMetaTypeName();
@@ -139,7 +139,7 @@ public class EcoreExecutorType extends ExecutorType
 		assert eClassifier != null;
 		assert this.eClassifier == null;
 		assert name.equals(eClassifier.getName());
-		this.eClassifier = ClassUtil.nonNullState(eClassifier);
+		this.eClassifier = ClassUtil.requireNonNull(eClassifier);
 		initFragments(fragments, depthCounts);
 		return this;
 	}

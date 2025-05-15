@@ -95,9 +95,9 @@ public class FlowAnalysisTests extends XtextTestCase
 			createFile(fileName + ".oclinecore", testContext);
 			Resource asResource = doLoad_Concrete(fileName, "oclinecore");
 			Model model = PivotUtil.getModel(asResource);
-			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
-			org.eclipse.ocl.pivot.Class deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
-			Constraint asInvariant = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName));
+			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.requireNonNull(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
+			org.eclipse.ocl.pivot.Class deductionsClass = ClassUtil.requireNonNull(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
+			Constraint asInvariant = ClassUtil.requireNonNull(NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName));
 			return environmentFactory.parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
 		}
 

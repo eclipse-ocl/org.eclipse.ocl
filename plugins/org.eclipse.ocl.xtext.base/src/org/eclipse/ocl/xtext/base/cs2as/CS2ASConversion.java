@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -74,6 +73,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -251,7 +251,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	protected void diagnoseContinuationFailure(@NonNull List<BasicContinuation<?>> continuations) {
 		if (CONTINUATION.isActive()) {
 			for (BasicContinuation<?> continuation : continuations) {
-				CONTINUATION.println(Objects.requireNonNull(continuation.toString()));
+				CONTINUATION.println(ClassUtil.requireNonNull(continuation.toString()));
 				for (Dependency dependency : continuation.getDependencies()) {
 					boolean canExecute = dependency.canExecute();
 					CONTINUATION.println((canExecute ? "+ " : "- ") + dependency.toString());
@@ -938,7 +938,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		boolean tracingOn = CONTINUATION.isActive();
 		if (tracingOn) {
 			CONTINUATION.println("------------------------------------------------ " + continuations.size());
-			CONTINUATION.println(Objects.requireNonNull(typesHaveSignatures.toString()));
+			CONTINUATION.println(ClassUtil.requireNonNull(typesHaveSignatures.toString()));
 		}
 		for (BasicContinuation<?> continuation : continuations) {
 			boolean canExecute = continuation.canExecute();

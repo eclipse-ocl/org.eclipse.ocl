@@ -160,7 +160,7 @@ public class CodeGenAnalyzer
 		PropertyId propertyId = asProperty.getPropertyId();
 		CGExecutorProperty cgProperty = null;
 		CGElementId cgPropertyId = getElementId(propertyId);
-		Property asOppositeProperty = ClassUtil.nonNullState(asProperty.getOpposite());
+		Property asOppositeProperty = ClassUtil.requireNonNull(asProperty.getOpposite());
 		if (asOppositeProperty.isIsComposite()) {
 			cgPropertyId = getElementId(asOppositeProperty.getPropertyId());
 			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorCompositionProperty();
@@ -314,7 +314,7 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull NameManager getNameManager() {
-		return ClassUtil.nonNullState(nameManager);
+		return ClassUtil.requireNonNull(nameManager);
 	}
 
 	public @NonNull CGTypeId getTypeId(@NonNull TypeId typeId) {
@@ -324,7 +324,7 @@ public class CodeGenAnalyzer
 			cgTypeId = CGModelFactory.eINSTANCE.createCGTypeId();
 			cgTypeId.setElementId(typeId);
 			cgTypeId.setName(nameManager.getGlobalSymbolName(typeId));
-			cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
+			cgTypeId.setValueName(ClassUtil.requireNonNull(cgTypeId.getName()));
 			cgElementIds.put(typeId, cgTypeId);
 			if (typeId instanceof SpecializedId) {
 				BindingsId templateBindings = ((SpecializedId)typeId).getTemplateBindings();

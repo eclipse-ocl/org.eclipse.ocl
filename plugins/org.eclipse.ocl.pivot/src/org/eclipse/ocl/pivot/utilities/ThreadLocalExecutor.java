@@ -179,7 +179,7 @@ public class ThreadLocalExecutor implements Nameable
 	 */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		ThreadLocalExecutor threadLocalExecutor = get();
-		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetEnvironmentFactory());
+		return ClassUtil.requireNonNull(threadLocalExecutor.localBasicGetEnvironmentFactory());
 	}
 
 	/**
@@ -187,9 +187,8 @@ public class ThreadLocalExecutor implements Nameable
 	 *
 	public static @NonNull Executor getExecutor() {
 		ThreadLocalExecutor threadLocalExecutor = get();
-		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetExecutor());
-	}
-	 * @param callBack */
+		return ClassUtil.requireNonNull(threadLocalExecutor.localBasicGetExecutor());
+	} */
 
 	/**
 	 * @since 7.0

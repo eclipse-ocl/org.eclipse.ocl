@@ -61,14 +61,14 @@ public class EObjectOperation extends AbstractOperation
 		}
 		ExpressionInOCL query = specification;
 		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(query, caller);
-		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(query.getOwnedContext()), boxedSourceAndArgumentValues[0]);
+		nestedEvaluationEnvironment.add(ClassUtil.requireNonNull(query.getOwnedContext()), boxedSourceAndArgumentValues[0]);
 		List<Variable> parameterVariables = query.getOwnedParameters();
 		int iMax = Math.min(parameterVariables.size(), boxedSourceAndArgumentValues.length-1);
 		for (int i = 0; i < iMax; i++) {
-			nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(parameterVariables.get(i)), boxedSourceAndArgumentValues[i+1]);
+			nestedEvaluationEnvironment.add(ClassUtil.requireNonNull(parameterVariables.get(i)), boxedSourceAndArgumentValues[i+1]);
 		}
 		try {
-			return executor.evaluate(ClassUtil.nonNullPivot(query.getOwnedBody()));
+			return executor.evaluate(ClassUtil.requireNonNull(query.getOwnedBody()));
 		}
 		finally {
 			executor.popEvaluationEnvironment();

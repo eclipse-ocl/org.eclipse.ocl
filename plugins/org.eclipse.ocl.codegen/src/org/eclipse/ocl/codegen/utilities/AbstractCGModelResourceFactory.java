@@ -26,7 +26,7 @@ public class AbstractCGModelResourceFactory extends ResourceFactoryImpl implemen
 	 */
 	@Override
 	public @NonNull CGModelResource createResource(URI uri) {
-		return new CGModelResourceImpl(ClassUtil.nonNullState(uri), this);
+		return new CGModelResourceImpl(ClassUtil.requireNonNull(uri), this);
 	}
 
 	@Override

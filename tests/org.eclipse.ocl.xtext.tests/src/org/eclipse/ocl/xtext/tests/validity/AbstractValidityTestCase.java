@@ -192,7 +192,7 @@ public abstract class AbstractValidityTestCase extends AbstractPivotTestCase
 		ProjectMap projectMap = getProjectMap();
 		assert projectMap != null;
 		String urlString = String.valueOf(projectMap.getLocation(PLUGIN_ID));
-		return ClassUtil.nonNullEMF(URI.createURI(urlString + localFileName));
+		return ClassUtil.requireNonNull(URI.createURI(urlString + localFileName));
 	}
 
 	public static ValidatableNode getValidatableNodeByLabel(@NonNull Iterable<? extends ValidatableNode> validatableNodes, @NonNull String label) {

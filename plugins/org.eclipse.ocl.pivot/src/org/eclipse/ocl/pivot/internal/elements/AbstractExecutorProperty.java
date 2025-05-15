@@ -64,7 +64,7 @@ public abstract class AbstractExecutorProperty extends AbstractExecutorFeature i
 
 	@Override
 	public @NonNull Property getOpposite() {
-		return ClassUtil.nonNullState(opposite);
+		return ClassUtil.requireNonNull(opposite);
 	}
 
 	@Override

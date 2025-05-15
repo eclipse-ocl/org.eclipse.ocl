@@ -15,6 +15,7 @@ package org.eclipse.ocl.xtext.tests.pivot.tests;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -73,7 +74,7 @@ public class UMLValidateTest extends AbstractValidateTests
 
 	public @Nullable EObject getStereotypeApplication(org.eclipse.uml2.uml.@NonNull Element umlElement, org.eclipse.uml2.uml.@NonNull Stereotype umlStereotype) {
 		for (EObject eObject : umlElement.eResource().getContents()) {
-			if (ClassUtil.safeEquals(eObject.eClass().getName(), umlStereotype.getName())) {
+			if (Objects.equals(eObject.eClass().getName(), umlStereotype.getName())) {
 				for (EStructuralFeature eFeature : eObject.eClass().getEAllStructuralFeatures()) {
 					if ((eFeature instanceof EReference) && !eFeature.isMany()) {
 						Object object = eObject.eGet(eFeature);
@@ -155,7 +156,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		getValidationRegistryAdapter(resourceSet);		// Install OCLinEcoreEObjectValidator
 		URI uri = getTestModelURI("models/uml/Bug408990.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		String label = NameUtil.qualifiedNameFor(umlResource.getContents().get(1));
 		assertValidationDiagnostics("Loading", umlResource, getMessages(StringUtil.bind(VIOLATED_TEMPLATE, "Stereotype1::IntegerConstraint", label)));
@@ -174,7 +175,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		getValidationRegistryAdapter(resourceSet);		// Install OCLinEcoreEObjectValidator
 		URI uri = getTestModelURI("models/uml/Bug408990.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
@@ -198,7 +199,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		ValidationContext validationContext = createValidationContext(resourceSet);
 		URI uri = getTestModelURI("models/uml/PapyrusTestFile.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/ExtraUMLValidation.ocl");
@@ -240,7 +241,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			UML2AS.initializeUML(resourceSet);
 		}
 		URI uri = getTestModelURI("models/uml/Bug404882.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/Bug404882.ocl");
@@ -270,7 +271,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			UML2AS.initializeUML(resourceSet);
 		}
 		URI uri = getTestModelURI("models/uml/Bug423905.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/Bug423905.ocl");
@@ -302,7 +303,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		URI uri = getTestModelURI("models/uml/bug432920.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		ValidationContext validationContext = createValidationContext(resourceSet);
 		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
@@ -349,7 +350,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		URI uri = getTestModelURI("models/uml/Bug434433.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
@@ -379,7 +380,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		URI uri = getTestModelURI("models/uml/Bug434356.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		ValidationContext validationContext = createValidationContext(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
@@ -409,7 +410,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		//		}
 		//		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		//		URI uri = getTestModelURI("models/uml/Bug436945.uml");
-		//		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		//		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		OCL ocl = createOCL();
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug436945.uml"));
 		assertNoResourceErrors("Loading", umlResource);
@@ -440,7 +441,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			UML2AS.initializeUML(resourceSet);
 		}
 		URI uri = getTestModelURI("models/uml/Bug446007.uml");
-		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/Bug446007.ocl");

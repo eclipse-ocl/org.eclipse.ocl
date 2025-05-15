@@ -10,13 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.build.analysis;
 
+import java.util.Objects;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
 
 public class AnalysisUtils extends SerializationUtils
@@ -36,7 +37,7 @@ public class AnalysisUtils extends SerializationUtils
 		if (thisEClassifier.eClass() != thatEClassifier.eClass()) {
 			return false;
 		}
-		if (!ClassUtil.safeEquals(thisEClassifier.getName(), thatEClassifier.getName())) {
+		if (!Objects.equals(thisEClassifier.getName(), thatEClassifier.getName())) {
 			return false;
 		}
 		return isEqual(thisEClassifier.getEPackage(), thatEClassifier.getEPackage());
@@ -57,13 +58,13 @@ public class AnalysisUtils extends SerializationUtils
 		if (thisEPackage.eClass() != thatEPackage.eClass()) {
 			return false;
 		}
-		if (!ClassUtil.safeEquals(thisEPackage.getName(), thatEPackage.getName())) {
+		if (!Objects.equals(thisEPackage.getName(), thatEPackage.getName())) {
 			return false;
 		}
 		EPackage thisESuperPackage = thisEPackage.getESuperPackage();
 		EPackage thatESuperPackage = thatEPackage.getESuperPackage();
 		if ((thisESuperPackage == null) && (thatESuperPackage == null)) {
-			return ClassUtil.safeEquals(thisEPackage.getNsURI(), thatEPackage.getNsURI());
+			return Objects.equals(thisEPackage.getNsURI(), thatEPackage.getNsURI());
 		}
 		else {
 			return isEqual(thisESuperPackage, thatESuperPackage);
@@ -85,7 +86,7 @@ public class AnalysisUtils extends SerializationUtils
 		if (thisEStructuralFeature.eClass() != thatEStructuralFeature.eClass()) {
 			return false;
 		}
-		if (!ClassUtil.safeEquals(thisEStructuralFeature.getName(), thatEStructuralFeature.getName())) {
+		if (!Objects.equals(thisEStructuralFeature.getName(), thatEStructuralFeature.getName())) {
 			return false;
 		}
 		return isEqual(thisEStructuralFeature.getEContainingClass(), thatEStructuralFeature.getEContainingClass());

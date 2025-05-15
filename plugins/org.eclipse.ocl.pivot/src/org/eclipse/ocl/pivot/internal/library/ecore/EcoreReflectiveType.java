@@ -47,7 +47,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
-		super(ClassUtil.nonNullEMF(eClassifier.getName()), flags);
+		super(ClassUtil.requireNonNull(eClassifier.getName()), flags);
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
@@ -75,7 +75,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 			EClass eClass = (EClass)eClassifier;
 			EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
 			//			TypeId typeId = IdManager.INSTANCE.getTypeId(eClass);
-			return /*ValuesUtil.createObjectValue(typeId,*/ ClassUtil.nonNullEMF(element); //);
+			return /*ValuesUtil.createObjectValue(typeId,*/ ClassUtil.requireNonNull(element); //);
 		}
 		throw new UnsupportedOperationException();
 	}
@@ -85,7 +85,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		if (eClassifier instanceof EDataType) {
 			EDataType eDataType = (EDataType)eClassifier;
 			Object element = eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
-			return ClassUtil.nonNullEMF(element);
+			return ClassUtil.requireNonNull(element);
 		}
 		throw new UnsupportedOperationException();
 	}
@@ -178,7 +178,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 
 	@Override
 	public @NonNull String getMetaTypeName() {
-		return ClassUtil.nonNullPivot(eClassifier.getName());
+		return ClassUtil.requireNonNull(eClassifier.getName());
 	}
 
 	@Override

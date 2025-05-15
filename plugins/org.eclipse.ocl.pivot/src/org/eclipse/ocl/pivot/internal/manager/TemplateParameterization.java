@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.manager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,6 +21,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -93,7 +93,7 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 	}
 
 	public static @NonNull List<@NonNull TemplateParameter> getTemplateParameters(@NonNull Element element) {
-		return Objects.requireNonNull(basicGetTemplateParameters(null, element));
+		return ClassUtil.requireNonNull(basicGetTemplateParameters(null, element));
 	}
 
 	protected final @NonNull TemplateableElement templateableElement;

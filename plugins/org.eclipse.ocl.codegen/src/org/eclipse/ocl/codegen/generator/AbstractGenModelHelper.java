@@ -79,12 +79,12 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	public static @NonNull String encodeName(@NonNull NamedElement element) {
 		int arity = element instanceof Operation ? ((Operation)element).getOwnedParameters().size() : 0;
-		String rawEncodeName = rawEncodeName(ClassUtil.nonNullModel(element.getName()), arity);
+		String rawEncodeName = rawEncodeName(ClassUtil.requireNonNull(element.getName()), arity);
 		if (element instanceof Operation) {
 			int sameNames = 0;
 			int myIndex = 0;
 			for (Operation operation : ((Operation)element).getOwningClass().getOwnedOperations()) {
-				String rawName = rawEncodeName(ClassUtil.nonNullModel(operation.getName()), ClassUtil.nonNullModel(operation.getOwnedParameters().size()));
+				String rawName = rawEncodeName(ClassUtil.requireNonNull(operation.getName()), ClassUtil.requireNonNull(operation.getOwnedParameters().size()));
 				if (rawName.equals(rawEncodeName)) {
 					if (operation == element) {
 						myIndex = sameNames;
@@ -541,11 +541,11 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	protected @NonNull GenPackage getGenPackage(GenClassifier genClassifier) {
-		return ClassUtil.nonNullState(genClassifier.getGenPackage());
+		return ClassUtil.requireNonNull(genClassifier.getGenPackage());
 	}
 
 	protected @NonNull GenPackage getGenPackage(@NonNull GenFeature genFeature) {
-		return ClassUtil.nonNullState(genFeature.getGenPackage());
+		return ClassUtil.requireNonNull(genFeature.getGenPackage());
 	}
 
 	@Override
@@ -787,7 +787,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull String getQualifiedValidatorClassName(@NonNull GenPackage genPackage) {
-		return ClassUtil.nonNullEMF(genPackage.getQualifiedValidatorClassName());
+		return ClassUtil.requireNonNull(genPackage.getQualifiedValidatorClassName());
 	}
 
 	@Override

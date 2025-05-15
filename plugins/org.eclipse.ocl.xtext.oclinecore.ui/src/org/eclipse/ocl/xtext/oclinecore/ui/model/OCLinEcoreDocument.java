@@ -67,7 +67,7 @@ public class OCLinEcoreDocument extends BaseDocument
 						//	Resource csResource = cs2as.getCSResource();
 						//	checkForErrors(csResource);
 							Map<@NonNull String, @Nullable Object> options = new HashMap<>();
-							options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
+							options.put(ClassUtil.requireNonNull(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
 							XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
 							//					ResourceSetImpl resourceSet = new ResourceSetImpl();
 							//					XMLResource ecoreResource = (XMLResource) resourceSet.createResource(ecoreURI);
@@ -127,7 +127,7 @@ public class OCLinEcoreDocument extends BaseDocument
 						if (cs2as != null) {
 							Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 							options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
-							options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
+							options.put(ClassUtil.requireNonNull(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
 							XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
 							ecoreResource.save(writer, null);
 							checkForErrors(ecoreResource);

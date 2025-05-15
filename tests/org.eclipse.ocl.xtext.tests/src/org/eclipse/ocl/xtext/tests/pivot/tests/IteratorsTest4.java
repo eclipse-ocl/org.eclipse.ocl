@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -52,6 +51,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -111,10 +111,10 @@ public class IteratorsTest4 extends PivotTestSuite
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) {
 			super(testFileSystem, testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, null);
 			MetamodelManager metamodelManager = getMetamodelManager();
-			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, Objects.requireNonNull(metamodelManager.getASmetamodel()));
+			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.requireNonNull(metamodelManager.getASmetamodel()));
 
-			metamodelManager.installRoot(Objects.requireNonNull(root));
-			//	        helper.setContext(Objects.requireNonNull(metamodelManager.getPivotType("Package")));
+			metamodelManager.installRoot(ClassUtil.requireNonNull(root));
+			//	        helper.setContext(ClassUtil.requireNonNull(metamodelManager.getPivotType("Package")));
 		}
 	}
 
@@ -242,7 +242,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg3, ocl.pkg5, ocl.george); // closure does include sources (george)
 		ocl.assertQueryEquals(ocl.george, expected1, "self.oclAsType(Package)->closure(owningPackage)");
@@ -273,7 +273,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = Objects.requireNonNull(environmentFactory.getASClass("Package"));
+		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Object ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
 		Object owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
@@ -363,8 +363,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = Objects.requireNonNull(environmentFactory.getASClass("Package"));
-		org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = Objects.requireNonNull(environmentFactory.getASClass("Property"));
+		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
+		org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = ClassUtil.requireNonNull(environmentFactory.getASClass("Property"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
@@ -462,7 +462,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		//    	Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
 		// complete form
@@ -606,7 +606,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
 
@@ -1004,7 +1004,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
 
@@ -1050,7 +1050,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
 
@@ -1099,7 +1099,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
-		@NonNull Type packageType = Objects.requireNonNull(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
 		OrderedSetValue expectedSet = idResolver.createOrderedSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
 

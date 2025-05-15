@@ -43,7 +43,7 @@ public class CompositionProperty extends AbstractProperty
 		if (eContainer == null) {
 			return null;				// No container
 		}
-		EReference eContainmentFeature = ClassUtil.nonNullModel(eObject.eContainmentFeature());
+		EReference eContainmentFeature = ClassUtil.requireNonNull(eObject.eContainmentFeature());
 		if (eContainmentFeature != this.eContainmentFeature) {
 			if (!isReferenced(eContainmentFeature)) {
 				return null;				// Contained but by some other property

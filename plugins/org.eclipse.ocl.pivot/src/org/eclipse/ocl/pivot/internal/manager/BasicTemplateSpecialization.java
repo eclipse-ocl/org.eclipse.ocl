@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import java.util.Objects;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,6 +18,7 @@ import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -66,7 +65,7 @@ public class BasicTemplateSpecialization implements TemplateParameterSubstitutio
 	}
 
 	public static @NonNull BasicTemplateSpecialization getTemplateSpecialization(@NonNull Element element) {
-		return Objects.requireNonNull(basicGetTemplateSpecialization(element));
+		return ClassUtil.requireNonNull(basicGetTemplateSpecialization(element));
 	}
 
 	protected final @NonNull TemplateableElement specializedElement;

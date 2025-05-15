@@ -505,7 +505,7 @@ implements EnumerationLiteral {
 	public @NonNull Enumerator getEnumerator() {
 		EObject eTarget = getESObject();
 		if (eTarget instanceof EEnumLiteral) {
-			return ClassUtil.nonNullEMF(((EEnumLiteral) eTarget).getInstance());
+			return ClassUtil.requireNonNull(((EEnumLiteral) eTarget).getInstance());
 		}
 		else {
 			throw new UnsupportedOperationException();			// FIXME
@@ -518,7 +518,7 @@ implements EnumerationLiteral {
 	public @NonNull EnumerationLiteralId getEnumerationLiteralId() {
 		EnumerationLiteralId enumerationLiteralId2 = enumerationLiteralId;
 		if (enumerationLiteralId2 == null) {
-			String name = ClassUtil.nonNullModel(getName());
+			String name = ClassUtil.requireNonNull(getName());
 			EnumerationId enumerationId = getOwningEnumeration().getEnumerationId();
 			enumerationLiteralId = enumerationLiteralId2 = enumerationId.getEnumerationLiteralId(name);
 		}

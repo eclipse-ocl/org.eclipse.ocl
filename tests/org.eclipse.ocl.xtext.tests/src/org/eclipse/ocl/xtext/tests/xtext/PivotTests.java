@@ -218,12 +218,12 @@ public class PivotTests extends XtextTestCase
 	}
 
 	protected void doPivotTestOCLstdlib(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
-		URI pivotURI = getTestFileURI(ClassUtil.nonNullState(inputURI.trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION).lastSegment()));
+		URI pivotURI = getTestFileURI(ClassUtil.requireNonNull(inputURI.trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION).lastSegment()));
 		BaseCSResource csResource = doLoadOCLstdlib(ocl, inputURI);
 		//
 		//	Create Pivot model from CS
 		//
-		CS2AS cs2as = ClassUtil.nonNullState(csResource.findCS2AS());
+		CS2AS cs2as = ClassUtil.requireNonNull(csResource.findCS2AS());
 		ASResource asResource = cs2as.getASResource();
 		OCLstdlibCS2AS creator = (OCLstdlibCS2AS) cs2as;
 		//

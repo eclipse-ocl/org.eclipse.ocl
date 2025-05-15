@@ -60,7 +60,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	protected final @NonNull CompleteClassInternal completeClass;
 
 	public CompleteInheritanceImpl(@NonNull CompleteClassInternal completeClass) {
-		super(ClassUtil.nonNullModel(completeClass.getName()), computeFlags(completeClass.getPrimaryClass()));
+		super(ClassUtil.requireNonNull(completeClass.getName()), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = completeClass;
 //		org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
 //		assert !(pivotClass instanceof DataType) || (((DataType)pivotClass).getBehavioralClass() == null);	// DataTypes must use the inheritance of their behavioral class
@@ -81,11 +81,11 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	}
 
 	public @NonNull List<? extends Operation> getLocalOperations() {
-		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
+		return ClassUtil.requireNonNull(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
 	}
 
 	public @NonNull List<? extends Property> getLocalProperties() {
-		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
+		return ClassUtil.requireNonNull(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
 	}
 
 	@Override
@@ -105,12 +105,12 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 
 	@Override
 	public @NonNull List<Property> getOwnedProperties() {
-		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
+		return ClassUtil.requireNonNull(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
 	}
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
-		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
+		return ClassUtil.requireNonNull(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
 	}
 
 	@Override

@@ -58,22 +58,22 @@ public class DelegateResourceAdapter extends AdapterImpl
 		    if (eventType == Notification.SET) 
 		    {
 		    	Resource resource = getTarget();
-				EList<EObject> contents = ClassUtil.nonNullEMF(resource.getContents());
+				EList<EObject> contents = ClassUtil.requireNonNull(resource.getContents());
 		    	if (notification.getNewBooleanValue()) {
 					EPackage.Registry packageRegistry = resource.getResourceSet().getPackageRegistry();
-					installPackages(ClassUtil.nonNullEMF(packageRegistry), contents);
+					installPackages(ClassUtil.requireNonNull(packageRegistry), contents);
 		    	}
 	    	}
 	    }
 	    else if (featureID == Resource.RESOURCE__CONTENTS) 
 	    {
 	    	if (eventType == Notification.REMOVE) {
-	    		EObject oldValue = (EObject) ClassUtil.nonNullEMF(notification.getOldValue());
+	    		EObject oldValue = (EObject) ClassUtil.requireNonNull(notification.getOldValue());
 				unloadDelegate(oldValue);
 	    	}
 	    	else if (eventType == Notification.REMOVE_MANY) {
 	    		@SuppressWarnings("unchecked")
-				List<? extends EObject> oldValues = ClassUtil.nonNullEMF((List<? extends EObject>) notification.getOldValue());
+				List<? extends EObject> oldValues = ClassUtil.requireNonNull((List<? extends EObject>) notification.getOldValue());
 				unloadDelegates(oldValues);
 	    	}
 	    }
@@ -84,7 +84,7 @@ public class DelegateResourceAdapter extends AdapterImpl
 			if (eObject instanceof EPackage) {
 				EPackage ePackage = (EPackage)eObject;
 				packageRegistry.put(ePackage.getNsURI(), ePackage);
-				installPackages(packageRegistry, ClassUtil.nonNullEMF(ePackage.getESubpackages()));
+				installPackages(packageRegistry, ClassUtil.requireNonNull(ePackage.getESubpackages()));
 			}
 		}
 	}
@@ -102,7 +102,7 @@ public class DelegateResourceAdapter extends AdapterImpl
 			if (adapter != null) {
 				adapter.unloadDelegates();
 			}
-			unloadDelegates(ClassUtil.nonNullEMF(ePackage.getESubpackages()));
+			unloadDelegates(ClassUtil.requireNonNull(ePackage.getESubpackages()));
 		}
 	}
 

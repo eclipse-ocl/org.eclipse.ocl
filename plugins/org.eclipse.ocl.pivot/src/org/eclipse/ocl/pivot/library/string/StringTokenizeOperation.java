@@ -144,7 +144,7 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 			//			Object firstArgument = executor.evaluate(argument0);
 			delims = asString(argument0);
 		}
-		return evaluate(executor, (CollectionTypeId)ClassUtil.nonNullPivot(caller.getTypeId()), sourceAndArgumentValues[0], delims, returnDelims);
+		return evaluate(executor, (CollectionTypeId)ClassUtil.requireNonNull(caller.getTypeId()), sourceAndArgumentValues[0], delims, returnDelims);
 
 
 

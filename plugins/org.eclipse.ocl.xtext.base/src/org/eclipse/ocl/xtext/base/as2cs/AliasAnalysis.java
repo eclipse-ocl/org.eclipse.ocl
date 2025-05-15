@@ -53,7 +53,7 @@ import org.eclipse.ocl.xtext.basecs.RootPackageCS;
 public class AliasAnalysis extends AdapterImpl
 {
 	public static void dispose(@NonNull Resource resource) {
-		List<Adapter> eAdapters = ClassUtil.nonNullEMF(resource.eAdapters());
+		List<Adapter> eAdapters = ClassUtil.requireNonNull(resource.eAdapters());
 		AliasAnalysis adapter = ClassUtil.getAdapter(AliasAnalysis.class, eAdapters);
 		if (adapter != null) {
 			adapter.dispose();

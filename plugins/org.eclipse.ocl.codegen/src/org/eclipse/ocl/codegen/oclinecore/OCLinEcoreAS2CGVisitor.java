@@ -58,7 +58,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		if (representedParameter != null) {
 			GenParameter genParameter = genModelHelper.getGenParameter(representedParameter);
 			if (genParameter != null) {
-				String name = ClassUtil.nonNullState(genParameter.getName());
+				String name = ClassUtil.requireNonNull(genParameter.getName());
 				cgParameter.setValueName(name);
 				// reserve name
 			}

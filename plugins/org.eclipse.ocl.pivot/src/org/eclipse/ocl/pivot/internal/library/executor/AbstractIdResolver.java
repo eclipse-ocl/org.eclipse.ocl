@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -448,7 +447,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 		else if (eClassifier instanceof EEnum) {
 			EnumerationId enumId = getEnumerationId((EEnum)eClassifier);
-			String name = Objects.requireNonNull(((Enumerator)unboxedValue).getName());
+			String name = ClassUtil.requireNonNull(((Enumerator)unboxedValue).getName());
 			return enumId.getEnumerationLiteralId(name);
 		}
 		else {
@@ -886,8 +885,8 @@ public abstract class AbstractIdResolver implements IdResolver
 	 * @since 1.4
 	 */
 	protected @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull EEnumLiteral eEnumLiteral) {
-		EEnum eEnum = Objects.requireNonNull(eEnumLiteral.getEEnum());
-		String name = Objects.requireNonNull(eEnumLiteral.getName());
+		EEnum eEnum = ClassUtil.requireNonNull(eEnumLiteral.getEEnum());
+		String name = ClassUtil.requireNonNull(eEnumLiteral.getName());
 		EnumerationId enumerationId = getEnumerationId(eEnum);
 		return enumerationId.getEnumerationLiteralId(name);
 	}
@@ -1830,7 +1829,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package visitRootPackageId(@NonNull RootPackageId id) {
 		if (id == IdManager.METAMODEL) {
-			return Objects.requireNonNull(getStandardLibrary().getPackage());
+			return ClassUtil.requireNonNull(getStandardLibrary().getPackage());
 		}
 		String internedName = id.getName().intern();
 		org.eclipse.ocl.pivot.Package knownPackage = roots2package.get(internedName);
@@ -1866,9 +1865,9 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public @NonNull Element visitTemplateParameterId(@NonNull TemplateParameterId id) {
-		@NonNull TemplateableId templateableId = Objects.requireNonNull(id.getTemplateableId());
+		@NonNull TemplateableId templateableId = ClassUtil.requireNonNull(id.getTemplateableId());
 		Element resolvedElement = templateableId.accept(this);
-		Element type = Objects.requireNonNull(resolvedElement);
+		Element type = ClassUtil.requireNonNull(resolvedElement);
 		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(type);
 		return templateParameters.get(id.getIndex());
 	}

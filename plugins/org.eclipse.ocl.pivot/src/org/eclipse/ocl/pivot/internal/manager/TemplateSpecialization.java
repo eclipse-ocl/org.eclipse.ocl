@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,6 +20,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -71,7 +71,7 @@ public class TemplateSpecialization extends BasicTemplateSpecialization
 	}
 
 	public static @NonNull TemplateSpecialization getTemplateSpecialization(@NonNull Element element) {
-		return (TemplateSpecialization)Objects.requireNonNull(basicGetTemplateSpecialization(element));
+		return (TemplateSpecialization)ClassUtil.requireNonNull(basicGetTemplateSpecialization(element));
 	}
 
 	protected final @NonNull List<@NonNull TemplateParameterSubstitution> templateParameterSubstitutions;

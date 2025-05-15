@@ -189,7 +189,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		Operation contextOperation = context.refreshModelElement(Operation.class, PivotPackage.Literals.OPERATION, operationContextDecl);
 		Operation modelOperation = operationContextDecl.getReferredOperation();
 		if (modelOperation != null) {
-			helper.refreshName(contextOperation, ClassUtil.nonNullModel(modelOperation.getName()));
+			helper.refreshName(contextOperation, ClassUtil.requireNonNull(modelOperation.getName()));
 			helper.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());
 			List<ExpSpecificationCS> ownedBodies = operationContextDecl.getOwnedBodies();
 			ExpSpecificationCS ownedBody = ownedBodies.size() > 0 ? ownedBodies.get(0) : null;
@@ -279,7 +279,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		Property contextProperty = context.refreshModelElement(Property.class, PivotPackage.Literals.PROPERTY, propertyContextDecl);
 		Property modelProperty = propertyContextDecl.getReferredProperty();
 		if (modelProperty != null) {
-			helper.refreshName(contextProperty, ClassUtil.nonNullModel(modelProperty.getName()));
+			helper.refreshName(contextProperty, ClassUtil.requireNonNull(modelProperty.getName()));
 			helper.setType(contextProperty, modelProperty.getType(), modelProperty.isIsRequired());
 			List<ExpSpecificationCS> ownedDefaultExpressions = propertyContextDecl.getOwnedDefaultExpressions();
 			int size = ownedDefaultExpressions.size();

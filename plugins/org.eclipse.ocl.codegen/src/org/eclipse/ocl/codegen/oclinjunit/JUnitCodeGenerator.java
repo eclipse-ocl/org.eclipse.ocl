@@ -81,7 +81,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 			contextVariable.setIsRequired(false); // May be null for test
 		}
 		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(cgAnalyzer);
-		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
+		CGValuedElement cgBody = (CGValuedElement) ClassUtil.requireNonNull(expInOcl.accept(as2cgVisitor));
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);

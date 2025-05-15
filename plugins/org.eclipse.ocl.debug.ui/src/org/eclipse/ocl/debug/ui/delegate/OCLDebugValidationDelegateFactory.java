@@ -41,7 +41,7 @@ public class OCLDebugValidationDelegateFactory extends AbstractOCLDelegateFactor
 
 	@Override
 	public @Nullable ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
-		EPackage ePackage = ClassUtil.nonNullEMF(classifier.getEPackage());
+		EPackage ePackage = ClassUtil.requireNonNull(classifier.getEPackage());
 		OCLDelegateDomain delegateDomain = getDelegateDomain(ePackage);
 		if (delegateDomain == null) {
 			return null;

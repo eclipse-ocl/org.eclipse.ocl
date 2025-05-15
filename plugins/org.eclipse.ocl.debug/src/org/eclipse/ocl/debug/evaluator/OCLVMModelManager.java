@@ -67,7 +67,7 @@ public class OCLVMModelManager extends AbstractModelManager
 		EPackage ePackage = eClass.getEPackage();
 		Type objectType = null;
 		if (ePackage == PivotPackage.eINSTANCE) {
-			String name = ClassUtil.nonNullEMF(eClass.getName());
+			String name = ClassUtil.requireNonNull(eClass.getName());
 			objectType = environmentFactory.getASClass(name);
 		}
 		else {

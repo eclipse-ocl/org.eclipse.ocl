@@ -590,7 +590,7 @@ public class UserElementAnalysis implements Nameable
 	}
 
 	public @NonNull UserSlotAnalysis getSlotAnalysis(@NonNull EStructuralFeature eStructuralFeature) {
-		return ClassUtil.nonNullState(eStructuralFeature2slotAnalysis.get(eStructuralFeature));
+		return ClassUtil.requireNonNull(eStructuralFeature2slotAnalysis.get(eStructuralFeature));
 	}
 
 	@Override

@@ -368,7 +368,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			if (id instanceof SpecializedId) {
 				BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
 				for (int i = 0; i < templateBindings.elementIdSize(); i++) {
-					ElementId elementId = ClassUtil.nonNullModel(templateBindings.getElementId(i));
+					ElementId elementId = ClassUtil.requireNonNull(templateBindings.getElementId(i));
 					addElementIdDependency(id, elementId);
 				}
 			}
@@ -409,7 +409,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			if (id instanceof SpecializedId) {
 				BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
 				for (int i = 0; i < templateBindings.elementIdSize(); i++) {
-					ElementId elementId = ClassUtil.nonNullModel(templateBindings.getElementId(i));
+					ElementId elementId = ClassUtil.requireNonNull(templateBindings.getElementId(i));
 					addElementIdDependency(id, elementId);
 				}
 			}

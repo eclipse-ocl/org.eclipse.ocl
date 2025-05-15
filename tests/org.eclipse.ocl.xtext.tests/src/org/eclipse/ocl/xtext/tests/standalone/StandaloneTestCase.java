@@ -26,22 +26,22 @@ public class StandaloneTestCase extends PivotTestCaseWithAutoTearDown
 
 	protected @NonNull String getHTMLLogFileName() {
 		String logFileName = "log_" + getTestName() + ".html";
-		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
+		return ClassUtil.requireNonNull(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
 	protected @NonNull String getTextLogFileName() {
 		String logFileName = "log_" + getTestName() + ".txt";
-		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
+		return ClassUtil.requireNonNull(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
 	protected @NonNull String getLogFileName(@NonNull IValidityExporter exporter) {
 		String logFileName = "log_" + getTestName() + "." + exporter.getPreferredExtension();
-		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
+		return ClassUtil.requireNonNull(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
 	protected @NonNull String getXMLLogFileName() {
 		String logFileName = "log_" + getTestName() + ".xml";
-		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
+		return ClassUtil.requireNonNull(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
 	@Override

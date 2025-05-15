@@ -56,7 +56,7 @@ public class UnboxedElementsDescriptor extends AbstractCollectionDescriptor impl
 
 	@Override
 	public @NonNull String getClassName() {
-		return ClassUtil.nonNullModel(type.getName());
+		return ClassUtil.requireNonNull(type.getName());
 	}
 
 	@Override

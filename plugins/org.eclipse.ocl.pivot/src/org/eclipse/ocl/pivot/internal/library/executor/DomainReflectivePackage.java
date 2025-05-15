@@ -29,7 +29,7 @@ public class DomainReflectivePackage extends ReflectivePackage
 	protected final org.eclipse.ocl.pivot.@NonNull Package domainPackage;
 
 	public DomainReflectivePackage(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Package domainPackage) {
-		super(ClassUtil.nonNullPivot(domainPackage.getName()), domainPackage.getNsPrefix(), domainPackage.getURI(), domainPackage.getPackageId());
+		super(ClassUtil.requireNonNull(domainPackage.getName()), domainPackage.getNsPrefix(), domainPackage.getURI(), domainPackage.getPackageId());
 		this.standardLibrary = standardLibrary;
 		this.domainPackage = domainPackage;
 	}
@@ -41,7 +41,7 @@ public class DomainReflectivePackage extends ReflectivePackage
 
 	@Override
 	protected @NonNull List<org.eclipse.ocl.pivot.Class> getDomainClasses() {
-		return ClassUtil.nonNullPivot(domainPackage.getOwnedClasses());
+		return ClassUtil.requireNonNull(domainPackage.getOwnedClasses());
 	}
 
 	@Override

@@ -18,8 +18,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -768,7 +766,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return Objects.requireNonNull(environmentFactory);
+		return ClassUtil.requireNonNull(environmentFactory);
 	}
 
 	/**
@@ -875,16 +873,16 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 								TemplateParameterId specializedTemplateParameterId = specializedFormal.getTemplateParameterId();
 								int specializedIndex = specializedTemplateParameterId.getIndex();
 								if (specializedFormal == superActual) {
-									Type specializedActual = Objects.requireNonNull(specializedParameterSubstitution.getActual());
-									TemplateParameter superFormal = Objects.requireNonNull(superParameterSubstitution.getFormal());
+									Type specializedActual = ClassUtil.requireNonNull(specializedParameterSubstitution.getActual());
+									TemplateParameter superFormal = ClassUtil.requireNonNull(superParameterSubstitution.getFormal());
 									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
 									break;
 								}
 								else if (superActual instanceof NormalizedTemplateParameter) {
 									int superIndex = ((NormalizedTemplateParameter)superActual).getIndex();
 									if (specializedIndex == superIndex) {
-										Type specializedActual = Objects.requireNonNull(specializedParameterSubstitution.getActual());
-										TemplateParameter superFormal = Objects.requireNonNull(superParameterSubstitution.getFormal());
+										Type specializedActual = ClassUtil.requireNonNull(specializedParameterSubstitution.getActual());
+										TemplateParameter superFormal = ClassUtil.requireNonNull(superParameterSubstitution.getFormal());
 										superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
 										break;
 									}

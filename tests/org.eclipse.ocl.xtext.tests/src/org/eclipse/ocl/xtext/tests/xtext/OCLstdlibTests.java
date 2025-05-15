@@ -279,7 +279,7 @@ public class OCLstdlibTests extends XtextTestCase
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(libraryURI);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(libraryURI);
 		xtextResource.load(inputStream, null);
-		CS2AS cs2as = ClassUtil.nonNullState(xtextResource.findCS2AS());
+		CS2AS cs2as = ClassUtil.requireNonNull(xtextResource.findCS2AS());
 		assertNoResourceErrors("Load failed", xtextResource);
 		Resource fileResource = cs2as.getASResource();
 		assertNoResourceErrors("File Model", fileResource);

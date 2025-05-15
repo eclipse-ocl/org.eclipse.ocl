@@ -79,10 +79,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @Nullable ResourceSet externalResourceSet) {
 			super(testFileSystem, testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, externalResourceSet);
 			MetamodelManager metamodelManager = getMetamodelManager();
-			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
+			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.requireNonNull(metamodelManager.getASmetamodel()));
 
-			metamodelManager.installRoot(ClassUtil.nonNullState(root));
-			//	        helper.setContext(ClassUtil.nonNullState(metamodelManager.getPivotType("Package")));
+			metamodelManager.installRoot(ClassUtil.requireNonNull(root));
+			//	        helper.setContext(ClassUtil.requireNonNull(metamodelManager.getPivotType("Package")));
 		}
 	}
 
@@ -763,7 +763,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
+		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		ocl.assertQueryEquals(ocl.pkg1, packageType, "self.oclType()");
 		ocl.assertQueryEquals(ocl.pkg1, "Package", "self.oclType().name");
 		ocl.assertQueryEquals(null, packageType, "Package");
@@ -810,7 +810,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		@NonNull Type collectionKindType = ClassUtil.nonNullState(environmentFactory.getASClass("CollectionKind"));
+		@NonNull Type collectionKindType = ClassUtil.requireNonNull(environmentFactory.getASClass("CollectionKind"));
 		org.eclipse.ocl.pivot.Class enumerationType = standardLibrary.getEnumerationType();
 		//    	ocl.assertQueryEquals(null, metamodelManager.getPivotType("EnumerationLiteral"), "CollectionKind::Set.oclType()");
 		// NB this is not EnumerationLiteral: cf. 4.oclType() is Integer not IntegerLiteral.

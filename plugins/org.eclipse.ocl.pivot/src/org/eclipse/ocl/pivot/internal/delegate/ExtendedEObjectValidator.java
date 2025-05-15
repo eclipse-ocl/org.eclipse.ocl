@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -54,7 +55,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -271,7 +271,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 			for (EOperation eOperation : eClass.getEOperations()) {
 				assert eOperation != null;
 				String name = NameUtil.getOriginalName(eOperation);
-				if (ClassUtil.safeEquals(name, asConstraint.getName())) {
+				if (Objects.equals(name, asConstraint.getName())) {
 					System.out.println("Missing esObject for " + asType.getName() + "::" + asConstraint.getName());		// Upgrade MetaModel generator
 					return;
 				}

@@ -406,7 +406,7 @@ public class VariableFinder
 	}
 
 	protected @NonNull VMVariableData createContainerVariable(Object value, @NonNull URI uri) {
-		String oclType = getOCLType(ClassUtil.nonNullModel(EcorePackage.Literals.EOBJECT___ECONTAINER));
+		String oclType = getOCLType(ClassUtil.requireNonNull(EcorePackage.Literals.EOBJECT___ECONTAINER));
 		return createVariable(CONTAINER_VARIABLE_NAME, VMVariableData.REFERENCE, oclType, value, uri.toString());
 	}
 
@@ -417,7 +417,7 @@ public class VariableFinder
 	} */
 
 	private @NonNull VMVariableData createFeatureVar(@NonNull EStructuralFeature feature, Object value, String uri) {
-		String varName = ClassUtil.nonNullModel(feature.getName());
+		String varName = ClassUtil.requireNonNull(feature.getName());
 		String declaredType = getOCLType(feature);
 
 		int kind = VMVariableData.ATTRIBUTE;
@@ -483,11 +483,11 @@ public class VariableFinder
 				}
 				childVar = createContainerVariable(value, uri);
 				nextObject = value;
-				nextDeclaredType = getOCLType(ClassUtil.nonNullModel(EcorePackage.Literals.EOBJECT___ECONTAINER));
+				nextDeclaredType = getOCLType(ClassUtil.requireNonNull(EcorePackage.Literals.EOBJECT___ECONTAINER));
 			}
 			else {
 				EObject eObject = (EObject) parentObj;
-				EStructuralFeature eFeature = findFeature(ClassUtil.nonNullState(indexedPath), eObject.eClass());
+				EStructuralFeature eFeature = findFeature(ClassUtil.requireNonNull(indexedPath), eObject.eClass());
 				if (eFeature != null) {
 					Object value = getValue(eFeature, eObject);
 					childVar = createFeatureVar(eFeature, value, uri.toString());
@@ -569,7 +569,7 @@ public class VariableFinder
 	private @Nullable Object findStackObject(@NonNull String @NonNull [] varTreePath) {
 		Object rootObj = null;
 		boolean gotIt = false;
-		String envVarName = ClassUtil.nonNullState(varTreePath[0]);
+		String envVarName = ClassUtil.requireNonNull(varTreePath[0]);
 		if (envVarName.startsWith("$")) {
 			Object pcObject = fEvalEnv.getValueOf(fEvalEnv.getPCVariable());
 			for (VMEvaluationEnvironment evalEnv = fEvalEnv; evalEnv != null; evalEnv = evalEnv.getVMParentEvaluationEnvironment()) {

@@ -73,7 +73,7 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 
 	@Override
 	public @NonNull String getClassName() {
-		return ClassUtil.nonNullModel(elementType.getName());
+		return ClassUtil.requireNonNull(elementType.getName());
 	}
 
 	@Override

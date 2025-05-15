@@ -104,7 +104,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 				}
 			}
 		}
-		return ClassUtil.nonNullState(type);
+		return ClassUtil.requireNonNull(type);
 	}
 
 	@Override

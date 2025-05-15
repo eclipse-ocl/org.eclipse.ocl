@@ -333,7 +333,7 @@ public class UMLOCLEValidator implements EValidator
 								stereotype = uml2as.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);
 							}
 							else {
-								ClassUtil.nonNullState(uml2as.getASModel());
+								ClassUtil.requireNonNull(uml2as.getASModel());
 								EClass umlStereotypeEClass = umlStereotypeApplication.eClass();
 								if (!(umlStereotypeApplication instanceof DynamicEObjectImpl)) {					// If stereotyped element has been genmodelled
 									stereotype = uml2as.getEnvironmentFactory().getMetamodelManager().getASOfEcore(Stereotype.class, umlStereotypeEClass); // then it is already a Type rather than a Stereotype

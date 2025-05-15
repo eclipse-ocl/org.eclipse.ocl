@@ -420,8 +420,8 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 					List<@NonNull RuleCall> ruleCalls = eFeature2ruleCalls != null ? eFeature2ruleCalls.get(eFeature) : null;
 					if (ruleCalls == null) {
 						assert keywords != null;
-						Keyword firstKeyword = ClassUtil.nonNullState(keywords.get(0));
-						Assignment assignment = ClassUtil.nonNullState((Assignment)firstKeyword.eContainer());
+						Keyword firstKeyword = ClassUtil.requireNonNull(keywords.get(0));
+						Assignment assignment = ClassUtil.requireNonNull((Assignment)firstKeyword.eContainer());
 						DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 						if (keywords.size() == 1) {
 							alternativeSerializationElements.add(new AssignedKeywordSerializationNode(assignmentAnalysis, GrammarCardinality.ONE, firstKeyword));
@@ -431,8 +431,8 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 						}
 					}
 					else if ((keywords == null) && (ruleCalls.size() == 1)) {
-						RuleCall firstRuleCall = ClassUtil.nonNullState(ruleCalls.get(0));
-						Assignment assignment = ClassUtil.nonNullState((Assignment)firstRuleCall.eContainer());
+						RuleCall firstRuleCall = ClassUtil.requireNonNull(ruleCalls.get(0));
+						Assignment assignment = ClassUtil.requireNonNull((Assignment)firstRuleCall.eContainer());
 						DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 						AbstractRuleAnalysis firstRuleAnalysis = grammarAnalysis.getRuleAnalysis(SerializationUtils.getRule(firstRuleCall));
 						alternativeSerializationElements.add(new AssignedRuleCallSerializationNode(assignmentAnalysis, GrammarCardinality.ONE, firstRuleAnalysis.getIndex()));
@@ -443,7 +443,7 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 						int [] ruleIndexes = new int [ruleCalls.size()];
 						int i = 0;
 						for (@NonNull RuleCall ruleCall : ruleCalls) {
-							Assignment assignment = ClassUtil.nonNullState((Assignment)ruleCall.eContainer());
+							Assignment assignment = ClassUtil.requireNonNull((Assignment)ruleCall.eContainer());
 							assignmentAnalyses.add(grammarAnalysis.getAssignmentAnalysis(assignment));
 							AbstractRuleAnalysis ruleAnalysis = grammarAnalysis.getRuleAnalysis(SerializationUtils.getRule(ruleCall));
 							ruleIndexes[i++] = ruleAnalysis.getIndex();
@@ -509,7 +509,7 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 						return new AlternativeAssignsSerializationNode(assignmentAnalysis, grammarCardinality, keywords, ruleIndexes);
 					}
 					else {
-						AbstractRuleAnalysis firstRuleAnalysis = ClassUtil.nonNullState(ruleAnalyses.get(0));
+						AbstractRuleAnalysis firstRuleAnalysis = ClassUtil.requireNonNull(ruleAnalyses.get(0));
 						return new AssignedRuleCallSerializationNode(assignmentAnalysis, grammarCardinality, firstRuleAnalysis.getIndex());
 					}
 				}
@@ -905,7 +905,7 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 			UniqueList<@NonNull ParserRuleAnalysis> superRuleAnalysesClosureSet = new UniqueList<>();
 			superRuleAnalysesClosureSet.add(this);
 			for (int i = 0; i < superRuleAnalysesClosureSet.size(); i++) {
-				ParserRuleAnalysis ruleAnalysis = ClassUtil.nonNullState(superRuleAnalysesClosureSet.get(i));
+				ParserRuleAnalysis ruleAnalysis = ClassUtil.requireNonNull(superRuleAnalysesClosureSet.get(i));
 				Set<@NonNull ParserRuleAnalysis> superRuleAnalyses = ruleAnalysis.superRuleAnalyses;
 				if (superRuleAnalyses != null) {
 					superRuleAnalysesClosureSet.addAll(superRuleAnalyses);
@@ -947,7 +947,7 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationElement.asListOfList().getLists()) {
 				SerializationNode serializationNode;
 				if (serializationNodes.size() == 1) {
-					serializationNode = ClassUtil.nonNullState(serializationNodes.get(0));
+					serializationNode = ClassUtil.requireNonNull(serializationNodes.get(0));
 					createSerializationRuleAnalyses(serializationRuleAnalyses, serializationNode);
 				}
 				else {
@@ -961,7 +961,7 @@ public class ParserRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 			List<@NonNull SerializationNode> serializationNodes = serializationElement.asList().getNodes();
 			SerializationNode serializationNode;
 			if (serializationNodes.size() == 1) {
-				serializationNode = ClassUtil.nonNullState(serializationNodes.get(0));
+				serializationNode = ClassUtil.requireNonNull(serializationNodes.get(0));
 			}
 			else {
 				CompoundElement alternatives = (CompoundElement)SerializationUtils.getAlternatives(abstractRule);

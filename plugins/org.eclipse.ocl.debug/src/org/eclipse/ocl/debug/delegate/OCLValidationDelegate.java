@@ -153,7 +153,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		}
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
+		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
 			ExpressionInOCL query = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, operation);
@@ -180,7 +180,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 			Map<Object, Object> context, @NonNull EOperation invariant, String expression, int severity, String source, int code) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
+		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
 			ExpressionInOCL query = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, operation);

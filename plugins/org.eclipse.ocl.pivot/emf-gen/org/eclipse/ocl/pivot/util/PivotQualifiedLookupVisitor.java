@@ -28,7 +28,7 @@ extends AbstractPivotCommonLookupVisitor
 
 	public PivotQualifiedLookupVisitor(@NonNull LookupEnvironment context) {
 		super(context);
-		this.executor = ClassUtil.nonNullState(context.getExecutor());
+		this.executor = ClassUtil.requireNonNull(context.getExecutor());
 		this.idResolver = executor.getIdResolver();
 	}
 

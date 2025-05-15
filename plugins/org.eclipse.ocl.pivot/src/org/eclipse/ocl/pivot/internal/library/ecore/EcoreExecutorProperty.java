@@ -28,7 +28,7 @@ public class EcoreExecutorProperty extends ExecutorProperty implements LibraryPr
 	protected final @NonNull EStructuralFeature eFeature;
 
 	public EcoreExecutorProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type executorType, int propertyIndex) {
-		super(ClassUtil.nonNullModel(eFeature.getName()), executorType, propertyIndex);
+		super(ClassUtil.requireNonNull(eFeature.getName()), executorType, propertyIndex);
 		this.eFeature = eFeature;
 	}
 

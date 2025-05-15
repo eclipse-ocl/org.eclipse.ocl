@@ -91,7 +91,7 @@ public class CSSplitter extends AbstractWorkflowComponent
 		ResourceUtils.checkResourceSet(resourceSet);
 		Map<@NonNull EPackage, @NonNull URI> inclusions = new HashMap<@NonNull EPackage, @NonNull URI>();
 		Map<@NonNull EPackage, @NonNull URI> exclusions = new HashMap<@NonNull EPackage, @NonNull URI>();
-		gatherEPackages(ClassUtil.nonNullEMF(resource.getContents()), inclusions, exclusions);
+		gatherEPackages(ClassUtil.requireNonNull(resource.getContents()), inclusions, exclusions);
 		List<Resource> resources = new ArrayList<Resource>();
 		for (EPackage ePackage : inclusions.keySet()) {
 			URI uri = inclusions.get(ePackage);
@@ -139,7 +139,7 @@ public class CSSplitter extends AbstractWorkflowComponent
 						continue;
 					}
 				}
-				gatherEPackages(ClassUtil.nonNullEMF(ePackage.getESubpackages()), inclusions, exclusions);
+				gatherEPackages(ClassUtil.requireNonNull(ePackage.getESubpackages()), inclusions, exclusions);
 			}
 		}
 	}

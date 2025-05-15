@@ -51,7 +51,7 @@ public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 		String initialContentsAsString = super.getInitialContentsAsString(newFile, dialog);
 		@SuppressWarnings("null") OCL ocl = OCL.newInstance(EPackage.Registry.INSTANCE);
 		ResourceSet resourceSet2 = ocl.getResourceSet();
-		BaseCSResource csResource = ClassUtil.nonNullState((BaseCSResource) resourceSet2.createResource(oclInEcoreURI));
+		BaseCSResource csResource = ClassUtil.requireNonNull((BaseCSResource) resourceSet2.createResource(oclInEcoreURI));
 		try {
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(initialContentsAsString.getBytes());
 			csResource.load(inputStream, null);

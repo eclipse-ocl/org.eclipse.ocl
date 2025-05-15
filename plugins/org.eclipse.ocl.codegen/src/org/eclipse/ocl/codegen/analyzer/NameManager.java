@@ -506,7 +506,7 @@ public class NameManager
 		}
 
 		public @NonNull Context getContext() {
-			return ClassUtil.nonNullState(context);
+			return ClassUtil.requireNonNull(context);
 		}
 
 		protected @NonNull String getGlobalUniqueName(@Nullable Object anObject, @Nullable String... nameHints) {
@@ -945,7 +945,7 @@ public class NameManager
 	}
 
 	protected String getVariableDeclarationNameHint(@NonNull VariableDeclaration aVariableDeclaration) {
-		String string = ClassUtil.nonNullModel(aVariableDeclaration.getName());
+		String string = ClassUtil.requireNonNull(aVariableDeclaration.getName());
 		return VARIABLE_DECLARATION_NAME_HINT_PREFIX + getValidJavaIdentifier(string, VARIABLE_DECLARATION_NAME_HINT_PREFIX.length() > 0, aVariableDeclaration);
 	}
 

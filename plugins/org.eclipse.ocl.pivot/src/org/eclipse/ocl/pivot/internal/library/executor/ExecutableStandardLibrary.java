@@ -147,7 +147,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			specializedType = weakGet(map, typeParameters);
 		}
 		if (specializedType == null) {
-			String name = ClassUtil.nonNullModel(genericType.getName());
+			String name = ClassUtil.requireNonNull(genericType.getName());
 			if (genericType instanceof BagType) {
 				specializedType = new ExecutorBagType(name, genericType, elementType, isNullFree, lower, upper);
 			}
@@ -221,7 +221,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			specializedType = weakGet(map, typeParameters);
 		}
 		if (specializedType == null) {
-			specializedType = new ExecutorMapType(ClassUtil.nonNullModel(genericType.getName()), genericType, typeParameters.getKeyType(), typeParameters.getValueType());
+			specializedType = new ExecutorMapType(ClassUtil.requireNonNull(genericType.getName()), genericType, typeParameters.getKeyType(), typeParameters.getValueType());
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		return specializedType;
@@ -230,7 +230,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
 		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
-		return ClassUtil.nonNullState(getPivotType(metaclassName));
+		return ClassUtil.requireNonNull(getPivotType(metaclassName));
 	}
 
 	@Override

@@ -102,7 +102,7 @@ public class EssentialOCLLocationInFileProvider extends BaseLocationInFileProvid
 			}
 			ITextRegion leftRegion = super.getTextRegion(csLeftmost, isSignificant);
 			ITextRegion rightRegion = super.getTextRegion(csRightmost, isSignificant);
-			return ClassUtil.nonNullState(leftRegion.merge(rightRegion));
+			return ClassUtil.requireNonNull(leftRegion.merge(rightRegion));
 		}
 		else {
 			return super.getTextRegion(csExp, isSignificant);

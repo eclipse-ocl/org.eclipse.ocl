@@ -82,7 +82,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 			@Nullable GenPackage baseGenPackage) {
 		super(environmentFactory, genPackage.getGenModel());
 		this.helper = new PivotHelper(environmentFactory);
-		this.genModel = ClassUtil.nonNullState(genPackage.getGenModel());
+		this.genModel = ClassUtil.requireNonNull(genPackage.getGenModel());
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
 		cgAnalyzer = new CodeGenAnalyzer(this);
 		this.asPackage = asPackage;
@@ -212,7 +212,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	}
 
 	public @NonNull String getQualifiedName() {
-		String className = ClassUtil.nonNullState(asPackage.getName());
+		String className = ClassUtil.requireNonNull(asPackage.getName());
 		String packagePrefix = getOptions().getPackagePrefix();
 		if (packagePrefix != null) {
 			return packagePrefix + "." + className;
@@ -260,7 +260,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	 */
 	protected @NonNull ExpressionInOCL getExpressionInOCL(Operation op) {
 		try {
-			LanguageExpression envSpecification = ClassUtil.nonNullState(op.getBodyExpression());
+			LanguageExpression envSpecification = ClassUtil.requireNonNull(op.getBodyExpression());
 			return environmentFactory.parseSpecification(envSpecification);
 		} catch (ParserException e) {
 			throw new IllegalStateException(e);

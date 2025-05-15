@@ -165,7 +165,7 @@ public class FileNewWizardTest extends TestCase
 
 	@Override
 	public String getName() {
-		return TestUtil.getName(ClassUtil.nonNullState(super.getName()));
+		return TestUtil.getName(ClassUtil.requireNonNull(super.getName()));
 	}
 
 	protected final @NonNull TestFileSystem getTestFileSystem() {
@@ -247,7 +247,7 @@ public class FileNewWizardTest extends TestCase
 		testIProject = testProject.getIProject();
 		assertTrue(testIProject.exists());
 		NullProgressMonitor nullMonitor = new NullProgressMonitor();
-		IProjectDescription description = ClassUtil.nonNullState(testIProject.getDescription());
+		IProjectDescription description = ClassUtil.requireNonNull(testIProject.getDescription());
 		if (!SUPPRESS_OCL_NATURE) {
 			BaseUIUtil.toggleNature(description, OCLProjectHelper.NATURE_ID);
 		}

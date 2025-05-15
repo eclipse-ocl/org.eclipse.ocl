@@ -44,7 +44,7 @@ public class TemplateBindingImpl extends AbstractTypeId implements TemplateBindi
 
 	@Override
 	public @NonNull TemplateParameter getTemplateParameter() {
-		return ClassUtil.nonNullState(templateParameter);
+		return ClassUtil.requireNonNull(templateParameter);
 	}
 
 	@Override

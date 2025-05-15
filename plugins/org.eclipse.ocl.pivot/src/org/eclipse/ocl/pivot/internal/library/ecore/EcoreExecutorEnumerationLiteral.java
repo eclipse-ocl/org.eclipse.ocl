@@ -23,7 +23,7 @@ public class EcoreExecutorEnumerationLiteral extends ExecutorEnumerationLiteral
 	protected final EEnumLiteral eEnumLiteral;
 
 	public EcoreExecutorEnumerationLiteral(/*@NonNull*/ EEnumLiteral eEnumLiteral, @NonNull Enumeration enumeration, int ordinal) {
-		super(ClassUtil.nonNullEMF(eEnumLiteral.getName()), enumeration, ordinal);
+		super(ClassUtil.requireNonNull(eEnumLiteral.getName()), enumeration, ordinal);
 		this.eEnumLiteral = eEnumLiteral;
 	}
 
@@ -35,6 +35,6 @@ public class EcoreExecutorEnumerationLiteral extends ExecutorEnumerationLiteral
 //	@Override
 	@Override
 	public @NonNull Enumerator getEnumerator() {
-		return ClassUtil.nonNullEMF(ClassUtil.nonNullState(eEnumLiteral).getInstance());
+		return ClassUtil.requireNonNull(ClassUtil.requireNonNull(eEnumLiteral).getInstance());
 	}
 }

@@ -20,17 +20,17 @@ import org.eclipse.ocl.xtext.base.serializer.SerializationUtils;
 public class IdiomsUtils extends SerializationUtils
 {
 	public static @NonNull IdiomsModel getIdiomsModel(@NonNull IdiomsImport idiomsImport) {
-		return ClassUtil.nonNullState(idiomsImport.getIdiomsModel());
+		return ClassUtil.requireNonNull(idiomsImport.getIdiomsModel());
 	}
 
 	public static @NonNull  Locator getLocator(@NonNull SubIdiom subIdiom) {
 		Locator locator = subIdiom.getOwnedLocator();
-		return getLocator(ClassUtil.nonNullState(locator));
+		return getLocator(ClassUtil.requireNonNull(locator));
 	}
 
 	public static @NonNull Locator getLocator(@NonNull Locator locator) {
 		if (locator instanceof ReferredLocator) {
-			return ClassUtil.nonNullState(((ReferredLocator)locator).getLocatorDeclaration().getOwnedLocator());
+			return ClassUtil.requireNonNull(((ReferredLocator)locator).getLocatorDeclaration().getOwnedLocator());
 		}
 		else {
 			return locator;
@@ -38,7 +38,7 @@ public class IdiomsUtils extends SerializationUtils
 	}
 
 	public static @NonNull LocatorDeclaration getLocatorDeclaration(@NonNull ReferredLocator referredLocator) {
-		return ClassUtil.nonNullState(referredLocator.getLocatorDeclaration());
+		return ClassUtil.requireNonNull(referredLocator.getLocatorDeclaration());
 	}
 
 	public static @NonNull Iterable<@NonNull Idiom> getOwnedIdioms(@NonNull IdiomsModel idiomsModel) {
@@ -50,15 +50,15 @@ public class IdiomsUtils extends SerializationUtils
 	}
 
 	public static @NonNull Locator getOwnedLocator(@NonNull LocatorDeclaration locatorDeclaration) {
-		return ClassUtil.nonNullState(locatorDeclaration.getOwnedLocator());
+		return ClassUtil.requireNonNull(locatorDeclaration.getOwnedLocator());
 	}
 
 	public static @NonNull  Locator getOwnedLocator(@NonNull SubIdiom subIdiom) {
-		return ClassUtil.nonNullState(subIdiom.getOwnedLocator());
+		return ClassUtil.requireNonNull(subIdiom.getOwnedLocator());
 	}
 
 	public static @NonNull Segment getOwnedSegment(@NonNull SegmentDeclaration segmentDeclaration) {
-		return ClassUtil.nonNullState(segmentDeclaration.getOwnedSegment());
+		return ClassUtil.requireNonNull(segmentDeclaration.getOwnedSegment());
 	}
 
 	public static @Nullable List<@NonNull Segment> getOwnedSegments(@NonNull SubIdiom subIdiom) {
@@ -74,10 +74,10 @@ public class IdiomsUtils extends SerializationUtils
 	}
 
 	public static @NonNull Idiom getOwningIdiom(@NonNull SubIdiom subIdiom) {
-		return ClassUtil.nonNullState(subIdiom.getOwningIdiom());
+		return ClassUtil.requireNonNull(subIdiom.getOwningIdiom());
 	}
 
 	public static @NonNull SegmentDeclaration getSegmentDeclaration(@NonNull ReferredSegment referredSegment) {
-		return ClassUtil.nonNullState(referredSegment.getSegmentDeclaration());
+		return ClassUtil.requireNonNull(referredSegment.getSegmentDeclaration());
 	}
 }

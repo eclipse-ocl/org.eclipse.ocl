@@ -117,7 +117,7 @@ public class OCLVMVirtualMachine extends VMVirtualMachine
 	private static @NonNull VMStackFrameData createStackFrame(@NonNull UnitLocation location, boolean includeVars) {
 		VMEvaluationEnvironment evalEnv = location.getEvalEnv();
 		NamedElement module = location.getModule();
-		String moduleName = (module != null) ? ClassUtil.nonNullState(module.getName()) : "<null>"; //$NON-NLS-1$
+		String moduleName = (module != null) ? ClassUtil.requireNonNull(module.getName()) : "<null>"; //$NON-NLS-1$
 
 		NamedElement operation = location.getOperation();
 		StringBuilder s = new StringBuilder();
@@ -125,7 +125,7 @@ public class OCLVMVirtualMachine extends VMVirtualMachine
 		String operSignature = s.toString(); //MessageFormat.format("<{0}>", moduleName);
 
 		List<VMVariableData> vars = VariableFinder.getVariables(evalEnv);
-		String uriString = ClassUtil.nonNullState(location.getURI().toString());
+		String uriString = ClassUtil.requireNonNull(location.getURI().toString());
 		@SuppressWarnings("null")@NonNull VMVariableData @NonNull [] varsArray = vars.toArray(new VMVariableData[vars.size()]);
 		VMStackFrameData vmStackFrame = new VMStackFrameData(evalEnv.getID(), uriString, moduleName,
 				operSignature, location.getLineNum(), location.getStartPosition(), location.getEndPosition(), varsArray);

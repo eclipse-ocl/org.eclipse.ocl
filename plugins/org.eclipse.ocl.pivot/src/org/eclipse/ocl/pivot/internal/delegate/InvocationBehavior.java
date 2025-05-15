@@ -46,12 +46,12 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 
 	@Override
 	public InvocationDelegate.Factory.@NonNull Registry getDefaultRegistry() {
-		return ClassUtil.nonNullEMF(InvocationDelegate.Factory.Registry.INSTANCE);
+		return ClassUtil.requireNonNull(InvocationDelegate.Factory.Registry.INSTANCE);
 	}
 
 	@Override
 	public @NonNull EPackage getEPackage(@NonNull EOperation eOperation) {
-		return ClassUtil.nonNullEMF(eOperation.getEContainingClass().getEPackage());
+		return ClassUtil.requireNonNull(eOperation.getEContainingClass().getEPackage());
 	}
 
 	@Override

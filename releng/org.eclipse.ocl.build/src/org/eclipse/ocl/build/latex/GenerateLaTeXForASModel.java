@@ -53,7 +53,7 @@ public abstract class GenerateLaTeXForASModel extends GenerateLaTeXUtils
 			Ecore2AS adapter = Ecore2AS.getAdapter(eResource, (EnvironmentFactoryInternal) ocl.getEnvironmentFactory());
 			Model asModel = adapter.getASModel();
 			org.eclipse.ocl.pivot.Package asPackage = asModel.getOwnedPackages().get(0);
-			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(eResource.getErrors()), "OCLstdlib parse failure", "\n");
+			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(eResource.getErrors()), "OCLstdlib parse failure", "\n");
 			if (message != null) {
 				issues.addError(this, message, null, null, null);
 				return;
@@ -62,7 +62,7 @@ public abstract class GenerateLaTeXForASModel extends GenerateLaTeXUtils
 //			saver.localizeSpecializations();
 			String fileName = folder + "/" + latexFileName + ".tex";
 			log.info("Generating '" + fileName + "'");
-			String latexContent = generateLaTeX(ClassUtil.nonNullState(asPackage));
+			String latexContent = generateLaTeX(ClassUtil.requireNonNull(asPackage));
 			String encodedContent = encodeForLaTeX(latexContent);
 			FileWriter fw = new FileWriter(fileName);
 			fw.append(encodedContent);

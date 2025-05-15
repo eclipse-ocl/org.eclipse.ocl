@@ -262,7 +262,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 				} // end of collection range
 
 			} // end of parts iterator
-			return idResolver.createCollectionOfAll(type.isOrdered(), type.isUnique(), ClassUtil.nonNullModel(type.getElementType()).getTypeId(), orderedResults);
+			return idResolver.createCollectionOfAll(type.isOrdered(), type.isUnique(), ClassUtil.requireNonNull(type.getElementType()).getTypeId(), orderedResults);
 		} // end of not-simple range case
 	} // end of Set, OrderedSet, Bag Literals
 
@@ -350,7 +350,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
-		Iteration staticIteration = ClassUtil.nonNullModel(iterateExp.getReferredIteration());
+		Iteration staticIteration = ClassUtil.requireNonNull(iterateExp.getReferredIteration());
 		OCLExpression source = iterateExp.getOwnedSource();
 		Object acceptedValue = source.accept(undecoratedVisitor);
 		IterableValue sourceValue = ValueUtil.asIterableValue(acceptedValue);
@@ -388,13 +388,13 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			//			initValue = ValuesUtil.asValidValue(initValue);
 			IterationManager iterationManager;
 			VariableDeclaration accumulatorVariable = accumulator;
-			OCLExpression body = ClassUtil.nonNullModel(iterateExp.getOwnedBody());
+			OCLExpression body = ClassUtil.requireNonNull(iterateExp.getOwnedBody());
 			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iterateExp);
 			int iSize = iterators.size();
 			if (sourceValue instanceof MapValue) {
 				List<IteratorVariable> coIterators = iterateExp.getOwnedCoIterators();
 				if (iSize == 1) {
-					VariableDeclaration keyIterator = ClassUtil.nonNullModel(iterators.get(0));
+					VariableDeclaration keyIterator = ClassUtil.requireNonNull(iterators.get(0));
 					VariableDeclaration valueIterator = coIterators.size() >= 1 ? coIterators.get(0) : null;
 					iterationManager = new EvaluatorSingleMapIterationManager(context, iterateExp, body, (MapValue)sourceValue, accumulatorVariable, initValue, keyIterator, valueIterator);
 
@@ -411,7 +411,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			}
 			else {
 				if (iSize == 1) {
-					VariableDeclaration firstIterator = ClassUtil.nonNullModel(iterators.get(0));
+					VariableDeclaration firstIterator = ClassUtil.requireNonNull(iterators.get(0));
 					iterationManager = new EvaluatorSingleIterationManager(context, iterateExp, body, (CollectionValue)sourceValue, accumulatorVariable, initValue, firstIterator, null);
 				}
 				else {
@@ -448,7 +448,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
-		Iteration staticIteration = ClassUtil.nonNullModel(iteratorExp.getReferredIteration());
+		Iteration staticIteration = ClassUtil.requireNonNull(iteratorExp.getReferredIteration());
 		IterableValue sourceValue;
 		//		try {
 		OCLExpression source = iteratorExp.getOwnedSource();
@@ -497,7 +497,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			int coSize = coIterators.size();
 			if (sourceValue instanceof MapValue) {
 				if (iSize == 1) {
-					VariableDeclaration keyIterator = ClassUtil.nonNullModel(iterators.get(0));
+					VariableDeclaration keyIterator = ClassUtil.requireNonNull(iterators.get(0));
 					VariableDeclaration valueIterator = coIterators.size() >= 1 ? coIterators.get(0) : null;
 					iterationManager = new EvaluatorSingleMapIterationManager(context, iteratorExp, body, (MapValue)sourceValue, null, accumulatorValue, keyIterator, valueIterator);
 				}
@@ -513,7 +513,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			}
 			else {
 				if (iSize == 1) {
-					VariableDeclaration firstIterator = ClassUtil.nonNullModel(iterators.get(0));
+					VariableDeclaration firstIterator = ClassUtil.requireNonNull(iterators.get(0));
 					VariableDeclaration indexIterator = coIterators.size() >= 1 ? coIterators.get(0) : null;
 					iterationManager = new EvaluatorSingleIterationManager(context, iteratorExp, body, (CollectionValue)sourceValue, null, accumulatorValue, firstIterator, indexIterator);
 				}
@@ -809,11 +809,11 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitTupleLiteralExp(@NonNull TupleLiteralExp tl) {
-		Type type = ClassUtil.nonNullModel(tl.getType());
+		Type type = ClassUtil.requireNonNull(tl.getType());
 		Map<@NonNull TuplePartId, @Nullable Object> propertyValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
 		for (@NonNull TupleLiteralPart part : ClassUtil.nullFree(tl.getOwnedParts())) {
 			// Set the tuple field with the value of the init expression
-			propertyValues.put(ClassUtil.nonNull(part.getPartId()), part.accept(undecoratedVisitor));
+			propertyValues.put(ClassUtil.requireNonNull(part.getPartId()), part.accept(undecoratedVisitor));
 		}
 		//		TupleType tupleType = metamodelManager.getTupleType(type.getName(), propertyValues.keySet());
 		return ValueUtil.createTupleValue(((TupleType) type).getTupleTypeId(), propertyValues);

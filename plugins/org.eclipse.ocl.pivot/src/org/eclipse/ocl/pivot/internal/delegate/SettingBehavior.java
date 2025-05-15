@@ -41,12 +41,12 @@ public class SettingBehavior extends AbstractDelegatedBehavior<EStructuralFeatur
 
 	@Override
 	public SettingDelegate.Factory.@NonNull Registry getDefaultRegistry() {
-		return ClassUtil.nonNullEMF(SettingDelegate.Factory.Registry.INSTANCE);
+		return ClassUtil.requireNonNull(SettingDelegate.Factory.Registry.INSTANCE);
 	}
 
 	@Override
 	public @NonNull EPackage getEPackage(@NonNull EStructuralFeature eStructuralFeature) {
-		return ClassUtil.nonNullEMF(eStructuralFeature.getEContainingClass().getEPackage());
+		return ClassUtil.requireNonNull(eStructuralFeature.getEContainingClass().getEPackage());
 	}
 
 	/**

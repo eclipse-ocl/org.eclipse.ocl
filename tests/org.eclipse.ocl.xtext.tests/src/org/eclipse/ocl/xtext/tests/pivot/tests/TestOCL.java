@@ -328,7 +328,7 @@ public class TestOCL extends OCLInternal
 	 */
 	public @Nullable Object assertQueryEquals(@Nullable Object context, @NonNull BigDecimal expected, @NonNull BigDecimal delta, @NonNull String expression) {
 		try {
-			BigDecimal value = ClassUtil.nonNullState((BigDecimal) evaluate(null, context, expression));
+			BigDecimal value = ClassUtil.requireNonNull((BigDecimal) evaluate(null, context, expression));
 			TestCase.assertTrue(expression, (value.compareTo(expected.add(delta)) >= 0) && (value.compareTo(expected.subtract(delta)) >= 0));
 			PivotTestSuite.appendLog(testName, context, expression, null, expected.toString(), delta.toString());
 			return value;
@@ -345,10 +345,10 @@ public class TestOCL extends OCLInternal
 	public Object assertQueryEquals(Object context, @NonNull Number expected, @NonNull String expression, double tolerance) {
 		try {
 			IdResolver idResolver = getIdResolver();
-			@NonNull Object expectedValue = ClassUtil.nonNullState(idResolver.boxedValueOf(expected));
-			@NonNull Object value = ClassUtil.nonNullState(evaluate(null, context, expression));
-			BigDecimal expectedVal = ClassUtil.nonNullState(((RealValue)expectedValue).bigDecimalValue());
-			BigDecimal val = ClassUtil.nonNullState(((RealValue)value).bigDecimalValue());
+			@NonNull Object expectedValue = ClassUtil.requireNonNull(idResolver.boxedValueOf(expected));
+			@NonNull Object value = ClassUtil.requireNonNull(evaluate(null, context, expression));
+			BigDecimal expectedVal = ClassUtil.requireNonNull(((RealValue)expectedValue).bigDecimalValue());
+			BigDecimal val = ClassUtil.requireNonNull(((RealValue)value).bigDecimalValue());
 			double delta = val.subtract(expectedVal).doubleValue();
 			if ((delta < -tolerance) || (tolerance < delta)) {
 				TestCase.assertEquals(expression, expected, value);
@@ -591,7 +591,7 @@ public class TestOCL extends OCLInternal
 	 */
 	public Object assertResultContainsAll(Object context, @NonNull CollectionValue expectedResult, @NonNull String expression) {
 		try {
-			Object result = ClassUtil.nonNullState(evaluate(null, context, expression));
+			Object result = ClassUtil.requireNonNull(evaluate(null, context, expression));
 			TestCase.assertTrue(expectedResult.getClass().isInstance(result));
 			TestCase.assertSame(expectedResult.intSize(), ((CollectionValue) result).intSize());
 			Object actualResult = ((CollectionValue) result).includesAll(expectedResult);
@@ -912,7 +912,7 @@ public class TestOCL extends OCLInternal
 
 	public org.eclipse.ocl.pivot.@NonNull Package getUMLMetamodel() {
 		MetamodelManager metamodelManager = getMetamodelManager();
-		return ClassUtil.nonNullState(metamodelManager.getASmetamodel());
+		return ClassUtil.requireNonNull(metamodelManager.getASmetamodel());
 	}
 
 	/**

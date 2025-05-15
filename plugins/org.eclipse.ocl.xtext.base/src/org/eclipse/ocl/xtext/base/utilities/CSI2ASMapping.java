@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -124,7 +125,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			if (this.index != thatIndex){
 				return null;
 			}
-			return ClassUtil.safeEquals(this.name, thatName) ? this : null;
+			return Objects.equals(this.name, thatName) ? this : null;
 		}
 
 		@Override
@@ -191,7 +192,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			if (this.index != thatIndex){
 				return null;
 			}
-			return ClassUtil.safeEquals(this.name, thatName) ? this : null;
+			return Objects.equals(this.name, thatName) ? this : null;
 		}
 
 		@Override
@@ -284,7 +285,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		protected @NonNull RootCSI getRootCSI(@NonNull ElementCS csElement) {
 			assert csElement.getCsi() == null;
 			assert csElement.eContainer() == null;
-			Resource eResource = ClassUtil.nonNullState(csElement.eResource());
+			Resource eResource = ClassUtil.requireNonNull(csElement.eResource());
 			String uri = eResource.getURI().toString();
 			int index = eResource.getContents().indexOf(csElement);
 			int hashCode = 3 * uri.hashCode() + 53 * index;
@@ -302,7 +303,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			assert eContainer instanceof ElementCS;
 			AbstractCSI	thisParent = getCSI((ElementCS)eContainer);
 			int parentHashCode = thisParent.hashCode();
-			EReference eContainmentFeature = ClassUtil.nonNullState(csElement.eContainmentFeature());
+			EReference eContainmentFeature = ClassUtil.requireNonNull(csElement.eContainmentFeature());
 			EReference thisChild = eContainmentFeature;
 			int childHashCode = eContainmentFeature.hashCode();
 			String thisName = null;
@@ -324,7 +325,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 						}
 						if (sibling instanceof Nameable) {
 							String thatName = ((Nameable)sibling).getName();
-							if (ClassUtil.safeEquals(thisName, thatName)) {
+							if (Objects.equals(thisName, thatName)) {
 								count++;
 							}
 						}

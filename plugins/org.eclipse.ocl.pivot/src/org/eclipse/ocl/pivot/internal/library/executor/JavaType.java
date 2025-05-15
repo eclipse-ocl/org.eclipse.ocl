@@ -30,7 +30,7 @@ public class JavaType extends AbstractExecutorClass
 	protected final @NonNull Class<?> javaClass;
 	
 	public JavaType(@NonNull Class<?> javaClass) {
-		super(ClassUtil.nonNullState(javaClass.getName()), 0);
+		super(ClassUtil.requireNonNull(javaClass.getName()), 0);
 		this.javaClass = javaClass;
 	}
 

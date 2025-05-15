@@ -596,7 +596,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGIterationCallExp generateIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp element) {
-		Iteration asIteration = ClassUtil.nonNullState(element.getReferredIteration());
+		Iteration asIteration = ClassUtil.requireNonNull(element.getReferredIteration());
 		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 		boolean isRequired = element.isIsRequired();
@@ -662,7 +662,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
-		Operation asOperation = ClassUtil.nonNullState(element.getReferredOperation());
+		Operation asOperation = ClassUtil.requireNonNull(element.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
@@ -735,7 +735,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		else if (libraryOperation instanceof ConstrainedOperation) {
 			if (pSource != null) {
-				Type sourceType = ClassUtil.nonNullState(pSource.getType());
+				Type sourceType = ClassUtil.requireNonNull(pSource.getType());
 				Operation finalOperation = codeGenerator.isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
 				CGClass currentClass2 = currentClass;
 				if (finalOperation != null) {
@@ -831,8 +831,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGValuedElement generateOppositePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull OppositePropertyCallExp element) {
-		Property asOppositeProperty = ClassUtil.nonNullModel(element.getReferredProperty());
-		Property asProperty = ClassUtil.nonNullModel(asOppositeProperty.getOpposite());
+		Property asOppositeProperty = ClassUtil.requireNonNull(element.getReferredProperty());
+		Property asProperty = ClassUtil.requireNonNull(asOppositeProperty.getOpposite());
 		boolean isRequired = asProperty.isIsRequired();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(element, null, asProperty);
 		CGOppositePropertyCallExp cgPropertyCallExp = null;
@@ -871,7 +871,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGValuedElement generatePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull PropertyCallExp element) {
-		Property asProperty = ClassUtil.nonNullModel(element.getReferredProperty());
+		Property asProperty = ClassUtil.requireNonNull(element.getReferredProperty());
 		boolean isRequired = asProperty.isIsRequired();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(element, null, asProperty);
 		CGPropertyCallExp cgPropertyCallExp = null;
@@ -949,7 +949,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generateSafeNavigationGuard(@NonNull CallExp callExp, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgUnsafeExp) {
 		//
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		setAst(cgVariableExp, ClassUtil.nonNullModel(callExp.getOwnedSource()));
+		setAst(cgVariableExp, ClassUtil.requireNonNull(callExp.getOwnedSource()));
 		cgVariableExp.setReferredVariable(cgVariable);
 		//
 		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());
@@ -1168,7 +1168,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return null;	// Simple heavy heuristic
 		}
 		ExpressionInOCL asClone = createCopy(prototype);
-		OCLExpression asExpression = ClassUtil.nonNullState(asClone.getOwnedBody());
+		OCLExpression asExpression = ClassUtil.requireNonNull(asClone.getOwnedBody());
 		List<@NonNull OCLExpression> asArguments = ClassUtil.nullFree(callExp.getOwnedArguments());
 		int argumentsSize = asArguments.size();
 		if (argumentsSize > 0) {
@@ -1519,7 +1519,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGValuedElement visitOppositePropertyCallExp(@NonNull OppositePropertyCallExp element) {
-		OCLExpression asSource = ClassUtil.nonNullModel(element.getOwnedSource());
+		OCLExpression asSource = ClassUtil.requireNonNull(element.getOwnedSource());
 		CGValuedElement cgSource = doVisit(CGValuedElement.class, asSource);
 		if (!element.isIsSafe()) {
 			return generateOppositePropertyCallExp(cgSource, element);
@@ -1580,7 +1580,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGValuedElement visitPropertyCallExp(@NonNull PropertyCallExp element) {
-		OCLExpression asSource = ClassUtil.nonNullModel(element.getOwnedSource());
+		OCLExpression asSource = ClassUtil.requireNonNull(element.getOwnedSource());
 		CGValuedElement cgSource = doVisit(CGValuedElement.class, asSource);
 		if (!element.isIsSafe()) {
 			return generatePropertyCallExp(cgSource, element);
@@ -1626,7 +1626,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		if (cgShadowExp != null) {
-			CGExecutorType cgExecutorType = context.createExecutorType(ClassUtil.nonNullState(element.getType()));
+			CGExecutorType cgExecutorType = context.createExecutorType(ClassUtil.requireNonNull(element.getType()));
 			cgShadowExp.setExecutorType(cgExecutorType);
 			cgShadowExp.getOwns().add(cgExecutorType);
 			setAst(cgShadowExp, element);

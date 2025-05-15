@@ -38,7 +38,7 @@ public class OCLStepperVisitor extends AbstractExtendingVisitor<@Nullable IStepp
 
 	@Override
 	public @NonNull IStepper getStepper(@NonNull Element object) {
-		return ClassUtil.nonNullState(object.accept(this));
+		return ClassUtil.requireNonNull(object.accept(this));
 	}
 
 	@Override

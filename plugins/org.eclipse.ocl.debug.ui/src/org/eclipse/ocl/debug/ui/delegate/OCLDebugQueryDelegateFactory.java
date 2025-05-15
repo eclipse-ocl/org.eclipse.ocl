@@ -54,7 +54,7 @@ public class OCLDebugQueryDelegateFactory extends AbstractOCLDelegateFactory imp
 		if ((context == null) || (expression == null)) {
 			return null;
 		}
-		OCLDelegateDomain delegateDomain = loadDelegateDomain(ClassUtil.nonNullEMF(context.getEPackage()));
+		OCLDelegateDomain delegateDomain = loadDelegateDomain(ClassUtil.requireNonNull(context.getEPackage()));
 		if (delegateDomain == null) {
 			return null;
 		}

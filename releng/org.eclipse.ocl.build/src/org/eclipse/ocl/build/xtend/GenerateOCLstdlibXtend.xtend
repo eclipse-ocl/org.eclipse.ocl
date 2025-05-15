@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
-import java.util.Objects
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
@@ -71,7 +70,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 
 	/*@NonNull*/ protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		// initModel(root); in caller
-		var lib = Objects.requireNonNull(thisModel.getLibrary());
+		var lib = ClassUtil.requireNonNull(thisModel.getLibrary());
 		var externalPackages = thisModel.getSortedExternalPackages();
 		var year = new GregorianCalendar().get(GregorianCalendar.YEAR);
 		'''
@@ -372,7 +371,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 *	Construct an OCL Standard Library with specified resource URI and library content.
 				 */
 				private «javaClassName»(@NonNull String asURI, @NonNull Model libraryModel) {
-					super(Objects.requireNonNull(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
+					super(ClassUtil.requireNonNull(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 					assert PivotUtilInternal.isASURI(uri);
 					getContents().add(libraryModel);
 				}

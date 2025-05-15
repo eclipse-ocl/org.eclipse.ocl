@@ -55,7 +55,7 @@ public class ArrayIterable<T> implements IndexableIterable<T>
 
 	@Override
 	public @NonNull T get(int index) {
-		return ClassUtil.nonNullState(array[firstIndex + index]);
+		return ClassUtil.requireNonNull(array[firstIndex + index]);
 	}
 
 	@Override

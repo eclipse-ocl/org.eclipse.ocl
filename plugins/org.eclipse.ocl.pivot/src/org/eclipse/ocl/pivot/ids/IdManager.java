@@ -16,8 +16,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -250,9 +248,9 @@ public final class IdManager
 	 * Return the classId for eClass.
 	 */
 	public static @NonNull ClassId getClassId(@NonNull EClass eClass) {
-		EPackage ePackage = Objects.requireNonNull(eClass.getEPackage());
+		EPackage ePackage = ClassUtil.requireNonNull(eClass.getEPackage());
 		PackageId packageId = IdManager.getPackageId(ePackage);
-		String className = Objects.requireNonNull(NameUtil.getOriginalName(eClass));
+		String className = ClassUtil.requireNonNull(NameUtil.getOriginalName(eClass));
 		ClassId classId = packageId.getClassId(className, eClass.getETypeParameters().size());
 		return classId;
 	}
@@ -321,8 +319,8 @@ public final class IdManager
 	 */
 	@Deprecated
 	public static @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull EEnumLiteral eEnumLiteral) {
-		EEnum eEnum = ClassUtil.nonNullModel(eEnumLiteral.getEEnum());
-		String name = ClassUtil.nonNullModel(eEnumLiteral.getName());
+		EEnum eEnum = ClassUtil.requireNonNull(eEnumLiteral.getEEnum());
+		String name = ClassUtil.requireNonNull(eEnumLiteral.getName());
 		EnumerationId enumerationId = getEnumerationId(eEnum);
 		EnumerationLiteralId enumerationLiteralId = enumerationId.getEnumerationLiteralId(name);
 		return enumerationLiteralId;

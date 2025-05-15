@@ -394,7 +394,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			assert eAttribute != null;
 			@SuppressWarnings("null") @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = entry1.getValue();
 			CardinalityExpression cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eAttribute);
-			boolean needsDefault = ClassUtil.nonNullState(cardinalityExpression).isOne();
+			boolean needsDefault = ClassUtil.requireNonNull(cardinalityExpression).isOne();
 			List<@NonNull EnumerationValue> enumerationValueList = new ArrayList<>(enumerationValue2grammarCardinality.keySet());
 			EnumerationValue firstEnumerationValue;
 			if ((enumerationValueList.size() == 1) && ((firstEnumerationValue = enumerationValueList.get(0)) != null) && firstEnumerationValue.isNull()) {
@@ -638,7 +638,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		do {
 			oldSize = residualExpressions.size();
 			for (int i = oldSize; --i >= 0; ) {
-				CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
+				CardinalityExpression residualExpression = ClassUtil.requireNonNull(residualExpressions.get(i));
 				if (residualExpression.generateLinear(this, false)) {
 					residualExpressions.remove(i);
 				}
@@ -654,7 +654,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			oldSize = residualExpressions.size();
 			gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
-				CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
+				CardinalityExpression residualExpression = ClassUtil.requireNonNull(residualExpressions.get(i));
 				if (residualExpression.generateMayBeZeroCommonFactors(this, false)) {
 					gotOne = true;
 					break;
@@ -662,7 +662,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			}
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
-					CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
+					CardinalityExpression residualExpression = ClassUtil.requireNonNull(residualExpressions.get(i));
 					if (residualExpression.generateLinear(this, false)) {
 						residualExpressions.remove(i);
 					}
@@ -676,7 +676,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			oldSize = residualExpressions.size();
 			gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
-				CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
+				CardinalityExpression residualExpression = ClassUtil.requireNonNull(residualExpressions.get(i));
 				if (residualExpression.generateMayBeZeroCommonFactors(this, true)) {
 					gotOne = true;
 					break;
@@ -684,7 +684,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			}
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
-					CardinalityExpression residualExpression = ClassUtil.nonNullState(residualExpressions.get(i));
+					CardinalityExpression residualExpression = ClassUtil.requireNonNull(residualExpressions.get(i));
 					if (residualExpression.generateLinear(this, true)) {
 						residualExpressions.remove(i);
 					}
@@ -716,7 +716,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				Iterable<@NonNull CardinalityExpression> unresolvedExpressions = computeExpressions(unsolvedVariableGroup, unsolvedVariable2expressions);
 				int size = Iterables.size(unresolvedExpressions);
 				if (size == 1) {
-					CardinalityExpression residualExpression = ClassUtil.nonNullState(unresolvedExpressions.iterator().next());
+					CardinalityExpression residualExpression = ClassUtil.requireNonNull(unresolvedExpressions.iterator().next());
 					/*if (residualExpression.generateMayBeZeroCommonFactors(this, true)) {
 						// ok
 					}
@@ -1108,12 +1108,12 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		SerializationRule serializationRule2 = serializationRule;
 		if (serializationRule2 == null) {
 			analyzeMatches();
-			@NonNull SerializationMatchStep @NonNull [] matchStepsArray = ClassUtil.nonNullState(matchSteps.toArray(new @NonNull SerializationMatchStep[matchSteps.size()]));
+			@NonNull SerializationMatchStep @NonNull [] matchStepsArray = ClassUtil.requireNonNull(matchSteps.toArray(new @NonNull SerializationMatchStep[matchSteps.size()]));
 			List<@NonNull SerializationStep> stepsList = new ArrayList<>();
 			Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms = getSerializationNode2subIdioms();
 			rootSerializationNode.gatherStepsAndSubIdioms(this, stepsList, serializationNode2subIdioms);
 			int size = stepsList.size();
-			@NonNull SerializationStep @NonNull [] serializationSteps = ClassUtil.nonNullState(stepsList.toArray(new @NonNull SerializationStep[size]));
+			@NonNull SerializationStep @NonNull [] serializationSteps = ClassUtil.requireNonNull(stepsList.toArray(new @NonNull SerializationStep[size]));
 			serializationRule = serializationRule2 = new SerializationRule(this, getVariantName(), ruleAnalysis.getIndex(), matchStepsArray, serializationSteps, basicGetSerializationFeatures());
 			SerializationRule old = debugMap.put(this, serializationRule2);		// FIXME debugging
 			assert old == null;
@@ -1142,7 +1142,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 
 	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
 		assert hasMatchAnalyses;
-		return ClassUtil.nonNullState(variable2node.keySet());
+		return ClassUtil.requireNonNull(variable2node.keySet());
 	}
 
 	/**

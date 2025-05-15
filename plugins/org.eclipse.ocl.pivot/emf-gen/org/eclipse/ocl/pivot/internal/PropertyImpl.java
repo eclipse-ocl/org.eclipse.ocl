@@ -1744,7 +1744,7 @@ implements Property {
 			synchronized (this) {
 				propertyId2 = propertyId;
 				if (propertyId2 == null) {
-					String name = ClassUtil.nonNullModel(getName());
+					String name = ClassUtil.requireNonNull(getName());
 					TypeId typeId = getOwningClass().getTypeId();
 					propertyId = propertyId2 = typeId.getPropertyId(name);
 				}

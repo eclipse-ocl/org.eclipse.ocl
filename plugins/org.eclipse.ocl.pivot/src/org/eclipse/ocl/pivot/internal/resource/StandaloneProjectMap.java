@@ -1099,7 +1099,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 					}
 					resource.load(inputStream, null);						// FIXME BUG 465326 this can load what was only created
 				} catch (Exception exception) {
-					handleLoadException(resource, ClassUtil.nonNullEMF(resource.getURI().toString()), exception);
+					handleLoadException(resource, ClassUtil.requireNonNull(resource.getURI().toString()), exception);
 				}
 			}
 		}
@@ -1625,7 +1625,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public @NonNull URI getLocationURI() {
-			return ClassUtil.nonNullState(locationURI);
+			return ClassUtil.requireNonNull(locationURI);
 		}
 
 		@Override
@@ -1635,12 +1635,12 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public @NonNull URI getPlatformPluginURI() {
-			return ClassUtil.nonNullState(platformPluginURI);
+			return ClassUtil.requireNonNull(platformPluginURI);
 		}
 
 		@Override
 		public @NonNull URI getPlatformResourceURI() {
-			return ClassUtil.nonNullState(platformResourceURI);
+			return ClassUtil.requireNonNull(platformResourceURI);
 		}
 
 		@Override

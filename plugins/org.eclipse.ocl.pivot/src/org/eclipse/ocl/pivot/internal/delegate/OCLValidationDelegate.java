@@ -183,7 +183,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		}
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);			// XXX context lookup first
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
+		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
 			ExpressionInOCL query = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, operation);
@@ -210,7 +210,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
 	//	MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.nonNullEMF(invariant));
+		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
 			Operation operation = (Operation)namedElement;
 			ExpressionInOCL query = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, operation);

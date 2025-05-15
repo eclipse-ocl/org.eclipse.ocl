@@ -54,7 +54,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitLambdaType(@NonNull LambdaType object) {
-		Type referredType = ClassUtil.nonNullModel(object.getContextType());
+		Type referredType = ClassUtil.requireNonNull(object.getContextType());
 		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
 		if (referredClass != null) {
 			Type resolvedType = context.resolveType(referredClass);
@@ -62,7 +62,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 				object.setContextType(resolvedType);
 			}
 		}
-		referredType = ClassUtil.nonNullModel(object.getResultType());
+		referredType = ClassUtil.requireNonNull(object.getResultType());
 		referredClass = referredType.isClass();
 		if (referredClass != null) {
 			Type resolvedType = context.resolveType(referredClass);
@@ -88,7 +88,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitLoopExp(@NonNull LoopExp object) {
-		Iteration referredIteration = ClassUtil.nonNullModel(object.getReferredIteration());
+		Iteration referredIteration = ClassUtil.requireNonNull(object.getReferredIteration());
 		Iteration resolvedIteration = context.resolveOperation(referredIteration);
 		object.setReferredIteration(resolvedIteration);
 		return super.visitLoopExp(object);
@@ -127,7 +127,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution object) {
-		Type referredType = ClassUtil.nonNullModel(object.getActual());
+		Type referredType = ClassUtil.requireNonNull(object.getActual());
 		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
 		if (referredClass != null) {
 			Type resolvedType = context.resolveType(referredClass);
@@ -145,7 +145,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitTypeExp(@NonNull TypeExp object) {
-		Type referredType = ClassUtil.nonNullEMF(object.getReferredType());
+		Type referredType = ClassUtil.requireNonNull(object.getReferredType());
 		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
 		if (referredClass != null) {
 			Type resolvedType = context.resolveType(referredClass);
@@ -159,7 +159,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitTypedElement(@NonNull TypedElement object) {
-		Type referredType = ClassUtil.nonNullEMF(object.getType());
+		Type referredType = ClassUtil.requireNonNull(object.getType());
 		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
 		if (referredClass != null) {
 			Type resolvedType = context.resolveType(referredClass);

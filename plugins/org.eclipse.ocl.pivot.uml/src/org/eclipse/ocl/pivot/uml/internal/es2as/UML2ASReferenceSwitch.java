@@ -428,7 +428,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			return name;
 		}
 		else {
-			return ClassUtil.nonNullState(umlProperty.getType().getName());
+			return ClassUtil.requireNonNull(umlProperty.getType().getName());
 		}
 	}
 

@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -40,6 +39,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.util.PivotValidator;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -195,7 +195,7 @@ public class AbstractUMLLoadTests extends AbstractLoadTests
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			IProjectDescriptor projectDescriptor1 = getProjectMap().getProjectDescriptor("org.eclipse.uml2.uml");
-			StandaloneProjectMap.IProjectDescriptor projectDescriptor2 = Objects.requireNonNull(projectDescriptor1);
+			StandaloneProjectMap.IProjectDescriptor projectDescriptor2 = ClassUtil.requireNonNull(projectDescriptor1);
 			projectDescriptor2.initializeURIMap(URIConverter.URI_MAP);		// *.ecore2xml must be global
 		}
 		EnvironmentFactoryInternal environmentFactory = internalOCL.getEnvironmentFactory();

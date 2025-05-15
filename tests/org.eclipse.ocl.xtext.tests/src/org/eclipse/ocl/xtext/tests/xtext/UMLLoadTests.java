@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.tests.xtext;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -23,6 +22,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -119,14 +119,14 @@ public class UMLLoadTests extends AbstractUMLLoadTests
 		URI uri = getTestModelURI("models/uml/NullFree.uml");
 		Model model = doLoadUML(ocl, uri, false, true, NO_MESSAGES, null);
 		org.eclipse.ocl.pivot.Package asPackage = model.getOwnedPackages().get(0);
-		org.eclipse.ocl.pivot.Class asInheritedNullFree = Objects.requireNonNull(NameUtil.getNameable(asPackage.getOwnedClasses(), "InheritedNullFree"));
-		org.eclipse.ocl.pivot.Class asNonNullFree = Objects.requireNonNull(NameUtil.getNameable(asPackage.getOwnedClasses(), "NonNullFree"));
-		Property inf_nf = Objects.requireNonNull(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nf"));
-		Property inf_nnf = Objects.requireNonNull(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nnf"));
-		Property inf_inf = Objects.requireNonNull(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "inf"));
-		Property nnf_nf = Objects.requireNonNull(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nf"));
-		Property nnf_nnf = Objects.requireNonNull(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nnf"));
-		Property nnf_inf = Objects.requireNonNull(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "inf"));
+		org.eclipse.ocl.pivot.Class asInheritedNullFree = ClassUtil.requireNonNull(NameUtil.getNameable(asPackage.getOwnedClasses(), "InheritedNullFree"));
+		org.eclipse.ocl.pivot.Class asNonNullFree = ClassUtil.requireNonNull(NameUtil.getNameable(asPackage.getOwnedClasses(), "NonNullFree"));
+		Property inf_nf = ClassUtil.requireNonNull(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nf"));
+		Property inf_nnf = ClassUtil.requireNonNull(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nnf"));
+		Property inf_inf = ClassUtil.requireNonNull(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "inf"));
+		Property nnf_nf = ClassUtil.requireNonNull(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nf"));
+		Property nnf_nnf = ClassUtil.requireNonNull(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nnf"));
+		Property nnf_inf = ClassUtil.requireNonNull(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "inf"));
 		assertEquals(true, ((CollectionType)inf_nf.getType()).isIsNullFree());
 		assertEquals(false, ((CollectionType)inf_nnf.getType()).isIsNullFree());
 		assertEquals(true, ((CollectionType)inf_inf.getType()).isIsNullFree());

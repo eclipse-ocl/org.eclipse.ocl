@@ -534,7 +534,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	@Override
 	public @NonNull CompleteModelInternal getCompleteModel() {
-		return ClassUtil.nonNullState(completeModel);
+		return ClassUtil.requireNonNull(completeModel);
 	}
 
 	@Override

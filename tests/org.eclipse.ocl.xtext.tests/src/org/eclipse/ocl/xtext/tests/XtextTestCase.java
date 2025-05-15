@@ -21,7 +21,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -63,6 +62,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -312,7 +312,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 	protected void doBadLoadFromString(@NonNull OCLInternal ocl, @NonNull String fileName, @NonNull String testContents, @NonNull Bag<String> expectedErrorMessages) throws Exception {
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		metamodelManager.addClassLoader(Objects.requireNonNull(getClass().getClassLoader()));
+		metamodelManager.addClassLoader(ClassUtil.requireNonNull(getClass().getClassLoader()));
 		InputStream inputStream = new URIConverter.ReadableInputStream(testContents, "UTF-8");
 		URI libraryURI = getTestFileURI(fileName, inputStream);
 		@SuppressWarnings("null")@NonNull BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(libraryURI);
@@ -505,7 +505,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		BaseCSResource xtextResource = null;
 		try {
 			ResourceSet resourceSet2 = ocl.getResourceSet();
-			xtextResource = Objects.requireNonNull((BaseCSResource) resourceSet2.getResource(inputURI, true));
+			xtextResource = ClassUtil.requireNonNull((BaseCSResource) resourceSet2.getResource(inputURI, true));
 			assertNoResourceErrors("Load failed", xtextResource);
 			//			adapter = xtextResource.getCS2ASAdapter(null);
 			CS2AS cs2as = xtextResource.getCS2AS(ocl.getEnvironmentFactory());
@@ -522,7 +522,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 			}
 			Writer writer = new StringWriter();
 			ecoreResource.save(writer, XMIUtil.createSaveOptions(ecoreResource));
-			return Objects.requireNonNull(writer.toString());
+			return ClassUtil.requireNonNull(writer.toString());
 		}
 		finally {
 			if (xtextResource != null) {

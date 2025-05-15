@@ -84,7 +84,7 @@ public class IdiomSerializationMatch implements IdiomMatch
 		if (subIdiomIndex >= locatedNodes.length) {
 			for (int i = 0; i < locatedNodes.length; i++) {
 				SerializationNode serializationNode = locatedNodes[i];
-				SubIdiom subIdiom = ClassUtil.nonNullState(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
+				SubIdiom subIdiom = ClassUtil.requireNonNull(IdiomsUtils.getOwnedSubIdioms(idiom).get(i));
 				if (subIdiom.getOwnedSegments().size() > 0) {		// Locator-only subidioms are trivislly 'mixed-in'
 					List<@NonNull SubIdiom> subIdioms = serializationNode2subIdioms.get(serializationNode);
 					if (subIdioms == null) {

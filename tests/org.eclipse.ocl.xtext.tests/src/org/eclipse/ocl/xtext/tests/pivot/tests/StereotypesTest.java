@@ -221,7 +221,7 @@ public class StereotypesTest extends PivotTestSuite
 			UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
 			Model pivotModel = uml2as.getASModel();
 			ASResource asResource = (ASResource) pivotModel.eResource();
-			return ClassUtil.nonNullModel(asResource);
+			return ClassUtil.requireNonNull(asResource);
 		}
 	}
 

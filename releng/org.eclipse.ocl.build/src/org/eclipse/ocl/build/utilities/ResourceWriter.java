@@ -64,7 +64,7 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
-		ResourceSet resourceSet = ClassUtil.nonNullState(getResourceSet());
+		ResourceSet resourceSet = ClassUtil.requireNonNull(getResourceSet());
 		XMLResource inputResource = (XMLResource) ctx.get(getModelSlot());
 		assert inputResource != null;
 		try {

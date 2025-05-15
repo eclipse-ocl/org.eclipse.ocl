@@ -230,7 +230,7 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 					if (root != null) {
 						String projectName = workspaceURI.segment(0);
 						Bundle bundle = Platform.getBundle(projectName);
-						BundleWiring bundleWiring = ClassUtil.nonNullState(bundle.adapt(BundleWiring.class));
+						BundleWiring bundleWiring = ClassUtil.requireNonNull(bundle.adapt(BundleWiring.class));
 						classLoader = bundleWiring.getClassLoader();
 						templateClassPathFile = JavaFileUtil.getOSGIClassPath(bundle);
 					}

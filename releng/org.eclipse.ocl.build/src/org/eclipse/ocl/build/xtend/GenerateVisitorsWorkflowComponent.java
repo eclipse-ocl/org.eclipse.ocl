@@ -30,6 +30,7 @@ import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.build.utilities.GenPackageHelper;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
@@ -162,7 +163,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 
 	protected @NonNull URI getGenModelURI(String projectName, String genModelFile) {
 		URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
-		return Objects.requireNonNull(URI.createURI(genModelFile).resolve(projectResourceURI));
+		return ClassUtil.requireNonNull(URI.createURI(genModelFile).resolve(projectResourceURI));
 	}
 
 	protected @NonNull Resource getGenModelResource(OCL ocl, URI genModelURI) {
@@ -224,7 +225,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 
 		log.info("Loading GenModel '" + genModelURI);
 		//		try {
-		registerGenModel(ocl, Objects.requireNonNull(genPackage.getGenModel()));
+		registerGenModel(ocl, ClassUtil.requireNonNull(genPackage.getGenModel()));
 		copyright = getCopyright(genPackage.getGenModel());
 		sourceFile = genModelFile;
 		generateVisitors(genPackage);

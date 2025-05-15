@@ -52,7 +52,7 @@ public abstract class ReflectivePackage extends ExecutorPackage
 		if (class2inheritance2 == null) {
 			class2inheritance2 = computeClasses();
 		}
-		return ClassUtil.nonNullState(class2inheritance2.get(domainClass));
+		return ClassUtil.requireNonNull(class2inheritance2.get(domainClass));
 	}
 
 	@Override

@@ -179,31 +179,31 @@ public class CGUtil
 	}
 
 	public static @NonNull CGIterator getAccumulator(@NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		return ClassUtil.nonNullState(cgIterationCallExp.getAccumulator());
+		return ClassUtil.requireNonNull(cgIterationCallExp.getAccumulator());
 	}
 
 	public static @NonNull OCLExpression getAST(@NonNull CGCallExp cgCallExp) {
-		return ClassUtil.nonNullState((OCLExpression)cgCallExp.getAst());
+		return ClassUtil.requireNonNull((OCLExpression)cgCallExp.getAst());
 	}
 
 	public static org.eclipse.ocl.pivot.@NonNull Class getAST(@NonNull CGClass cgClass) {
-		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)cgClass.getAst());
+		return ClassUtil.requireNonNull((org.eclipse.ocl.pivot.Class)cgClass.getAst());
 	}
 
 	public static @NonNull Constraint getAST(@NonNull CGConstraint cgConstraint) {
-		return ClassUtil.nonNullState((Constraint)cgConstraint.getAst());
+		return ClassUtil.requireNonNull((Constraint)cgConstraint.getAst());
 	}
 
 	public static @NonNull Type getAST(@NonNull CGExecutorType cgExecutorType) {
-		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
+		return ClassUtil.requireNonNull((Type)cgExecutorType.getAst());
 	}
 
 	public static @NonNull Variable getAST(@NonNull CGIterator cgIterator) {
-		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
+		return ClassUtil.requireNonNull((Variable)cgIterator.getAst());
 	}
 
 	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGParameter cgParameter) {
-		return ClassUtil.nonNullState((VariableDeclaration)cgParameter.getAst());
+		return ClassUtil.requireNonNull((VariableDeclaration)cgParameter.getAst());
 	}
 
 	public static @NonNull List<@NonNull CGIterator> getCoIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
@@ -238,15 +238,15 @@ public class CGUtil
 	} */
 
 	public static @NonNull CGValuedElement getIn(@NonNull CGLetExp cgLetExp) {
-		return ClassUtil.nonNullState(cgLetExp.getIn());
+		return ClassUtil.requireNonNull(cgLetExp.getIn());
 	}
 
 	public static @NonNull CGValuedElement getInit(@NonNull CGTuplePart cgTuplePart) {
-		return ClassUtil.nonNullState(cgTuplePart.getInit());
+		return ClassUtil.requireNonNull(cgTuplePart.getInit());
 	}
 
 	public static @NonNull CGValuedElement getInit(@NonNull CGVariable cgVariable) {
-		return ClassUtil.nonNullState(cgVariable.getInit());
+		return ClassUtil.requireNonNull(cgVariable.getInit());
 	}
 
 	public static @NonNull List<@NonNull CGIterator> getIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
@@ -258,11 +258,11 @@ public class CGUtil
 	}
 
 	public static @NonNull CGValuedElement getReferredConstant(@NonNull CGConstantExp cgConstantExp) {
-		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
+		return ClassUtil.requireNonNull(cgConstantExp.getReferredConstant());
 	}
 
 	public static @NonNull CGValuedElement getReferredVariable(@NonNull CGVariableExp cgVariableExp) {
-		return ClassUtil.nonNullState(cgVariableExp.getReferredVariable());
+		return ClassUtil.requireNonNull(cgVariableExp.getReferredVariable());
 	}
 
 	public static boolean isInlinedId(@NonNull ElementId elementId) {

@@ -117,7 +117,7 @@ extends AbstractPivotCommonLookupVisitor
 
 	public PivotUnqualifiedLookupVisitor(@NonNull LookupEnvironment context) {
 		super(context);
-		this.executor = ClassUtil.nonNullState(context.getExecutor());
+		this.executor = ClassUtil.requireNonNull(context.getExecutor());
 		this.idResolver = executor.getIdResolver();
 	}
 
@@ -173,7 +173,7 @@ extends AbstractPivotCommonLookupVisitor
 			}
 		};
 		final @NonNull  ExecutorSingleIterationManager MGR_superClasses_1 = new ExecutorSingleIterationManager(executor, SET_CLSSid_Class, BODY_superClasses_1, oclAsSet, ACC_superClasses_1);
-		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SetValue superClasses = ClassUtil.nonNullState((SetValue)IMPL_superClasses_1.evaluateIteration(MGR_superClasses_1));
+		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SetValue superClasses = ClassUtil.requireNonNull((SetValue)IMPL_superClasses_1.evaluateIteration(MGR_superClasses_1));
 		/*@Thrown*/ BagValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
 		@Nullable Iterator<?> ITERATOR__1_0 = superClasses.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull BagValue collect;
@@ -344,7 +344,7 @@ extends AbstractPivotCommonLookupVisitor
 			}
 		};
 		final @NonNull  ExecutorSingleIterationManager MGR_superClasses_1 = new ExecutorSingleIterationManager(executor, SET_CLSSid_Class, BODY_superClasses_1, oclAsSet, ACC_superClasses_1);
-		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SetValue superClasses = ClassUtil.nonNullState((SetValue)IMPL_superClasses_1.evaluateIteration(MGR_superClasses_1));
+		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SetValue superClasses = ClassUtil.requireNonNull((SetValue)IMPL_superClasses_1.evaluateIteration(MGR_superClasses_1));
 		/*@Thrown*/ BagValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
 		@Nullable Iterator<?> ITERATOR__1 = superClasses.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull BagValue collect;

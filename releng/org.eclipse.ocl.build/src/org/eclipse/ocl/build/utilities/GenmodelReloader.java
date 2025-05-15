@@ -81,7 +81,7 @@ public class GenmodelReloader extends AbstractProjectComponent
 		URI genModelURI = URI.createPlatformResourceURI(genModel, true);
 		log.info("Reloading '" + genModelURI + "'");
 		Monitor monitor = showProgress ? new LoggerMonitor(log) : new BasicMonitor();
-		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectDescriptor());
+		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.requireNonNull(getProjectDescriptor());
 		//		@SuppressWarnings("null")@NonNull URI nsURI = URI.createURI(PivotPackage.eNS_URI);
 		//		IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(nsURI);
 		//		packageDescriptor.configure(null, StandaloneProjectMap.LoadModelStrategy.INSTANCE, null);
