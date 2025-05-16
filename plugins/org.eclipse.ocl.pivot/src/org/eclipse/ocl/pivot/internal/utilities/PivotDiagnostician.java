@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 public abstract class PivotDiagnostician extends Diagnostician
 {
-	private static Boolean diagnosticianHasDoValidate = null; // Use 2.9/2.8 Diagnostician
+	@SuppressWarnings("unused") private static Boolean diagnosticianHasDoValidate = null; // Use 2.9/2.8 Diagnostician
 
 	protected final static class Diagnostician_2_8 extends PivotDiagnostician
 	{

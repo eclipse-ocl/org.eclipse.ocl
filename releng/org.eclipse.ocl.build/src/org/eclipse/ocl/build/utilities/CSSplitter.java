@@ -107,7 +107,7 @@ public class CSSplitter extends AbstractWorkflowComponent
 		for (Resource csResource : resources) {
 			try {
 				log.info(" to '" + csResource.getURI() + "'");
-				csResource.save(XMIUtil.createSaveOptions());
+				csResource.save(XMIUtil.createSaveOptions(csResource));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

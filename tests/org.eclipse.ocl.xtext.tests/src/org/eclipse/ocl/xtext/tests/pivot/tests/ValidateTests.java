@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
-import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -655,8 +654,6 @@ public class ValidateTests extends AbstractValidateTests
 		String template = PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_;
 		String objectLabel1; // = LabelUtil.getLabel(testInstance1);
 		String objectLabel2; // = LabelUtil.getLabel(testInstance2);
-		String message1;
-		String message2;
 		String conflictingResourceMessage = StringUtil.bind(PivotMessages.ConflictingResource, ecoreURI.toString());
 		try {
 			//
@@ -675,8 +672,6 @@ public class ValidateTests extends AbstractValidateTests
 			eSet(testInstance2, "l3", "yy");
 			objectLabel1 = LabelUtil.getLabel(testInstance1);
 			objectLabel2 = LabelUtil.getLabel(testInstance2);
-			message1 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel1, "The feature 'l1' is not a valid feature");
-			message2 = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,  "Level1", "L1_size", objectLabel2, "The feature 'l1' is not a valid feature");
 			//
 			// yet another OCL - dynamic OCL's EPackage is loaded to match first testInstance1 and so not testInstance2 - CompleteOCLEObjectValidator's Validate.ecore EPackage is inconsistent with Validate.oclinecore import
 			//

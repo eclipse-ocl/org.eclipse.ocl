@@ -569,7 +569,6 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 		return true;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
 		//		if (!object.hasMoniker()) {

@@ -169,7 +169,6 @@ public class MonikerTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	@SuppressWarnings("null")
 	public void doMonikerTestOCLstdlib(@NonNull URI inputURI) throws IOException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		//

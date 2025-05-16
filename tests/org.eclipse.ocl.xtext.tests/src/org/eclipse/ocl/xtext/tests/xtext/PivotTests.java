@@ -203,14 +203,14 @@ public class PivotTests extends XtextTestCase
 		xtextResource.setURI(output2URI);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
-		xtextResource.save(XMIUtil.createSaveOptions());
+		xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 		debugTimestamp.log("Serialization save done");
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xtextResource);
 		Resource xmiResource = resourceSet.createResource(outputURI);
 		xmiResource.getContents().addAll(xtextResource.getContents());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-		xmiResource.save(XMIUtil.createSaveOptions());
+		xmiResource.save(XMIUtil.createSaveOptions(xmiResource));
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xmiResource);
 		xtextResource.getContents().addAll(xmiResource.getContents());
@@ -308,7 +308,7 @@ public class PivotTests extends XtextTestCase
 		for (Resource pResource : asResourceSet.getResources()) {
 			URI uri = pResource.getURI();
 			if (uri.isFile()) {
-				Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+				Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(pResource);
 				saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 				saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
 				pResource.save(saveOptions);
@@ -325,7 +325,7 @@ public class PivotTests extends XtextTestCase
 		//		cs2asResourceMap.put(csResource, asResource);
 		AS2CS as2cs = new OCLinEcoreAS2CS(cs2asResourceMap, metamodelManager.getEnvironmentFactory());
 		as2cs.update();
-		csResource.save(XMIUtil.createSaveOptions());
+		csResource.save(XMIUtil.createSaveOptions(csResource));
 		ocl.dispose();
 	}
 

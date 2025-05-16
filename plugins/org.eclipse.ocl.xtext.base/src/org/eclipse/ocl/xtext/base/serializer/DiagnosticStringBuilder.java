@@ -104,7 +104,6 @@ public class DiagnosticStringBuilder
 
 	@Override
 	public @NonNull String toString() {
-		@SuppressWarnings("null")
 		@NonNull String castString = s.toString();
 		return castString;
 	}

@@ -254,17 +254,6 @@ public class DataTypeRuleAnalysis extends AbstractNonTerminalRuleAnalysis
 			if (rule2segments == null) {
 				rule2segments = finalSegments;
 			}
-			StringBuilder s = new StringBuilder();
-		/*	s.append(this);
-			if (rule2segments != null) {
-				s.append(" : " + rule2segments);
-			}
-			if (string2segments != null) {
-				for (Map.@NonNull Entry<@NonNull String, @NonNull List<Segment>> entry : string2segments.entrySet()) {
-					s.append("\n\t" + entry.getKey() + " : " + entry.getValue());
-				}
-			}
-			System.out.println(s.toString()); */
 		}
 	}
 

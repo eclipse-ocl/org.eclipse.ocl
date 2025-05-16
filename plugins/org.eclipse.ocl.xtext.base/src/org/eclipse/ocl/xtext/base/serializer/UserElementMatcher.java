@@ -158,7 +158,6 @@ public class UserElementMatcher
 				for (int grammarRuleIndex : grammarRuleIndexes) {
 					DynamicRuleMatch dynamicRuleMatch = elementAnalysis.basicCreateDynamicRuleMatch(grammarRuleIndex);
 					if (dynamicRuleMatch != null) {
-						@SuppressWarnings("null")
 						@NonNull Integer castInteger = Integer.valueOf(index+1);
 						matcherContext.put(eReference, castInteger);
 						return object;
@@ -166,7 +165,6 @@ public class UserElementMatcher
 				}
 			}
 			else if (eObject != null) {
-				@SuppressWarnings("null")
 				@NonNull Integer castInteger = Integer.valueOf(index+1);
 				matcherContext.put(eReference, castInteger);
 				return eObject;
@@ -183,7 +181,6 @@ public class UserElementMatcher
 				}
 			}
 			// FIXME Check non ParserRule grammarRuleValue
-			@SuppressWarnings("null")
 			@NonNull Integer castInteger = Integer.valueOf(index+1);
 			matcherContext.put(eAttribute, castInteger);
 			return object;
@@ -256,22 +253,21 @@ public class UserElementMatcher
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-			List<@NonNull EStructuralFeature> features = new ArrayList<>(matcherContext.keySet());
-			Collections.sort(features, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-			boolean isFirst = true;
-			for (@NonNull EStructuralFeature feature : features) {
-				if (!isFirst) {
-					s.append(",");
-				}
-				s.append(feature.getName());
-				Integer consumed = matcherContext.get(feature);
-				assert consumed != null;
-				s.append("[");
-				s.append(consumed);
-				s.append("]");
-				isFirst = false;
+		List<@NonNull EStructuralFeature> features = new ArrayList<>(matcherContext.keySet());
+		Collections.sort(features, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		boolean isFirst = true;
+		for (@NonNull EStructuralFeature feature : features) {
+			if (!isFirst) {
+				s.append(",");
 			}
-		@SuppressWarnings("null")
+			s.append(feature.getName());
+			Integer consumed = matcherContext.get(feature);
+			assert consumed != null;
+			s.append("[");
+			s.append(consumed);
+			s.append("]");
+			isFirst = false;
+		}
 		@NonNull String castString = s.toString();
 		return castString;
 	}

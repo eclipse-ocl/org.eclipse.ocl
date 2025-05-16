@@ -160,7 +160,7 @@ public class SerializeTests extends XtextTestCase
 		//
 		//	Ecore to Pivot
 		//
-		XtextResource xtextResource1 = null;
+		@SuppressWarnings("unused") XtextResource xtextResource1 = null;
 		try {
 			ASResource asResource = ocl1.ecore2as(ecoreResource);
 			assertNoResourceErrors("Normalisation failed", asResource);
@@ -249,7 +249,7 @@ public class SerializeTests extends XtextTestCase
 		//
 		//	Ecore to Pivot
 		//
-		XtextResource xtextResource = null;
+		@SuppressWarnings("unused") XtextResource xtextResource = null;
 		try {
 			EnvironmentFactoryInternal environmentFactory1 = ocl1.getEnvironmentFactory();
 			@SuppressWarnings("unused")
@@ -304,7 +304,6 @@ public class SerializeTests extends XtextTestCase
 		return asResource;
 	}
 
-	@SuppressWarnings("deprecation")
 	protected @NonNull Resource loadEcore(@NonNull ResourceSet resourceSet, @NonNull URI inputURI) {
 		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {

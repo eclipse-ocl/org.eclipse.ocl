@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -117,7 +117,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		if (modelManager == null) {
 			modelManager = environmentFactory.createModelManager(unboxedObject);
 		}
-		BasicQueryImpl query2 = new BasicQueryImpl(environmentFactory, query);
+		QueryImpl query2 = new QueryImpl(environmentFactory, query);
 		return query2.evaluateEcore(eStructuralFeature.getEType().getInstanceClass(), unboxedObject);
 	}
 

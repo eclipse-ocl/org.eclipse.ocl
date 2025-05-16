@@ -228,7 +228,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 			return null;
 		}
 		else if (value instanceof CGElementId) {
-			return getASTypeId() == ((CGElementId)thatValue).getASTypeId();
+			return getASTypeId() == thatValue.getASTypeId();
 		}
 		else {
 			return Boolean.FALSE;

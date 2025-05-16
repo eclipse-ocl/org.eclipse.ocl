@@ -37,9 +37,9 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
 import org.eclipse.ocl.pivot.internal.helper.OCLHelperImpl;
-import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLDebugOptions;
@@ -318,7 +318,7 @@ public class OCL
 	 * @return the new query object
 	 */
 	public @NonNull Query createQuery(@NonNull ExpressionInOCL query) {
-		return new QueryImpl(this, query);
+		return new QueryImpl(getEnvironmentFactory(), query);
 	}
 
 	/**
@@ -342,7 +342,7 @@ public class OCL
 	public Query createQuery(@NonNull Constraint constraint) throws ParserException {
 		LanguageExpression specification = ClassUtil.requireNonNull(constraint.getOwnedSpecification());
 		ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-		return new QueryImpl(this, query);
+		return new QueryImpl(environmentFactory, query);
 	}
 
 	/**

@@ -166,7 +166,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), userResourceSet);
 		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
-		String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
+		@SuppressWarnings("unused") String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 		//
 		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
 		//
@@ -206,7 +206,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		doTestRunnable(new TestRunnable(ocl0.getEnvironmentFactory()) {
 			@Override
 			public void runWithThrowable() {
-				String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
+				@SuppressWarnings("unused") String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 				assertValidationDiagnostics("Ecore validation with extra OCL", ecoreResource, getMessages(
 					"OCL Delegate Initialization Failed\n\tParserException - Failed to resolve 'platform:/resource/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore#//BadClass/mustBeTrue'"));
 			}
@@ -218,7 +218,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 	public void testValidationTutorial_Minimal_EcoreTestFile() throws Throwable {
 		@NonNull URI ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/EcoreTestFile.ecore", true);
 		@NonNull URI ocl4ecoreURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.completeocltutorial/model/ExtraEcoreValidation.ocl", true);
-		String badMinuteMessage = "The name 'M i n u t e' is not well formed";
+		@SuppressWarnings("unused") String badMinuteMessage = "The name 'M i n u t e' is not well formed";
 
 		ResourceSet userResourceSet = createExternalResourceSet();
 		//
@@ -232,14 +232,14 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		//
 		OCL ocl0 = new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), userResourceSet);
 		assertNoValidationErrors("Ecore validation without extra OCL", ecoreResource);
-		String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
+		@SuppressWarnings("unused") String ecoreObjectLabel = LabelUtil.getLabel(ecoreFeature);
 		//
 		//	Load the Complete OCL document - emulate OCL -> Load Document for the *.ocl
 		//
 		CompleteOCLLoader helper = new TestCompleteOCLLoader(ocl0.getEnvironmentFactory());
 		ASResource ocl4ecoreResource = (ASResource)helper.loadResource(ocl4ecoreURI);
 		assert ocl4ecoreResource != null;
-		String iseMessage = "\n\t" + IllegalStateException.class.getSimpleName() + " - " + StringUtil.bind(PivotMessages.ConflictingResource, ecoreURI);
+		@SuppressWarnings("unused") String iseMessage = "\n\t" + IllegalStateException.class.getSimpleName() + " - " + StringUtil.bind(PivotMessages.ConflictingResource, ecoreURI);
 	//	String mustBeTrueMessage = StringUtil.bind(AbstractValidateTests.VALIDATION_EXCEPTION, "Bad::M i n u t e::mustBeTrue::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot") + iseMessage;
 	//	String uncachedDerivedMessage = StringUtil.bind(AbstractValidateTests.VALIDATION_EXCEPTION, "Bad::M i n u t e::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot") + iseMessage;
 		ThreadLocalExecutor.resetEnvironmentFactory();
@@ -395,7 +395,7 @@ public class ValidationTutorialExamples extends PivotTestCaseWithAutoTearDown
 		assert xtextResource != null;
 		//
 		Grammar xtextGrammar = (Grammar)xtextResource.getContents().get(0);
-		EList<AbstractRule> xtextRules = xtextGrammar.getRules();
+		@SuppressWarnings("unused") EList<AbstractRule> xtextRules = xtextGrammar.getRules();
 	//	org.eclipse.xtext2.xtext.Model xtextModel = (org.eclipse.xtext2.xtext.Model)xtextResource.getContents().get(0);
 	//	org.eclipse.xtext2.xtext.Package xtextPackage = (org.eclipse.xtext2.xtext.Model)xtextResource.getContents().get(0);
 	//	org.eclipse.xtext2.xtext.Class xtext_UPPERCASE_Class = (org.eclipse.xtext2.xtext.Class)xtextPackage.getOwnedTypes().get(0);

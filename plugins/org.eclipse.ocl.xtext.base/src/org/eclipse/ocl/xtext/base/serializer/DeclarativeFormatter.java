@@ -763,7 +763,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		serializationBuilder.resetBuilder();
 		this.selectEnd = selectStart + selectLength;
 		this.rootText = rootNode.getText();
-		String selectedText = rootText.substring(selectStart, selectEnd);
+		@SuppressWarnings("unused") String selectedText = rootText.substring(selectStart, selectEnd);
 //		System.out.println("format\tselectedText: " + selectedText.length() + " chars at " + selectStart + "-" + selectEnd + ": '" + Strings.convertToJavaString(selectedText) + "'");
 		start = createStartBoundary(rootNode, selectStart);
 		end = createEndBoundary(rootNode, selectEnd);
@@ -771,7 +771,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 //		end.debugPrintln("\t");
 		extendedSelectStart = start.getExtendedStartIndex(); //Math.min(darkStartNode.getTotalOffset(), end.getSelectedNode().getTotalOffset());
 		extendedSelectEnd = end.getExtendedEndIndex(); //Math.max(darkEndNode.getTotalEndOffset(), end.getSelectedNode().getTotalEndOffset());
-		String extendedText = rootText.substring(extendedSelectStart, extendedSelectEnd);
+		@SuppressWarnings("unused") String extendedText = rootText.substring(extendedSelectStart, extendedSelectEnd);
 //		System.out.println("\textendedText: " + extendedText.length() + " chars at " + extendedSelectStart + "-" + extendedSelectEnd + ": '" + Strings.convertToJavaString(extendedText) + "'");
 		formatRootNode(rootNode);
 		INode lastNode = getLastLeafNode(rootNode);
@@ -1026,7 +1026,7 @@ protected String debugContext(@NonNull EObject semanticElement, AbstractElement 
 		assert text != null;
 //		System.out.println(getIndent(indent) + "formatLeafNode compositeNode: " + leafNode.getTotalOffset() + "-" + leafNode.getOffset() + " .. " +  + leafNode.getEndOffset() + "-" + leafNode.getTotalEndOffset() + " " + NameUtil.debugSimpleName(leafNode) + " '" + Strings.convertToJavaString(text) + "'");
 		EObject semanticElement = leafNode.getSemanticElement();
-		EObject grammarElement = leafNode.getGrammarElement();
+	//	EObject grammarElement = leafNode.getGrammarElement();
 	//	assert grammarElement instanceof TerminalRule;
 		AbstractElement formattedGrammarElement = getFormattedGrammarElement(leafNode);
 		if (isTracingElements) {

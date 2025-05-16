@@ -691,7 +691,6 @@ public abstract class SerializationMatchTerm
 	 * Return the closure of this and all child solutions.
 	 */
 	public @NonNull Set<@NonNull SerializationMatchTerm> getChildClosure() {
-		@SuppressWarnings("null")
 		@NonNull Set<@NonNull SerializationMatchTerm> singleton = Collections.singleton(this);
 		return singleton;
 	}

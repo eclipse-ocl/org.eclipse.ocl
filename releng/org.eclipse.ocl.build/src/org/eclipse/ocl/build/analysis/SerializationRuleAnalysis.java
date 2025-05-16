@@ -392,7 +392,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality>> entry1 : eAttribute2enumerationValue2grammarCardinality2.entrySet()) {
 			EAttribute eAttribute = entry1.getKey();
 			assert eAttribute != null;
-			@SuppressWarnings("null") @NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = entry1.getValue();
+			@NonNull Map<@NonNull EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = entry1.getValue();
 			CardinalityExpression cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eAttribute);
 			boolean needsDefault = ClassUtil.requireNonNull(cardinalityExpression).isOne();
 			List<@NonNull EnumerationValue> enumerationValueList = new ArrayList<>(enumerationValue2grammarCardinality.keySet());
@@ -403,7 +403,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				serializationAttributes[i1++] = new SerializationSimpleAttribute(eAttribute, needsDefault, grammarCardinality);
 			}
 			else {
-				@SuppressWarnings("null") List<@NonNull EnumerationValue> enumerationValueList2 = enumerationValueList;
+				List<@NonNull EnumerationValue> enumerationValueList2 = enumerationValueList;
 				Collections.sort(enumerationValueList2, NameUtil.NAMEABLE_COMPARATOR);
 				int iMax = enumerationValueList2.size();
 				@NonNull EnumerationValue [] enumerationValues = new @NonNull EnumerationValue[iMax];
@@ -453,9 +453,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		@NonNull SerializationReference [] eReference2ruleValueIndex2grammarCardinality = new @NonNull SerializationReference[eReference2ruleAnalysis2grammarCardinality2.size()];
 		int i1 = 0;
 		for (Map.Entry<@NonNull EReference, @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality>> entry1 : eReference2ruleAnalysis2grammarCardinality2.entrySet()) {
-			@SuppressWarnings("null")
 			@NonNull EReference eReference = entry1.getKey();
-			@SuppressWarnings("null")
 			@NonNull Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = entry1.getValue();
 			int iMax = ruleAnalysis2grammarCardinality.size();
 			int @NonNull [] grammarRuleIndexes = new int[iMax];
@@ -834,7 +832,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		}
 		if (eAttribute2enumerationValues2.size() > 0) {
 			for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues2.entrySet()) {
-				@SuppressWarnings("null")
 				@NonNull Set<@NonNull EnumerationValue> assignedRuleIndexes = entry.getValue();
 				eAttribute2enumerationValues2.put(entry.getKey(), assignedRuleIndexes);
 			}

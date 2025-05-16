@@ -279,11 +279,11 @@ public class IdAssigner extends AbstractWorkflowComponent
 				for (TreeIterator<EObject> tit = toResource.getAllContents(); tit.hasNext(); ) {
 					EObject eObject = tit.next();
 					if ((eObject instanceof org.eclipse.ocl.pivot.Package) || (eObject instanceof Type) || (eObject instanceof Property) || (eObject instanceof Operation)) {
-						@SuppressWarnings("null")@NonNull NamedElement namedElement = (NamedElement) eObject;
+						@NonNull NamedElement namedElement = (NamedElement) eObject;
 						toResource.setID(eObject, computeId(new StringBuilder(), namedElement));
 					}
 					else if ((eObject instanceof org.eclipse.uml2.uml.Package) || (eObject instanceof org.eclipse.uml2.uml.Type) || (eObject instanceof org.eclipse.uml2.uml.Property) || (eObject instanceof org.eclipse.uml2.uml.Operation)) {
-						@SuppressWarnings("null")@NonNull NamedElement namedElement = (NamedElement) eObject;
+						@NonNull NamedElement namedElement = (NamedElement) eObject;
 						toResource.setID(eObject, computeId(new StringBuilder(), namedElement));
 					}
 	/*				else if (eObject instanceof Property) {

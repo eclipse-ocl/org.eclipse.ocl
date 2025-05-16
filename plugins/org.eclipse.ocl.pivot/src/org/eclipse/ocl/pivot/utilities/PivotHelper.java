@@ -70,6 +70,7 @@ public class PivotHelper extends PivotUtil
 {
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull StandardLibrary standardLibrary;
+	@Deprecated /* change to lazy */
 	private final @NonNull MetamodelManager metamodelManager;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {

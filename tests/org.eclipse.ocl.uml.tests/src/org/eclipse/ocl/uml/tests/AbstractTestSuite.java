@@ -444,13 +444,13 @@ Property, Property, EnumerationLiteral, State, CallOperationAction, SendSignalAc
 		if (value instanceof InstanceValue) {
 			result = ((InstanceValue) value).getInstance();
 		} else if (value instanceof LiteralString) {
-			result = ((LiteralString) value).stringValue();
+			result = value.stringValue();
 		} else if (value instanceof LiteralInteger) {
-			result = ((LiteralInteger) value).integerValue();
+			result = value.integerValue();
 		} else if (value instanceof LiteralUnlimitedNatural) {
-			result = ((LiteralUnlimitedNatural) value).integerValue();
+			result = value.integerValue();
 		} else if (value instanceof LiteralBoolean) {
-			result = ((LiteralBoolean) value).booleanValue();
+			result = value.booleanValue();
 		} else if (value instanceof LiteralNull) {
 			result = null;
 		} else {

@@ -100,7 +100,7 @@ public class IdiomsLoadTests extends XtextTestCase
 			xtextResource.setURI(output2URI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 			DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
-			xtextResource.save(XMIUtil.createSaveOptions());
+			xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 			debugTimestamp.log("Serialization save done");
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", xtextResource);
@@ -414,7 +414,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		int indentedOffset = referenceText.indexOf(indentedKey);
 		int indentedWindow = 15;
 		assert rootNode == NodeModelUtils.getNode(rootEObject);
-		int i1 = -indentedWindow-2;
+	//	int i1 = -indentedWindow-2;
 	//	System.out.println(i1 + " " + (indentedOffset+i1));
 	//	doReformatText(declarativeFormatter, rootNode, indentedOffset+i1, indentedWindow, replacedText);
 	//	String indentedKey2 = "ES {\n\tat \"{\"";
@@ -443,7 +443,7 @@ public class IdiomsLoadTests extends XtextTestCase
 		String key = "//mixin idiom COMMENTS at final do PRE_COMMENT value POST_COMMENT;";
 		int keyOffset = referenceText.indexOf(key);
 		assert (100 < keyOffset) && ((keyOffset + 100) < referenceText.length());
-		int keyLength = key.length();
+	//	int keyLength = key.length();
 		doReformatText(declarativeFormatter, rootNode, keyOffset + 32, 100, referenceText);
 
 		ocl.dispose();

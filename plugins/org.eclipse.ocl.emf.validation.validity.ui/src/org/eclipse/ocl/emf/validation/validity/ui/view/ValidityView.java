@@ -401,7 +401,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	/** Selection */
 	private @Nullable IWorkbenchPart currentPart;
 	private @Nullable ISelection currentSelection;
-	private @Nullable Notifier selection = null;
+//	private @Nullable Notifier selection = null;
 	private @Nullable ChangeSelectionJob setInputJob = null;
 	private boolean createPartControlDone = false;	// Inhibit jobs while creating
 	private @Nullable Notifier pendingInput = null;
@@ -1051,7 +1051,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		//
 		//	Force the reselection
 		//
-		selection = null;
+//		selection = null;
 		setSelection(pendingInput);
 //		System.out.println("reselect done: expandedValidatableNodes.size() = " + expandedValidatableNodes.size());
 	}
@@ -1112,7 +1112,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 
 	protected synchronized void setSelection(final Notifier newSelection) {
 	//	if (newSelection != selection) {
-			selection = newSelection;
+	//		selection = newSelection;
 			if (createPartControlDone) {
 				ChangeSelectionJob oldJob = setInputJob;
 				ChangeSelectionJob newJob = setInputJob = new ChangeSelectionJob(newSelection);

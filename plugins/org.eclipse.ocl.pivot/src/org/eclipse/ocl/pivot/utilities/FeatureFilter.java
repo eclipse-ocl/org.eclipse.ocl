@@ -46,7 +46,7 @@ public interface FeatureFilter
 	{
 		@Override
 		public boolean accept(@NonNull Feature asFeature) {
-			return (asFeature instanceof Property) && (((Property)asFeature).getType() instanceof Stereotype);
+			return (asFeature instanceof Property) && (asFeature.getType() instanceof Stereotype);
 		}
 	}
 

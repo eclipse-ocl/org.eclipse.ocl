@@ -49,7 +49,7 @@ public class DynamicRuleMatch implements RuleMatch
 		this.elementAnalysis = elementAnalysis;
 		this.serializationRule = serializationRule;
 		elementAnalysis.getModelAnalysis().debugAddDynamicRuleMatch(this);
-		EObject eObject = elementAnalysis.getEObject();
+		@SuppressWarnings("unused") EObject eObject = elementAnalysis.getEObject();
 	}
 
 	/**

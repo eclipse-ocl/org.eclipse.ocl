@@ -76,7 +76,7 @@ public class EssentialOCLLocationInFileProvider extends BaseLocationInFileProvid
 			ExpCS csLeftmost = csExp;
 			ExpCS csRightmost = csExp;
 			if (csLeftmost instanceof NameExpCS) {
-				EObject csLeft = ((NameExpCS) csLeftmost).getLocalLeft();
+				EObject csLeft = csLeftmost.getLocalLeft();
 				if (NavigationUtil.isNavigationInfixExp(csLeft)) {
 					assert csLeft != null;
 					csLeftmost = (InfixExpCS)csLeft;

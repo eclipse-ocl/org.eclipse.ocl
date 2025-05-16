@@ -59,7 +59,6 @@ public class JavaClassCSImpl extends NamedElementCSImpl implements JavaClassCS
 	 * {@inheritDoc}
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
 		return visitor.visitJavaClassCS(this);

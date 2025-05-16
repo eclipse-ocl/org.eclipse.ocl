@@ -365,8 +365,6 @@ public class LazyEcoreModelManager extends AbstractModelManager implements Ecore
 		}
 	}
 
-	private static final @NonNull List<@NonNull Object> NO_OBJECTS = Collections.emptyList();
-
 	/**
 	 * Return all the root EObjects in the ResourceSet else Resource containing contextEObject
 	 * else the root container.

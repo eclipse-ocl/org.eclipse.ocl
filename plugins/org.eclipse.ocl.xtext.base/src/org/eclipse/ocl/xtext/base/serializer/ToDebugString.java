@@ -33,7 +33,6 @@ public class ToDebugString
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toDebugString.toDebugString(s, 0);
-		@SuppressWarnings("null")
 		@NonNull String castString = s.toString();
 		return castString;
 	}
