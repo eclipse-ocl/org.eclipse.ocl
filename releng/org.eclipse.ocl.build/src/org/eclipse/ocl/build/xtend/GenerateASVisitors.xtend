@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis
-import org.eclipse.ocl.pivot.internal.resource.AbstractASSaver
+import org.eclipse.ocl.pivot.internal.resource.ASSaver
 
 class GenerateASVisitors extends GenerateVisitorsXtend
 {
@@ -34,7 +34,7 @@ class GenerateASVisitors extends GenerateVisitorsXtend
 		if (isDerived()) {
 //			ePackage.generateAbstractGenericVisitor("AS2XMIid", typeof(Boolean), typeof(AS2XMIid));
 			ePackage.generateAbstractGenericVisitor("AS2Moniker", typeof(Object), typeof(AS2Moniker));
-			ePackage.generateAbstractGenericVisitor("ASSaverNormalize", typeof(Object), typeof(AbstractASSaver));
+			ePackage.generateAbstractGenericVisitor("ASSaverNormalize", typeof(Object), typeof(ASSaver));
 			ePackage.generateAbstractTemplateParameterSubstitutionVisitor("TemplateParameterSubstitution", typeof(Object), typeof(EnvironmentFactoryInternal));
 			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromFalse", typeof(Boolean), typeof(FlowAnalysis), false);
 			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromNull", typeof(Boolean), typeof(FlowAnalysis), true);

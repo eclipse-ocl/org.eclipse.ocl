@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.resource.AbstractASSaver;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 
@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
  * ASSaverNormalizeVisitor normalizes contents by alphabeticizing
  * - lists of Property.
  */
-public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AbstractASSaver>
+public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, ASSaver>
 {
 	/**
 	 * @since 1.4
@@ -84,7 +84,7 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, Ab
 	/**
 	 * @since 1.18
 	 */
-	public ASSaverNormalizeVisitor(@NonNull AbstractASSaver context) {
+	public ASSaverNormalizeVisitor(@NonNull ASSaver context) {
 		super(context);
 	}
 
