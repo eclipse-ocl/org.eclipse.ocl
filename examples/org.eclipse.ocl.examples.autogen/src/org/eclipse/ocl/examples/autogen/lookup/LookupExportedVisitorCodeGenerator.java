@@ -111,12 +111,12 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(operation.getOwningClass());
-		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
+		Variable asElement = PivotUtil.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asImporterSource = createThisVariableExp(asThisVariable);
 		PropertyCallExp asImporterAccess = PivotUtil.createPropertyCallExp(asImporterSource, ClassUtil.requireNonNull(asImporterProperty));
-		Variable asImporter = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asImporterAccess);
+		Variable asImporter = PivotUtil.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asImporterAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asImporter);
 
 		//rewrite LookupEnvironment ShadowExp as accessing the context variable (it might be the init of let variable)

@@ -180,11 +180,11 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		OCLExpression asSource = ClassUtil.requireNonNull(asOperationCallExp.getOwnedSource());
 		if (asOuterCallExp != asOperationCallExp) {
 			CallExp asInnerCallExp = (CallExp)asOperationCallExp.eContainer();
-			VariableExp asContextExp = helper.createVariableExp(asContextVariable);
+			VariableExp asContextExp = PivotUtil.createVariableExp(asContextVariable);
 			asInnerCallExp.setOwnedSource(asContextExp);										// asOperationCallExp becomes an orphan
-			Variable asInnerEnv = helper.createLetVariable("inner", asOuterCallExp);
-			VariableExp asInnerEnvExp1 = helper.createVariableExp(asInnerEnv);
-			VariableExp asInnerEnvExp2 = helper.createVariableExp(asInnerEnv);
+			Variable asInnerEnv = PivotUtil.createLetVariable("inner", asOuterCallExp);
+			VariableExp asInnerEnvExp1 = PivotUtil.createVariableExp(asInnerEnv);
+			VariableExp asInnerEnvExp2 = PivotUtil.createVariableExp(asInnerEnv);
 			OperationCallExp asCondition = helper.createOperationCallExp(asInnerEnvExp1, asEnvironmentHasFinalResultOperation, Collections.emptyList());
 			IfExp asIfExp = metamodelManager.createIfExp(asCondition, asInnerEnvExp2, asSource);
 			LetExp asLetExp = PivotUtil.createLetExp(asInnerEnv, asIfExp);
@@ -276,12 +276,12 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(operation.getOwningClass());
-		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
+		Variable asElement = PivotUtil.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asChildSource = createThisVariableExp(asThisVariable);
 		PropertyCallExp asChildAccess = PivotUtil.createPropertyCallExp(asChildSource, ClassUtil.requireNonNull(asChildProperty));
-		Variable asChild = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asChildAccess);
+		Variable asChild = PivotUtil.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asChildAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asChild);
 		//
 		Operation asOperation = createVisitorOperation("visit" + asType.getName(), operation.getType());

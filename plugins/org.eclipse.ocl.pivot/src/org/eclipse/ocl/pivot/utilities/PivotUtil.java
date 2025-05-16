@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -89,7 +90,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -97,6 +100,7 @@ import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
@@ -451,10 +455,36 @@ public class PivotUtil implements PivotConstants
 		return pivotType;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull CollectionItem createCollectionItem(@NonNull OCLExpression asItem) {
+		CollectionItem collectionItem = PivotFactory.eINSTANCE.createCollectionItem();
+		collectionItem.setOwnedItem(asItem);
+		collectionItem.setType(asItem.getType());
+		collectionItem.setIsRequired(asItem.isIsRequired());
+		return collectionItem;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull CollectionLiteralExp createCollectionLiteralExp(@NonNull CollectionType asType, @NonNull Iterable<CollectionLiteralPart> asParts) {
+		CollectionLiteralExp collectionLiteralExp = PivotFactory.eINSTANCE.createCollectionLiteralExp();
+		Iterables.addAll(collectionLiteralExp.getOwnedParts(), asParts);
+		collectionLiteralExp.setType(asType);
+		collectionLiteralExp.setKind(TypeUtil.getCollectionKind(asType));
+		collectionLiteralExp.setIsRequired(true);
+		return collectionLiteralExp;
+	}
+
 	public static @NonNull CollectionType createCollectionType(@NonNull CollectionType unspecializedType, @NonNull Type elementType) {
 		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), unspecializedType, elementType);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected static @NonNull <@NonNull T extends CollectionType> T createCollectionType(/*@NonNull*/ T specializedType, @NonNull T unspecializedType, @NonNull Type instanceType) {
 		specializedType.setName(unspecializedType.getName());
 		specializedType.setLower(unspecializedType.getLower());
@@ -469,6 +499,15 @@ public class PivotUtil implements PivotConstants
 		return specializedType;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Comment createComment(@NonNull String comment) {
+		Comment asComment = PivotFactory.eINSTANCE.createComment();
+		asComment.setBody(comment);
+		return asComment;
+	}
+
 	public static @NonNull DataType createDataType(/*@NonNull*/ EDataType eDataType) {
 		DataType pivotType = PivotFactory.eINSTANCE.createDataType();
 		pivotType.setName(eDataType.getName());
@@ -480,6 +519,17 @@ public class PivotUtil implements PivotConstants
 		DataType pivotType = PivotFactory.eINSTANCE.createDataType();
 		pivotType.setName(name);
 		return pivotType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull EnumLiteralExp createEnumLiteralExp(@NonNull EnumerationLiteral value) {
+		EnumLiteralExp asEnumLiteralExp = PivotFactory.eINSTANCE.createEnumLiteralExp();
+		asEnumLiteralExp.setReferredLiteral(value);
+		asEnumLiteralExp.setType(value.getOwningEnumeration());
+		asEnumLiteralExp.setIsRequired(true);
+		return asEnumLiteralExp;
 	}
 
 	public static @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum) {
@@ -522,6 +572,9 @@ public class PivotUtil implements PivotConstants
 		return asExpressionInOCL;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull ExpressionInOCL createExpressionInOCLError(@NonNull String string) {
 		ExpressionInOCL expressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
 		StringLiteralExp stringLiteral = PivotFactory.eINSTANCE.createStringLiteralExp();
@@ -529,6 +582,17 @@ public class PivotUtil implements PivotConstants
 		expressionInOCL.setOwnedBody(stringLiteral);
 		expressionInOCL.setType(stringLiteral.getType());
 		return expressionInOCL;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Import createImport(@Nullable String name, @NonNull Namespace namespace) {
+		Import asImport = PivotFactory.eINSTANCE.createImport();
+		asImport.setName(name);
+		asImport.setImportedNamespace(namespace);
+		asImport.setXmiidVersion(PivotConstants.XMIIDS_CURRENT);
+		return asImport;
 	}
 
 	public static @NonNull InvalidType createInvalidType(@NonNull String name) {
@@ -547,6 +611,9 @@ public class PivotUtil implements PivotConstants
 		return pivotType;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
 		Iteration pivotIteration = PivotFactory.eINSTANCE.createIteration();
 		pivotIteration.setName(name);
@@ -556,12 +623,26 @@ public class PivotUtil implements PivotConstants
 		return pivotIteration;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull IteratorVariable createIteratorVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+		IteratorVariable asVariable = PivotFactory.eINSTANCE.createIteratorVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		return asVariable;
+	}
+
 	public static @NonNull LambdaType createLambdaType(@NonNull String name) {
 		LambdaType pivotType = PivotFactory.eINSTANCE.createLambdaType();
 		pivotType.setName(name);
 		return pivotType;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull LetExp createLetExp(@NonNull Variable asVariable, @NonNull OCLExpression asIn) {
 		LetExp asLetExp = PivotFactory.eINSTANCE.createLetExp();
 		asLetExp.setOwnedIn(asIn);
@@ -569,6 +650,64 @@ public class PivotUtil implements PivotConstants
 		asLetExp.setIsRequired(asIn.isIsRequired());
 		asLetExp.setOwnedVariable(asVariable);
 		return asLetExp;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull LetVariable createLetVariable(@NonNull String name, @NonNull OCLExpression asInitExpression) {
+		LetVariable asVariable = PivotFactory.eINSTANCE.createLetVariable();
+		asVariable.setName(name);
+		asVariable.setType(asInitExpression.getType());
+		asVariable.setIsRequired(asInitExpression.isIsRequired());
+		asVariable.setOwnedInit(asInitExpression);
+		return asVariable;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull LetVariable createLetVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+		LetVariable asVariable = PivotFactory.eINSTANCE.createLetVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		return asVariable;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull LetVariable createLetVariable(@NonNull String name, @NonNull Type asType, boolean isRequired, @NonNull OCLExpression asInitExpression) {
+		LetVariable asVariable = PivotFactory.eINSTANCE.createLetVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		asVariable.setOwnedInit(asInitExpression);
+		return asVariable;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull OCLExpression createMapLiteralExp(@NonNull MapType asType, @NonNull Iterable<MapLiteralPart> asParts) {
+		MapLiteralExp mapLiteralExp = PivotFactory.eINSTANCE.createMapLiteralExp();
+		Iterables.addAll(mapLiteralExp.getOwnedParts(), asParts);
+		mapLiteralExp.setType(asType);
+		mapLiteralExp.setIsRequired(true);
+		return mapLiteralExp;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull MapLiteralPart createMapLiteralPart(@NonNull OCLExpression asKey, @NonNull OCLExpression asValue) {
+		MapLiteralPart mapLiteralPart = PivotFactory.eINSTANCE.createMapLiteralPart();
+		mapLiteralPart.setOwnedKey(asKey);
+		mapLiteralPart.setOwnedValue(asValue);
+		//		mapLiteralPart.setType(asItem.getType());
+		//		mapLiteralPart.setIsRequired(true);
+		return mapLiteralPart;
 	}
 
 	//	public static @NonNull MapType createMapType(@NonNull String name) {
@@ -658,11 +797,29 @@ public class PivotUtil implements PivotConstants
 		return aPackage;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static org.eclipse.ocl.pivot.@NonNull Package createOwnedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
 		@SuppressWarnings("null")
 		org.eclipse.ocl.pivot.Package aPackage = createPackage(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, name, null, null);
 		parentPackage.getOwnedPackages().add(aPackage);
 		return aPackage;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @Nullable String nsURI) {
+		Package asPackage = PivotFactory.eINSTANCE.createPackage();
+		asPackage.setName(name);
+		if (nsPrefix != null) {
+			asPackage.setNsPrefix(nsPrefix);
+		}
+		if (nsURI != null) {
+			asPackage.setURI(nsURI);
+		}
+		return asPackage;
 	}
 
 	public static org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable String nsPrefix, @NonNull String nsURI) {
@@ -706,12 +863,49 @@ public class PivotUtil implements PivotConstants
 		return asPackage;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull Parameter createParameter(@NonNull String name, @NonNull Type asType, boolean isRequired) {
 		Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 		asParameter.setName(name);
 		asParameter.setType(asType);
 		asParameter.setIsRequired(isRequired);
 		return asParameter;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Parameter createParameter(@NonNull TypedElement typedElement) {
+		String name = ClassUtil.requireNonNull(typedElement.getName());
+		Type type = ClassUtil.requireNonNull(typedElement.getType());
+		Parameter asParameter = createParameter(name, type, typedElement.isIsRequired());
+		return asParameter;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated /* supply a representedParameter */
+	public static @NonNull ParameterVariable createParameterVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+		ParameterVariable asVariable = PivotFactory.eINSTANCE.createParameterVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		return asVariable;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull ParameterVariable createParameterVariable(@NonNull Parameter asParameter) {
+		ParameterVariable asParameterVariable = PivotFactory.eINSTANCE.createParameterVariable();
+		asParameterVariable.setName(asParameter.getName());
+		asParameterVariable.setType(asParameter.getType());
+		asParameterVariable.setIsRequired(asParameter.isIsRequired());
+		asParameterVariable.setRepresentedParameter(asParameter);
+		return asParameterVariable;
 	}
 
 	public static @NonNull Precedence createPrecedence(@NonNull String name, /*@NonNull*/ AssociativityKind kind) {
@@ -747,6 +941,9 @@ public class PivotUtil implements PivotConstants
 		return pivotProperty;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull Property createProperty(@NonNull String name, @NonNull Type type) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(name);
@@ -754,6 +951,9 @@ public class PivotUtil implements PivotConstants
 		return pivotProperty;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull PropertyCallExp createPropertyCallExp(@NonNull OCLExpression asSource, @NonNull Property asProperty) {
 		PropertyCallExp asChild = PivotFactory.eINSTANCE.createPropertyCallExp();
 		asChild.setOwnedSource(asSource);
@@ -761,6 +961,18 @@ public class PivotUtil implements PivotConstants
 		asChild.setType(asProperty.getType());
 		asChild.setIsRequired(asProperty.isIsRequired());
 		return asChild;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull ResultVariable createResultVariable(@NonNull String name, @NonNull Type asType, boolean isRequired, @NonNull OCLExpression asInitExpression) {
+		ResultVariable asVariable = PivotFactory.eINSTANCE.createResultVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		asVariable.setOwnedInit(asInitExpression);
+		return asVariable;
 	}
 
 	public static @NonNull SelfType createSelfType(@NonNull String name) {
@@ -779,12 +991,41 @@ public class PivotUtil implements PivotConstants
 		return pivotType;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull SequenceType createSequenceType(@NonNull SequenceType unspecializedType, @NonNull Type elementType) {
 		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), unspecializedType, elementType);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull SetType createSetType(@NonNull SetType unspecializedType, @NonNull Type elementType) {
 		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), unspecializedType, elementType);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull OCLExpression createShadowExp(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Iterable<ShadowPart> asParts) {
+		ShadowExp shadowExp = PivotFactory.eINSTANCE.createShadowExp();
+		Iterables.addAll(shadowExp.getOwnedParts(), asParts);
+		shadowExp.setType(asClass);
+		shadowExp.setIsRequired(true);
+		return shadowExp;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull ShadowPart createShadowPart(@NonNull Property asProperty, @NonNull OCLExpression asValue) {
+		ShadowPart shadowPart = PivotFactory.eINSTANCE.createShadowPart();
+		shadowPart.setReferredProperty(asProperty);
+		shadowPart.setType(asProperty.getType());
+		shadowPart.setIsRequired(asProperty.isIsRequired());
+		shadowPart.setOwnedInit(asValue);
+		return shadowPart;
 	}
 
 	public static @NonNull TemplateBinding createTemplateBinding(TemplateParameterSubstitution... templateParameterSubstitutions) {
@@ -809,6 +1050,9 @@ public class PivotUtil implements PivotConstants
 		return pivotTemplateParameter;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution(@NonNull TemplateParameter formal, @NonNull Type actual) {
 		TemplateParameterSubstitution pivotTemplateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
 		pivotTemplateParameterSubstitution.setFormal(formal);
@@ -816,6 +1060,9 @@ public class PivotUtil implements PivotConstants
 		return pivotTemplateParameterSubstitution;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull TemplateSignature createTemplateSignature(@NonNull TemplateableElement templateableElement, TemplateParameter... templateParameters) {
 		TemplateSignature pivotTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
 		List<TemplateParameter> parameters = pivotTemplateSignature.getOwnedParameters();
@@ -824,6 +1071,29 @@ public class PivotUtil implements PivotConstants
 		}
 		pivotTemplateSignature.setOwningElement(templateableElement);
 		return pivotTemplateSignature;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TupleLiteralExp createTupleLiteralExp(@NonNull TupleType asType, @NonNull Iterable<TupleLiteralPart> asParts) {
+		TupleLiteralExp tupleLiteralExp = PivotFactory.eINSTANCE.createTupleLiteralExp();
+		Iterables.addAll(tupleLiteralExp.getOwnedParts(), asParts);
+		tupleLiteralExp.setType(asType);
+		tupleLiteralExp.setIsRequired(true);
+		return tupleLiteralExp;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TupleLiteralPart createTupleLiteralPart(@NonNull String name, @NonNull Type asType, boolean isRequired, @NonNull OCLExpression asValue) {
+		TupleLiteralPart tupleLiteralPart = PivotFactory.eINSTANCE.createTupleLiteralPart();
+		tupleLiteralPart.setName(name);
+		tupleLiteralPart.setType(asType);
+		tupleLiteralPart.setIsRequired(isRequired);
+		tupleLiteralPart.setOwnedInit(asValue);
+		return tupleLiteralPart;
 	}
 
 	public static @NonNull TupleType createTupleType(@NonNull String name, Property... properties) {
@@ -1392,13 +1662,6 @@ public class PivotUtil implements PivotConstants
 			assert elementType != null;
 		}
 		return elementType;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return ClassUtil.requireNonNull(ThreadLocalExecutor.basicGetEnvironmentFactory());
 	}
 
 	/**
@@ -2722,6 +2985,26 @@ public class PivotUtil implements PivotConstants
 			oldElements.remove(--k);
 		}
 		assert hasDuplicates || (newElements.size() == oldElements.size());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
+		String oldName = pivotNamedElement.getName();
+		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
+			pivotNamedElement.setName(newName);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
+		String oldNsURI = pivotPackage.getURI();
+		if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
+			pivotPackage.setURI(newNsURI);
+		}
 	}
 
 	/**

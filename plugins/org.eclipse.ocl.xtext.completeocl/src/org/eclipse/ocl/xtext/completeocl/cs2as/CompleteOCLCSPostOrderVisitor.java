@@ -142,7 +142,7 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 		if ((modelOperation != null) && !modelOperation.eIsProxy()) {
 			Operation contextOperation = PivotUtil.getPivot(Operation.class, csElement);
 			if (contextOperation != null) {
-				helper.refreshName(contextOperation, ClassUtil.requireNonNull(modelOperation.getName()));
+				PivotUtil.refreshName(contextOperation, ClassUtil.requireNonNull(modelOperation.getName()));
 				helper.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());		// FIXME type consistency check
 			}
 		}

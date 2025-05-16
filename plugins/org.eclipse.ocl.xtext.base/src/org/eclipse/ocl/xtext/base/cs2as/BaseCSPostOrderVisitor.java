@@ -149,7 +149,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 						references.add(element);
 					}
 				}
-				helper.refreshList(pivotElement.getReferences(), references);
+				PivotUtil.refreshList(pivotElement.getReferences(), references);
 			}
 			else {
 				pivotElement.getReferences().clear();
@@ -300,7 +300,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 				pivotOpposite = null;
 			}
 			pivotElement.setOpposite(pivotOpposite);
-			helper.refreshList(pivotElement.getKeys(), csReference.getReferredKeys());
+			PivotUtil.refreshList(pivotElement.getKeys(), csReference.getReferredKeys());
 			//			BasicContinuation<?> continuation = visitTypedElementCS(csReference);
 			//			assert continuation == null;
 			List<ImplicitOppositeCS> csOwnedImplicitOpposites = csReference.getOwnedImplicitOpposites();

@@ -179,7 +179,7 @@ public abstract class BasicEAnnotationValidator2 extends BasicEAnnotationValidat
 	public void addDynamicAnnotationClass(EClass dynamicAnnotationClass) {
 		if (dynamicAnnotationPackage == null) {
 			Resource dynamicAnnotationResource = new XMIResourceImpl(URI.createURI(PivotAnnotationsPackage.eINSTANCE.getNsURI()));
-			this.dynamicAnnotationPackage = EcoreFactory.eINSTANCE.createEPackage();
+			BasicEAnnotationValidator2.dynamicAnnotationPackage = EcoreFactory.eINSTANCE.createEPackage();
 			dynamicAnnotationPackage.setName(PivotAnnotationsPackage.eINSTANCE.getName());
 			dynamicAnnotationPackage.setNsPrefix(PivotAnnotationsPackage.eINSTANCE.getNsPrefix());
 			dynamicAnnotationPackage.setNsURI(PivotAnnotationsPackage.eINSTANCE.getNsURI());
