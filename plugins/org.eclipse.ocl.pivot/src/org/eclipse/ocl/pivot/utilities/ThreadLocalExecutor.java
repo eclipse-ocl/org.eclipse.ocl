@@ -318,7 +318,7 @@ public class ThreadLocalExecutor implements Nameable
 
 	/**
 	 * Perform up to 10 garbage collects followed by 10 millisecond sleep until basicGetEnvironmentFactory
-	 * returns false indicating that GC of an EnvironmentFactory held by a WeakOCLReference has succeeded.
+	 * returns false indicating that GC of an EnvironmentFactory held by a WeakReference has succeeded.
 	 * Return false if an EnvironmentFactory remains active.
 	 */
 	@Deprecated /* @deprecated no longer used */

@@ -136,12 +136,12 @@ public class UMLValidateTest extends AbstractValidateTests
 		//		org.eclipse.uml2.uml.OpaqueExpression opaqueExpression = (org.eclipse.uml2.uml.OpaqueExpression) slot.getOwnedElements().get(0);
 		//		Property asPrice = ocl.getMetamodelManager().getPivotOf(Property.class, price);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
-			//			ClassUtil.bind(UMLMessages.BodyLanguageSupportError, IllegalStateException.class.getName() + ": " + NLS.bind(UMLMessages.MissingBodyLanguageSupport, "Natural language"), ClassUtil.getLabel(opaqueExpression)),
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, book.getName() + "::" + constraint.getName(), LabelUtil.getLabel(invalidBook)),
-			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, book.getName(), constraint.getName(), LabelUtil.getLabel(partialBook),
-				StringUtil.bind(PivotMessages.UnsupportedCompareTo, "null", IntIntegerValueImpl.class.getName())));
-		//		ocl.dispose();
-		ocl = null;		// UMLOCLEValidator.WeakOCLReference will dispose.
+		//			ClassUtil.bind(UMLMessages.BodyLanguageSupportError, IllegalStateException.class.getName() + ": " + NLS.bind(UMLMessages.MissingBodyLanguageSupport, "Natural language"), ClassUtil.getLabel(opaqueExpression)),
+		StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, book.getName() + "::" + constraint.getName(), LabelUtil.getLabel(invalidBook)),
+		StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, book.getName(), constraint.getName(), LabelUtil.getLabel(partialBook),
+		StringUtil.bind(PivotMessages.UnsupportedCompareTo, "null", IntIntegerValueImpl.class.getName())));
+		ocl.dispose();
+		ocl = null;
 	}
 
 	public void test_tutorial_umlValidation_with_lpg_408990() {
@@ -306,7 +306,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		ValidationContext validationContext = createValidationContext(resourceSet);
-		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
+		@SuppressWarnings("unused") EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");
@@ -428,7 +428,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		//				"Failed to evaluate " + asPrice),
 		//			ClassUtil.bind(OCLMessages.ParsingError, ClassUtil.getLabel(opaqueExpression), "No containing namespace for 3 + 0.4"));
 		ocl.dispose();
-		ocl = null;		// UMLOCLEValidator.WeakOCLReference will dispose too in due course.
+		ocl = null;
 	}
 
 	public void test_umlValidation_446007() {
