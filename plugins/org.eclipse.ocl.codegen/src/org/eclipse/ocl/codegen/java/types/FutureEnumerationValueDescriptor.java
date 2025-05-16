@@ -49,7 +49,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		EClassifier eClassifier = cgEcoreExp.getEClassifier();
 		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
-		EcoreDescriptor ecoreDescriptor = getEcoreDescriptor(js.getCodeGenerator(), ecoreClass);
+		@SuppressWarnings("unused") EcoreDescriptor ecoreDescriptor = getEcoreDescriptor(js.getCodeGenerator(), ecoreClass);
 	//	return ecoreDescriptor.appendEcore(js, localContext, cgEcoreExp, boxedValue);
 
 

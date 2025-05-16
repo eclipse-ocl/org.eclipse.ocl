@@ -81,7 +81,6 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 
 	@Override
 	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, boolean isRootAlternative) { // is this needed ?
-		@SuppressWarnings("null")
 		@NonNull List<@NonNull SerializationNode> castSingletonList = Collections.singletonList(this);
 		return createFrozenSequence(compoundElement, grammarCardinality, castSingletonList, isRootAlternative);
 	}

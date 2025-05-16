@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
-import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -126,7 +126,7 @@ public class OCLQueryDelegate implements QueryDelegate
 				}
 
 
-				Query query = new BasicQueryImpl(environmentFactory, nonNullSpecification);
+				Query query = new QueryImpl(environmentFactory, nonNullSpecification);
 				EvaluationEnvironment env = query.getEvaluationEnvironment(target);
 				for (Variable parameterVariable : parameterVariables) {
 					// bind arguments to parameter names

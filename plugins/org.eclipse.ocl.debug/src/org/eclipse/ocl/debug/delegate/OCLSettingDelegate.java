@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
-import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -62,7 +62,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 				specification2 = specification = SettingBehavior.INSTANCE.getQueryOrThrow(metamodelManager, property2);
 				SettingBehavior.INSTANCE.validate(property2);
 			}
-			Query query = new BasicQueryImpl(environmentFactory, specification2);
+			Query query = new QueryImpl(environmentFactory, specification2);
 			Object ecoreResult = query.evaluateEcore(eStructuralFeature.getEType().getInstanceClass(), owner);
 			return ecoreResult;
 		}

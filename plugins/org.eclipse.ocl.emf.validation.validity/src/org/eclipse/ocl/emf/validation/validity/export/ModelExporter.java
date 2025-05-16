@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   E.D.Willink - initial API and implementation 
+ *   E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.emf.validation.validity.export;
 
@@ -34,21 +34,22 @@ public class ModelExporter extends AbstractExporter
 	/**
 	 * Returns a stream containing the initial contents to be given to new
 	 * exported validation results file resource instances.
-	 * 
-	 * @throws IOException 
+	 *
+	 * @throws IOException
 	 */
 	@Override
 	public void createContents(@NonNull Appendable text, @NonNull RootNode rootNode, @Nullable String exportedFileName) throws IOException {
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		Resource resource = new XMIResourceImpl(URI.createFileURI(exportedFileName));
 		resource.getContents().add(rootNode);
-		Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+		Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(resource);
 		saveOptions.put(XMIResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
 		resource.save(os, saveOptions);
 		os.close();
 		text.append(os.toString());
 	}
-	
+
+	@Override
 	public @NonNull String getExporterType() { return EXPORTER_TYPE; }
 
 	@Override

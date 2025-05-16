@@ -26,7 +26,7 @@ public class PivotTypeOfRefDependency extends AbstractDependency<@NonNull TypedR
 	@Override
 	public boolean canExecute() {
 		if (element instanceof TypedTypeRefCS) {
-			Element type = ((TypedTypeRefCS)element).getPivot();
+			Element type = element.getPivot();
 			return type != null;
 		}
 		Element pivot = element.getPivot();

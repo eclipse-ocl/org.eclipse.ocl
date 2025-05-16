@@ -286,7 +286,7 @@ public class EditorTests extends XtextTestCase
 	 */
 	private IEditorPart openDummyEditor() throws Exception {
 		String dummyDocument = "dummy document\n";
-		TestFile dummyFile = createFile("DummyDocument.txt", dummyDocument);
+		@SuppressWarnings("unused") TestFile dummyFile = createFile("DummyDocument.txt", dummyDocument);
 		InputStream inputStream = new URIConverter.ReadableInputStream(dummyDocument, "UTF-8");
 		FileEditorInput fileEditorInput = createFileEditorInput("test", "DummyDocument.txt", inputStream);
 		IWorkbench workbench = PlatformUI.getWorkbench();
@@ -454,7 +454,7 @@ public class EditorTests extends XtextTestCase
 		assert initialPartService != null;
 		IWorkbenchPart initialPart = initialPartService.getActivePart();
 		assert initialPart != null;
-		ISelectionService selectionService = initialWorkbenchWindow.getSelectionService();
+		@SuppressWarnings("unused") ISelectionService selectionService = initialWorkbenchWindow.getSelectionService();
 		openDummyEditor();
 		String testDocument =
 				"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +

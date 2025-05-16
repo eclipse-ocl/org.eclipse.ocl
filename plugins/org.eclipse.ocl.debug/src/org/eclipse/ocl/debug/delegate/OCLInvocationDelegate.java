@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
-import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -88,7 +88,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 					throw new OCLDelegateException(new SemanticException("Unsupported InvocationDelegate for null")) ;
 				}
 			}
-			Query query = new BasicQueryImpl(environmentFactory, specification2);
+			Query query = new QueryImpl(environmentFactory, specification2);
 			EvaluationEnvironment env = query.getEvaluationEnvironment(target);
 			Object object = target;
 			Object value = idResolver.boxedValueOf(target);
