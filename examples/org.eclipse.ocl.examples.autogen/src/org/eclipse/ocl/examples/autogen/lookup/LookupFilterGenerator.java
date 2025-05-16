@@ -117,7 +117,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			List<Property> asProperties = asClass.getOwnedProperties();
 			asProperties.add(asEvaluatorProperty);
 			asProperties.add(asIdResolverProperty);
-			Variable asThisVariable = helper.createParameterVariable("this", asClass, true);
+			Variable asThisVariable = PivotUtil.createParameterVariable("this", asClass, true);
 			// We create the operations
 			Operation asOperation = createASMatchesOperation(filteringOp, asClass, asThisVariable);
 			asClass.getOwnedOperations().add(asOperation);
@@ -159,7 +159,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			// Redefinition requires a Variable access rather than a Property
 			VariableExp asThisVarExp = createThisVariableExp(thisVariable);
 			PropertyCallExp asPropertyAccess = PivotUtil.createPropertyCallExp(asThisVarExp, asProperty);
-			Variable asContextVar = helper.createLetVariable(paramName, asPropertyAccess);
+			Variable asContextVar = PivotUtil.createLetVariable(paramName, asPropertyAccess);
 			redefinitions.put(paramVar, asContextVar);
 			filteringProps.add(asProperty);
 			LetExp letExp = PivotFactory.eINSTANCE.createLetExp();
@@ -175,7 +175,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 		// Filtering op context is translated as asOperation parameter
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(filteringOp.getOwningClass());
-		Variable asParamVar = helper.createParameterVariable(LookupFilterClassContext.ELEMENT_NAME, asType,true);
+		Variable asParamVar = PivotUtil.createParameterVariable(LookupFilterClassContext.ELEMENT_NAME, asType,true);
 		newExpressionInOCL.getOwnedParameters().add(asParamVar);
 		redefinitions.put(oldExpressionInOCL.getOwnedContext(), asParamVar);
 

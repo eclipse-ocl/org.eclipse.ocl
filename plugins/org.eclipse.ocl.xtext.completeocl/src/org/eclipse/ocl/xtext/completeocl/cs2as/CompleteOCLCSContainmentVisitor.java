@@ -173,8 +173,8 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		org.eclipse.ocl.pivot.Class contextClass = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, csClassifierContext0);
 		contextClass.setName(modelClass.getName());
 		context.refreshPivotList(Constraint.class, contextClass.getOwnedInvariants(), csInvariants);
-		helper.refreshList(contextClass.getOwnedOperations(), contextOperations);
-		helper.refreshList(contextClass.getOwnedProperties(), contextProperties);
+		PivotUtil.refreshList(contextClass.getOwnedOperations(), contextOperations);
+		PivotUtil.refreshList(contextClass.getOwnedProperties(), contextProperties);
 		context.refreshComments(contextClass, csClassifierContext0);
 		for (@NonNull ContextDeclCS csContext : csContexts) {
 			if ((csContext instanceof ClassifierContextDeclCS) && (csContext != csClassifierContext0)) {
@@ -189,7 +189,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		Operation contextOperation = context.refreshModelElement(Operation.class, PivotPackage.Literals.OPERATION, operationContextDecl);
 		Operation modelOperation = operationContextDecl.getReferredOperation();
 		if (modelOperation != null) {
-			helper.refreshName(contextOperation, ClassUtil.requireNonNull(modelOperation.getName()));
+			PivotUtil.refreshName(contextOperation, ClassUtil.requireNonNull(modelOperation.getName()));
 			helper.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());
 			List<ExpSpecificationCS> ownedBodies = operationContextDecl.getOwnedBodies();
 			ExpSpecificationCS ownedBody = ownedBodies.size() > 0 ? ownedBodies.get(0) : null;
@@ -239,7 +239,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		org.eclipse.ocl.pivot.Package contextPackage = context.refreshModelElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, csContextPackage0);
 		contextPackage.setName(modelPackage.getName());
 		contextPackage.setURI(modelPackage.getURI());
-		helper.refreshList(contextPackage.getOwnedClasses(), contextClasses);
+		PivotUtil.refreshList(contextPackage.getOwnedClasses(), contextClasses);
 		context.refreshComments(contextPackage, csContextPackage0);
 		for (int i = 1; i < csContextPackages.size(); i++) {
 			PackageDeclarationCS csContextPackageN = csContextPackages.get(i);
@@ -279,7 +279,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		Property contextProperty = context.refreshModelElement(Property.class, PivotPackage.Literals.PROPERTY, propertyContextDecl);
 		Property modelProperty = propertyContextDecl.getReferredProperty();
 		if (modelProperty != null) {
-			helper.refreshName(contextProperty, ClassUtil.requireNonNull(modelProperty.getName()));
+			PivotUtil.refreshName(contextProperty, ClassUtil.requireNonNull(modelProperty.getName()));
 			helper.setType(contextProperty, modelProperty.getType(), modelProperty.isIsRequired());
 			List<ExpSpecificationCS> ownedDefaultExpressions = propertyContextDecl.getOwnedDefaultExpressions();
 			int size = ownedDefaultExpressions.size();
@@ -388,10 +388,10 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 			assert childContextPackages != null;
 			Collections.sort(childContextPackages, NameUtil.NAMEABLE_COMPARATOR);
 			if (contextPackage != null) {
-				helper.refreshList(contextPackage.getOwnedPackages(), childContextPackages);
+				PivotUtil.refreshList(contextPackage.getOwnedPackages(), childContextPackages);
 			}
 			else {
-				helper.refreshList(contextRoot.getOwnedPackages(), childContextPackages);
+				PivotUtil.refreshList(contextRoot.getOwnedPackages(), childContextPackages);
 			}
 		}
 		context.refreshPivotList(Import.class, contextRoot.getOwnedImports(), csDocument.getOwnedImports());

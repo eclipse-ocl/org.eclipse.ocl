@@ -117,8 +117,8 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		//
 		org.eclipse.ocl.pivot.Package asVisitorPackage = createASPackage(packageName);
 		this.asVisitorClass = createASClass(asVisitorPackage, visitorClassName);
-		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
-		this.asContextVariable = helper.createParameterVariable(LookupVisitorsClassContext.CONTEXT_NAME, asEnvironmentType, true);
+		this.asThisVariable = PivotUtil.createParameterVariable("this", asVisitorClass, true);
+		this.asContextVariable = PivotUtil.createParameterVariable(LookupVisitorsClassContext.CONTEXT_NAME, asEnvironmentType, true);
 		CGVariable cgVariable = as2cgVisitor.getVariable(asContextVariable);
 		nameManager.reserveName(LookupVisitorsClassContext.CONTEXT_NAME, cgVariable);
 
