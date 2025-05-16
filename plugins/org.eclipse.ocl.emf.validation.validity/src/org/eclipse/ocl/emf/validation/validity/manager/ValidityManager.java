@@ -57,7 +57,6 @@ import org.eclipse.ocl.emf.validation.validity.utilities.IVisibilityFilter;
 import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidatorAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.WeakOCLReference;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -606,15 +605,6 @@ public class ValidityManager
 							monitor.worked(100);
 						}
 						i++;
-					}
-				}
-			}
-			if (context != null) {
-				Object oclRef = context.get(WeakOCLReference.class);
-				if (oclRef instanceof WeakOCLReference) {
-					OCL ocl = ((WeakOCLReference)oclRef).get();
-					if (ocl != null) {
-						ocl.dispose();
 					}
 				}
 			}

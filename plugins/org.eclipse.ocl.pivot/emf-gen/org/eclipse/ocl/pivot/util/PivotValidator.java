@@ -154,13 +154,13 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.validation.ValidationContext;
 
 /**
  * <!-- begin-user-doc -->
@@ -2685,9 +2685,9 @@ extends EObjectValidator {
 	{
 		if ((expressionInOCL.getOwnedBody() == null) && (expressionInOCL.getBody() != null)) {
 			assert context != null;
-			OCL ocl = PivotDiagnostician.getOCL(context, expressionInOCL);
+			EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(context, expressionInOCL);
 			try {
-				ocl.getEnvironmentFactory().parseSpecification(expressionInOCL);
+				environmentFactory.parseSpecification(expressionInOCL);
 			} catch (ParserException e) {
 				if (diagnostics != null) {
 					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,

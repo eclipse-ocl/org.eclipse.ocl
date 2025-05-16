@@ -659,7 +659,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			ocl.dispose();
 			ocl = null;
 			unloadResourceSet(resourceSet);
-			ThreadLocalExecutor.reset();		// Ensure that the Diagnostician's validateContext releases its WeakOCLReference.
+			ThreadLocalExecutor.reset();		// Ensure that the ValidateContext releases its reference.
 		}
 	}
 
@@ -1559,7 +1559,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 					genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 					genModelResource.setURI(targetGenModelURI);
-					genModelResource.save(XMIUtil.createSaveOptions());
+					genModelResource.save(XMIUtil.createSaveOptions(genModelResource));
 					//
 					createManifestFile();
 				}
@@ -2053,7 +2053,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 					genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 					genModelResource.setURI(targetGenModelURI);
-					genModelResource.save(XMIUtil.createSaveOptions());
+					genModelResource.save(XMIUtil.createSaveOptions(genModelResource));
 				}
 				finally {
 					ocl0.dispose();

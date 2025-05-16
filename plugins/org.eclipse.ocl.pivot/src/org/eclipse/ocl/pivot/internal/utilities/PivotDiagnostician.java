@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -24,93 +22,19 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
-import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
-import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
 public abstract class PivotDiagnostician extends Diagnostician
 {
 	private static Boolean diagnosticianHasDoValidate = null; // Use 2.9/2.8 Diagnostician
-
-	/**
-	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by
-	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
-	 *
-	 * If no OCL context is cached a new one is created first by creating an OCL for an EnvironmentFactory adapting
-	 * a non-null eObject's Resource or ResourceSet. Otherwise by creating a new global OCL.
-	 *
-	 * @since 1.4
-	 */
-	public static @NonNull OCL getOCL(@NonNull Map<Object, Object> context, @Nullable EObject eObject) {
-		OCL ocl = null;
-		Object oclRef = context.get(WeakOCLReference.class);
-		if (oclRef instanceof WeakOCLReference) {
-			ocl = ((WeakOCLReference)oclRef).get();
-		}
-		if (ocl == null) {
-			if (eObject != null) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtil.basicGetEnvironmentFactory(eObject);	// XXX ValidationContext.getEnvironmentFactory(eObject
-				if (environmentFactory != null) {
-					ocl = environmentFactory.createOCL();
-				}
-			}
-			if (ocl == null) {
-				if (eObject != null) {
-					Resource eResource = eObject.eResource();
-					if (eResource != null) {
-						ResourceSet resourceSet = eResource.getResourceSet();
-						if (resourceSet instanceof IEditingDomainProvider) {			// AdapterFactoryEditingDomainResourceSet
-							EditingDomain editingDomain = ((IEditingDomainProvider)resourceSet).getEditingDomain();
-							InitWrapperCallBack<OCL, CoreException> callBack = new InitWrapperCallBack<OCL, CoreException>()
-							{
-								protected @Nullable OCL ocl = null;
-
-								@Override
-								public OCL getResult() {
-									return ocl;
-								}
-
-								@Override
-								public @Nullable CoreException getThrowable() { return null; }//throwable; }
-
-								@Override
-								public void run() {
-									ocl = OCL.newInstance(editingDomain.getResourceSet());
-								}
-							};
-							ThreadLocalExecutor.init(editingDomain, callBack);
-							ocl = callBack.getResult();
-						}
-					}
-				}
-				if (ocl == null) {
-					ocl = OCL.newInstance();
-				}
-			}
-			ThreadLocalExecutor.setUsesFinalizer();			// XXX not on a worker thread ?? part threads may also use fiunalizer ??
-			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
-		}
-		return ocl;
-	}
-
-	public static void setOCL(@NonNull Map<Object, Object> context, @NonNull OCL ocl) {
-		ThreadLocalExecutor.setUsesFinalizer();
-		context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
-	}
 
 	protected final static class Diagnostician_2_8 extends PivotDiagnostician
 	{
@@ -161,38 +85,6 @@ public abstract class PivotDiagnostician extends Diagnostician
 				}
 			}
 			return super.getObjectLabel(eObject);
-		}
-	}
-
-	/**
-	 * WeakOCLReference maintains the reference to the OCL context within the Diagnostician context and
-	 * disposes of it once the Diagnostician is done.
-	 */
-	public static final class WeakOCLReference extends WeakReference<OCL>	// FIXME Migrate to ThreadLocalExecutor.Terminator
-	{
-		private static int counter = 0;
-
-		protected final @NonNull OCL ocl;
-		private int count;
-
-		protected WeakOCLReference(@NonNull OCL ocl) {
-			super(ocl);
-			this.ocl = ocl;
-			this.count = ++counter;
-		//	System.out.println("[" + Thread.currentThread().getName() + "] PivotDiagnostician.WeakOCLReference-" + count + ".init()");
-		}
-
-		@Override
-		public void finalize() {
-			new Thread("OCL-Finalizer")		// New thread needed to avoid deadlock hazard on ocl.dispose()
-			{
-				@Override
-				public void run() {
-				//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " PivotDiagnostician.WeakOCLReference-" + count + ".finalize()");
-					ThreadLocalExecutor.incrementFinalizerReleases();
-					ocl.dispose();
-				}
-			}.start();
 		}
 	}
 

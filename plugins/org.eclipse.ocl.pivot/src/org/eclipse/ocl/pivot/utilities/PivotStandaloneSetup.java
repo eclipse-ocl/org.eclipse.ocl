@@ -85,6 +85,9 @@ public class PivotStandaloneSetup //implements ISetup
 		else if (knownEPackage == ePackage) {
 			// Required package already registered.
 		}
+		else if (knownEPackage instanceof EPackage.Descriptor) {
+			// Displacing a descriptor
+		}
 		else {
 			System.err.println("Conflicting registrations for '" + eNSuri + "'");
 		}

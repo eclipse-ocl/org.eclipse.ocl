@@ -462,7 +462,7 @@ public class AbstractPivotTestCase extends TestCase
 					try {
 						Object eGet = eSource.eGet(eStructuralFeature);		// XXX debugging
 						if ((eStructuralFeature instanceof EReference) && (eGet instanceof EObject) && ((EObject)eGet).eIsProxy() && !((EReference)eStructuralFeature).isResolveProxies()) {
-							EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
+							@SuppressWarnings("unused") EObject eObject = EcoreUtil.resolve((EObject)eGet, eSource);
 						}
 						s.append(eSource.toString());
 					}

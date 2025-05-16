@@ -55,9 +55,6 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	public static @NonNull List<Diagnostic> assertUMLOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
 		EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
 		ValidationContext validationContext = new ValidationContext(registry);
-		if (ocl != null) {
-			PivotDiagnostician.setOCL(validationContext, ocl);
-		}
 		registry.put(UMLPackage.eINSTANCE, UMLOCLEValidator.INSTANCE);
 		Diagnostician dignostician = validationContext.getDiagnostician();
 		List<Diagnostic> diagnostics = new ArrayList<>();
