@@ -481,9 +481,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (!(ePackage.eContainer() instanceof EAnnotation)) {
 			String moniker = AS2Moniker.toString(pivotElement);
 			MonikerAliasAdapter adapter = MonikerAliasAdapter.getAdapter(ePackage.eResource());
-			if (adapter != null) {
-				adapter.getAliasMap().put(ePackage, moniker);
-			}
+			adapter.getAliasMap().put(ePackage, moniker);
 		}
 		converter.addMapping(ePackage, pivotElement);
 		//		copyNamedElement(pivotElement, eObject2);

@@ -33,7 +33,7 @@ public class ExecutorFragment extends AbstractFragment
 	private @NonNull ExecutorOperation[] operations;
 	private @NonNull ExecutorProperty[] properties;
 
-	public ExecutorFragment(@NonNull ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	public ExecutorFragment(/*@NonNull*/ ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 		this.operations = null;
 		this.properties = null;

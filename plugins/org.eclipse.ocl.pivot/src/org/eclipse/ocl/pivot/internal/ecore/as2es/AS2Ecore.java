@@ -73,18 +73,13 @@ public class AS2Ecore extends AbstractConversion
 		/**
 		 * Mapping of synthesized ES eModelElements and eGenericTypes from their originating AS elements.
 		 */
-		private final @NonNull Map<@NonNull EObject, @NonNull Element> inverseCreateMap = new HashMap<>();
+		private @Nullable Map<@NonNull EObject, @NonNull Element> inverseCreateMap = null;
 
 		/**
 		 * @since 7.0
 		 */
 		protected InverseConversion() {
 			super(AS2Ecore.this.environmentFactory);
-			for (@NonNull Element asElement : createMap.keySet()) {
-				EObject eObject = createMap.get(asElement);
-				assert eObject != null;
-				inverseCreateMap.put(eObject, asElement);
-			}
 		}
 
 		@Override
@@ -92,14 +87,12 @@ public class AS2Ecore extends AbstractConversion
 
 		@Override
 		public @NonNull Model getASModel() {
-			Model asModel = AS2Ecore.this.asModel;
-			assert asModel != null;
-			return asModel;				// XXX if proxy reconvert
+			return AS2Ecore.this.asModel;			// XXX if proxy reconvert
 		}
 
 		@Override
 		public <T extends Element> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-			Element asElement = inverseCreateMap.get(eObject);
+			Element asElement = getCreatedMap().get(eObject);
 			//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 			if (asElement == null) {
 				XMLResource ecoreResource2 = getEcoreResource();
@@ -117,8 +110,17 @@ public class AS2Ecore extends AbstractConversion
 		}
 
 		@Override
-		public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
-			return inverseCreateMap;
+		public @NonNull Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
+			Map<@NonNull EObject, @NonNull Element> inverseCreateMap2 = inverseCreateMap;
+			if (inverseCreateMap2 == null) {
+				inverseCreateMap = inverseCreateMap2 = new HashMap<>();
+				for (@NonNull Element asElement : createMap.keySet()) {
+					EObject eObject = createMap.get(asElement);
+					assert eObject != null;
+					inverseCreateMap2.put(eObject, asElement);
+				}
+			}
+			return inverseCreateMap2;
 		}
 
 		@Override
@@ -134,8 +136,11 @@ public class AS2Ecore extends AbstractConversion
 		}
 
 		public void putCreated(@NonNull EModelElement eObject, @NonNull Element pivotElement) {
-			Element oldPivot = inverseCreateMap.put(eObject, pivotElement);
-			assert oldPivot == null;
+			Map<@NonNull EObject, @NonNull Element> createdMap = getCreatedMap();
+			Element oldPivot = createdMap.put(eObject, pivotElement);
+			if ((oldPivot != null) && (oldPivot != pivotElement)) {		// Inverse may have duplicates
+				createdMap.put(oldPivot, environmentFactory.getStandardLibrary().getOclInvalidType());
+			}
 		}
 
 		@Override
@@ -197,14 +202,6 @@ public class AS2Ecore extends AbstractConversion
 		else if (commentAnnotation != null) {
 			commentAnnotation.getDetails().removeKey(key);
 		}
-	}
-
-	/**
-	 * @deprecated Use copyCommentsAndDocumentation
-	 */
-	@Deprecated
-	public static void copyComments(@NonNull EModelElement eModelElement, @NonNull Element pivotElement) {
-		EMF_GenModel_EAnnotationConverter.getInstance().convertAnnotations(pivotElement, eModelElement);
 	}
 
 	/**
@@ -349,58 +346,45 @@ public class AS2Ecore extends AbstractConversion
 	protected final @NonNull AS2EcoreReferenceVisitor pass2;
 	protected final @NonNull URI ecoreURI;
 	protected final @Nullable String primitiveTypesUriPrefix;
-	private @Nullable Model asModel;
-	private @Nullable XMLResource ecoreResource;
-	private @Nullable InverseConversion ecore2as;
-
-	@Deprecated /* @deprecated pass asResource */
-	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
-		super(environmentFactory);
-		this.options = options != null ? options : new HashMap<>();
-		this.delegateInstaller = new DelegateInstaller(environmentFactory, options);
-		this.pass1 = new AS2EcoreDeclarationVisitor(this);
-		this.pass2 = new AS2EcoreReferenceVisitor(this);
-		this.ecoreURI = ecoreURI;
-		this.primitiveTypesUriPrefix = getString(options, PivotConstants.PRIMITIVE_TYPES_URI_PREFIX);
-	}
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull Model asModel;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull XMLResource ecoreResource;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull InverseConversion ecore2as;
 
 	/**
 	 * @since 7.0
 	 */
 	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
-		this(environmentFactory, ecoreURI, options);
-		this.asModel = PivotUtil.getModel(asResource);
-		convertResource(asResource, ecoreURI);
-	}
-
-	/** @deprecated not used */
-	@Deprecated
-	protected @Nullable Object convert(@NonNull Element pivotObject) {
-		Object eObject = pass1.safeVisit(pivotObject);
-		for (Element eKey : deferMap) {
-			pass2.safeVisit(eKey);
-		}
-		return eObject;
-	}
-
-	public @NonNull XMLResource convertResource(@NonNull Resource asResource, @NonNull URI ecoreURI) {		// FIXME remove redundant asResource argument
-		Model asModel2 = this.asModel;
-		if (asModel2 == null) {
-			this.asModel = asModel2 = PivotUtil.getModel(asResource);
-		}
-		else {
-			assert asModel2.eResource() == asResource;
-		}
+		super(environmentFactory);
+		Model asModel = PivotUtil.getModel(asResource);
+		assert asModel != null;
+		this.asModel = asModel;
+		assert asModel.eResource() == asResource;
+		this.options = options != null ? options : new HashMap<>();
+		this.delegateInstaller = new DelegateInstaller(environmentFactory, this.options);
+		this.pass1 = new AS2EcoreDeclarationVisitor(this);
+		this.pass2 = new AS2EcoreReferenceVisitor(this);
+		this.ecoreURI = ecoreURI;
+		this.primitiveTypesUriPrefix = getString(options, PivotConstants.PRIMITIVE_TYPES_URI_PREFIX);
+		this.ecore2as = new InverseConversion();
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		setGenerationInProgress(asResource, true);
 		try {
 			XMLResource ecoreResource = (XMLResource) resourceSet.createResource(ecoreURI);
-			List<EObject> contents = ecoreResource.getContents();
+			List<@NonNull EObject> contents = ecoreResource.getContents();
 			//			contents.clear();						// FIXME workaround for BUG 465326
-			Object results = pass1.safeVisit(asModel2);
+			Object results = pass1.safeVisit(asModel);
 			if (results instanceof List<?>) {
 				@SuppressWarnings("unchecked")
-				List<EObject> results2 = (List<EObject>)results;
+				List<@NonNull  EObject> results2 = (List<@NonNull  EObject>)results;
 				contents.addAll(results2);
 			}
 			for (@NonNull Element eKey : deferMap) {
@@ -408,21 +392,20 @@ public class AS2Ecore extends AbstractConversion
 			}
 			for (@NonNull Element pivotElement : createMap.keySet()) {
 				EObject eObject = createMap.get(pivotElement);
+				assert eObject != null;
 				PivotObjectImpl pivotObjectImpl = (PivotObjectImpl)pivotElement;
 				if (pivotObjectImpl.getESObject() == null) {				// Bug 510729 avoid trashing OCLstdlib
 					pivotObjectImpl.setESObject(eObject);
 				}
 			}
-			if (asModel2.getExternalURI() == null) {
-				asModel2.setExternalURI(String.valueOf(ecoreResource.getURI()));
+			if (asModel.getExternalURI() == null) {
+				asModel.setExternalURI(String.valueOf(ecoreResource.getURI()));
 			}
-			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
+			if (Boolean.valueOf(String.valueOf(this.options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
 				XMIUtil.assignIds(ecoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
 			}
 			this.ecoreResource = ecoreResource;
-			ecore2as = new InverseConversion();
 			environmentFactory.addExternal2AS(ecore2as);
-			return ecoreResource;
 		}
 		finally {
 			setGenerationInProgress(asResource, false);
@@ -445,7 +428,6 @@ public class AS2Ecore extends AbstractConversion
 	 * @since 7.0
 	 */
 	public @NonNull Model getASModel() {
-		assert asModel != null;
 		return asModel;
 	}
 
@@ -481,7 +463,6 @@ public class AS2Ecore extends AbstractConversion
 	 * @since 7.0
 	 */
 	public @NonNull XMLResource getEcoreResource() {
-		assert ecoreResource != null;
 		return ecoreResource;
 	}
 
@@ -539,15 +520,11 @@ public class AS2Ecore extends AbstractConversion
 		//		System.out.println("Put1 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 		EObject oldEObject = createMap.put(pivotElement, eModelElement);
 		assert oldEObject == null;
-		if (ecore2as != null) {
-			ecore2as.putCreated(eModelElement, pivotElement);
-		}
+		ecore2as.putCreated(eModelElement, pivotElement);
 		if ((pivotElement != primaryElement) && !createMap.containsKey(primaryElement)) {
 			//			System.out.println("Put2 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 			createMap.put(primaryElement, eModelElement);
-			if (ecore2as != null) {
-				ecore2as.putCreated(eModelElement, primaryElement);
-			}
+			ecore2as.putCreated(eModelElement, primaryElement);
 		}
 	}
 

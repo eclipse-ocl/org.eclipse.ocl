@@ -1368,7 +1368,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			assert templateArguments.size() == 2;
 			@NonNull Type keyTemplateArgument = templateArguments.get(0);
 			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getMapType(libraryCompleteClass, TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
+			@SuppressWarnings("unchecked") T specializedType = (T) libraryCompleteClass.getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
 			return specializedType;
 		}
 		else {
@@ -1387,28 +1387,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public @Nullable EObject getLockingObject() {
 		return lockingAnnotation;
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		if (keyType.eIsProxy() || valueType.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getMapType(standardLibrary.getRequiredLibraryType(mapTypeName), keyType, keysAreNullFree, valueType, valuesAreNullFree);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		if (entryClass.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getMapType(standardLibrary.getMapType(), entryClass);
 	}
 
 	@Override
@@ -2140,7 +2118,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 								External2AS external2as2 = external2asMap.get(packageURI);
 								if (external2as2 != null) {
 									Resource knownResource = external2as2.getResource();
-									if ((knownResource != null) && (knownResource != resource)) {			// isCompatible
+									if (knownResource != resource) {			// isCompatible
 										for (EObject eContent : resource.getContents()) {
 											if (eContent instanceof Pivotable) {
 												Element pivot = ((Pivotable)firstContent).getPivot();
