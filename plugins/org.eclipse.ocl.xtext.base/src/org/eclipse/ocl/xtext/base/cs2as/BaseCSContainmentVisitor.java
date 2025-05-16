@@ -167,7 +167,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		T pivotElement = context.refreshModelElement(pivotClass, pivotEClass, csElement);
 		String name = csElement.getName();
 		if (name != null) {
-			helper.refreshName(pivotElement, name);
+			PivotUtil.refreshName(pivotElement, name);
 		}
 		context.refreshComments(pivotElement, csElement);
 		return pivotElement;
@@ -206,7 +206,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 			@SuppressWarnings("unchecked")
 			T pivotElement2 = (T) pivotObject;
 			pivotElement = pivotElement2;
-			helper.refreshName(pivotElement, name);
+			PivotUtil.refreshName(pivotElement, name);
 		}
 		context.getConverter().installPivotDefinition(csElement, pivotElement);
 		context.refreshComments(pivotElement, csElement);

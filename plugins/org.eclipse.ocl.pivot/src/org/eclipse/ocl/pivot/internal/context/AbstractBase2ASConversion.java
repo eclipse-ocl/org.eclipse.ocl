@@ -120,7 +120,8 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 				contextType = standardLibrary.getOclVoidType();
 			}
 		}
-		getHelper().refreshName(contextVariable, selfVariableName);
+		getHelper();
+		PivotUtil.refreshName(contextVariable, selfVariableName);
 		getHelper().setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
 	}
 

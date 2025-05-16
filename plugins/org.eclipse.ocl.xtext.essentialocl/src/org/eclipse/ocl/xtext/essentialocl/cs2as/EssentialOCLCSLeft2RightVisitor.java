@@ -831,7 +831,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		IteratorVariable iterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null); // FIXME reuse
 		Parameter resolvedIterator = asIteration.getOwnedIterators().get(0);
 		iterator.setRepresentedParameter(resolvedIterator);
-		helper.refreshName(iterator, "1_");
+		PivotUtil.refreshName(iterator, "1_");
 		helper.setType(iterator, elementType, isSafe || isNullFree, null);
 		iterator.setIsImplicit(true);
 		implicitCollectExp.getOwnedIterators().add(iterator);
@@ -1228,7 +1228,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Parameter formalIterator = iteration.getOwnedIterators().get(iteratorIndex);
 			String varName = Integer.toString(iteratorIndex+1) + "_";
 			IteratorVariable iterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null);
-			helper.refreshName(iterator, varName);
+			PivotUtil.refreshName(iterator, varName);
 			helper.setType(iterator, sourceElementType, isSafe || formalIterator.isIsRequired(), null);
 			iterator.setIsImplicit(true);
 			iterator.setRepresentedParameter(formalIterator);
@@ -1251,7 +1251,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					}
 					String varName = Integer.toString(iterationIteratorsSize + coiteratorIndex+1) + "_";
 					coIterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null);
-					helper.refreshName(coIterator, varName);
+					PivotUtil.refreshName(coIterator, varName);
 					helper.setType(coIterator, sourceElementType, coIteratorIsRequired, null);
 					coIterator.setIsImplicit(true);
 					pivotCoIterators.set(coiteratorIndex, coIterator);
@@ -1891,7 +1891,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		OperationCallExp expression = context.refreshModelElement(OperationCallExp.class, PivotPackage.Literals.OPERATION_CALL_EXP, csOperator);
 		String name = csOperator.getName();
 		assert name != null;
-		helper.refreshName(expression, name);
+		PivotUtil.refreshName(expression, name);
 		ExpCS csSource = csOperator.getSource();
 		if (csSource != null) {
 			OCLExpression source = revisit(OCLExpression.class, csSource);
@@ -2305,7 +2305,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 		}
 		OperationCallExp asCallExp = context.refreshModelElement(OperationCallExp.class, PivotPackage.Literals.OPERATION_CALL_EXP, csPrefixExp);
-		helper.refreshName(asCallExp, csPrefixExp.getName());
+		PivotUtil.refreshName(asCallExp, csPrefixExp.getName());
 		ExpCS csSource = csPrefixExp.getSource();
 		if (csSource != null) {
 			OCLExpression source = revisit(OCLExpression.class, csSource);
@@ -2345,7 +2345,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				property = new PivotHelper(environmentFactory).getDataTypeValueProperty();
 			}
 			pivotElement.setReferredProperty(property);
-			helper.refreshName(pivotElement, property.getName());
+			PivotUtil.refreshName(pivotElement, property.getName());
 			helper.setType(pivotElement, property.getType(), property.isIsRequired());
 			ExpCS csInitExpression = csShadowPart.getOwnedInitExpression();
 			if (csInitExpression != null) {

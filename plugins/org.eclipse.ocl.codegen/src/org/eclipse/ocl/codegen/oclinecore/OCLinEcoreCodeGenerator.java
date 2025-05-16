@@ -475,43 +475,43 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			asSynthesizedQuery.setBody(null);
 		}
 		Variable asSelfVariable = ClassUtil.requireNonNull(asSynthesizedQuery.getOwnedContext());
-		Variable asDiagnosticsVariable = asHelper.createParameterVariable("diagnostics", oclAnyType, false);
-		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
+		Variable asDiagnosticsVariable = PivotUtil.createParameterVariable("diagnostics", oclAnyType, false);
+		Variable asConstraintNameNameVariable = PivotUtil.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
 		asSynthesizedQuery.getOwnedParameters().add(asDiagnosticsVariable);
-		Variable asContextVariable = asHelper.createParameterVariable("context", oclAnyType, false);
+		Variable asContextVariable = PivotUtil.createParameterVariable("context", oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asContextVariable);
 		//
 		//	Cache the result in a let-variable
 		//
 		OCLExpression asResultVariableInit = asSynthesizedQuery.getOwnedBody();
 		assert asResultVariableInit != null;
-		LetVariable asResultVariable = asHelper.createLetVariable("result", asResultVariableInit);
+		LetVariable asResultVariable = PivotUtil.createLetVariable("result", asResultVariableInit);
 		//
 		//	Cache the severity in a let-variable
 		//
-		OCLExpression asSeverityVariableInit = asHelper.createOperationCallExp(asHelper.createVariableExp(asConstraintNameNameVariable), "getSeverity");
-		LetVariable asSeverityVariable = asHelper.createLetVariable("severity", integerType, asSeverityVariableInit.isIsRequired(), asSeverityVariableInit);
+		OCLExpression asSeverityVariableInit = asHelper.createOperationCallExp(PivotUtil.createVariableExp(asConstraintNameNameVariable), "getSeverity");
+		LetVariable asSeverityVariable = PivotUtil.createLetVariable("severity", integerType, asSeverityVariableInit.isIsRequired(), asSeverityVariableInit);
 		//
 		//	Build from the bottom, starting with logging the status.
 		//
-		OCLExpression asLogExpression = asHelper.createOperationCallExp(asHelper.createVariableExp(asConstraintNameNameVariable), "logDiagnostic",
-			asHelper.createVariableExp(asSelfVariable), asHelper.createNullLiteralExp(),
-			asHelper.createVariableExp(asDiagnosticsVariable), asHelper.createVariableExp(asContextVariable),
-			asHelper.createNullLiteralExp()/*asMessageExp*/, asHelper.createVariableExp(asSeverityVariable),
-			asHelper.createVariableExp(asResultVariable), asHelper.createIntegerLiteralExp(0));
+		OCLExpression asLogExpression = asHelper.createOperationCallExp(PivotUtil.createVariableExp(asConstraintNameNameVariable), "logDiagnostic",
+			PivotUtil.createVariableExp(asSelfVariable), asHelper.createNullLiteralExp(),
+			PivotUtil.createVariableExp(asDiagnosticsVariable), PivotUtil.createVariableExp(asContextVariable),
+			asHelper.createNullLiteralExp()/*asMessageExp*/, PivotUtil.createVariableExp(asSeverityVariable),
+			PivotUtil.createVariableExp(asResultVariable), asHelper.createIntegerLiteralExp(0));
 		//
 		//	Wrapped in the status let-variable
 		//
-		OCLExpression asResultExpression = asHelper.createLetExp(asResultVariable, asLogExpression);
+		OCLExpression asResultExpression = PivotUtil.createLetExp(asResultVariable, asLogExpression);
 		//
 		//	Wrapped in an interesting severity guard
 		//
-		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asSeverityVariable), "<=", asHelper.createIntegerLiteralExp(0));
+		OCLExpression asCondition = asHelper.createOperationCallExp(PivotUtil.createVariableExp(asSeverityVariable), "<=", asHelper.createIntegerLiteralExp(0));
 		OCLExpression asSeverityExpression = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asResultExpression);
 		//
 		//	Wrapped in the severity let-variable
 		//
-		asSynthesizedQuery.setOwnedBody(asHelper.createLetExp(asSeverityVariable, asSeverityExpression));
+		asSynthesizedQuery.setOwnedBody(PivotUtil.createLetExp(asSeverityVariable, asSeverityExpression));
 		//
 		//	Install replacment query in the original Constraint.
 		//
@@ -539,14 +539,14 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//	Cache the status in a let-variable
 		//
 		PivotUtil.resetContainer(asStatusInit);
-		asStatusVariable = asHelper.createLetVariable("status", standardLibrary.getBooleanType(), asStatusInit.isIsRequired(), asStatusInit);
-		asStatusPart.setOwnedInit(asHelper.createVariableExp(asStatusVariable));
+		asStatusVariable = PivotUtil.createLetVariable("status", standardLibrary.getBooleanType(), asStatusInit.isIsRequired(), asStatusInit);
+		asStatusPart.setOwnedInit(PivotUtil.createVariableExp(asStatusVariable));
 		//
 		//	Wrap the tuple in a status guard for failure.
 		//
 		PivotUtil.resetContainer(asTupleLiteralExp);
-		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asStatusVariable), "=", asHelper.createBooleanLiteralExp(true));
+		OCLExpression asCondition = asHelper.createOperationCallExp(PivotUtil.createVariableExp(asStatusVariable), "=", asHelper.createBooleanLiteralExp(true));
 		OCLExpression asStatusExp = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asTupleLiteralExp);
-		return asHelper.createLetExp(asStatusVariable, asStatusExp);
+		return PivotUtil.createLetExp(asStatusVariable, asStatusExp);
 	}
 }

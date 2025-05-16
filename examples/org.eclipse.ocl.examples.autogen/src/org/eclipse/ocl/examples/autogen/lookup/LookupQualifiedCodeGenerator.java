@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 
@@ -91,7 +92,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.requireNonNull(operation.getOwningClass());
-		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
+		Variable asElement = PivotUtil.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 
 		//rewrite LookupEnvironment ShadowExp as accessing the context variable (it might be the init of let variable)

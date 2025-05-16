@@ -178,7 +178,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			csPathElement.setReferredElement(parameter);	// Resolve the reference that is actually a definition
 			csPathElement.setElementType(null);				// Indicate a definition to the syntax colouring
 			assert varName != null;
-			helper.refreshName(parameter, varName);
+			PivotUtil.refreshName(parameter, varName);
 		}
 	}
 

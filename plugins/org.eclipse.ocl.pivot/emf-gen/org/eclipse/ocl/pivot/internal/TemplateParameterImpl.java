@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * <!-- begin-user-doc -->
@@ -438,7 +439,7 @@ public class TemplateParameterImpl
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp expr, @Nullable Type selfType) {
 		assert expr != null;
 		if (selfType != null) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			return metamodelManager.specializeType(this, expr, selfType, null);
 		}
