@@ -42,7 +42,7 @@ Workflow {
     	genModelFile = "model/cgmodel.genmodel"
     }
 	component = ConvertToUnixLineEndings {
-		directory = "org.eclipse.ocl.codegen/emf-gen"
+		directory = "../../plugins/org.eclipse.ocl.codegen/emf-gen"
 	}
 }
 

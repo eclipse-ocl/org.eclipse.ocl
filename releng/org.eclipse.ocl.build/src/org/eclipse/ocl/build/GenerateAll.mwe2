@@ -28,4 +28,5 @@ Workflow {
   component = @GenerateQueriesModels {}
   component = @GenerateTestModels {}
   component = @GenerateOCLstdlibModel {}
+  component = @GenerateCGLibraryModel {}
 }

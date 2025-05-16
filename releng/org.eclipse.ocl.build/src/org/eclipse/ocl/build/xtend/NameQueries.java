@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -68,6 +69,8 @@ public class NameQueries
 				if ((elem instanceof CollectionType) && (((CollectionType)elem).getUnspecializedElement() != null)) {
 		}
 		else if ((elem instanceof MapType) && (((MapType)elem).getUnspecializedElement() != null)) {
+		}
+		else if (elem instanceof PrimitiveType)  {
 		}
 		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
 			//	elem = metamodelManager.getCompleteModel().getCompleteClass((Type)elem);
