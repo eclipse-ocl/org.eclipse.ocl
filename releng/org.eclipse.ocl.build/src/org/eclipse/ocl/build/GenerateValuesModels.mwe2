@@ -33,7 +33,7 @@ Workflow {
 		clearResourceSet = false
 	}
 		component = ConvertToUnixLineEndings {
-		directory = "org.eclipse.ocl.pivot/emf-gen"
+		directory = "../../plugins/org.eclipse.ocl.pivot/emf-gen"
 	}
 }
 

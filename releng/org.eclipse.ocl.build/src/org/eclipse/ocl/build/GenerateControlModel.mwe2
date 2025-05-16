@@ -38,7 +38,7 @@ Workflow {
     	genModelFile = "model/Control.genmodel"
     }
 	component = ConvertToUnixLineEndings {
-		directory = "org.eclipse.ocl.control/emf-gen"
+		directory = "../../plugins/org.eclipse.ocl.control/emf-gen"
 	}
 }
 
