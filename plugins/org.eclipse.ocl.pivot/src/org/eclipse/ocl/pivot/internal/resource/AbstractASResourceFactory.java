@@ -43,9 +43,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
-import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
-import org.eclipse.ocl.pivot.utilities.ASSaverResolveVisitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -210,23 +208,8 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	@Override
-	public @NonNull ASSaverLocateVisitor createASSaverLocateVisitor(@NonNull ASSaver saver) {
-		return new ASSaverLocateVisitor(saver);
-	}
-
-	@Override
 	public @NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull AbstractASSaver asSaver) {
 		return new ASSaverNormalizeVisitor(asSaver);
-	}
-
-	@Override
-	public @NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull ASSaver saver) {
-		return new ASSaverNormalizeVisitor(saver);
-	}
-
-	@Override
-	public @NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver saver) {
-		return new ASSaverResolveVisitor(saver);
 	}
 
 	@Override
