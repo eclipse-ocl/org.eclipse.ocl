@@ -83,6 +83,6 @@ Workflow {
     	baseGenModelFile = baseGenModelFile
     }
 	component = ConvertToUnixLineEndings {
-		directory = "${projectName}/emf-gen"
+		directory = "../../plugins/${projectName}/emf-gen"
 	}
 }
