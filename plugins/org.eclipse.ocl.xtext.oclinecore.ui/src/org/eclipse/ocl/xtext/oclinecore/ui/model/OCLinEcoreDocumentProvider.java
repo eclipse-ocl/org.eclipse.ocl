@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.model.BaseCSorASDocumentProvider;
-import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiPluginHelper;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -284,7 +283,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 				//				displayText = string;
 				////				CS2ASResourceAdapter resourceAdapter = ((BaseCSResource)csResource).getCS2ASAdapter();
 				////				resourceAdapter.dispose();
-				((BaseCSResource)csResource).dispose();
+				csResource.dispose();
 				csResourceSet.getResources().remove(csResource);
 				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 			}

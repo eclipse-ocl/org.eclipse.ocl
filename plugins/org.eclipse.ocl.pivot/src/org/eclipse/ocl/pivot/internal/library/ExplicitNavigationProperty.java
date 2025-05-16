@@ -88,12 +88,12 @@ public class ExplicitNavigationProperty extends AbstractProperty
 		}
 		catch (IllegalArgumentException e) {
 			EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
-			ResourceSet resourceSet0 = environmentFactory.getResourceSet();
+			@SuppressWarnings("unused") ResourceSet resourceSet0 = environmentFactory.getResourceSet();
 			EClass eClass1 = eObject.eClass();
 			Resource eResource1 = eClass1.eResource();
 			Resource eResource2 = eFeature2.eResource();
-			ResourceSet resourceSet1 = eResource1.getResourceSet();
-			ResourceSet resourceSet2 = eResource2.getResourceSet();
+			@SuppressWarnings("unused") ResourceSet resourceSet1 = eResource1.getResourceSet();
+			@SuppressWarnings("unused") ResourceSet resourceSet2 = eResource2.getResourceSet();
 			throw new InvalidValueException(e, e.getMessage());
 		}
 		return null;

@@ -227,7 +227,7 @@ public class CGExecutorTypeImpl extends CGValuedElementImpl implements CGExecuto
 			return null;
 		}
 		else if (value instanceof CGExecutorType) {
-			return getASTypeId() == ((CGExecutorType)thatValue).getASTypeId();
+			return getASTypeId() == thatValue.getASTypeId();
 		}
 		else {
 			return Boolean.FALSE;

@@ -77,7 +77,7 @@ public class RoundTripTests extends XtextTestCase
 		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
 		//		if (ecoreURI != null) {
-		ecoreResource.save(XMIUtil.createSaveOptions());
+		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		//		}
 		return ecoreResource;
 	}
@@ -109,7 +109,7 @@ public class RoundTripTests extends XtextTestCase
 		XtextResource xtextResource = (XtextResource)resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		((BaseCSResource)xtextResource).updateFrom(asResource, environmentFactory);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.requireNonNull(xtextResource.getURI().toString()));
-		xtextResource.save(XMIUtil.createSaveOptions());
+		xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
@@ -130,7 +130,7 @@ public class RoundTripTests extends XtextTestCase
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.requireNonNull(xtextResource.getURI().toString()));
-		xtextResource.save(XMIUtil.createSaveOptions());
+		xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", (XtextResource) xtextResource);
@@ -162,7 +162,7 @@ public class RoundTripTests extends XtextTestCase
 		//	environmentFactory1.adapt(resourceSet);
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
-			pivotResource1.save(XMIUtil.createSaveOptions());
+			pivotResource1.save(XMIUtil.createSaveOptions(pivotResource1));
 			ASResource pivotResource2 = ClassUtil.requireNonNull(CompleteOCLSplitter.separate(environmentFactory1, pivotResource1));
 			@SuppressWarnings("unused")
 			CSResource xtextResource2 = createCompleteOCLXtextFromPivot(environmentFactory1, pivotResource2, outputURI);

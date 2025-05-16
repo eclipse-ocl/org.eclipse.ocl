@@ -280,7 +280,6 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 			}
 		}
 		s.append("]");
-		@SuppressWarnings("null")
 		@NonNull String castString = s.toString();
 		return castString;
 	}
@@ -314,7 +313,6 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 			s.append("L");
 			isFirst = false;
 		}
-		@SuppressWarnings("null")
 		@NonNull String castString = s.toString();
 		return castString;
 	}

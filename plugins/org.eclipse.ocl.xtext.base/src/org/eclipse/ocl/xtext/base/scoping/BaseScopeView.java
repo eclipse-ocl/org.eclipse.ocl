@@ -160,7 +160,6 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		return new EnvironmentView(environmentFactory, targetReference, name);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NonNull Attribution getAttribution() {
 		Attribution attribution2 = attribution;

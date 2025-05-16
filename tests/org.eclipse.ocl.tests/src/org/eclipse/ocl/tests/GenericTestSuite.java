@@ -92,6 +92,7 @@ extends TestCase {
 
 	private static boolean initialized = false;
 
+	@SafeVarargs
 	public static <T> Collection<T> createBag(T... elements) {
 		Collection<T> collection = CollectionUtil.createNewBag();
 		if (elements != null) {
@@ -102,6 +103,7 @@ extends TestCase {
 		return collection;
 	}
 
+	@SafeVarargs
 	public static <T> Set<T> createOrderedSet(T... elements) {
 		Set<T> collection = CollectionUtil.createNewOrderedSet();
 		if (elements != null) {
@@ -112,6 +114,7 @@ extends TestCase {
 		return collection;
 	}
 
+	@SafeVarargs
 	public static <T> List<T> createSequence(T... elements) {
 		List<T> collection = CollectionUtil.createNewSequence();
 		if (elements != null) {
@@ -122,6 +125,7 @@ extends TestCase {
 		return collection;
 	}
 
+	@SafeVarargs
 	public static <T> Set<T> createSet(T... elements) {
 		Set<T> collection = CollectionUtil.createNewSet();
 		if (elements != null) {

@@ -88,7 +88,6 @@ public class PivotScopeView implements ScopeView
 		return attribution.computeLookup(aTarget, environmentView, this);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NonNull Attribution getAttribution() {
 		Attribution attribution2 = attribution;

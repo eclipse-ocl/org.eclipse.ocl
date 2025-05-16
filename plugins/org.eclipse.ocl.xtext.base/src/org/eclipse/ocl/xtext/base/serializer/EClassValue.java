@@ -83,7 +83,6 @@ public class EClassValue implements Nameable
 			}
 		}
 		@NonNull SerializationRule @NonNull [] newEmptyArray = new @NonNull SerializationRule @NonNull [newSerializationRules.size()];
-		@SuppressWarnings("null")
 		@NonNull SerializationRule @NonNull [] newFullArray = newSerializationRules.toArray(newEmptyArray);
 		return newFullArray;
 	}

@@ -180,7 +180,7 @@ public class TupleTypeManager
 		//
 		//	Find the outgoing template parameter references
 		// FIXME this should be more readily and reliably computed in the caller
-		@NonNull Collection<? extends Type> partValues = parts.values();
+		@SuppressWarnings("unused") @NonNull Collection<? extends Type> partValues = parts.values();
 		//
 		//	Create the tuple part ids
 		//

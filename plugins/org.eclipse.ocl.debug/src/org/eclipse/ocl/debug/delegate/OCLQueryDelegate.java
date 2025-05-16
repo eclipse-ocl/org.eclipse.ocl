@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLQueryDelegateFactory;
-import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -112,7 +112,7 @@ public class OCLQueryDelegate implements QueryDelegate
 				String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentCount_ERROR_, argCount, parameterVariables.size());
 				throw new OCLDelegateException(new SemanticException(message));
 			}
-			Query query = new BasicQueryImpl(environmentFactory, nonNullSpecification);
+			Query query = new QueryImpl(environmentFactory, nonNullSpecification);
 			EvaluationEnvironment env = query.getEvaluationEnvironment(target);
 			for (Variable parameterVariable : parameterVariables) {
 				// bind arguments to parameter names

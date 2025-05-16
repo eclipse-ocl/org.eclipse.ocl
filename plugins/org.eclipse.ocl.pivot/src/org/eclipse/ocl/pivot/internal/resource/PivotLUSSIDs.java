@@ -42,8 +42,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
@@ -70,7 +68,6 @@ import com.google.common.collect.Iterables;
 public class PivotLUSSIDs extends LUSSIDs
 {
 	private org.eclipse.ocl.pivot.Package typeOrphanage = null;
-	private org.eclipse.ocl.pivot.Class featureOrphanage = null;
 
 	public PivotLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
 		super(asResource, options);
@@ -79,7 +76,6 @@ public class PivotLUSSIDs extends LUSSIDs
 				for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eRoot).getOwnedPackages()) {
 					if (Orphanage.isOrphanage(asPackage)) {
 						typeOrphanage = asPackage;
-						featureOrphanage = NameUtil.getNameable(asPackage.getOwnedClasses(), PivotConstants.ORPHANAGE_NAME);
 						break;
 					}
 				}

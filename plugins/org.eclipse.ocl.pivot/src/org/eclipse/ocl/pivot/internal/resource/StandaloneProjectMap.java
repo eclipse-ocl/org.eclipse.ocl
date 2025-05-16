@@ -2791,7 +2791,7 @@ public class StandaloneProjectMap implements ProjectManager
 			for (@NonNull EPackage ePackage : ePackages) {
 				String nsURI = ePackage.getNsURI();
 				Resource eResource = ePackage.eResource();
-				URI uri = eResource.getURI();
+				@SuppressWarnings("unused") URI uri = eResource.getURI();
 
 				resourceSet.getPackageRegistry().put(nsURI, ePackage);
 

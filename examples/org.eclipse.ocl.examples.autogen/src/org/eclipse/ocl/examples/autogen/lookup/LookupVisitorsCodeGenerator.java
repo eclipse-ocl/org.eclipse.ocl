@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -281,7 +280,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	}
 
 	protected @NonNull VariableExp createThisVariableExp(@NonNull Variable thisVariable) {
-		return PivotUtil.createVariableExp((VariableDeclaration)thisVariable);
+		return PivotUtil.createVariableExp(thisVariable);
 	}
 
 	abstract protected @NonNull String getLookupVisitorClassName(@NonNull String prefix);

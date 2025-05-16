@@ -56,7 +56,7 @@ public class ValidityViewRefreshJob extends Job
 			assert monitor != null;
 			try {
 			//	Set<@NonNull Object> expandedConstrainingElements = validityView.getExpandedConstrainingNodes();
-				Set<@NonNull AbstractNode> expandedValidatableNodes = validityView.getExpandedNodes(true);
+				@SuppressWarnings("unused") Set<@NonNull AbstractNode> expandedValidatableNodes = validityView.getExpandedNodes(true);
 //				System.out.println("DisplayRefresh.run start: expandedValidatableNodes.size() = " + expandedValidatableNodes.size()); // + ", " + getExpandedElements(validatableNodesViewer).size());
 			//	showExpandedElements(expandedValidatableElements);
 				final @SuppressWarnings("null")@NonNull Monitor emfMonitor = BasicMonitor.toMonitor(monitor);

@@ -91,9 +91,7 @@ public abstract class SerializationSegment
 				return supportClassName;
 			}
 			assert supportClass != null;
-			@SuppressWarnings("null")
-			@NonNull String castName = supportClass.getName();
-			return castName;
+			return supportClass.getName();
 		}
 
 		@Override

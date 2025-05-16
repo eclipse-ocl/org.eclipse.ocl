@@ -2122,7 +2122,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if (asKey instanceof NullLiteralExp) {
 							keysAreNullFree = false;
 						}
-						@SuppressWarnings("deprecation")
 						FlowAnalysis flowAnalysis = environmentFactory.getMetamodelManager().getFlowAnalysis(asKey);
 						if (!flowAnalysis.isNonNull(asKey)) {
 							keysAreNullFree = false;
@@ -2144,7 +2143,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if (asValue instanceof NullLiteralExp) {
 							valuesAreNullFree = false;
 						}
-						@SuppressWarnings("deprecation")
 						FlowAnalysis flowAnalysis = environmentFactory.getMetamodelManager().getFlowAnalysis(asValue);
 						if (!flowAnalysis.isNonNull(asValue)) {
 							valuesAreNullFree = false;

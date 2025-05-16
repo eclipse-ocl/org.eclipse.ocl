@@ -120,7 +120,7 @@ public class FlowAnalysisTests extends XtextTestCase
 			assertNoResourceErrors("Save failed", xtextResource);
 			asResource.setURI(pivotURI);
 			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
-			asResource.save(XMIUtil.createSaveOptions());
+			asResource.save(XMIUtil.createSaveOptions(asResource));
 			return asResource;
 		}
 

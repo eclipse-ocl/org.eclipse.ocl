@@ -250,9 +250,6 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 
 
 	private void registerGenModel(@NonNull OCL ocl, @NonNull GenModel genModel) {
-		@SuppressWarnings("null")@NonNull ResourceSet resourceSet2 = resourceSet;
-	//	EnvironmentFactoryAdapter adapter = OCLInternal.adapt(resourceSet2); // We prepare the mManager for the whole resourceSet
-		//	MetamodelManager metamodelManager = adapter.getMetamodelManager();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		metamodelManager.addGenModel(genModel);
 		for (@SuppressWarnings("null")@NonNull GenPackage usedGenPackage : genModel.getUsedGenPackages()) {

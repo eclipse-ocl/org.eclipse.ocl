@@ -286,7 +286,6 @@ public abstract class SerializationMatchStep
 
 		@Override
 		public @NonNull Set<@NonNull SerializationMatchTerm> getMatchTermClosure() {
-			@SuppressWarnings("null")
 			@NonNull Set<@NonNull SerializationMatchTerm> emptySet = Collections.<@NonNull SerializationMatchTerm>emptySet();
 			return emptySet;
 		}
@@ -455,7 +454,6 @@ public abstract class SerializationMatchStep
 
 		@Override
 		public @NonNull Set<@NonNull SerializationMatchTerm> getMatchTermClosure() {
-			@SuppressWarnings("null")
 			@NonNull Set<@NonNull SerializationMatchTerm> emptySet = Collections.<@NonNull SerializationMatchTerm>emptySet();
 			return emptySet;
 		}

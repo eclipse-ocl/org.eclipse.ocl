@@ -924,7 +924,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_Tuple() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		@SuppressWarnings("unused") StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class tupleTypeClass = environmentFactory.getASClass("TupleType");
 		TuplePartId partId = IdManager.getTuplePartId(0, "a", TypeId.INTEGER);
 		TupleTypeId tupleId = IdManager.getTupleTypeId("Tuple", partId);
