@@ -22,6 +22,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.emf.validation.validity.Result;
 import org.eclipse.ocl.emf.validation.validity.Severity;
@@ -91,7 +92,9 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	public void testHTMLExport_LoggingMetricsWithNoSeverity()
 			throws XPathExpressionException, CoreException, IOException {
 		// initiate the test case
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
 		.setSeverity(Severity.OK);
 
@@ -117,10 +120,12 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_LoggingMetricsWithInformationSeverity()
 			throws IOException, XPathExpressionException, CoreException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
 		.setSeverity(Severity.OK);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.INFO);
 
@@ -145,13 +150,15 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_LoggingMetricsWithWarningSeverity()
 			throws IOException, XPathExpressionException, CoreException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
 		.setSeverity(Severity.OK);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.INFO);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
 		.setSeverity(Severity.WARNING);
 
@@ -176,16 +183,18 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_LoggingMetricsWithErrorSeverity()
 			throws IOException, XPathExpressionException, CoreException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
 		.setSeverity(Severity.OK);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.INFO);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
 		.setSeverity(Severity.WARNING);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE2_E_STRING)
 		.setSeverity(Severity.ERROR);
 
@@ -210,19 +219,21 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_LoggingMetricsWithFailureSeverity()
 			throws IOException, XPathExpressionException, CoreException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
 		.setSeverity(Severity.OK);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.INFO);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
 		.setSeverity(Severity.WARNING);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE2_E_STRING)
 		.setSeverity(Severity.ERROR);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE4_E_STRING)
 		.setSeverity(Severity.FATAL);
 
@@ -247,7 +258,9 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_LogNullDiagnosticMessage()
 			throws XPathExpressionException, CoreException, IOException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.INFO);
 
@@ -268,11 +281,13 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_LogInfoDiagnosticMessage()
 			throws XPathExpressionException, CoreException, IOException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.INFO);
 		String diagnostic = "Diag INFO"; //$NON-NLS-1$
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setDiagnostic(diagnostic);
 
@@ -285,7 +300,9 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_ProducesOneLogHeading() throws IOException,
 	XPathExpressionException, CoreException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
 		.setSeverity(Severity.FATAL);
 
@@ -299,19 +316,21 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Test
 	public void testHTMLExport_ProducesAllLogHeadings() throws IOException,
 	XPathExpressionException, CoreException {
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
 		.setSeverity(Severity.FATAL);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity(
 						Severity.ERROR);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity(
 						Severity.FATAL);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.WARNING);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity(
 						Severity.INFO);
 
@@ -333,28 +352,30 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 			result.setSeverity(Severity.OK);
 		}
 
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity(
 						Severity.ERROR);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EPACKAGE_CONSTRAINT_2, VALIDATABLE_ECORE_TEST).setSeverity(
 						Severity.ERROR);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity(
 						Severity.FATAL);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
 		.setSeverity(Severity.FATAL);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.WARNING);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity(
 						Severity.INFO);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
 		.setSeverity(Severity.INFO);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
 		.setSeverity(Severity.WARNING);
 
@@ -426,28 +447,30 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 			result.setSeverity(Severity.OK);
 		}
 
-		getResultOfValidatableNodeFromLabel(results,
+		EList<Result> results2 = results;
+		assert results2 != null;
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity(
 						Severity.ERROR);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EPACKAGE_CONSTRAINT_2, VALIDATABLE_ECORE_TEST).setSeverity(
 						Severity.ERROR);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity(
 						Severity.FATAL);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
 		.setSeverity(Severity.FATAL);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity(
 						Severity.INFO);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
 		.setSeverity(Severity.INFO);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
 		.setSeverity(Severity.WARNING);
-		getResultOfValidatableNodeFromLabel(results,
+		getResultOfValidatableNodeFromLabel(results2,
 				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
 		.setSeverity(Severity.WARNING);
 

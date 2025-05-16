@@ -32,12 +32,10 @@ public class ContextCSAttribution extends PivotableElementCSAttribution
 			if (eResource instanceof EssentialOCLCSResource) {
 				EssentialOCLCSResource csResource = (EssentialOCLCSResource)eResource;
 				ParserContext parserContext = csResource.getParserContext();
-				if (parserContext != null) {
-					Element asContext = parserContext.getElementContext();
-					for (EObject eObject = asContext; eObject != null; eObject = eObject.eContainer()) {
-						if (eObject instanceof TemplateableElement) {
-							environmentView.addAllTemplateParameters((TemplateableElement)eObject);
-						}
+				Element asContext = parserContext.getElementContext();
+				for (EObject eObject = asContext; eObject != null; eObject = eObject.eContainer()) {
+					if (eObject instanceof TemplateableElement) {
+						environmentView.addAllTemplateParameters((TemplateableElement)eObject);
 					}
 				}
 			}

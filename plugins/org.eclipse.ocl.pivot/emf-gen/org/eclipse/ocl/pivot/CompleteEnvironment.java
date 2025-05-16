@@ -115,21 +115,6 @@ public interface CompleteEnvironment extends Element
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 
-	/**
-	 * @since 1.6
-	 */
-	default @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return getMapType(containerType, keyType, valueType);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, org.eclipse.ocl.pivot.@NonNull Class entryClass);
-
-	@Deprecated /* @deprecated provide null-free arguments */
-	@NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType);
-
 	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
 	Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);

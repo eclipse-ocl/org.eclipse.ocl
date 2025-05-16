@@ -417,7 +417,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 					asExpression = (ExpressionInOCL) doSwitch(umlValue);
 					Type requiredType = PivotUtil.getType(pivotElement);
 					Type defaultValueType = asExpression != null ? asExpression.getType() : null;
-					if ((requiredType != null) && (defaultValueType != null) && !defaultValueType.conformsTo(standardLibrary, requiredType)) {
+					if ((defaultValueType != null) && !defaultValueType.conformsTo(standardLibrary, requiredType)) {
 						converter.error("Incompatible '" + defaultValueType + "' initializer for " + pivotElement + " when '" + requiredType + "' required");
 					}
 				}

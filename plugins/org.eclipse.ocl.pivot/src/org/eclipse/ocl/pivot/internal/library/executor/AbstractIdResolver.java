@@ -939,7 +939,7 @@ public abstract class AbstractIdResolver implements IdResolver
 			Type keyType = getType(keyTypeId);
 			Type valueType = getType(valueTypeId);
 			if (generalizedId == TypeId.MAP) {
-				return environment.getMapType(standardLibrary.getMapType(), keyType, keysAreNullFree, valueType, valuesAreNullFree);
+				return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			}
 			else {
 				throw new UnsupportedOperationException();

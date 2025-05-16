@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -662,11 +661,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @Nullable MapType findMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return completeClass.findMapType(typeParameters);
-	}
-
-	@Override
 	public @NonNull CollectionType getBagType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(ownedStandardLibrary.getBagType(), elementType, false, lower, upper);
 	}
@@ -765,74 +759,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			@Nullable TemplateParameterSubstitutions bindings) {
 		LambdaTypeManager lambdaManager = getLambdaManager();
 		return lambdaManager.getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return completeClass.getMapType(typeParameters);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(containerType, keyType, true, valueType, true);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(keyType), keysAreNullFree, metamodelManager.getPrimaryType(valueType), valuesAreNullFree);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryClass(entryClass));
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(containerType, keyType, true, valueType, true);
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	@Override
-	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		if (isUnspecializedType(completeClass, keyType, valueType)) {
-			return containerType;
-		}
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
-		return specializedType;
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public @NonNull MapType getMapType(@NonNull MapType containerType, org.eclipse.ocl.pivot.@NonNull Class entryType) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		TemplateSignature templateSignature = containerType.getOwnedSignature();
-		if (templateSignature == null) {
-			throw new IllegalArgumentException("Map type must have a template signature");
-		}
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 2) {
-			throw new IllegalArgumentException("Map type must have exactly two template parameter");
-		}
-		//	boolean isUnspecialized = (keyType == templateParameters.get(0)) && (valueType == templateParameters.get(1));
-		//	if (isUnspecialized) {
-		//		return containerType;
-		//	}
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryType);
-		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
-		return specializedType;
 	}
 
 	//	@Override

@@ -15,3 +15,4 @@ Export-Package: org.eclipse.ocl.examples.standalone,
  org.eclipse.ocl.examples.standalone.messages;x-friends:="org.eclipse.ocl.xtext.tests",
  org.eclipse.ocl.examples.standalone.validity;x-friends:="org.eclipse.ocl.xtext.tests"
 ame: org.eclipse.ocl.examples.standalone
+Automatic-Module-Name: org.eclipse.ocl.examples.standalone

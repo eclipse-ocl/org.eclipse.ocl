@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -685,6 +686,12 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			return ((Type)getUnspecializedElement()).conformsTo(standardLibrary, type);
 		}
 		return super.conformsTo(standardLibrary, type);
+	}
+
+	@Override
+	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
+		// XXX TODO Auto-generated method stub
+		return super.getCommonType(idResolver, type);
 	}
 
 	@Override

@@ -57,7 +57,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
-	@NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	/**
 	 * @since 7.0
 	 */
