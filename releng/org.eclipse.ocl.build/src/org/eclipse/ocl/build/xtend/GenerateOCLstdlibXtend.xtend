@@ -351,12 +351,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					}
 				}
 			
-				@Deprecated /* Provide externalURI */
-				public static @NonNull «javaClassName» create(@NonNull String asURI) {
-					Contents contents = new Contents(asURI);
-					return new «javaClassName»(asURI, contents.getModel());
-				}
-			
 				/**
 				 *	Construct a copy of the OCL Standard Library with specified AS resource URI,
 				 *  and external URI.
@@ -379,7 +373,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				private static class AbstractLibraryContents extends AbstractContents
 				{
 					«FOR pkge : thisModel.getSortedPackages()»
-					protected final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
+					protected final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.basicGetOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 					«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
 					protected final @NonNull NormalizedTemplateParameter «normalizedTemplateParameter.getPrefixedSymbolName(normalizedTemplateParameter.getName())»;
