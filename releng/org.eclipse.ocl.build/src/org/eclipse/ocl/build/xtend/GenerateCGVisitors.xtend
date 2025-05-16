@@ -18,10 +18,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 	override void generateVisitors(/*@NonNull*/ GenPackage genPackage) {
 		var EPackage ePackage = genPackage.getEcorePackage();
 		ePackage.generateAbstractExtendingVisitor();
-		ePackage.generateAbstractNonNullExtendingVisitor();
 		genPackage.generateVisitorInterface();
 		/* ePackage.generateDecorableVisitorInterface("org.eclipse.ocl.xtext.base.util.BaseCSVisitor"); */
 		ePackage.generateAbstractVisitor();
-		ePackage.generateAbstractNullVisitor();
 	}
 }

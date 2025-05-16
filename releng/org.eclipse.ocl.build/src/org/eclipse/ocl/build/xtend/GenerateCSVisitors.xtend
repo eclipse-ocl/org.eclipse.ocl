@@ -23,7 +23,6 @@ class GenerateCSVisitors extends GenerateVisitorsXtend
 		genPackage.generateVisitorInterface();
 		ePackage.generateDecorableVisitorInterface("org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor");
 		ePackage.generateAbstractVisitor();
-		ePackage.generateAbstractNullVisitor();
 		ePackage.generateAbstractDelegatingVisitor();
 		ePackage.generateAbstractExtendingVisitor();
 		/* ePackage.generateAbstractExtendingDelegatingVisitor();*/

@@ -28,7 +28,6 @@ class GenerateASVisitors extends GenerateVisitorsXtend
 		}
 		genPackage.generateVisitorInterface();
 		ePackage.generateAbstractVisitor();
-		ePackage.generateAbstractNullVisitor();
 		ePackage.generateAbstractDelegatingVisitor();
 		ePackage.generateAbstractExtendingVisitor();
 		ePackage.generateAbstractMergedVisitor();
