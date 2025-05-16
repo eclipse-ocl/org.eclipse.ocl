@@ -80,7 +80,10 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 			while (st.hasMoreElements()) {
 				final String dir = st.nextToken().trim();
 				final File f = new File(dir);
-				if (f.exists() && f.isDirectory()) {
+				if (!f.exists()) {
+					LOG.warn("Nothing to convert for " + getReadablePath(f) + " - full path required.");
+				}
+				if (f.isDirectory()) {
 					LOG.info("Converting " + getReadablePath(f));
 					try {
 						cleanFolder(f.getAbsolutePath());
