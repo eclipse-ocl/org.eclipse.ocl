@@ -46,11 +46,11 @@ public final class PivotSaveImpl extends XMISaveImpl
 	 */
 	public static class PivotXMIHelperImpl extends XMIHelperImpl
 	{
-		private @NonNull ASSaverNew asSaver;
+		private @NonNull ASSaver asSaver;
 
 		public PivotXMIHelperImpl(@NonNull ASResource asResource) {
 			super(asResource);
-			this.asSaver = new ASSaverNew(asResource);
+			this.asSaver = new ASSaver(asResource);
 		}
 
 		@Override
@@ -62,7 +62,10 @@ public final class PivotSaveImpl extends XMISaveImpl
 			return super.getHREF(resolvedObject);
 		}
 
-		public @NonNull ASSaverNew getSaver() {
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull ASSaver getSaver() {
 			return asSaver;
 		}
 	}
@@ -84,7 +87,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 		}
 	}
 
-	private @NonNull ASSaverNew asSaver;
+	private @NonNull ASSaver asSaver;
 
 	public PivotSaveImpl(@NonNull XMLHelper helper) {
 		super(helper);

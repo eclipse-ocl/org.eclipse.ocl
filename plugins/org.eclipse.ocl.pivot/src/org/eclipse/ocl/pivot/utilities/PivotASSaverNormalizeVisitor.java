@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.resource.AbstractASSaver;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 
 /**
  * @since 1.1
@@ -22,7 +22,7 @@ public class PivotASSaverNormalizeVisitor extends ASSaverNormalizeVisitor
 	/**
 	 * @since 1.18
 	 */
-	public PivotASSaverNormalizeVisitor(@NonNull AbstractASSaver context) {
+	public PivotASSaverNormalizeVisitor(@NonNull ASSaver context) {
 		super(context);
 	}
 }

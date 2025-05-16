@@ -65,8 +65,8 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.resource.ASSaverNew;
-import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -1225,7 +1225,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		contentAnalysis.analyze(thisModel);
 	}
 
-	public void initModel(@NonNull Model thisModel, ASSaverNew.@NonNull ASSaverWithInverse asSaver) {
+	public void initModel(@NonNull Model thisModel, ASSaver.@NonNull ASSaverWithInverse asSaver) {
 		this.thisModel = thisModel;
 		initLocalTypes();
 		initOrphanSymbolNames(asSaver);

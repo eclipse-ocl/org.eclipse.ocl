@@ -372,10 +372,10 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
-	protected @NonNull AbstractASSaver createASSaver() {
-		return new ASSaverNew(this);
+	protected @NonNull ASSaver createASSaver() {
+		return new ASSaver(this);
 	}
 
 	/**
