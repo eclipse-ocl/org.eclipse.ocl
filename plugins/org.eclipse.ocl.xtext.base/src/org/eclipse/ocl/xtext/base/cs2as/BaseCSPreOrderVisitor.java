@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
@@ -32,7 +33,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -498,14 +498,15 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
 			Type pivotType = csElement.getReferredType();
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
 				if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
-					org.eclipse.ocl.pivot.Class mapClass = environmentFactory.getStandardLibrary().getMapType();
-					MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, entryClass);
-					mapType.setEntryClass(entryClass);
+					StandardLibrary standardLibrary = context.getStandardLibrary();
+					org.eclipse.ocl.pivot.@NonNull Class mapType = standardLibrary.getMapEntryType(entryClass);
+					if (mapType instanceof MapType) {
+						((MapType)mapType).setEntryClass(entryClass);
+					}
 					context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 					return null;
 				}

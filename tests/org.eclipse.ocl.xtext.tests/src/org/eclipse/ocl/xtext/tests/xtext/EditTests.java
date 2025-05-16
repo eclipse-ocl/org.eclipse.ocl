@@ -17,6 +17,7 @@ import java.io.StringWriter;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -134,15 +135,15 @@ public class EditTests extends XtextTestCase
 		if (needsBowdlerization) {
 			URI ecoreURI = getTestFileURI("test.ecore");
 			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == environmentFactory;
-			AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal)environmentFactory, ecoreURI, null)
+			AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal)environmentFactory, asResource, ecoreURI, null)
 			{
 				@Override
-				protected @NonNull InverseConversion createInverseConversion(@NonNull XMLResource ecoreResource) {
+				protected void addContents(@NonNull List<@NonNull EObject> results) {
+					super.addContents(results);
 					bowdlerize(ecoreResource);
-					return super.createInverseConversion(ecoreResource);
 				}
 			};
-			ecoreResource = converter.convertResource(asResource, ecoreURI);
+			ecoreResource = converter.getEcoreResource();
 			ecoreResource.save(null);
 			if (ecoreErrors != SUPPRESS_VALIDATION) {
 				//			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);

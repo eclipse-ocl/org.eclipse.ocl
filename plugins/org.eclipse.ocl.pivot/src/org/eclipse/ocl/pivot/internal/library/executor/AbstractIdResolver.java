@@ -255,7 +255,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	private boolean directRootsProcessed = false;
 	private boolean crossReferencedRootsProcessed = false;
 	/**
-	 * @since 1.1
+	 * @since 7.0
 	 */
 	protected final @NonNull Map<@NonNull Object, @NonNull Type> key2type = new HashMap<>();	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull EnumerationLiteralId, @NonNull Enumerator> enumerationLiteral2enumerator = null;	// Concurrent puts are duplicates
@@ -939,7 +939,7 @@ public abstract class AbstractIdResolver implements IdResolver
 			Type keyType = getType(keyTypeId);
 			Type valueType = getType(valueTypeId);
 			if (generalizedId == TypeId.MAP) {
-				return environment.getMapType(standardLibrary.getMapType(), keyType, keysAreNullFree, valueType, valuesAreNullFree);
+				return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			}
 			else {
 				throw new UnsupportedOperationException();

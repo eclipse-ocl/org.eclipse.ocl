@@ -890,9 +890,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		else {
 			if (oldParserContext != null) {
 				assert environmentFactory2parserContext2 != null;
-				if (newParserContext == null) {
-					environmentFactory2parserContext2.remove(oldParserContext.getEnvironmentFactory());
-				}
+				environmentFactory2parserContext2.remove(oldParserContext.getEnvironmentFactory());
 			}
 			else {
 				return;

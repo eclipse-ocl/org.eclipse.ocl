@@ -88,7 +88,9 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 			return thatClass;
 		}
 		else {
-			return standardLibrary.getMapType(standardLibrary.getMapType(), commonKeyClass, commonValueClass);
+			boolean commonKeysAreNullFree = false;				// XXX compute
+			boolean commonValuesAreNullFree = false;			// XXX compute
+			return standardLibrary.getMapType(commonKeyClass, commonKeysAreNullFree, commonValueClass, commonValuesAreNullFree);
 		}
 	}
 

@@ -227,22 +227,20 @@ public class PivotEObjectValidator implements EValidator
 						List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
 						constraint = invariants.get(0);
 					}
-					if (constraint != null) {
-						if (complementingModels != null) {
-							Model containingModel = PivotUtil.getContainingModel(constraint);
-							if (!complementingModels.contains(containingModel)) {
-								continue;
-							}
+					if (complementingModels != null) {
+						Model containingModel = PivotUtil.getContainingModel(constraint);
+						if (!complementingModels.contains(containingModel)) {
+							continue;
 						}
-						Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
-						if (diagnostic != null) {
-							if (diagnostics != null) {
-								diagnostics.add(diagnostic);
-							}
-							allOk = false;
-							if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-								return allOk;		// Generate many warnings but only one error
-							}
+					}
+					Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
+					if (diagnostic != null) {
+						if (diagnostics != null) {
+							diagnostics.add(diagnostic);
+						}
+						allOk = false;
+						if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+							return allOk;		// Generate many warnings but only one error
 						}
 					}
 				}

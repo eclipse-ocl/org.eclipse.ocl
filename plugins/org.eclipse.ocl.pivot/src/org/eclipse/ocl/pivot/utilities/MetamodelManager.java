@@ -327,16 +327,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
-
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic);
 
 	/**

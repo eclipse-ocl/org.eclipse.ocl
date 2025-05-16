@@ -397,7 +397,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			boolean needsDefault = ClassUtil.requireNonNull(cardinalityExpression).isOne();
 			List<@NonNull EnumerationValue> enumerationValueList = new ArrayList<>(enumerationValue2grammarCardinality.keySet());
 			EnumerationValue firstEnumerationValue;
-			if ((enumerationValueList.size() == 1) && ((firstEnumerationValue = enumerationValueList.get(0)) != null) && firstEnumerationValue.isNull()) {
+			if ((enumerationValueList.size() == 1) && (firstEnumerationValue = enumerationValueList.get(0)).isNull()) {
 				GrammarCardinality grammarCardinality = enumerationValue2grammarCardinality.get(firstEnumerationValue);
 				assert grammarCardinality != null;
 				serializationAttributes[i1++] = new SerializationSimpleAttribute(eAttribute, needsDefault, grammarCardinality);

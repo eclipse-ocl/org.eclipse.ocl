@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -649,11 +650,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		return completeEnvironment.getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return completeClass.getMapType(typeParameters);
 	}
 
 	public @Nullable CompletePackage getMemberPackage(@NonNull String memberPackageName) {

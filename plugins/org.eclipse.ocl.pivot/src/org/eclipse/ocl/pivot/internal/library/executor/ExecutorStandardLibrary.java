@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.library.executor;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +19,24 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -30,6 +44,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
@@ -249,4 +264,150 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		}
 		return null;
 	}
+
+
+	@Override
+	public <R> R accept(@NonNull Visitor<R> visitor) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	@NonNull
+	public List<Element> allOwnedElements() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EList<Adapter> eAdapters() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull TreeIterator<@NonNull EObject> eAllContents() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EClass eClass() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EObject eContainer() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EStructuralFeature eContainingFeature() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EReference eContainmentFeature() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EList<EObject> eContents() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EList<EObject> eCrossReferences() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean eDeliver() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object eGet(EStructuralFeature feature) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object eGet(EStructuralFeature feature, boolean resolve) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean eIsProxy() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean eIsSet(EStructuralFeature feature) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void eNotify(Notification notification) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Resource eResource() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void eSet(EStructuralFeature feature, Object newValue) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void eSetDeliver(boolean deliver) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void eUnset(EStructuralFeature feature) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<Comment> getAnnotatingComments() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EObject getESObject() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EObject getETarget() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	@NonNull
+	public List<ElementExtension> getOwnedExtensions() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	@NonNull
+	public List<Element> getOwnedAnnotations() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	@NonNull
+	public List<Comment> getOwnedComments() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Element getValue(Type stereotype, String propertyName) {
+		throw new UnsupportedOperationException();
+	}
+
 }

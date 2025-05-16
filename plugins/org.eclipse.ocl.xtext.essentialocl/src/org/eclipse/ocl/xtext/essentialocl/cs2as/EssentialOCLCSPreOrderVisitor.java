@@ -15,6 +15,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -157,7 +158,13 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				keyType = context.getNormalizedType(keyType);
 				valueType = context.getNormalizedType(valueType);
 				if ((keyType != null) && (valueType != null)) {
-					type = metamodelManager.getMapType(name, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
+					StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+					if (keyType.eIsProxy() || valueType.eIsProxy()) {
+						type = standardLibrary.getOclInvalidType();
+					}
+					else {
+						type = standardLibrary.getMapType(keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
+					}
 				}
 			}
 			if (type == null) {

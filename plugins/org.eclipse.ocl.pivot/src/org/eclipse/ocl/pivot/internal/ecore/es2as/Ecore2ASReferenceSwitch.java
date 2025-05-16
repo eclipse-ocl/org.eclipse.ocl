@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -87,14 +88,19 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_UPPER_KEY;
 
 	protected final @NonNull Ecore2AS converter;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	private final @NonNull Property oclInvalidProperty;
 
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
 		this.converter = converter;
+		this.environmentFactory = converter.getEnvironmentFactory();
 		this.metamodelManager = converter.getMetamodelManager();
-		this.standardLibrary = metamodelManager.getStandardLibrary();
+		this.standardLibrary = (StandardLibraryInternal)environmentFactory.getStandardLibrary();
 		this.oclInvalidProperty = standardLibrary.getOclInvalidProperty();
 	}
 
@@ -433,7 +439,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						if (valueProperty2.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}
-						pivotType = metamodelManager.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
+						pivotType = standardLibrary.getMapEntryType((org.eclipse.ocl.pivot.Class)pivotType);
 					}
 					else {
 						boolean isNullFree = Ecore2AS.isNullFree((ENamedElement)eTypedElement);
@@ -547,8 +553,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				if ((keyType != null) && (valueType != null)) {
 					boolean keysAreNullFree = keyFeature.isRequired();
 					boolean valuesAreNullFree = valueFeature.isRequired();
-					org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
-					return metamodelManager.getCompleteEnvironment().getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+					return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);	// XXX MapEntryType ???
 				}
 			}
 		}

@@ -316,16 +316,15 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = getTestFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
-		AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), ecoreURI, options)
+		AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options)
 		{
 			@Override
-			protected @NonNull InverseConversion createInverseConversion(@NonNull XMLResource ecoreResource) {
+			protected void addContents(@NonNull List<@NonNull EObject> results) {
+				super.addContents(results);
 				bowdlerize(ecoreResource);
-				return super.createInverseConversion(ecoreResource);
 			}
-
 		};
-		XMLResource ecoreResource = converter.convertResource(asResource, ecoreURI);
+		XMLResource ecoreResource = converter.getEcoreResource();
 		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		ocl.dispose();
 	}
@@ -340,16 +339,15 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = getTestFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
-		AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), ecoreURI, options)
+		AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options)
 		{
 			@Override
-			protected @NonNull InverseConversion createInverseConversion(@NonNull XMLResource ecoreResource) {
+			protected void addContents(@NonNull List<@NonNull EObject> results) {
+				super.addContents(results);
 				bowdlerize(ecoreResource);
-				return super.createInverseConversion(ecoreResource);
 			}
-
 		};
-		XMLResource ecoreResource = converter.convertResource(asResource, ecoreURI);
+		XMLResource ecoreResource = converter.getEcoreResource();
 		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		ocl.dispose();
 	}

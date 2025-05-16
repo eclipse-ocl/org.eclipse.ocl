@@ -236,12 +236,12 @@ public class DelegateInstaller
 		return ePackages;
 	}
 
-	public static @Nullable String getExportDelegateURI(@NonNull Map<String, Object> options) {
+	public static @Nullable String getExportDelegateURI(@NonNull Map<@NonNull String, @Nullable Object> options) {
 		String exportDelegateURI = (String)options.get(OCLConstants.OCL_DELEGATE_URI);
 		return exportDelegateURI != null ? exportDelegateURI : OCLinEcoreOptions.EXPORT_DELEGATION_URI.getPreferredValue();
 	}
 
-	public static boolean isBooleanInvariants(@NonNull Map<String,Object> options) {
+	public static boolean isBooleanInvariants(@NonNull Map<@NonNull String, @Nullable Object> options) {
 		return Boolean.valueOf(String.valueOf(options.get(OPTION_BOOLEAN_INVARIANTS)));
 	}
 
@@ -328,10 +328,10 @@ public class DelegateInstaller
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull Map<String, Object> options;
+	protected final @NonNull Map<@NonNull String, @Nullable Object> options;
 	protected final @Nullable String exportDelegateURI;
 
-	public DelegateInstaller(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Map<String, Object> options) {
+	public DelegateInstaller(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		this.environmentFactory = environmentFactory;
 		this.options = options != null ? options : new HashMap<>();
 		this.exportDelegateURI = getExportDelegateURI(this.options);

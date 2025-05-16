@@ -1633,6 +1633,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		assert getCS2ASContext() != null;			// XXX now guaranteed by naming visibility
 		Element element = null;
 		try {
+		//	System.out.println("visit " + csElement.eClass().getName() + " " + csElement);		// XXX
 			element = csElement.accept(this);
 		} catch (Throwable e) {
 			@NonNull String message = String.valueOf(e);
@@ -2179,7 +2180,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			else if (inferValueType && (valuesAreNullFree == null)) {
 				valuesAreNullFree = true;
 			}
-			Type type = metamodelManager.getMapType(mapTypeName, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
+			Type type;
+			if (keyType.eIsProxy() || valueType.eIsProxy()) {
+				type = standardLibrary.getOclInvalidType();
+			}
+			else {
+				type = standardLibrary.getMapType(keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
+			}
 			helper.setType(expression, type, true, null);
 		}
 		return expression;
