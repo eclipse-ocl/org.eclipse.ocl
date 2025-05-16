@@ -19,9 +19,12 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -35,6 +38,8 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -47,18 +52,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  * @since 1.18
  */
-public class ASSaverNew extends AbstractASSaver
+public class ASSaver
 {
-/*	protected static class ClassByMonikerComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
-	{
-		@Override
-		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
-			String s1 = AS2Moniker.toString(o1);
-			String s2 = AS2Moniker.toString(o2);
-			return s1.compareTo(s2);
-		}
-	} */
-
+	/**
+	 * @since 7.0
+	 */
 	@SuppressWarnings("serial")
 	protected static class ASSaverCopier extends EcoreUtil.Copier
 	{
@@ -86,7 +84,10 @@ public class ASSaverNew extends AbstractASSaver
 		}
 	}
 
-	public static class ASSaverWithInverse extends ASSaverNew
+	/**
+	 * @since 7.0
+	 */
+	public static class ASSaverWithInverse extends ASSaver
 	{
 		private final @NonNull Map<@NonNull EObject, @NonNull EObject> target2source = new HashMap<>();
 
@@ -98,8 +99,8 @@ public class ASSaverNew extends AbstractASSaver
 			return target2source.get(target);
 		}
 
-		@SuppressWarnings("serial")
 		@Override
+		@SuppressWarnings("serial")
 		protected @NonNull ASSaverCopier createCopier(@NonNull ASResource resource) {
 			return new ASSaverCopier(resource, true)
 			{
@@ -114,11 +115,17 @@ public class ASSaverNew extends AbstractASSaver
 			};
 		}
 
+		/**
+		 * @since 7.0
+		 */
 		public @NonNull EObject getSource(@NonNull EObject target) {
 			return ClassUtil.requireNonNull(target2source.get(target));
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected static class ClassByTypeIdAndEntryClassComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{
 		@Override
@@ -161,23 +168,75 @@ public class ASSaverNew extends AbstractASSaver
 	 */
 	private final EcoreUtil.@NonNull Copier copier;
 
-	public ASSaverNew(@NonNull ASResource resource) {
-		super(resource);
-		copier = createCopier(resource);
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull Resource resource;
+
+	/**
+	 * The appropriate normalization visitor for each Resource.
+	 * @since 7.0
+	 */
+	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor = null;
+
+	/**
+	 * @since 7.0
+	 */
+	public ASSaver(@NonNull ASResource resource) {
+		this.resource = resource;
+		this.copier = createCopier(resource);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public @Nullable EObject basicGetTarget(@NonNull EObject source) {
 		return copier.get(source);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected @NonNull ASSaverCopier createCopier(@NonNull ASResource resource) {
 		return new ASSaverCopier(resource, true);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public @NonNull EObject getTarget(@NonNull EObject source) {
 		return ClassUtil.requireNonNull(copier.get(source));
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull ASSaverNormalizeVisitor getNormalizeVisitor(@NonNull EObject eObject) {
+		Resource resource = eObject.eResource();
+		if (resource == null) {
+			throw new IllegalStateException("Cannot locate " + ASSaverNormalizeVisitor.class.getName() + " for resource-less " + eObject.eClass().getName());
+		}
+		if (resource2normalizeVisitor == null) {
+			resource2normalizeVisitor = new HashMap<>();
+		}
+		ASSaverNormalizeVisitor visitor = resource2normalizeVisitor.get(resource);
+		if (visitor != null) {
+			return visitor;
+		}
+		if (resource instanceof ASResource) {
+			ASResource asResource = (ASResource)resource;
+			visitor = asResource.getASResourceFactory().createASSaverNormalizeVisitor(this);
+			resource2normalizeVisitor.put(resource, visitor);
+			return visitor;
+		}
+		else {
+			throw new IllegalStateException("Cannot locate " + ASSaverNormalizeVisitor.class.getName() + " for non-OCL " + resource.getClass().getName());
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	protected void loadOrphanage(org.eclipse.ocl.pivot.@NonNull Package localOrphanage, @NonNull Orphanage sharedOrphanage) {
 		//
 		//	Determine the global contents.
@@ -220,6 +279,7 @@ public class ASSaverNew extends AbstractASSaver
 
 	/**
 	 * Prepare a pivot resource for save by redirecting all type references to shared orphans to local copies of the orphans.
+	 * @since 7.0
 	 */
 	public void localizeOrphans() {
 		Model asModel = PivotUtil.getModel(resource);
@@ -278,8 +338,32 @@ public class ASSaverNew extends AbstractASSaver
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public void normalizeContents() {
+		List<@NonNull EObject> allContents = new ArrayList<>();
+		for (@NonNull TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
+			EObject eObject = tit.next();
+			if (eObject instanceof Visitable) {
+				allContents.add(eObject);
+			}
+		}
+		Map<EClass, @NonNull ASSaverNormalizeVisitor> eClass2normalizeVisitor = new HashMap<>();
+		for (@NonNull EObject eObject : allContents) {
+			EClass eClass = eObject.eClass();
+			ASSaverNormalizeVisitor normalizeVisitor = eClass2normalizeVisitor.get(eClass);
+			if (normalizeVisitor == null) {
+				normalizeVisitor = getNormalizeVisitor(eObject);
+				eClass2normalizeVisitor.put(eClass, normalizeVisitor);
+			}
+			normalizeVisitor.safeVisit((Visitable) eObject);
+		}
+	}
+
+	/**
 	 * Return the localized variant of eObject. If eObject is an orphan, localizeSpecializations should have created
 	 * a local copy that is returned here. Else returns eObject.
+	 * @since 7.0
 	 */
 	public @Nullable EObject resolveOrphan(@NonNull EObject eObject) {
 		EObject localEObject = copier.get(eObject);

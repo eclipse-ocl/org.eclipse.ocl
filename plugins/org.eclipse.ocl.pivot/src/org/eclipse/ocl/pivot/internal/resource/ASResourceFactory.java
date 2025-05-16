@@ -91,7 +91,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 *
 	 * @since 1.18
 	 */
-	@NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull AbstractASSaver asSaver);
+	@NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull ASSaver asSaver);
 
 	/**
 	 * Create the CS2AS converter.
