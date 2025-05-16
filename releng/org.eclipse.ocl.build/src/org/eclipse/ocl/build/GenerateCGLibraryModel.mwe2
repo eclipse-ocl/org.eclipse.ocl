@@ -10,7 +10,7 @@
  *
  * Run As->MWE2 Workflow to regenerate the pivot model.
  *******************************************************************************/
-module GenerateCGLibraryModels
+module GenerateCGLibraryModel
 
 import org.eclipse.ocl.build.utilities.*
 import org.eclipse.ocl.build.xtend.*
@@ -27,13 +27,13 @@ Workflow {
     	platformUri = "../../plugins"
     	scanClassPath = true
     }
-    bean = GenModelSetup { resourceSet = resourceSet }
+    bean = EcoreGenModelSetup { resourceSet = resourceSet }
     component = GenerateOCLstdlibXtend { resourceSet = resourceSet
     	projectName = "org.eclipse.ocl.codegen"
     	modelFile = "model/CGLibrary.oclstdlib"
     	uri = "http://www.eclipse.org/ocl/2015/CGLibrary"
     	ecoreFile = "/org.eclipse.ocl.codegen/model-gen/CGLibrary.ecore"
-    	javaFolder = "/../examples/org.eclipse.ocl.codegen/emf-gen"
+    	javaFolder = "/org.eclipse.ocl.codegen/emf-gen"
     	javaPackageName = "org.eclipse.ocl.codegen.model"
     	javaClassName = "CGLibrary"
     	useOCLstdlib = true
@@ -46,12 +46,8 @@ Workflow {
     		to = "org.eclipse.ocl.pivot.model.OCLstdlib"
     	}
     }
-/*    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
-    	genModel = "/org.eclipse.ocl.codegen/model/CGLibrary.genmodel"
-    }
-    component = Model2tablesGenerator { resourceSet = resourceSet
-    	genModelFile = "/org.eclipse.ocl.codegen/model/CGLibrary.genmodel"
-    	genOCLstdlib = true
-    } */
+	component = ConvertToUnixLineEndings {
+		directory = "../../plugins/org.eclipse.ocl.codegen/emf-gen"
+	}
 }
 

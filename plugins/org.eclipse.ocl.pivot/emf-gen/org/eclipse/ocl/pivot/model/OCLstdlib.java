@@ -269,12 +269,6 @@ public class OCLstdlib extends ASResourceImpl
 		}
 	}
 
-	@Deprecated /* Provide externalURI */
-	public static @NonNull OCLstdlib create(@NonNull String asURI) {
-		Contents contents = new Contents(asURI);
-		return new OCLstdlib(asURI, contents.getModel());
-	}
-
 	/**
 	 *	Construct a copy of the OCL Standard Library with specified AS resource URI,
 	 *  and external URI.

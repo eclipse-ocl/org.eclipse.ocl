@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -733,6 +734,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		generatedClassNameMap.put(mapping.getFrom(), mapping.getTo());
 	}
 
+	protected org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanPackage(@NonNull Model elem) {
+		for (org.eclipse.ocl.pivot.@NonNull Package pkg : PivotUtil.getOwnedPackages(elem)) {
+			if (PivotConstants.ORPHANAGE_NAME.equals(pkg.getName())) {
+				return pkg;
+			}
+		}
+		return null;
+	}
+
 	protected @NonNull ContentAnalysis createContentAnalysis() {
 		return new ContentAnalysis(this);
 	}
@@ -835,12 +845,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Model elem) {
-		for (org.eclipse.ocl.pivot.@NonNull Package pkg : PivotUtil.getOwnedPackages(elem)) {
-			if (PivotConstants.ORPHANAGE_NAME.equals(pkg.getName())) {
-				return pkg;
-			}
-		}
-		throw new IllegalStateException();
+		return ClassUtil.requireNonNull(basicGetOrphanPackage(elem));
 	}
 
 	protected @NonNull String getPartialName(@NonNull Constraint constraint) {
@@ -1142,13 +1147,14 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected @NonNull List<@NonNull NormalizedTemplateParameter> getNormalizedTemplateParameters(@NonNull Model model) {
 		List<@NonNull NormalizedTemplateParameter> normalizedTemplateParameters = new ArrayList<>();
 		org.eclipse.ocl.pivot.Package orphanage = Orphanage.basicGetLocalOrphanPackage(model);
-		assert orphanage != null;
-		NormalizedTemplateParameter normalizedTemplateParameter;
-		while ((normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size())) != null) {
-			normalizedTemplateParameters.add(normalizedTemplateParameter);
-		}
-		while (normalizedTemplateParameters.size() < 4) {
-			normalizedTemplateParameters.add(Orphanage.getNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size()));			// Define four in case in transition from no NormalizedTemplateParameters.
+		if (orphanage != null) {
+			NormalizedTemplateParameter normalizedTemplateParameter;
+			while ((normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size())) != null) {
+				normalizedTemplateParameters.add(normalizedTemplateParameter);
+			}
+			while (normalizedTemplateParameters.size() < 4) {
+				normalizedTemplateParameters.add(Orphanage.getNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size()));			// Define four in case in transition from no NormalizedTemplateParameters.
+			}
 		}
 		return normalizedTemplateParameters;
 	}
@@ -1231,7 +1237,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	 * local copy had been corrupted to point at the local.
 	 */
 	protected void initOrphanSymbolNames(@NonNull ASSaverWithInverse asSaver) {
-		org.eclipse.ocl.pivot.Package localOrphanage = getOrphanPackage(thisModel);
+		org.eclipse.ocl.pivot.Package localOrphanage = basicGetOrphanPackage(thisModel);
+		if (localOrphanage == null) {
+			return;
+		}
 		for (EObject localOrphan : new TreeIterable(localOrphanage, true)) {
 			StringBuilder s = new StringBuilder();
 			if (localOrphan instanceof CollectionType) {
