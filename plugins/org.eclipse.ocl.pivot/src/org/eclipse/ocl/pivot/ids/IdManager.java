@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -260,6 +261,28 @@ public final class IdManager
 	 */
 	public static @NonNull CollectionTypeId getCollectionTypeId(@NonNull String collectionTypeName) {
 		return collectionNames.getSingleton(PRIVATE_INSTANCE, collectionTypeName);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull CollectionTypeId getCollectionTypeId(boolean isOrdered, boolean isUnique) {
+		if (isOrdered) {
+			if (isUnique) {
+				return TypeId.ORDERED_SET;
+			}
+			else {
+				return TypeId.SEQUENCE;
+			}
+		}
+		else {
+			if (isUnique) {
+				return TypeId.SET;
+			}
+			else {
+				return TypeId.BAG;
+			}
+		}
 	}
 
 	/**

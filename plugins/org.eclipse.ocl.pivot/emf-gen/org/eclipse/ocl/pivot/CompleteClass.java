@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 
 /**
  * <!-- begin-user-doc -->
@@ -81,10 +80,6 @@ public interface CompleteClass extends NamedElement
 	boolean conformsTo(@NonNull Type elementType);
 	boolean conformsTo(@NonNull CompleteClass thatCompleteClass);
 
-	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass();
-
-	@Nullable CollectionType findCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
-	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
 	@NonNull CompleteInheritance getCompleteInheritance();
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
@@ -92,6 +87,7 @@ public interface CompleteClass extends NamedElement
 	@Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation);
 	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name);
+	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass();
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
 	@Nullable Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty);
 	@Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName);

@@ -250,7 +250,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionValue expected2 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages)");
 		ocl.assertSemanticErrorQuery(ocl.getContextType(ocl.pkg1), "self->asSequence()->closure(ownedPackages)",
-			PivotMessages.ExpectedArgumentType, "closure", "1", "OrderedCollection(Package[*|?])", "Set(Package)");
+			PivotMessages.ExpectedArgumentType, "closure", "1", "OrderedCollection(Package)", "Set(Package)");
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages->asSequence())");
 		SetValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
 		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->asBag()->closure(ownedPackages)");
@@ -296,7 +296,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
 		ocl.createGeneralization(fake, ocl.getStandardLibrary().getOclAnyType());
 		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, fake, true);
-		getFakes.setType(ocl.getCompleteEnvironment().getSetType(fake, false, null, null));
+		getFakes.setType(ocl.getStandardLibrary().getSetType(fake, false, null, null));
 
 		ocl.assertQuery(fake, "self->closure(getFakes())");
 		ocl.dispose();
@@ -329,7 +329,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		fakeResource.getContents().add(fakePkg);
 		org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
 		@SuppressWarnings("unused")
-		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, completeEnvironment.getSetType(fake, false, null, null), true);
+		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, standardLibrary.getSetType(fake, false, null, null), true);
 
 		// subclass the Fake class
 		org.eclipse.ocl.pivot.Class subFake = ocl.createOwnedClass(fakePkg, "Subfake", false);
@@ -338,7 +338,7 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		// get sub-fakes from a fake
 		@SuppressWarnings("unused")
-		Operation getSubFakes = ocl.createOwnedOperation(fake, "getSubFakes", null, null, completeEnvironment.getSetType(subFake, false, null, null), true);
+		Operation getSubFakes = ocl.createOwnedOperation(fake, "getSubFakes", null, null, standardLibrary.getSetType(subFake, false, null, null), true);
 
 		//        helper.setContext(subFake);
 
@@ -368,9 +368,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | i.oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | i.oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
 		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(i : Property | oclContainer().oclAsSet())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(i : Property[1] | self.oclContainer().oclAsSet())");
 
@@ -388,7 +388,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		org.eclipse.ocl.pivot.Class contextType = ocl.getContextType(ocl.getUMLMetamodel());
 		ocl.assertSemanticErrorQuery(contextType, "let c : ocl::Type = invalid in ownedClasses->closure(c)",
-			PivotMessages.ExpectedArgumentType, "closure", 1, "Collection(Class[*|?])", "Type");
+			PivotMessages.ExpectedArgumentType, "closure", 1, "Collection(Class)", "Type");
 		ocl.assertQueryInvalid(ocl.getUMLMetamodel(), "let c : ocl::Class = invalid in ownedClasses->closure(c.oclAsSet())",
 			PivotMessages.InvalidLiteral, InvalidValueException.class);
 

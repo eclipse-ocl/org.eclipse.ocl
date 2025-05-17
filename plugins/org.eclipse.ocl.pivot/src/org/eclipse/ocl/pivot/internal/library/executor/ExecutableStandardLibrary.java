@@ -19,23 +19,29 @@ import java.util.WeakHashMap;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -47,15 +53,16 @@ import org.eclipse.ocl.pivot.internal.executor.ExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
+import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -63,6 +70,45 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElement*/ implements CompleteEnvironment, StandardLibrary
 {
+	/**
+	 * @since 7.0
+	 */
+	public static class ExecutorCollectionTypeManager extends AbstractCollectionTypeManager
+	{
+		public ExecutorCollectionTypeManager(@NonNull ExecutableStandardLibrary standardLibrary) {
+			super(standardLibrary);
+		}
+
+		@Override
+		protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
+			CollectionTypeId collectionTypeId = typeArguments.getCollectionTypeId();
+			Type elementType = typeArguments.getElementType();
+			boolean isNullFree = typeArguments.isNullFree();
+			IntegerValue lower = typeArguments.getLower();
+			UnlimitedNaturalValue upper = typeArguments.getUpper();
+			if (collectionTypeId == TypeId.BAG) {
+				return new ExecutorBagType(TypeId.BAG_NAME, standardLibrary.getBagType(), elementType, isNullFree, lower, upper);
+			}
+			else if (collectionTypeId == TypeId.ORDERED_SET) {
+				return new ExecutorOrderedSetType(TypeId.ORDERED_SET_NAME, standardLibrary.getOrderedSetType(), elementType, isNullFree, lower, upper);
+			}
+			else if (collectionTypeId == TypeId.SEQUENCE) {
+				return new ExecutorSequenceType(TypeId.SEQUENCE_NAME, standardLibrary.getSequenceType(), elementType, isNullFree, lower, upper);
+			}
+			else if (collectionTypeId == TypeId.SET) {
+				return new ExecutorSetType(TypeId.SET_NAME, standardLibrary.getSetType(), elementType, isNullFree, lower, upper);
+			}
+			else {
+				return new ExecutorCollectionType(TypeId.COLLECTION_NAME, standardLibrary.getCollectionType(), elementType, isNullFree, lower, upper);
+			}
+		}
+
+		@Override
+		protected boolean isValid(@Nullable Type type) {
+			return type != null;
+		}
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -80,12 +126,18 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 			}
 			return executorMapType;
 		}
+
+		@Override
+		protected boolean isValid(@Nullable Type type) {
+			return type != null;
+		}
 	}
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
-	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable ExecutorCollectionType>>> collectionSpecializations = new /*Weak*/HashMap<>();	// Keys are not singletons
+//	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeArguments, @NonNull WeakReference<@Nullable ExecutorCollectionType>>> collectionSpecializations = new /*Weak*/HashMap<>();	// Keys are not singletons
+	private /*@LazyNonNull*/ ExecutorCollectionTypeManager collectionTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
@@ -117,13 +169,8 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getBagType() {
+	public @NonNull BagType getBagType() {
 		return OCLstdlibTables.Types._Bag;
-	}
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getBagType(), elementType, false, lower, upper);
 	}
 
 	@Override
@@ -132,22 +179,17 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getBooleanType() {
+	public @NonNull BooleanType getBooleanType() {
 		return OCLstdlibTables.Types._Boolean;
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType() {
+	public @NonNull CollectionType getCollectionType() {
 		return OCLstdlibTables.Types._Collection;
 	}
 
 	@Override
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(genericType, elementType, false, lower, upper);
-	}
-
-	@Override
-	public synchronized @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		IntegerValue lower2 = lower;
 		UnlimitedNaturalValue upper2 = upper;
 		if (lower2 == null) {
@@ -156,40 +198,37 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 		if (upper2 == null) {
 			upper2 = ValueUtil.UNLIMITED_VALUE;
 		}
-		CollectionTypeParameters<@NonNull Type> typeArguments = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower2, upper2);
-		ExecutorCollectionType specializedType = null;
-		Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable ExecutorCollectionType>> map = collectionSpecializations.get(genericType);
-		if (map == null) {
-			map = new WeakHashMap<>();
-			collectionSpecializations.put(genericType, map);
-		}
-		else {
-			specializedType = weakGet(map, typeArguments);
-		}
-		if (specializedType == null) {
-			String name = ClassUtil.requireNonNull(genericType.getName());
-			if (genericType instanceof BagType) {
-				specializedType = new ExecutorBagType(name, genericType, elementType, isNullFree, lower, upper);
-			}
-			else if (genericType instanceof OrderedSetType) {
-				specializedType = new ExecutorOrderedSetType(name, genericType, elementType, isNullFree, lower, upper);
-			}
-			else if (genericType instanceof SequenceType) {
-				specializedType = new ExecutorSequenceType(name, genericType, elementType, isNullFree, lower, upper);
-			}
-			else if (genericType instanceof SetType) {
-				specializedType = new ExecutorSetType(name, genericType, elementType, isNullFree, lower, upper);
-			}
-			else {
-				specializedType = new ExecutorCollectionType(name, genericType, elementType, isNullFree, lower, upper);
-			}
-			map.put(typeArguments, new WeakReference<>(specializedType));
-		}
-		return specializedType;
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower2, upper2);
+		return getCollectionTypeManager().getCollectionType(typeArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments) {
+		return getCollectionTypeManager().getCollectionType(typeArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId) {
+		return getCollectionTypeManager().getCollectionType(collectionTypeId);
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getIntegerType() {
+	public @NonNull CollectionTypeManager getCollectionTypeManager() {
+		ExecutorCollectionTypeManager collectionTypeManager2 = collectionTypeManager;
+		if (collectionTypeManager2 == null) {
+			collectionTypeManager = collectionTypeManager2 = new ExecutorCollectionTypeManager(this);
+		}
+		return collectionTypeManager2;
+	}
+
+	@Override
+	public @NonNull PrimitiveType getIntegerType() {
 		return OCLstdlibTables.Types._Integer;
 	}
 
@@ -244,7 +283,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getOclAnyType() {
+	public @NonNull AnyType getOclAnyType() {
 		return OCLstdlibTables.Types._OclAny;
 	}
 
@@ -267,7 +306,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getOclInvalidType() {
+	public @NonNull InvalidType getOclInvalidType() {
 		return OCLstdlibTables.Types._OclInvalid;
 	}
 
@@ -300,7 +339,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getOclVoidType() {
+	public @NonNull VoidType getOclVoidType() {
 		return OCLstdlibTables.Types._OclVoid;
 	}
 
@@ -310,18 +349,13 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getOrderedCollectionType() {
+	public @NonNull CollectionType getOrderedCollectionType() {
 		return OCLstdlibTables.Types._OrderedCollection;
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType() {
+	public @NonNull OrderedSetType getOrderedSetType() {
 		return OCLstdlibTables.Types._OrderedSet;
-	}
-
-	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getOrderedSetType(), elementType, false, lower, upper);
 	}
 
 	@Override
@@ -359,7 +393,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getRealType() {
+	public @NonNull PrimitiveType getRealType() {
 		return OCLstdlibTables.Types._Real;
 	}
 
@@ -369,13 +403,8 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getSequenceType() {
+	public @NonNull SequenceType getSequenceType() {
 		return OCLstdlibTables.Types._Sequence;
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getSequenceType(), elementType, false, lower, upper);
 	}
 
 	@Override
@@ -384,13 +413,8 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getSetType() {
+	public @NonNull SetType getSetType() {
 		return OCLstdlibTables.Types._Set;
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getSetType(), elementType, false, lower, upper);
 	}
 
 	@Override
@@ -413,7 +437,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStringType() {
+	public @NonNull PrimitiveType getStringType() {
 		return OCLstdlibTables.Types._String;
 	}
 
@@ -481,12 +505,12 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getUniqueCollectionType() {
+	public @NonNull CollectionType getUniqueCollectionType() {
 		return OCLstdlibTables.Types._UniqueCollection;
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getUnlimitedNaturalType() {
+	public @NonNull PrimitiveType getUnlimitedNaturalType() {
 		return OCLstdlibTables.Types._UnlimitedNatural;
 	}
 

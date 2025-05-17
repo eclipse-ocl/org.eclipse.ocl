@@ -31,17 +31,15 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
-import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -54,7 +52,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -1071,7 +1069,7 @@ public class EditTests extends XtextTestCase
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		String testDocument =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
 						"library ocl : ocl = '" + LibraryConstants.STDLIB_URI + "' {\n" +
@@ -1087,19 +1085,17 @@ public class EditTests extends XtextTestCase
 		assertNoResourceErrors("Loading input", asResource);
 		//
 		Type myType = ClassUtil.requireNonNull(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
-		SequenceType sequenceType = ocl.getStandardLibrary().getSequenceType();
-		CollectionTypeParameters<@NonNull Type> typeParameters = new CollectionTypeParametersImpl<>(myType, true, null, null);
-		CompleteClassInternal sequenceCompleteClass = metamodelManager.getCompleteClass(sequenceType);
-		WeakReference<Type> sequenceMyType = new WeakReference<>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(TypeId.SEQUENCE, myType, true, null, null);
+		WeakReference<Type> sequenceMyType = new WeakReference<>(standardLibrary.basicGetCollectionType(typeArguments));
 		assertNull(sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Boolean", "Sequence(MyType)", NO_MESSAGES, NO_MESSAGES);
-		sequenceMyType = new WeakReference<>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
+		sequenceMyType = new WeakReference<>(standardLibrary.basicGetCollectionType(typeArguments));
 		assertNotNull(sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)", NO_MESSAGES, NO_MESSAGES);
 		System.gc();
-		sequenceMyType = new WeakReference<>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
+		sequenceMyType = new WeakReference<>(standardLibrary.basicGetCollectionType(typeArguments));
 		boolean isNull = debugStateRef(sequenceMyType);
 		sequenceMyType = null;
 		assertTrue(isNull);

@@ -77,18 +77,18 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 			boolean commonIsNullFree = this.isIsNullFree() && thatClass.isIsNullFree();
 			if (commonContainerClass.isOrdered()) {
 				if (commonContainerClass.isUnique()) {
-					return standardLibrary.getCollectionType(standardLibrary.getOrderedSetType(), commonElementClass, commonIsNullFree, null, null);
+					return standardLibrary.getOrderedSetType(commonElementClass, commonIsNullFree, null, null);
 				}
 				else {
-					return standardLibrary.getCollectionType(standardLibrary.getSequenceType(), commonElementClass, commonIsNullFree, null, null);
+					return standardLibrary.getSequenceType(commonElementClass, commonIsNullFree, null, null);
 				}
 			}
 			else {
 				if (commonContainerClass.isUnique()) {
-					return standardLibrary.getCollectionType(standardLibrary.getSetType(), commonElementClass, commonIsNullFree, null, null);
+					return standardLibrary.getSetType(commonElementClass, commonIsNullFree, null, null);
 				}
 				else {
-					return standardLibrary.getCollectionType(standardLibrary.getBagType(), commonElementClass, commonIsNullFree, null, null);
+					return standardLibrary.getBagType(commonElementClass, commonIsNullFree, null, null);
 				}
 			}
 		}

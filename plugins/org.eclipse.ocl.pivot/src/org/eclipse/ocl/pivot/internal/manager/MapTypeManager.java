@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
 
@@ -22,7 +23,12 @@ import org.eclipse.ocl.pivot.values.MapTypeArguments;
 public interface MapTypeManager
 {
 	/**
-	 * Return, and if necessary create, the map type characterized by the typeArguments.
+	 * Return the map type characterized by the typeArguments if it exists else null.
+	 */
+	@Nullable MapType basicGetMapType(@NonNull MapTypeArguments typeArguments);
+
+	/**
+	 * Return, and if necessary create, the map entry type characterized by the typeArguments and entryClass.
 	 */
 	@NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
 
