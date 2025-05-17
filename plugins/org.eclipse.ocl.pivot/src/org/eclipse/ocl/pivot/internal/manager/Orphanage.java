@@ -675,4 +675,15 @@ public class Orphanage extends PackageImpl
 		}
 		return ownedPackages2;
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean isOrphanPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		EObject eContainer = asPackage.eContainer();
+		if (eContainer instanceof Orphanage) {
+			return true;			// Obsolete path - Orphanage no longer contains
+		}
+		return getOwnedPackages().contains(asPackage);
+	}
 }
