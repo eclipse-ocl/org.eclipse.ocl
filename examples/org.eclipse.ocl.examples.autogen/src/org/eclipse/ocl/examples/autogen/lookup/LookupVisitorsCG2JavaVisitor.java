@@ -46,7 +46,7 @@ public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisi
 		js.append("super(" + LookupVisitorsClassContext.CONTEXT_NAME + ");\n");
 		js.append("this." + JavaConstants.EXECUTOR_NAME + " = ");
 		js.appendClassReference(null, ClassUtil.class);
-		js.append(".nonNull(" + LookupVisitorsClassContext.CONTEXT_NAME + ".getExecutor());\n");
+		js.append(".requireNonNull(" + LookupVisitorsClassContext.CONTEXT_NAME + ".getExecutor());\n");
 		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = " + JavaConstants.EXECUTOR_NAME + ".getIdResolver();\n");
 		doAdditionalFieldsInitialization(cgClass);
 		js.popIndentation();
