@@ -83,6 +83,8 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -102,6 +104,7 @@ import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SingletonIterator;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.base.cs2as.AmbiguitiesAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -1712,7 +1715,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (commonType == null) {
 				commonType = standardLibrary.getOclVoidType();
 			}
-			Type type = metamodelManager.getCollectionType(collectionTypeName, commonType, isNullFree, null, null);
+			CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(collectionTypeName);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, commonType, isNullFree, null, null);
+			Type type = standardLibrary.getCollectionType(typeArguments);
 			helper.setType(expression, type, true, null);
 			expression.setKind(TypeUtil.getCollectionKind((CollectionType) type));
 		}

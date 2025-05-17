@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -46,7 +47,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
@@ -89,7 +89,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
@@ -102,8 +101,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -439,10 +436,6 @@ public class PivotUtil implements PivotConstants
 		return pivotType;
 	}
 
-	public static @NonNull BagType createBagType(@NonNull BagType unspecializedType, @NonNull Type elementType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), unspecializedType, elementType);
-	}
-
 	public static org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eClass) {
 		org.eclipse.ocl.pivot.Class pivotType = PivotFactory.eINSTANCE.createClass();
 		pivotType.setName(eClass.getName());
@@ -479,25 +472,31 @@ public class PivotUtil implements PivotConstants
 		return collectionLiteralExp;
 	}
 
-	public static @NonNull CollectionType createCollectionType(@NonNull CollectionType unspecializedType, @NonNull Type elementType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), unspecializedType, elementType);
-	}
-
 	/**
 	 * @since 7.0
 	 */
-	protected static @NonNull <@NonNull T extends CollectionType> T createCollectionType(/*@NonNull*/ T specializedType, @NonNull T unspecializedType, @NonNull Type instanceType) {
-		specializedType.setName(unspecializedType.getName());
-		specializedType.setLower(unspecializedType.getLower());
-		specializedType.setUpper(unspecializedType.getUpper());
-		specializedType.setUnspecializedElement(unspecializedType);
-		TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
-		assert templateParameter != null;
-		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, instanceType);
+	public static @NonNull CollectionType createCollectionType(@NonNull CollectionType genericCollectionType, @NonNull Type elementType,
+			boolean isNullFree, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
+		//
+		assert getUnspecializedTemplateableElement(genericCollectionType) == genericCollectionType;
+		List<TemplateParameter> templateParameters = genericCollectionType.getOwnedSignature().getOwnedParameters();
+		TemplateParameter elementParameter = templateParameters.get(0);
+		assert elementParameter != null;
+		//
+		EClass eClass = genericCollectionType.eClass();
+		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
+		CollectionType specializedCollectionType = (CollectionType) eFactoryInstance.create(eClass);
+		specializedCollectionType.setName(genericCollectionType.getName());
+		specializedCollectionType.setUnspecializedElement(genericCollectionType);
+		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(elementParameter, elementType);
 		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution);
-		specializedType.getOwnedBindings().add(templateBinding);
-		assert specializedType.getElementType() == instanceType;
-		return specializedType;
+		specializedCollectionType.getOwnedBindings().add(templateBinding);
+		assert specializedCollectionType.getElementType() == elementType;
+		specializedCollectionType.setIsNullFree(isNullFree);
+		specializedCollectionType.setLowerValue(lower);
+		specializedCollectionType.setUpperValue(upper);
+		// NB no superClasses
+		return specializedCollectionType;
 	}
 
 	/**
@@ -820,10 +819,6 @@ public class PivotUtil implements PivotConstants
 		return asOperation;
 	}
 
-	public static @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType unspecializedType, @NonNull Type elementType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), unspecializedType, elementType);
-	}
-
 	public static org.eclipse.ocl.pivot.@NonNull Package createOwnedPackage(@NonNull Model parentRoot, @NonNull String name) {
 		@SuppressWarnings("null")
 		org.eclipse.ocl.pivot.Package aPackage = createPackage(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, name, null, null);
@@ -1023,20 +1018,6 @@ public class PivotUtil implements PivotConstants
 		pivotType.setName(eClass.getName());
 		((PivotObjectImpl)pivotType).setESObject(eClass);
 		return pivotType;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull SequenceType createSequenceType(@NonNull SequenceType unspecializedType, @NonNull Type elementType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), unspecializedType, elementType);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull SetType createSetType(@NonNull SetType unspecializedType, @NonNull Type elementType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), unspecializedType, elementType);
 	}
 
 	/**
@@ -1487,7 +1468,7 @@ public class PivotUtil implements PivotConstants
 						boolean isNullFree = collectionType.isIsNullFree();
 						IntegerValue lowerValue = collectionType.getLowerValue();
 						UnlimitedNaturalValue upperValue = collectionType.getUpperValue();
-						return environmentFactory.getCompleteEnvironment().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
+						return environmentFactory.getStandardLibrary().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
 					}
 				}
 			}

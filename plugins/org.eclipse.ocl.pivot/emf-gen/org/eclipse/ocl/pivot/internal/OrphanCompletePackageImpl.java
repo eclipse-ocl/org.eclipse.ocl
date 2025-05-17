@@ -11,19 +11,15 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
@@ -31,11 +27,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -127,7 +119,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		assert Orphanage.isOrphanage(domainPackage);
 	}
 
-	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+/*	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
 		TemplateSignature templateSignature = containerType.getOwnedSignature();
 		if (templateSignature == null) {
@@ -142,10 +134,11 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 			return containerType;
 		}
 		org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(containerType);
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(containerType.getTypeId(), elementType, isNullFree, lower, upper);
 		@SuppressWarnings("unchecked")
-		T specializedType = (T) getCompleteModel().getCollectionType(completeClass, TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper));
+		T specializedType = (T)completeClass.getCollectionType(typeArguments);
 		return specializedType;
-	}
+	} */
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class type) {

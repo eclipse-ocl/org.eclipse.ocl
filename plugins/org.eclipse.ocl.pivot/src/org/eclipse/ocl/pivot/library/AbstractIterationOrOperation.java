@@ -15,10 +15,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 
 /**
  * AbstractIterationOrOperation realizes shared characteristics of library iterations and operations.
@@ -39,9 +42,10 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				if (sourceType instanceof CollectionType) {
 					CollectionType sourceCollectionType = (CollectionType)sourceType;
 					Type elementType = PivotUtil.getElementType(sourceCollectionType);
-					MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-					returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
-						elementType, sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
+					StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+					CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
+					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
+					returnType = standardLibrary.getCollectionType(typeArguments);
 				}
 			}
 		}
@@ -73,9 +77,10 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				CollectionType collectionType = (CollectionType)returnType;
 				if ((sourceType instanceof CollectionType) && ((CollectionType)sourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
 					@SuppressWarnings("null")@NonNull Type elementType = collectionType.getElementType();
-					MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-					returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
-						elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
+					StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+					CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(collectionType.isOrdered(), collectionType.isUnique());
+					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
+					returnType = standardLibrary.getCollectionType(typeArguments);
 				}
 			}
 		}

@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Model;
@@ -27,7 +26,6 @@ import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 public interface CompleteModelInternal extends CompleteModel
@@ -40,10 +38,8 @@ public interface CompleteModelInternal extends CompleteModel
 	void didAddCompletePackage(@NonNull CompletePackageInternal completePackage);
 	void didRemoveCompletePackage(@NonNull CompletePackageInternal completePackage);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
-	@Nullable CollectionType findCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
 	@Override
 	@NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages();
-	@NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
 	@Override
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type partialClass);
 	@Override

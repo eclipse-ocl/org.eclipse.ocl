@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
@@ -79,6 +80,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.uml2.types.TypesPackage;
@@ -994,7 +996,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 						}
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper == -1 ? ValueUtil.UNLIMITED_VALUE : ValueUtil.unlimitedNaturalValueOf(upper);
-						pivotType = environmentFactory.getMetamodelManager().getCollectionType(isOrdered, isUnique, pivotType, isNullFree == Boolean.TRUE, lowerValue, upperValue);
+						CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+						CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, pivotType, isNullFree == Boolean.TRUE, lowerValue, upperValue);
+						pivotType = environmentFactory.getStandardLibrary().getCollectionType(typeArguments);
 					}
 				}
 				pivotElement.setType(pivotType);

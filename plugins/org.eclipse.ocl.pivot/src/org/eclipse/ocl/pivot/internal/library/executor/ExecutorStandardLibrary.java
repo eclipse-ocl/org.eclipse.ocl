@@ -412,5 +412,4 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	public Element getValue(Type stereotype, String propertyName) {
 		throw new UnsupportedOperationException();
 	}
-
 }

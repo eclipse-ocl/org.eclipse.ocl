@@ -34,10 +34,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -125,20 +123,6 @@ public class TypeUtil
 		CompleteInheritance firstInheritance = firstTupleType.getInheritance(standardLibrary);
 		CompleteInheritance secondInheritance = secondTupleType.getInheritance(standardLibrary);
 		return firstInheritance.isSuperInheritanceOf(secondInheritance);
-	}
-
-	/**
-	 * @deprecated add isNullFree argument
-	 */
-	@Deprecated
-	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType,
-			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, false, lower, upper);
-	}
-
-	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType, boolean isNullFree,
-			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, isNullFree, lower, upper);
 	}
 
 	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {

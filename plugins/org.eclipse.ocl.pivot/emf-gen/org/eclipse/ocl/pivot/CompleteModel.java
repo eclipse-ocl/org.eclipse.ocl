@@ -144,7 +144,6 @@ public interface CompleteModel extends NamedElement
 	 */
 	default @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return null; }
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
-	//	@NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
 	@NonNull CompleteEnvironment getCompleteEnvironment();
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);

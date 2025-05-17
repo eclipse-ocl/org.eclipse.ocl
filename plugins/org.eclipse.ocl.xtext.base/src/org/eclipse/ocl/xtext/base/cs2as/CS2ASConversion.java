@@ -60,6 +60,8 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -77,6 +79,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.OperatorExpContinuation;
@@ -829,7 +832,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 			UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-			CollectionType pivotCollectionType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
+			CollectionType pivotCollectionType = standardLibrary.getCollectionType(typeArguments);
 			installPivotReference(csElement, pivotCollectionType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 		}
 	}
@@ -1321,7 +1326,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				if (csMultiplicity != null) {
 					isNullFree = csMultiplicity.isIsNullFree();
 				}
-				specializedPivotElement = templateArgument != null ? completeEnvironment.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
+				specializedPivotElement = templateArgument != null ? standardLibrary.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
 			}
 			else {
 				List<@NonNull Type> templateArguments = new ArrayList<>();

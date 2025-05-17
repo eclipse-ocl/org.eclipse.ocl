@@ -47,6 +47,8 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -57,6 +59,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -151,9 +154,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 					else if (redefiningType != null) {
 						CollectionType redefinedCollectionType = (CollectionType)redefinedType;
-						optionalType = new OptionalType(context.getMetamodelManager().getCollectionType(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique(),
-							redefiningType, redefinedCollectionType.isIsNullFree(),
-							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue()), redefinedProperty.isIsRequired());
+						CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique());
+						CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, redefiningType, redefinedCollectionType.isIsNullFree(),
+							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue());
+						optionalType = new OptionalType(context.getStandardLibrary().getCollectionType(typeArguments), redefinedProperty.isIsRequired());
 					}
 				}
 			}
