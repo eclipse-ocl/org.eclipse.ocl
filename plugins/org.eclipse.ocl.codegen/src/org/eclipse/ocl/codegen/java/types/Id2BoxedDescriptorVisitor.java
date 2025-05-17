@@ -147,8 +147,12 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		} */
 		//		if (type instanceof org.eclipse.ocl.pivot.Class) {
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
-		if ((asPackage != null) && (asPackage.eContainer() instanceof Orphanage)) {
-			return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
+		if (asPackage != null) {
+			Orphanage orphanage = metamodelManager.getEnvironmentFactory().getOrphanage();
+			boolean isOrphan = orphanage.isOrphanPackage(asPackage);
+			if (isOrphan) {
+				return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
+			}
 		}
 		//		}
 		return new RootObjectDescriptor(id);
@@ -297,8 +301,12 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		}
 		// FIXME this is the control path that has not been exercised
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
-		if ((asPackage != null) && (asPackage.eContainer() instanceof Orphanage)) {
-			return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
+		if (asPackage != null) {
+			Orphanage orphanage = metamodelManager.getEnvironmentFactory().getOrphanage();
+			boolean isOrphan = orphanage.isOrphanPackage(asPackage);
+			if (isOrphan) {
+				return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
+			}
 		}
 		return new RootObjectDescriptor(id);
 	}
