@@ -403,13 +403,13 @@ public abstract class AbstractContents extends PivotUtil
 		return (VoidType) ClassUtil.requireNonNull(asPackage.getOwnedClass(name));
 	}
 
-	protected <T extends CollectionType> void initTemplateParameter(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter templateParameter) {
+	protected void initTemplateParameter(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter templateParameter) {
 		TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
 		templateSignature.getOwnedParameters().add(templateParameter);
 		pivotType.setOwnedSignature(templateSignature);
 	}
 
-	protected <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, TemplateParameter... templateParameters) {
+	protected void initTemplateParameters(@NonNull TemplateableElement pivotType, TemplateParameter... templateParameters) {
 		if ((templateParameters != null) && (templateParameters.length > 0)) {
 			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
 			for (TemplateParameter templateParameter : templateParameters) {

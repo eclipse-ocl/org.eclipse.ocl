@@ -63,8 +63,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -656,51 +654,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @Nullable CollectionType findCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeClass.findCollectionType(typeParameters);
-	}
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getBagType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getBagType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeClass.getCollectionType(typeParameters);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), false, lower, upper);
-	}
-
-	@Override
-	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		if (isUnspecializedType(completeClass, elementType)) {
-			return containerType;
-		}
-		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper);
-		@SuppressWarnings("unchecked")
-		T specializedType = (T) completeClass.getCollectionType(typeParameters);
-		return specializedType;
-	}
-
-	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
 		if (pivotType instanceof TemplateParameter) {
 			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, getOwnedStandardLibrary().getOclAnyType());
@@ -782,38 +735,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return completePackage.getMemberType(name);
 	}
 
-	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getOrderedSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getOrderedSetType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSequenceType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSequenceType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSetType(), elementType, false, lower, upper);
-	}
-
 	@Override @Deprecated
-	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {		// XXX Use TPSV.specializeType
+	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
 		if ((substitutions == null) || substitutions.isEmpty()) {
 			return type;
 		}
@@ -837,7 +760,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			CollectionType collectionType = (CollectionType)type;
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
 			Type elementType = getSpecializedType(PivotUtil.getElementType(collectionType), substitutions);
-			return getCollectionType(unspecializedType, elementType, null, null);		// nullity
+			return ownedStandardLibrary.getCollectionType(unspecializedType, elementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
 		}
 		else if (type instanceof MapType) {
 			MapType mapType = (MapType)type;

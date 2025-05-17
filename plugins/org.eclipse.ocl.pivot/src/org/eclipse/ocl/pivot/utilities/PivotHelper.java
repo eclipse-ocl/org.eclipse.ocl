@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
@@ -68,14 +69,14 @@ import com.google.common.collect.Lists;
  */
 public class PivotHelper extends PivotUtil
 {
-	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull StandardLibrary standardLibrary;
+	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull StandardLibraryInternal standardLibrary;
 	@Deprecated /* change to lazy */
 	private final @NonNull MetamodelManager metamodelManager;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {
-		this.environmentFactory = environmentFactory;
-		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
+		this.standardLibrary = this.environmentFactory.getStandardLibrary();
 		this.metamodelManager = environmentFactory.getMetamodelManager();			// FIXME avoid this cast;
 	}
 
@@ -448,7 +449,7 @@ public class PivotHelper extends PivotUtil
 		boolean returnIsRequired = asOperation.isIsRequired();
 		Object returnValue = null;			// Currently always a Type - see Bug 577902
 		if ((formalType != null) && (sourceType != null)) {
-			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, null);
+			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, environmentFactory, sourceType, null);
 		}
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately.

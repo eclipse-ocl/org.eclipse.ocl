@@ -18,10 +18,13 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -62,9 +65,10 @@ public class CollectionIncludingAllOperation extends AbstractSimpleBinaryOperati
 								CollectionType returnCollectionType = (CollectionType)returnType;
 								if (returnCollectionType.isIsNullFree() != isNullFree) {
 									@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-									MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-									returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
-										elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
+									StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+									CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
+									CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
+									returnType = standardLibrary.getCollectionType(typeArguments);
 								}
 							}
 						}

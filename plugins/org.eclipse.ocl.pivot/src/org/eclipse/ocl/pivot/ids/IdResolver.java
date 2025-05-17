@@ -104,7 +104,10 @@ public interface IdResolver extends IdVisitor<Element>
 
 	org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypeId typeId, @Nullable Object context);
 
-	@NonNull Type getCollectionType(@NonNull CollectionTypeId typeId);
+	/**
+	 * @since 7.0
+	 */
+//	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeId typeId);
 
 	/**
 	 * Compute the type of value according to its content. Beware that this can be very expensive for collections and so

@@ -52,6 +52,8 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -63,6 +65,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -329,7 +332,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 							}
 							else {
 								isRequired = true;
-								pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, false, lowerValue, upperValue);
+								CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+								CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, false, lowerValue, upperValue);
+								pivotType = standardLibrary.getCollectionType(typeArguments);
 							}
 						}
 						else {
@@ -461,7 +466,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 						pivotType = converter.getNormalizedType(pivotType);
 						assert pivotType != null;
-						pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+						CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+						CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
+						pivotType = standardLibrary.getCollectionType(typeArguments);
 					}
 				}
 			}

@@ -16,15 +16,17 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -92,8 +94,10 @@ public class CollectIteration extends AbstractIteration
 			boolean isOrdered = (returnType instanceof CollectionType) && ((CollectionType)returnType).isOrdered();
 			boolean isNullFree = asType instanceof CollectionType && ((CollectionType)asType).isIsNullFree();
 			boolean isRequired = !(asType instanceof CollectionType) && (body != null) && body.isIsRequired();
-			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
-			returnType = metamodelManager.getCollectionType(isOrdered, false, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
+			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, false);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
+			returnType = standardLibrary.getCollectionType(typeArguments);
 		}
 		return returnType;
 	}

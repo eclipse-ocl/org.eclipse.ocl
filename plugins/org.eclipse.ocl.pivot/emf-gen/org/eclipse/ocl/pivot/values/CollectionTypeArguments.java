@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2022 Willink Transformations and others.
+ * Copyright (c) 2014, 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,20 +8,21 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.values;
 
 import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-public class CollectionTypeParametersImpl<T extends Type> implements CollectionTypeParameters<T>
+/**
+ * @since 7.0
+ */
+public class CollectionTypeArguments //implements Iterable<Object>
 {
 	protected class Iterator implements java.util.Iterator<Object>
 	{
@@ -49,30 +50,38 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	}
 
 	private final int hashCode;
-	private final @NonNull T elementType;
-	private final boolean isNullFree;
-	private final @NonNull IntegerValue lower;
-	private final @NonNull UnlimitedNaturalValue upper;
+	protected final @NonNull CollectionTypeId collectionTypeId;
+	protected final @NonNull Type elementType;
+	protected final boolean isNullFree;
+	protected final @NonNull IntegerValue lower;
+	protected final @NonNull UnlimitedNaturalValue upper;
 
-	public CollectionTypeParametersImpl(@NonNull T elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public CollectionTypeArguments(@NonNull CollectionTypeId collectionTypeId, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		assert collectionTypeId == collectionTypeId.getGeneralizedId();
+		this.collectionTypeId = collectionTypeId;
 		this.elementType = elementType;
 		this.isNullFree = isNullFree;
 		this.lower = lower != null ? lower : ValueUtil.ZERO_VALUE;
 		this.upper = upper != null ? upper : ValueUtil.UNLIMITED_VALUE;
-		int hash = elementType.getTypeId().hashCode() + (isNullFree ? 9876 : 0);
-		hash = 111 * hash + this.lower.hashCode();
-		hash = 111 * hash + this.upper.hashCode();
+		int hash = collectionTypeId.hashCode();
+		hash += 3 * elementType.getTypeId().hashCode();
+		hash += isNullFree ? 9876 : 0;
+		hash += 7 * this.lower.hashCode();
+		hash += 17 * this.upper.hashCode();
 		hashCode = hash;
 		assert PivotUtil.assertIsNormalizedType(elementType);
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof CollectionTypeParametersImpl<?>)) {
+		if (!(o instanceof CollectionTypeArguments)) {
 			return false;
 		}
-		CollectionTypeParametersImpl<?> that = (CollectionTypeParametersImpl<?>)o;
+		CollectionTypeArguments that = (CollectionTypeArguments)o;
 		if (this.hashCode != that.hashCode){
+			return false;
+		}
+		if (this.collectionTypeId != that.collectionTypeId) {
 			return false;
 		}
 		if (this.isNullFree != that.isNullFree) {
@@ -90,17 +99,18 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 		return true;
 	}
 
-	@Override
-	public @NonNull T getElementType() {
+	public @NonNull CollectionTypeId getCollectionTypeId() {
+		return collectionTypeId;
+	}
+
+	public @NonNull Type getElementType() {
 		return elementType;
 	}
 
-	@Override
 	public @NonNull IntegerValue getLower() {
 		return lower;
 	}
 
-	@Override
 	public @NonNull UnlimitedNaturalValue getUpper() {
 		return upper;
 	}
@@ -110,15 +120,14 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 		return hashCode;
 	}
 
-	@Override
 	public boolean isNullFree() {
 		return isNullFree;
 	}
 
-	@Override
-	public @NonNull Iterator iterator() {
-		return new Iterator();
-	}
+//	@Override
+//	public @NonNull Iterator iterator() {
+//		return new Iterator();
+//	}
 
 	public int parametersSize() {
 		return 1;
@@ -127,6 +136,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
+		s.append(collectionTypeId);
 		s.append('(');
 		s.append(elementType);
 		s.append(',');

@@ -463,7 +463,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			Type elementType = PivotUtil.getElementType(collectionType);
 			Type specializedElementType = specializeType(elementType);
 			CollectionType unspecializedCollectionType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
-			return metamodelManager.getCompleteEnvironment().getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+			return environmentFactory.getStandardLibrary().getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
 		}
 		else if (type instanceof MapType) {
 			MapType mapType = (MapType)type;

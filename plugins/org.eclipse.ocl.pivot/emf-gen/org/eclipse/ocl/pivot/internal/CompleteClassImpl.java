@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -52,7 +51,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -422,11 +420,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @Nullable CollectionType findCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return null;
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass() {
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses2 = ClassUtil.nullFree(partialClasses);
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
@@ -441,11 +434,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			return partialClass;
 		}
 		return null;
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		throw new UnsupportedOperationException("Not a collection");
 	}
 
 	@Override

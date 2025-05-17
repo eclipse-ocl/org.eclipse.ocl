@@ -36,7 +36,7 @@ public abstract class AbstractAllInstancesOperation extends AbstractUnaryOperati
 		OCLExpression asSource = PivotUtil.getOwnedSource(callExp);
 		Type asTypeValue = asSource.getTypeValue();
 		if (asTypeValue != null) {
-			return environmentFactory.getCompleteEnvironment().getSetType(asTypeValue, true, null, null);
+			return environmentFactory.getStandardLibrary().getSetType(asTypeValue, true, null, null);
 		}
 		else {
 			return returnType;			// Shouldn't happen

@@ -49,47 +49,32 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		this.genericMapType = genericMapType;
 	}
 
+	@Override
+	public @Nullable MapType basicGetMapType(@NonNull MapTypeArguments typeArguments) {
+		synchronized (mapTypes) {
+			WeakReference<@Nullable MapType> weakReference = mapTypes.get(typeArguments);
+			if (weakReference != null) {
+				MapType specializedType = weakReference.get();
+				if (specializedType != null) {
+					Type keyType = specializedType.getKeyType();
+					Type valueType = specializedType.getValueType();
+					if (isValid(keyType) && isValid(valueType)) {		// If no GC pending
+						return specializedType;
+					}
+					weakReference.clear();
+				}
+				mapTypes.remove(typeArguments);
+			}
+			return null;
+		}
+	}
+
 	protected abstract @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass);
 
 	public void dispose() {
 		mapTypes.clear();
 	}
 
-/*	public synchronized @Nullable MapType findMapType(@NonNull MapTypeArguments typeArguments) {
-		TemplateSignature templateSignature = mapType.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 1) {
-			return null;
-		}
-		Map<@NonNull MapTypeParameters, @NonNull WeakReference<@Nullable MapType>> specializations2 = mapTypes;
-		if (specializations2 == null) {
-			return null;
-		}
-		WeakReference<MapType> weakReference = specializations2.get(typeArguments);
-		if (weakReference == null) {
-			return null;
-		}
-		MapType specializedType;
-		synchronized (specializations2) {
-			specializedType = weakReference.get();
-			if (specializedType != null) {
-				Type keyType = specializedType.getKeyType();
-				Type valueType = specializedType.getValueType();
-				if ((keyType == null) || (valueType == null) || (keyType.eResource() == null) || (valueType.eResource() == null)) {		// If GC pending
-					specializedType = null;
-					weakReference.clear();
-				}
-			}
-			if (specializedType == null) {
-				specializations2.remove(typeArguments);
-			}
-		}
-		return specializedType;
-	} */
-
-	/**
-	 * @since 1.7
-	 */
 	@Override
 	public @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		assert !entryClass.eIsProxy();
@@ -123,7 +108,7 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 				if (specializedType != null) {
 					Type keyType = specializedType.getKeyType();
 					Type valueType = specializedType.getValueType();
-					if ((keyType != null) && (valueType != null) && (keyType.eResource() != null) && (valueType.eResource() != null)) {		// If no GC pending
+					if (isValid(keyType) && isValid(valueType)) {		// If no GC pending
 						return specializedType;
 					}
 					weakReference.clear();
@@ -135,4 +120,6 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 			return specializedType;
 		}
 	}
+
+	protected abstract boolean isValid(@Nullable Type type);
 }

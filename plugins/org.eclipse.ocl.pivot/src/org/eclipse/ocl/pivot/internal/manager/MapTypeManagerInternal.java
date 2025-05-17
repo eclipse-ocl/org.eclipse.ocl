@@ -51,4 +51,9 @@ public class MapTypeManagerInternal extends AbstractMapTypeManager
 		mapType.setOwningPackage(orphanage);
 		return mapType;
 	}
+
+	@Override
+	protected boolean isValid(@Nullable Type type) {
+		return (type != null) && (type.eResource() != null);
+	}
 }

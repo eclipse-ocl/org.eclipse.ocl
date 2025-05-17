@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -99,6 +100,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -787,57 +789,42 @@ public abstract class AbstractIdResolver implements IdResolver
 		return (org.eclipse.ocl.pivot.Class)type;
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId) {
-		return getCollectionType(typeId, false, null, null);
-	}
+//	@Override
+//	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId typeId) {
+//		return getCollectionType(typeId, false, null, null);
+//	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId typeId, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		CollectionTypeId generalizedId = typeId.getGeneralizedId();
 		if ((typeId == generalizedId) && !isNullFree && (lower == null) && (upper == null)) {
-			if (generalizedId == TypeId.BAG) {
-				return standardLibrary.getBagType();
-			}
-			else if (generalizedId == TypeId.COLLECTION) {
-				return standardLibrary.getCollectionType();
-			}
-			else if (generalizedId == TypeId.ORDERED_SET) {
-				return standardLibrary.getOrderedSetType();
-			}
-			else if (generalizedId == TypeId.SEQUENCE) {
-				return standardLibrary.getSequenceType();
-			}
-			else if (generalizedId == TypeId.SET) {
-				return standardLibrary.getSetType();
-			}
-			else if (generalizedId == TypeId.UNIQUE_COLLECTION) {
-				return standardLibrary.getUniqueCollectionType();
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
+			return standardLibrary.getCollectionType(typeId);
 		}
 		else {
 			TypeId elementTypeId = typeId.getElementTypeId();
 			Type elementType = getType(elementTypeId);
-			if (generalizedId == TypeId.BAG) {
-				return environment.getBagType(elementType, isNullFree, lower, upper);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(generalizedId, elementType, isNullFree, lower, upper);
+			return standardLibrary.getCollectionType(typeArguments);
+		/*	if (generalizedId == TypeId.BAG) {
+				return standardLibrary.getBagType(elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.COLLECTION) {
-				return environment.getCollectionType(standardLibrary.getCollectionType(), elementType, isNullFree, lower, upper);
+				return standardLibrary.getCollectionType(standardLibrary.getCollectionType(), elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.ORDERED_SET) {
-				return environment.getOrderedSetType(elementType, isNullFree, lower, upper);
+				return standardLibrary.getOrderedSetType(elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.SEQUENCE) {
-				return environment.getSequenceType(elementType, isNullFree, lower, upper);
+				return standardLibrary.getSequenceType(elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.SET) {
-				return environment.getSetType(elementType, isNullFree, lower, upper);
+				return standardLibrary.getSetType(elementType, isNullFree, lower, upper);
 			}
 			else {
 				throw new UnsupportedOperationException();
-			}
+			} */
 		}
 	}
 
@@ -1628,13 +1615,19 @@ public abstract class AbstractIdResolver implements IdResolver
 			throw new UnsupportedOperationException();
 		}
 		CollectionTypeId collectionTypeId = id.getGeneralizedId();
-		org.eclipse.ocl.pivot.Class collectionType = getCollectionType(collectionTypeId);
-		return environment.getCollectionType(collectionType, elementType, false, null, null);
+	//	CollectionType collectionType = getCollectionType(collectionTypeId);
+		return standardLibrary.getCollectionType(new CollectionTypeArguments(collectionTypeId, elementType, false, null, null));
 	}
 
 	@Override
 	public @NonNull Type visitCollectionTypeId(@NonNull CollectionTypeId id) {
-		return getCollectionType(id);
+		CollectionTypeId generalizedId = id.getGeneralizedId();
+		if (generalizedId != id) {
+			return visitCollectedId(id);
+		}
+		else {
+			return standardLibrary.getCollectionType(generalizedId);
+		}
 	}
 
 	@Override

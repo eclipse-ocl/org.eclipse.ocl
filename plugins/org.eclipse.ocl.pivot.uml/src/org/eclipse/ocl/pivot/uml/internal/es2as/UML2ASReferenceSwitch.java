@@ -37,14 +37,16 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.uml2.uml.util.UMLSwitch;
 
 //
@@ -447,8 +449,9 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 				}
 			}
 		}
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return metamodelManager.getCollectionType(isOrdered, isUnique, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		return standardLibrary.getCollectionType(typeArguments);
 	}
 
 	private boolean getToAssociationEndIsRequired(org.eclipse.uml2.uml.@NonNull Property umlProperty, @NonNull List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds) {
@@ -482,8 +485,9 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		if (!isMultivalued) {
 			return asClass;
 		}
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return metamodelManager.getCollectionType(isOrdered, true, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, true);
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		return standardLibrary.getCollectionType(typeArguments);
 	}
 
 	protected org.eclipse.uml2.uml.Property getOtherEnd(org.eclipse.uml2.uml.@NonNull Property umlProperty) {

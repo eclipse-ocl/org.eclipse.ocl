@@ -871,13 +871,6 @@ public class TestOCL extends OCLInternal
 		//    	return new GenModelCodeGenHelper(genModel, metamodelManager);
 	}
 
-	public @NonNull Type getCollectionType(@NonNull String collectionName, @NonNull Type type, boolean isNullFree) {
-		MetamodelManager metamodelManager = getMetamodelManager();
-		Type collectionType = metamodelManager.getCollectionType(collectionName, type, isNullFree, null, null);
-		metamodelManager.addLockedElement(collectionType);
-		return collectionType;
-	}
-
 	@Deprecated /* @deprecated use getError */
 	public Resource.Diagnostic getDiagnostic(@NonNull Resource resource) {
 		return getError(resource);

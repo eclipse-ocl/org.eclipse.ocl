@@ -15,8 +15,11 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -72,16 +75,24 @@ public interface StandardLibrary extends Element
 	 * <tt>Bag(T)</tt>.
 	 *
 	 * @return the <tt>Bag(T)</tt> type (an instance of BagType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getBagType();
+	@NonNull BagType getBagType();
+
+	/**
+	 * Return the instance of the Bag metatype whose elements are of elementType.
+	 * @since 7.0
+	 */
+	@NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
 	 * <tt>Boolean</tt>.
 	 *
 	 * @return the <tt>Boolean</tt> type (an instance of PrimitiveType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getBooleanType();
+	@NonNull BooleanType getBooleanType();
 
 	/**
 	 * Obtains the single instance of the org.eclipse.ocl.pivot.Class metatype, named
@@ -96,15 +107,29 @@ public interface StandardLibrary extends Element
 	 * <tt>Collection(T)</tt>.
 	 *
 	 * @return the <tt>Collection(T)</tt> type (an instance of CollectionType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getCollectionType();
+	@NonNull CollectionType getCollectionType();
 
 	/**
-	 * @deprecated add isNullFree argument
+	 * @since 7.0
 	 */
-	@Deprecated
-	@NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
-	@NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CollectionTypeManager getCollectionTypeManager();
 
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
@@ -124,8 +149,9 @@ public interface StandardLibrary extends Element
 	 * <tt>Integer</tt>.
 	 *
 	 * @return the <tt>Integer</tt> type (an instance of PrimitiveType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getIntegerType();
+	@NonNull PrimitiveType getIntegerType();
 
 	/**
 	 * @since 7.0
@@ -161,8 +187,9 @@ public interface StandardLibrary extends Element
 	 * <tt>OclAny</tt>.
 	 *
 	 * @return the <tt>OclAny</tt> type (an instance of AnyType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOclAnyType();
+	@NonNull AnyType getOclAnyType();
 
 	/**
 	 * Obtains the single instance of the OclComparable metatype, named
@@ -201,8 +228,9 @@ public interface StandardLibrary extends Element
 	 * <tt>OclInvalid</tt>.
 	 *
 	 * @return the <tt>OclInvalid</tt> type (an instance of InvalidType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOclInvalidType();
+	@NonNull InvalidType getOclInvalidType();
 
 	/**
 	 * Obtains the generic instance of the MessageType metatype, named
@@ -252,8 +280,9 @@ public interface StandardLibrary extends Element
 	 * <tt>OclVoid</tt>.
 	 *
 	 * @return the <tt>OclVoid</tt> type (an instance of VoidType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOclVoidType();
+	@NonNull VoidType getOclVoidType();
 
 	Element getOperationTemplateParameter(@NonNull Operation anOperation, int index);
 
@@ -262,16 +291,24 @@ public interface StandardLibrary extends Element
 	 * <tt>OrderedCollection(T)</tt>.
 	 *
 	 * @return the <tt>OrderedCollection(T)</tt> type (an instance of CollectionType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOrderedCollectionType();
+	@NonNull CollectionType getOrderedCollectionType();
 
 	/**
 	 * Obtains the generic instance of the OrderedSetType metatype, named
 	 * <tt>OrderedSet(T)</tt>.
 	 *
 	 * @return the <tt>OrderedSet(T)</tt> type (an instance of OrderedSetType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType();
+	@NonNull OrderedSetType getOrderedSetType();
+
+	/**
+	 * Return the instance of the OrderedSet metatype whose elements are of elementType.
+	 * @since 7.0
+	 */
+	@NonNull CollectionType getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the package containing the library types
@@ -285,8 +322,9 @@ public interface StandardLibrary extends Element
 	 * <tt>Real</tt>.
 	 *
 	 * @return the <tt>Real</tt> type (an instance of PrimitiveType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getRealType();
+	@NonNull PrimitiveType getRealType();
 
 	org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name);
 
@@ -295,32 +333,48 @@ public interface StandardLibrary extends Element
 	 * <tt>Sequence(T)</tt>.
 	 *
 	 * @return the <tt>Sequence(T)</tt> type (an instance of SequenceType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getSequenceType();
+	@NonNull SequenceType getSequenceType();
+
+	/**
+	 * Return the instance of the Sequence metatype whose elements are of elementType.
+	 * @since 7.0
+	 */
+	@NonNull CollectionType getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the generic instance of the SetType metatype, named
 	 * <tt>Set(T)</tt>.
 	 *
 	 * @return the <tt>Set(T)</tt> type (an instance of SetType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getSetType();
+	@NonNull SetType getSetType();
+
+	/**
+	 * Return the instance of the Set metatype whose elements are of elementType.
+	 * @since 7.0
+	 */
+	@NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
 	 * <tt>String</tt>.
 	 *
 	 * @return the <tt>String</tt> type (an instance of PrimitiveType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getStringType();
+	@NonNull PrimitiveType getStringType();
 
 	/**
 	 * Obtains the generic instance of the UniqueCollection metatype, named
 	 * <tt>Set(T)</tt>.
 	 *
 	 * @return the <tt>Set(T)</tt> type (an instance of CollectionType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getUniqueCollectionType();
+	@NonNull CollectionType getUniqueCollectionType();
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype,
@@ -328,6 +382,7 @@ public interface StandardLibrary extends Element
 	 *
 	 * @return the <tt>UnlimitedNatural</tt> type (an instance of
 	 *     PrimitiveType)
+	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getUnlimitedNaturalType();
+	@NonNull PrimitiveType getUnlimitedNaturalType();
 } // StandardLibrary

@@ -14,12 +14,15 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.cs2as.BasicContinuation;
@@ -62,7 +65,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			MetamodelManager metamodelManager = context.getMetamodelManager();
+			StandardLibraryInternal standardLibrary = context.getStandardLibrary();
 			TypedRefCS csElementType = csElement.getOwnedType();
 			Type type = null;
 			String name = csElement.getName();
@@ -85,7 +88,9 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						lowerValue = null;
 						upperValue = null;
 					}
-					type = metamodelManager.getCollectionType(name, elementType, isNullFree, lowerValue, upperValue);
+					CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(name);
+					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, elementType, isNullFree, lowerValue, upperValue);
+					type = standardLibrary.getCollectionType(typeArguments);
 					MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
 					if (csMultiplicity != null) {
 						int upper = csMultiplicity.getUpper();
@@ -93,13 +98,14 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 							isNullFree = csMultiplicity.isIsNullFree();
 							lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());
 							upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-							type = metamodelManager.getCollectionType(TypeId.SET_NAME, type, isNullFree, lowerValue, upperValue);
+							typeArguments = new CollectionTypeArguments(TypeId.SET, type, isNullFree, lowerValue, upperValue);
+							type = standardLibrary.getCollectionType(typeArguments);
 						}
 					}
 				}
 			}
 			if (type == null) {
-				type = metamodelManager.getStandardLibrary().getLibraryType(name);
+				type = standardLibrary.getLibraryType(name);
 			}
 			csElement.setPivot(type);
 			return null;
