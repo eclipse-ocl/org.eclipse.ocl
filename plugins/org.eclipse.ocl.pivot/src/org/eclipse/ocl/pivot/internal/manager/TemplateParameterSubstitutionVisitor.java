@@ -369,7 +369,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.requireNonNull(type.getName()), partIds);
-			specializedTupleType = metamodelManager.getCompleteModel().getTupleManager().getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
+			specializedTupleType = metamodelManager.getStandardLibrary().getTupleManager().getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
@@ -382,7 +382,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 					partMap.put(PivotUtil.getName(part), type3);
 				}
 			}
-			return metamodelManager.getCompleteModel().getTupleManager().getTupleType(NameUtil.getSafeName(type), partMap);
+			return metamodelManager.getStandardLibrary().getTupleManager().getTupleType(NameUtil.getSafeName(type), partMap);
 		}
 	}
 
@@ -493,7 +493,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				specializedParameterTypes.add(specializeType(parameterType));
 			}
 			Type specializedResultType = specializeType(PivotUtil.getResultType(lambdaType));
-			return metamodelManager.getCompleteModel().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
+			return metamodelManager.getStandardLibrary().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType, null);
 		}
 		else if (templateSpecialization == null) {	// type instanceof Class
 			return type;

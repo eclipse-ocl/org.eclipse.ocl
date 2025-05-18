@@ -31,7 +31,8 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.TypedElementImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -66,19 +67,36 @@ public class TupleTypeManager
 		}
 	}
 
-	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull StandardLibraryInternal standardLibrary;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull IdResolver idResolver;
 	protected final org.eclipse.ocl.pivot.@NonNull Class oclTupleType;
 
 	/**
 	 * Map from the tuple typeId to the tuple type.
+	 * @since 7.0
 	 */
 	private @Nullable Map<@NonNull TupleTypeId, @NonNull TupleType> tupleid2tuple = null;
 
-	public TupleTypeManager(@NonNull CompleteEnvironmentInternal allCompleteClasses) {
-		this.completeEnvironment = allCompleteClasses;
-		this.metamodelManager = allCompleteClasses.getEnvironmentFactory().getMetamodelManager();
-		this.oclTupleType = metamodelManager.getStandardLibrary().getOclTupleType();
+	/**
+	 * @since 7.0
+	 */
+	public TupleTypeManager(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		this.environmentFactory = environmentFactory;
+		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.idResolver = environmentFactory.getIdResolver();
+		this.oclTupleType = standardLibrary.getOclTupleType();
 	}
 
 	public void dispose() {
@@ -120,7 +138,7 @@ public class TupleTypeManager
 			commonPartIds.add(commonPartId);
 		}
 		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
-		return getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), commonTupleTypeId);
+		return getTupleType(idResolver, commonTupleTypeId);
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId) {
@@ -152,7 +170,7 @@ public class TupleTypeManager
 					}
 					tupleType.getSuperClasses().add(oclTupleType);
 					tupleid2tuple2.put(tupleTypeId, tupleType);
-					completeEnvironment.addOrphanClass(tupleType);
+					environmentFactory.addOrphanClass(tupleType);
 				}
 			}
 		}
@@ -166,7 +184,7 @@ public class TupleTypeManager
 			Type type1 = part.getType();
 			if (type1 != null) {
 				Type type2 = metamodelManager.getPrimaryType(type1);
-				Type type3 = completeEnvironment.getSpecializedType(type2, usageBindings);
+				Type type3 = standardLibrary.getSpecializedType(type2, usageBindings);
 				partMap.put(PivotUtil.getName(part), type3);
 			}
 		}
@@ -201,11 +219,10 @@ public class TupleTypeManager
 		//	Create the tuple type id (and then specialize it)
 		//
 		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(tupleName, newPartIds);
-		IdResolver pivotIdResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
 		//
 		//	Finally create the (specialized) tuple type
 		//
-		TupleType tupleType = getTupleType(pivotIdResolver, tupleTypeId);
+		TupleType tupleType = getTupleType(idResolver, tupleTypeId);
 		return tupleType;
 	}
 
@@ -217,7 +234,7 @@ public class TupleTypeManager
 		for (Property part : parts) {
 			if (part != null) {
 				Type propertyType = PivotUtil.getTypeInternal(part);
-				Type resolvedPropertyType = completeEnvironment.getSpecializedType(propertyType, usageBindings);
+				Type resolvedPropertyType = standardLibrary.getSpecializedType(propertyType, usageBindings);
 				if (resolvedPropertyType != propertyType) {
 					if (resolutions == null) {
 						resolutions = new HashMap<>();
@@ -237,7 +254,7 @@ public class TupleTypeManager
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(PivotUtil.getName(type), partIds);
-			specializedTupleType = getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
+			specializedTupleType = getTupleType(idResolver, tupleTypeId);
 			return specializedTupleType;
 		}
 		else {

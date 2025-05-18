@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 
@@ -359,6 +361,11 @@ public interface StandardLibrary extends Element
 	@NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions);
+
+	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
 	 * <tt>String</tt>.
 	 *
@@ -366,6 +373,12 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull PrimitiveType getStringType();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
+			@Nullable TemplateParameterSubstitutions bindings);
 
 	/**
 	 * Obtains the generic instance of the UniqueCollection metatype, named

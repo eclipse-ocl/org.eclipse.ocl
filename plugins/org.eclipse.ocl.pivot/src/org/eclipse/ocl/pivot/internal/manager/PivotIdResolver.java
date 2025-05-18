@@ -85,7 +85,7 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		TupleTypeManager tupleManager = metamodelManager.getCompleteModel().getTupleManager();
+		TupleTypeManager tupleManager = metamodelManager.getStandardLibrary().getTupleManager();
 		return tupleManager.getTupleType(this, typeId);
 	}
 
