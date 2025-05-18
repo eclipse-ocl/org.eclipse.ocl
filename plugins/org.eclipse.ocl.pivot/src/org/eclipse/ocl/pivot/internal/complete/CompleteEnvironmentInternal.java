@@ -14,13 +14,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 public interface CompleteEnvironmentInternal extends CompleteEnvironment
 {
-	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement);
 	/**
 	 * @since 7.0
 	 */
@@ -33,12 +31,8 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType);
 	@Override
 	@NonNull CompleteModelInternal getOwnedCompleteModel();
-	//	@NonNull MetamodelManager getMetamodelManager();
-	//	@Override
-	//	@NonNull PivotStandardLibrary getStandardLibrary();
 	@Override
 	@NonNull StandardLibraryInternal getOwnedStandardLibrary();
-	@NonNull TupleTypeManager getTupleManager();
 	@NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
 	boolean isCodeGeneration();
 	void setCodeGeneration(boolean isCodeGeneration);
