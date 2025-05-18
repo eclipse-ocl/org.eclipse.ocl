@@ -10,23 +10,15 @@
  */
 package org.eclipse.ocl.pivot.internal.complete;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 public interface CompleteModelInternal extends CompleteModel
 {
@@ -48,8 +40,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@Nullable CompletePackageInternal getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull CompleteURIs getCompleteURIs();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
-			@Nullable TemplateParameterSubstitutions bindings);
 	/**
 	 * @since 7.0
 	 */
@@ -60,9 +50,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull PartialModels getPartialModels();
 	@Override
 	@NonNull PrimitiveCompletePackageImpl getPrimitiveCompletePackage();
-	@NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions);
-	@NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
-			@Nullable TemplateParameterSubstitutions bindings);
 
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void dispose();
@@ -71,7 +58,6 @@ public interface CompleteModelInternal extends CompleteModel
 	void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemovePartialModel(@NonNull Model partialModel);
 	@Nullable String getCompleteURI(@Nullable String nsURI);
-	@NonNull TupleTypeManager getTupleManager();
 	@NonNull StandardLibraryInternal getStandardLibrary();
 	@Override
 	@NonNull CompleteEnvironmentInternal getCompleteEnvironment();

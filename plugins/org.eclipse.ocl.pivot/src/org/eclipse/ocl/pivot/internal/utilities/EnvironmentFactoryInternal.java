@@ -35,6 +35,11 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
  */
 public interface EnvironmentFactoryInternal extends EnvironmentFactory
 {
+	/**
+	 * @since 7.0
+	 */
+	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement);
+
 	@Override
 	@NonNull OCLInternal createOCL();
 

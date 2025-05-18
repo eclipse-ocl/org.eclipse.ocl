@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -29,7 +28,6 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
@@ -230,12 +228,6 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
 		return OCLstdlibTables.Types._Integer;
-	}
-
-	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType,
-			@NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType, @Nullable TemplateParameterSubstitutions bindings) {
-		throw new UnsupportedOperationException();
 	}
 
 	/**

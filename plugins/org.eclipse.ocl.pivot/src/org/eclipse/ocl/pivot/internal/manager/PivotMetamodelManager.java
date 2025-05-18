@@ -411,8 +411,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
 			Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
 			Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
-			Type specializedReferenceType = referenceType != null ? completeModel.getSpecializedType(referenceType, referenceBindings) : null;
-			Type specializedCandidateType = candidateType != null ? completeModel.getSpecializedType(candidateType, candidateBindings) : null;
+			Type specializedReferenceType = referenceType != null ? standardLibrary.getSpecializedType(referenceType, referenceBindings) : null;
+			Type specializedCandidateType = candidateType != null ? standardLibrary.getSpecializedType(candidateType, candidateBindings) : null;
 			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
 				if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 					return 1;
@@ -440,8 +440,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			else {
 				Type referenceType = ClassUtil.requireNonNull(PivotUtil.getType(referenceParameter));
 				Type candidateType = ClassUtil.requireNonNull(PivotUtil.getType(candidateParameter));
-				Type specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
-				Type specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
+				Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
+				Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
 				if (referenceType != candidateType) {
 					if (!conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 						referenceConformsToCandidate = false;
@@ -457,8 +457,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		Type referenceType = ClassUtil.requireNonNull(reference.getOwningClass());
 		Type candidateType = ClassUtil.requireNonNull(candidate.getOwningClass());
-		Type specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
-		Type specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
+		Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
+		Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
 		if (referenceType != candidateType) {
 			if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 				return 1;
@@ -892,7 +892,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
 		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
-			TupleTypeManager tupleManager = completeModel.getTupleManager();
+			TupleTypeManager tupleManager = standardLibrary.getTupleManager();
 			Type commonType = tupleManager.getCommonType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
 			if (commonType == null) {
 				commonType = standardLibrary.getOclAnyType();

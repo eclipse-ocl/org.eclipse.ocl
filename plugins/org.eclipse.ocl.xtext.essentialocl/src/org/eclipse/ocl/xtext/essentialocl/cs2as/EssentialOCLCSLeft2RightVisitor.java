@@ -1027,7 +1027,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							}
 						}
 						TemplateParameterSubstitutions templateParameterSubstitutions = visitor != null ? visitor : TemplateParameterSubstitutions.EMPTY;
-						LambdaType specializedLambdaType = (LambdaType)environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
+						LambdaType specializedLambdaType = (LambdaType)standardLibrary.getSpecializedType(asParameterType, templateParameterSubstitutions);
 						asParameterType = PivotUtil.getResultType(specializedLambdaType);
 					}
 					Type expType = exp.getType();
@@ -2386,7 +2386,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			String tupleTypeName = "Tuple"; //ownedCollectionType.getName();
 			List<@NonNull TupleLiteralPart> parts = ClassUtil.nullFree(expression.getOwnedParts());
 			assert parts != null;
-			Type type = standardLibrary.getCompleteModel().getTupleType(tupleTypeName, parts, null);
+			Type type = standardLibrary.getTupleType(tupleTypeName, parts, null);
 			helper.setType(expression, type, true, null);
 		}
 		return expression;

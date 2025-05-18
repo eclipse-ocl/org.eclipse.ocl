@@ -156,7 +156,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				if (resultType instanceof TemplateParameter) {
 					resultType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)resultType);
 				}
-				LambdaType lambdaType = completeModel.getLambdaType(name, contextType, parameterTypes, resultType, null);
+				LambdaType lambdaType = context.getStandardLibrary().getLambdaType(name, contextType, parameterTypes, resultType, null);
 				context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 			}
 			return null;
@@ -407,7 +407,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				TemplateParameterSubstitutions templateSpecialization = namespace != null ? TemplateSpecialization.basicGetTemplateSpecialization(namespace) : null;
 			//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(namespace);
 			//	TemplateParameterSubstitutions templateParameterSubstitutions = new BasicTemplateSpecialization(namespace, templateParameterization);
-				TupleType tupleType = context.getMetamodelManager().getCompleteModel().getTupleType(name, parts, templateSpecialization);			// XXX pass parameterization from ancestral scope
+				TupleType tupleType = context.getStandardLibrary().getTupleType(name, parts, templateSpecialization);			// XXX pass parameterization from ancestral scope
 				context.installPivotTypeWithMultiplicity(tupleType, csElement);
 				List<Property> tupleParts = tupleType.getOwnedProperties();
 				for (TuplePartCS csTuplePart : csElement.getOwnedParts()) {

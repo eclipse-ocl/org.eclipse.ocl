@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
@@ -51,9 +50,7 @@ import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -67,7 +64,6 @@ import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -617,17 +613,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completeURIs;
 	}
 
-	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
-		return completeEnvironment.getLambdaType(typeName, contextType, parameterTypes, resultType, null);
-	}
-
-	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
-			@Nullable TemplateParameterSubstitutions bindings) {
-		return completeEnvironment.getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
-	}
-
 	public @Nullable CompletePackage getMemberPackage(@NonNull String memberPackageName) {
 		return ownedCompletePackages.getOwnedCompletePackage(memberPackageName);
 	}
@@ -792,24 +777,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
-		return completeEnvironment.getSpecializedType(type, substitutions);
-	}
-
-	@Override
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
 		return completeEnvironment.getOwnedStandardLibrary();
-	}
-
-	@Override
-	public @NonNull TupleTypeManager getTupleManager() {
-		return completeEnvironment.getTupleManager();
-	}
-
-	@Override
-	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
-			@Nullable TemplateParameterSubstitutions bindings) {
-		return completeEnvironment.getTupleType(typeName, parts, bindings);
 	}
 
 	@Override

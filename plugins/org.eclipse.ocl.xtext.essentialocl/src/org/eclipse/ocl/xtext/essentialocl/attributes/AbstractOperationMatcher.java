@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -111,14 +112,15 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	protected int compareMatches(@NonNull Object match1, @NonNull TemplateParameterSubstitutions referenceBindings,
 			@NonNull Object match2, @NonNull TemplateParameterSubstitutions candidateBindings, boolean useCoercions) {
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		@NonNull Operation reference = (Operation) match1;
 		@NonNull Operation candidate = (Operation) match2;
 		org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
 		org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
 		Type referenceType = referenceClass;// != null ? PivotUtil.getBehavioralType(referenceClass) : null;
 		Type candidateType = candidateClass;// != null ? PivotUtil.getBehavioralType(candidateClass) : null;
-		Type specializedReferenceType = referenceType != null ? completeModel.getSpecializedType(referenceType, referenceBindings) : null;
-		Type specializedCandidateType = candidateType != null ? completeModel.getSpecializedType(candidateType, candidateBindings) : null;
+		Type specializedReferenceType = referenceType != null ? standardLibrary.getSpecializedType(referenceType, referenceBindings) : null;
+		Type specializedCandidateType = candidateType != null ? standardLibrary.getSpecializedType(candidateType, candidateBindings) : null;
 		if ((reference instanceof Iteration) && (candidate instanceof Iteration) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
 			int iteratorCountDelta = ((Iteration)candidate).getOwnedIterators().size() - ((Iteration)reference).getOwnedIterators().size();
 			if (iteratorCountDelta != 0) {
@@ -154,8 +156,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 			Parameter candidateParameter = candidateParameters.get(i);
 			referenceType = PivotUtil.getTypeInternal(referenceParameter);//.behavioralType();
 			candidateType = PivotUtil.getTypeInternal(candidateParameter);//.behavioralType();
-			specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
-			specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
+			specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
+			specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
 			if (argumentType != specializedReferenceType) {
 				referenceConversions++;
 			}
