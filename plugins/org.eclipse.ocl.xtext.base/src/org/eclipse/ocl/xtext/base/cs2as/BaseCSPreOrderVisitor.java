@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Parameter;
@@ -51,6 +50,7 @@ import org.eclipse.ocl.xtext.basecs.LambdaTypeCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementRefCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
@@ -500,15 +500,15 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		public BasicContinuation<?> execute() {
 			Type pivotType = csElement.getReferredType();
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
-				if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
-					StandardLibrary standardLibrary = context.getStandardLibrary();
-					org.eclipse.ocl.pivot.@NonNull Class mapType = standardLibrary.getMapEntryType(entryClass);
-					if (mapType instanceof MapType) {
-						((MapType)mapType).setEntryClass(entryClass);
+				MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
+				if ((csMultiplicity != null) && (csMultiplicity.getLower() == 0) && (csMultiplicity.getUpper() < 0)) {
+					org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
+					if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
+						StandardLibrary standardLibrary = context.getStandardLibrary();
+						org.eclipse.ocl.pivot.@NonNull Class mapType = standardLibrary.getMapEntryType(entryClass);
+						context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+						return null;
 					}
-					context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
-					return null;
 				}
 			}
 			pivotType = context.getNormalizedType(pivotType);

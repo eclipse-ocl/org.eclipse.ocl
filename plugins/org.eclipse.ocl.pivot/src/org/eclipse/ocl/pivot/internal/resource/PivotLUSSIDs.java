@@ -139,6 +139,10 @@ public class PivotLUSSIDs extends LUSSIDs
 				if (!mapType.isValuesAreNullFree()) {
 					localId += MAP_VALUES_ARE_NULL_FREE_MULTIPLIER;
 				}
+				Type entryClass = mapType.getEntryClass();
+				if (entryClass != null) {
+					localId += templateIndexMultiplier * computeReferenceLUSSID(as2id, entryClass, normalizeTemplateParameters);
+				}
 			}
 			else if (element instanceof LambdaType) {
 				LambdaType lambdaType = (LambdaType)element;

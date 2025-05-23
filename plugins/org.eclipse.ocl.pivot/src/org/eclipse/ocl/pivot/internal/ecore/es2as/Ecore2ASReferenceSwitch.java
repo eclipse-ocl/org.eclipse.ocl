@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -397,12 +398,24 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
 			if ((lower == 0) && (upper == -1) && converter.isEcoreOnlyEntryClass(eClassifier)) {
+				// XXX diagnose ordered / !unique
 				pivotType = converter.getCreated(Type.class, eType);
 				assert converter.isEntryClass(eClassifier);
 				assert pivotType == null;
 				assert eClassifier != null;
 				isRequired = true;
 				pivotType = getEcoreOnlyEntryClassMapType((EClass)eClassifier);
+			}
+			else if ((lower == 0) && (upper == -1) && converter.isEntryClass(eClassifier)) {
+				// XXX diagnose ordered / !unique
+				org.eclipse.ocl.pivot.Class entryClass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eType);
+				assert entryClass != null;
+				assert eClassifier != null;
+				isRequired = true;
+				for (EStructuralFeature  eStructuralFeature : ((EClass)eClassifier).getEStructuralFeatures()) {
+					doSwitch(eStructuralFeature);
+				}
+				pivotType =  standardLibrary.getMapEntryType(entryClass);
 			}
 			else {
 				pivotType = converter.getASType(eType);
@@ -427,7 +440,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				}
 				else {
 					isRequired = true;
-					if (converter.isEntryClass(eClassifier)) {
+					if (converter.isEntryClass(eClassifier) && (lower == 0) && (upper < 0)) {
 						Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
 						Property keyProperty1 = NameUtil.getNameable(ownedProperties, "key");
 						Property valueProperty1 = NameUtil.getNameable(ownedProperties, "value");
@@ -526,6 +539,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	/**
+	 * Return the regular Pivot Map type from its synthetic representation as an EntryClass-EAnnotated EClass.
+	 *
 	 * @since 1.7
 	 */
 	protected @Nullable Type getEcoreOnlyEntryClassMapType(@NonNull EClass eClass) {
@@ -553,7 +568,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				if ((keyType != null) && (valueType != null)) {
 					boolean keysAreNullFree = keyFeature.isRequired();
 					boolean valuesAreNullFree = valueFeature.isRequired();
-					return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);	// XXX MapEntryType ???
+					return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 				}
 			}
 		}

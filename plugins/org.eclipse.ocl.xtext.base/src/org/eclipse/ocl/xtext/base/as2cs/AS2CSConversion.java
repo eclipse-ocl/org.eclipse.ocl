@@ -660,13 +660,13 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			int lower;
 			int upper;
 			if (isEMap) {
-				isNullFree = true;
-				lower = object.isIsRequired() ? 1 : 0;
+				isNullFree = true; //no null-entries // object.isIsRequired();
+				lower = 0;
 				upper = -1;
-				List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
+				//	List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
 				//	refreshQualifiers(qualifiers, "composes", object.isIsComposite());
-				refreshQualifiers(qualifiers, "ordered", "!ordered", Boolean.TRUE);		// sic; Ecore idiom
-				refreshQualifiers(qualifiers, "unique", "!unique", Boolean.TRUE);
+				//	refreshQualifiers(qualifiers, "ordered", "!ordered", Boolean.TRUE);		// sic; Ecore idiom
+				//	refreshQualifiers(qualifiers, "unique", "!unique", Boolean.TRUE);
 			}
 			else if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
 				CollectionType collectionType = (CollectionType)type;

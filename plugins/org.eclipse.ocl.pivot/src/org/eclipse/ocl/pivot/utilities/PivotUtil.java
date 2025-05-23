@@ -717,30 +717,44 @@ public class PivotUtil implements PivotConstants
 	//		return pivotType;
 	//	}
 
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull MapType createMapEntryType(@NonNull MapType mapType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		assert mapType.getEntryClass() == null;
+		//
+		TemplateableElement genericMapType = getUnspecializedTemplateableElement(mapType);
+		List<TemplateParameter> templateParameters = genericMapType.getOwnedSignature().getOwnedParameters();
+		TemplateParameter keyParameter = templateParameters.get(0);
+		TemplateParameter valueParameter = templateParameters.get(1);
+		assert keyParameter != null;
+		assert valueParameter != null;
+		//
+		Type keyType = getKeyType(mapType);
+		boolean keysAreNullFree = mapType.isKeysAreNullFree();
+		Type valueType = getValueType(mapType);
+		boolean valuesAreNullFree = mapType.isValuesAreNullFree();
+		//
+		MapType mapEntryType = PivotFactory.eINSTANCE.createMapType();
+		mapEntryType.setName(mapType.getName());
+		mapEntryType.setUnspecializedElement(genericMapType);
+		TemplateParameterSubstitution templateParameterSubstitution1 = createTemplateParameterSubstitution(keyParameter, keyType);
+		TemplateParameterSubstitution templateParameterSubstitution2 = createTemplateParameterSubstitution(valueParameter, valueType);
+		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution1, templateParameterSubstitution2);
+		mapEntryType.getOwnedBindings().add(templateBinding);
+		assert mapEntryType.getKeyType() == keyType;
+		assert mapEntryType.getValueType() == valueType;
+		mapEntryType.setKeysAreNullFree(keysAreNullFree);
+		mapEntryType.setValuesAreNullFree(valuesAreNullFree);
+		mapEntryType.setEntryClass(entryClass);
+	//	mapEntryType.setBehavioralClass(mapType);
+		return mapEntryType;
+	}
+
 	public static @NonNull Model createModel(String externalURI) {
 		Model pivotModel = PivotFactory.eINSTANCE.createModel();
 		pivotModel.setExternalURI(externalURI);
 		return pivotModel;
-	}
-
-	public static @NonNull MapType createMapType(@NonNull MapType unspecializedType, @NonNull Type keyType, @NonNull Type valueType) {
-		return createMapType(PivotFactory.eINSTANCE.createMapType(), unspecializedType, keyType, valueType);
-	}
-
-	protected static @NonNull <@NonNull T extends MapType> T createMapType(T specializedType, T unspecializedType, @NonNull Type keyType, @NonNull Type valueType) {
-		specializedType.setName(unspecializedType.getName());
-		specializedType.setUnspecializedElement(unspecializedType);
-		TemplateParameter templateParameter1 = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
-		TemplateParameter templateParameter2 = unspecializedType.getOwnedSignature().getOwnedParameters().get(1);
-		assert templateParameter1 != null;
-		assert templateParameter2 != null;
-		TemplateParameterSubstitution templateParameterSubstitution1 = createTemplateParameterSubstitution(templateParameter1, keyType);
-		TemplateParameterSubstitution templateParameterSubstitution2 = createTemplateParameterSubstitution(templateParameter2, valueType);
-		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution1, templateParameterSubstitution2);
-		specializedType.getOwnedBindings().add(templateBinding);
-		assert specializedType.getKeyType() == keyType;
-		assert specializedType.getValueType() == valueType;
-		return specializedType;
 	}
 
 	public static @NonNull <T extends Model> T createModel(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, String externalURI) {

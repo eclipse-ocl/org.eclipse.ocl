@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -809,7 +808,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			pivotType = getStandardLibrary().getOclInvalidType();
 		}
 		boolean isNullFree = false;
-		int lower = pivotType instanceof MapType ? 1 : 0;			// Optional EMaps are impossible and so optional Maps are not supported.
+		int lower = 0;
 		int upper = 1;
 		MultiplicityCS multiplicity = csElement.getOwnedMultiplicity();
 		if (multiplicity != null) {
@@ -1080,30 +1079,23 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			if (pivotType instanceof LambdaType) {			// The lambda exprssion is mandatory, for compatibility we propagate the return nullity
 				optionalDefaultMultiplicity2 = true;		// BUG
 			}
-			if (pivotType instanceof MapType) {		// Ecore does not support collections of or null EMaps, so pivot Maps must also be 1..1
+			MultiplicityCS csMultiplicity = ownedType.getOwnedMultiplicity();
+			if ((csMultiplicity == null) && !optionalDefaultMultiplicity2){
 				lower = 1;
 				upper = 1;
 				isRequired = true;
 			}
 			else {
-				MultiplicityCS csMultiplicity = ownedType.getOwnedMultiplicity();
-				if ((csMultiplicity == null) && !optionalDefaultMultiplicity2){
-					lower = 1;
-					upper = 1;
-					isRequired = true;
+				lower = ElementUtil.getLower(csTypedElement);
+				upper = ElementUtil.getUpper(csTypedElement);
+				if (upper == 1) {
+					isRequired = lower == 1;
 				}
 				else {
-					lower = ElementUtil.getLower(csTypedElement);
-					upper = ElementUtil.getUpper(csTypedElement);
-					if (upper == 1) {
-						isRequired = lower == 1;
-					}
-					else {
-						isRequired = true;
-						//				if (pivotType != null) {
-						//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
-						//				}
-					}
+					isRequired = true;
+					//				if (pivotType != null) {
+					//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
+					//				}
 				}
 			}
 		}
