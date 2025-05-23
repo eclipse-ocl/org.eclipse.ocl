@@ -25,17 +25,18 @@ public interface MapTypeId extends BuiltInTypeId, TemplateableId
 	@Override
 	@NonNull MapTypeId getSpecializedId(@NonNull BindingsId bindingsId);
 
-	@Deprecated
-	default @NonNull MapTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
-		assert templateBindings.length == 2;			// Legacy compatibility
-		return getSpecializedId(templateBindings[0], templateBindings[1], false, false);
-	}
-
 	/**
 	 * @since 1.18
 	 */
 	default @NonNull MapTypeId getSpecializedId(@NonNull ElementId keyTypeId, @NonNull ElementId valueTypeId, boolean keysAreNullFree, boolean valuesAreNullFree) {
 		return getSpecializedId(IdManager.getBindingsId(new @NonNull ElementId[] {keyTypeId, valueTypeId}, new @NonNull Object[] {keysAreNullFree, valuesAreNullFree}));
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	default @NonNull MapTypeId getSpecializedId(@NonNull TypeId entryTypeId, @NonNull ElementId keyTypeId, @NonNull ElementId valueTypeId, boolean keysAreNullFree, boolean valuesAreNullFree) {
+		return getSpecializedId(IdManager.getBindingsId(new @NonNull ElementId[] {keyTypeId, valueTypeId}, new @NonNull Object[] {entryTypeId, keysAreNullFree, valuesAreNullFree}));
 	}
 
 	@NonNull TypeId getValueTypeId();

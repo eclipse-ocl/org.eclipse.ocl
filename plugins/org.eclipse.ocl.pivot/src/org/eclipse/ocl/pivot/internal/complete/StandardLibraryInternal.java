@@ -37,8 +37,6 @@ public interface StandardLibraryInternal extends StandardLibrary
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
-	@Deprecated /* @deprecated - use multi-type defineLibraryTypes */
-	void defineLibraryType(org.eclipse.ocl.pivot.@NonNull Class pivotType);
 	/**
 	 * @since 1.17
 	 */

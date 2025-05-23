@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -150,11 +151,6 @@ public class TypeUtil
 		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, isNullFree, lower, upper);
 	}
 
-	@Deprecated /* @deprecated use nullFrees */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, @NonNull Type valueType) {
-		return createMapTypeParameters(keyType, true, valueType, true);
-	}
-
 	/**
 	 * @since 1.6
 	 */
@@ -166,7 +162,15 @@ public class TypeUtil
 	 * @since 1.7
 	 */
 	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(entryClass);
+		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
+		Property keyProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
+		Property valueProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
+		@SuppressWarnings("unchecked")
+		Type keyType = PivotUtil.getType(keyProperty);
+		boolean keysAreNullFree = keyProperty.isIsRequired();
+		Type valueType = PivotUtil.getType(valueProperty);
+		boolean valuesAreNullFree = valueProperty.isIsRequired();
+		return createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {

@@ -156,6 +156,13 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			Type elementType = ((CollectionType)referencedType).getElementType();
 			return needsSpecialization(elementType);
 		}
+		if (referencedType instanceof MapType) {
+			MapType mapType = (MapType)referencedType;
+			Type entryType = mapType.getEntryClass();
+			Type keyType = mapType.getKeyType();
+			Type valueType = mapType.getValueType();
+			return (entryType != null) || needsSpecialization(keyType) || needsSpecialization(valueType);
+		}
 		if (referencedType instanceof TupleType) {
 			TupleType tupleType = (TupleType)referencedType;
 			for (Property tuplePart : tupleType.getOwnedProperties()) {
@@ -461,12 +468,15 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		else if (type instanceof MapType) {
 			MapType mapType = (MapType)type;
 			Type keyType = PivotUtil.getKeyType(mapType);
+			boolean keysAreNullFree = mapType.isKeysAreNullFree();
 			Type valueType = PivotUtil.getValueType(mapType);
+			boolean valuesAreNullFree = mapType.isValuesAreNullFree();
 			Type specializedKeyType = specializeType(keyType);
 			Type specializedValueType = specializeType(valueType);
 			MapType unspecializedMapType = PivotUtil.getUnspecializedTemplateableElement(mapType);
 			assert unspecializedMapType == environmentFactory.getStandardLibrary().getMapType();
-			return environmentFactory.getStandardLibrary().getMapType(specializedKeyType, mapType.isKeysAreNullFree(), specializedValueType, mapType.isValuesAreNullFree());
+			// Ignore the entryClass.
+			return environmentFactory.getStandardLibrary().getMapType(specializedKeyType, keysAreNullFree, specializedValueType, valuesAreNullFree);
 		}
 		else if (type instanceof PrimitiveType) {
 			return type;

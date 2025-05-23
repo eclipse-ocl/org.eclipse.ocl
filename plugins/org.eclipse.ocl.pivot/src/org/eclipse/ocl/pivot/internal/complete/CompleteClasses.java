@@ -211,7 +211,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			specializedMapType.setUnspecializedElement(unspecializedType);
 			Orphanage orphanage = completeModel.getOrphanage();
 			specializedMapType.setOwningPackage(orphanage);
-			specializedMapType.setEntryClass(typeParameters.getEntryClass());
+		//	specializedMapType.setEntryClass(typeParameters.getEntryClass());
 			return specializedMapType;
 		}
 
