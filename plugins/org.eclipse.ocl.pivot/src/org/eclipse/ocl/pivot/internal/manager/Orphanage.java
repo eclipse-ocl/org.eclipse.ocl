@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +37,17 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -48,6 +56,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 /**
  * An Orphanage provides a Package that weakly contains elements such as type specializations that
@@ -401,6 +410,53 @@ public class Orphanage extends PackageImpl
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.requireNonNull(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 	@Deprecated /* @deprecated The global Orphanage is never used */
 	private static Orphanage ORPHAN_PACKAGE = null;
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean assertIsValid() {
+		Map<@NonNull ElementId, @NonNull EObject> elementId2eObject = new HashMap<>();
+		for (EObject eObject : new TreeIterable(this, true)) {
+			ElementId elementId = null;
+			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
+				elementId = ((org.eclipse.ocl.pivot.Package)eObject).getPackageId();
+			}
+			else if (eObject instanceof Type) {
+				elementId = ((Type)eObject).getTypeId();
+			}
+			else if (eObject instanceof Property) {
+				if (eObject.eContainer() instanceof TupleType) {
+					elementId = TypeId.OCL_INVALID;				// XXX Why no TuplePartId ?
+				}
+				else if ((eObject.eContainer() instanceof TemplateableElement) && (((TemplateableElement)eObject.eContainer()).getUnspecializedElement() != null))  {
+					elementId = TypeId.OCL_INVALID;				// XXX Why no TuplePartId ?
+				}
+				else {
+// XXX 	public boolean isEcoreOnlyEntryClass(@Nullable EClassifier eClassifier) {
+
+
+					elementId = ((Property)eObject).getPropertyId();
+				}
+			}
+			else if (eObject instanceof TemplateBinding) {
+				elementId = TypeId.OCL_INVALID;
+			}
+			else if (eObject instanceof TemplateParameterSubstitution) {
+				elementId = TypeId.OCL_INVALID;
+			}
+			else if (eObject instanceof TemplateSignature) {
+				elementId = TypeId.OCL_INVALID;
+			}
+			if (elementId == null) {
+				assert false : "Missing ElementId for " + eObject.eClass().getName() + " " + elementId;
+			}
+			else if (elementId != TypeId.OCL_INVALID) {
+				EObject old = elementId2eObject.put(elementId, eObject);
+				assert old == null : "Conflicting " + elementId;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * @since 1.18
