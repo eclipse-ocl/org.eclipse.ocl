@@ -285,6 +285,7 @@ public class ASSaver
 		Model asModel = PivotUtil.getModel(resource);
 		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetLocalOrphanPackage(asModel);
 		Orphanage sharedOrphanage = Orphanage.getOrphanage(resource.getResourceSet());
+		assert sharedOrphanage.assertIsValid();
 		if (localOrphanPackage != null) {
 			loadOrphanage(localOrphanPackage, sharedOrphanage);
 		}
