@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.internal.manager.MapTypeManagerInternal;
 
 /**
  */
@@ -54,6 +55,11 @@ public interface StandardLibraryInternal extends StandardLibrary
 	@Override
 	@NonNull PrimitiveType getIntegerType();
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	@NonNull MapTypeManagerInternal getMapTypeManager();
 	@Override
 	@NonNull AnyType getOclAnyType();
 	@Override

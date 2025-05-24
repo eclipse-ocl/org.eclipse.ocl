@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorBagType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorMapType;
@@ -46,22 +47,41 @@ import org.eclipse.ocl.pivot.internal.executor.ExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
+import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
+import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElement*/ implements CompleteEnvironment, StandardLibrary
 {
+	/**
+	 * @since 7.0
+	 */
+	public static class ExecutorMapTypeManager extends AbstractMapTypeManager
+	{
+		public ExecutorMapTypeManager(@NonNull ExecutableStandardLibrary standardLibrary) {
+			super(standardLibrary.getMapType());
+		}
+
+		@Override
+		protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
+			ExecutorMapType executorMapType = new ExecutorMapType(TypeId.MAP_NAME, genericMapType, typeArguments.getKeyType(), typeArguments.isKeysAreNullFree(), typeArguments.getValueType(), typeArguments.isValuesAreNullFree());
+			if (entryClass != null) {
+				executorMapType.setEntryClass(entryClass);
+			}
+			return executorMapType;
+		}
+	}
+
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
@@ -70,7 +90,8 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
 	 */
-	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable ExecutorMapType>>> mapSpecializations = new /*Weak*/HashMap<>();		// Keys are not singletons
+//	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull MapTypeParameters, @NonNull WeakReference<@Nullable ExecutorMapType>>> mapSpecializations = new /*Weak*/HashMap<>();		// Keys are not singletons
+	private /*@LazyNonNull*/ ExecutorMapTypeManager mapTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted tuples.
@@ -135,7 +156,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 		if (upper2 == null) {
 			upper2 = ValueUtil.UNLIMITED_VALUE;
 		}
-		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower2, upper2);
+		CollectionTypeParameters<@NonNull Type> typeArguments = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower2, upper2);
 		ExecutorCollectionType specializedType = null;
 		Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable ExecutorCollectionType>> map = collectionSpecializations.get(genericType);
 		if (map == null) {
@@ -143,7 +164,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 			collectionSpecializations.put(genericType, map);
 		}
 		else {
-			specializedType = weakGet(map, typeParameters);
+			specializedType = weakGet(map, typeArguments);
 		}
 		if (specializedType == null) {
 			String name = ClassUtil.requireNonNull(genericType.getName());
@@ -162,7 +183,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 			else {
 				specializedType = new ExecutorCollectionType(name, genericType, elementType, isNullFree, lower, upper);
 			}
-			map.put(typeParameters, new WeakReference<>(specializedType));
+			map.put(typeArguments, new WeakReference<>(specializedType));
 		}
 		return specializedType;
 	}
@@ -183,26 +204,11 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	 */
 	@Override
 	public synchronized @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		org.eclipse.ocl.pivot.@NonNull Class mapType = getMapType();
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryClass);
-		ExecutorMapType specializedType = null;
-		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable ExecutorMapType>> map = mapSpecializations.get(mapType);
-		if (map == null) {
-			map = new WeakHashMap<>();
-			mapSpecializations.put(mapType, map);
-		}
-		else {
-			specializedType = weakGet(map, typeParameters);
-		}
-		if (specializedType == null) {
-			specializedType = new ExecutorMapType(PivotUtil.getName(mapType), mapType, typeParameters.getKeyType(), false, typeParameters.getValueType(), false);
-			map.put(typeParameters, new WeakReference<>(specializedType));
-		}
-		return specializedType;
+		return getMapTypeManager().getMapEntryType(entryClass);
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType() {
+	public @NonNull MapType getMapType() {
 		return OCLstdlibTables.Types._Map;
 	}
 
@@ -211,22 +217,20 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	 */
 	@Override
 	public synchronized @NonNull MapType getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		org.eclipse.ocl.pivot.@NonNull Class mapType = getMapType();
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
-		ExecutorMapType specializedType = null;
-		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable ExecutorMapType>> map = mapSpecializations.get(mapType);
-		if (map == null) {
-			map = new WeakHashMap<>();
-			mapSpecializations.put(mapType, map);
+		MapTypeArguments typeArguments = new MapTypeArguments(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+		return getMapTypeManager().getMapType(typeArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull ExecutorMapTypeManager getMapTypeManager() {
+		ExecutorMapTypeManager mapTypeManager2 = mapTypeManager;
+		if (mapTypeManager2 == null) {
+			mapTypeManager = mapTypeManager2 = new ExecutorMapTypeManager(this);
 		}
-		else {
-			specializedType = weakGet(map, typeParameters);
-		}
-		if (specializedType == null) {
-			specializedType = new ExecutorMapType(PivotUtil.getName(mapType), mapType, keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
-			map.put(typeParameters, new WeakReference<>(specializedType));
-		}
-		return specializedType;
+		return mapTypeManager2;
 	}
 
 	@Override

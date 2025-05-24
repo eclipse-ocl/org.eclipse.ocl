@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -134,7 +135,12 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getMapType();
+	@NonNull MapType getMapType();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull MapTypeManager getMapTypeManager();
 
 	/**
 	 * @since 7.0

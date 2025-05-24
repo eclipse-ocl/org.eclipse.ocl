@@ -1338,7 +1338,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return getLibraryType(libraryType, templateArguments);
 	}
 
-	@Override
+	@Override @Deprecated
 	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments) {
 		//		assert !(libraryType instanceof CollectionType);
 		assert libraryType == PivotUtil.getUnspecializedTemplateableElement(libraryType);
@@ -1364,12 +1364,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			return specializedType;
 		}
 		else if (pivotClass instanceof MapType) {
-			assert pivotClass instanceof MapType;
-			assert templateArguments.size() == 2;
-			@NonNull Type keyTemplateArgument = templateArguments.get(0);
-			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) libraryCompleteClass.getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
-			return specializedType;
+			throw new IllegalStateException("Use a MapType method");			// XXX
 		}
 		else {
 			@SuppressWarnings("unchecked")

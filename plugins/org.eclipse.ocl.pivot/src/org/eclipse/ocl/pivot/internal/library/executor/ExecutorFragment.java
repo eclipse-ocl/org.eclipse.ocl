@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -33,7 +32,10 @@ public class ExecutorFragment extends AbstractFragment
 	private @NonNull ExecutorOperation[] operations;
 	private @NonNull ExecutorProperty[] properties;
 
-	public ExecutorFragment(/*@NonNull*/ ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	/**
+	 * @since 7.0
+	 */
+	public ExecutorFragment(/*@NonNull*/ ExecutorType derivedInheritance, @NonNull ExecutorType baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 		this.operations = null;
 		this.properties = null;

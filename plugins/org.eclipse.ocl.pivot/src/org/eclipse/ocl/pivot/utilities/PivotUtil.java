@@ -146,6 +146,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -710,45 +711,64 @@ public class PivotUtil implements PivotConstants
 		return mapLiteralPart;
 	}
 
-	//	public static @NonNull MapType createMapType(@NonNull String name) {
-	//		MapType pivotType = PivotFactory.eINSTANCE.createMapType();
-	//		pivotType.setName(name);
-	//		((PivotObjectImpl)pivotType).setESObject(eDataType);
-	//		return pivotType;
-	//	}
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull MapType createMapEntryType(@NonNull MapType specializedMapType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		assert specializedMapType.getEntryClass() == null;
+		MapType genericMapType = getUnspecializedTemplateableElement(specializedMapType);
+		assert specializedMapType != genericMapType;
+		Type keyType = getKeyType(specializedMapType);
+		boolean keysAreNullFree = specializedMapType.isKeysAreNullFree();
+		Type valueType = getValueType(specializedMapType);
+		boolean valuesAreNullFree = specializedMapType.isValuesAreNullFree();
+
+		MapType mapEntryType = createMapType(genericMapType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		mapEntryType.setEntryClass(entryClass);
+	//	mapEntryType.setBehavioralClass(mapType);		// XXX superClasses
+		return mapEntryType;
+	}
 
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull MapType createMapEntryType(@NonNull MapType mapType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		assert mapType.getEntryClass() == null;
+	public static @NonNull MapType createMapType(@NonNull MapType genericMapType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		assert genericMapType.getEntryClass() == null;
 		//
-		TemplateableElement genericMapType = getUnspecializedTemplateableElement(mapType);
+		assert getUnspecializedTemplateableElement(genericMapType) == genericMapType;
 		List<TemplateParameter> templateParameters = genericMapType.getOwnedSignature().getOwnedParameters();
 		TemplateParameter keyParameter = templateParameters.get(0);
 		TemplateParameter valueParameter = templateParameters.get(1);
 		assert keyParameter != null;
 		assert valueParameter != null;
 		//
-		Type keyType = getKeyType(mapType);
-		boolean keysAreNullFree = mapType.isKeysAreNullFree();
-		Type valueType = getValueType(mapType);
-		boolean valuesAreNullFree = mapType.isValuesAreNullFree();
-		//
-		MapType mapEntryType = PivotFactory.eINSTANCE.createMapType();
-		mapEntryType.setName(mapType.getName());
-		mapEntryType.setUnspecializedElement(genericMapType);
+		MapType specializedMapType = PivotFactory.eINSTANCE.createMapType();
+		specializedMapType.setName(TypeId.MAP_NAME);
+		specializedMapType.setUnspecializedElement(genericMapType);
 		TemplateParameterSubstitution templateParameterSubstitution1 = createTemplateParameterSubstitution(keyParameter, keyType);
 		TemplateParameterSubstitution templateParameterSubstitution2 = createTemplateParameterSubstitution(valueParameter, valueType);
 		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution1, templateParameterSubstitution2);
-		mapEntryType.getOwnedBindings().add(templateBinding);
-		assert mapEntryType.getKeyType() == keyType;
-		assert mapEntryType.getValueType() == valueType;
-		mapEntryType.setKeysAreNullFree(keysAreNullFree);
-		mapEntryType.setValuesAreNullFree(valuesAreNullFree);
-		mapEntryType.setEntryClass(entryClass);
-	//	mapEntryType.setBehavioralClass(mapType);
-		return mapEntryType;
+		specializedMapType.getOwnedBindings().add(templateBinding);
+		assert specializedMapType.getKeyType() == keyType;
+		assert specializedMapType.getValueType() == valueType;
+		specializedMapType.setKeysAreNullFree(keysAreNullFree);
+		specializedMapType.setValuesAreNullFree(valuesAreNullFree);
+		// NB no superClasses
+		return specializedMapType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull MapTypeArguments createMapTypeArguments(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
+		Property keyProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
+		Property valueProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
+		Type keyType = PivotUtil.getType(keyProperty);
+		boolean keysAreNullFree = keyProperty.isIsRequired();
+		Type valueType = PivotUtil.getType(valueProperty);
+		boolean valuesAreNullFree = valueProperty.isIsRequired();
+		return new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	public static @NonNull Model createModel(String externalURI) {

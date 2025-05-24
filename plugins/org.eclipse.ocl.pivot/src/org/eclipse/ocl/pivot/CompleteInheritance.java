@@ -28,6 +28,31 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  */
 public interface CompleteInheritance extends Nameable
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final int ABSTRACT = 1 << 5;
+	/**
+	 * @since 7.0
+	 */
+	public static final int ORDERED = 1 << 0;
+	/**
+	 * @since 7.0
+	 */
+	public static final int UNIQUE = 1 << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int OCL_ANY = 1 << 2;
+	/**
+	 * @since 7.0
+	 */
+	public static final int OCL_VOID = 1 << 3;
+	/**
+	 * @since 7.0
+	 */
+	public static final int OCL_INVALID = 1 << 4;			// NB. OCL_INVALID assumed greater than OCL_VOID by isSuper/SubInheritanceOf
+
 	public static @NonNull CompleteInheritance @NonNull [] EMPTY_ARRAY = new @NonNull CompleteInheritance[0];
 
 	/**
