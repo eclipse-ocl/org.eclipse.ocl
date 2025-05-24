@@ -812,8 +812,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return getCollectionType(ownedStandardLibrary.getSetType(), elementType, false, lower, upper);
 	}
 
-	@Override
-	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
+	@Override @Deprecated
+	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {		// XXX Use TPSV.specializeType
 		if ((substitutions == null) || substitutions.isEmpty()) {
 			return type;
 		}
@@ -836,21 +836,14 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		else if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
-			Type elementType = getSpecializedType(ClassUtil.requireNonNull(collectionType.getElementType()), substitutions);
-		//	Type boundType = substitutions.get(elementType);
-			return getCollectionType(unspecializedType, elementType, null, null);
-		/*	org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
-			if (!substitutions.isEmpty()) {
-				TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
-				Type templateArgument = substitutions.get(templateParameter);
-				if (templateArgument == null) {
-					templateArgument = templateParameter;
-				}
-				if (templateArgument != null) {
-					return getCollectionType(unspecializedType, templateArgument, null, null);
-				}
-			}
-			return collectionType; */
+			Type elementType = getSpecializedType(PivotUtil.getElementType(collectionType), substitutions);
+			return getCollectionType(unspecializedType, elementType, null, null);		// nullity
+		}
+		else if (type instanceof MapType) {
+			MapType mapType = (MapType)type;
+			Type keyType = getSpecializedType(PivotUtil.getKeyType(mapType), substitutions);
+			Type valueType = getSpecializedType(PivotUtil.getValueType(mapType), substitutions);
+			return ownedStandardLibrary.getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
 		}
 		else if (type instanceof TupleType) {
 			return getTupleManager().getTupleType((TupleType) type, substitutions);

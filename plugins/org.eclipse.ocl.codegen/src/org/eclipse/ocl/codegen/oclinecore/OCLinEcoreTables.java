@@ -41,7 +41,9 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
@@ -66,6 +68,7 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
+import org.eclipse.ocl.pivot.internal.library.ecore.ExecutorGenericMapType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
@@ -919,7 +922,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(" ");
 		asClass.accept(emitLiteralVisitor);
 		s.append(" = ");
-		if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof CollectionType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
+		if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof IterableType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
 			s.append("new ");
 			s.appendClassReference(null, typeClass);
 			s.append("(");
@@ -1353,6 +1356,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		else if (asClass instanceof InvalidType) {
 			return EcoreExecutorInvalidType.class;
+		}
+		else if (asClass instanceof MapType) {
+			return ExecutorGenericMapType.class;
 		}
 		else if (asClass instanceof PrimitiveType) {
 			if (asClass instanceof BooleanType) {

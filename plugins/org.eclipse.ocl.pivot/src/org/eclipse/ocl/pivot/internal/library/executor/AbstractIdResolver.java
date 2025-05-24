@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -921,9 +922,9 @@ public abstract class AbstractIdResolver implements IdResolver
 	}
 
 	/**
-	 * @since 1.6
+	 * @since 7.0
 	 */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull MapTypeId typeId, boolean keysAreNullFree, boolean valuesAreNullFree) {
+	public @NonNull MapType getMapType(@NonNull MapTypeId typeId, boolean keysAreNullFree, boolean valuesAreNullFree) {
 		MapTypeId generalizedId = typeId.getGeneralizedId();
 		if (typeId == generalizedId) {
 			if (generalizedId == TypeId.MAP) {

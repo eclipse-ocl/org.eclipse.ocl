@@ -122,6 +122,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		throw new IllegalStateException("No extension package defines Enumeration type"); //$NON-NLS-1$
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof CompleteInheritance) {

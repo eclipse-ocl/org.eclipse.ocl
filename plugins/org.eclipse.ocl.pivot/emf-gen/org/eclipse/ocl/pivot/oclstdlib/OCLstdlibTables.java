@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
+import org.eclipse.ocl.pivot.internal.library.ecore.ExecutorGenericMapType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
@@ -259,7 +260,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull EcoreExecutorBooleanType _Boolean = new EcoreExecutorBooleanType(TypeId.BOOLEAN, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorCollectionType _Collection = new EcoreExecutorCollectionType(TypeId.COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
 		public static final @NonNull EcoreExecutorPrimitiveType _Integer = new EcoreExecutorPrimitiveType(TypeId.INTEGER, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _Map = new EcoreExecutorType(OCLstdlibPackage.Literals.MAP, PACKAGE, 0, TypeParameters._0_K, TypeParameters._1_V);
+		public static final @NonNull ExecutorGenericMapType _Map = new ExecutorGenericMapType(TypeId.MAP, PACKAGE, 0, TypeParameters._0_K, TypeParameters._1_V);
 		public static final @NonNull EcoreExecutorAnyType _OclAny = new EcoreExecutorAnyType(TypeId.OCL_ANY, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclComparable = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_COMPARABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclElement = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);

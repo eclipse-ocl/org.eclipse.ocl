@@ -229,7 +229,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 				Element templateArgument = templateArguments.get(i);
 				if (templateArgument instanceof Type) {
 					Type actualType = (Type) templateArgument;
-					TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, actualType);
+					TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, actualType);
 					templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				}
 			}

@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -43,12 +42,10 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
-import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class TypeUtil
@@ -149,28 +146,6 @@ public class TypeUtil
 	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType, boolean isNullFree,
 			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, isNullFree, lower, upper);
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
-		Property keyProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
-		Property valueProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
-		@SuppressWarnings("unchecked")
-		Type keyType = PivotUtil.getType(keyProperty);
-		boolean keysAreNullFree = keyProperty.isIsRequired();
-		Type valueType = PivotUtil.getType(valueProperty);
-		boolean valuesAreNullFree = valueProperty.isIsRequired();
-		return createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {

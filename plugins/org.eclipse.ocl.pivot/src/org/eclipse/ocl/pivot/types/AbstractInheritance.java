@@ -102,16 +102,6 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		}
 	}
 
-	public static final int ORDERED = 1 << 0;
-	public static final int UNIQUE = 1 << 1;
-	public static final int OCL_ANY = 1 << 2;
-	public static final int OCL_VOID = 1 << 3;
-	public static final int OCL_INVALID = 1 << 4;			// NB. OCL_INVALID assumed greater than OCL_VOID by isSuper/SubInheritanceOf
-	/**
-	 * @since 1.1
-	 */
-	public static final int ABSTRACT = 1 << 5;
-
 	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */

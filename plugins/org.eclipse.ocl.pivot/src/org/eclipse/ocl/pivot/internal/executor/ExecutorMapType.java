@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.executor;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -39,12 +38,7 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	 */
 	protected final boolean valuesAreNullFree;
 	protected final @NonNull MapTypeId typeId;
-
-	@Deprecated
-	public ExecutorMapType(@NonNull String name,
-			org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType) {
-		this(name, containerType, keyType, false, valueType, false);
-	}
+	private org.eclipse.ocl.pivot.Class entryClass = null;
 
 	/**
 	 * @since 1.18
@@ -100,8 +94,8 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	}
 
 	@Override
-	public Class getEntryClass() {
-		throw new UnsupportedOperationException();
+	public org.eclipse.ocl.pivot.Class getEntryClass() {
+		return entryClass;
 	}
 
 	@Override
@@ -159,8 +153,8 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	}
 
 	@Override
-	public void setEntryClass(Class value) {
-		throw new UnsupportedOperationException();
+	public void setEntryClass(org.eclipse.ocl.pivot.Class entryClass) {
+		this.entryClass = entryClass;
 	}
 
 	@Override
