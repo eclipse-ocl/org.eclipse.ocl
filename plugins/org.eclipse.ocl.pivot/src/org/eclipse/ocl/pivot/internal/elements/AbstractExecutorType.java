@@ -23,11 +23,12 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
-public class AbstractExecutorType extends AbstractInheritance implements Type
+public class AbstractExecutorType extends AbstractInheritance implements ExecutorType
 {
 	public AbstractExecutorType(@NonNull String name, int flags) {
 		super(name, flags);

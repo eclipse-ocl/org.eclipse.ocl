@@ -21,9 +21,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -33,7 +33,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 {
 	protected final EPackage ePackage;
 	private ExecutorStandardLibrary standardLibrary = null;
-	private @NonNull ExecutorType[] types = null;
+	private @NonNull AbstractExecutorClass[] types = null;
 	private @Nullable List<org.eclipse.ocl.pivot.Package> packages = null;
 
 	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage) {
@@ -96,8 +96,11 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @Nullable ExecutorType getOwnedClass(String typeName) {
+	public @Nullable AbstractExecutorClass getOwnedClass(String typeName) {
 		int index = Arrays.binarySearch(types, new StringNameable(typeName), NameUtil.NameableComparator.INSTANCE);
 		if (index >= 0) {
 			return types[index];
@@ -105,13 +108,16 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		//	Should be sorted, but do linear search just in case
 		for (org.eclipse.ocl.pivot.@NonNull Class type : types) {
 			if (type.getName().equals(typeName)) {
-				return (ExecutorType) type;
+				return (AbstractExecutorClass)type;
 			}
 		}
 		return null;
 	}
 
-	public void init(@Nullable ExecutorStandardLibrary standardLibrary, @NonNull ExecutorType @NonNull [] types) {
+	/**
+	 * @since 7.0
+	 */
+	public void init(@Nullable ExecutorStandardLibrary standardLibrary, @NonNull EcoreExecutorType @NonNull [] types) {
 		assert this.standardLibrary == null;
 		assert this.types == null;
 		this.standardLibrary = standardLibrary;

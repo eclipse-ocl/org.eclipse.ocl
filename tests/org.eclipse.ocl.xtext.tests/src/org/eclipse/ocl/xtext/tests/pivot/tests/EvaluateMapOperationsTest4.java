@@ -592,6 +592,8 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
+// XXX
+		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->oclType().keyType");
 		//
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map(String,Boolean)", "keyType");
 		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->_'Map'::keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Map", "keyType");

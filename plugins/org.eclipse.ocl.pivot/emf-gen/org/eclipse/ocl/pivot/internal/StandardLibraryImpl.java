@@ -49,31 +49,26 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.MapTypeManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
+import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.osgi.util.NLS;
 
@@ -413,10 +408,12 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	private @Nullable Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap = null;
 
-	private @Nullable Map<@NonNull MapType, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull MapType>> mapType2entryClass2mapEntryType = null;
-
 	protected /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	protected /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
+	/**
+	 * @since 7.0
+	 */
+	protected @Nullable MapTypeManagerInternal mapTypeManager = null;
 
 	@Override
 	public @Nullable AnyType basicGetOclAnyType() {
@@ -528,7 +525,8 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	@Override
 	public @NonNull CompleteModelInternal getCompleteModel() {
-		return ClassUtil.requireNonNull(completeModel);
+		assert completeModel != null;
+		return completeModel;
 	}
 
 	@Override
@@ -571,29 +569,12 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	}
 
 	/**
-	 * @since 1.7
+	 * @since 7.0
 	 */
 	@Override
 	public @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		assert !entryClass.eIsProxy();
-		MapType mapType = getMapType(entryClass);
-		Map<@NonNull MapType, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull MapType>> mapType2entryClass2mapEntryType2 = mapType2entryClass2mapEntryType;
-		if (mapType2entryClass2mapEntryType2 == null) {
-			mapType2entryClass2mapEntryType = mapType2entryClass2mapEntryType2 = new HashMap<>();
-		}
-		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull MapType> entryClass2mapEntryType = mapType2entryClass2mapEntryType2.get(mapType);
-		if (entryClass2mapEntryType == null) {
-			entryClass2mapEntryType = new HashMap<>();
-			mapType2entryClass2mapEntryType2.put(mapType, entryClass2mapEntryType);
-		}
-		MapType mapEntryType = entryClass2mapEntryType.get(entryClass);
-		if (mapEntryType == null) {
-			mapEntryType = PivotUtil.createMapEntryType(mapType, entryClass);
-			Orphanage orphanage = completeModel.getOrphanage();
-			mapEntryType.setOwningPackage(orphanage);
-			entryClass2mapEntryType.put(entryClass, mapEntryType);
-		}
-		return mapEntryType;
+		return getMapTypeManager().getMapEntryType(entryClass);
 	}
 
 	@Override
@@ -605,30 +586,6 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		return mapType2;
 	}
 
-	private @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		assert !entryClass.eIsProxy();
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		MapType genericType = getMapType();
-		genericType = (MapType)metamodelManager.getPrimaryClass(genericType);						// XXX
-		org.eclipse.ocl.pivot.Class entryType = metamodelManager.getPrimaryClass(entryClass);		// XXX
-		assert genericType == PivotUtil.getUnspecializedTemplateableElement(genericType);
-		TemplateSignature templateSignature = genericType.getOwnedSignature();
-		if (templateSignature == null) {
-			throw new IllegalArgumentException("Map type must have a template signature");
-		}
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 2) {
-			throw new IllegalArgumentException("Map type must have exactly two template parameter");
-		}
-		//	boolean isUnspecialized = (keyType == templateParameters.get(0)) && (valueType == templateParameters.get(1));
-		//	if (isUnspecialized) {
-		//		return containerType;
-		//	}
-		CompleteClassInternal completeClass = completeModel.getCompleteClass(genericType);
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryClass);
-		return completeClass.getMapType(typeParameters);
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -636,12 +593,24 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull MapType getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		MapType mapType = getMapType();
 		assert mapType == PivotUtil.getUnspecializedTemplateableElement(mapType);
-		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(mapType);
-		if (isUnspecializedType(completeClass, keyType, valueType)) {
-			return mapType;
+		if ((keyType == mapType.getKeyType()) && (valueType == mapType.getValueType())) {
+			return mapType;		// XXX ??? never happens now that NormalizedTemplatedParameter in use
 		}
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-		return completeClass.getMapType(typeParameters);
+		MapTypeArguments typeArguments = new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		return getMapTypeManager().getMapType(typeArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull MapTypeManagerInternal getMapTypeManager() {
+		MapTypeManagerInternal mapTypeManager2 = mapTypeManager;
+		if (mapTypeManager2 == null) {
+			assert completeModel != null;
+			this.mapTypeManager = mapTypeManager2 = new MapTypeManagerInternal(completeModel);
+		}
+		return mapTypeManager2;
 	}
 
 	@Override
@@ -953,7 +922,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal  init(@NonNull CompleteModelInternal completeModel) {
+	public @NonNull StandardLibraryInternal init(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
 		this.environmentFactory = completeModel.getEnvironmentFactory();
 		return this;
@@ -972,36 +941,6 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Return true if elementTypes are the TemplateParameters of one of the unspecialized type of one of the
-	 * partial types of completeClass.
-	 */
-	private boolean isUnspecializedType(@NonNull CompleteClassInternal completeClass, @NonNull Type @NonNull ... elementTypes) {
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
-		for (int i = 0; i < elementTypes.length; i++) {
-			@NonNull Type elementType = elementTypes[i];
-			boolean isUnspecializedElement = false;
-			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
-				TemplateSignature templateSignature = partialClass.getOwnedSignature();
-				if (templateSignature == null) {
-					throw new IllegalArgumentException(completeClass.getName() + " type must have a template signature");
-				}
-				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-				if (templateParameters.size() != elementTypes.length) {
-					throw new IllegalArgumentException(completeClass.getName() + " type must have exactly " + elementTypes.length + " template parameter");
-				}
-				if (elementType == templateParameters.get(i)) {
-					isUnspecializedElement = true;
-					break;
-				}
-			}
-			if (!isUnspecializedElement) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public boolean isUnique(Type sourceType) {
@@ -1050,6 +989,10 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		uniqueCollectionType = null;
 		unlimitedNaturalType = null;
 		nameToLibraryTypeMap = null;
+		if (mapTypeManager != null) {
+			mapTypeManager.dispose();
+			mapTypeManager = null;
+		}
 	}
 
 	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(@NonNull Class<T> requiredClassType, @NonNull String name) {

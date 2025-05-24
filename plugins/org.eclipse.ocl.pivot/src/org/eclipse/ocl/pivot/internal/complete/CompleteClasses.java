@@ -40,10 +40,10 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
 public class CompleteClasses extends EObjectContainmentWithInverseEList<CompleteClass>
 {
@@ -81,7 +81,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			TemplateParameter formalParameter = ClassUtil.requireNonNull(templateParameters.get(0));
 			assert formalParameter != null;
 			Type elementType = typeParameters.getElementType();
-			TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, elementType);
+			TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 			templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 			specializedType.getOwnedBindings().add(templateBinding);
 			getCompleteModel().resolveSuperClasses(specializedType, unspecializedType);
@@ -142,7 +142,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				synchronized(this) {
 					specializations2 = collections;
 					if (specializations2 == null) {
-						specializations2 = collections = new /*Weak*/HashMap<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>>();
+						specializations2 = collections = new /*Weak*/HashMap<>();
 					}
 				}
 			}
@@ -161,131 +161,14 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				}
 				if (specializedType == null) {
 					specializedType = createSpecialization(typeParameters);
-					specializations2.put(typeParameters, new WeakReference<@Nullable CollectionType>(specializedType));
+					specializations2.put(typeParameters, new WeakReference<>(specializedType));
 				}
 				return specializedType;
 			}
 		}
 	}
 
-	protected static class MapCompleteClassImpl extends CompleteClassImpl
-	{
-		/**
-		 * Map from actual types to specialization.
-		 * <br>
-		 * The specializations are weakly referenced so that stale specializations are garbage collected.
-		 */
-		// FIXME tests fail if keys are weak since GC is too aggressive across tests
-		// The actual types are weak keys so that parameterizations using stale types are garbage collected.
-		// No. The problem is that MapTypeParameters is not a singleton since it passes key/value types. Attempting to use
-		// a SingletonScope needs to use the IdResolver to convert the TemplateParameterId to its type which seemed reluctant
-		// to work, and failing to GC within the scope of this CompleteClass is not a disaster. May change once CompleteClass goes.
-		//
-		private @Nullable /*WeakHash*/Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> maps = null;
-
-		protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-			org.eclipse.ocl.pivot.Class unspecializedType = getPrimaryClass();
-			String typeName = unspecializedType.getName();
-			TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			EClass eClass = unspecializedType.eClass();
-			EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-			MapType specializedMapType = (MapType) eFactoryInstance.create(eClass);
-			specializedMapType.setName(typeName);
-			TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-			TemplateParameter keyFormalParameter = templateParameters.get(0);
-			TemplateParameter valueFormalParameter = templateParameters.get(1);
-			assert keyFormalParameter != null;
-			assert valueFormalParameter != null;
-			Type keyType = typeParameters.getKeyType();
-			Type valueType = typeParameters.getValueType();
-			TemplateParameterSubstitution keyTemplateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(keyFormalParameter, keyType);
-			TemplateParameterSubstitution valueTemplateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(valueFormalParameter, valueType);
-			templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
-			templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
-			specializedMapType.getOwnedBindings().add(templateBinding);
-			CompleteModelInternal completeModel = getCompleteModel();
-			completeModel.resolveSuperClasses(specializedMapType, unspecializedType);
-			specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
-			specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
-			specializedMapType.setUnspecializedElement(unspecializedType);
-			Orphanage orphanage = completeModel.getOrphanage();
-			specializedMapType.setOwningPackage(orphanage);
-		//	specializedMapType.setEntryClass(typeParameters.getEntryClass());
-			return specializedMapType;
-		}
-
-		@Override
-		public synchronized @Nullable MapType findMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-			TemplateSignature templateSignature = getPrimaryClass().getOwnedSignature();
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			if (templateParameters.size() != 1) {
-				return null;
-			}
-			Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> specializations2 = maps;
-			if (specializations2 == null) {
-				return null;
-			}
-			WeakReference<MapType> weakReference = specializations2.get(typeParameters);
-			if (weakReference == null) {
-				return null;
-			}
-			MapType specializedType;
-			synchronized (specializations2) {
-				specializedType = weakReference.get();
-				if (specializedType != null) {
-					Type keyType = specializedType.getKeyType();
-					Type valueType = specializedType.getValueType();
-					if ((keyType == null) || (valueType == null) || (keyType.eResource() == null) || (valueType.eResource() == null)) {		// If GC pending
-						specializedType = null;
-						weakReference.clear();
-					}
-				}
-				if (specializedType == null) {
-					specializations2.remove(typeParameters);
-				}
-			}
-			return specializedType;
-		}
-
-		@Override
-		public synchronized @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-			Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> specializations2 = maps;
-			if (specializations2 == null) {
-				synchronized(this) {
-					specializations2 = maps;
-					if (specializations2 == null) {
-						specializations2 = maps = new /*Weak*/HashMap<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>>();
-					}
-				}
-			}
-			synchronized (specializations2) {
-				MapType specializedType = null;
-				WeakReference<@Nullable MapType> weakReference = specializations2.get(typeParameters);
-				if (weakReference != null) {
-					specializedType = weakReference.get();
-					if (specializedType != null) {
-						Type keyType = specializedType.getKeyType();
-						Type valueType = specializedType.getValueType();
-						if ((keyType == null) || (valueType == null) || (keyType.eResource() == null) || (valueType.eResource() == null)) {		// If GC pending
-							specializedType = null;
-							weakReference.clear();
-						}
-					}
-				}
-				if (weakReference != null) {
-					specializedType = weakReference.get();
-				}
-				if (specializedType == null) {
-					specializedType = createSpecialization(typeParameters);
-					specializations2.put(typeParameters, new WeakReference<@Nullable MapType>(specializedType));
-				}
-				return specializedType;
-			}
-		}
-	}
-
-	protected @Nullable Map<String, CompleteClassInternal> name2completeClass = null;
+	protected @Nullable Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass = null;
 
 	public CompleteClasses(@NonNull CompletePackageImpl owner) {
 		super(CompleteClass.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES.getFeatureID(), PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE.getFeatureID());
@@ -400,9 +283,9 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 					else if (partialClass instanceof CollectionType) {
 						completeClass = new CollectionCompleteClassImpl();
 					}
-					else if (partialClass instanceof MapType) {
-						completeClass = new MapCompleteClassImpl();
-					}
+				//	else if (partialClass instanceof MapType) {
+				//		completeClass = new MapCompleteClassImpl();
+				//	}
 					else {
 						completeClass = (CompleteClassInternal) PivotFactory.eINSTANCE.createCompleteClass();
 					}
@@ -414,10 +297,10 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		}
 	}
 
-	protected @NonNull Map<String, CompleteClassInternal> doRefreshPartialClasses() {
-		Map<String, CompleteClassInternal> name2completeClass2 = name2completeClass;
+	protected @NonNull Map<@NonNull String, @NonNull CompleteClassInternal> doRefreshPartialClasses() {
+		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
 		if (name2completeClass2 == null) {
-			name2completeClass2 = name2completeClass = new HashMap<String, CompleteClassInternal>();
+			name2completeClass2 = name2completeClass = new HashMap<>();
 		}
 		for (org.eclipse.ocl.pivot.Package partialPackage : getCompletePackage().getPartialPackages()) {
 			if (partialPackage != null) {

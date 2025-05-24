@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InheritanceFragment;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -54,7 +53,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -429,11 +427,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @Nullable MapType findMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return null;
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass() {
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses2 = ClassUtil.nullFree(partialClasses);
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
@@ -476,11 +469,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return getCompleteModel().getEnvironmentFactory();
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		throw new UnsupportedOperationException("Not a map");
 	}
 
 	public @NonNull Iterable<Operation> getMemberOperations() {

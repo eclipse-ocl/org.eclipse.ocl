@@ -18,12 +18,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateParameters;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
@@ -49,13 +45,6 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	}
 
 	public static final @NonNull BestOperation bestOperation = new BestOperation();
-
-	public static @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution(@NonNull TemplateParameter formalParameter, @NonNull Type type) {
-		TemplateParameterSubstitution templateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
-		templateParameterSubstitution.setFormal(formalParameter);
-		templateParameterSubstitution.setActual(type);
-		return templateParameterSubstitution;
-	}
 
 	protected final @NonNull CompleteClassInternal completeClass;
 
