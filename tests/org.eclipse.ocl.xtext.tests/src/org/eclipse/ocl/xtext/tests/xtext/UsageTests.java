@@ -1500,7 +1500,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				//
 				EObject eObject = eFactory.create(eClass);
 				//			OCLHelper helper = getHelper();
-				//			org.eclipse.ocl.pivot.Class contextType = helper.getOCL().getMetamodelManager().getType(idResolver.getStaticTypeOf(eObject));
+				//			org.eclipse.ocl.pivot.Class contextType = helper.getOCL().getMetamodelManager().getType(idResolver.getStaticClassOf(eObject));
 				//			helper.setContext(contextType);
 				//			ExpressionInOCL query = helper.createQuery("test(3, 2, 1)");
 				//			ocl.assertCallCount(query, null, 2);

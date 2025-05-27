@@ -88,8 +88,8 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
-		return completeClass.getPrimaryClass().getMetaTypeName();
+	public @NonNull String getMetaclassName() {
+		return completeClass.getPrimaryClass().getMetaclassName();
 	}
 
 	@Override

@@ -383,7 +383,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			cgTypeId.accept(this);
 		}
 		Type asType = CGUtil.getAST(cgExecutorType);
-		Type asMetaType = codeGenerator.getEnvironmentFactory().getStandardLibrary().getMetaclass(asType);
+		Type asMetaType = codeGenerator.getEnvironmentFactory().getMetaclass(asType);
 	//	cgExecutorType.setTypeId(analyzer.getTypeId(JavaConstants.CLASS_TYPE_ID));		// FIXME
 		cgExecutorType.setTypeId(analyzer.getTypeId(asMetaType.getTypeId()));
 		return super.visitCGExecutorType(cgExecutorType);

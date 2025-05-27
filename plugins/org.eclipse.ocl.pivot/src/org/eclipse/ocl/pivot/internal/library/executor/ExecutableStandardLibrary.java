@@ -234,17 +234,6 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
-		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
-		return ClassUtil.requireNonNull(getPivotType(metaclassName));
-	}
-
-	@Override
-	public @NonNull Type getMetaType(@NonNull Type instanceType) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
 		return NameUtil.getNameable(parentPackage.getOwnedPackages(), name);
 	}

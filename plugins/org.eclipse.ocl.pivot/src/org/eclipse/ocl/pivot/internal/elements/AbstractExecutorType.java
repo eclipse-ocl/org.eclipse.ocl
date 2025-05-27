@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
-public class AbstractExecutorType extends AbstractInheritance implements ExecutorType
+public abstract class AbstractExecutorType extends AbstractInheritance implements ExecutorType
 {
 	public AbstractExecutorType(@NonNull String name, int flags) {
 		super(name, flags);

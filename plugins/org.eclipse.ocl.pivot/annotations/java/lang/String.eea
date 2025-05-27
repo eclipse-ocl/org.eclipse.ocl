@@ -20,6 +20,12 @@ substring
 substring
  (II)Ljava/lang/String;
  (II)L1java/lang/String;
+toLowerCase
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
+toUpperCase
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
 trim
  ()Ljava/lang/String;
  ()L1java/lang/String;

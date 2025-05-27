@@ -81,7 +81,10 @@ public class EnumerationLiteralIdImpl extends UnscopedId implements EnumerationL
 		return parentId + "::" + name;
 	}
 
-	@Override public @NonNull String getMetaTypeName() {
+	/**
+	 * @since 7.0
+	 */
+	@Override public @NonNull String getMetaclassName() {
 		return TypeId.ENUMERATION_NAME;
 	}
 

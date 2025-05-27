@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -55,6 +56,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Slot;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
@@ -100,6 +102,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 
 /**
@@ -135,13 +138,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final @NonNull ResourceSet externalResourceSet;
 	private final @NonNull ResourceSet asResourceSet;
 	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
-	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
-	private final @NonNull StandardLibraryInternal standardLibrary;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull StandardLibraryInternal standardLibrary;
 	private @Nullable ICSI2ASMapping csi2asMapping;
 	/**
 	 * The known packages.
+	 * @since 7.0
 	 */
-	private final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull CompleteModelInternal completeModel;
 
 	private /*@LazyNonNull*/ IdResolver idResolver;
 
@@ -901,7 +911,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected org.eclipse.ocl.pivot.@NonNull Class getClassifier(@NonNull Object context) {
 		MetamodelManager metamodelManager = getMetamodelManager();
-		org.eclipse.ocl.pivot.Class dClass = getIdResolver().getStaticTypeOfValue(null, context);
+		org.eclipse.ocl.pivot.Class dClass = getIdResolver().getStaticClassOf(context);
 		return metamodelManager.getPrimaryClass(dClass);
 	}
 
@@ -946,6 +956,48 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		return idResolver2;
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
+		if (asInstanceType instanceof ElementExtension) {
+			Stereotype asStereotype = ((ElementExtension)asInstanceType).getStereotype();
+			return asStereotype != null ? asStereotype : standardLibrary.getOclInvalidType();
+		}
+		EClass eClass = asInstanceType.eClass();
+		String metaclassName = eClass.getName();
+		EPackage ePackage = eClass.getEPackage();
+		assert ePackage != null;
+		Model asMetamodel = getMetamodel(ePackage);
+		for (org.eclipse.ocl.pivot.Package asMetapackage : asMetamodel.getOwnedPackages()) {
+			org.eclipse.ocl.pivot.Class asMetaClass = NameUtil.getNameable(asMetapackage.getOwnedClasses(), metaclassName);
+			if (asMetaClass != null) {
+				return asMetaClass;
+			}
+		}
+	/*	if (ePackage == )
+		String metaPackageName = ePackage.getName().toLowerCase();
+	//	CompleteClassInternal completeClass = completeModel.getCompleteClass(asInstanceType);
+	//	CompletePackageInternal completePackage = completeClass.getOwningCompletePackage();
+	//	String metaPackageName = completePackage.getMetaPackageName();
+		Iterable<@NonNull CompletePackage> metaCompletePackages = completeModel.getAllMetaCompletePackages(metaPackageName);
+		if (metaCompletePackages != null) {
+			for (CompletePackage metaCompletePackage : metaCompletePackages) {
+				CompleteClass metaCompleteClass = metaCompletePackage.getOwnedCompleteClass(metaClassName);
+				if (metaCompleteClass != null) {
+					return metaCompleteClass.getPrimaryClass();
+				}
+			}
+		} */
+		throw new InvalidValueException("Metaclass '" + metaclassName + "' not found in '" + asMetamodel);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull Model getMetamodel(@NonNull EPackage ePackage);
 
 	@Override
 	public @NonNull MetamodelManager getMetamodelManager() {

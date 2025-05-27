@@ -58,9 +58,12 @@ public abstract class AbstractSpecializedIdImpl<@NonNull T extends TemplateableI
 		return generalizedId;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull String getMetaTypeName() {
-		return generalizedId.getMetaTypeName();
+	public @NonNull String getMetaclassName() {
+		return generalizedId.getMetaclassName();
 	}
 
 	@Override

@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 
@@ -22,7 +22,10 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 public class EcoreExecutorBagType extends EcoreExecutorCollectionType implements BagType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-	public EcoreExecutorBagType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+	/**
+	 * @since 7.0
+	 */
+	public EcoreExecutorBagType(@NonNull CollectionTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
 		super(typeId, evaluationPackage, flags, typeParameter);
 	}
 }

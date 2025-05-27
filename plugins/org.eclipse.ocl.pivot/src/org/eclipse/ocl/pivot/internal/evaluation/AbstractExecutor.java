@@ -295,22 +295,12 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		return environmentFactory.getStandardLibrary();
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
-		return idResolver.getStaticTypeOf(value, values);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
-		return idResolver.getStaticTypeOf(value, values);
-	}
-
 	/**
-	 * @since 1.7
+	 * @since 7.0
 	 */
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
-		return idResolver.getStaticTypeOfValue(staticType, value);
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticClassOf(@Nullable Object value) {
+		return idResolver.getStaticClassOf(value);
 	}
 
 	@Override
@@ -364,8 +354,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		//
 		Type actualSourceType = null;
 		if (!apparentOperation.isIsStatic()) {
-			Type sourceType = operationCallExp.getOwnedSource().getType();
-			actualSourceType = idResolver.getStaticTypeOfValue(sourceType, sourceAndArgumentValues[0]);
+			actualSourceType = idResolver.getStaticClassOf(sourceAndArgumentValues[0]);
 		}
 		//
 		//	Refine source type to common type of source and a first OclSelf argument.
@@ -374,7 +363,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		if (asParameters.size() == 1) {
 			Type parameterType = asParameters.get(0).getType();
 			if ((parameterType instanceof SelfType) && (actualSourceType != null)) {
-				Type actualArgType = idResolver.getStaticTypeOfValue(parameterType, sourceAndArgumentValues[1]);
+				Type actualArgType = idResolver.getStaticClassOf(sourceAndArgumentValues[1]);
 				actualSourceType = actualSourceType.getCommonType(idResolver, actualArgType);
 			}
 		}

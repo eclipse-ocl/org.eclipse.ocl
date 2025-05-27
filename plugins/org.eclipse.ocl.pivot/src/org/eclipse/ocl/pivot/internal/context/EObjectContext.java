@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -38,10 +37,9 @@ public class EObjectContext extends AbstractParserContext
 	public @NonNull Type getClassContext() {
 		Type classContext2 = classContext;
 		if (classContext2 == null) {
-			MetamodelManager metamodelManager = getMetamodelManager();
 			try {
 				if (eObject instanceof Type) {
-					classContext2 = metamodelManager.getMetaclass((Type)eObject);
+					classContext2 = environmentFactory.getMetaclass((Type)eObject);
 				}
 				//				else if (eObject instanceof NamedElement) {
 				//					classContext = eObject;
@@ -60,7 +58,7 @@ public class EObjectContext extends AbstractParserContext
 				e.printStackTrace();
 			}
 			if (classContext2 == null) {
-				classContext2 = metamodelManager.getStandardLibrary().getOclVoidType();
+				classContext2 = environmentFactory.getStandardLibrary().getOclVoidType();
 			}
 			classContext = classContext2;
 		}

@@ -282,7 +282,7 @@ public class PivotHelper extends PivotUtil
 		asTypeExp.setIsRequired(true);
 		asTypeExp.setReferredType(type);
 		asTypeExp.setName(type.getName());
-		Type metaType = standardLibrary.getMetaclass(type);
+		Type metaType = environmentFactory.getMetaclass(type);
 		asTypeExp.setType(metaType);
 		asTypeExp.setTypeValue(type);
 		return asTypeExp;

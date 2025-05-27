@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
@@ -64,14 +63,11 @@ public interface Executor
 	 */
 	int getSeverity(@Nullable Object validationKey);
 	@NonNull StandardLibrary getStandardLibrary();
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values);
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
 	/**
-	 * @since 1.7
+	 * @since 7.0
 	 */
-	default org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
-		return getStaticTypeOf(value);
-	}
+	org.eclipse.ocl.pivot.@NonNull Class getStaticClassOf(@Nullable Object value);
+
 	void popEvaluationEnvironment();
 	/**
 	 * @since 7.0
