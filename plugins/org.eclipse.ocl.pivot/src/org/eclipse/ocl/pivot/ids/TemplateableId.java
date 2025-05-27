@@ -25,7 +25,10 @@ public interface TemplateableId extends ElementId
 
 	@NonNull TemplateableId getGeneralizedId();
 	@Nullable String getLiteralName();
-	@NonNull String getMetaTypeName();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull String getMetaclassName();
 	@NonNull String getName();
 
 	/**

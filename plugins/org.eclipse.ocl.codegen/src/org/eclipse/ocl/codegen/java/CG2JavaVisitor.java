@@ -360,7 +360,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" " + staticTypeName + " = ");
 		//		js.appendReferenceTo(evaluatorParameter);
 		js.append(JavaConstants.EXECUTOR_NAME);
-		js.append(".getStaticTypeOfValue(null, ");
+		js.append(".getStaticClassOf(");
 		js.appendValueName(source);
 		js.append(");\n");
 		//

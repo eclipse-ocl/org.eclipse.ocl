@@ -451,7 +451,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						@SuppressWarnings("null")
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0);
 						final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);
-						final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticTypeOfValue(null, oclAsSet);
+						final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticClassOf(oclAsSet);
 						final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
 						final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
 						/**
@@ -762,7 +762,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
 						/*@Thrown*/ @NonNull Object IF_notEmpty;
 						if (notEmpty) {
-							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_1 = executor.getStaticTypeOfValue(null, extraProperties);
+							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_1 = executor.getStaticClassOf(extraProperties);
 							final @NonNull LibraryIteration IMPL_sortedBy_1 = (LibraryIteration)TYPE_sortedBy_1.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
 							final @NonNull Object ACC_sortedBy_1 = IMPL_sortedBy_1.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 							/**
@@ -812,7 +812,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							final /*@Thrown*/ boolean notEmpty_0 = CollectionNotEmptyOperation.INSTANCE.evaluate(missingProperties).booleanValue();
 							/*@Thrown*/ @NonNull Object IF_notEmpty_0;
 							if (notEmpty_0) {
-								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0_0 = executor.getStaticTypeOfValue(null, missingProperties);
+								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0_0 = executor.getStaticClassOf(missingProperties);
 								final @NonNull LibraryIteration IMPL_sortedBy_0_0 = (LibraryIteration)TYPE_sortedBy_0_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
 								final @NonNull Object ACC_sortedBy_0_0 = IMPL_sortedBy_0_0.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 								/**

@@ -113,7 +113,7 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return TypeId.ENUMERATION_NAME;
 	}
 

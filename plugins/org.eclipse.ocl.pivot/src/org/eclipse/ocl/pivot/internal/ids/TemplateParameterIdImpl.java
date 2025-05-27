@@ -139,8 +139,11 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		throw new UnsupportedOperationException();
 	}
 

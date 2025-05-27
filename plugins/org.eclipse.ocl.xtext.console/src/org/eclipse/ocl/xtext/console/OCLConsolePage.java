@@ -810,8 +810,8 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 
 					EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
 					IdResolver idResolver = environmentFactory.getIdResolver();
-					//				DomainType staticType = idResolver.getStaticTypeOfValue(null, selectedObject);
-					org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticTypeOfValue(null, contextObject);
+					//				DomainType staticType = idResolver.getStaticClassOf(selectedObject);
+					org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticClassOf(contextObject);
 					org.eclipse.ocl.pivot.Class contextType = environmentFactory.getMetamodelManager().getPrimaryClass(staticType);
 					Iterable<org.eclipse.ocl.pivot.@NonNull Class> savedContextModelClasses = contextModelClasses;
 					contextModelClasses = contextObject != null ? idResolver.getModelClassesOf(contextObject) : null;

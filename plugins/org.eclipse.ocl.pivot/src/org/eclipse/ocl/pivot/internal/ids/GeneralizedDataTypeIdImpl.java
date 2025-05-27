@@ -86,8 +86,11 @@ public class GeneralizedDataTypeIdImpl extends GeneralizedNestedTypeIdImpl imple
 		return new SpecializedDataTypeIdImpl(this, templateBindings);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return TypeId.DATA_TYPE_NAME;
 	}
 }

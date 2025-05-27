@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
 /**
@@ -95,7 +96,10 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 			String emfMessage = message != null ? message.toString() : null;
 			int emfSeverity;
 			int emfCode = ValueUtil.asIntegerValue(code).intValue();
-			if (tupleValue != null) {
+			if (tupleValue instanceof InvalidValueException) {
+				emfSeverity = Diagnostic.ERROR;
+			}
+			else if (tupleValue instanceof TupleValue) {			// Not InvalidValueException
 				TupleTypeId tupleTypeId = tupleValue.getTypeId();
 				TuplePartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
 				if (severityPartId != null) {
@@ -134,7 +138,23 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 				}
 				emfMessage = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, new Object[]{constraintName, objectLabel});
 			}
-			Object emfData[] = feature != null ? new Object [] { object, feature } : new Object [] { object };
+			Object emfData[];
+			if (tupleValue instanceof InvalidValueException) {
+				if (feature != null) {
+					emfData = new Object [] { object, feature, tupleValue };
+				}
+				else {
+					emfData = new Object [] { object, tupleValue };
+				}
+			}
+			else {
+				if (feature != null) {
+					emfData = new Object [] { object, feature };
+				}
+				else {
+					emfData = new Object [] { object };
+				}
+			}
 			((DiagnosticChain) diagnostics).add(new BasicDiagnostic(emfSeverity, PivotValidator.DIAGNOSTIC_SOURCE, emfCode, emfMessage, emfData));
 		}
 		return ValueUtil.FALSE_VALUE;

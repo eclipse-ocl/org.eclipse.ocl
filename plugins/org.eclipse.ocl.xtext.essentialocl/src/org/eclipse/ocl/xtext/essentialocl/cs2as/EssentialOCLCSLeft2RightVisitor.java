@@ -1584,7 +1584,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @NonNull TypeExp resolveTypeExp(@NonNull ExpCS csExp, @NonNull Type type) {		// FIXME Class
 		assert type instanceof org.eclipse.ocl.pivot.Class;		// Not TemplateParameter
 		TypeExp expression = context.refreshModelElement(TypeExp.class, PivotPackage.Literals.TYPE_EXP, csExp);
-		Type asType = standardLibrary.getMetaclass(type);
+		Type asType = environmentFactory.getMetaclass(type);
 	//	type = metamodelManager.specializeType(type, expression, asType, null);
 
 		helper.setType(expression, asType, true, type);

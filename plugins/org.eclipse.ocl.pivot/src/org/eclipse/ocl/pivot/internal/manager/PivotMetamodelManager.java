@@ -1401,12 +1401,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
-		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
-		return ClassUtil.requireNonNull(getASClass(metaclassName));
-	}
-
-	@Override
 	public @Nullable Type getOclType(@NonNull String typeName) {
 		org.eclipse.ocl.pivot.Class pivotType = getASClass(typeName);
 		return pivotType != null ? getInheritance(pivotType).getPivotClass() : null;

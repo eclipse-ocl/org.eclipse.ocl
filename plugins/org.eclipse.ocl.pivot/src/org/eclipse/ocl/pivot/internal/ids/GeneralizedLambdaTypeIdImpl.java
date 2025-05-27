@@ -142,8 +142,11 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 		return false;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return TypeId.LAMBDA_TYPE_NAME;
 	}
 

@@ -109,12 +109,19 @@ public interface IdResolver extends IdVisitor<Element>
 	/**
 	 * Compute the type of value according to its content. Beware that this can be very expensive for collections and so
 	 * should only be used where it really is necessary to compute a content-dependent type.
+	 * @since 7.0
 	 */
-	@NonNull Type getDynamicTypeOf(@Nullable Object value);
+	org.eclipse.ocl.pivot.@NonNull Class getDynamicClassOf(@Nullable Object value);
 
-	@Nullable Type getDynamicTypeOf(@Nullable Object @NonNull ... values);
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfAll(@NonNull Iterable<?> values);
 
-	@Nullable Type getDynamicTypeOf(@NonNull Iterable<?> values);
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfEach(@Nullable Object @NonNull ... values);
 
 	@NonNull CompleteEnvironment getEnvironment();
 
@@ -140,16 +147,22 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull StandardLibrary getStandardLibrary();
 
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values);
-
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
+	/**
+	 * Return the class of which value is an instance; i.e. value.oclType(). NB This is the class that is
+	 * part of the user's metamodels, rather than the metaclass built-in to the tool.ing.
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getStaticClassOf(@Nullable Object value);
 
 	/**
-	 * @since 1.7
+	 * @since 7.0
 	 */
-	default org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type contextType, @Nullable Object value) {
-		return getStaticTypeOf(value);
-	}
+	org.eclipse.ocl.pivot.@NonNull Class getStaticClassOfAll(@NonNull Iterable<?> values);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getStaticClassOfEach(@Nullable Object @NonNull ... values);
 
 	@NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId);
 

@@ -177,7 +177,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return ClassUtil.requireNonNull(eClassifier.getName());
 	}
 

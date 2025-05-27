@@ -29,7 +29,7 @@ public class UnlimitedNaturalOclAsTypeOperation extends OclAnyOclAsTypeOperation
 	@Override
 	public @NonNull Object evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
-		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
+		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		Type argType = asType(argVal);
 		if (sourceType.conformsTo(standardLibrary, argType)) {
 			if (isUnlimited(sourceVal) && ((argType == standardLibrary.getRealType()) || (argType == standardLibrary.getIntegerType()))) {

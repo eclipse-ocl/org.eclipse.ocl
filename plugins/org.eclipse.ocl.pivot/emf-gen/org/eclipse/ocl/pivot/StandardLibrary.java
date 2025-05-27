@@ -147,17 +147,6 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull MapType getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
 
-	/**
-	 * Return the metaclass to which classType conforms.
-	 */
-	org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType);
-
-	/**
-	 * Returns the meta-type of a given type.
-	 */
-	@Deprecated /* @deprecated use getMetaclass */
-	@NonNull Type getMetaType(@NonNull Type type);
-
 	org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI);
 
 	/**

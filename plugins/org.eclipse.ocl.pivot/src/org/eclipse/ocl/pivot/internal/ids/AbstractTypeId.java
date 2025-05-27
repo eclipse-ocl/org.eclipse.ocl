@@ -34,7 +34,7 @@ public abstract class AbstractTypeId extends AbstractElementId implements TypeId
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return TypeId.CLASS_NAME;
 	}
 

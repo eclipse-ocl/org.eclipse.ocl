@@ -224,10 +224,6 @@ public abstract class ExecutorManager implements Executor
 		return environment;
 	}
 
-	public @NonNull Type getDynamicTypeOf(@Nullable Object value) {
-		return getIdResolver().getDynamicTypeOf(value);
-	}
-
 	/**
 	 * @since 1.1
 	 */
@@ -292,21 +288,8 @@ public abstract class ExecutorManager implements Executor
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
-		return getIdResolver().getStaticTypeOf(value, values);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
-		return getIdResolver().getStaticTypeOf(value, values);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
-		return getIdResolver().getStaticTypeOfValue(staticType, value);
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticClassOf(@Nullable Object value) {
+		return getIdResolver().getStaticClassOf(value);
 	}
 
 	@Override

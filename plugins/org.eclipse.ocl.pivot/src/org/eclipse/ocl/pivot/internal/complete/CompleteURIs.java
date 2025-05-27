@@ -30,17 +30,17 @@ public class CompleteURIs
 	/**
 	 * Map of Complete URI to Package URIs
 	 */
-	private final @NonNull Map<String, Set<String>> completeURI2packageURIs = new HashMap<String, Set<String>>();
+	private final @NonNull Map<@NonNull String, @NonNull Set<@NonNull String>> completeURI2packageURIs = new HashMap<>();
 
 	/**
 	 * Map of Package URI to Complete URI.
 	 */
-	private final @NonNull Map<String, String> packageURI2completeURI = new HashMap<String, String>();
+	private final @NonNull Map<@NonNull String, @NonNull String> packageURI2completeURI = new HashMap<>();
 
 	/**
 	 * Map from Complete URI to Complete Package.
 	 */
-	private final @NonNull Map<String, @NonNull CompletePackageInternal> completeURI2completePackage = new HashMap<String, @NonNull CompletePackageInternal>();
+	private final @NonNull Map<@NonNull String, @NonNull CompletePackageInternal> completeURI2completePackage = new HashMap<>();
 
 	public CompleteURIs(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
@@ -75,7 +75,7 @@ public class CompleteURIs
 		//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
 		String completeURI = completePackage.getURI();
 		if (completeURI != null) {
-			completeURI2completePackage.remove(completeURI);
+			removeCompletePackage(completeURI);
 			Set<String> packageURIs = completeURI2packageURIs.remove(completeURI);
 			if (packageURIs != null) {
 				for (String packageURI : packageURIs) {
@@ -132,7 +132,7 @@ public class CompleteURIs
 		packageURI2completeURI.put(packageURI, newCompleteURI);
 		Set<String> packageURIs = completeURI2packageURIs.get(newCompleteURI);
 		if (packageURIs == null) {
-			packageURIs = new HashSet<String>();
+			packageURIs = new HashSet<>();
 			completeURI2packageURIs.put(newCompleteURI, packageURIs);
 		}
 		packageURIs.add(packageURI);

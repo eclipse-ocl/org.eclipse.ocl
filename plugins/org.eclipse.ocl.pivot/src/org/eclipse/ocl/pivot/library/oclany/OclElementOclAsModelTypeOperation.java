@@ -37,7 +37,7 @@ public class OclElementOclAsModelTypeOperation extends AbstractUntypedBinaryOper
 			throw (InvalidValueException)sourceVal;
 		}
 		Type argType = asType(argVal);
-		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
+		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		if (sourceVal == null) {
 			throw new InvalidValueException(PivotMessages.NullNavigation, "source value", "oclAsModelType");
 		}

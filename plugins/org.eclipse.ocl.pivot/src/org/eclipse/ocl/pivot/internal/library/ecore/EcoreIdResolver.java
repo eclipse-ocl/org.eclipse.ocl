@@ -35,14 +35,13 @@ import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * EcoreIdResolver provides a package discovery capability so that package identifiers can be resolved.
@@ -78,17 +77,12 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public void dispose() {
-		super.dispose();
-	}
-
-	@Override
 	public synchronized @NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier) {
 		CompleteInheritance type = weakGet(typeMap, eClassifier);
 		if (type == null) {
 			EPackage ePackage = eClassifier.getEPackage();
 			assert ePackage != null;
-			ExecutorPackage execPackage = ((ExecutorStandardLibrary)standardLibrary).getPackage(ePackage);
+			ExecutorPackage execPackage = getStandardLibrary().getPackage(ePackage);
 			if (execPackage == null) {
 				PackageId packageId = IdManager.getPackageId(ePackage);
 				Element domainPackage = packageId.accept(this);
@@ -108,19 +102,31 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType,  @Nullable Object value) {
-		if (value instanceof AbstractExecutorType) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
-			Type type = key2type.get(value);
-			if (type == null) {
-				type = standardLibrary.getMetaclass((AbstractExecutorType)value);
-				assert type != null;
-				key2type.put(value, type);
+	protected org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType) {
+		throw new UnsupportedOperationException();				// XXX
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull ExecutorStandardLibrary getStandardLibrary() {
+		return (ExecutorStandardLibrary)standardLibrary;
+	}
+
+	@Override
+	protected org.eclipse.ocl.pivot.@Nullable Class getStaticClassOfEObject(@NonNull EObject eObject) {
+		if (eObject instanceof ExecutorType) {
+			ExecutorType executorType = (ExecutorType)eObject;
+			org.eclipse.ocl.pivot.Class asClass = key2class.get(executorType);
+			if (asClass == null) {
+				String metaclassName = executorType.getTypeId().getMetaclassName();
+				asClass = getStandardLibrary().getPivotType(metaclassName);
+				key2class.put(executorType, asClass);
 			}
-			return PivotUtil.getClass(type, standardLibrary);
+			return asClass;
 		}
-		else {
-			return super.getStaticTypeOfValue(staticType, value);
-		}
+		return super.getStaticClassOfEObject(eObject);
 	}
 
 	@Override

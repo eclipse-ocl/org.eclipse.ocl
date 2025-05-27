@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
@@ -49,11 +48,6 @@ public class PivotExecutorManager extends ExecutorManager
 
 	protected @NonNull IdResolver createIdResolver() {
 		return environmentFactory.getIdResolver();
-	}
-
-	@Override
-	public @NonNull Type getDynamicTypeOf(@Nullable Object value) {
-		return idResolver.getDynamicTypeOf(value);
 	}
 
 	/**
@@ -95,17 +89,7 @@ public class PivotExecutorManager extends ExecutorManager
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value,@Nullable Object @NonNull ... values) {
-		return idResolver.getStaticTypeOf(value, values);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
-		return idResolver.getStaticTypeOf(value, values);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
-		return idResolver.getStaticTypeOfValue(staticType, value);
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticClassOf(@Nullable Object value) {
+		return idResolver.getStaticClassOf(value);
 	}
 }

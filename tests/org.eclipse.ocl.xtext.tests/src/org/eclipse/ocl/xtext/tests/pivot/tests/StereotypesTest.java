@@ -296,7 +296,7 @@ public class StereotypesTest extends PivotTestSuite
 		//    	ocl.assertQueryEquals(ocl.mm.englishClass, "EnglishClass$InEnglish", "self.extension_Internationalized.oclType().instanceType.name");
 		//    	ocl.assertQueryEquals(ocl.mm.englishClass, "EnglishClass$InEnglish", "self.extension_Internationalized.oclType().name");
 		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InGerman", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InGerman");
-		ocl.assertSemanticErrorQuery(ocl.getIdResolver().getStaticTypeOfValue(null, ocl.mm.umlEnglishClass), "self.extension_Internationalized.extension_InEnglish", PivotMessagesInternal.UnresolvedProperty_ERROR_, "InternationalizedProfile::Internationalized", "extension_InEnglish");
+		ocl.assertSemanticErrorQuery(ocl.getIdResolver().getStaticClassOf(ocl.mm.umlEnglishClass), "self.extension_Internationalized.extension_InEnglish", PivotMessagesInternal.UnresolvedProperty_ERROR_, "InternationalizedProfile::Internationalized", "extension_InEnglish");
 		ocl.assertSemanticErrorQuery(/*metamodelManager.getMetaclass(*/ocl.mm.asEnglishClass/*)*/, "self.extension_Internationalized.extension_InEnglish", PivotMessagesInternal.UnresolvedProperty_ERROR_, "InternationalizedProfile::Internationalized", "extension_InEnglish");
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish, "self.extension_Internationalized");
 		ocl.assertQueryEquals(ocl.mm.asEnglishClass, ocl.mm.asEnglishClassInEnglish, "self.extension_Internationalized");

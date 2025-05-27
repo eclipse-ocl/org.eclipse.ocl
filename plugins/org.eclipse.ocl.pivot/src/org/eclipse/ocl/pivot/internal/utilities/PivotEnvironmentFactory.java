@@ -16,15 +16,20 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.common.preferences.PreferenceableOption;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Customizable;
 import org.eclipse.ocl.pivot.utilities.Option;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * Implementation of the {@link EnvironmentFactoryInternal} for parsing OCL expressions
@@ -40,6 +45,14 @@ public class PivotEnvironmentFactory extends AbstractEnvironmentFactory
 	 */
 	public PivotEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
 		super(projectManager, csResourceSet, asResourceSet);
+	}
+
+	@Override
+	protected @NonNull Model getMetamodel(@NonNull EPackage ePackage) {
+		if (ePackage == PivotPackage.eINSTANCE) {
+			return OCLmetamodel.getDefaultModel();
+		}
+		throw new InvalidValueException("No metamodel known for EPackage " + ePackage.getNsURI());
 	}
 
 	@Override

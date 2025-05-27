@@ -614,20 +614,6 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType) {
-		return environmentFactory.getMetamodelManager().getMetaclass(classType);
-	}
-
-	@Override
-	public @NonNull Type getMetaType(@NonNull Type instanceType) {
-	//	if (instanceType instanceof PrimitiveType) {
-	//		return getASClass(TypeId.PRIMITIVE_TYPE_NAME);
-	//	}
-		//		throw new UnsupportedOperationException();
-		return getMetaclass(instanceType);
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI) {
 		CompletePackage completePackage = completeModel.getCompletePackageByURI(nsURI);
 		return completePackage != null ? completePackage.getPrimaryPackage() : null;

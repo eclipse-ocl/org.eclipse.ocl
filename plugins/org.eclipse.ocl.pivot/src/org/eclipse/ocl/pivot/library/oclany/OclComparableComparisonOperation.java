@@ -36,8 +36,8 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object left, @Nullable Object right) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		IdResolver idResolver = executor.getIdResolver();
-		CompleteInheritance leftType = idResolver.getDynamicTypeOf(left).getInheritance(standardLibrary);
-		CompleteInheritance rightType = idResolver.getDynamicTypeOf(right).getInheritance(standardLibrary);
+		CompleteInheritance leftType = idResolver.getDynamicClassOf(left).getInheritance(standardLibrary);
+		CompleteInheritance rightType = idResolver.getDynamicClassOf(right).getInheritance(standardLibrary);
 		CompleteInheritance commonType = leftType.getCommonInheritance(rightType);
 		CompleteInheritance comparableType = standardLibrary.getOclComparableType().getInheritance(standardLibrary);
 		CompleteInheritance selfType = standardLibrary.getOclSelfType().getInheritance(standardLibrary);

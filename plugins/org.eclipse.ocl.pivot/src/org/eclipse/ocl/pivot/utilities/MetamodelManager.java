@@ -337,11 +337,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType);
-
-	/**
-	 * @since 7.0
-	 */
 	@Nullable Type getOclType(@NonNull String typeName);
 
 	/**

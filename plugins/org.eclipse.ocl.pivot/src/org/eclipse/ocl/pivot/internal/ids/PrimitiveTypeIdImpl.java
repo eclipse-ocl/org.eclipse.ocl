@@ -113,8 +113,17 @@ public class PrimitiveTypeIdImpl extends UnscopedId implements PrimitiveTypeId
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
+		if (BOOLEAN_NAME.equals(name)) {
+			return BOOLEAN_TYPE_NAME;
+		}
+		if (OCL_ANY_NAME.equals(name)) {
+			return ANY_TYPE_NAME;
+		}
 		return PRIMITIVE_TYPE_NAME;
 	}
 }

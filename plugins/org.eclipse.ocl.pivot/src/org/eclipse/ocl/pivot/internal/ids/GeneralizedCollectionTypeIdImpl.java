@@ -133,7 +133,7 @@ public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonN
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return name + "Type";
 	}
 

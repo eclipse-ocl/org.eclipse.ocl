@@ -100,7 +100,7 @@ public class ClosureIteration extends AbstractIteration
 		}
 		else {
 			Executor executor = iterationManager.getExecutor();
-			Type elementType = executor.getStaticTypeOfValue(null, bodyVal);
+			Type elementType = executor.getStaticClassOf(bodyVal);
 			CollectionTypeId sequenceId = TypeId.SEQUENCE.getSpecializedId(elementType.getTypeId());
 			collectionValue = executor.getIdResolver().createSequenceOfEach(sequenceId, bodyVal);
 		}

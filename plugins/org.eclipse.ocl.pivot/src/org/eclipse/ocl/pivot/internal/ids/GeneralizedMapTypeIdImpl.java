@@ -101,7 +101,7 @@ public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull Map
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return name + "Type";
 	}
 
