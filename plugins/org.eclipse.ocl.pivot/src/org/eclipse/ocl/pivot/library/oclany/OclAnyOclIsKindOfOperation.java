@@ -30,7 +30,7 @@ public class OclAnyOclIsKindOfOperation extends AbstractUntypedBinaryOperation
 	@Override
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
-		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
+		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		Type argType = asType(argVal);
 		boolean result = sourceType.conformsTo(standardLibrary, argType);	// FIXME this fails because ExecutableStandardLibrary.getMetaclass is bad
 		return result;

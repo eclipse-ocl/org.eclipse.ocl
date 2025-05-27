@@ -1177,7 +1177,7 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return ClassUtil.requireNonNull(eClass().getName());
 	}
 

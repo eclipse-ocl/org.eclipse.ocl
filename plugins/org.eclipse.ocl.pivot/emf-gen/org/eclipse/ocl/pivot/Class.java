@@ -322,7 +322,7 @@ extends Type, Namespace, TemplateableElement {
 	/**
 	 * Return the name of the meta-type of this type.
 	 */
-	@NonNull String getMetaTypeName();
+	@NonNull String getMetaclassName();
 
 	/**
 	 * Return the ordered list of type parameters of this type.

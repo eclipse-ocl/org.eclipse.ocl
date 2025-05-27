@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -16,12 +16,12 @@ import org.eclipse.ocl.pivot.CompletePackage;
 
 public interface CompletePackageInternal extends CompletePackage
 {
+	void dispose();
 	@Override
 	@NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType);
 	@NonNull CompleteInheritanceImpl getCompleteInheritance(@NonNull CompleteClassInternal completeClass);
 	@Override
 	@NonNull CompleteModelInternal getCompleteModel();
-	void dispose();
 	@Override
 	CompleteClassInternal getOwnedCompleteClass(String name);
 	@Override

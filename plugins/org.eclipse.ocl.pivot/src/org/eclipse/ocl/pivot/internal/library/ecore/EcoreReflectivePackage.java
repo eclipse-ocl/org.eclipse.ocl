@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -50,6 +51,9 @@ public class EcoreReflectivePackage extends ExecutorPackage
 				org.eclipse.ocl.pivot.Class executorType;
 				if (eClassifier instanceof EEnum) {
 					executorType = new EcoreReflectiveEnumeration(this, 0, (EEnum)eClassifier);
+				}
+				else if (eClassifier instanceof EDataType) {
+					executorType = new EcoreReflectiveDataType(this, 0, (EDataType)eClassifier);
 				}
 				else {
 					executorType = new EcoreReflectiveType(this, 0, eClassifier);

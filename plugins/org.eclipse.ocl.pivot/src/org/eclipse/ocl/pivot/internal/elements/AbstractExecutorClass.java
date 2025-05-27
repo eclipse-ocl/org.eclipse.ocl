@@ -77,9 +77,8 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
-		return getTypeId().getMetaTypeName();
-		//		throw new UnsupportedOperationException();
+	public @NonNull String getMetaclassName() {
+		return getTypeId().getMetaclassName();
 	}
 
 	@Override

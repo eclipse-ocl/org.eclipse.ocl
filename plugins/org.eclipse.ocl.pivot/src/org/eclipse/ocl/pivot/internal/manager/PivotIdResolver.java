@@ -18,10 +18,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
@@ -76,20 +74,13 @@ public class PivotIdResolver extends AbstractIdResolver
 		return metamodelManager.getInheritance(getType(eClassifier));
 	}
 
-	protected org.eclipse.ocl.pivot.@Nullable Package getPivotlessEPackage(@NonNull EPackage ePackage) {
-		return null;
+	@Override
+	protected org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType) {
+		return environmentFactory.getMetaclass(classType);
 	}
 
-	/**
-	 * @since 1.7
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
-		if (value instanceof ElementExtension) {
-			Stereotype asStereotype = ((ElementExtension)value).getStereotype();
-			return asStereotype != null ? asStereotype : metamodelManager.getStandardLibrary().getOclInvalidType();
-		}
-		return super.getStaticTypeOfValue(staticType, value);
+	protected org.eclipse.ocl.pivot.@Nullable Package getPivotlessEPackage(@NonNull EPackage ePackage) {
+		return null;
 	}
 
 	@Override

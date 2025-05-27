@@ -305,6 +305,12 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull IdResolver getIdResolver();
 
 	/**
+	 * Return the metaclass to which classType conforms.
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType);
+
+	/**
 	 * Return the MetamodelManager used to supervise the normalized Abstract Syntax representations of the metamodels.
 	 */
 	@NonNull MetamodelManager getMetamodelManager();

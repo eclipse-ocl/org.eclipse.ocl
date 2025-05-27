@@ -95,8 +95,8 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
-		return domainClass.getMetaTypeName();
+	public @NonNull String getMetaclassName() {
+		return domainClass.getMetaclassName();
 	}
 
 	@Override

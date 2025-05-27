@@ -40,7 +40,7 @@ public class OclElementOclModelTypeOperation extends AbstractUntypedUnaryOperati
 		if (sourceVal instanceof InvalidValueException) {
 			throw (InvalidValueException)sourceVal;
 		}
-		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
+		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		if (sourceVal == null) {
 			throw new InvalidValueException(PivotMessages.NullNavigation, "source value", "oclModelType");
 		}
@@ -61,7 +61,7 @@ public class OclElementOclModelTypeOperation extends AbstractUntypedUnaryOperati
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		Type sourceType = PivotUtil.getType(source);
-		return environmentFactory.getIdResolver().getStaticTypeOfValue(null, sourceType);
+		return environmentFactory.getIdResolver().getStaticClassOf(sourceType);
 	}
 
 	/**

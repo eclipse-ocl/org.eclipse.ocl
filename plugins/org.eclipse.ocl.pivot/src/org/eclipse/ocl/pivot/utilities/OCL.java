@@ -37,9 +37,9 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
-import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
 import org.eclipse.ocl.pivot.internal.helper.OCLHelperImpl;
+import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLDebugOptions;
@@ -496,7 +496,7 @@ public class OCL
 	public org.eclipse.ocl.pivot.@NonNull Class getContextType(@Nullable Object contextObject) {
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		IdResolver idResolver = getIdResolver();
-		org.eclipse.ocl.pivot.Class staticTypeOf = idResolver.getStaticTypeOfValue(null, contextObject);
+		org.eclipse.ocl.pivot.Class staticTypeOf = idResolver.getStaticClassOf(contextObject);
 		return metamodelManager.getPrimaryClass(staticTypeOf);
 	}
 

@@ -28,7 +28,7 @@ public class OclAnyOclIsTypeOfOperation extends AbstractUntypedBinaryOperation
 	 */
 	@Override
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
-		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
+		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		Type argType = asType(argVal);
 		boolean result = sourceType.isEqualTo(executor.getStandardLibrary(), argType);
 		return result;

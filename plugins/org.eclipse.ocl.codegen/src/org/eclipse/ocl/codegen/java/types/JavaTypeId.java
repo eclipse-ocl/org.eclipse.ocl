@@ -73,7 +73,7 @@ public class JavaTypeId extends UnscopedId implements PrimitiveTypeId
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return "JavaClass";
 	}
 }

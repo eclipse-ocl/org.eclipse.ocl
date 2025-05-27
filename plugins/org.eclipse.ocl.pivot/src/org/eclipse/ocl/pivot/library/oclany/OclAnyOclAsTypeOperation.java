@@ -35,7 +35,7 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 			throw (InvalidValueException)sourceVal;
 		}
 		Type argType = asType(argVal);
-		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
+		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		if (sourceVal == null) {				// null conforms to anything even though e.g. VoidType doesn't
 			return null;
 		}

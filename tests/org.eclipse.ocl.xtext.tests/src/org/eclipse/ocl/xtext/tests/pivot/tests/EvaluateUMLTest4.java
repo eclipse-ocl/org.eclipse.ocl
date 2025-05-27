@@ -217,7 +217,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		IdResolver idResolver = ocl.getIdResolver();
 		EObject context = doLoadUML(ocl, getTestModelURI("models/uml/Bug431638.uml"), "Bug431638Model.Class1.Attribute1");
 		assertNotNull(context);
-		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOfValue(null, context);
+		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticClassOf(context);
 		org.eclipse.ocl.pivot.Package contextPackage = contextType.getOwningPackage();
 		//		assertEquals(XMI2UMLResource.UML_METAMODEL_NS_URI, contextPackage.getNsURI());
 		//		assertEquals(IdManager.METAMODEL, contextPackage.getPackageId());
@@ -254,7 +254,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		EObject context = doLoadUML(ocl, getTestModelURI("models/uml/Bug455394.uml"), "Model.Class1.class2");
 		assertNotNull(context);
 		assert context != null;
-		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOfValue(null, context);
+		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticClassOf(context);
 		ocl.assertQueryTrue(context, "self.aggregation=UML::AggregationKind::composite");
 		ocl.assertQueryResults(context, "UML::AggregationKind::composite", "self.aggregation");
 		EObject associationContext = doLoadUML(ocl, getTestModelURI("models/uml/Bug455394.uml"), "Model.A_class2_class1");
@@ -271,7 +271,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		MyOCL ocl = createOCLWithProjectMap();
 		IdResolver idResolver = ocl.getIdResolver();
 		EObject train1 = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zKtRgLUyEeWSV7DXeOPrdA"); //RootElement.Train1");
-		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOfValue(null, train1);
+		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticClassOf(train1);
 		EObject application1 = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zLFE8LUyEeWSV7DXeOPrdA");
 		EObject application2 = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_8MmIwLUyEeWSV7DXeOPrdA");
 		assert train1 != null;

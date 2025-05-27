@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
@@ -54,6 +55,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -91,6 +93,7 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -110,6 +113,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.UnmodifiableIterator;
 
 public abstract class AbstractIdResolver implements IdResolver
 {
@@ -255,10 +260,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	private final @NonNull Set<@NonNull EObject> directRoots = new HashSet<>();
 	private boolean directRootsProcessed = false;
 	private boolean crossReferencedRootsProcessed = false;
-	/**
-	 * @since 1.1
-	 */
-	protected final @NonNull Map<@NonNull Object, @NonNull Type> key2type = new HashMap<>();	// Concurrent puts are duplicates
+	protected final @NonNull Map<@NonNull Object, org.eclipse.ocl.pivot.@NonNull Class> key2class = new HashMap<>();	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull EnumerationLiteralId, @NonNull Enumerator> enumerationLiteral2enumerator = null;	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull Enumerator, @NonNull EnumerationLiteralId> enumerator2enumerationLiteralId = null;	// Concurrent puts are duplicates
 
@@ -380,7 +382,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		else if (unboxedValue.getClass().isArray()) {
 			try {
 				@Nullable Object @NonNull [] unboxedValues = (@Nullable Object @NonNull [])unboxedValue;
-				Type dynamicType = getDynamicTypeOf(unboxedValues);
+				Type dynamicType = getDynamicClassOfEach(unboxedValues);
 				if (dynamicType == null) {
 					dynamicType = standardLibrary.getOclInvalidType();
 				}
@@ -392,7 +394,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 		else if (unboxedValue instanceof Iterable<?>) {
 			Iterable<?> unboxedValues = (Iterable<?>)unboxedValue;
-			Type dynamicType = getDynamicTypeOf(unboxedValues);
+			Type dynamicType = getDynamicClassOfAll(unboxedValues);
 			if (dynamicType == null) {
 				dynamicType = standardLibrary.getOclInvalidType();
 			}
@@ -516,6 +518,25 @@ public abstract class AbstractIdResolver implements IdResolver
 			throw new InvalidValueException("Unknown enumeration " + unboxedValue.getName()); //$NON-NLS-1$
 		}
 		return enumerationLiteralId;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected org.eclipse.ocl.pivot.@NonNull Class computeDynamicClassOf(@NonNull Object value) {
+		EClass eClass = ((EObject)value).eClass();
+		assert eClass != null;
+		Object key = eClass;
+		Type type = getInheritance(eClass).getPivotClass();
+		assert type != null;
+		org.eclipse.ocl.pivot.@NonNull Class dynamicClass = PivotUtil.getClass(type, standardLibrary);
+		org.eclipse.ocl.pivot.@NonNull Class staticClass = getStaticClassOf(value);
+		if (dynamicClass != staticClass) {
+			System.out.println("staticClass of " + NameUtil.debugSimpleName(value) + " " + value +
+				"\n\t=>dynamicClass " + NameUtil.debugSimpleName(dynamicClass) + " " + dynamicClass +
+				"\n\t=>staticClass " + NameUtil.debugSimpleName(staticClass) + " " + staticClass);
+		}
+		return dynamicClass;
 	}
 
 	@Override
@@ -670,7 +691,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	@Override
 	public void dispose() {
 		tupleParts = null;
-		key2type.clear();
+		key2class.clear();
 		enumerationLiteral2enumerator = null;
 		enumerator2enumerationLiteralId = null;
 	}
@@ -817,12 +838,15 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getDynamicTypeOf(@Nullable Object value) {
+	public org.eclipse.ocl.pivot.@NonNull Class getDynamicClassOf(@Nullable Object value) {
 		if (value instanceof CollectionValue) {
 			CollectionValue collectionValue = (CollectionValue) value;
 			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
-			Type elementType = getDynamicTypeOf(collectionValue.iterable());
+			Type elementType = getDynamicClassOfAll(collectionValue.iterable());
 			if (elementType == null) {
 				elementType = getType(collectionTypeId.getElementTypeId());
 			}
@@ -833,42 +857,68 @@ public abstract class AbstractIdResolver implements IdResolver
 			final IntegerValue size = collectionValue.size();
 			return getCollectionType(collectedId, false, size, size.asUnlimitedNaturalValue());		// FIXME dynamic isNullFree
 		}
+		return getStaticClassOf(value);
+/*		else if (value instanceof Value) {
+			return getStaticClassOf(value);
+		}
+		else if (value instanceof EObject) {
+			EClass eClass = ((EObject)value).eClass();
+			assert eClass != null;
+			Object key = eClass;
+			org.eclipse.ocl.pivot.Class asClass = key2dynamicClass.get(key);
+			if (asClass == null) {
+				asClass = computeDynamicClassOf(value);				// XXX avoid double execution
+				key2dynamicClass.put(key, asClass);
+			}
+			return asClass;
+		}
+		else if (value instanceof org.eclipse.ocl.pivot.Class) { */
+/*			EClass eClass = ((EObject)value).eClass();
+			assert eClass != null;
+//			Type type = key2type.get(eClass);
+//			if (type == null) {
+				Type type = getInheritance(eClass).getPivotClass();
+				assert type != null;
+//				key2type.put(eClass, type);
+//			}
+			return PivotUtil.getClass(type, standardLibrary);
+		//	return envF.get
+		//	return (org.eclipse.ocl.pivot.Class)value;
+//	*//*		return getStaticClassOf(value);
+		}
 		else {
-			return getStaticTypeOf(value);
-		}
+			return getStaticClassOf(value);
+//			throw new UnsupportedOperationException();			// XXX
+		//	return getStaticClassOf(value);
+		} */
 	}
 
 	@Override
-	public @Nullable Type getDynamicTypeOf(@Nullable Object @NonNull ... values) {
-		Type elementType = null;
-		for (Object value : values) {
-			org.eclipse.ocl.pivot.Class valueType = getDynamicTypeOf(value);
-			if (elementType == null) {
-				elementType = valueType;
-			}
-			else {
-				elementType = elementType.getCommonType(this, valueType);
-			}
-		}
-		if (elementType == null) {
-			elementType = standardLibrary.getOclInvalidType();
-		}
-		return elementType;
+	public org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfAll(@NonNull Iterable<?> values) {
+		return getDynamicClassOfMany(values.iterator());
 	}
 
 	@Override
-	public @Nullable Type getDynamicTypeOf(@NonNull Iterable<?> values) {
-		Type elementType = null;
-		for (Object value : values) {
-			org.eclipse.ocl.pivot.Class valueType = getDynamicTypeOf(value);
-			if (elementType == null) {
-				elementType = valueType;
+	public org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfEach(@Nullable Object @NonNull ... values) {
+		UnmodifiableIterator<@Nullable Object> arrayIterator = Iterators.forArray(values);
+		assert arrayIterator != null;
+		return getDynamicClassOfMany(arrayIterator);
+	}
+
+	private org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfMany(@NonNull Iterator<?> values) {
+		org.eclipse.ocl.pivot.@Nullable Class bestType = null;
+		while (values.hasNext()) {
+			Object value = values.next();
+			assert value != null;
+			org.eclipse.ocl.pivot.Class valueType = getDynamicClassOf(value);
+			if (bestType == null) {
+				bestType = valueType;
 			}
 			else {
-				elementType = elementType.getCommonType(this, valueType);
+				bestType = (org.eclipse.ocl.pivot.Class)bestType.getCommonType(this, valueType);
 			}
 		}
-		return elementType;
+		return bestType;
 	}
 
 	/**
@@ -899,10 +949,11 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass) {
-		Type type = key2type.get(javaClass);
-		if (type instanceof JavaType) {
-			return (JavaType)type;
+		org.eclipse.ocl.pivot.Class asClass = key2class.get(javaClass);
+		if (asClass instanceof JavaType) {
+			return (JavaType)asClass;
 		}
+		assert asClass == null;
 		/*		if (javaClass == Boolean.class) {
 			type = standardLibrary.getBooleanType();
 		}
@@ -912,7 +963,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		else { */
 		JavaType javaType = new JavaType(javaClass);
 		//		}
-		key2type.put(javaClass, javaType);
+		key2class.put(javaClass, javaType);
 		return javaType;
 	}
 
@@ -947,6 +998,12 @@ public abstract class AbstractIdResolver implements IdResolver
 			}
 		}
 	}
+
+	/**
+	 * Return the metaclass to which classType conforms.
+	 * @since 7.0
+	 */
+	protected abstract org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType);
 
 	/**
 	 * @since 1.1
@@ -995,137 +1052,124 @@ public abstract class AbstractIdResolver implements IdResolver
 		return standardLibrary;
 	}
 
-//	@Override
-	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
-	protected org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
-		// testConsole_Bug516285 uses this
-		Type staticType = getStaticTypeOfValue(null, value);
-		org.eclipse.ocl.pivot.Class asClass = staticType.isClass();
-		if (asClass != null) {
-			return asClass;
-		}
-		TemplateParameter templateParameter = staticType.isTemplateParameter();
-		if (templateParameter != null) {
-			return PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
-		}
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @Nullable Object @NonNull ... values) {
-		Object bestTypeId = getTypeKeyOf(value);
-		Type bestType = key2type.get(bestTypeId);
-		assert bestType != null;
-		Collection<Object> assessedTypeKeys = null;
-		int count = 0;
-		for (Object anotherValue : values) {
-			Object anotherTypeId = getTypeKeyOf(anotherValue);
-			if ((assessedTypeKeys == null) ? (anotherTypeId != bestTypeId) : !assessedTypeKeys.contains(anotherTypeId)) {
-				Type anotherType = key2type.get(anotherTypeId);
-				assert anotherType != null;
-				Type commonType = bestType.getCommonType(this, anotherType);
-				if ((commonType != bestType) && (commonType instanceof org.eclipse.ocl.pivot.Class)) {
-					if (assessedTypeKeys == null) {
-						assessedTypeKeys = new ArrayList<>();
-						assessedTypeKeys.add(bestTypeId);
-					}
-					else if (count++ == 4) {
-						assessedTypeKeys = new HashSet<>(assessedTypeKeys);
-					}
-					assessedTypeKeys.add(anotherTypeId);
-					bestType = commonType;
-					bestTypeId = anotherTypeId;
-				}
-			}
-		}
-		return (org.eclipse.ocl.pivot.Class)bestType;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
-		Object bestTypeKey = getTypeKeyOf(value);
-		Type bestType = key2type.get(bestTypeKey);
-		assert bestType != null;
-		Collection<Object> assessedTypeKeys = null;
-		int count = 0;
-		for (Object anotherValue : values) {
-			assert anotherValue != null;
-			Object anotherTypeKey = getTypeKeyOf(anotherValue);
-			if ((assessedTypeKeys == null) ? (anotherTypeKey != bestTypeKey) : !assessedTypeKeys.contains(anotherTypeKey)) {
-				Type anotherType = key2type.get(anotherTypeKey);
-				assert anotherType != null;
-				Type commonType = bestType.getCommonType(this, anotherType);
-				if (commonType != bestType) {
-					if (assessedTypeKeys == null) {
-						assessedTypeKeys = new ArrayList<>();
-						assessedTypeKeys.add(bestTypeKey);
-					}
-					else if (count++ == 4) {
-						assessedTypeKeys = new HashSet<>(assessedTypeKeys);
-					}
-					assessedTypeKeys.add(anotherTypeKey);
-				}
-			}
-		}
-		return (org.eclipse.ocl.pivot.Class)bestType;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type contextType, @Nullable Object value) {
-	//	assert !(value instanceof TypeId) : "Use getType...) directly";		// Only EnumerationLiteralId occurs
-		if (value instanceof Enumeration) {
-			return standardLibrary.getEnumerationType();
+	public final org.eclipse.ocl.pivot.@NonNull Class getStaticClassOf(@Nullable Object value) {
+		org.eclipse.ocl.pivot.Class asClass;
+		if (value == null) {
+			asClass = standardLibrary.getOclVoidType();
 		}
 		else if (value instanceof EObject) {
-			EClass eClass = ((EObject)value).eClass();
-			assert eClass != null;
-			Type type = key2type.get(eClass);
-			if (type == null) {
-				type = getInheritance(eClass).getPivotClass();
-				assert type != null;
-				key2type.put(eClass, type);
-			}
-			return PivotUtil.getClass(type, standardLibrary);
+			EObject eObject = (EObject)value;
+			asClass = getStaticClassOfEObject(eObject);
 		}
+	//	else if (value instanceof Type) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
+	//		key = getMetaclass((Type)value);
+	//	}
 		else if (value instanceof Value) {
 			TypeId typeId = ((Value)value).getTypeId();
-			Type type = key2type.get(typeId);
-			if (type == null) {
-				type = (Type)typeId.accept(this);
-				if (type ==  null) {
+			asClass = key2class.get(typeId);
+			if (asClass == null) {
+				Type type = (Type)typeId.accept(this);
+				if (type == null) {
 					type = standardLibrary.getOclAnyType();
 				}
-				key2type.put(typeId, type);
-			}
-			return PivotUtil.getClass(type, standardLibrary);
-		}
-		else if (value == null) {
-			return standardLibrary.getOclVoidType();
-		}
-		if (value instanceof Boolean) {
-			return standardLibrary.getBooleanType();
-		}
-		else if (value instanceof String) {
-			return standardLibrary.getStringType();
-		}
-		else if (value instanceof Number) {
-			if ((value instanceof BigDecimal) || (value instanceof Double) || (value instanceof Float)) {
-				return standardLibrary.getRealType();
-			}
-			if ((value instanceof BigInteger) || (value instanceof Byte) || (value instanceof Integer) || (value instanceof Long) || (value instanceof Short)) {
-				return standardLibrary.getIntegerType();
+				asClass = PivotUtil.getClass(type, standardLibrary);
+				key2class.put(typeId, asClass);
 			}
 		}
 		else if (value instanceof EnumerationLiteralId) {
 			EnumerationLiteral enumLiteral = (EnumerationLiteral) ((EnumerationLiteralId)value).accept(this);
 			assert enumLiteral != null;
-			Enumeration enumeration = enumLiteral.getOwningEnumeration();
-			assert enumeration != null;
-			return enumeration;
+			asClass = enumLiteral.getOwningEnumeration();
 		}
-		Class<?> jClass = value.getClass();
-		assert jClass != null;
-		return getJavaType(jClass);
+		else {
+			Class<?> jClass = value.getClass();
+			asClass = key2class.get(jClass);
+			if (asClass == null) {
+				if (jClass == Boolean.class) {
+					asClass = standardLibrary.getBooleanType();
+				}
+				else if (jClass == String.class) {
+					asClass = standardLibrary.getStringType();
+				}
+				else if ((jClass == BigDecimal.class) || (jClass == Double.class) || (jClass == Float.class)) {
+					asClass = standardLibrary.getRealType();
+				}
+				else if ((jClass == BigInteger.class) || (jClass == Byte.class) || (jClass == Integer.class) || (jClass == Long.class) || (jClass == Short.class)) {
+					asClass = standardLibrary.getIntegerType();
+				}
+				else {
+					asClass = getJavaType(jClass);
+				}
+				key2class.put(jClass, asClass);
+			}
+		}
+	//	System.out.println("getStaticClassOf " + NameUtil.debugSimpleName(value) + " " + value + " => " + NameUtil.debugSimpleName(asClass) + " " + asClass);		// XXX
+		return asClass;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticClassOfAll(@NonNull Iterable<?> values) {
+		return getStaticClassOfMany(values.iterator());
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticClassOfEach(@Nullable Object @NonNull ... values) {
+		UnmodifiableIterator<@Nullable Object> arrayIterator = Iterators.forArray(values);
+		assert arrayIterator != null;
+		return getStaticClassOfMany(arrayIterator);
+	}
+
+	/**
+	 * Return the class of an EObject which is generally the cached AS class corresponding to the EClass.
+	 * However for delegating elements such as ElementExtension the delegation is followed to determine the class.
+	 *
+	 * @since 7.0
+	 */
+	protected org.eclipse.ocl.pivot.@Nullable Class getStaticClassOfEObject(@NonNull EObject eObject) {
+		if (eObject instanceof ElementExtension) {
+			Stereotype asStereotype = ((ElementExtension)eObject).getStereotype();
+			return asStereotype != null ? asStereotype : standardLibrary.getOclInvalidType();
+		}
+		@SuppressWarnings("null") @NonNull EClass eClass = eObject.eClass();
+		org.eclipse.ocl.pivot.Class asClass = key2class.get(eClass);
+		if (asClass == null) {
+			asClass = getInheritance(eClass).getPivotClass();
+			key2class.put(eClass, asClass);
+		}
+		return asClass;
+	//	assert !(value instanceof TypeId) : "Use getType...) directly";		// Only EnumerationLiteralId occurs
+	//	if (value instanceof Enumeration) {
+	//		return standardLibrary.getEnumerationType();
+	//	}
+	//	if (key instanceof EClass) {
+	//		@SuppressWarnings("null")
+	//		@NonNull EClass eClass = eObject.eClass();
+	//		return getInheritance(eClass).getPivotClass();
+	//	}
+	//	else if (value instanceof Type) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
+	//		return getMetaclass((Type)value);
+	//	}
+	}
+
+	private org.eclipse.ocl.pivot.@NonNull Class getStaticClassOfMany(@NonNull Iterator<?> values) {
+		org.eclipse.ocl.pivot.Class bestType = null;
+		while (values.hasNext()) {
+			Object value = values.next();
+			assert value != null;
+			org.eclipse.ocl.pivot.Class type = getStaticClassOf(value);
+			assert type != null;
+			if (bestType == null) {
+				bestType = type;
+			}
+			else if (type != bestType) {
+				org.eclipse.ocl.pivot.Class commonType = (org.eclipse.ocl.pivot.Class)bestType.getCommonType(this, type);	// XXX cast
+				if (commonType != bestType) {
+					bestType = type;
+				}
+			}
+		}
+		return bestType != null ? bestType : standardLibrary.getOclVoidType();
 	}
 
 	@Override
@@ -1166,72 +1210,6 @@ public abstract class AbstractIdResolver implements IdResolver
 		return getType(typeId);
 	}
 
-	private @NonNull Object getTypeKeyOf(@Nullable Object value) {
-		/*if (value instanceof DomainType) {
-			DomainType type = (DomainType) id2element.get(value);
-			if (type == null) {
-				type = standardLibrary.getMetaclass((DomainType) value);
-				assert type != null;
-				id2element.put(value, type);
-			}
-			return value;
-		}
-		else*/ if (value instanceof EObject) {
-			EClass typeKey = ((EObject)value).eClass();
-			assert typeKey != null;
-			Type type = key2type.get(typeKey);
-			if (type == null) {
-				type = getInheritance(typeKey).getPivotClass();
-				assert type != null;
-				key2type.put(typeKey, type);
-			}
-			return typeKey;
-		}
-		else if (value instanceof Value) {
-			TypeId typeKey = ((Value)value).getTypeId();
-			Type type = key2type.get(typeKey);
-			if (type == null) {
-				type = (org.eclipse.ocl.pivot.Class) typeKey.accept(this);
-				assert type != null;
-				key2type.put(typeKey, type);
-			}
-			return typeKey;
-		}
-		else if (value instanceof EnumerationLiteralId) {
-			TypeId typeKey = ((EnumerationLiteralId)value).getParentId();
-			Type type = key2type.get(typeKey);
-			if (type == null) {
-				type = (org.eclipse.ocl.pivot.Class) typeKey.accept(this);
-				assert type != null;
-				key2type.put(typeKey, type);
-			}
-			return typeKey;
-		}
-		else if (value == null) {
-			TypeId typeKey = TypeId.OCL_VOID;
-			key2type.put(typeKey, standardLibrary.getOclVoidType());
-			return typeKey;
-		}
-		else {
-			Class<?> typeKey = value.getClass();
-			assert typeKey != null;
-			Type type = key2type.get(typeKey);
-			if (type != null) {
-				return typeKey;
-			}
-			if (value instanceof Boolean) {
-				type = standardLibrary.getBooleanType();
-			}
-			else if (value instanceof String) {
-				type = standardLibrary.getStringType();
-			}
-			if (type != null) {
-				key2type.put(typeKey, type);
-				return typeKey;
-			}
-		}
-		throw new UnsupportedOperationException();
-	}
 
 	/**
 	 * @since 1.1

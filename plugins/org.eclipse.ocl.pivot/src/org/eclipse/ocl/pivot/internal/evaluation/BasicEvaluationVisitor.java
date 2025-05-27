@@ -669,7 +669,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		}
 		else {
 			assert source != null;
-			org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticTypeOfValue(source.getType(), sourceValue);
+			org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticClassOf(sourceValue);
 			List<Parameter> ownedParameters = apparentOperation.getOwnedParameters();
 			if (ownedParameters.size() == 1) {
 				Parameter onlyParameter = ownedParameters.get(0);
@@ -677,7 +677,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 				if (onlyType == standardLibrary.getOclSelfType()) {
 					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 					Object onlyArgument = arguments.get(0).accept(undecoratedVisitor);
-					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOfValue(onlyType, onlyArgument);
+					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticClassOf(onlyArgument);
 					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);

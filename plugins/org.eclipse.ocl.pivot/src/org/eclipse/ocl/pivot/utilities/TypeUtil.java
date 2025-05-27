@@ -14,31 +14,24 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
@@ -175,8 +168,10 @@ public class TypeUtil
 	/**
 	 * @since 1.18
 	 */
+	@Deprecated /* use EnvironmentFactory */
 	public static @NonNull String getMetaclassName(@NonNull Type asInstanceType) {
-		if (asInstanceType instanceof CollectionType) {
+		return asInstanceType.eClass().getName();
+	/*	if (asInstanceType instanceof CollectionType) {
 			if (asInstanceType instanceof BagType) {
 				return TypeId.BAG_TYPE_NAME;
 			}
@@ -220,7 +215,13 @@ public class TypeUtil
 		else if (asInstanceType instanceof TupleType) {
 			return TypeId.TUPLE_TYPE_NAME;
 		}
-		return TypeId.CLASS_NAME;		// fallback for e.g. TemplateParameter
+		else if (asInstanceType instanceof DataType) {
+			return TypeId.DATA_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof ElementExtension) {
+			throw new IllegalStateException("ElementExtension must be processed where multiple names can be handled.");
+		}
+		return TypeId.CLASS_NAME;		// fallback for e.g. TemplateParameter */
 	}
 
 	public static @NonNull Type @NonNull [] getOperationParameterTypes(@NonNull Operation anOperation) {

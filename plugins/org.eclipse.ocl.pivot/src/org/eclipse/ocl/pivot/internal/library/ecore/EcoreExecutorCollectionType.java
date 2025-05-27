@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
@@ -27,7 +26,10 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class EcoreExecutorCollectionType extends EcoreExecutorType implements CollectionType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-	public EcoreExecutorCollectionType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+	/**
+	 * @since 7.0
+	 */
+	public EcoreExecutorCollectionType(@NonNull CollectionTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
 		super(typeId, evaluationPackage, flags, typeParameter);
 	}
 
@@ -93,7 +95,7 @@ public class EcoreExecutorCollectionType extends EcoreExecutorType implements Co
 
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {
-		throw new UnsupportedOperationException();
+		return (CollectionTypeId)super.getTypeId();
 	}
 
 	@Override

@@ -83,8 +83,11 @@ public class GeneralizedClassIdImpl extends GeneralizedNestedTypeIdImpl implemen
 		return new SpecializedClassIdImpl(this, templateBindings);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		return TypeId.CLASS_NAME;
 	}
 }

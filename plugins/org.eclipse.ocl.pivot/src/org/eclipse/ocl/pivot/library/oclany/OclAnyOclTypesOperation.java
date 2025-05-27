@@ -34,7 +34,7 @@ public class OclAnyOclTypesOperation extends AbstractUnaryOperation
 	 */
 	@Override
 	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
-		Type dynamicTypeOf = executor.getIdResolver().getDynamicTypeOf(sourceVal);
+		Type dynamicTypeOf = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		return executor.getIdResolver().createSetOfEach((CollectionTypeId)returnTypeId, dynamicTypeOf);
 	}
 

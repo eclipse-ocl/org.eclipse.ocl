@@ -216,12 +216,12 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	}
 
 	@Override
-	public @NonNull String getMetaTypeName() {
+	public @NonNull String getMetaclassName() {
 		if (eClassifier != null) {					// FIXME Enforce @NonNull
 			return ClassUtil.requireNonNull(ClassUtil.requireNonNull(eClassifier).getName());
 		}
 		else {
-			return getTypeId().getMetaTypeName();
+			return getTypeId().getMetaclassName();
 		}
 	}
 

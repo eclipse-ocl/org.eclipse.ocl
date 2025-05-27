@@ -35,8 +35,8 @@ public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 	 */
 	@Override
 	public @NonNull Type evaluate(@NonNull Executor executor, @Nullable Object sourceVal) {
-//		return executor.getStaticTypeOf(sourceVal);
-		return executor.getIdResolver().getDynamicTypeOf(sourceVal);
+//		return executor.getStaticClassOf(sourceVal);
+		return executor.getIdResolver().getDynamicClassOf(sourceVal);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 			return environmentFactory.getStandardLibrary().getClassType();	// Suppress the irregularity ?? Class<OclAny> rather than Class<Class>
 		}
 	//	if (sourceType instanceof DataType) {	// collections, maps, lambdas, tuples, enumerations
-			return environmentFactory.getIdResolver().getStaticTypeOfValue(null, sourceType);
+			return environmentFactory.getIdResolver().getStaticClassOf(sourceType);
 	//	}
 	//	else {
 	//		return environmentFactory.getStandardLibrary().getClassType();	// FIXME could be common type of all possible metatypes
