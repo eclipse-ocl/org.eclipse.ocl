@@ -20,24 +20,27 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 
-public class DomainReflectiveType extends AbstractReflectiveInheritanceType
+/**
+ * @since 7.0
+ */
+public class ExecutorReflectiveType extends AbstractReflectiveInheritanceType
 {
-	protected final @NonNull DomainReflectivePackage evaluationPackage;
+	protected final @NonNull ExecutorReflectivePackage evaluationPackage;
 	protected final org.eclipse.ocl.pivot.@NonNull Class domainClass;
-	private /*@LazyNonNull*/ DomainProperties allProperties;
+	private /*@LazyNonNull*/ ExecutorProperties allProperties;
 
-	public DomainReflectiveType(@NonNull DomainReflectivePackage evaluationPackage, org.eclipse.ocl.pivot.@NonNull Class domainClass) {
+	public ExecutorReflectiveType(@NonNull ExecutorReflectivePackage evaluationPackage, org.eclipse.ocl.pivot.@NonNull Class domainClass) {
 		super(ClassUtil.requireNonNull(domainClass.getName()), computeFlags(domainClass));
 		this.evaluationPackage = evaluationPackage;
 		this.domainClass = domainClass;
@@ -45,7 +48,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 
 	@Override
 	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
-		return new DomainReflectiveFragment(this, baseInheritance);
+		return new ExecutorReflectiveFragment(this, baseInheritance);
 	}
 
 	@Override
@@ -87,9 +90,9 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 
 	@Override
 	public @Nullable Property getMemberProperty(@NonNull String name) {
-		DomainProperties allProperties2 = allProperties;
+		ExecutorProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(this);
+			allProperties = allProperties2 = new ExecutorProperties(this);
 		}
 		return allProperties2.getMemberProperty(name);
 	}
@@ -134,9 +137,12 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 		return domainClass.getTypeId();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
-		return domainClass.getTypeParameters();
+	public @NonNull TemplateParameters getTemplateParameters() {
+		return domainClass.getTemplateParameters();
 	}
 
 	@Override

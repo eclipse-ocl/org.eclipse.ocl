@@ -103,7 +103,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SingletonIterator;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.base.cs2as.AmbiguitiesAdapter;
@@ -722,13 +721,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * Return a non-null coercion Operation from argType to parameterType if one is available and needed.
 	 */
 	protected @Nullable Operation resolveCoercionFrom(@NonNull Type argType, @NonNull Type parameterType) {
-		if (!metamodelManager.conformsTo(argType, TemplateParameterSubstitutions.EMPTY, parameterType, TemplateParameterSubstitutions.EMPTY)) {
+		if (!standardLibrary.conformsTo(argType, TemplateParameterSubstitutions.EMPTY, parameterType, TemplateParameterSubstitutions.EMPTY)) {
 			CompleteClass completeClass = metamodelManager.getCompleteClass(argType);
 			for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 				if (partialClass instanceof PrimitiveType) {
 					for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
 						Type corcedArgType = coercion.getType();
-						if ((corcedArgType != null) && metamodelManager.conformsTo(corcedArgType, TemplateParameterSubstitutions.EMPTY, parameterType, TemplateParameterSubstitutions.EMPTY)) {
+						if ((corcedArgType != null) && standardLibrary.conformsTo(corcedArgType, TemplateParameterSubstitutions.EMPTY, parameterType, TemplateParameterSubstitutions.EMPTY)) {
 							return coercion;
 						}
 					}
@@ -1445,7 +1444,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression argument = arguments.get(i);
 				Type parameterType = PivotUtil.getTypeInternal(parameter);
 				Type argumentType = PivotUtil.getTypeInternal(argument);
-				if (!metamodelManager.conformsTo(argumentType, TemplateParameterSubstitutions.EMPTY, parameterType, templateSubstitutions)) {
+				if (!standardLibrary.conformsTo(argumentType, TemplateParameterSubstitutions.EMPTY, parameterType, templateSubstitutions)) {
 					isConformant = false;
 				}
 			}
@@ -1458,7 +1457,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					Variable result = PivotUtil.getOwnedResult((IterateExp)callExp);
 					Type accumulatorType = PivotUtil.getTypeInternal(accumulator);
 					Type resultType = PivotUtil.getTypeInternal(result);
-					if (!metamodelManager.conformsTo(resultType, TemplateParameterSubstitutions.EMPTY, accumulatorType, templateSubstitutions)) {
+					if (!standardLibrary.conformsTo(resultType, TemplateParameterSubstitutions.EMPTY, accumulatorType, templateSubstitutions)) {
 						isConformant = false;
 					}
 				}
@@ -1469,7 +1468,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression body = PivotUtil.getOwnedBody((LoopExp)callExp);
 				Type parameterType = PivotUtil.getTypeInternal(parameter);
 				Type bodyType = PivotUtil.getTypeInternal(body);
-				if (!metamodelManager.conformsTo(bodyType, TemplateParameterSubstitutions.EMPTY, parameterType, templateSubstitutions)) {
+				if (!standardLibrary.conformsTo(bodyType, TemplateParameterSubstitutions.EMPTY, parameterType, templateSubstitutions)) {
 					isConformant = false;
 				}
 			}
@@ -1503,7 +1502,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type actualType;
 		Type sourceType = source != null ? source.getType() : null;
 		if ((source != null) && (sourceType != null)) {				// XXX just one
-			actualType = metamodelManager.specializeType(formalType, callExp, sourceType, null);
+			actualType = TemplateParameterSubstitutionVisitor.specializeType(formalType, callExp, environmentFactory, sourceType, null);
 		}
 		else {
 			actualType = formalType;
@@ -1719,7 +1718,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, commonType, isNullFree, null, null);
 			Type type = standardLibrary.getCollectionType(typeArguments);
 			helper.setType(expression, type, true, null);
-			expression.setKind(TypeUtil.getCollectionKind((CollectionType) type));
+			expression.setKind(PivotUtil.getCollectionKind((CollectionType) type));
 		}
 		return expression;
 	}
@@ -2009,7 +2008,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	public Element visitInvalidLiteralExpCS(@NonNull InvalidLiteralExpCS csInvalidLiteralExp) {
 		InvalidLiteralExp expression = PivotUtil.getPivot(InvalidLiteralExp.class, csInvalidLiteralExp);
 		if (expression == null) {
-			expression = metamodelManager.createInvalidExpression();
+			expression = helper.createInvalidExpression();
 		}
 		//		expression.setType(metamodelManager.getOclInvalidType());
 		context.installPivotUsage(csInvalidLiteralExp, expression);
@@ -2242,7 +2241,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (pivot instanceof InvalidLiteralExp) {
 				return pivot;
 			}
-			InvalidLiteralExp invalidLiteralExp = metamodelManager.createInvalidExpression();
+			InvalidLiteralExp invalidLiteralExp = helper.createInvalidExpression();
 			context.installPivotUsage(csNameExp, invalidLiteralExp);
 			return invalidLiteralExp;
 		}

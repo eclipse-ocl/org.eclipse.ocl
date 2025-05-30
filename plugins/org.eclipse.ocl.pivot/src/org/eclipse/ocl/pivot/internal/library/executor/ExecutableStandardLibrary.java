@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -58,7 +57,6 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -337,7 +335,7 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 
 	@Override
 	public @Nullable Element getOperationTemplateParameter(@NonNull Operation anOperation, int index) {
-		return anOperation.getTypeParameters().get(index);
+		return anOperation.getTemplateParameters().get(index);
 	}
 
 	@Override
@@ -377,11 +375,6 @@ public abstract class ExecutableStandardLibrary /*extends AbstractExecutorElemen
 
 	public org.eclipse.ocl.pivot.@Nullable Class getPivotType(@NonNull String className) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @Nullable Type getPrimitiveType(@NonNull PrimitiveTypeId typeId) {
-		return TypeUtil.getPrimitiveType(this, typeId);
 	}
 
 	@Override

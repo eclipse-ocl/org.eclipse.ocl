@@ -15,13 +15,16 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 
-public class DomainReflectiveFragment extends ReflectiveFragment
+/**
+ * @since 7.0
+ */
+public class ExecutorReflectiveFragment extends ReflectiveFragment
 {
 //	protected final EClassifier eClassifier;
 
-	public DomainReflectiveFragment(@NonNull DomainReflectiveType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	public ExecutorReflectiveFragment(@NonNull ExecutorReflectiveType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
 		super(derivedInheritance, baseInheritance);
-//		this.eClassifier = derivedInheritance.getEClassifier();		
+//		this.eClassifier = derivedInheritance.getEClassifier();
 	}
 
 //	public final EClassifier getEClassifier() {

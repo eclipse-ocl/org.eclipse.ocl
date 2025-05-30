@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -31,18 +30,14 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -112,39 +107,13 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
-
-	/**
-	 * @since 7.0
-	 */		// XXX move to PivotHelper
-	@NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse);
-
-	/**
-	 * @since 7.0
-	 */
 	void createImplicitOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
 			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 
 	/**
 	 * @since 7.0
 	 */
-	@NonNull InvalidLiteralExp createInvalidExpression(/*Object object, String boundMessage, Throwable e*/);		// FIXME move to PivotHelper
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull NullLiteralExp createNullLiteralExp();		// FIXME move to PivotHelper
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull Orphanage createOrphanage();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull WildcardType createWildcardType(org.eclipse.ocl.pivot.@Nullable Class lowerBound, org.eclipse.ocl.pivot.@Nullable Class upperBound);		// FIXME move to PivotHelper
 
 	/**
 	 * @since 7.0
@@ -301,6 +270,7 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	/**
@@ -451,9 +421,4 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void setLibraryLoadInProgress(boolean libraryLoadInProgress);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull Type selfType, @Nullable Type selfTypeValue);
 }

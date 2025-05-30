@@ -186,7 +186,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 			VariableExp asInnerEnvExp1 = PivotUtil.createVariableExp(asInnerEnv);
 			VariableExp asInnerEnvExp2 = PivotUtil.createVariableExp(asInnerEnv);
 			OperationCallExp asCondition = helper.createOperationCallExp(asInnerEnvExp1, asEnvironmentHasFinalResultOperation, Collections.emptyList());
-			IfExp asIfExp = metamodelManager.createIfExp(asCondition, asInnerEnvExp2, asSource);
+			IfExp asIfExp = helper.createIfExp(asCondition, asInnerEnvExp2, asSource);
 			LetExp asLetExp = PivotUtil.createLetExp(asInnerEnv, asIfExp);
 			eContainer.eSet(eContainingFeature, asLetExp);
 		}

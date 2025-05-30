@@ -13,39 +13,22 @@ package org.eclipse.ocl.pivot.utilities;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.ParameterTypes;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
-import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class TypeUtil
 {
-	/**
-	 * @since 1.1
-	 */
-	public static @NonNull ParameterTypes EMPTY_PARAMETER_TYPES = createParameterTypes();
-
 	public static boolean conformsToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();
 		Type secondContainerType = secondCollectionType.getContainerType();
@@ -125,18 +108,6 @@ public class TypeUtil
 		return firstInheritance.isSuperInheritanceOf(secondInheritance);
 	}
 
-	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {
-		return new ParameterTypesImpl(parameterTypes);
-	}
-
-	public static @NonNull TemplateParameters createTemplateParameters(@NonNull TemplateParameter @NonNull ... parameters) {
-		return new TemplateParametersImpl(parameters);
-	}
-
-	public static @NonNull TemplateParameters createTemplateParameters(@NonNull List<@NonNull ? extends Type> parameters) {
-		return new TemplateParametersImpl(parameters);
-	}
-
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {
 		int iParameter = 0;
 		List<? extends Type> ownedParameters = lambdaType.getParameterTypes();
@@ -147,65 +118,6 @@ public class TypeUtil
 			parameterTypes[iParameter++] = ClassUtil.requireNonNull(parameterType);
 		}
 		return parameterTypes;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Deprecated /* use EnvironmentFactory */
-	public static @NonNull String getMetaclassName(@NonNull Type asInstanceType) {
-		return asInstanceType.eClass().getName();
-	/*	if (asInstanceType instanceof CollectionType) {
-			if (asInstanceType instanceof BagType) {
-				return TypeId.BAG_TYPE_NAME;
-			}
-			else if (asInstanceType instanceof OrderedSetType) {
-				return TypeId.ORDERED_SET_TYPE_NAME;
-			}
-			else if (asInstanceType instanceof SequenceType) {
-				return TypeId.SEQUENCE_TYPE_NAME;
-			}
-			else if (asInstanceType instanceof SetType) {
-				return TypeId.SET_TYPE_NAME;
-			}
-			else {
-				return TypeId.COLLECTION_TYPE_NAME;
-			}
-		}
-		else if (asInstanceType instanceof AnyType) {
-			return TypeId.ANY_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof Enumeration) {
-			return TypeId.ENUMERATION_NAME;
-		}
-		else if (asInstanceType instanceof InvalidType) {
-			return TypeId.INVALID_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof MapType) {
-			return TypeId.MAP_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof VoidType) {
-			return TypeId.VOID_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof BooleanType) {
-			return TypeId.BOOLEAN_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof PrimitiveType) {
-			return TypeId.PRIMITIVE_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof Stereotype) {
-			return TypeId.STEREOTYPE_NAME;
-		}
-		else if (asInstanceType instanceof TupleType) {
-			return TypeId.TUPLE_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof DataType) {
-			return TypeId.DATA_TYPE_NAME;
-		}
-		else if (asInstanceType instanceof ElementExtension) {
-			throw new IllegalStateException("ElementExtension must be processed where multiple names can be handled.");
-		}
-		return TypeId.CLASS_NAME;		// fallback for e.g. TemplateParameter */
 	}
 
 	public static @NonNull Type @NonNull [] getOperationParameterTypes(@NonNull Operation anOperation) {
@@ -231,40 +143,6 @@ public class TypeUtil
 			parameterTypes[iParameter++] = ClassUtil.requireNonNull(ownedParameter.getType());
 		}
 		return parameterTypes;
-	}
-
-	public static @Nullable Type getPrimitiveType(@NonNull StandardLibrary standardLibrary, @NonNull PrimitiveTypeId typeId) {
-		if (typeId == TypeId.BOOLEAN) {
-			return standardLibrary.getBooleanType();
-		}
-		else if (typeId == TypeId.INTEGER) {
-			return standardLibrary.getIntegerType();
-		}
-		else if (typeId == TypeId.REAL) {
-			return standardLibrary.getRealType();
-		}
-		else if (typeId == TypeId.STRING) {
-			return standardLibrary.getStringType();
-		}
-		else if (typeId == TypeId.UNLIMITED_NATURAL) {
-			return standardLibrary.getUnlimitedNaturalType();
-		}
-		else if (typeId == TypeId.OCL_ANY) {
-			return standardLibrary.getOclAnyType();
-		}
-		else if (typeId == TypeId.OCL_COMPARABLE) {
-			return standardLibrary.getOclComparableType();
-		}
-		else if (typeId == TypeId.OCL_ENUMERATION) {
-			return standardLibrary.getOclEnumerationType();
-		}
-		else if (typeId == TypeId.OCL_SELF) {
-			return standardLibrary.getOclSelfType();
-		}
-		else if (typeId == TypeId.OCL_SUMMABLE) {
-			return standardLibrary.getOclSummableType();
-		}
-		throw new UnsupportedOperationException();
 	}
 
 	public static boolean isEqualToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
@@ -319,23 +197,5 @@ public class TypeUtil
 		TypeId firstParts = firstTupleType.getTypeId();
 		TypeId secondParts = secondTupleType.getTypeId();
 		return firstParts == secondParts;
-	}
-
-	public static CollectionKind getCollectionKind(CollectionType collectionType) {
-		if (collectionType instanceof OrderedSetType) {
-			return CollectionKind.ORDERED_SET;
-		}
-		else if (collectionType instanceof SequenceType) {
-			return CollectionKind.SEQUENCE;
-		}
-		else if (collectionType instanceof SetType) {
-			return CollectionKind.SET;
-		}
-		else if (collectionType instanceof BagType) {
-			return CollectionKind.BAG;
-		}
-		else {
-			return CollectionKind.COLLECTION;
-		}
 	}
 }

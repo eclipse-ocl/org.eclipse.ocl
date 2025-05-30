@@ -184,7 +184,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		INode node = NodeModelUtils.getNode(csElement);
 		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
 		csElement.eResource().getErrors().add(resourceDiagnostic);
-		InvalidLiteralExp invalidLiteralExp = metamodelManager.createInvalidExpression();
+		InvalidLiteralExp invalidLiteralExp = new PivotHelper(environmentFactory).createInvalidExpression();
 		csElement.setPivot(invalidLiteralExp);
 		return invalidLiteralExp;
 	}

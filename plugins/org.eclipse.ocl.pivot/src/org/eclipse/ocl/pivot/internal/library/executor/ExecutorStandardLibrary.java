@@ -50,7 +50,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 {
 	private @NonNull Map<@NonNull String, WeakReference<@NonNull EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();		// Keys are interned
-	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull DomainReflectivePackage>> asPackageMap = null;
+	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull ExecutorReflectivePackage>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
@@ -149,7 +149,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 			}
 		}
 		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull DomainReflectivePackage>> asPackageMap2;
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull ExecutorReflectivePackage>> asPackageMap2;
 		synchronized (this) {
 			String nsURI = asPackage.getURI();
 			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
@@ -181,9 +181,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 			}
 		}
 		synchronized (asPackageMap2) {
-			DomainReflectivePackage executorPackage = weakGet(asPackageMap2, asPackage);
+			ExecutorReflectivePackage executorPackage = weakGet(asPackageMap2, asPackage);
 			if (executorPackage == null) {
-				executorPackage = new DomainReflectivePackage(this, asPackage);
+				executorPackage = new ExecutorReflectivePackage(this, asPackage);
 				asPackageMap2.put(asPackage, new WeakReference<>(executorPackage));
 			}
 			return executorPackage.getInheritance(asClass);

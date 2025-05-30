@@ -26,12 +26,12 @@ import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 
 /**
  * @since 1.3
@@ -208,9 +208,11 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	@NonNull
-	public TemplateParameters getTypeParameters() {
+	public @NonNull TemplateParameters getTemplateParameters() {
 		throw new UnsupportedOperationException();
 	}
 

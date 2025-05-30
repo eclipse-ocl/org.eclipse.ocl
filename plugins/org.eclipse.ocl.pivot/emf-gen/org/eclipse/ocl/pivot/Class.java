@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
@@ -321,13 +322,17 @@ extends Type, Namespace, TemplateableElement {
 
 	/**
 	 * Return the name of the meta-type of this type.
+	 *
+	 * @since 7.0
 	 */
 	@NonNull String getMetaclassName();
 
 	/**
-	 * Return the ordered list of type parameters of this type.
+	 * Return the template parameters of this type.
+	 *
+	 * @since 7.0
 	 */
-	@NonNull TemplateParameters getTypeParameters();
+	@NonNull TemplateParameters getTemplateParameters();
 
 	/**
 	 * Return true if this type is a Collection type and has ordered elements.
