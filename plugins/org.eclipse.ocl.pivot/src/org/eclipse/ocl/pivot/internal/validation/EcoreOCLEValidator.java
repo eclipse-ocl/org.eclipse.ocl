@@ -49,10 +49,10 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
@@ -835,7 +835,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (asElement == null) {
 			return  false;
 		}
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		Type requiredType = null;
 		Constraint asConstraint = null;
@@ -907,7 +907,7 @@ public class EcoreOCLEValidator implements EValidator
 		}
 		assert asType != null;
 		assert asExpressionType != null;
-		if (!environmentFactory.getMetamodelManager().conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, asType, TemplateParameterSubstitutions.EMPTY)) {
+		if (!standardLibrary.conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, asType, TemplateParameterSubstitutions.EMPTY)) {
 			if (diagnostics != null) {
 				String objectLabel = EObjectValidator.getObjectLabel(eNamedElement, context);
 				String message = StringUtil.bind(INCOMPATIBLE_TYPE_2, asExpressionType, role != null ? role : PivotConstantsInternal.UNKNOWN_ROLE, objectLabel);
@@ -952,7 +952,8 @@ public class EcoreOCLEValidator implements EValidator
 		if (requiredType != null) {
 			Type asExpressionType = expressionInOCL.getType();
 			assert asExpressionType != null;
-			if (!environmentFactory.getMetamodelManager().conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, requiredType, TemplateParameterSubstitutions.EMPTY)) {
+			StandardLibraryInternal standardLibrary = (StandardLibraryInternal)environmentFactory.getStandardLibrary();
+			if (!standardLibrary.conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, requiredType, TemplateParameterSubstitutions.EMPTY)) {
 				allOk = false;
 				if (diagnostics != null) {
 					String role = PivotUtil.getSpecificationRole(asSpecification);

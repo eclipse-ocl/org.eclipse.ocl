@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -34,15 +33,15 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
-import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperties;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeArgument;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ArrayIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
 public class EcoreExecutorType extends AbstractExecutorClass implements ExecutorTypeArgument
@@ -64,8 +63,8 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	 * @since 7.0
 	 */
 	protected final org.eclipse.ocl.pivot.@NonNull Package evaluationPackage;
-	private final @NonNull TemplateParameters typeParameters;
-	private /*@LazyNonNull*/ DomainProperties allProperties;
+	private final @NonNull TemplateParameters templateParameters;
+	private /*@LazyNonNull*/ ExecutorProperties allProperties;
 
 	protected @Nullable EClassifier eClassifier;
 	private @Nullable TypeId typeId = null;
@@ -74,10 +73,10 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
 	 * call of {@link #initFragments(ExecutorFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
-	public EcoreExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public EcoreExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... templateParameters) {
 		super(name, flags);
 		this.evaluationPackage = evaluationPackage;
-		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+		this.templateParameters = new TemplateParameters(templateParameters);
 		this.eClassifier = null;
 	}
 
@@ -85,10 +84,10 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
 	 * call of {@link #initFragments(ExecutorFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
-	public EcoreExecutorType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public EcoreExecutorType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... templateParameters) {
 		super(typeId.getName(), flags);
 		this.evaluationPackage = evaluationPackage;
-		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+		this.templateParameters = new TemplateParameters(templateParameters);
 		this.eClassifier = null;
 		this.typeId = typeId;
 	}
@@ -96,10 +95,10 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	/**
 	 * Construct an executable type descriptor for a known EClassifier.
 	 */
-	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... templateParameters) {
 		super(ClassUtil.requireNonNull(eClassifier.getName()), flags);
 		this.evaluationPackage = evaluationPackage;
-		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+		this.templateParameters = new TemplateParameters(templateParameters);
 		this.eClassifier = eClassifier;
 	}
 
@@ -208,9 +207,9 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 
 	@Override
 	public @Nullable Property getMemberProperty(@NonNull String name) {
-		DomainProperties allProperties2 = allProperties;
+		ExecutorProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(this);
+			allProperties = allProperties2 = new ExecutorProperties(this);
 		}
 		return allProperties2.getMemberProperty(name);
 	}
@@ -284,8 +283,8 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 //	}
 
 	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
-		return typeParameters;
+	public @NonNull TemplateParameters getTemplateParameters() {
+		return templateParameters;
 	}
 
 	@Override
@@ -301,12 +300,12 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 					}
 					else {
 						PackageId packageTypeId = evaluationPackage.getPackageId(); //IdManager.getPackageId(evaluationPackage);
-						TemplateParameters typeParameters = getTypeParameters();
+						TemplateParameters templateParameters = getTemplateParameters();
 						if (eClassifier instanceof EDataType) {
-							typeId2 = packageTypeId.getDataTypeId(name, typeParameters.parametersSize());
+							typeId2 = packageTypeId.getDataTypeId(name, templateParameters.parametersSize());
 						}
 						else {
-							typeId2 = packageTypeId.getClassId(name, typeParameters.parametersSize());
+							typeId2 = packageTypeId.getClassId(name, templateParameters.parametersSize());
 						}
 					}
 					typeId = typeId2;

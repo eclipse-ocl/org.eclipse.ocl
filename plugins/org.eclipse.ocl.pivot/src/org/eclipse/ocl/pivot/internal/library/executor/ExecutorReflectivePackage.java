@@ -20,15 +20,16 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * DomainExecutorPackage uses the limited Domain interfaces to construct a package description for use
  * in contexts where no explicit ExecutorPackage is available.
- * 
+ *
  * This typically occurs when a dynamic Ecore model is used but no MetamodelManager is accessible.
+ * @since 7.0
  */
-public class DomainReflectivePackage extends ReflectivePackage
+public class ExecutorReflectivePackage extends ReflectivePackage
 {
 	protected final @NonNull StandardLibrary standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package domainPackage;
 
-	public DomainReflectivePackage(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Package domainPackage) {
+	public ExecutorReflectivePackage(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Package domainPackage) {
 		super(ClassUtil.requireNonNull(domainPackage.getName()), domainPackage.getNsPrefix(), domainPackage.getURI(), domainPackage.getPackageId());
 		this.standardLibrary = standardLibrary;
 		this.domainPackage = domainPackage;
@@ -36,7 +37,7 @@ public class DomainReflectivePackage extends ReflectivePackage
 
 	@Override
 	protected @NonNull ReflectiveInheritance createInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
-		return new DomainReflectiveType(this, domainClass);
+		return new ExecutorReflectiveType(this, domainClass);
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class DomainReflectivePackage extends ReflectivePackage
 	public @NonNull PackageId getPackageId() {
 		return domainPackage.getPackageId();
 	}
-	
+
 	@Override
 	protected @NonNull StandardLibrary getStandardLibrary() {
 		return standardLibrary;

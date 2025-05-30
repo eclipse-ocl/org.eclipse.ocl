@@ -23,10 +23,10 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -278,7 +278,10 @@ implements Type {
 		throw new UnsupportedOperationException();		// FIXME
 	}
 
-	public @NonNull TemplateParameters getTypeParameters() {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull TemplateParameters getTemplateParameters() {
 		throw new UnsupportedOperationException();		// FIXME
 	}
 } //TypeImpl

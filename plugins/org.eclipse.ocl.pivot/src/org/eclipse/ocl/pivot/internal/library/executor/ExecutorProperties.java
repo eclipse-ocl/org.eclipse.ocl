@@ -25,12 +25,15 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 
-public class DomainProperties
+/**
+ * @since 7.0
+ */
+public class ExecutorProperties
 {
 	protected final @NonNull CompleteInheritance inheritance;
 	protected final @NonNull Map<String, Property> name2property = new HashMap<String, Property>();
 
-	public DomainProperties(@NonNull CompleteInheritance inheritance) {
+	public ExecutorProperties(@NonNull CompleteInheritance inheritance) {
 		this.inheritance = inheritance;
 		InheritanceFragment selfFragment = inheritance.getSelfFragment();
 		for (@NonNull Property property : selfFragment.getLocalProperties()) {

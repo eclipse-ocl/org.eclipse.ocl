@@ -40,8 +40,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -52,10 +50,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.IntegerLiteralExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -64,7 +59,6 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -72,17 +66,13 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -414,10 +404,10 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			Type specializedReferenceType = referenceType != null ? standardLibrary.getSpecializedType(referenceType, referenceBindings) : null;
 			Type specializedCandidateType = candidateType != null ? standardLibrary.getSpecializedType(candidateType, candidateBindings) : null;
 			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
-				if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
+				if (standardLibrary.conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 					return 1;
 				}
-				else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
+				else if (standardLibrary.conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
 					return -1;
 				}
 			}
@@ -443,10 +433,10 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
 				Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
 				if (referenceType != candidateType) {
-					if (!conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
+					if (!standardLibrary.conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 						referenceConformsToCandidate = false;
 					}
-					if (!conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
+					if (!standardLibrary.conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
 						candidateConformsToReference = false;
 					}
 				}
@@ -460,44 +450,14 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
 		Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
 		if (referenceType != candidateType) {
-			if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
+			if (standardLibrary.conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 				return 1;
 			}
-			else if (conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
+			else if (standardLibrary.conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
 				return -1;
 			}
 		}
 		return 0;
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return completeModel.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
-	}
-
-	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {		// FIXME move to PivotHelper
-		BooleanLiteralExp asBoolean = PivotFactory.eINSTANCE.createBooleanLiteralExp();
-		asBoolean.setBooleanSymbol(booleanSymbol);
-		asBoolean.setType(standardLibrary.getBooleanType());
-		asBoolean.setIsRequired(true);
-		return asBoolean;
-	}
-
-	/**
-	 * @since 1.1
-	 */
-	@Override
-	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {		// FIXME move to PivotHelper
-		Type commonType = getCommonType(ClassUtil.requireNonNull(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
-			ClassUtil.requireNonNull(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
-		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
-		asIf.setOwnedCondition(asCondition);
-		asIf.setOwnedThen(asThen);
-		asIf.setOwnedElse(asElse);
-		asIf.setType(commonType);
-		asIf.setIsRequired(asThen.isIsRequired() && asElse.isIsRequired());
-		return asIf;
 	}
 
 	/**
@@ -526,7 +486,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		Property oppositeProperty = PivotFactory.eINSTANCE.createProperty();
 		oppositeProperty.setName(oppositeName);
 		oppositeProperty.setIsImplicit(true);
-		if (!upper.equals(ValueUtil.ONE_VALUE)) {
+		if (!upper.equals(ValueUtil.UNLIMITED_ONE_VALUE)) {
 			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
 			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, localType, false, lower, upper);
 			oppositeProperty.setType(standardLibrary.getCollectionType(typeArguments));
@@ -541,32 +501,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		asProperty.setOpposite(oppositeProperty);
 	}
 
-	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {		// FIXME move to PivotHelper
-		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
-		asInteger.setIntegerSymbol(integerSymbol);
-		asInteger.setType(standardLibrary.getIntegerType());
-		asInteger.setIsRequired(true);
-		return asInteger;
-	}
-
-	@Override
-	public @NonNull InvalidLiteralExp createInvalidExpression(/*Object object, String boundMessage, Throwable e*/) {		// FIXME move to PivotHelper
-		InvalidLiteralExp invalidLiteralExp = PivotFactory.eINSTANCE.createInvalidLiteralExp();
-		invalidLiteralExp.setType(standardLibrary.getOclInvalidType());
-		//		invalidLiteralExp.setObject(object);
-		//		invalidLiteralExp.setReason(boundMessage);
-		//		invalidLiteralExp.setThrowable(e);
-		return invalidLiteralExp;
-	}
-
-	@Override
-	public @NonNull NullLiteralExp createNullLiteralExp() {		// FIXME move to PivotHelper
-		NullLiteralExp asNull = PivotFactory.eINSTANCE.createNullLiteralExp();
-		asNull.setType(standardLibrary.getOclVoidType());
-		asNull.setIsRequired(false);
-		return asNull;
-	}
-
 	@Override
 	public @NonNull Orphanage createOrphanage() {
 		return Orphanage.getOrphanage(asResourceSet);
@@ -579,39 +513,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			logger.error(error);
 		}
 		return precedenceManager;
-	}
-
-	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {		// FIXME move to PivotHelper
-		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
-		asReal.setRealSymbol(realSymbol);
-		asReal.setType(standardLibrary.getRealType());
-		asReal.setIsRequired(true);
-		return asReal;
-	}
-
-	public @NonNull StringLiteralExp createStringLiteralExp(@NonNull String stringSymbol) {		// FIXME move to PivotHelper
-		StringLiteralExp asString = PivotFactory.eINSTANCE.createStringLiteralExp();
-		asString.setStringSymbol(stringSymbol);
-		asString.setType(standardLibrary.getStringType());
-		asString.setIsRequired(true);
-		return asString;
-	}
-
-	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
-		UnlimitedNaturalLiteralExp asUnlimitedNatural = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
-		asUnlimitedNatural.setUnlimitedNaturalSymbol(unlimitedNaturalSymbol);
-		asUnlimitedNatural.setType(standardLibrary.getUnlimitedNaturalType());
-		asUnlimitedNatural.setIsRequired(true);
-		return asUnlimitedNatural;
-	}
-
-	@Override
-	public @NonNull WildcardType createWildcardType(org.eclipse.ocl.pivot.@Nullable Class lowerBound, org.eclipse.ocl.pivot.@Nullable Class upperBound) {		// FIXME move to PivotHelper
-		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
-	//	wildcardType.setName("?");			// Name is not significant
-	//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
-	//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());
-		return wildcardType;
 	}
 
 	@Override
@@ -912,10 +813,10 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
 			return standardLibrary.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
 		}
-		if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
+		if (standardLibrary.conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
 			return rightType;
 		}
-		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions)) {
+		if (standardLibrary.conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions)) {
 			return leftType;
 		}
 		CompleteInheritance leftInheritance = leftType.getInheritance(standardLibrary);
@@ -1305,11 +1206,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public @Nullable Resource getLibraryResource() { return asLibraryResource; }
 
-	public org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		org.eclipse.ocl.pivot.Class libraryType = standardLibrary.getRequiredLibraryType(string);
-		return getLibraryType(libraryType, templateArguments);
-	}
-
 	@Override @Deprecated
 	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments) {
 		//		assert !(libraryType instanceof CollectionType);
@@ -1327,21 +1223,22 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			return libraryType;
 		}
 		CompleteClassInternal libraryCompleteClass = getCompleteClass(libraryType);
-		org.eclipse.ocl.pivot.Class pivotClass = libraryCompleteClass.getPrimaryClass();
-		if (pivotClass instanceof CollectionType) {
-			assert pivotClass instanceof CollectionType;
-			assert templateArguments.size() == 1;
-			@NonNull Type templateArgument = templateArguments.get(0);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) pivotClass.getTypeId(), templateArgument, true, null, null);
-			@SuppressWarnings("unchecked") T specializedType = (T) standardLibrary.getCollectionType(typeArguments);
-			return specializedType;
+		org.eclipse.ocl.pivot.Class primaryClass = libraryCompleteClass.getPrimaryClass();
+		if (primaryClass instanceof CollectionType) {
+			throw new IllegalStateException("Use a CollectionType method");			// XXX
 		}
-		else if (pivotClass instanceof MapType) {
+		else if (primaryClass instanceof LambdaType) {
+			throw new IllegalStateException("Use a LambdaType method");			// XXX
+		}
+		else if (primaryClass instanceof MapType) {
 			throw new IllegalStateException("Use a MapType method");			// XXX
+		}
+		else if (primaryClass instanceof TupleType) {
+			throw new IllegalStateException("Use a TupleType method");			// XXX
 		}
 		else {
 			@SuppressWarnings("unchecked")
-			T specializedType = (T) libraryCompleteClass.getPartialClasses().getSpecializedType(templateArguments);
+			T specializedType = (T) standardLibrary.getSpecializedType(primaryClass, templateArguments);
 			return specializedType;
 		}
 	}
@@ -2197,16 +2094,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public void setTarget(Notifier newTarget) {
 		//		assert newTarget == asResourceSet;
-	}
-
-	/**
-	 * Return the specialized form of type analyzing actualExp to determine the formal to actual parameter mappings
-	 * using selfType as the value of OclSelf.
-	 */
-	@Override
-	public @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull Type selfType, @Nullable Type selfTypeValue) {
-		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
-		return TemplateParameterSubstitutionVisitor.specializeType(type, actualExp, environmentFactory, selfType, null);
 	}
 
 	@Override

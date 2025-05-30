@@ -54,8 +54,10 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
@@ -121,8 +123,8 @@ public class PivotHelper extends PivotUtil
 	}
 
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
-		Type commonType = metamodelManager.getCommonType(ClassUtil.requireNonNull(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
-			ClassUtil.requireNonNull(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
+		Type commonType = metamodelManager.getCommonType(getType(asThen), TemplateParameterSubstitutions.EMPTY,
+			getType(asElse), TemplateParameterSubstitutions.EMPTY);
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);
 		asIf.setOwnedThen(asThen);
@@ -297,6 +299,17 @@ public class PivotHelper extends PivotUtil
 		return asUnlimitedNatural;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull WildcardType createWildcardType(org.eclipse.ocl.pivot.@Nullable Class lowerBound, org.eclipse.ocl.pivot.@Nullable Class upperBound) {		// FIXME move to PivotHelper
+		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
+	//	wildcardType.setName("?");			// Name is not significant
+	//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
+	//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());
+		return wildcardType;
+	}
+
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
 		return ClassUtil.requireNonNull(metamodelManager.getASClass(TypeId.DATA_TYPE_NAME));
 	}
@@ -378,7 +391,7 @@ public class PivotHelper extends PivotUtil
 		EReference eContainmentFeature = unsafeCollectionCallExp.eContainmentFeature();
 		resetContainer(unsafeCollectionCallExp);
 		//
-		OCLExpression nullExpression = metamodelManager.createNullLiteralExp();
+		OCLExpression nullExpression = createNullLiteralExp();
 		OCLExpression safeCollectionCallExp = createOperationCallExp(unsafeCollectionCallExp, excludingOperation, Collections.singletonList(nullExpression));
 		//
 		eContainer.eSet(eContainmentFeature, safeCollectionCallExp);
@@ -400,11 +413,11 @@ public class PivotHelper extends PivotUtil
 		unsafeObjectCallExp.setOwnedSource(unsafeSourceExpression1);
 		//
 		OCLExpression unsafeSourceExpression2 = createVariableExp(unsafeSourceVariable);
-		OCLExpression nullExpression = metamodelManager.createNullLiteralExp();
+		OCLExpression nullExpression = createNullLiteralExp();
 		OCLExpression isUnsafeExpression = createOperationCallExp(unsafeSourceExpression2, oclEqualsOperation, Collections.singletonList(nullExpression));
 		//
-		OCLExpression thenExpression = metamodelManager.createNullLiteralExp();
-		OCLExpression safeObjectCallExp = metamodelManager.createIfExp(isUnsafeExpression, thenExpression, unsafeObjectCallExp);
+		OCLExpression thenExpression = createNullLiteralExp();
+		OCLExpression safeObjectCallExp = createIfExp(isUnsafeExpression, thenExpression, unsafeObjectCallExp);
 		//
 		LetExp safeExp = createLetExp(unsafeSourceVariable, safeObjectCallExp);
 		//

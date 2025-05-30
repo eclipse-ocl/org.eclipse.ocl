@@ -21,11 +21,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
-// import org.eclipse.ocl.pivot.ParameterTypes;
-// import org.eclipse.ocl.pivot.PivotTables;
-// import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -49,8 +45,8 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImple
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 
@@ -1845,12 +1841,12 @@ public class PivotTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _CallExp___Type = TypeUtil.createParameterTypes(PivotTables.Types._CallExp, PivotTables.Types._Type);
-		public static final @NonNull ParameterTypes _Property = TypeUtil.createParameterTypes(PivotTables.Types._Property);
-		public static final @NonNull ParameterTypes _String = TypeUtil.createParameterTypes(OCLstdlibTables.Types._String);
-		public static final @NonNull ParameterTypes _Type = TypeUtil.createParameterTypes(PivotTables.Types._Type);
-		public static final @NonNull ParameterTypes _Type___String = TypeUtil.createParameterTypes(PivotTables.Types._Type, OCLstdlibTables.Types._String);
-		public static final @NonNull ParameterTypes _ValueSpecification = TypeUtil.createParameterTypes(PivotTables.Types._ValueSpecification);
+		public static final @NonNull ParameterTypes _CallExp___Type = new ParameterTypes(PivotTables.Types._CallExp, PivotTables.Types._Type);
+		public static final @NonNull ParameterTypes _Property = new ParameterTypes(PivotTables.Types._Property);
+		public static final @NonNull ParameterTypes _String = new ParameterTypes(OCLstdlibTables.Types._String);
+		public static final @NonNull ParameterTypes _Type = new ParameterTypes(PivotTables.Types._Type);
+		public static final @NonNull ParameterTypes _Type___String = new ParameterTypes(PivotTables.Types._Type, OCLstdlibTables.Types._String);
+		public static final @NonNull ParameterTypes _ValueSpecification = new ParameterTypes(PivotTables.Types._ValueSpecification);
 
 		static {
 			Init.initEnd();
@@ -1875,10 +1871,10 @@ public class PivotTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull ExecutorOperation _BooleanType__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._BooleanType,
+		public static final @NonNull ExecutorOperation _BooleanType__allInstances = new ExecutorOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._BooleanType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull ExecutorOperation _Class__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Class,
+		public static final @NonNull ExecutorOperation _Class__allInstances = new ExecutorOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._Class,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _CompleteModel__getOwnedCompletePackage = new ExecutorOperation("getOwnedCompletePackage", Parameters._String, Types._CompleteModel,
@@ -1887,49 +1883,49 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorOperation _CompletePackage__getOwnedCompleteClass = new ExecutorOperation("getOwnedCompleteClass", Parameters._String, Types._CompletePackage,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _Element__allOwnedElements = new ExecutorOperation("allOwnedElements", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Element,
+		public static final @NonNull ExecutorOperation _Element__allOwnedElements = new ExecutorOperation("allOwnedElements", ParameterTypes.EMPTY_LIST, Types._Element,
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull ExecutorOperation _Element__getValue = new ExecutorOperation("getValue", Parameters._Type___String, Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _Enumeration__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Enumeration,
+		public static final @NonNull ExecutorOperation _Enumeration__allInstances = new ExecutorOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._Enumeration,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull ExecutorOperation _InvalidType__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._InvalidType,
+		public static final @NonNull ExecutorOperation _InvalidType__allInstances = new ExecutorOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._InvalidType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull ExecutorOperation _OCLExpression__isNonNull = new ExecutorOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
+		public static final @NonNull ExecutorOperation _OCLExpression__isNonNull = new ExecutorOperation("isNonNull", ParameterTypes.EMPTY_LIST, Types._OCLExpression,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _OCLExpression__isNull = new ExecutorOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
+		public static final @NonNull ExecutorOperation _OCLExpression__isNull = new ExecutorOperation("isNull", ParameterTypes.EMPTY_LIST, Types._OCLExpression,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _OperationCallExp__hasOclVoidOverload = new ExecutorOperation("hasOclVoidOverload", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OperationCallExp,
+		public static final @NonNull ExecutorOperation _OperationCallExp__hasOclVoidOverload = new ExecutorOperation("hasOclVoidOverload", ParameterTypes.EMPTY_LIST, Types._OperationCallExp,
 			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull ExecutorOperation _Property__isAttribute = new ExecutorOperation("isAttribute", Parameters._Property, Types._Property,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _PropertyCallExp__getSpecializedReferredPropertyOwningType = new ExecutorOperation("getSpecializedReferredPropertyOwningType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._PropertyCallExp,
+		public static final @NonNull ExecutorOperation _PropertyCallExp__getSpecializedReferredPropertyOwningType = new ExecutorOperation("getSpecializedReferredPropertyOwningType", ParameterTypes.EMPTY_LIST, Types._PropertyCallExp,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _PropertyCallExp__getSpecializedReferredPropertyType = new ExecutorOperation("getSpecializedReferredPropertyType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._PropertyCallExp,
+		public static final @NonNull ExecutorOperation _PropertyCallExp__getSpecializedReferredPropertyType = new ExecutorOperation("getSpecializedReferredPropertyType", ParameterTypes.EMPTY_LIST, Types._PropertyCallExp,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _ReferringElement__getReferredElement = new ExecutorOperation("getReferredElement", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ReferringElement,
+		public static final @NonNull ExecutorOperation _ReferringElement__getReferredElement = new ExecutorOperation("getReferredElement", ParameterTypes.EMPTY_LIST, Types._ReferringElement,
 			0, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull ExecutorOperation _SelfType__specializeIn = new ExecutorOperation("specializeIn", Parameters._CallExp___Type, Types._SelfType,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _Stereotype__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Stereotype,
+		public static final @NonNull ExecutorOperation _Stereotype__allInstances = new ExecutorOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._Stereotype,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Type__conformsTo = new ExecutorOperation("conformsTo", Parameters._Type, Types._Type,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Type__flattenedType = new ExecutorOperation("flattenedType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
+		public static final @NonNull ExecutorOperation _Type__flattenedType = new ExecutorOperation("flattenedType", ParameterTypes.EMPTY_LIST, Types._Type,
 			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _Type__isClass = new ExecutorOperation("isClass", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
+		public static final @NonNull ExecutorOperation _Type__isClass = new ExecutorOperation("isClass", ParameterTypes.EMPTY_LIST, Types._Type,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _Type__isTemplateParameter = new ExecutorOperation("isTemplateParameter", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Type,
+		public static final @NonNull ExecutorOperation _Type__isTemplateParameter = new ExecutorOperation("isTemplateParameter", ParameterTypes.EMPTY_LIST, Types._Type,
 			3, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull ExecutorOperation _Type__specializeIn = new ExecutorOperation("specializeIn", Parameters._CallExp___Type, Types._Type,
 			4, TemplateParameters.EMPTY_LIST, null);
@@ -1937,20 +1933,20 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorOperation _TypedElement__CompatibleBody = new ExecutorOperation("CompatibleBody", Parameters._ValueSpecification, Types._TypedElement,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _ValueSpecification__booleanValue = new ExecutorOperation("booleanValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
+		public static final @NonNull ExecutorOperation _ValueSpecification__booleanValue = new ExecutorOperation("booleanValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _ValueSpecification__integerValue = new ExecutorOperation("integerValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
+		public static final @NonNull ExecutorOperation _ValueSpecification__integerValue = new ExecutorOperation("integerValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
 			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _ValueSpecification__isComputable = new ExecutorOperation("isComputable", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
+		public static final @NonNull ExecutorOperation _ValueSpecification__isComputable = new ExecutorOperation("isComputable", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _ValueSpecification__isNull = new ExecutorOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
+		public static final @NonNull ExecutorOperation _ValueSpecification__isNull = new ExecutorOperation("isNull", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
 			3, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _ValueSpecification__stringValue = new ExecutorOperation("stringValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
+		public static final @NonNull ExecutorOperation _ValueSpecification__stringValue = new ExecutorOperation("stringValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
 			4, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _ValueSpecification__unlimitedValue = new ExecutorOperation("unlimitedValue", TypeUtil.EMPTY_PARAMETER_TYPES, Types._ValueSpecification,
+		public static final @NonNull ExecutorOperation _ValueSpecification__unlimitedValue = new ExecutorOperation("unlimitedValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
 			5, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull ExecutorOperation _VoidType__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._VoidType,
+		public static final @NonNull ExecutorOperation _VoidType__allInstances = new ExecutorOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._VoidType,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		static {

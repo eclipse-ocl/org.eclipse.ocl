@@ -19,10 +19,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -127,16 +125,8 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		CompleteModelInternal completeModel = getCompleteModel();
 		String name = partialClass.getName();
 		if (name != null) {
-			CompleteClassInternal completeClass = null;
-			if (partialClass instanceof PrimitiveType) {
-				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
-				completeClass = primitiveCompletePackage.getCompleteClass(partialClass);
-			}
-			else if ((partialClass instanceof MapType) && (partialClass.getUnspecializedElement() != null)) {
-				CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
-				completeClass = orphanCompletePackage.getCompleteClass(partialClass);
-			}
-			else if (PivotConstants.METAMODEL_NAME.equals(getCompletePackage().getURI())) {
+			CompleteClassInternal completeClass = completeModel.basicGetSharedCompleteClass(partialClass);
+			if ((completeClass == null) && PivotConstants.METAMODEL_NAME.equals(getCompletePackage().getURI())) {
 				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 				completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
 			}

@@ -46,6 +46,14 @@ public interface StandardLibraryInternal extends StandardLibrary
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
+
+	/**
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
+			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
+
+
 	/**
 	 * @since 1.17
 	 */
@@ -82,6 +90,11 @@ public interface StandardLibraryInternal extends StandardLibrary
 	org.eclipse.ocl.pivot.@NonNull Class getOclTypeType();
 	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 	org.eclipse.ocl.pivot.@NonNull Class getRequiredLibraryType(@NonNull String typeName);
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
+			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
 	/**
 	 * @since 7.0
 	 */

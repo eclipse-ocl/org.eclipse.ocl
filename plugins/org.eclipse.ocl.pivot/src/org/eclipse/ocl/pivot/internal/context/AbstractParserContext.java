@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -209,7 +210,7 @@ public abstract class AbstractParserContext implements ParserContext
 		} catch (IOException e) {
 			//				throw new ParserException("Failed to load expression", e);
 			@NonNull ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
-			OCLExpression invalidValueBody = getMetamodelManager().createInvalidExpression();
+			OCLExpression invalidValueBody = new PivotHelper(environmentFactory).createInvalidExpression();
 			PivotUtil.setBody(specification, invalidValueBody, null);
 			return specification;
 		} finally {

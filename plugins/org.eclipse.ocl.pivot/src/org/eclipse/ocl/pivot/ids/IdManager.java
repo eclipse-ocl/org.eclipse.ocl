@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -54,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl.TuplePartIdSingletonSc
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -234,9 +234,9 @@ public final class IdManager
 		assert name != null;
 		org.eclipse.ocl.pivot.Package parentPackage = unspecializedType.getOwningPackage();
 		if (parentPackage != null) {
-			TemplateParameters typeParameters = unspecializedType.getTypeParameters();
+			TemplateParameters templateParameters = unspecializedType.getTemplateParameters();
 			PackageId packageId = parentPackage.getPackageId();
-			ClassId unspecializedClassId = packageId.getClassId(name, typeParameters.parametersSize());
+			ClassId unspecializedClassId = packageId.getClassId(name, templateParameters.parametersSize());
 			BindingsId bindingsId = basicGetBindingsId(PivotUtil.getOwnedBindings(aType));
 			return bindingsId != null ? (ClassId)unspecializedClassId.getSpecializedId(bindingsId) : unspecializedClassId;
 		}
@@ -297,9 +297,9 @@ public final class IdManager
 		assert name != null;
 		org.eclipse.ocl.pivot.Package parentPackage = unspecializedType.getOwningPackage();
 		if (parentPackage != null) {
-			TemplateParameters typeParameters = unspecializedType.getTypeParameters();
+			TemplateParameters templateParameters = unspecializedType.getTemplateParameters();
 			PackageId packageId = parentPackage.getPackageId();
-			DataTypeId unspecializedDataTypeId = packageId.getDataTypeId(name, typeParameters.parametersSize());
+			DataTypeId unspecializedDataTypeId = packageId.getDataTypeId(name, templateParameters.parametersSize());
 			BindingsId bindingsId = basicGetBindingsId(PivotUtil.getOwnedBindings(aType));
 			return bindingsId != null ? (DataTypeId)unspecializedDataTypeId.getSpecializedId(bindingsId) : unspecializedDataTypeId;
 		}
@@ -396,8 +396,8 @@ public final class IdManager
 		String name = NameUtil.getSafeName(anOperation);
 		org.eclipse.ocl.pivot.Class owningClass = PivotUtil.getOwningClass(anOperation);
 		TypeId parentTypeId = owningClass.getTypeId();
-		TemplateParameters typeParameters = anOperation.getTypeParameters();
-		int typeParametersSize = typeParameters.parametersSize();
+		TemplateParameters templateParameters = anOperation.getTemplateParameters();
+		int typeParametersSize = templateParameters.parametersSize();
 		ParametersId parametersId;
 		if ((typeParametersSize <= 0) || (anOperation.getUnspecializedElement() != null)) {	// If unspecializeable or specialized
 			@NonNull Type @NonNull [] parameterTypes = TypeUtil.getOperationParameterTypes(anOperation);

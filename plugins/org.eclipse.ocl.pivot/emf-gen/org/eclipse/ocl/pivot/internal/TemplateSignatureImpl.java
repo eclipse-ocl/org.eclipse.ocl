@@ -29,12 +29,11 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -352,7 +351,10 @@ public class TemplateSignatureImpl
 		return visitor.visitTemplateSignature(this);
 	}
 
-	public static @NonNull TemplateParameters getTypeParameters(@Nullable TemplateSignature templateSignature) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TemplateParameters getTemplateParameters(@Nullable TemplateSignature templateSignature) {
 		if (templateSignature == null) {
 			return TemplateParameters.EMPTY_LIST;
 		}
@@ -362,6 +364,6 @@ public class TemplateSignatureImpl
 		for (int i = 0; i < iMax; i++) {
 			typeParameters[i] = templateParameters.get(i);
 		}
-		return TypeUtil.createTemplateParameters(typeParameters);
+		return new TemplateParameters(typeParameters);
 	}
 } //TemplateSignatureImpl
