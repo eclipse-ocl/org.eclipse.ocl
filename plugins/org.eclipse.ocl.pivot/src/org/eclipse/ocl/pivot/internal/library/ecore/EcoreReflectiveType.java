@@ -26,31 +26,33 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
-import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperties;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 {
 	public static final @NonNull List<CompleteInheritance> EMPTY_INHERITANCES = Collections.emptyList();
 	protected final @NonNull EcoreReflectivePackage evaluationPackage;
 	protected final @NonNull EClassifier eClassifier;
-	protected final @NonNull TemplateParameters typeParameters;
-	private /*@LazyNonNull*/ DomainProperties allProperties;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull TemplateParameters templateParameters;
+	private /*@LazyNonNull*/ ExecutorProperties allProperties;
 
-	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
+	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... templateParameters) {
 		super(ClassUtil.requireNonNull(eClassifier.getName()), flags);
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
-		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+		this.templateParameters = new TemplateParameters(templateParameters);
 	}
 
 	@Override
@@ -169,9 +171,9 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 
 	@Override
 	public @Nullable Property getMemberProperty(@NonNull String name) {
-		DomainProperties allProperties2 = allProperties;
+		ExecutorProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(this);
+			allProperties = allProperties2 = new ExecutorProperties(this);
 		}
 		return allProperties2.getMemberProperty(name);
 	}
@@ -208,12 +210,15 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 
 	@Override
 	public @NonNull TypeId getTypeId() {
-		return getOwningPackage().getPackageId().getClassId(name, getPivotClass().getTypeParameters().parametersSize());			// FIXME DataTypeId alternative
+		return getOwningPackage().getPackageId().getClassId(name, getPivotClass().getTemplateParameters().parametersSize());			// FIXME DataTypeId alternative
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
-		return typeParameters;
+	public @NonNull TemplateParameters getTemplateParameters() {
+		return templateParameters;
 	}
 
 	@Override

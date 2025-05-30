@@ -41,12 +41,15 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.IterableType;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -70,7 +73,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 import com.google.common.collect.Lists;
 
@@ -454,12 +456,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return completeEnvironment.conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions);
-	}
-
-	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		completeEnvironment.didAddClass(partialClass, completeClass);
 	}
@@ -722,6 +718,23 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
+	public @Nullable CompleteClassInternal basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass instanceof PrimitiveType) {
+			CompletePackageInternal primitiveCompletePackage = getPrimitiveCompletePackage();
+			return primitiveCompletePackage.getCompleteClass(asClass);
+		}
+		else if ((asClass instanceof IterableType) && (asClass.getUnspecializedElement() != null)) {
+			CompletePackageInternal orphanCompletePackage = getOrphanCompletePackage();
+			return orphanCompletePackage.getCompleteClass(asClass);
+		}
+		else if ((asClass instanceof LambdaType) && (((LambdaType)asClass).getContextType() != null)) {
+			CompletePackageInternal orphanCompletePackage = getOrphanCompletePackage();
+			return orphanCompletePackage.getCompleteClass(asClass);
+		}
+		return null;
+	}
+
+	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return ClassUtil.requireNonNull(environmentFactory);
 	}
@@ -860,7 +873,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						}
 					}
 					CompleteInheritanceImpl superCompleteInheritance = superCompleteClass.getCompleteInheritance();
-					org.eclipse.ocl.pivot.Class specializedSuperType = superCompleteInheritance.getCompleteClass().getPartialClasses().getSpecializedType(superTemplateArgumentList);
+					org.eclipse.ocl.pivot.Class genericSuperType = superCompleteInheritance.getCompleteClass().getPrimaryClass();
+					org.eclipse.ocl.pivot.Class specializedSuperType = environmentFactory.getStandardLibrary().getSpecializedType(genericSuperType, superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);
 				}
 			}

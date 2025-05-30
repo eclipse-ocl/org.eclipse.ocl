@@ -315,7 +315,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 
 	protected @NonNull NullLiteralExp createNullLiteralExp() {
-		return metamodelManager.createNullLiteralExp();
+		return helper.createNullLiteralExp();
 	}
 
 	public @NonNull CGValuedElement getEvaluatorVariable() {

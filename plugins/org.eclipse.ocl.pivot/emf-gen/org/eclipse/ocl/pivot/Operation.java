@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 
 /**
  * <!-- begin-user-doc -->
@@ -383,7 +384,9 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	@NonNull ParameterTypes getParameterTypes();
 
 	/**
-	 * Return the ordered list of type parameters of this operation.
+	 * Return the template arguments of this operation.
+	 *
+	 * @since 7.0
 	 */
-	@NonNull TemplateParameters getTypeParameters();
+	@NonNull TemplateParameters getTemplateParameters();
 } // Operation

@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -433,6 +434,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	public @NonNull Type specializeType(@NonNull Type type) {
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		if (type instanceof NormalizedTemplateParameter) {
 			Type actualType = getTemplateSpecialization().get(((NormalizedTemplateParameter)type).getIndex());
@@ -463,7 +465,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			Type elementType = PivotUtil.getElementType(collectionType);
 			Type specializedElementType = specializeType(elementType);
 			CollectionType unspecializedCollectionType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
-			return environmentFactory.getStandardLibrary().getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+			return standardLibrary.getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
 		}
 		else if (type instanceof MapType) {
 			MapType mapType = (MapType)type;
@@ -474,9 +476,9 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			Type specializedKeyType = specializeType(keyType);
 			Type specializedValueType = specializeType(valueType);
 			MapType unspecializedMapType = PivotUtil.getUnspecializedTemplateableElement(mapType);
-			assert unspecializedMapType == environmentFactory.getStandardLibrary().getMapType();
+			assert unspecializedMapType == standardLibrary.getMapType();
 			// Ignore the entryClass.
-			return environmentFactory.getStandardLibrary().getMapType(specializedKeyType, keysAreNullFree, specializedValueType, valuesAreNullFree);
+			return standardLibrary.getMapType(specializedKeyType, keysAreNullFree, specializedValueType, valuesAreNullFree);
 		}
 		else if (type instanceof PrimitiveType) {
 			return type;
@@ -493,7 +495,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				specializedParameterTypes.add(specializeType(parameterType));
 			}
 			Type specializedResultType = specializeType(PivotUtil.getResultType(lambdaType));
-			return metamodelManager.getStandardLibrary().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType, null);
+			return standardLibrary.getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType, null);
 		}
 		else if (templateSpecialization == null) {	// type instanceof Class
 			return type;

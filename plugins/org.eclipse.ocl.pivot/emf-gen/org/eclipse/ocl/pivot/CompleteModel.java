@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -133,8 +132,6 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompletePackage getOwnedCompletePackage(String name);
 
 	void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI);
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	/**
 	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
 	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constraint> rather than just a Constraint.

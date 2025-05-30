@@ -20,7 +20,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -28,20 +27,27 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorOperation;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 
 public class ExecutorOperation extends AbstractExecutorOperation
 {
 	protected final @NonNull ParameterTypes parameterTypes;
 	protected final int index;
 	protected final @NonNull LibraryFeature implementation;
-	protected final @NonNull TemplateParameters typeParameters;
-	
-	public ExecutorOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type type, int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull TemplateParameters templateParameters;
+
+	/**
+	 * @since 7.0
+	 */
+	public ExecutorOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type type, int index, @NonNull TemplateParameters templateParameters, @Nullable LibraryFeature implementation) {
 		super(name, type);
 		this.parameterTypes = parameterTypes;
 		this.index = index;
 		this.implementation = implementation != null ? implementation : OclAnyUnsupportedOperation.INSTANCE;		// FIXME
-		this.typeParameters = typeParameters;
+		this.templateParameters = templateParameters;
 	}
 
 	@Override
@@ -73,7 +79,7 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	public @NonNull OperationId getOperationId() {
 		throw new UnsupportedOperationException();			// FIXME
 	}
-	
+
 	@Override
 	public @NonNull List<Constraint> getOwnedConstraints() {
 		throw new UnsupportedOperationException();			// FIXME
@@ -105,14 +111,14 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	public @NonNull ParametersId getParametersId() {
 		return parameterTypes.getParametersId();
 	}
-	
+
 	@Override
 	public @NonNull ParameterTypes getParameterTypes() {
 		return parameterTypes;
 	}
 
-	
-	
+
+
 
 //	@Override
 //	public @NonNull DomainType getType() {
@@ -127,8 +133,8 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	}
 
 	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
-		return typeParameters;
+	public @NonNull TemplateParameters getTemplateParameters() {
+		return templateParameters;
 	}
 
 	@Override

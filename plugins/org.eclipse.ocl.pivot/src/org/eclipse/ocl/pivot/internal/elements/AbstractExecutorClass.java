@@ -26,12 +26,12 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 public class AbstractExecutorClass extends AbstractExecutorType implements org.eclipse.ocl.pivot.Class
@@ -133,8 +133,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-	@NonNull
-	public TemplateParameters getTypeParameters() {
+	public @NonNull TemplateParameters getTemplateParameters() {
 		return TemplateParameters.EMPTY_LIST;
 		//		throw new UnsupportedOperationException();
 	}

@@ -47,8 +47,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
+import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
@@ -89,6 +91,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
@@ -101,6 +104,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -467,7 +472,7 @@ public class PivotUtil implements PivotConstants
 		CollectionLiteralExp collectionLiteralExp = PivotFactory.eINSTANCE.createCollectionLiteralExp();
 		Iterables.addAll(collectionLiteralExp.getOwnedParts(), asParts);
 		collectionLiteralExp.setType(asType);
-		collectionLiteralExp.setKind(TypeUtil.getCollectionKind(asType));
+		collectionLiteralExp.setKind(getCollectionKind(asType));
 		collectionLiteralExp.setIsRequired(true);
 		return collectionLiteralExp;
 	}
@@ -1530,6 +1535,27 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypedElement typedElement) {
 		return ClassUtil.requireNonNull((org.eclipse.ocl.pivot.Class)typedElement.getType());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static CollectionKind getCollectionKind(@NonNull CollectionType collectionType) {
+		if (collectionType instanceof OrderedSetType) {
+			return CollectionKind.ORDERED_SET;
+		}
+		else if (collectionType instanceof SequenceType) {
+			return CollectionKind.SEQUENCE;
+		}
+		else if (collectionType instanceof SetType) {
+			return CollectionKind.SET;
+		}
+		else if (collectionType instanceof BagType) {
+			return CollectionKind.BAG;
+		}
+		else {
+			return CollectionKind.COLLECTION;
+		}
 	}
 
 	/**

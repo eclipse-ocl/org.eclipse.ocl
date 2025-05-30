@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -59,15 +58,16 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1369,8 +1369,8 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
-		return TemplateSignatureImpl.getTypeParameters(getOwnedSignature());
+	public @NonNull TemplateParameters getTemplateParameters() {
+		return TemplateSignatureImpl.getTemplateParameters(getOwnedSignature());
 	}
 
 	@Override
@@ -1449,17 +1449,14 @@ implements org.eclipse.ocl.pivot.Class {
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp callExpr, @Nullable Type selfType) {
 		assert callExpr != null;
 		if (selfType != null) {
+			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(callExpr);
 			TemplateSignature templateSignature = getOwnedSignature();
 			if (templateSignature != null) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(callExpr);
-				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				return metamodelManager.specializeType(this, callExpr, selfType, null);
+				return TemplateParameterSubstitutionVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
 			}
 			List<TemplateBinding> templateBindings = getOwnedBindings();
 			if ((templateBindings != null) && !templateBindings.isEmpty()) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(callExpr);
-				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				return metamodelManager.specializeType(this, callExpr, selfType, null);
+				return TemplateParameterSubstitutionVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
 			}
 		}
 		return this;
