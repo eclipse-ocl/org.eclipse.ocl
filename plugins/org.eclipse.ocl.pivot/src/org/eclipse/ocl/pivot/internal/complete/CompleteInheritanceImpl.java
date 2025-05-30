@@ -19,12 +19,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.base.Function;
@@ -121,8 +121,11 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 		return completeClass.getPrimaryClass().getTypeId();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
+	public @NonNull TemplateParameters getTemplateParameters() {
 		return TemplateParameters.EMPTY_LIST;
 	}
 

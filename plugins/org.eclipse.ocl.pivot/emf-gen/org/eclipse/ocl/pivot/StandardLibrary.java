@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
@@ -317,7 +318,39 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Package getPackage();
 
-	Type getPrimitiveType(@NonNull PrimitiveTypeId id);
+	default @Nullable Type getPrimitiveType(@NonNull PrimitiveTypeId typeId) {
+		if (typeId == TypeId.BOOLEAN) {
+			return getBooleanType();
+		}
+		else if (typeId == TypeId.INTEGER) {
+			return getIntegerType();
+		}
+		else if (typeId == TypeId.REAL) {
+			return getRealType();
+		}
+		else if (typeId == TypeId.STRING) {
+			return getStringType();
+		}
+		else if (typeId == TypeId.UNLIMITED_NATURAL) {
+			return getUnlimitedNaturalType();
+		}
+		else if (typeId == TypeId.OCL_ANY) {
+			return getOclAnyType();
+		}
+		else if (typeId == TypeId.OCL_COMPARABLE) {
+			return getOclComparableType();
+		}
+		else if (typeId == TypeId.OCL_ENUMERATION) {
+			return getOclEnumerationType();
+		}
+		else if (typeId == TypeId.OCL_SELF) {
+			return getOclSelfType();
+		}
+		else if (typeId == TypeId.OCL_SUMMABLE) {
+			return getOclSummableType();
+		}
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named

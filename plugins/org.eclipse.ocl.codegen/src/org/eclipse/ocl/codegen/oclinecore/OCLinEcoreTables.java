@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -68,7 +67,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
-import org.eclipse.ocl.pivot.internal.library.ecore.ExecutorGenericMapType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
@@ -78,6 +76,7 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
+import org.eclipse.ocl.pivot.internal.library.ecore.ExecutorGenericMapType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
@@ -86,11 +85,11 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
@@ -277,8 +276,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append(getTemplateBindingsName(parameterTypes));
 		}
 		else {
-			s.appendClassReference(null, TypeUtil.class);
-			s.append(".EMPTY_PARAMETER_TYPES");
+			s.appendClassReference(null, ParameterTypes.class);
+			s.append(".EMPTY_LIST");
 		}
 	}
 
@@ -739,8 +738,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(".EMPTY_LIST");
 				}
 				else {
-					s.appendClassReference(null, TypeUtil.class);
-					s.append(".createTemplateParameters(");
+					s.append("new ");
+					s.appendClassReference(null, TemplateParameters.class);
+					s.append("(");
 					boolean first = true;
 					for (TemplateParameter parameter : ownedTemplateSignature.getOwnedParameters()) {
 						if (parameter != null) {
@@ -796,9 +796,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.appendClassReference(true, ParameterTypes.class);
 					s.append(" ");
 					s.append(name);
-					s.append(" = ");
-					s.appendClassReference(null, TypeUtil.class);
-					s.append(".createParameterTypes(");
+					s.append(" = new ");
+					s.appendClassReference(null, ParameterTypes.class);
+					s.append("(");
 					for (int i = 0; i < types.size(); i++) {
 						if (i > 0) {
 							s.append(", ");

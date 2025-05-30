@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
@@ -266,8 +266,8 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 
 	@Override
 	public void appendEqualsValue(@NonNull JavaStream js, @NonNull CGValuedElement thisValue, @NonNull CGValuedElement thatValue, boolean notEquals) {
-		MetamodelManager metamodelManager = js.getCodeGenerator().getEnvironmentFactory().getMetamodelManager();
-		if (isBoxedType(metamodelManager, thisValue) && isBoxedType(metamodelManager, thatValue)) {
+		StandardLibraryInternal standardLibrary = js.getCodeGenerator().getEnvironmentFactory().getStandardLibrary();
+		if (isBoxedType(standardLibrary, thisValue) && isBoxedType(standardLibrary, thatValue)) {
 			boolean nullSafe = thisValue.isNonNull() && thatValue.isNonNull();
 			if (!nullSafe) {
 				String prefix = "";
@@ -394,7 +394,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		return javaClass == Object.class;
 	}
 
-	protected boolean isBoxedType(@NonNull MetamodelManager metamodelManager, @NonNull CGValuedElement cgValue) {
+	protected boolean isBoxedType(@NonNull StandardLibraryInternal standardLibrary, @NonNull CGValuedElement cgValue) {
 		Element ast = cgValue.getAst();
 		if (!(ast instanceof TypedElement)) {
 			return false;
@@ -410,8 +410,8 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		if (type instanceof Enumeration) {
 			return false;
 		}
-		Type oclTypeType = metamodelManager.getStandardLibrary().getOclTypeType();
-		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
+		Type oclTypeType = standardLibrary.getOclTypeType();
+		return standardLibrary.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
 
 	@Override

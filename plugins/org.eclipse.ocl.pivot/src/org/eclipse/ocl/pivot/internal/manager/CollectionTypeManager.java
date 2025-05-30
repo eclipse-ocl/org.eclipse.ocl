@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 
 /**
- * CollectionTypeManagerInternal encapsulates the knowledge about known collection types.
+ * CollectionTypeManager encapsulates the knowledge about known collection types.
  *
  * @since 7.0
  */

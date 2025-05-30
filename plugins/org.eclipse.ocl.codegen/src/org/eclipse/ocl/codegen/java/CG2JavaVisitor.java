@@ -140,6 +140,7 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractEvaluationOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager;
@@ -1002,8 +1003,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			return false;
 		}
 		MetamodelManager metamodelManager = context.getEnvironmentFactory().getMetamodelManager();
-		Type oclTypeType = environmentFactory.getStandardLibrary().getOclTypeType();
-		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		Type oclTypeType = standardLibrary.getOclTypeType();
+		return standardLibrary.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
 
 	protected boolean isEnumerationLiteral(@NonNull CGValuedElement cgValue) {

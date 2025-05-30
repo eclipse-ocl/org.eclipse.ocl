@@ -157,7 +157,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				if (bodyType != null) {
 					MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 					specializedBodyType = specializedBodyType != null ? specializedBodyType/*.behavioralType()*/ : null;
-					if ((specializedBodyType != null) && metamodelManager.conformsTo(specializedBodyType, TemplateParameterSubstitutions.EMPTY, oclComparableType, TemplateParameterSubstitutions.EMPTY)) {
+					if ((specializedBodyType != null) && standardLibrary.conformsTo(specializedBodyType, TemplateParameterSubstitutions.EMPTY, oclComparableType, TemplateParameterSubstitutions.EMPTY)) {
 						isOk = true;
 					}
 				}

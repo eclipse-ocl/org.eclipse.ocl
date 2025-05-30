@@ -37,12 +37,10 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -604,7 +602,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
-		assert (oldCompleteClass == null) ||(oldCompleteClass == completeClass);
+		assert (oldCompleteClass == null) || (oldCompleteClass == completeClass);
 	}
 
 	@Override
@@ -632,21 +630,18 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		if (completeClass != null) {
 			return completeClass;
 		}
-		else if (pivotType instanceof PrimitiveType) {
-			CompletePackageInternal primitiveCompletePackage = ownedCompleteModel.getPrimitiveCompletePackage();
-			return primitiveCompletePackage.getCompleteClass((PrimitiveType)pivotType);
-		}
-		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getUnspecializedElement() != null)) {
-			CompletePackageInternal orphanCompletePackage = ownedCompleteModel.getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass((CollectionType)pivotType);
-		}
-		else if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Package pivotPackage = ((org.eclipse.ocl.pivot.Class)pivotType).getOwningPackage();
+		if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)pivotType;
+			completeClass = ownedCompleteModel.basicGetSharedCompleteClass(asClass);
+			if (completeClass != null) {
+				return completeClass;
+			}
+			org.eclipse.ocl.pivot.Package pivotPackage = asClass.getOwningPackage();
 			if (pivotPackage == null) {
 				throw new IllegalStateException("type has no package");
 			}
 			CompletePackageInternal completePackage = ownedCompleteModel.getCompletePackage(pivotPackage);
-			return completePackage.getCompleteClass((org.eclipse.ocl.pivot.Class) pivotType);
+			return completePackage.getCompleteClass(asClass);
 		}
 		else {
 			throw new UnsupportedOperationException("TemplateType");
@@ -701,36 +696,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public boolean isCodeGeneration() {
 		return isCodeGeneration ;
-	}
-
-	/**
-	 * Return true if elementTypes are the TemplateParameters of one of the unspecialized type of one of the
-	 * partial types of completeClass.
-	 */
-	private boolean isUnspecializedType(@NonNull CompleteClassInternal completeClass, @NonNull Type @NonNull ... elementTypes) {
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
-		for (int i = 0; i < elementTypes.length; i++) {
-			@NonNull Type elementType = elementTypes[i];
-			boolean isUnspecializedElement = false;
-			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
-				TemplateSignature templateSignature = partialClass.getOwnedSignature();
-				if (templateSignature == null) {
-					throw new IllegalArgumentException(completeClass.getName() + " type must have a template signature");
-				}
-				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-				if (templateParameters.size() != elementTypes.length) {
-					throw new IllegalArgumentException(completeClass.getName() + " type must have exactly " + elementTypes.length + " template parameter");
-				}
-				if (elementType == templateParameters.get(i)) {
-					isUnspecializedElement = true;
-					break;
-				}
-			}
-			if (!isUnspecializedElement) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	@Override
