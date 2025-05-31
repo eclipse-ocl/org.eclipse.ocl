@@ -375,10 +375,9 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<@Nullable Boolean,
 				s.append(index);
 			}
 			else {
-				index = iteration.getOwnedAccumulators().indexOf(object);
-				if (index >= 0) {
+				if (object.equals(iteration.getOwnedAccumulator())) {
 					s.append(ACCUMULATOR_PREFIX);
-					s.append(index);
+					s.append(0);
 				}
 			}
 		}

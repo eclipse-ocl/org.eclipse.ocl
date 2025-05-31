@@ -202,20 +202,28 @@ public class EquivalenceUtil
 				return null;			// Different sources do not guarantee different results
 			}
 		}
-		CGValuedElement thisBody = thisValue.getBody();
-		CGValuedElement thatBody = thatValue.getBody();
-		if ((thisBody != null) || (thatBody != null)) {
-			if ((thisBody == null) || (thatBody == null)) {
-				return null;			// Null bodies should never happen
-			}
-			Boolean equivalence = thisBody.isEquivalentTo(thatBody);
-			if (equivalence != Boolean.TRUE) {
-				return null;			// Different bodies do not guarantee different results
+		List<CGValuedElement> theseBodies = thisValue.getBodies();
+		List<CGValuedElement> thoseBodies = thatValue.getBodies();
+		int iSize = theseBodies.size();
+		if (iSize != thoseBodies.size()) {
+			return null;			// Different bodies never happen / do not guarantee different results
+		}
+		for (int i = 0; i < iSize; i++) {
+			CGValuedElement thisBody = theseBodies.get(i);
+			CGValuedElement thatBody = thoseBodies.get(i);
+			if ((thisBody != null) || (thatBody != null)) {
+				if ((thisBody == null) || (thatBody == null)) {
+					return null;			// Null bodies should never happen
+				}
+				Boolean equivalence = thisBody.isEquivalentTo(thatBody);
+				if (equivalence != Boolean.TRUE) {
+					return null;			// Different bodies do not guarantee different results
+				}
 			}
 		}
 		List<CGIterator> theseIterators = thisValue.getIterators();
 		List<CGIterator> thoseIterators = thatValue.getIterators();
-		int iSize = theseIterators.size();
+		iSize = theseIterators.size();
 		if (iSize != thoseIterators.size()) {
 			return null;			// Different iterator lists do not guarantee different results
 		}

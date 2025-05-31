@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -66,6 +67,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.IterateExpImpl#getOwnedBodies <em>Owned Bodies</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.IterateExpImpl#getOwnedResult <em>Owned Result</em>}</li>
  * </ul>
  *
@@ -80,7 +82,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ITERATE_EXP_FEATURE_COUNT = LoopExpImpl.LOOP_EXP_FEATURE_COUNT + 1;
+	public static final int ITERATE_EXP_FEATURE_COUNT = LoopExpImpl.LOOP_EXP_FEATURE_COUNT + 2;
 	/**
 	 * The number of operations of the '<em>Iterate Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -89,6 +91,15 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	 * @ordered
 	 */
 	public static final int ITERATE_EXP_OPERATION_COUNT = LoopExpImpl.LOOP_EXP_OPERATION_COUNT + 7;
+	/**
+	 * The cached value of the '{@link #getOwnedBodies() <em>Owned Bodies</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedBodies()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<OCLExpression> ownedBodies;
 	/**
 	 * The cached value of the '{@link #getOwnedResult() <em>Owned Result</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -125,6 +136,21 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	 * @generated
 	 */
 	@Override
+	public List<OCLExpression> getOwnedBodies()
+	{
+		if (ownedBodies == null)
+		{
+			ownedBodies = new EObjectContainmentEList<OCLExpression>(OCLExpression.class, this, 16);
+		}
+		return ownedBodies;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Variable getOwnedResult()
 	{
 		return ownedResult;
@@ -141,7 +167,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		ownedResult = newOwnedResult;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 16, oldOwnedResult, newOwnedResult);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 17, oldOwnedResult, newOwnedResult);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -159,14 +185,14 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		{
 			NotificationChain msgs = null;
 			if (ownedResult != null)
-				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
+				msgs = ((InternalEObject)ownedResult).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (17), null, msgs);
 			if (newOwnedResult != null)
-				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
+				msgs = ((InternalEObject)newOwnedResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (17), null, msgs);
 			msgs = basicSetOwnedResult(newOwnedResult, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 16, newOwnedResult, newOwnedResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, 17, newOwnedResult, newOwnedResult));
 	}
 
 	/**
@@ -189,13 +215,13 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
 				return basicSetOwnedSource(null, msgs);
-			case 12:
-				return basicSetOwnedBody(null, msgs);
 			case 13:
 				return ((InternalEList<?>)getOwnedCoIterators()).basicRemove(otherEnd, msgs);
 			case 14:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 			case 16:
+				return ((InternalEList<?>)getOwnedBodies()).basicRemove(otherEnd, msgs);
+			case 17:
 				return basicSetOwnedResult(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -237,7 +263,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 11:
 				return getOwnedSource();
 			case 12:
-				return getOwnedBody();
+				return getFirstOwnedBody();
 			case 13:
 				return getOwnedCoIterators();
 			case 14:
@@ -246,6 +272,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				if (resolve) return getReferredIteration();
 				return basicGetReferredIteration();
 			case 16:
+				return getOwnedBodies();
+			case 17:
 				return getOwnedResult();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -300,7 +328,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setOwnedSource((OCLExpression)newValue);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)newValue);
+				setFirstOwnedBody((OCLExpression)newValue);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -314,6 +342,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setReferredIteration((Iteration)newValue);
 				return;
 			case 16:
+				getOwnedBodies().clear();
+				getOwnedBodies().addAll((Collection<? extends OCLExpression>)newValue);
+				return;
+			case 17:
 				setOwnedResult((Variable)newValue);
 				return;
 		}
@@ -364,7 +396,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setOwnedSource((OCLExpression)null);
 				return;
 			case 12:
-				setOwnedBody((OCLExpression)null);
+				setFirstOwnedBody((OCLExpression)null);
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
@@ -376,6 +408,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				setReferredIteration((Iteration)null);
 				return;
 			case 16:
+				getOwnedBodies().clear();
+				return;
+			case 17:
 				setOwnedResult((Variable)null);
 				return;
 		}
@@ -417,7 +452,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 11:
 				return ownedSource != null;
 			case 12:
-				return ownedBody != null;
+				return getFirstOwnedBody() != null;
 			case 13:
 				return ownedCoIterators != null && !ownedCoIterators.isEmpty();
 			case 14:
@@ -425,6 +460,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 15:
 				return referredIteration != null;
 			case 16:
+				return ownedBodies != null && !ownedBodies.isEmpty();
+			case 17:
 				return ownedResult != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -992,4 +1029,15 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		}
 	}
 
+	@Override
+	public OCLExpression getFirstOwnedBody() {
+		return getOwnedBodies().get(0);
+	}
+
+	@Override
+	public void setFirstOwnedBody(OCLExpression newFirstOwnedBody) {
+		List<OCLExpression> ownedBodies = getOwnedBodies();
+		assert ownedBodies.size() == 0;
+		ownedBodies.add(newFirstOwnedBody);
+	}
 } //IterateExpImpl

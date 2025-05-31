@@ -27,7 +27,7 @@ import org.eclipse.ocl.xtext.basecs.ParameterCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#isIsInvalidating <em>Is Invalidating</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#isIsValidating <em>Is Validating</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedAccumulators <em>Owned Accumulators</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedAccumulator <em>Owned Accumulator</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedIterators <em>Owned Iterators</em>}</li>
  * </ul>
  *
@@ -53,22 +53,6 @@ public interface LibIterationCS
 	 * @generated
 	 */
 	EList<ParameterCS> getOwnedIterators();
-
-	/**
-	 * Returns the value of the '<em><b>Owned Accumulators</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.xtext.basecs.ParameterCS}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owned Accumulators</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owned Accumulators</em>' containment reference list.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibIterationCS_OwnedAccumulators()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<ParameterCS> getOwnedAccumulators();
 
 	/**
 	 * Returns the value of the '<em><b>Is Invalidating</b></em>' attribute.
@@ -123,5 +107,31 @@ public interface LibIterationCS
 	 * @generated
 	 */
 	void setIsValidating(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Owned Accumulator</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Accumulator</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Accumulator</em>' containment reference.
+	 * @see #setOwnedAccumulator(ParameterCS)
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibIterationCS_OwnedAccumulator()
+	 * @model containment="true"
+	 * @generated
+	 */
+	ParameterCS getOwnedAccumulator();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedAccumulator <em>Owned Accumulator</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owned Accumulator</em>' containment reference.
+	 * @see #getOwnedAccumulator()
+	 * @generated
+	 */
+	void setOwnedAccumulator(ParameterCS value);
 
 } // LibIterationCS

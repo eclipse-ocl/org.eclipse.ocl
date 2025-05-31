@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -155,7 +156,16 @@ public class PivotLUSSIDs extends LUSSIDs
 				localId += LAMBDA_TYPE_RETURN_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, PivotUtil.getResultType(lambdaType), normalizeTemplateParameters);
 			}
 			else if (element instanceof Iteration) {
-				Iterable<@NonNull Parameter> parameters = Iterables.concat(PivotUtil.getOwnedIterators((Iteration)element), PivotUtil.getOwnedAccumulators((Iteration)element));
+				Iterable<@NonNull Parameter> asIterators = PivotUtil.getOwnedIterators((Iteration)element);
+				Iterable<@NonNull Parameter> parameters;
+				Parameter asAccumulator = ((Iteration)element).getOwnedAccumulator();
+				if (asAccumulator == null) {
+					parameters = asIterators;
+				}
+				else {
+					parameters = Iterables.concat(asIterators, Collections.singletonList(asAccumulator));
+					assert parameters != null;
+				}
 				localId += computeParametersLUSSID(as2id, parameters);
 			}
 			else if (element instanceof Operation) {

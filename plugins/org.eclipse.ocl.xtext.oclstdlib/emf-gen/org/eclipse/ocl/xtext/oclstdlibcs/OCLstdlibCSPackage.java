@@ -267,17 +267,6 @@ public interface OCLstdlibCSPackage
 	EReference getLibIterationCS_OwnedIterators();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedAccumulators <em>Owned Accumulators</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Owned Accumulators</em>'.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedAccumulators()
-	 * @see #getLibIterationCS()
-	 * @generated
-	 */
-	EReference getLibIterationCS_OwnedAccumulators();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#isIsInvalidating <em>Is Invalidating</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -298,6 +287,17 @@ public interface OCLstdlibCSPackage
 	 * @generated
 	 */
 	EAttribute getLibIterationCS_IsValidating();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedAccumulator <em>Owned Accumulator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Accumulator</em>'.
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#getOwnedAccumulator()
+	 * @see #getLibIterationCS()
+	 * @generated
+	 */
+	EReference getLibIterationCS_OwnedAccumulator();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS <em>Lib Operation CS</em>}'.
@@ -558,14 +558,6 @@ public interface OCLstdlibCSPackage
 		EReference LIB_ITERATION_CS__OWNED_ITERATORS = eINSTANCE.getLibIterationCS_OwnedIterators();
 
 		/**
-		 * The meta object literal for the '<em><b>Owned Accumulators</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LIB_ITERATION_CS__OWNED_ACCUMULATORS = eINSTANCE.getLibIterationCS_OwnedAccumulators();
-
-		/**
 		 * The meta object literal for the '<em><b>Is Invalidating</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -580,6 +572,14 @@ public interface OCLstdlibCSPackage
 		 * @generated
 		 */
 		EAttribute LIB_ITERATION_CS__IS_VALIDATING = eINSTANCE.getLibIterationCS_IsValidating();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Accumulator</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LIB_ITERATION_CS__OWNED_ACCUMULATOR = eINSTANCE.getLibIterationCS_OwnedAccumulator();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOperationCSImpl <em>Lib Operation CS</em>}' class.

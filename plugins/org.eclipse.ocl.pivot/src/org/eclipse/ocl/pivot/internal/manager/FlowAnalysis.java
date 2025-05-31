@@ -310,12 +310,20 @@ public class FlowAnalysis
 				if (!isSameTerm(PivotUtil.getOwnedSource(firstIterateExp), PivotUtil.getOwnedSource(secondIterateExp), firstVariable2secondVariable))	{
 					return false;
 				}
-				if (!isSameTerm(PivotUtil.getOwnedBody(firstIterateExp), PivotUtil.getOwnedBody(secondIterateExp), firstVariable2secondVariable))	{
+				List<@NonNull OCLExpression> firstBodies = PivotUtil.getOwnedBodiesList(firstIterateExp);
+				List<@NonNull OCLExpression> secondBodies = PivotUtil.getOwnedBodiesList(secondIterateExp);
+				int iSize = firstBodies.size();
+				if (iSize != secondBodies.size()) {
 					return false;
+				}
+				for (int i = 0; i < iSize; i++) {
+					if (!isSameTerm(firstBodies.get(i), secondBodies.get(i), firstVariable2secondVariable))	{
+						return false;
+					}
 				}
 				List<@NonNull Variable> firstIterators = PivotUtil.getOwnedIteratorsList(firstIterateExp);
 				List<@NonNull Variable> secondIterators = PivotUtil.getOwnedIteratorsList(secondIterateExp);
-				int iSize = firstIterators.size();
+				iSize = firstIterators.size();
 				if (iSize != secondIterators.size()) {
 					return false;
 				}
@@ -354,8 +362,16 @@ public class FlowAnalysis
 				if (!isSameVariable(PivotUtil.getOwnedResult(firstIterateExp), PivotUtil.getOwnedResult(secondIterateExp), firstVariable2secondVariable))	{
 					return false;
 				}
-				if (!isSameTerm(PivotUtil.getOwnedBody(firstIterateExp), PivotUtil.getOwnedBody(secondIterateExp), firstVariable2secondVariable))	{
+				List<@NonNull OCLExpression> firstBodies = PivotUtil.getOwnedBodiesList(firstIterateExp);
+				List<@NonNull OCLExpression> secondBodies = PivotUtil.getOwnedBodiesList(secondIterateExp);
+				iSize = firstBodies.size();
+				if (iSize != secondBodies.size()) {
 					return false;
+				}
+				for (int i = 0; i < iSize; i++) {
+					if (!isSameTerm(firstBodies.get(i), secondBodies.get(i), firstVariable2secondVariable))	{
+						return false;
+					}
 				}
 			}
 			else if (firstExpression instanceof IteratorExp) {

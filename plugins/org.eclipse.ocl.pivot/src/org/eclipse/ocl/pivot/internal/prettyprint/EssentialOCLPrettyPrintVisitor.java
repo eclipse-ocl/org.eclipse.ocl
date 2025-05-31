@@ -247,7 +247,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 	@Override
 	public Object visitIterateExp(@NonNull IterateExp object) {
 		Iteration referredIteration = object.getReferredIteration();
-		OCLExpression body = object.getOwnedBody();
+		List<OCLExpression> bodies = object.getOwnedBodies();
 		Variable result = object.getOwnedResult();
 		if (context.showNames()) {
 			List<Variable> iterators = object.getOwnedIterators();
@@ -286,7 +286,14 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				safeVisit(result);
 				context.next(null, " |", " ");
 			}
-			safeVisit(body);
+			boolean isFirst = true;
+			for (OCLExpression body : bodies) {
+				if (!isFirst) {
+					context.next(null, ", ", " ");
+				}
+				safeVisit(body);
+				isFirst = false;
+			}
 			context.next("", ")", "");
 			context.pop();
 		}
@@ -328,8 +335,13 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				context.appendTypedMultiplicity(result);
 			}
 			context.next(null, " |", " ");
-			if (body != null) {
+			boolean isFirst = true;
+			for (OCLExpression body : bodies) {
+				if (!isFirst) {
+					context.next(null, ", ", " ");
+				}
 				context.appendTypedMultiplicity(body);
+				isFirst = false;
 			}
 			context.next("", ")", "");
 			context.pop();

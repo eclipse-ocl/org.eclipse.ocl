@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -58,7 +58,7 @@ public class ClosureIteration extends AbstractIteration
 				Type sourceType = ownedSource.getType();
 				if (sourceType instanceof CollectionType) {
 					CollectionType sourceCollectionType = (CollectionType)sourceType;
-					OCLExpression body = ((LoopExp)callExp).getOwnedBody();
+					OCLExpression body = ((IteratorExp)callExp).getOwnedBody();
 					Type bodyType = body.getType();
 					if (bodyType instanceof CollectionType) {
 						CollectionType argumentCollectionType = (CollectionType)bodyType;

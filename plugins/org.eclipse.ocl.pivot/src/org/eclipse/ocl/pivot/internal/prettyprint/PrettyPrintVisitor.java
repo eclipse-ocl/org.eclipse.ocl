@@ -194,13 +194,12 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 					context.appendTypedMultiplicity(parameter);
 					prefix = ",";
 				}
-				if (iteration.getOwnedAccumulators().size() > 0) {
+				if (iteration.getOwnedAccumulator() != null) {
 					prefix = ";";
-					for (Parameter parameter : PivotUtil.getOwnedAccumulators(iteration)) {
-						context.append(prefix);
-						context.appendTypedMultiplicity(parameter);
-						prefix = ",";
-					}
+					Parameter parameter = PivotUtil.getOwnedAccumulator(iteration);
+					context.append(prefix);
+					context.appendTypedMultiplicity(parameter);
+					prefix = ",";
 				}
 				prefix = "|";
 			}

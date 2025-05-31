@@ -13,10 +13,12 @@ package org.eclipse.ocl.pivot.internal;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -45,7 +47,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.IterationImpl#getOwnedAccumulators <em>Owned Accumulators</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.IterationImpl#getOwnedAccumulator <em>Owned Accumulator</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.IterationImpl#getOwnedIterators <em>Owned Iterators</em>}</li>
  * </ul>
  *
@@ -72,14 +74,14 @@ public class IterationImpl extends OperationImpl implements Iteration
 	public static final int ITERATION_OPERATION_COUNT = OperationImpl.OPERATION_OPERATION_COUNT + 0;
 
 	/**
-	 * The cached value of the '{@link #getOwnedAccumulators() <em>Owned Accumulators</em>}' containment reference list.
+	 * The cached value of the '{@link #getOwnedAccumulator() <em>Owned Accumulator</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedAccumulators()
+	 * @see #getOwnedAccumulator()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Parameter> ownedAccumulators;
+	protected Parameter ownedAccumulator;
 
 	/**
 	 * The cached value of the '{@link #getOwnedIterators() <em>Owned Iterators</em>}' containment reference list.
@@ -118,14 +120,48 @@ public class IterationImpl extends OperationImpl implements Iteration
 	 * @generated
 	 */
 	@Override
-	@SuppressWarnings("null")
-	public @NonNull List<Parameter> getOwnedIterators()
+	public Parameter getOwnedAccumulator()
 	{
-		if (ownedIterators == null)
+		return ownedAccumulator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedAccumulator(Parameter newOwnedAccumulator, NotificationChain msgs)
+	{
+		Parameter oldOwnedAccumulator = ownedAccumulator;
+		ownedAccumulator = newOwnedAccumulator;
+		if (eNotificationRequired())
 		{
-			ownedIterators = new EObjectContainmentEList<Parameter>(Parameter.class, this, 28);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 27, oldOwnedAccumulator, newOwnedAccumulator);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
-		return ownedIterators;
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedAccumulator(Parameter newOwnedAccumulator)
+	{
+		if (newOwnedAccumulator != ownedAccumulator)
+		{
+			NotificationChain msgs = null;
+			if (ownedAccumulator != null)
+				msgs = ((InternalEObject)ownedAccumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (27), null, msgs);
+			if (newOwnedAccumulator != null)
+				msgs = ((InternalEObject)newOwnedAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (27), null, msgs);
+			msgs = basicSetOwnedAccumulator(newOwnedAccumulator, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 27, newOwnedAccumulator, newOwnedAccumulator));
 	}
 
 	/**
@@ -135,13 +171,13 @@ public class IterationImpl extends OperationImpl implements Iteration
 	 */
 	@Override
 	@SuppressWarnings("null")
-	public @NonNull List<Parameter> getOwnedAccumulators()
+	public @NonNull List<Parameter> getOwnedIterators()
 	{
-		if (ownedAccumulators == null)
+		if (ownedIterators == null)
 		{
-			ownedAccumulators = new EObjectContainmentEList<Parameter>(Parameter.class, this, 27);
+			ownedIterators = new EObjectContainmentEList<Parameter>(Parameter.class, this, 28);
 		}
-		return ownedAccumulators;
+		return ownedIterators;
 	}
 
 	/**
@@ -179,7 +215,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 23:
 				return basicSetOwningClass(null, msgs);
 			case 27:
-				return ((InternalEList<?>)getOwnedAccumulators()).basicRemove(otherEnd, msgs);
+				return basicSetOwnedAccumulator(null, msgs);
 			case 28:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 		}
@@ -253,7 +289,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 26:
 				return getRedefinedOperations();
 			case 27:
-				return getOwnedAccumulators();
+				return getOwnedAccumulator();
 			case 28:
 				return getOwnedIterators();
 		}
@@ -361,8 +397,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getRedefinedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
 			case 27:
-				getOwnedAccumulators().clear();
-				getOwnedAccumulators().addAll((Collection<? extends Parameter>)newValue);
+				setOwnedAccumulator((Parameter)newValue);
 				return;
 			case 28:
 				getOwnedIterators().clear();
@@ -461,7 +496,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getRedefinedOperations().clear();
 				return;
 			case 27:
-				getOwnedAccumulators().clear();
+				setOwnedAccumulator((Parameter)null);
 				return;
 			case 28:
 				getOwnedIterators().clear();
@@ -535,7 +570,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 26:
 				return redefinedOperations != null && !redefinedOperations.isEmpty();
 			case 27:
-				return ownedAccumulators != null && !ownedAccumulators.isEmpty();
+				return ownedAccumulator != null;
 			case 28:
 				return ownedIterators != null && !ownedIterators.isEmpty();
 		}

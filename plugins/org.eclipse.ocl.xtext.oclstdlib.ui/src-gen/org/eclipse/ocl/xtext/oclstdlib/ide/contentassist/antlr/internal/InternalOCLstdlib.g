@@ -7731,7 +7731,6 @@ rule__LibIterationCS__Group_6__1
 	}
 :
 	rule__LibIterationCS__Group_6__1__Impl
-	rule__LibIterationCS__Group_6__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -7743,89 +7742,9 @@ rule__LibIterationCS__Group_6__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAssignment_6_1()); }
-	(rule__LibIterationCS__OwnedAccumulatorsAssignment_6_1)
-	{ after(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAssignment_6_1()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__LibIterationCS__Group_6__2
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__LibIterationCS__Group_6__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__LibIterationCS__Group_6__2__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getLibIterationCSAccess().getGroup_6_2()); }
-	(rule__LibIterationCS__Group_6_2__0)*
-	{ after(grammarAccess.getLibIterationCSAccess().getGroup_6_2()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__LibIterationCS__Group_6_2__0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__LibIterationCS__Group_6_2__0__Impl
-	rule__LibIterationCS__Group_6_2__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__LibIterationCS__Group_6_2__0__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getLibIterationCSAccess().getCommaKeyword_6_2_0()); }
-	','
-	{ after(grammarAccess.getLibIterationCSAccess().getCommaKeyword_6_2_0()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__LibIterationCS__Group_6_2__1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__LibIterationCS__Group_6_2__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__LibIterationCS__Group_6_2__1__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAssignment_6_2_1()); }
-	(rule__LibIterationCS__OwnedAccumulatorsAssignment_6_2_1)
-	{ after(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAssignment_6_2_1()); }
+	{ before(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorAssignment_6_1()); }
+	(rule__LibIterationCS__OwnedAccumulatorAssignment_6_1)
+	{ after(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorAssignment_6_1()); }
 )
 ;
 finally {
@@ -19625,30 +19544,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__LibIterationCS__OwnedAccumulatorsAssignment_6_1
+rule__LibIterationCS__OwnedAccumulatorAssignment_6_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_1_0()); }
+		{ before(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorAccumulatorCSParserRuleCall_6_1_0()); }
 		ruleAccumulatorCS
-		{ after(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_1_0()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__LibIterationCS__OwnedAccumulatorsAssignment_6_2_1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_2_1_0()); }
-		ruleAccumulatorCS
-		{ after(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_2_1_0()); }
+		{ after(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorAccumulatorCSParserRuleCall_6_1_0()); }
 	)
 ;
 finally {

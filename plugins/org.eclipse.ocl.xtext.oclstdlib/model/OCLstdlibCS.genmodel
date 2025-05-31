@@ -36,7 +36,7 @@
     <genClasses ecoreClass="OCLstdlibCS.ecore#//LibIterationCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute OCLstdlibCS.ecore#//LibIterationCS/isInvalidating"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute OCLstdlibCS.ecore#//LibIterationCS/isValidating"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference OCLstdlibCS.ecore#//LibIterationCS/ownedAccumulators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference OCLstdlibCS.ecore#//LibIterationCS/ownedAccumulator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference OCLstdlibCS.ecore#//LibIterationCS/ownedIterators"/>
     </genClasses>
     <genClasses ecoreClass="OCLstdlibCS.ecore#//LibOperationCS">

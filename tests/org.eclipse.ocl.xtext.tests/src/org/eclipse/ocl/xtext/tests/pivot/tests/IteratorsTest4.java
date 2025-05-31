@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -250,7 +249,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionValue expected2 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages)");
 		ocl.assertSemanticErrorQuery(ocl.getContextType(ocl.pkg1), "self->asSequence()->closure(ownedPackages)",
-			PivotMessages.ExpectedArgumentType, "closure", "1", "OrderedCollection(Package)", "Set(Package)");
+			PivotMessages.ExpectedArgumentType, "closure", "1", "OrderedCollection(Package[*|?])", "Set(Package)");
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages->asSequence())");
 		SetValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
 		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->asBag()->closure(ownedPackages)");
@@ -368,9 +367,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
-		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | i.oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property)", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
+		ocl.assertSemanticErrorQuery(propertyMetaclass, "self->closure(i | i.oclContainer())", PivotMessages.ExpectedArgumentType, "closure", "1", "Collection(Property[*|?])", "OclElement");
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
 		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(i : Property | oclContainer().oclAsSet())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(i : Property[1] | self.oclContainer().oclAsSet())");
 
@@ -388,7 +387,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		org.eclipse.ocl.pivot.Class contextType = ocl.getContextType(ocl.getUMLMetamodel());
 		ocl.assertSemanticErrorQuery(contextType, "let c : ocl::Type = invalid in ownedClasses->closure(c)",
-			PivotMessages.ExpectedArgumentType, "closure", 1, "Collection(Class)", "Type");
+			PivotMessages.ExpectedArgumentType, "closure", 1, "Collection(Class[*|?])", "Type");
 		ocl.assertQueryInvalid(ocl.getUMLMetamodel(), "let c : ocl::Class = invalid in ownedClasses->closure(c.oclAsSet())",
 			PivotMessages.InvalidLiteral, InvalidValueException.class);
 
@@ -1144,8 +1143,11 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class context = environmentFactory.getASClass("Package");
 		org.eclipse.ocl.pivot.Class type = environmentFactory.getASClass("Class");
-		ocl.assertValidationErrorQuery(context, "ownedClasses->sortedBy(e | e)",
-			PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
+	//	ocl.assertValidationErrorQuery(context, "ownedClasses->sortedBy(e | e)",
+	//		PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
+		ocl.assertSemanticErrorQuery(context, "ownedClasses->sortedBy(e | e)",
+			PivotMessages.ExpectedArgumentType, "sortedBy", 1, "OclComparable", "Class");
+	//	PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
 
 		ocl.assertQuery(context, "ownedClasses->sortedBy(e | e.name)");
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);

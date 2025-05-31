@@ -29,7 +29,7 @@ public class IterateExpAttribution extends AbstractAttribution
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		IterateExp targetExpression = (IterateExp)target;
 		EStructuralFeature containmentFeature = scopeView.getContainmentFeature();
-		if (containmentFeature == PivotPackage.Literals.LOOP_EXP__OWNED_BODY) {
+		if (containmentFeature == PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES) {
 			OCLExpression source = targetExpression.getOwnedSource();
 			environmentView.addElementsOfScope(source.getType(), scopeView);
 			environmentView.addElements(targetExpression.getOwnedIterators());

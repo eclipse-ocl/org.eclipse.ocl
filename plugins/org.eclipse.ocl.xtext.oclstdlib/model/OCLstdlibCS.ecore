@@ -21,8 +21,7 @@
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
         defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAccumulators" upperBound="-1"
-        eType="ecore:EClass ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ParameterCS"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAccumulator" eType="ecore:EClass ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ParameterCS"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIterators" upperBound="-1"
         eType="ecore:EClass ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ParameterCS"

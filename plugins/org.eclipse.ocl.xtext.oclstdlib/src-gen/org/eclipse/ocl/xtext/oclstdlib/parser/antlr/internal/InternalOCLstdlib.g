@@ -1766,59 +1766,34 @@ ruleLibIterationCS returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_1_0());
+						newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorAccumulatorCSParserRuleCall_6_1_0());
 					}
-					lv_ownedAccumulators_8_0=ruleAccumulatorCS
+					lv_ownedAccumulator_8_0=ruleAccumulatorCS
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
 						}
-						add(
+						set(
 							$current,
-							"ownedAccumulators",
-							lv_ownedAccumulators_8_0,
+							"ownedAccumulator",
+							lv_ownedAccumulator_8_0,
 							"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AccumulatorCS");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-			(
-				otherlv_9=','
-				{
-					newLeafNode(otherlv_9, grammarAccess.getLibIterationCSAccess().getCommaKeyword_6_2_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_2_1_0());
-						}
-						lv_ownedAccumulators_10_0=ruleAccumulatorCS
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
-							}
-							add(
-								$current,
-								"ownedAccumulators",
-								lv_ownedAccumulators_10_0,
-								"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AccumulatorCS");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)*
 		)?
 		(
-			otherlv_11='|'
+			otherlv_9='|'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getLibIterationCSAccess().getVerticalLineKeyword_7_0());
+				newLeafNode(otherlv_9, grammarAccess.getLibIterationCSAccess().getVerticalLineKeyword_7_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedParametersParameterCSParserRuleCall_7_1_0());
 					}
-					lv_ownedParameters_12_0=ruleParameterCS
+					lv_ownedParameters_10_0=ruleParameterCS
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1826,23 +1801,23 @@ ruleLibIterationCS returns [EObject current=null]
 						add(
 							$current,
 							"ownedParameters",
-							lv_ownedParameters_12_0,
+							lv_ownedParameters_10_0,
 							"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ParameterCS");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_13=','
+				otherlv_11=','
 				{
-					newLeafNode(otherlv_13, grammarAccess.getLibIterationCSAccess().getCommaKeyword_7_2_0());
+					newLeafNode(otherlv_11, grammarAccess.getLibIterationCSAccess().getCommaKeyword_7_2_0());
 				}
 				(
 					(
 						{
 							newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedParametersParameterCSParserRuleCall_7_2_1_0());
 						}
-						lv_ownedParameters_14_0=ruleParameterCS
+						lv_ownedParameters_12_0=ruleParameterCS
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1850,7 +1825,7 @@ ruleLibIterationCS returns [EObject current=null]
 							add(
 								$current,
 								"ownedParameters",
-								lv_ownedParameters_14_0,
+								lv_ownedParameters_12_0,
 								"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ParameterCS");
 							afterParserOrEnumRuleCall();
 						}
@@ -1858,20 +1833,20 @@ ruleLibIterationCS returns [EObject current=null]
 				)
 			)*
 		)?
-		otherlv_15=')'
+		otherlv_13=')'
 		{
-			newLeafNode(otherlv_15, grammarAccess.getLibIterationCSAccess().getRightParenthesisKeyword_8());
+			newLeafNode(otherlv_13, grammarAccess.getLibIterationCSAccess().getRightParenthesisKeyword_8());
 		}
-		otherlv_16=':'
+		otherlv_14=':'
 		{
-			newLeafNode(otherlv_16, grammarAccess.getLibIterationCSAccess().getColonKeyword_9());
+			newLeafNode(otherlv_14, grammarAccess.getLibIterationCSAccess().getColonKeyword_9());
 		}
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_10_0());
 				}
-				lv_ownedType_17_0=ruleTypedMultiplicityRefCS
+				lv_ownedType_15_0=ruleTypedMultiplicityRefCS
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1879,7 +1854,7 @@ ruleLibIterationCS returns [EObject current=null]
 					set(
 						$current,
 						"ownedType",
-						lv_ownedType_17_0,
+						lv_ownedType_15_0,
 						"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedMultiplicityRefCS");
 					afterParserOrEnumRuleCall();
 				}
@@ -1887,36 +1862,36 @@ ruleLibIterationCS returns [EObject current=null]
 		)
 		(
 			(
-				lv_isInvalidating_18_0='invalidating'
+				lv_isInvalidating_16_0='invalidating'
 				{
-					newLeafNode(lv_isInvalidating_18_0, grammarAccess.getLibIterationCSAccess().getIsInvalidatingInvalidatingKeyword_11_0());
+					newLeafNode(lv_isInvalidating_16_0, grammarAccess.getLibIterationCSAccess().getIsInvalidatingInvalidatingKeyword_11_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getLibIterationCSRule());
 					}
-					setWithLastConsumed($current, "isInvalidating", lv_isInvalidating_18_0 != null, "invalidating");
+					setWithLastConsumed($current, "isInvalidating", lv_isInvalidating_16_0 != null, "invalidating");
 				}
 			)
 		)?
 		(
 			(
-				lv_isValidating_19_0='validating'
+				lv_isValidating_17_0='validating'
 				{
-					newLeafNode(lv_isValidating_19_0, grammarAccess.getLibIterationCSAccess().getIsValidatingValidatingKeyword_12_0());
+					newLeafNode(lv_isValidating_17_0, grammarAccess.getLibIterationCSAccess().getIsValidatingValidatingKeyword_12_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getLibIterationCSRule());
 					}
-					setWithLastConsumed($current, "isValidating", lv_isValidating_19_0 != null, "validating");
+					setWithLastConsumed($current, "isValidating", lv_isValidating_17_0 != null, "validating");
 				}
 			)
 		)?
 		(
-			otherlv_20='=>'
+			otherlv_18='=>'
 			{
-				newLeafNode(otherlv_20, grammarAccess.getLibIterationCSAccess().getEqualsSignGreaterThanSignKeyword_13_0());
+				newLeafNode(otherlv_18, grammarAccess.getLibIterationCSAccess().getEqualsSignGreaterThanSignKeyword_13_0());
 			}
 			(
 				(
@@ -1928,18 +1903,18 @@ ruleLibIterationCS returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getLibIterationCSRule());
 						}
 					}
-					otherlv_21=RULE_SINGLE_QUOTED_STRING
+					otherlv_19=RULE_SINGLE_QUOTED_STRING
 					{
-						newLeafNode(otherlv_21, grammarAccess.getLibIterationCSAccess().getImplementationJavaClassCSCrossReference_13_1_0());
+						newLeafNode(otherlv_19, grammarAccess.getLibIterationCSAccess().getImplementationJavaClassCSCrossReference_13_1_0());
 					}
 				)
 			)
 		)?
 		(
 			(
-				otherlv_22='{'
+				otherlv_20='{'
 				{
-					newLeafNode(otherlv_22, grammarAccess.getLibIterationCSAccess().getLeftCurlyBracketKeyword_14_0_0());
+					newLeafNode(otherlv_20, grammarAccess.getLibIterationCSAccess().getLeftCurlyBracketKeyword_14_0_0());
 				}
 				(
 					(
@@ -1947,7 +1922,7 @@ ruleLibIterationCS returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedAnnotationsAnnotationElementCSParserRuleCall_14_0_1_0_0());
 							}
-							lv_ownedAnnotations_23_0=ruleAnnotationElementCS
+							lv_ownedAnnotations_21_0=ruleAnnotationElementCS
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1955,7 +1930,7 @@ ruleLibIterationCS returns [EObject current=null]
 								add(
 									$current,
 									"ownedAnnotations",
-									lv_ownedAnnotations_23_0,
+									lv_ownedAnnotations_21_0,
 									"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AnnotationElementCS");
 								afterParserOrEnumRuleCall();
 							}
@@ -1967,7 +1942,7 @@ ruleLibIterationCS returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedPreconditionsPostCSParserRuleCall_14_0_1_1_0());
 							}
-							lv_ownedPreconditions_24_0=rulePostCS
+							lv_ownedPreconditions_22_0=rulePostCS
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1975,7 +1950,7 @@ ruleLibIterationCS returns [EObject current=null]
 								add(
 									$current,
 									"ownedPreconditions",
-									lv_ownedPreconditions_24_0,
+									lv_ownedPreconditions_22_0,
 									"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.PostCS");
 								afterParserOrEnumRuleCall();
 							}
@@ -1987,7 +1962,7 @@ ruleLibIterationCS returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getLibIterationCSAccess().getOwnedPostconditionsPreCSParserRuleCall_14_0_1_2_0());
 							}
-							lv_ownedPostconditions_25_0=rulePreCS
+							lv_ownedPostconditions_23_0=rulePreCS
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getLibIterationCSRule());
@@ -1995,22 +1970,22 @@ ruleLibIterationCS returns [EObject current=null]
 								add(
 									$current,
 									"ownedPostconditions",
-									lv_ownedPostconditions_25_0,
+									lv_ownedPostconditions_23_0,
 									"org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.PreCS");
 								afterParserOrEnumRuleCall();
 							}
 						)
 					)
 				)*
-				otherlv_26='}'
+				otherlv_24='}'
 				{
-					newLeafNode(otherlv_26, grammarAccess.getLibIterationCSAccess().getRightCurlyBracketKeyword_14_0_2());
+					newLeafNode(otherlv_24, grammarAccess.getLibIterationCSAccess().getRightCurlyBracketKeyword_14_0_2());
 				}
 			)
 			    |
-			otherlv_27=';'
+			otherlv_25=';'
 			{
-				newLeafNode(otherlv_27, grammarAccess.getLibIterationCSAccess().getSemicolonKeyword_14_1());
+				newLeafNode(otherlv_25, grammarAccess.getLibIterationCSAccess().getSemicolonKeyword_14_1());
 			}
 		)
 	)

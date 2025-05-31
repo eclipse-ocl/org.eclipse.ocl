@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/IterateExp.java" type="org.eclipse.ocl.pivot.IterateExp">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedBodies()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Iteration.java" type="org.eclipse.ocl.pivot.Iteration">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedAccumulator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setOwnedAccumulator(Parameter)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/LoopExp.java" type="org.eclipse.ocl.pivot.LoopExp">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getFirstOwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setFirstOwnedBody(OCLExpression)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/NormalizedTemplateParameter.java" type="org.eclipse.ocl.pivot.NormalizedTemplateParameter">
         <filter id="1110441988">
             <message_arguments>
@@ -15,6 +46,26 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIterateExp_OwnedBodies()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIteration_OwnedAccumulator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLoopExp_FirstOwnedBody()"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getNormalizedTemplateParameter()"/>
@@ -34,6 +85,26 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="ITERATE_EXP__OWNED_BODIES"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATION__OWNED_ACCUMULATOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP__OWNED_BODY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LOOP_EXP__FIRST_OWNED_BODY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="NORMALIZED_TEMPLATE_PARAMETER"/>
             </message_arguments>
         </filter>
@@ -45,6 +116,13 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORD_CLSSid_OCLExpression_0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -249,6 +327,32 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterateExpImpl.java" type="org.eclipse.ocl.pivot.internal.IterateExpImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedBodies"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterationImpl.java" type="org.eclipse.ocl.pivot.internal.IterationImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicSetOwnedAccumulator(Parameter, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedAccumulator"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IteratorExpImpl.java" type="org.eclipse.ocl.pivot.internal.IteratorExpImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedBody"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NormalizedTemplateParameterImpl.java" type="org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl">
         <filter id="1110441988">
             <message_arguments>
@@ -296,7 +400,52 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="_2_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Bag__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Bag__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Bag__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__collectBy_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Collection__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__collectBy_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Map__collect_E"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -306,12 +455,42 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="__OrderedSet__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__OrderedSet__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Sequence__closure_E"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="__Sequence__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Sequence__collect_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="__Set__closure_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Set__collectNested_E"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="__Set__collect_E"/>
             </message_arguments>
         </filter>
     </resource>

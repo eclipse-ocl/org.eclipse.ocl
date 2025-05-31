@@ -614,7 +614,11 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		}
 		Variable asResult = asIterateExp.getOwnedResult();
 		csRoundBracketedClause.getOwnedArguments().add(createNavigatingArgCS(";", asResult, asResult, asResult.getOwnedInit()));
-		csRoundBracketedClause.getOwnedArguments().add(createNavigatingArgCS("|", asIterateExp.getOwnedBody()));
+		prefix = "|";
+		for (OCLExpression asBody : asIterateExp.getOwnedBodies()) {
+			csRoundBracketedClause.getOwnedArguments().add(createNavigatingArgCS(prefix, asBody));
+			prefix = ",";
+		}
 		return createNavigationOperatorCS(asIterateExp, csNameExp, false);
 	}
 

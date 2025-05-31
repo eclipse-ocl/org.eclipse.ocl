@@ -200,14 +200,13 @@ public class AS2Moniker implements PivotConstantsInternal
 //				appendMultiplicity(parameter);
 				prefix = PARAMETER_SEPARATOR;
 			}
-			if (iteration.getOwnedAccumulators().size() > 0) {
+			if (iteration.getOwnedAccumulator() != null) {
 				prefix = ITERATOR_SEPARATOR;
-				for (Parameter parameter : iteration.getOwnedAccumulators()) {
-					s.append(prefix);
-					appendElement(parameter.getType(), templateBindings);
-//					appendMultiplicity(parameter);
-					prefix = PARAMETER_SEPARATOR;
-				}
+				Parameter parameter = iteration.getOwnedAccumulator();
+				s.append(prefix);
+				appendElement(parameter.getType(), templateBindings);
+//				appendMultiplicity(parameter);
+				prefix = PARAMETER_SEPARATOR;
 			}
 			prefix = ACCUMULATOR_SEPARATOR;
 		}
