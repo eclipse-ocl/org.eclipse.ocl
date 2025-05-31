@@ -566,6 +566,15 @@ extends EFactory {
 	@NonNull IteratorVariable createIteratorVariable();
 
 	/**
+	 * Returns a new object of class '<em>Lambda Parameter</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Lambda Parameter</em>'.
+	 * @generated
+	 */
+	@NonNull LambdaParameter createLambdaParameter();
+
+	/**
 	 * Returns a new object of class '<em>Lambda Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

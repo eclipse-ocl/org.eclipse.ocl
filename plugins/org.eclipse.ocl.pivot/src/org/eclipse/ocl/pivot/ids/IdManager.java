@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -350,25 +351,41 @@ public final class IdManager
 	}
 
 	/**
+	 * Return the named lambdaPartId with the defined name and type and nullity.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull TuplePartId getLambdaPartId(int index, @NonNull String name, @NonNull TypeId typeId, boolean isRequired) {
+		return tupleParts.getSingleton(PRIVATE_INSTANCE, index, name, typeId, isRequired);
+	}
+
+	/**
 	 * Return the typeId for aLambdaType.
 	 */
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull LambdaType lambdaType) {
 		String name = NameUtil.getSafeName(lambdaType);
-		return getLambdaTypeId(name, lambdaType.getParametersId());
+		return getLambdaTypeId(name, PivotUtil.getOwnedContext(lambdaType), PivotUtil.getOwnedParametersList(lambdaType), PivotUtil.getOwnedResult(lambdaType));
 	}
 
 	/**
 	 * Return the named lambda typeId with the defined type parameters.
+	 * @since 7.0
 	 */
-	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull TypeId @NonNull ... typeIds) {
-		return getLambdaTypeId(name, getParametersId(typeIds));
+	@Deprecated /* XXX temporary fudge */
+	public static @NonNull TypeId getLambdaTypeId(@NonNull String name, @NonNull Type @NonNull [] typeArguments) {
+		return lambdaTypes.getSingleton(PRIVATE_INSTANCE, name, typeArguments);
 	}
 
 	/**
 	 * Return the named lambda typeId with the defined type parameters.
+	 * @since 7.0
 	 */
-	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull ParametersId parametersId) {
-		return lambdaTypes.getSingleton(PRIVATE_INSTANCE, name, parametersId);
+//	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull ParametersId parametersId) {
+//		return lambdaTypes.getSingleton(PRIVATE_INSTANCE, name, parametersId);
+//	}
+	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull LambdaParameter context,
+			@Nullable List<@NonNull LambdaParameter> parameters, @NonNull LambdaParameter result) {
+		return lambdaTypes.getSingleton(PRIVATE_INSTANCE, name, context, parameters, result);
 	}
 
 	/**
@@ -583,21 +600,21 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named tuplePartId for the givem property of a TupleType.
+	 * Return the named tuplePartId for the given property of a TupleType.
 	 * @since 1.3
 	 */
 	public static @NonNull TuplePartId getTuplePartId(@NonNull Property asProperty) {
 		TupleType tupleType = (TupleType) PivotUtil.getOwningClass(asProperty);
 		String name = NameUtil.getSafeName(asProperty);
 		int index = tupleType.getOwnedProperties().indexOf(asProperty);
-		return IdManager.getTuplePartId(index, name, asProperty.getTypeId());
+		return getTuplePartId(index, name, asProperty.getTypeId());
 	}
 
 	/**
 	 * Return the named tuplePartId with the defined name and type.
 	 */
 	public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
-		return tupleParts.getSingleton(PRIVATE_INSTANCE, index, name, typeId);
+		return getLambdaPartId(index, name, typeId, false);
 	}
 
 	/**

@@ -293,6 +293,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitLambdaParameter(org.eclipse.ocl.pivot.@NonNull LambdaParameter object) {
+		return visitParameter(object);
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		return visitDataType(object);
 	}

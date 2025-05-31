@@ -581,17 +581,22 @@
         eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LambdaParameter" eSuperTypes="#//Parameter">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A LambdaParameter specifies the name, type and multiplicity of a LambdaType context, parameter or result."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LambdaType" eSuperTypes="#//DataType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" lowerBound="1"
-        eType="#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterType" unique="false"
-        upperBound="-1" eType="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedContext" lowerBound="1"
+        eType="#//LambdaParameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameters" upperBound="-1"
+        eType="#//LambdaParameter" containment="true">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="resultType" lowerBound="1"
-        eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedResult" lowerBound="1"
+        eType="#//LambdaParameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LanguageExpression" abstract="true"
       eSuperTypes="#//ValueSpecification">

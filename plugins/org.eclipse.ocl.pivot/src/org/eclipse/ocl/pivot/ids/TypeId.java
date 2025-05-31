@@ -177,10 +177,6 @@ public interface TypeId extends ElementId
 	public static final @NonNull CollectionTypeId SET = IdManager.getCollectionTypeId(SET_NAME);
 	public static final @NonNull CollectionTypeId UNIQUE_COLLECTION = IdManager.getCollectionTypeId(UNIQUE_COLLECTION_NAME);
 
-	/**
-	 * @since 1.18
-	 */
-	public static final @NonNull LambdaTypeId LAMBDA = IdManager.getLambdaTypeId(LAMBDA_NAME);
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
 
 	@Deprecated /* @deprecated no longer used */

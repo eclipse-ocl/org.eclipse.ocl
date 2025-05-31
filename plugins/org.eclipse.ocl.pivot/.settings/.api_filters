@@ -19,6 +19,40 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/LambdaParameter.java" type="org.eclipse.ocl.pivot.LambdaParameter">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LambdaParameter"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/LambdaType.java" type="org.eclipse.ocl.pivot.LambdaType">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedContext()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedParameters()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedResult()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setOwnedContext(LambdaParameter)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setOwnedResult(LambdaParameter)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/LoopExp.java" type="org.eclipse.ocl.pivot.LoopExp">
         <filter id="1211105284">
             <message_arguments>
@@ -41,6 +75,11 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="createLambdaParameter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="createNormalizedTemplateParameter()"/>
             </message_arguments>
         </filter>
@@ -59,6 +98,26 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLambdaParameter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLambdaType_OwnedContext()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLambdaType_OwnedParameters()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLambdaType_OwnedResult()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -100,6 +159,26 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="LAMBDA_PARAMETER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LAMBDA_TYPE__OWNED_CONTEXT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LAMBDA_TYPE__OWNED_PARAMETERS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LAMBDA_TYPE__OWNED_RESULT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="LOOP_EXP__FIRST_OWNED_BODY"/>
             </message_arguments>
         </filter>
@@ -122,11 +201,26 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="CLSSid_LambdaParameter"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORD_CLSSid_LambdaParameter"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="ORD_CLSSid_OCLExpression_0"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_LambdaParameter"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_NormalizedTemplateParameter"/>
@@ -165,6 +259,9 @@
                 <message_argument value="org.eclipse.ocl.pivot.annotations.Collection_EClass"/>
             </message_arguments>
         </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Collection_EPackage.java">
+        <filter id="0"/>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/annotations/Collection_EPackage.java" type="org.eclipse.ocl.pivot.annotations.Collection_EPackage">
         <filter id="1110441988">
@@ -353,6 +450,40 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LambdaParameterImpl.java" type="org.eclipse.ocl.pivot.internal.LambdaParameterImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LambdaParameterImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LambdaTypeImpl.java" type="org.eclipse.ocl.pivot.internal.LambdaTypeImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicSetOwnedContext(LambdaParameter, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicSetOwnedResult(LambdaParameter, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedParameters"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedResult"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NormalizedTemplateParameterImpl.java" type="org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl">
         <filter id="1110441988">
             <message_arguments>
@@ -497,11 +628,21 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotAdapterFactory.java" type="org.eclipse.ocl.pivot.util.PivotAdapterFactory">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="createLambdaParameterAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="createNormalizedTemplateParameterAdapter()"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotSwitch.java" type="org.eclipse.ocl.pivot.util.PivotSwitch">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseLambdaParameter(LambdaParameter)"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="caseNormalizedTemplateParameter(NormalizedTemplateParameter)"/>
@@ -511,11 +652,21 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="validateLambdaParameter(LambdaParameter, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="validateNormalizedTemplateParameter(NormalizedTemplateParameter, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/Visitor.java" type="org.eclipse.ocl.pivot.util.Visitor">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="visitLambdaParameter(LambdaParameter)"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="visitNormalizedTemplateParameter(NormalizedTemplateParameter)"/>

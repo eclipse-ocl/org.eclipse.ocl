@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -418,6 +419,9 @@ public class Orphanage extends PackageImpl
 		Map<@NonNull ElementId, @NonNull EObject> elementId2eObject = new HashMap<>();
 		for (EObject eObject : new TreeIterable(this, true)) {
 			ElementId elementId = null;
+			if (eObject instanceof LambdaParameter) {
+				getClass();		// XXX
+			}
 			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
 				elementId = ((org.eclipse.ocl.pivot.Package)eObject).getPackageId();
 			}
@@ -437,6 +441,9 @@ public class Orphanage extends PackageImpl
 
 					elementId = ((Property)eObject).getPropertyId();
 				}
+			}
+			else if (eObject instanceof LambdaParameter) {
+				elementId = TypeId.OCL_INVALID;
 			}
 			else if (eObject instanceof TemplateBinding) {
 				elementId = TypeId.OCL_INVALID;

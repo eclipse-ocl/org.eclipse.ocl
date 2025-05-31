@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -1258,11 +1259,19 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			else if (localOrphan instanceof LambdaType) {
 				LambdaType type = (LambdaType)localOrphan;
 				s.append("_" + type.getName());
-				s.append("_" + partialName(type.getContextType()));
-				for (Type parameterType : type.getParameterTypes()) {
-					s.append("_" + partialName(parameterType));
+				LambdaParameter context = type.getOwnedContext();
+				s.append("_" + partialName(context));
+				s.append("_" + partialName(context.getType()));
+				s.append("_" + (context.isIsRequired() ? "T" : "F"));
+				for (LambdaParameter parameter : type.getOwnedParameters()) {
+					s.append("_" + partialName(parameter));
+					s.append("_" + partialName(parameter.getType()));
+					s.append("_" + (parameter.isIsRequired() ? "T" : "F"));
 				}
-				s.append("_" + partialName(type.getResultType()));
+				LambdaParameter result = type.getOwnedResult();
+				s.append("_" + partialName(result));
+				s.append("_" + partialName(result.getType()));
+				s.append("_" + (result.isIsRequired() ? "T" : "F"));
 			}
 			else if (localOrphan instanceof MapType) {
 				MapType type = (MapType)localOrphan;
@@ -1287,6 +1296,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			else if (localOrphan instanceof TemplateParameterSubstitution) {
 			}
 			else if (localOrphan instanceof NormalizedTemplateParameter) {
+				s.append(partialName(localOrphan));
+			}
+			else if (localOrphan instanceof LambdaParameter) {
 				s.append(partialName(localOrphan));
 			}
 			else if (localOrphan instanceof TemplateSignature) {

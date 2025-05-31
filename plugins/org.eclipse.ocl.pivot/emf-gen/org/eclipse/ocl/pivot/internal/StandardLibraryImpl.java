@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -656,7 +657,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	}
 
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
+	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		return getLambdaManager().getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
 	}
@@ -1033,11 +1034,11 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
-			String typeName = ClassUtil.requireNonNull(lambdaType.getName());
-			Type contextType = ClassUtil.requireNonNull(lambdaType.getContextType());
-			@NonNull List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(lambdaType);
-			Type resultType = ClassUtil.requireNonNull(lambdaType.getResultType());
-			return getLambdaType(typeName, contextType, parameterTypes, resultType, substitutions);
+			String typeName = PivotUtil.getName(lambdaType);
+			LambdaParameter context = PivotUtil.getOwnedContext(lambdaType);
+			List<@NonNull LambdaParameter> parameters = PivotUtil.getOwnedParametersList(lambdaType);
+			LambdaParameter result = PivotUtil.getOwnedResult(lambdaType);
+			return getLambdaType(typeName, context, parameters, result, substitutions);
 		}
 		else if (type instanceof org.eclipse.ocl.pivot.Class) {
 			//
