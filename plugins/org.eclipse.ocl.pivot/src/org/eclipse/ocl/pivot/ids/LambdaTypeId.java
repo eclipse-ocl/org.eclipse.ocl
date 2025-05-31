@@ -10,12 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 /**
  * A LambdaTypeId provides a unique hierarchical identifier a Lambda function name and parameters.
  */
 public interface LambdaTypeId extends TypeId, TemplateableId
 {
-	@NonNull ParametersId getParametersId();
+//	@NonNull ParametersId getParametersId();
 }

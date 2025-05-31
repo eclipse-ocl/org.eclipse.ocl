@@ -1499,14 +1499,20 @@
       </eParameters>
     </eOperations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LambdaParameter" name="LambdaParameter"
+      eSuperTypes="#T-pivot-Parameter">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A LambdaParameter specifies the name, type and multiplicity of a LambdaType context, parameter or result."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LambdaType" name="LambdaType"
       eSuperTypes="#T-pivot-DataType">
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-contextType"
-        name="contextType" lowerBound="1" eType="#T-pivot-Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-parameterType"
-        name="parameterType" unique="false" upperBound="-1" eType="#T-pivot-Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-resultType"
-        name="resultType" lowerBound="1" eType="#T-pivot-Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-ownedContext"
+        name="ownedContext" lowerBound="1" eType="#T-pivot-LambdaParameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-ownedParameters"
+        name="ownedParameters" upperBound="-1" eType="#T-pivot-LambdaParameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-ownedResult"
+        name="ownedResult" lowerBound="1" eType="#T-pivot-LambdaParameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LanguageExpression" name="LanguageExpression"
       abstract="true" eSuperTypes="#T-pivot-ValueSpecification">

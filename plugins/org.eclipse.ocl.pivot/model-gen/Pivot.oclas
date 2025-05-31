@@ -175,8 +175,8 @@
       <ownedProperties xmi:id="Qrg5Y" isComposite="true" name="ownedStandardLibrary" opposite="#pt2se" type="#v6b4D"/>
     </ownedClasses>
     <ownedClasses xmi:id="hzOMU" name="CompleteModel" superClasses="#0kVqz">
-      <ownedOperations xmi:id="W9Wm," isRequired="false" name="getOwnedCompletePackage" type="#+gDEJ">
-        <ownedParameters xmi:id="0S+uw" isRequired="false" name="name" type="#CPVxu"/>
+      <ownedOperations xmi:id="f+Wm," isRequired="false" name="getOwnedCompletePackage" type="#+gDEJ">
+        <ownedParameters xmi:id="ZfQvw" isRequired="false" name="name" type="#CPVxu"/>
       </ownedOperations>
       <ownedProperties xmi:id="aU0xR" isDerived="true" isReadOnly="true" isRequired="false" isResolveProxies="false" isTransient="true"
           name="orphanCompletePackage" opposite="#pwEaB" type="#WaoLl"/>
@@ -187,8 +187,8 @@
           name="primitiveCompletePackage" opposite="#tpHsl" type="#XSQ4c"/>
     </ownedClasses>
     <ownedClasses xmi:id="+gDEJ" name="CompletePackage" superClasses="#0kVqz">
-      <ownedOperations xmi:id="xxnVz" isRequired="false" name="getOwnedCompleteClass" type="#wspoT">
-        <ownedParameters xmi:id="jlSuJ" isRequired="false" name="name" type="#CPVxu"/>
+      <ownedOperations xmi:id="6ynVz" isRequired="false" name="getOwnedCompleteClass" type="#wspoT">
+        <ownedParameters xmi:id="IykuJ" isRequired="false" name="name" type="#CPVxu"/>
       </ownedOperations>
       <ownedProperties xmi:id="ms6IU" isComposite="true" name="ownedCompleteClasses" opposite="#ZmPN3" type="#J7ICS"/>
       <ownedProperties xmi:id="pXZYG" isComposite="true" name="ownedCompletePackages" opposite="#vpFYN" type="#niCJl"/>
@@ -527,10 +527,16 @@
       </ownedInvariants>
       <ownedProperties xmi:id="sbNVd" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
     </ownedClasses>
+    <ownedClasses xmi:id="T8YnB" name="LambdaParameter" superClasses="#as9eG">
+      <ownedComments body="A LambdaParameter specifies the name, type and multiplicity of a LambdaType context, parameter or result."/>
+      <ownedProperties xmi:id="mIKrg" isImplicit="true" isRequired="false" name="LambdaType" opposite="#snCZn" type="#S9Pb5"/>
+      <ownedProperties xmi:id="pwd,w" isImplicit="true" isRequired="false" name="LambdaType" opposite="#RkOup" type="#S9Pb5"/>
+      <ownedProperties xmi:id="OE1ZE" isImplicit="true" isRequired="false" name="LambdaType" opposite="#En,x+" type="#S9Pb5"/>
+    </ownedClasses>
     <ownedClasses xmi:id="S9Pb5" name="LambdaType" superClasses="#1mHCJ">
-      <ownedProperties xmi:id="rwWeu" name="contextType" opposite="#X5F8c" type="#rrwsa"/>
-      <ownedProperties xmi:id="l0V,d" name="parameterType" opposite="#tU,ip" type="#r5PCb"/>
-      <ownedProperties xmi:id="ZeRhS" name="resultType" opposite="#Z5gQZ" type="#rrwsa"/>
+      <ownedProperties xmi:id="snCZn" isComposite="true" name="ownedContext" opposite="#mIKrg" type="#T8YnB"/>
+      <ownedProperties xmi:id="RkOup" isComposite="true" name="ownedParameters" opposite="#pwd,w" type="#Hlsey"/>
+      <ownedProperties xmi:id="En,x+" isComposite="true" name="ownedResult" opposite="#OE1ZE" type="#T8YnB"/>
     </ownedClasses>
     <ownedClasses xmi:id="BfHsW" isAbstract="true" name="LanguageExpression" superClasses="#DLUxI">
       <ownedProperties xmi:id="37C4q" isRequired="false" name="body" type="#CPVxu"/>
@@ -1308,9 +1314,6 @@
       </ownedOperations>
       <ownedProperties xmi:id="JFc9Y" isImplicit="true" name="CollectionType" opposite="#zzSGt" type="#7uaJn"/>
       <ownedProperties xmi:id="Nn,Xg" isImplicit="true" name="DynamicElement" opposite="#t8fLB" type="#44OiT"/>
-      <ownedProperties xmi:id="X5F8c" isImplicit="true" name="LambdaType" opposite="#rwWeu" type="#85RZ1"/>
-      <ownedProperties xmi:id="tU,ip" isImplicit="true" name="LambdaType" opposite="#l0V,d" type="#85RZ1"/>
-      <ownedProperties xmi:id="Z5gQZ" isImplicit="true" name="LambdaType" opposite="#ZeRhS" type="#85RZ1"/>
       <ownedProperties xmi:id="83I1p" isImplicit="true" name="MapType" opposite="#cBKS6" type="#JK5PO"/>
       <ownedProperties xmi:id="6Rkl+" isImplicit="true" name="MapType" opposite="#up7P9" type="#JK5PO"/>
       <ownedProperties xmi:id="onVlb" isImplicit="true" name="OCLExpression" opposite="#s8mFO" type="#TqxYF"/>
@@ -1509,11 +1512,6 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="B2y2s" name="Bag" superClasses="#XRb47">
       <ownedBindings>
         <ownedSubstitutions actual="#f3gRG" formal="&_0;#k2OA6"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="85RZ1" name="Bag" superClasses="#SV6aE">
-      <ownedBindings>
-        <ownedSubstitutions actual="#S9Pb5" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="0ymr3" name="Bag" superClasses="#KOPtG">
@@ -1781,9 +1779,9 @@
         <ownedSubstitutions actual="#7yjCF" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SV6aE" name="Collection" superClasses="&_0;#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="r9ZTd" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
-        <ownedSubstitutions actual="#S9Pb5" formal="&_0;#qs59R"/>
+        <ownedSubstitutions actual="#T8YnB" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KOPtG" name="Collection" superClasses="&_0;#jbMkR">
@@ -2031,6 +2029,11 @@
         <ownedSubstitutions actual="#7yjCF" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="4NPqT" name="OrderedCollection" superClasses="#r9ZTd">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T8YnB" formal="&_0;#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8Cjk9" name="OrderedCollection" superClasses="#vytNH">
       <ownedBindings>
         <ownedSubstitutions actual="#33CoS" formal="&_0;#feFHs"/>
@@ -2076,11 +2079,6 @@
         <ownedSubstitutions actual="#LgkF0" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QGQIM" name="OrderedCollection" superClasses="#D2axV">
-      <ownedBindings>
-        <ownedSubstitutions actual="#rrwsa" formal="&_0;#feFHs"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oumdQ" name="OrderedCollection" superClasses="#bexGa">
       <ownedBindings>
         <ownedSubstitutions actual="#DLUxI" formal="&_0;#feFHs"/>
@@ -2119,6 +2117,11 @@
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="qjyQj" name="OrderedSet" superClasses="#gLVcE #E2PB+">
       <ownedBindings>
         <ownedSubstitutions actual="#7yjCF" formal="&_0;#53+C2"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Hlsey" isNullFree="true" name="OrderedSet" superClasses="#4NPqT #c4JPN">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T8YnB" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="LaAZc" isNullFree="true" name="OrderedSet" superClasses="#8Cjk9 #gtdJ3">
@@ -2179,11 +2182,6 @@
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Rl6IP" isNullFree="true" name="OrderedSet" superClasses="#COdUw #m4X5p">
       <ownedBindings>
         <ownedSubstitutions actual="#t4j6T" formal="&_0;#53+C2"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="r5PCb" isNullFree="true" name="Sequence" superClasses="#QGQIM">
-      <ownedBindings>
-        <ownedSubstitutions actual="#rrwsa" formal="&_0;#l1i6D"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="kow3e" isNullFree="true" name="Set" superClasses="#M+E1d">
@@ -2414,6 +2412,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="E2PB+" name="UniqueCollection" superClasses="#T7fFO">
       <ownedBindings>
         <ownedSubstitutions actual="#7yjCF" formal="&_0;#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="c4JPN" name="UniqueCollection" superClasses="#r9ZTd">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T8YnB" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gtdJ3" name="UniqueCollection" superClasses="#vytNH">

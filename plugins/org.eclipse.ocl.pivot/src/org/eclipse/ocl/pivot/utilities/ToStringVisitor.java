@@ -50,10 +50,12 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -261,17 +263,20 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		else {
 			Type type = typedElement.getType();
 			if (type instanceof NormalizedTemplateParameter) {
-				TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(typedElement);
-				appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
+			//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(typedElement);
+			//	appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
+				appendName(type);
 			}
 			else {
 				safeVisit(type);
 			}
-			if (!typedElement.isIsRequired()) {
-				append("[?]");
-			}
-			else if (!(type instanceof CollectionType)) {
-				append("[1]");
+			if (!(type instanceof IterableType) && !(type instanceof LambdaType)) {
+				if (!typedElement.isIsRequired()) {
+					append("[?]");
+				}
+				else {
+					append("[1]");
+				}
 			}
 		}
 	}
@@ -381,17 +386,17 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			appendName(object);
 			if (object instanceof TemplateableElement) {
 				TemplateableElement templateableElement = (TemplateableElement) object;
-				appendTemplateBindings(templateableElement.getOwnedBindings(), null);
+				appendTemplateBindings(PivotUtil.getOwnedBindingsList(templateableElement), null);
 				appendTemplateSignature(templateableElement.getOwnedSignature());
 			}
 		}
 	}
 
-	protected void appendTemplateBindings(List<TemplateBinding> templateBindings, @Nullable CollectionType collectionType) {
+	protected void appendTemplateBindings(List<@NonNull TemplateBinding> templateBindings, @Nullable CollectionType collectionType) {
 		if (templateBindings.size() > 0) {
 			append("(");
 			String prefix = ""; //$NON-NLS-1$
-			for (TemplateBinding templateBinding : templateBindings) {
+			for (@NonNull TemplateBinding templateBinding : templateBindings) {
 				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
 					append(prefix);
 					appendTypedElement(templateBinding, templateParameterSubstitution.getActual());
@@ -568,7 +573,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		else {
 			appendName(cls);
 		}
-		appendTemplateBindings(cls.getOwnedBindings(), null);
+		appendTemplateBindings(PivotUtil.getOwnedBindingsList(cls), null);
 		appendTemplateSignature(cls.getOwnedSignature());
 		return null;
 	}
@@ -632,7 +637,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitCollectionType(@NonNull CollectionType object) {
 		appendName(object);
-		appendTemplateBindings(object.getOwnedBindings(), object);
+		appendTemplateBindings(PivotUtil.getOwnedBindingsList(object), object);
 		appendTemplateSignature(object.getOwnedSignature());
 		//		Number lower = object.getLower();
 		//		Number upper = object.getUpper();
@@ -951,26 +956,44 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable String visitLambdaParameter(@NonNull LambdaParameter lambdaParameter) {
+		appendName(lambdaParameter);
+		Type type = lambdaParameter.getType();
+		if (type != null) {
+			append(" : ");
+			appendElementType(lambdaParameter);
+		}
+		return null;
+	}
+
 	@Override
 	public String visitLambdaType(@NonNull LambdaType lambda) {
 		appendName(lambda);
-		Type contextType = lambda.getContextType();
-		if (contextType != null) {
+	//	Type contextType = lambda.getContextType();
+	//	if (contextType != null) {
 			append(" ");
-			appendTypedElement(lambda, contextType);
-			appendTemplateSignature(lambda.getOwnedSignature());
+			LambdaParameter context = lambda.getOwnedContext();
+		//	safeVisit(context);
+			appendElementType(context);
+		//	appendTemplateSignature(lambda.getOwnedSignature());
 			append("(");
 			boolean isFirst = true;
-			for (Type parameterType : lambda.getParameterType()) {
+			for (LambdaParameter parameter : lambda.getOwnedParameters()) {
 				if (!isFirst) {
 					append(",");
 				}
-				appendTypedElement(lambda, parameterType);
+				safeVisit(parameter);
 				isFirst = false;
 			}
 			append(") : ");
-			appendTypedElement(lambda, lambda.getResultType());
-		}
+			LambdaParameter result = lambda.getOwnedResult();
+		//	safeVisit(result);
+			appendElementType(result);
+	//	}
 		return null;
 	}
 
@@ -1095,7 +1118,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitOperation(@NonNull Operation operation) {
 		appendQualifiedName(operation.getOwningClass(), "::", operation);
-		appendTemplateBindings(operation.getOwnedBindings(), null);
+		appendTemplateBindings(PivotUtil.getOwnedBindingsList(operation), null);
 		appendTemplateSignature(operation.getOwnedSignature());
 		append("(");
 		boolean isFirst = true;

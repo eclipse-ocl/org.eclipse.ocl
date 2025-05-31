@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.ids.TypeId
 import org.eclipse.ocl.pivot.utilities.NameUtil
 import org.eclipse.ocl.pivot.Constraint
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter
+import org.eclipse.ocl.pivot.LambdaParameter
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -412,11 +413,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				List<Class> superClasses;
 				«FOR type : allLambdaTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);	
-					type.setContextType(«type.contextType.getTemplateIndex()»);
-					«FOR parameterType : type.parameterType»
-						type.getParameterType().add(«parameterType.getTemplateIndex()»);
+					type.setOwnedContext(createLambdaParameter("«type.ownedContext.name»", «type.ownedContext.type.getTemplateIndex()», «type.ownedContext.isRequired ? "true" : "false"»));
+					«FOR parameter : type.ownedParameters»
+						type.getOwnedParameters().add(createLambdaParameter("«parameter.name»", «parameter.type.getTemplateIndex()», «parameter.isRequired ? "true" : "false"»));
 					«ENDFOR»
-					type.setResultType(«type.resultType.getTemplateIndex()»);
+					type.setOwnedResult(createLambdaParameter("«type.ownedResult.name»", «type.ownedResult.type.getTemplateIndex()», «type.ownedResult.isRequired ? "true" : "false"»));
 					«type.emitSuperClasses("type")»
 				«ENDFOR»
 			}
@@ -883,6 +884,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			Comment: return element.javaName(element.body.substring(0, Math.min(11, element.body.length() - 1)))
 			EnumerationLiteral case element.owningEnumeration === null: return "null"
 			EnumerationLiteral: return element.owningEnumeration.partialName() + "_" + element.javaName()
+			LambdaParameter: return element.javaName()
 			Operation case element.owningClass === null: return "null_" + element.javaName()
 			Operation: return element.owningClass.partialName() + "_" + element.javaName()
 			Package: return element.javaName()

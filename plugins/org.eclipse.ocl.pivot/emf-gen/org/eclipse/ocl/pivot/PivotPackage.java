@@ -1452,6 +1452,16 @@ extends EPackage
 	EOperation getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.LambdaParameter <em>Lambda Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Lambda Parameter</em>'.
+	 * @see org.eclipse.ocl.pivot.LambdaParameter
+	 * @generated
+	 */
+	EClass getLambdaParameter();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateAnyHasOneIterator(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Any Has One Iterator</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1632,37 +1642,37 @@ extends EPackage
 	EClass getLambdaType();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.LambdaType#getContextType <em>Context Type</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.LambdaType#getOwnedContext <em>Owned Context</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Context Type</em>'.
-	 * @see org.eclipse.ocl.pivot.LambdaType#getContextType()
+	 * @return the meta object for the containment reference '<em>Owned Context</em>'.
+	 * @see org.eclipse.ocl.pivot.LambdaType#getOwnedContext()
 	 * @see #getLambdaType()
 	 * @generated
 	 */
-	EReference getLambdaType_ContextType();
+	EReference getLambdaType_OwnedContext();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.pivot.LambdaType#getParameterType <em>Parameter Type</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.LambdaType#getOwnedParameters <em>Owned Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Parameter Type</em>'.
-	 * @see org.eclipse.ocl.pivot.LambdaType#getParameterType()
+	 * @return the meta object for the containment reference list '<em>Owned Parameters</em>'.
+	 * @see org.eclipse.ocl.pivot.LambdaType#getOwnedParameters()
 	 * @see #getLambdaType()
 	 * @generated
 	 */
-	EReference getLambdaType_ParameterType();
+	EReference getLambdaType_OwnedParameters();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.LambdaType#getResultType <em>Result Type</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.LambdaType#getOwnedResult <em>Owned Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Result Type</em>'.
-	 * @see org.eclipse.ocl.pivot.LambdaType#getResultType()
+	 * @return the meta object for the containment reference '<em>Owned Result</em>'.
+	 * @see org.eclipse.ocl.pivot.LambdaType#getOwnedResult()
 	 * @see #getLambdaType()
 	 * @generated
 	 */
-	EReference getLambdaType_ResultType();
+	EReference getLambdaType_OwnedResult();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.LanguageExpression <em>Language Expression</em>}'.
@@ -7062,6 +7072,16 @@ extends EPackage
 		EOperation ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.LambdaParameterImpl <em>Lambda Parameter</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.LambdaParameterImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getLambdaParameter()
+		 * @generated
+		 */
+		EClass LAMBDA_PARAMETER = eINSTANCE.getLambdaParameter();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Any Has One Iterator</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7208,28 +7228,28 @@ extends EPackage
 		EClass LAMBDA_TYPE = eINSTANCE.getLambdaType();
 
 		/**
-		 * The meta object literal for the '<em><b>Context Type</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Owned Context</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference LAMBDA_TYPE__CONTEXT_TYPE = eINSTANCE.getLambdaType_ContextType();
+		EReference LAMBDA_TYPE__OWNED_CONTEXT = eINSTANCE.getLambdaType_OwnedContext();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameter Type</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Owned Parameters</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference LAMBDA_TYPE__PARAMETER_TYPE = eINSTANCE.getLambdaType_ParameterType();
+		EReference LAMBDA_TYPE__OWNED_PARAMETERS = eINSTANCE.getLambdaType_OwnedParameters();
 
 		/**
-		 * The meta object literal for the '<em><b>Result Type</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Owned Result</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference LAMBDA_TYPE__RESULT_TYPE = eINSTANCE.getLambdaType_ResultType();
+		EReference LAMBDA_TYPE__OWNED_RESULT = eINSTANCE.getLambdaType_OwnedResult();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.LanguageExpressionImpl <em>Language Expression</em>}' class.

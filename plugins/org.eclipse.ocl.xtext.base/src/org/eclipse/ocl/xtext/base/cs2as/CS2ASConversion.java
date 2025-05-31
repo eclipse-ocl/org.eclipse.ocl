@@ -878,6 +878,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return converter.isRequired(csTypeRef);
 	}
 
+	public boolean isRequiredWithDefault(@NonNull TypedRefCS csTypeRef) {
+		return converter.isRequiredWithDefault(csTypeRef);
+	}
+
 	public @Nullable Iteration lookupIteration(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName, @Nullable ScopeFilter scopeFilter) {
 		return converter.lookupIteration(csElement, csPathName, scopeFilter);
 	}

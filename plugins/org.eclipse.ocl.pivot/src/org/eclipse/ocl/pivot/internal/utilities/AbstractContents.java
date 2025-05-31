@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -194,6 +195,29 @@ public abstract class AbstractContents extends PivotUtil
 		Iteration pivotIteration = createIteration(name, type, implementationClass, implementation);
 		initTemplateParameters(pivotIteration, templateParameters);
 		return pivotIteration;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull LambdaParameter createLambdaParameter(@NonNull String string, @NonNull Type type, boolean isRequired) {
+		LambdaParameter lambdaParameter = PivotFactory.eINSTANCE.createLambdaParameter();
+		lambdaParameter.setName(string);
+		lambdaParameter.setType(type);
+		lambdaParameter.setIsRequired(isRequired);
+		return lambdaParameter;
+	}
+
+	@Deprecated /* @deprecated add ePackage */
+	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId) {
+		Library pivotLibrary = PivotFactory.eINSTANCE.createLibrary();
+		pivotLibrary.setName(name);
+		pivotLibrary.setNsPrefix(nsPrefix);
+		if (packageId != null) {
+			((LibraryImpl)pivotLibrary).setPackageId(packageId);  // FIXME Add to API
+		}
+		pivotLibrary.setURI(nsURI);
+		return pivotLibrary;
 	}
 
 	/**
