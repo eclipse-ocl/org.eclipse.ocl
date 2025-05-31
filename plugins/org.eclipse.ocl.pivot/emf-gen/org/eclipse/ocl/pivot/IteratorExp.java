@@ -21,12 +21,44 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * A representation of the model object '<em><b>Iterator Exp</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.IteratorExp#getOwnedBody <em>Owned Body</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getIteratorExp()
  * @generated
  */
 public interface IteratorExp extends LoopExp, ReferringElement
 {
+
+	/**
+	 * Returns the value of the '<em><b>Owned Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Body</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Body</em>' containment reference.
+	 * @see #setOwnedBody(OCLExpression)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getIteratorExp_OwnedBody()
+	 * @generated
+	 */
+	@Override
+	OCLExpression getOwnedBody();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.IteratorExp#getOwnedBody <em>Owned Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owned Body</em>' containment reference.
+	 * @see #getOwnedBody()
+	 * @generated
+	 */
+	void setOwnedBody(OCLExpression value);
 
 	/**
 	 * <!-- begin-user-doc -->

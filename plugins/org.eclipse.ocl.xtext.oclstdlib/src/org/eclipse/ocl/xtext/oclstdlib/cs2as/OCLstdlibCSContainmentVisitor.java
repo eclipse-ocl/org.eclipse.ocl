@@ -43,6 +43,7 @@ import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
+import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
@@ -236,7 +237,11 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 		pivotElement.setIsValidating(csElement.isIsValidating());
 		context.refreshTemplateSignature(csElement, pivotElement);
 		context.refreshPivotList(Parameter.class, pivotElement.getOwnedIterators(), csElement.getOwnedIterators());
-		context.refreshPivotList(Parameter.class, pivotElement.getOwnedAccumulators(), csElement.getOwnedAccumulators());
+		if (csElement.getOwnedAccumulators().size() > 0) {
+			ParameterCS csAccumulator = csElement.getOwnedAccumulators().get(0);
+			@Nullable Parameter asAccumulator = PivotUtil.getPivot(Parameter.class, csAccumulator);
+			pivotElement.setOwnedAccumulator(asAccumulator);
+		}
 		context.refreshPivotList(Parameter.class, pivotElement.getOwnedParameters(), csElement.getOwnedParameters());
 		return null;
 	}

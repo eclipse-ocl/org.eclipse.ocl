@@ -44,7 +44,7 @@ public class EssentialOCLOutlineTreeProvider extends BaseOutlineTreeProvider
 				if (asSource != null) {
 					ElementCS csElement = ElementUtil.getCsElement(asSource);
 					if (csElement instanceof ExpCS) {
-						return ((ExpCS)csElement).getParent();
+						return csElement.getParent();
 					}
 				}
 			}
@@ -74,7 +74,11 @@ public class EssentialOCLOutlineTreeProvider extends BaseOutlineTreeProvider
 		}
 		createNode(parentNode, ele.getOwnedResult());
 		createNode(parentNode, ele.getOwnedSource());
-		createNode(parentNode, ele.getOwnedBody());
+		for (OCLExpression body : ele.getOwnedBodies()) {
+			if (body != null) {
+				createNode(parentNode, body);
+			}
+		}
 	}
 
 	protected void _createChildren(IOutlineNode parentNode, IteratorExp ele) {

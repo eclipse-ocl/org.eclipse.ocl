@@ -656,9 +656,9 @@ implements DataType {
 							final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
 							final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
 							/**
-							 * Implementation of the iterator body.
+							 * Implementation of the iteration evaluation body.
 							 */
-							final @NonNull AbstractBinaryOperation BODY_closure_0 = new AbstractBinaryOperation()
+							final @NonNull AbstractBinaryOperation BODY0_closure_1 = new AbstractBinaryOperation()
 							{
 								/**
 								 * superClasses
@@ -674,7 +674,7 @@ implements DataType {
 									return BOXED_superClasses_0;
 								}
 							};
-							final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, BOXED_superClasses, ACC_closure_0);
+							final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY0_closure_1, BOXED_superClasses, ACC_closure_0);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;

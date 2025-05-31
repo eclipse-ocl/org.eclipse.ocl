@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -51,8 +51,8 @@ public class CollectIteration extends AbstractIteration
 	 */
 	@Override
 	public @Nullable Type resolveBodyType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		LoopExp loopExp = (LoopExp)callExp;
-		OCLExpression body = loopExp.getOwnedBody();
+		IteratorExp iteratorExp = (IteratorExp)callExp;
+		OCLExpression body = iteratorExp.getOwnedBody();
 		Type asType = body != null ? body.getType() : null;
 		Type bodyType = asType != null ? PivotUtil.getNonLambdaType(asType) : null;
 		if (bodyType != null) {
@@ -77,8 +77,8 @@ public class CollectIteration extends AbstractIteration
 	 */
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		LoopExp loopExp = (LoopExp)callExp;
-		OCLExpression body = loopExp.getOwnedBody();
+		IteratorExp iteratorExp = (IteratorExp)callExp;
+		OCLExpression body = iteratorExp.getOwnedBody();
 		Type asType = body != null ? body.getType() : null;
 		Type bodyType = asType != null ? PivotUtil.getNonLambdaType(asType) : null;
 		if (bodyType != null) {

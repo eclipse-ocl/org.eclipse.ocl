@@ -387,7 +387,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			//			initValue = ValuesUtil.asValidValue(initValue);
 			IterationManager iterationManager;
 			VariableDeclaration accumulatorVariable = accumulator;
-			OCLExpression body = ClassUtil.requireNonNull(iterateExp.getOwnedBody());
+			OCLExpression body = ClassUtil.requireNonNull(iterateExp.getOwnedBodies().get(0));		// XXX break/return
 			List<@NonNull Variable> iterators = PivotUtil.getOwnedIteratorsList(iterateExp);
 			int iSize = iterators.size();
 			if (sourceValue instanceof MapValue) {

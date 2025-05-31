@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -25,6 +26,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.IterateExp#getOwnedBodies <em>Owned Bodies</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.IterateExp#getOwnedResult <em>Owned Result</em>}</li>
  * </ul>
  *
@@ -33,6 +35,21 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  */
 public interface IterateExp extends LoopExp, ReferringElement
 {
+	/**
+	 * Returns the value of the '<em><b>Owned Bodies</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.OCLExpression}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Bodies</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Bodies</em>' containment reference list.
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getIterateExp_OwnedBodies()
+	 * @generated
+	 */
+	List<OCLExpression> getOwnedBodies();
+
 	/**
 	 * Returns the value of the '<em><b>Owned Result</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

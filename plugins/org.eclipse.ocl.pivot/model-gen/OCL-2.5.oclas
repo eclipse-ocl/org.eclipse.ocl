@@ -717,7 +717,7 @@
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="8BC+U" implementationClass="org.eclipse.ocl.pivot.library.iterator.IterateIteration"
           isRequired="false" name="iterate" type="#OxGT6">
-        <ownedAccumulators xmi:id="HbSkO" isRequired="false" name="acc" type="#OxGT6"/>
+        <ownedAccumulator xmi:id="xWF,g" isRequired="false" name="acc" type="#OxGT6"/>
         <ownedComments body="&#xA;Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source collection.&#xA;"/>
         <ownedIterators xmi:id="V4FiI" isRequired="false" name="i" type="#NxGT6"/>
         <ownedParameters xmi:id="+JkBp" isRequired="false" name="lambda" type="#rwQgu"/>
@@ -1130,7 +1130,7 @@
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="1ZElo" implementationClass="org.eclipse.ocl.pivot.library.iterator.IterateIteration"
           isRequired="false" name="iterate" type="#PxGT6">
-        <ownedAccumulators xmi:id="cjJVE" isRequired="false" name="acc" type="#PxGT6"/>
+        <ownedAccumulator xmi:id="Gf8vW" isRequired="false" name="acc" type="#PxGT6"/>
         <ownedComments body="&#xA;Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.&#xA;"/>
         <ownedIterators xmi:id="qA9S+" isRequired="false" name="i" type="#NxGT6"/>
         <ownedParameters xmi:id="TSbye" isRequired="false" name="lambda" type="#6xQgu"/>

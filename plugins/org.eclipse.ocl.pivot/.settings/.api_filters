@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/IterateExp.java" type="org.eclipse.ocl.pivot.IterateExp">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedBodies()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Iteration.java" type="org.eclipse.ocl.pivot.Iteration">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwnedAccumulator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setOwnedAccumulator(Parameter)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/NormalizedTemplateParameter.java" type="org.eclipse.ocl.pivot.NormalizedTemplateParameter">
         <filter id="1110441988">
             <message_arguments>
@@ -15,6 +34,21 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIterateExp_OwnedBodies()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIteration_OwnedAccumulator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getNormalizedTemplateParameter()"/>
@@ -47,6 +81,21 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATE_EXP__OWNED_BODIES"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATION__OWNED_ACCUMULATOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP__OWNED_BODY"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="NORMALIZED_TEMPLATE_PARAMETER"/>
@@ -87,6 +136,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CLSSid_TypeUsage"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORD_CLSSid_OCLExpression_0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -300,6 +354,32 @@
         <filter id="1110441988">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.annotations.util.PivotAnnotationsSwitch"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterateExpImpl.java" type="org.eclipse.ocl.pivot.internal.IterateExpImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedBodies"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterationImpl.java" type="org.eclipse.ocl.pivot.internal.IterationImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicSetOwnedAccumulator(Parameter, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedAccumulator"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IteratorExpImpl.java" type="org.eclipse.ocl.pivot.internal.IteratorExpImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedBody"/>
             </message_arguments>
         </filter>
     </resource>

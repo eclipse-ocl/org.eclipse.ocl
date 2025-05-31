@@ -35,10 +35,10 @@ import org.eclipse.ocl.pivot.FinalState;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
@@ -111,7 +111,8 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	public static void initialize() {
 		if (!initialized) {
 			initialized = true;
-			roleNames.put(PivotPackage.Literals.LOOP_EXP__OWNED_BODY, "argument");
+			roleNames.put(PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, "arguments");
+			roleNames.put(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, "argument");
 			//			roleNames.put(PivotPackage.Literals.EXPRESSION_IN_OCL__BODY_EXPRESSION, "ownedExpression");
 
 			/*		roleNames.put(PivotPackage.Literals.CALL_EXP__SOURCE, "s");
@@ -442,6 +443,36 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	}
 
 	@Override
+	public Object visitIterateExp(@NonNull IterateExp object) {
+		appendExpPrefix(object);
+		if (object.isIsImplicit()) {
+			OCLExpression body = object.getOwnedBodies().get(0);
+			if (body instanceof CallExp) {
+				Feature referredFeature = PivotUtil.getReferredFeature((CallExp) body);
+				context.appendName(referredFeature);
+				return true;
+			}
+		}
+		context.appendName(object.getReferredIteration());
+		return true;
+	}
+
+	@Override
+	public Object visitIteratorExp(@NonNull IteratorExp object) {
+		appendExpPrefix(object);
+		if (object.isIsImplicit()) {
+			OCLExpression body = object.getOwnedBody();
+			if (body instanceof CallExp) {
+				Feature referredFeature = PivotUtil.getReferredFeature((CallExp) body);
+				context.appendName(referredFeature);
+				return true;
+			}
+		}
+		context.appendName(object.getReferredIteration());
+		return true;
+	}
+
+	@Override
 	public Object visitLambdaType(@NonNull LambdaType object) {
 		context.append(object.getName());
 		//		context.appendTemplateParameters(object);
@@ -454,21 +485,6 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	public Object visitLetExp(@NonNull LetExp object) {
 		appendExpPrefix(object);
 		context.append(MONIKER_LET_EXP);
-		return true;
-	}
-
-	@Override
-	public Object visitLoopExp(@NonNull LoopExp object) {
-		appendExpPrefix(object);
-		if (object.isIsImplicit()) {
-			OCLExpression body = object.getOwnedBody();
-			if (body instanceof CallExp) {
-				Feature referredFeature = PivotUtil.getReferredFeature((CallExp) body);
-				context.appendName(referredFeature);
-				return true;
-			}
-		}
-		context.appendName(object.getReferredIteration());
 		return true;
 	}
 
