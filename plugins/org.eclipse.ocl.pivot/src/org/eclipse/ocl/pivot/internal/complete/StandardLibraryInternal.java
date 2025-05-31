@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.MapTypeManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
@@ -76,7 +77,7 @@ public interface StandardLibraryInternal extends StandardLibrary
 	/**
 	 * @since 7.0
 	 */
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
+	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
 	/**
