@@ -68,19 +68,19 @@ The actual constraints are lazily loaded by the first validation run that uses t
    </extension>
    
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated ecoreTest -->
-      <package
+      <!-- @generated ecoreTest NOT -->
+      <!-- package
             uri="http://eclipse.org/ocl/debug/test/ecoreTest"
             class="org.eclipse.ocl.xtext.tests.ecoreTest.EcoreTestPackage"
-            genModel="models/validity/ecoreTest.genmodel"/>
+            genModel="models/validity/ecoreTest.genmodel"/-->
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated ecoreTest -->
-      <package
+      <!-- @generated ecoreTest NOT -->
+      <!-- package
             uri="http://eclipse.org/ocl/debug/test/ecoreTest2"
             class="org.eclipse.ocl.xtext.tests.ecoreTest2.EcoreTest2Package"
-            genModel="models/validity/ecoreTest.genmodel"/>
+            genModel="models/validity/ecoreTest.genmodel"/-->
    </extension>
 
 </plugin>
