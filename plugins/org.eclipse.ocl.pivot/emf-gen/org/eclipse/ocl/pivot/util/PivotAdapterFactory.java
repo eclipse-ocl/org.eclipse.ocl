@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
@@ -462,6 +463,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseIteratorVariable(IteratorVariable object)
 			{
 				return createIteratorVariableAdapter();
+			}
+			@Override
+			public Adapter caseLambdaParameter(LambdaParameter object)
+			{
+				return createLambdaParameterAdapter();
 			}
 			@Override
 			public Adapter caseLambdaType(LambdaType object)
@@ -1421,6 +1427,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createIteratorVariableAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.LambdaParameter <em>Lambda Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.LambdaParameter
+	 * @generated
+	 */
+	public Adapter createLambdaParameterAdapter()
 	{
 		return null;
 	}
