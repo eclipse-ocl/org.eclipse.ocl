@@ -126,7 +126,6 @@ public class OCLstdlibFormatter extends AbstractEssentialOCLFormatter {
 			c.setNoSpace().around(a.getLeftParenthesisKeyword_3());
 			c.setNoSpace().before(a.getCommaKeyword_5_0());
 			c.setNoSpace().before(a.getSemicolonKeyword_6_0());
-			c.setNoSpace().before(a.getCommaKeyword_6_2_0());
 			c.setNoSpace().before(a.getCommaKeyword_7_2_0());
 			c.setNoSpace().before(a.getRightParenthesisKeyword_8());
 			c.setLinewrap().before(a.getEqualsSignGreaterThanSignKeyword_13_0());

@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.debug.vm.evaluator.VMEvaluationStepper;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Variable;
@@ -30,9 +31,9 @@ public class LoopExpStepper extends CallExpStepper
 			parentElement = parentElement.eContainer();
 		}
 		if (parentElement instanceof LoopExp) {
-			LoopExp loopExp = (LoopExp)parentElement;
-			vmEvaluationVisitor.postIterate(loopExp);
-			OCLExpression body = loopExp.getOwnedBody();
+			IteratorExp iteratorExp = (IteratorExp)parentElement;
+			vmEvaluationVisitor.postIterate(iteratorExp);
+			OCLExpression body = iteratorExp.getFirstOwnedBody();			// XXX sequence multiple bodies
 			if (body != null) {
 				return getFirstElement(vmEvaluationVisitor, body);
 			}

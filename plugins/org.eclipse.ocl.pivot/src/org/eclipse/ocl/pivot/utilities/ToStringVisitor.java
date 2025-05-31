@@ -860,7 +860,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		append("; ");
 		safeVisit(callExp.getOwnedResult());
 		append(" | ");
-		safeVisit(callExp.getOwnedBody());
+		isFirst = true;
+		for (OCLExpression asBody : callExp.getOwnedBodies()) {
+			if (!isFirst) {
+				append(", ");
+			}
+			safeVisit(asBody);
+			isFirst = false;
+		}
 		append(")");//$NON-NLS-1$
 		return null;
 	}
@@ -868,7 +875,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitIteration(@NonNull Iteration iteration) {
 		appendQualifiedName(iteration.getOwningClass(), ".", iteration);
-		appendTemplateBindings(iteration.getOwnedBindings(), null);
+		appendTemplateBindings(PivotUtil.getOwnedBindingsList(iteration), null);
 		appendTemplateSignature(iteration.getOwnedSignature());
 		append("(");
 		boolean isFirst = true;
@@ -880,7 +887,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			isFirst = false;
 		}
 		isFirst = true;
-		for (Parameter accumulator : iteration.getOwnedAccumulators()) {
+		Parameter accumulator = iteration.getOwnedAccumulator();
+		if (accumulator != null) {
 			if (!isFirst) {
 				append(", ");
 			}

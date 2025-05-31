@@ -23,6 +23,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.tests.codegen.company;
 
+import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;

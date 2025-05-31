@@ -296,10 +296,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 						createAssignment("ownedIterators", "+=", createRuleCall(PR_IteratorCS)))),
 					setCardinality("?", createGroup(
 						createKeyword(";"),
-						createAssignment("ownedAccumulators", "+=", createRuleCall(PR_AccumulatorCS)),
-						setCardinality("*", createGroup(
-							createKeyword(","),
-							createAssignment("ownedAccumulators", "+=", createRuleCall(PR_AccumulatorCS)))))),
+						createAssignment("ownedAccumulator", "=", createRuleCall(PR_AccumulatorCS)))),
 					setCardinality("?", createGroup(
 						createKeyword("|"),
 						createAssignment("ownedParameters", "+=", createRuleCall(PR_ParameterCS)),

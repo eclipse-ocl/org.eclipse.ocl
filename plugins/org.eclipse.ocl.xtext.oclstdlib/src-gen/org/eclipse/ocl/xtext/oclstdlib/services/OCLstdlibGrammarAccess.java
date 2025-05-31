@@ -1099,12 +1099,8 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		private final RuleCall cOwnedIteratorsIteratorCSParserRuleCall_5_1_0 = (RuleCall)cOwnedIteratorsAssignment_5_1.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
 		private final Keyword cSemicolonKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cOwnedAccumulatorsAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cOwnedAccumulatorsAccumulatorCSParserRuleCall_6_1_0 = (RuleCall)cOwnedAccumulatorsAssignment_6_1.eContents().get(0);
-		private final Group cGroup_6_2 = (Group)cGroup_6.eContents().get(2);
-		private final Keyword cCommaKeyword_6_2_0 = (Keyword)cGroup_6_2.eContents().get(0);
-		private final Assignment cOwnedAccumulatorsAssignment_6_2_1 = (Assignment)cGroup_6_2.eContents().get(1);
-		private final RuleCall cOwnedAccumulatorsAccumulatorCSParserRuleCall_6_2_1_0 = (RuleCall)cOwnedAccumulatorsAssignment_6_2_1.eContents().get(0);
+		private final Assignment cOwnedAccumulatorAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cOwnedAccumulatorAccumulatorCSParserRuleCall_6_1_0 = (RuleCall)cOwnedAccumulatorAssignment_6_1.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
 		private final Keyword cVerticalLineKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
 		private final Assignment cOwnedParametersAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
@@ -1143,7 +1139,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//    'iteration' name=Name
 		//    (ownedSignature=TemplateSignatureCS)?
 		//    '(' ownedIterators+=IteratorCS (',' ownedIterators+=IteratorCS)*
-		//    (';' ownedAccumulators+=AccumulatorCS (',' ownedAccumulators+=AccumulatorCS)*)?
+		//    (';' ownedAccumulator=AccumulatorCS)?
 		//    ('|' ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)?
 		//    ')'
 		//    ':' ownedType=TypedMultiplicityRefCS
@@ -1161,7 +1157,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//'iteration' name=Name
 		//(ownedSignature=TemplateSignatureCS)?
 		//'(' ownedIterators+=IteratorCS (',' ownedIterators+=IteratorCS)*
-		//(';' ownedAccumulators+=AccumulatorCS (',' ownedAccumulators+=AccumulatorCS)*)?
+		//(';' ownedAccumulator=AccumulatorCS)?
 		//('|' ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)?
 		//')'
 		//':' ownedType=TypedMultiplicityRefCS
@@ -1211,29 +1207,17 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		//IteratorCS
 		public RuleCall getOwnedIteratorsIteratorCSParserRuleCall_5_1_0() { return cOwnedIteratorsIteratorCSParserRuleCall_5_1_0; }
 
-		//(';' ownedAccumulators+=AccumulatorCS (',' ownedAccumulators+=AccumulatorCS)*)?
+		//(';' ownedAccumulator=AccumulatorCS)?
 		public Group getGroup_6() { return cGroup_6; }
 
 		//';'
 		public Keyword getSemicolonKeyword_6_0() { return cSemicolonKeyword_6_0; }
 
-		//ownedAccumulators+=AccumulatorCS
-		public Assignment getOwnedAccumulatorsAssignment_6_1() { return cOwnedAccumulatorsAssignment_6_1; }
+		//ownedAccumulator=AccumulatorCS
+		public Assignment getOwnedAccumulatorAssignment_6_1() { return cOwnedAccumulatorAssignment_6_1; }
 
 		//AccumulatorCS
-		public RuleCall getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_1_0() { return cOwnedAccumulatorsAccumulatorCSParserRuleCall_6_1_0; }
-
-		//(',' ownedAccumulators+=AccumulatorCS)*
-		public Group getGroup_6_2() { return cGroup_6_2; }
-
-		//','
-		public Keyword getCommaKeyword_6_2_0() { return cCommaKeyword_6_2_0; }
-
-		//ownedAccumulators+=AccumulatorCS
-		public Assignment getOwnedAccumulatorsAssignment_6_2_1() { return cOwnedAccumulatorsAssignment_6_2_1; }
-
-		//AccumulatorCS
-		public RuleCall getOwnedAccumulatorsAccumulatorCSParserRuleCall_6_2_1_0() { return cOwnedAccumulatorsAccumulatorCSParserRuleCall_6_2_1_0; }
+		public RuleCall getOwnedAccumulatorAccumulatorCSParserRuleCall_6_1_0() { return cOwnedAccumulatorAccumulatorCSParserRuleCall_6_1_0; }
 
 		//('|' ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)?
 		public Group getGroup_7() { return cGroup_7; }
@@ -2908,7 +2892,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 	//    'iteration' name=Name
 	//    (ownedSignature=TemplateSignatureCS)?
 	//    '(' ownedIterators+=IteratorCS (',' ownedIterators+=IteratorCS)*
-	//    (';' ownedAccumulators+=AccumulatorCS (',' ownedAccumulators+=AccumulatorCS)*)?
+	//    (';' ownedAccumulator=AccumulatorCS)?
 	//    ('|' ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)?
 	//    ')'
 	//    ':' ownedType=TypedMultiplicityRefCS

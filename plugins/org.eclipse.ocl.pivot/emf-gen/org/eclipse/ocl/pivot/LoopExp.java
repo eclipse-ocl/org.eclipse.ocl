@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getOwnedBody <em>Owned Body</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getFirstOwnedBody <em>First Owned Body</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getOwnedCoIterators <em>Owned Co Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getOwnedIterators <em>Owned Iterators</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.LoopExp#getReferredIteration <em>Referred Iteration</em>}</li>
@@ -37,29 +37,29 @@ public interface LoopExp
 extends CallExp {
 
 	/**
-	 * Returns the value of the '<em><b>Owned Body</b></em>' containment reference.
+	 * Returns the value of the '<em><b>First Owned Body</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Body</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>First Owned Body</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owned Body</em>' containment reference.
-	 * @see #setOwnedBody(OCLExpression)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getLoopExp_OwnedBody()
+	 * @return the value of the '<em>First Owned Body</em>' reference.
+	 * @see #setFirstOwnedBody(OCLExpression)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getLoopExp_FirstOwnedBody()
 	 * @generated
 	 */
-	OCLExpression getOwnedBody();
+	OCLExpression getFirstOwnedBody();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.LoopExp#getOwnedBody <em>Owned Body</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.LoopExp#getFirstOwnedBody <em>First Owned Body</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owned Body</em>' containment reference.
-	 * @see #getOwnedBody()
+	 * @param value the new value of the '<em>First Owned Body</em>' reference.
+	 * @see #getFirstOwnedBody()
 	 * @generated
 	 */
-	void setOwnedBody(OCLExpression value);
+	void setFirstOwnedBody(OCLExpression value);
 
 	/**
 	 * Returns the value of the '<em><b>Owned Co Iterators</b></em>' containment reference list.
