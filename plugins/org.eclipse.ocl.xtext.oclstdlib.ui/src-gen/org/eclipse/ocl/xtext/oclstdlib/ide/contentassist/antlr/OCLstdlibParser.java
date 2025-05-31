@@ -131,7 +131,6 @@ public class OCLstdlibParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup(), "rule__LibIterationCS__Group__0");
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_5(), "rule__LibIterationCS__Group_5__0");
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_6(), "rule__LibIterationCS__Group_6__0");
-			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_6_2(), "rule__LibIterationCS__Group_6_2__0");
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_7(), "rule__LibIterationCS__Group_7__0");
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_7_2(), "rule__LibIterationCS__Group_7_2__0");
 			builder.put(grammarAccess.getLibIterationCSAccess().getGroup_13(), "rule__LibIterationCS__Group_13__0");
@@ -316,8 +315,7 @@ public class OCLstdlibParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedSignatureAssignment_2(), "rule__LibIterationCS__OwnedSignatureAssignment_2");
 			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedIteratorsAssignment_4(), "rule__LibIterationCS__OwnedIteratorsAssignment_4");
 			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedIteratorsAssignment_5_1(), "rule__LibIterationCS__OwnedIteratorsAssignment_5_1");
-			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAssignment_6_1(), "rule__LibIterationCS__OwnedAccumulatorsAssignment_6_1");
-			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorsAssignment_6_2_1(), "rule__LibIterationCS__OwnedAccumulatorsAssignment_6_2_1");
+			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedAccumulatorAssignment_6_1(), "rule__LibIterationCS__OwnedAccumulatorAssignment_6_1");
 			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedParametersAssignment_7_1(), "rule__LibIterationCS__OwnedParametersAssignment_7_1");
 			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedParametersAssignment_7_2_1(), "rule__LibIterationCS__OwnedParametersAssignment_7_2_1");
 			builder.put(grammarAccess.getLibIterationCSAccess().getOwnedTypeAssignment_10(), "rule__LibIterationCS__OwnedTypeAssignment_10");

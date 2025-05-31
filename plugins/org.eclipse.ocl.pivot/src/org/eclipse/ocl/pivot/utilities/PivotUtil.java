@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -1939,17 +1940,10 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.4
-	 */
-	public static @NonNull Iterable<@NonNull Parameter> getOwnedAccumulators(@NonNull Iteration iteration) {
-		return ClassUtil.nullFree(iteration.getOwnedAccumulators());
-	}
-
-	/**
 	 * @since 7.0
 	 */
-	public static @NonNull List<@NonNull Parameter> getOwnedAccumulatorsList(@NonNull Iteration iteration) {
-		return ClassUtil.nullFree(iteration.getOwnedAccumulators());
+	public static @NonNull Parameter getOwnedAccumulator(@NonNull Iteration iteration) {
+		return ClassUtil.requireNonNull(iteration.getOwnedAccumulator());
 	}
 
 	/**
@@ -1981,6 +1975,27 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull List<@NonNull TemplateBinding> getOwnedBindingsList(@NonNull TemplateableElement templateableElement) {
+		return ClassUtil.nullFree(templateableElement.getOwnedBindings());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull List<@NonNull OCLExpression> getOwnedBodiesList(@NonNull IterateExp iterateExp) {
+		return ClassUtil.nullFree(iterateExp.getOwnedBodies());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull List<@NonNull OCLExpression> getOwnedBodies(@NonNull IterateExp iterateExp) {
+		return ClassUtil.nullFree(iterateExp.getOwnedBodies());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedBody(@NonNull ExpressionInOCL asExpression) {
@@ -1988,10 +2003,10 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.3
+	 * @since 7.0
 	 */
-	public static @NonNull OCLExpression getOwnedBody(@NonNull LoopExp loopExp) {
-		return ClassUtil.requireNonNull(loopExp.getOwnedBody());
+	public static @NonNull OCLExpression getOwnedBody(@NonNull IteratorExp iteratorExp) {
+		return ClassUtil.requireNonNull(iteratorExp.getOwnedBody());
 	}
 
 	/**

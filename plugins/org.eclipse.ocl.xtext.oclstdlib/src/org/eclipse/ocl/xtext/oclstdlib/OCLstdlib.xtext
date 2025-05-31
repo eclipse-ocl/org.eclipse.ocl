@@ -141,7 +141,7 @@ LibIterationCS returns LibIterationCS:
 	'iteration' name=Name
 	(ownedSignature=TemplateSignatureCS)?
 	'(' ownedIterators+=IteratorCS (',' ownedIterators+=IteratorCS)*
-	(';' ownedAccumulators+=AccumulatorCS (',' ownedAccumulators+=AccumulatorCS)*)?
+	(';' ownedAccumulator=AccumulatorCS)?
 	('|' ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)?
 	')'
 	':' ownedType=TypedMultiplicityRefCS

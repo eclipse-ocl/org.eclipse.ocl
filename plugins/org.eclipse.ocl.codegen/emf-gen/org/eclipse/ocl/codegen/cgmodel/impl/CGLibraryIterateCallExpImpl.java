@@ -236,8 +236,10 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 		if ((result == null) || !result.isNonNull() || !result.isNonInvalid()) {
 			return false;
 		}
-		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
-			return false;
+		for (@NonNull CGValuedElement body : ClassUtil.nullFree(getBodies())) {
+			if (!body.isNonNull() || !body.isNonInvalid()) {
+				return false;
+			}
 		}
 		return true;
 	}
