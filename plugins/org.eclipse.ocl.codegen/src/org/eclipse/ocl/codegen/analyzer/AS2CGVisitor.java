@@ -119,6 +119,7 @@ import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.Library;
@@ -509,8 +510,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgElement2;
 	}
 
-	protected @NonNull CGIterationCallExp generateIterateExp(@NonNull CGValuedElement cgSource, @NonNull IterateExp element) {
-		Iteration asIteration = element.getReferredIteration();
+	protected @NonNull CGIterationCallExp generateIterateExp(@NonNull CGValuedElement cgSource, @NonNull IterateExp asIterateExp) {
+		Iteration asIteration = asIterateExp.getReferredIteration();
 		LibraryIteration libraryIteration = null;
 		if (asIteration != null) {
 			libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
@@ -519,26 +520,36 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				CGBuiltInIterationCallExp cgBuiltInIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
 				cgBuiltInIterationCallExp.setReferredIteration(asIteration);
 				cgBuiltInIterationCallExp.setSource(cgSource);
-				for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(element)) {
+				for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asIterateExp)) {
 					CGIterator cgIterator = getNullableIterator(iterator);
 					cgBuiltInIterationCallExp.getIterators().add(cgIterator);
 				}
-				for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(element)) {
+				for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asIterateExp)) {
 					CGIterator cgCoIterator = getNullableIterator(coIterator);
 					cgBuiltInIterationCallExp.getCoIterators().add(cgCoIterator);
-				}
-				if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
-					cgBuiltInIterationCallExp.getBody().setRequired(true);
 				}
 				cgBuiltInIterationCallExp.setInvalidating(false);
 				cgBuiltInIterationCallExp.setValidating(false);
 				//				cgBuiltInIterationCallExp.setNonNull();
-				setAst(cgBuiltInIterationCallExp, element);
-				@SuppressWarnings("null")@NonNull Variable accumulator = element.getOwnedResult();
+				setAst(cgBuiltInIterationCallExp, asIterateExp);
+				@SuppressWarnings("null")@NonNull Variable accumulator = asIterateExp.getOwnedResult();
 				CGIterator cgAccumulator = getNullableIterator(accumulator);
 				cgAccumulator.setInit(doVisit(CGValuedElement.class, accumulator.getOwnedInit()));
 				cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
-				cgBuiltInIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
+				List<OCLExpression> asBodies = Collections.singletonList(asIterateExp.getOwnedBody());
+				cgBuiltInIterationCallExp.getBodies().add(doVisit(CGValuedElement.class, asBodies.get(0)));
+				List<Parameter> asParameters = asIteration.getOwnedParameters();
+				int iMax = Math.min(asParameters.size(), asBodies.size());
+				for (int i = 0; i < iMax; i++) {
+					Parameter asParameter = asParameters.get(i);
+					LambdaType asParameterType = (LambdaType) asParameter.getType();
+					OCLExpression asBody = asBodies.get(i);
+					CGValuedElement cgBody = doVisit(CGValuedElement.class, asBody);
+				//	if (asParameterType.getOwnedResult().isIsRequired()) {		// XXX siblings
+				//		cgBody.setRequired(true);
+				//	}
+					cgBuiltInIterationCallExp.getBodies().add(cgBody);
+				}
 				/*			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);
 				if (cgAccumulatorId != null) {
 					CGIterator cgAccumulator = CGModelFactory.eINSTANCE.createCGIterator();
@@ -557,42 +568,33 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGLibraryIterateCallExp cgLibraryIterateCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterateCallExp();
 		cgLibraryIterateCallExp.setLibraryIteration(libraryIteration);
 		cgLibraryIterateCallExp.setReferredIteration(asIteration);
-		setAst(cgLibraryIterateCallExp, element);
+		setAst(cgLibraryIterateCallExp, asIterateExp);
 		if (asIteration != null) {
 			cgLibraryIterateCallExp.setInvalidating(asIteration.isIsInvalidating());
 			cgLibraryIterateCallExp.setValidating(asIteration.isIsValidating());
 		}
 		cgLibraryIterateCallExp.setSource(cgSource);
-		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(element)) {
+		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asIterateExp)) {
 			cgLibraryIterateCallExp.getIterators().add(getIterator(iterator));
 		}
-		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(element)) {
+		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asIterateExp)) {
 			cgLibraryIterateCallExp.getCoIterators().add(getIterator(coIterator));
 		}
-		Variable result = element.getOwnedResult();
+		Variable result = asIterateExp.getOwnedResult();
 		if (result != null) {
 			CGIterator cgResult = getIterator(result);
 			cgLibraryIterateCallExp.setResult(cgResult);
 			CGValuedElement cgInitExpression = doVisit(CGValuedElement.class, result.getOwnedInit());
 			cgResult.setInit(cgInitExpression);
 		}
-		cgLibraryIterateCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
+		for (OCLExpression asBody : Collections.singletonList(asIterateExp.getOwnedBody())) {
+			cgLibraryIterateCallExp.getBodies().add(doVisit(CGValuedElement.class, asBody));
+		}
 		if (asIteration != null) {
 			cgLibraryIterateCallExp.setRequired(asIteration.isIsRequired());
 		}
 		//		cgIterationCallExp.setOperation(getOperation(element.getReferredOperation()));
 		return cgLibraryIterateCallExp;
-	}
-
-	protected @NonNull CGIterator getNullableIterator(@NonNull Variable iterator) {
-		CGIterator cgIterator = getIterator(iterator);
-		cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
-		cgIterator.setRequired(iterator.isIsRequired());
-		if (iterator.isIsRequired()) {
-			cgIterator.setNonNull();
-		}
-		cgIterator.setNonInvalid();
-		return cgIterator;
 	}
 
 	protected @NonNull CGIterationCallExp generateIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp element) {
@@ -617,9 +619,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgBuiltInIterationCallExp.setValidating(false);
 			//			cgBuiltInIterationCallExp.setNonNull();
 			setAst(cgBuiltInIterationCallExp, element);
-			cgBuiltInIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
+			CGValuedElement cgBody = doVisit(CGValuedElement.class, element.getOwnedBody());
+			cgBuiltInIterationCallExp.getBodies().add(cgBody);
 			if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
-				cgBuiltInIterationCallExp.getBody().setRequired(true);
+				cgBody.setRequired(true);
 			}
 			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);
 			if (cgAccumulatorId != null) {
@@ -655,7 +658,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(element)) {
 			cgLibraryIterationCallExp.getCoIterators().add(getIterator(coIterator));
 		}
-		cgLibraryIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
+		CGValuedElement cgBody = doVisit(CGValuedElement.class, element.getOwnedBody());
+		cgLibraryIterationCallExp.getBodies().add(cgBody);
 		cgLibraryIterationCallExp.setRequired(isRequired);
 		//		cgIterationCallExp.setOperation(getOperation(element.getReferredOperation()));
 		return cgLibraryIterationCallExp;
@@ -1018,6 +1022,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			variablesStack.putVariable(asVariable, cgVariable);
 		}
 		return cgVariable;
+	}
+
+	protected @NonNull CGIterator getNullableIterator(@NonNull Variable iterator) {
+		CGIterator cgIterator = getIterator(iterator);
+		cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
+		cgIterator.setRequired(iterator.isIsRequired());
+		if (iterator.isIsRequired()) {
+			cgIterator.setNonNull();
+		}
+		cgIterator.setNonInvalid();
+		return cgIterator;
 	}
 
 	@Deprecated // add explicitName argument
