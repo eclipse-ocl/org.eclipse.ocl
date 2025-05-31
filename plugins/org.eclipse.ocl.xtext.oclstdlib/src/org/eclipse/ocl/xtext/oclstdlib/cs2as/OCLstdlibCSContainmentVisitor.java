@@ -237,8 +237,8 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 		pivotElement.setIsValidating(csElement.isIsValidating());
 		context.refreshTemplateSignature(csElement, pivotElement);
 		context.refreshPivotList(Parameter.class, pivotElement.getOwnedIterators(), csElement.getOwnedIterators());
-		if (csElement.getOwnedAccumulators().size() > 0) {
-			ParameterCS csAccumulator = csElement.getOwnedAccumulators().get(0);
+		ParameterCS csAccumulator = csElement.getOwnedAccumulator();
+		if (csAccumulator != null) {
 			@Nullable Parameter asAccumulator = PivotUtil.getPivot(Parameter.class, csAccumulator);
 			pivotElement.setOwnedAccumulator(asAccumulator);
 		}

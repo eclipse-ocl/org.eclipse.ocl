@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
+ * from: E:\GIT\org.eclipse.ocl\releng..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
  * by: org.eclipse.ocl.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
@@ -296,10 +296,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 						createAssignment("ownedIterators", "+=", createRuleCall(PR_IteratorCS)))),
 					setCardinality("?", createGroup(
 						createKeyword(";"),
-						createAssignment("ownedAccumulators", "+=", createRuleCall(PR_AccumulatorCS)),
-						setCardinality("*", createGroup(
-							createKeyword(","),
-							createAssignment("ownedAccumulators", "+=", createRuleCall(PR_AccumulatorCS)))))),
+						createAssignment("ownedAccumulator", "=", createRuleCall(PR_AccumulatorCS)))),
 					setCardinality("?", createGroup(
 						createKeyword("|"),
 						createAssignment("ownedParameters", "+=", createRuleCall(PR_ParameterCS)),
