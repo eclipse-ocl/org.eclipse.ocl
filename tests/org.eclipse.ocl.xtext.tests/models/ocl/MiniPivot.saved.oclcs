@@ -708,7 +708,7 @@
                         <ownedLeft xsi:type="essentialoclcs:NameExpCS">
                           <ownedPathName>
                             <ownedPathElements>
-                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#OSoce"/>
+                              <referredElement xsi:type="pivot:Iteration" href="http://www.eclipse.org/ocl/2015/Library.oclas#XToce"/>
                             </ownedPathElements>
                           </ownedPathName>
                           <ownedRoundBracketedClause>
