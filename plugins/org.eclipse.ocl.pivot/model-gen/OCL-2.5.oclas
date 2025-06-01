@@ -30,13 +30,13 @@
         <ownedComments body="&#xA;True if oclText[self] and bag contain the same elements, the same number of times.&#xA;"/>
         <ownedParameters xmi:id="0K0em" isRequired="false" name="object2" type="#zlfMH"/>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="c2dcd" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="l3dcd" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#yJkED">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="1a6DW" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="esYj2" name="lambda" type="#AC2V1"/>
+        <ownedIterators xmi:id="anMEW" isRequired="false" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="D5qj2" name="lambda" type="#AC2V1"/>
         <ownedSignature>
-          <ownedParameters xmi:id="P1,64" name="E"/>
+          <ownedParameters xmi:id="gfSd9" name="E"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="zRrYi" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -1764,13 +1764,13 @@
         <ownedComments body="&#xA;The set of elements, consisting of all elements of oclText[self], followed by objects.&#xA;"/>
         <ownedParameters xmi:id="wakcI" name="objects" type="#nx9cI"/>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="V7nm," implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="e8nm," implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#FMbRn">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="KcqGS" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="ztImy" name="lambda" type="#uD+j0"/>
+        <ownedIterators xmi:id="vo8GS" isRequired="false" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="Y6amy" name="lambda" type="#uD+j0"/>
         <ownedSignature>
-          <ownedParameters xmi:id="QBFzw" name="E"/>
+          <ownedParameters xmi:id="hrXV1" name="E"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="sW1iE" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -2037,13 +2037,13 @@
         <ownedComments body="&#xA;The sequence of elements, consisting of all elements of oclText[self], followed by objects.&#xA;"/>
         <ownedParameters xmi:id="cYIUW" name="objects" type="#nx9cI"/>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="xmD9H" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="6nD9H" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#FMbRn">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="2ZO+f" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="frsdA" name="lambda" type="#uD+j0"/>
+        <ownedIterators xmi:id="bmg+f" isRequired="false" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="E4+dA" name="lambda" type="#uD+j0"/>
         <ownedSignature>
-          <ownedParameters xmi:id="MI0LA" name="E"/>
+          <ownedParameters xmi:id="dyGuE" name="E"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="ICR5M" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -2176,13 +2176,13 @@
         <ownedComments body="&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
         <ownedParameters xmi:id="eXRFm" isRequired="false" name="object2" type="#zlfMH"/>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="OSoce" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="XToce" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           name="closure" type="#yJkED">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="fnXqV" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="I51J2" name="lambda" type="#AC2V1"/>
+        <ownedIterators xmi:id="E0pqV" isRequired="false" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="tFIK2" name="lambda" type="#AC2V1"/>
         <ownedSignature>
-          <ownedParameters xmi:id="Rvyah" name="E"/>
+          <ownedParameters xmi:id="iZF9l" name="E"/>
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="lt1Yj" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"

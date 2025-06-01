@@ -2182,7 +2182,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedIterations = _Bag_Bag_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Bag_closure);
 			ownedParameters = iteration.getOwnedIterators();
-			ownedParameters.add(parameter = createParameter("i", $$1, true));
+			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_T_result_Collection_T, true));
 			ownedIterations.add(iteration = it_Bag_collectNested);
@@ -2427,7 +2427,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedIterations = _OrderedSet_OrderedSet_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_OrderedSet_closure);
 			ownedParameters = iteration.getOwnedIterators();
-			ownedParameters.add(parameter = createParameter("i", $$1, true));
+			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_T_result_OrderedCollection_T, true));
 			ownedIterations.add(iteration = it_OrderedSet_collectNested);
@@ -2459,7 +2459,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedIterations = _Sequence_Sequence_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Sequence_closure);
 			ownedParameters = iteration.getOwnedIterators();
-			ownedParameters.add(parameter = createParameter("i", $$1, true));
+			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_T_result_OrderedCollection_T, true));
 			ownedIterations.add(iteration = it_Sequence_collectNested);
@@ -2491,7 +2491,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedIterations = _Set_Set_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Set_closure);
 			ownedParameters = iteration.getOwnedIterators();
-			ownedParameters.add(parameter = createParameter("i", $$1, true));
+			ownedParameters.add(parameter = createParameter("i", $$1, false));
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_self_$$1_T_result_Collection_T, true));
 			ownedIterations.add(iteration = it_Set_collectNested);
