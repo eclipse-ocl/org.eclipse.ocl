@@ -544,9 +544,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					LambdaType asParameterType = (LambdaType) asParameter.getType();
 					OCLExpression asBody = asBodies.get(i);
 					CGValuedElement cgBody = doVisit(CGValuedElement.class, asBody);
-				//	if (asParameterType.getOwnedResult().isIsRequired()) {		// XXX siblings
-				//		cgBody.setRequired(true);
-				//	}
+					if (asParameterType.getOwnedResult().isIsRequired()) {		// XXX siblings
+						cgBody.setRequired(true);
+					}
 					cgBuiltInIterationCallExp.getBodies().add(cgBody);
 				}
 				/*			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);
@@ -620,8 +620,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			setAst(cgBuiltInIterationCallExp, element);
 			CGValuedElement cgBody = doVisit(CGValuedElement.class, element.getOwnedBody());
 			cgBuiltInIterationCallExp.getBodies().add(cgBody);
-			if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
-				cgBody.setRequired(true);
+			Parameter bodyParameter = asIteration.getOwnedParameters().get(0);
+			Type bodyType = bodyParameter.getType();
+			if (bodyType instanceof LambdaType) {
+				if (((LambdaType)bodyType).getOwnedResult().isIsRequired()) {
+					cgBody.setRequired(true);
+				}
+			}
+			else {
+				bodyParameter.setIsRequired(true);
 			}
 			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);
 			if (cgAccumulatorId != null) {
