@@ -3389,14 +3389,24 @@ extends EPackage
 	EReference getTupleLiteralPart_OwnedInit();
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleInitialiserType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Initialiser Type</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleNullityForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Nullity For Initializer</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Validate Compatible Initialiser Type</em>' operation.
-	 * @see org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleInitialiserType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @return the meta object for the '<em>Validate Compatible Nullity For Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleNullityForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 * @generated
 	 */
-	EOperation getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map();
+	EOperation getTupleLiteralPart__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleTypeForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Type For Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Type For Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleTypeForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getTupleLiteralPart__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TupleLiteralPart#validateTypeIsNotInvalid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Invalid</em>}' operation.
@@ -8643,12 +8653,20 @@ extends EPackage
 		EReference TUPLE_LITERAL_PART__OWNED_INIT = eINSTANCE.getTupleLiteralPart_OwnedInit();
 
 		/**
-		 * The meta object literal for the '<em><b>Validate Compatible Initialiser Type</b></em>' operation.
+		 * The meta object literal for the '<em><b>Validate Compatible Nullity For Initializer</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map();
+		EOperation TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTupleLiteralPart__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Type For Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTupleLiteralPart__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Type Is Not Invalid</b></em>' operation.

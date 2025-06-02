@@ -4717,7 +4717,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map()
+	public EOperation getTupleLiteralPart__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map()
 	{
 		return tupleLiteralPartEClass.getEOperations().get(0);
 	}
@@ -4728,9 +4728,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	public EOperation getTupleLiteralPart__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map()
 	{
 		return tupleLiteralPartEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	{
+		return tupleLiteralPartEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -7909,6 +7920,7 @@ implements PivotPackage  {
 		createEReference(tupleLiteralPartEClass, 9);
 		createEOperation(tupleLiteralPartEClass, 6);
 		createEOperation(tupleLiteralPartEClass, 7);
+		createEOperation(tupleLiteralPartEClass, 8);
 
 		tupleTypeEClass = createEClass(120);
 
@@ -9571,7 +9583,16 @@ implements PivotPackage  {
 		initEClass(tupleLiteralPartEClass, TupleLiteralPart.class, "TupleLiteralPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getTupleLiteralPart_OwnedInit(), this.getOCLExpression(), null, "ownedInit", null, 0, 1, TupleLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateCompatibleInitialiserType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getTupleLiteralPart__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateCompatibleNullityForInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getTupleLiteralPart__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateCompatibleTypeForInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -10567,7 +10588,14 @@ implements PivotPackage  {
 			   "body", "type <> OclInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
+		  (getTupleLiteralPart__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "ownedInit?.isRequired = isRequired" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getTupleLiteralPart__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
@@ -11328,11 +11356,18 @@ implements PivotPackage  {
 			   "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
+		  (getTupleLiteralPart__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "originalName", "CompatibleInitialiserType" //$NON-NLS-1$ //$NON-NLS-2$
+			   "originalName", "CompatibleNullityForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getTupleLiteralPart__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "CompatibleTypeForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),

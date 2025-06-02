@@ -1390,7 +1390,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(part);
 		Type type = part.getType();
 		if (type != null) {
-			append(" : ");
+			append(":");
 			appendElementType(part);
 		}
 		OCLExpression initExpression = part.getOwnedInit();

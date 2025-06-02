@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -105,6 +106,20 @@ public class TupleTypeImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTupleType(this);
+	}
+
+	@Override
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+		if (this == type) {
+			return true;
+		}
+		if (type instanceof TupleType) {
+			return TypeUtil.conformsToTupleType(standardLibrary, this, (TupleType)type);
+		}
+	//	if (getUnspecializedElement() != null) {
+	//		return ((Type)getUnspecializedElement()).conformsTo(standardLibrary, type);
+	//	}
+		return super.conformsTo(standardLibrary, type);
 	}
 
 	@Override

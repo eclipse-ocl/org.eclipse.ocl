@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeUsage;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -590,6 +591,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return conformsTo(firstValueType, firstSubstitutions, secondValueType, secondSubstitutions);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected boolean conformsToTupleType(@NonNull TupleType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
 			@NonNull TupleType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions) {
 		List<Property> actualProperties = actualType.getOwnedProperties();
@@ -602,16 +606,28 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			if (requiredProperty == null) {
 				return false;
 			}
-			Type actualPropertyType = actualProperty.getType();
-			Type requiredPropertyType = requiredProperty.getType();
-			if ((actualPropertyType == null) || (requiredPropertyType == null)) {
-				return false;
-			}
-			if (!conformsTo(actualPropertyType, actualSubstitutions, requiredPropertyType, requiredSubstitutions)) {
+			if (!conformsToTypeUsage(actualProperty, actualSubstitutions, requiredProperty, requiredSubstitutions)) {
+//				if (!conformsToTypeUsage(actualProperty, actualProperty.isIsRequired(), actualSubstitutions, requiredProperty, requiredProperty.isIsRequired(), requiredSubstitutions)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean conformsToTypeUsage(@NonNull TypeUsage actualTypeUsage, @NonNull TemplateParameterSubstitutions actualSubstitutions,
+			@NonNull Property requiredTypeUsage, @NonNull TemplateParameterSubstitutions requiredSubstitutions) {
+		Type actualPropertyType = actualTypeUsage.getType();
+		Type requiredPropertyType = requiredTypeUsage.getType();
+		if ((actualPropertyType == null) || (requiredPropertyType == null)) {
+			return false;
+		}
+		if (!actualTypeUsage.isIsRequired() && requiredTypeUsage.isIsRequired()) {
+			return false;
+		}
+		return conformsTo(actualPropertyType, actualSubstitutions, requiredPropertyType, requiredSubstitutions);
 	}
 
 	@Override

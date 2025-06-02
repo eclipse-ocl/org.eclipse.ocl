@@ -465,7 +465,8 @@ context StateExp
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context TupleLiteralPart
-inv CompatibleInitialiserType: ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)
+inv CompatibleTypeForInitializer: ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)
+inv CompatibleNullityForInitializer: ownedInit?.isRequired = isRequired
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context Variable

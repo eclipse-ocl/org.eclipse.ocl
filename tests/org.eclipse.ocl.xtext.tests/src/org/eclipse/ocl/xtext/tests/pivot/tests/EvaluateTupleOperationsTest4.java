@@ -111,9 +111,17 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 		SetValue setValue_a3a_null = ValueUtil.createSetOfEach(collectionTypeId, aValue_3, aValue_null);
 		SetValue setValue_a3av_null = ValueUtil.createSetOfEach(collectionTypeId, aValue_3, aValuev_null);
 		SetValue setValue_a3b4 = ValueUtil.createSetOfEach(collectionTypeId, aValue_3, bValue_4);
-		SetValue setValue2 = ValueUtil.createSetOfEach(collectionTypeId);
+	//	SetValue setValue2 = ValueUtil.createSetOfEach(collectionTypeId);
+		ocl.assertValidationErrorQuery(null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a:Integer[?] = null}} in s",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleTypeForInitializer",
+				"s : Set(Tuple(a:Integer[1])) = Set{Tuple{a:Integer[1] = 3}, Tuple{a:Integer[?] = null}}");
 		ocl.assertQueryEquals(null, setValue_a3a_null, "let s : Set(Tuple(a:Integer[?])) = Set{Tuple{a = 3}, Tuple{a:Integer = null}} in s");
-		ocl.assertQueryEquals(null, setValue_a3av_null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a:Integer[1] = null}} in s");
+		ocl.assertValidationErrorQuery(null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a:Integer[1] = null}} in s",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "TupleLiteralPart::CompatibleNullityForInitializer",
+				"a:Integer[1] = null");
+		ocl.assertValidationErrorQuery(null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a:Integer[?] = null}} in s",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "TupleLiteralPart::CompatibleNullityForInitializer",
+				"a:Integer[1] = null");
 		ocl.assertQueryEquals(null, setValue_a3av_null, "let s : Set(Tuple(a:Integer[?])) = Set{Tuple{a = 3}, Tuple{a = null}} in s");
 		ocl.assertQueryEquals(null, setValue_a3av_null, "let s : Set(Tuple(a:Integer[1])) = Set{Tuple{a = 3}, Tuple{a = null}} in s");
 

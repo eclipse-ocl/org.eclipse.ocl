@@ -4712,7 +4712,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Constraint iv_ShadowPart_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
 		private final @NonNull Constraint iv_ShadowPart_TypeIsNotNull = createInvariant(PivotPackage.Literals.SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "TypeIsNotNull", "type <> null");
 		private final @NonNull Constraint iv_StateExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.STATE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
-		private final @NonNull Constraint iv_TupleLiteralPart_CompatibleInitialiserType = createInvariant(PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP, "CompatibleInitialiserType", "ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)");
+		private final @NonNull Constraint iv_TupleLiteralPart_CompatibleNullityForInitializer = createInvariant(PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForInitializer", "ownedInit?.isRequired = isRequired");
+		private final @NonNull Constraint iv_TupleLiteralPart_CompatibleTypeForInitializer = createInvariant(PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleTypeForInitializer", "ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)");
 		private final @NonNull Constraint iv_TupleLiteralPart_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
 		private final @NonNull Constraint iv_Variable_CompatibleInitialiserType = createInvariant(PivotPackage.Literals.VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP, "CompatibleInitialiserType", "true");
 		private final @NonNull Constraint iv_VariableDeclaration_NameIsNotNull = createInvariant(PivotPackage.Literals.VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP, "NameIsNotNull", "name <> null");
@@ -4882,7 +4883,8 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedInvariants.add(constraint = iv_StateExp_TypeIsNotInvalid);
 
 			ownedInvariants = _TupleLiteralPart.getOwnedInvariants();
-			ownedInvariants.add(constraint = iv_TupleLiteralPart_CompatibleInitialiserType);
+			ownedInvariants.add(constraint = iv_TupleLiteralPart_CompatibleNullityForInitializer);
+			ownedInvariants.add(constraint = iv_TupleLiteralPart_CompatibleTypeForInitializer);
 			ownedInvariants.add(constraint = iv_TupleLiteralPart_TypeIsNotInvalid);
 
 			ownedInvariants = _Variable.getOwnedInvariants();

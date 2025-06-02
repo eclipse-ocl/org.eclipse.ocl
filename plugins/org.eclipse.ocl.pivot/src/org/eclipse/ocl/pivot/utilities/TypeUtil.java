@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -39,6 +40,11 @@ public class TypeUtil
 			if (!secondInheritance.isSuperInheritanceOf(firstInheritance)) {
 				return false;
 			}
+		}
+		boolean firstIsNullFree = firstCollectionType.isIsNullFree();
+		boolean secondIsNullFree = secondCollectionType.isIsNullFree();
+		if (firstIsNullFree && !secondIsNullFree) {
+			return false;
 		}
 		Type firstElementType = firstCollectionType.getElementType();
 		Type secondElementType = secondCollectionType.getElementType();
@@ -77,6 +83,16 @@ public class TypeUtil
 		//				return false;
 		//			}
 		//		}
+		boolean firstIsKeysAreNullFree = firstMapType.isKeysAreNullFree();
+		boolean secondIsKeysAreNullFree = secondMapType.isKeysAreNullFree();
+		if (firstIsKeysAreNullFree && !secondIsKeysAreNullFree) {
+			return false;
+		}
+		boolean firstIsValuesAreNullFree = firstMapType.isValuesAreNullFree();
+		boolean secondIsValuesAreNullFree = secondMapType.isValuesAreNullFree();
+		if (firstIsValuesAreNullFree && !secondIsValuesAreNullFree) {
+			return false;
+		}
 		Type firstKeyType = firstMapType.getKeyType();
 		Type secondKeyType = secondMapType.getKeyType();
 		if (firstKeyType != secondKeyType) {
@@ -101,12 +117,38 @@ public class TypeUtil
 	}
 
 	public static boolean conformsToTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType) {
-		if (isEqualToTupleType(standardLibrary, firstTupleType, secondTupleType)) {
+		List<@NonNull Property> firstParts = PivotUtil.getOwnedPropertiesList(firstTupleType);
+		List<@NonNull Property> secondParts = PivotUtil.getOwnedPropertiesList(secondTupleType);
+		int iSize = firstParts.size();
+		if (iSize != secondParts.size()) {
+			return false;
+		}
+		for (int i = 0; i < iSize; i++) {
+			Property firstPart = firstParts.get(i);
+			Property secondPart = secondParts.get(i);
+			boolean firstIsRequired = firstPart.isIsRequired();
+			boolean secondIsRequired = secondPart.isIsRequired();
+			if (!firstIsRequired && secondIsRequired) {
+				return false;
+			}
+			Type firstElementType = firstPart.getType();
+			Type secondElementType = secondPart.getType();
+			if (firstElementType != secondElementType) {
+				if ((firstElementType == null) || (secondElementType == null)) {
+					return false;
+				}
+				if (!firstElementType.conformsTo(standardLibrary, secondElementType)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	/*	if (isEqualToTupleType(standardLibrary, firstTupleType, secondTupleType)) {
 			return true;
 		}
 		CompleteInheritance firstInheritance = firstTupleType.getInheritance(standardLibrary);
 		CompleteInheritance secondInheritance = secondTupleType.getInheritance(standardLibrary);
-		return firstInheritance.isSuperInheritanceOf(secondInheritance);
+		return firstInheritance.isSuperInheritanceOf(secondInheritance); */
 	}
 
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {

@@ -969,12 +969,20 @@ extends EObjectValidator {
 	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 97;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Tuple Literal Part'.
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For Initializer' of 'Tuple Literal Part'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 98;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 98;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Type For Initializer' of 'Tuple Literal Part'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 99;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Tuple Literal Part'.
@@ -982,7 +990,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 99;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 100;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Variable'.
@@ -990,7 +998,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 100;
+	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 101;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Name Is Not Null' of 'Variable Declaration'.
@@ -998,7 +1006,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 101;
+	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 102;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Declaration'.
@@ -1006,7 +1014,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 102;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 103;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Variable Declaration'.
@@ -1014,7 +1022,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 103;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 104;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Exp'.
@@ -1022,7 +1030,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 104;
+	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 105;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -1030,7 +1038,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 104;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 105;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -4743,19 +4751,31 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateTypeIsNotInvalid(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(tupleLiteralPart, diagnostics, context);
-		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateCompatibleInitialiserType(tupleLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateCompatibleNullityForInitializer(tupleLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateCompatibleTypeForInitializer(tupleLiteralPart, diagnostics, context);
 		return result;
 	}
 
 	/**
-	 * Validates the validateCompatibleInitialiserType constraint of '<em>Tuple Literal Part</em>'.
+	 * Validates the validateCompatibleNullityForInitializer constraint of '<em>Tuple Literal Part</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateTupleLiteralPart_validateCompatibleInitialiserType(TupleLiteralPart tupleLiteralPart, DiagnosticChain diagnostics, Map<Object, Object> context)
+	public boolean validateTupleLiteralPart_validateCompatibleNullityForInitializer(TupleLiteralPart tupleLiteralPart, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return tupleLiteralPart.validateCompatibleInitialiserType(diagnostics, context);
+		return tupleLiteralPart.validateCompatibleNullityForInitializer(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateCompatibleTypeForInitializer constraint of '<em>Tuple Literal Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateTupleLiteralPart_validateCompatibleTypeForInitializer(TupleLiteralPart tupleLiteralPart, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return tupleLiteralPart.validateCompatibleTypeForInitializer(diagnostics, context);
 	}
 
 	/**

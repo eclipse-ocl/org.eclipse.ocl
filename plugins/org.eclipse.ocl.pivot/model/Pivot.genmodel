@@ -959,9 +959,13 @@
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-TupleLiteralPart">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TupleLiteralPart-ownedInit"/>
-      <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType">
-        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType/diagnostics"/>
-        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType/context"/>
+      <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateCompatibleNullityForInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleNullityForInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleNullityForInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateCompatibleTypeForInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleTypeForInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleTypeForInitializer/context"/>
       </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid">
         <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid/diagnostics"/>

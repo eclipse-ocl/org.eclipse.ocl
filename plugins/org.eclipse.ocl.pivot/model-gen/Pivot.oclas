@@ -1289,7 +1289,10 @@
       <ownedProperties xmi:id="+L,3k" isComposite="true" name="ownedParts" opposite="#K,8sA" type="#,dxc+"/>
     </ownedClasses>
     <ownedClasses xmi:id="LgkF0" name="TupleLiteralPart" superClasses="#PT,bz">
-      <ownedInvariants xmi:id="YrOU3" isCallable="true" name="CompatibleInitialiserType">
+      <ownedInvariants xmi:id="j9WhU" isCallable="true" name="CompatibleNullityForInitializer">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit?.isRequired = isRequired"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="+wMiQ" isCallable="true" name="CompatibleTypeForInitializer">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit &lt;> null and ownedInit.type &lt;> null implies ownedInit.type.conformsTo(type)"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="f7Bys" isCallable="true" name="TypeIsNotInvalid">
