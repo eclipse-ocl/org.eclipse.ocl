@@ -27,6 +27,8 @@ public interface MapTypeManager
 	 */
 	@Nullable MapType basicGetMapType(@NonNull MapTypeArguments typeArguments);
 
+	void dispose();
+
 	/**
 	 * Return, and if necessary create, the map entry type characterized by the typeArguments and entryClass.
 	 */

@@ -59,7 +59,6 @@ public interface CompleteEnvironment extends Element
 
 	/**
 	 * Returns the value of the '<em><b>Owned Standard Library</b></em>' containment reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Owned Standard Library</em>' containment reference isn't clear,
@@ -67,12 +66,11 @@ public interface CompleteEnvironment extends Element
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Standard Library</em>' containment reference.
-	 * @see #setOwnedStandardLibrary(StandardLibrary)
+	 * @see #setOwnedStandardLibrary(StandardLibraryInternal)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteEnvironment_OwnedStandardLibrary()
-	 * @see org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment
 	 * @generated
 	 */
-	@NonNull StandardLibrary getOwnedStandardLibrary();
+	@NonNull StandardLibraryInternal getOwnedStandardLibrary();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}' containment reference.
@@ -82,9 +80,14 @@ public interface CompleteEnvironment extends Element
 	 * @see #getOwnedStandardLibrary()
 	 * @generated
 	 */
-	void setOwnedStandardLibrary(StandardLibrary value);
+	void setOwnedStandardLibrary(StandardLibraryInternal value);
 
 	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
 	Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull StandardLibrary getStandardLibrary();
 } // CompleteEnvironment

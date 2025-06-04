@@ -16,18 +16,19 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -43,7 +44,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	protected final @NonNull MetamodelManager metamodelManager;
 
 	public PivotIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		super(environmentFactory.getMetamodelManager().getCompleteEnvironment());
+		super(environmentFactory.getStandardLibrary());
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 	}
@@ -79,14 +80,74 @@ public class PivotIdResolver extends AbstractIdResolver
 		return environmentFactory.getMetaclass(classType);
 	}
 
+	@Override
+	protected @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		Type nestedType = environment.getNestedType(parentPackage, name);
+		if (nestedType == null) {
+			CompletePackage asParentCompletePackage = environment.getOwnedCompleteModel().getCompletePackage(parentPackage);
+			CompleteClass nestedCompleteType = (CompleteClass) asParentCompletePackage.getType(name);
+			nestedType = nestedCompleteType.getPrimaryClass();
+		//	environment.getOwnedCompleteModel().ge
+
+			nestedType = environment.getNestedType(parentPackage, name);		// XXX debugging
+			throw new UnsupportedOperationException();
+		}
+		return nestedType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	protected @NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		Type nestedType = environment.getNestedType(parentPackage, name);
+		if (nestedType == null) {
+			nestedType = environment.getNestedType(parentPackage, name);
+			if (nestedType == null) {
+				throw new UnsupportedOperationException();
+			}
+		}
+		return nestedType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	protected @NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		Type nestedType = environment.getNestedType(parentPackage, name);
+		if (nestedType == null) {
+			nestedType = environment.getNestedType(parentPackage, name);
+			if (nestedType == null) {
+				throw new UnsupportedOperationException();
+			}
+		}
+		return nestedType;
+	}
+
+	@Override
+	protected org.eclipse.ocl.pivot.@NonNull Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		org.eclipse.ocl.pivot.Package nestedPackage = environment.getNestedPackage(parentPackage, name);
+		if (nestedPackage == null) {
+			throw new UnsupportedOperationException();
+		}
+		return nestedPackage;
+	}
+
 	protected org.eclipse.ocl.pivot.@Nullable Package getPivotlessEPackage(@NonNull EPackage ePackage) {
 		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		TupleTypeManager tupleManager = metamodelManager.getStandardLibrary().getTupleManager();
-		return tupleManager.getTupleType(this, typeId);
+	public @NonNull StandardLibraryInternal getStandardLibrary() {
+		return (StandardLibraryInternal)super.getStandardLibrary();
 	}
 
 	@Override
@@ -163,7 +224,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package visitRootPackageId(@NonNull RootPackageId id) {
 		String completeURIorName = id.getName();
-		org.eclipse.ocl.pivot.Package rootPackage = standardLibrary.getRootPackage(completeURIorName);
+		org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().getRootPackage(completeURIorName);
 		if (rootPackage == null) {
 			Orphanage orphanage = environmentFactory.getOrphanage();
 			rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);

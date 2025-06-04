@@ -28,6 +28,8 @@ public interface CollectionTypeManager
 	 */
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
+	void dispose();
+
 	/**
 	 * Return, and if necessary create, the collection type characterized by the typeArguments.
 	 */

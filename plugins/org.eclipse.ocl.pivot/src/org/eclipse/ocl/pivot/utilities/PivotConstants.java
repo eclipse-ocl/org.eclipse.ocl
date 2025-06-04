@@ -22,6 +22,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  */
@@ -101,6 +103,38 @@ public interface PivotConstants
 	 */
 	static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
 	static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
+
+	/**
+	 * The default non-null-free- of Collections, Lambdas, Maps and Tuples. This is not intended to be changed;
+	 * just to document where the default is hardwired.
+	 *
+	 * @since 7.0
+	 */
+	static final boolean DEFAULT_AGGREGATE_IS_REQUIRED = true;
+
+	/**
+	 * The default null-free-ness of Maps and Collections. This is not intended to be changed;
+	 * just to document where the default is hardwired.
+	 *
+	 * @since 7.0
+	 */
+	static final boolean DEFAULT_IS_NULL_FREE = false;
+
+	/**
+	 * The default lower bounds of Maps and Collections. This is not intended to be changed;
+	 * just to document where the default is hardwired.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull IntegerValue DEFAULT_LOWER_BOUND = ValueUtil.ZERO_VALUE;
+
+	/**
+	 * The default upper bounds of Maps and Collections. This is not intended to be changed;
+	 * just to document where the default is hardwired.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull UnlimitedNaturalValue DEFAULT_UPPER_BOUND = ValueUtil.UNLIMITED_VALUE;
 
 	/**
 	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
@@ -231,29 +265,29 @@ public interface PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull List<@NonNull Constraint> EMPTY_CONSTRAINT_LIST = Collections.<@NonNull Constraint>emptyList();
+	static final @NonNull List<@NonNull Constraint> EMPTY_CONSTRAINT_LIST = Collections.<@NonNull Constraint>emptyList();
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull List<@NonNull Element> EMPTY_ELEMENT_LIST = Collections.<@NonNull Element>emptyList();
+	static final @NonNull List<@NonNull Element> EMPTY_ELEMENT_LIST = Collections.<@NonNull Element>emptyList();
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull List<@NonNull Operation> EMPTY_OPERATION_LIST = Collections.<@NonNull Operation>emptyList();
+	static final @NonNull List<@NonNull Operation> EMPTY_OPERATION_LIST = Collections.<@NonNull Operation>emptyList();
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull List<@NonNull Property> EMPTY_PROPERTY_LIST = Collections.<@NonNull Property>emptyList();
+	static final @NonNull List<@NonNull Property> EMPTY_PROPERTY_LIST = Collections.<@NonNull Property>emptyList();
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull List<@NonNull State> EMPTY_STATE_LIST = Collections.<@NonNull State>emptyList();
+	static final @NonNull List<@NonNull State> EMPTY_STATE_LIST = Collections.<@NonNull State>emptyList();
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull List<@NonNull TemplateParameter> EMPTY_TEMPLATE_PARAMETER_LIST = Collections.emptyList();
+	static final @NonNull List<@NonNull TemplateParameter> EMPTY_TEMPLATE_PARAMETER_LIST = Collections.emptyList();
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull List<@NonNull Type> EMPTY_TYPE_LIST = Collections.<@NonNull Type>emptyList();
+	static final @NonNull List<@NonNull Type> EMPTY_TYPE_LIST = Collections.<@NonNull Type>emptyList();
 }

@@ -20,14 +20,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -66,11 +64,13 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		return PivotPackage.Literals.ORPHAN_COMPLETE_PACKAGE;
 	}
 
+	@Deprecated
 	private class OrphanCompleteClassImpl extends CompleteClassImpl
 	{
 		@Override
 		public boolean conformsTo(final @NonNull CompleteClass thatCompleteClass) {
-			final org.eclipse.ocl.pivot.@NonNull Class thisClass = getPrimaryClass();
+			throw new UnsupportedOperationException();
+		/*	final org.eclipse.ocl.pivot.@NonNull Class thisClass = getPrimaryClass();
 			final org.eclipse.ocl.pivot.@NonNull Class thatClass = thatCompleteClass.getPrimaryClass();
 			CompleteEnvironmentImpl completeEnvironmentImpl = new CompleteEnvironmentImpl()	{	// FIXME avoid this horrible fudge
 				{
@@ -88,7 +88,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 					return super.getCompleteClass(asType);
 				}
 			};
-			return completeEnvironmentImpl.conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY);
+			return completeEnvironmentImpl.conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY); */
 		}
 
 		@Override

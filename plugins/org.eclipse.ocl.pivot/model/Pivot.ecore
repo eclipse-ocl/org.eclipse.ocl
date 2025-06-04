@@ -479,8 +479,8 @@
         name="ownedCompleteModel" lowerBound="1" eType="#T-pivot-CompleteModel" containment="true"
         eOpposite="#F-pivot-CompleteModel-owningCompleteEnvironment"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteEnvironment-ownedStandardLibrary"
-        name="ownedStandardLibrary" lowerBound="1" eType="#T-pivot-StandardLibrary"
-        containment="true" eOpposite="#F-pivot-StandardLibrary-owningCompleteEnvironment"/>
+        name="ownedStandardLibrary" lowerBound="1" eType="#T-pivot-StandardLibraryInternal"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteModel" name="CompleteModel"
       eSuperTypes="#T-pivot-NamedElement">
@@ -2860,9 +2860,11 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-StandardLibrary" name="StandardLibrary"
-      eSuperTypes="#T-pivot-Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StandardLibrary-owningCompleteEnvironment"
-        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedStandardLibrary"/>
+      abstract="true" eSuperTypes="#T-pivot-Element"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-StandardLibraryInternal" name="StandardLibraryInternal"
+      eSuperTypes="#T-pivot-StandardLibrary">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StandardLibraryInternal-owningCompleteEnvironment"
+        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-State" name="State" eSuperTypes="#T-pivot-Namespace #T-pivot-Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

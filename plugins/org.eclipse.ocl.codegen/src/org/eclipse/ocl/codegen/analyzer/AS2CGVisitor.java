@@ -137,6 +137,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -155,7 +156,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
@@ -532,18 +532,24 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgBuiltInIterationCallExp.setValidating(false);
 				//				cgBuiltInIterationCallExp.setNonNull();
 				setAst(cgBuiltInIterationCallExp, asIterateExp);
-				@SuppressWarnings("null")@NonNull Variable accumulator = asIterateExp.getOwnedResult();
+				Variable accumulator = PivotUtil.getOwnedResult(asIterateExp);
 				CGIterator cgAccumulator = getNullableIterator(accumulator);
 				cgAccumulator.setInit(doVisit(CGValuedElement.class, accumulator.getOwnedInit()));
 				cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
-				List<Parameter> asParameters = asIteration.getOwnedParameters();
-				List<OCLExpression> asBodies = asIterateExp.getOwnedBodies();
+				List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParametersList(asIteration);
+				List<@NonNull OCLExpression> asBodies = PivotUtil.getOwnedBodiesList(asIterateExp);
 				int iMax = Math.min(asParameters.size(), asBodies.size());
 				for (int i = 0; i < iMax; i++) {
 					Parameter asParameter = asParameters.get(i);
-					LambdaType asParameterType = (LambdaType) asParameter.getType();
+					Type asParameterType = PivotUtil.getType(asParameter);
+					if (asParameterType instanceof LambdaType) {										// Always true
+						asParameter = PivotUtil.getOwnedResult((LambdaType)asParameterType);
+					}
 					OCLExpression asBody = asBodies.get(i);
 					CGValuedElement cgBody = doVisit(CGValuedElement.class, asBody);
+					if (asParameter.isIsRequired()) {
+						cgBody.setRequired(true);
+					}
 				//	if (asParameterType.getOwnedResult().isIsRequired()) {		// XXX siblings
 				//		cgBody.setRequired(true);
 				//	}
@@ -620,7 +626,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			setAst(cgBuiltInIterationCallExp, element);
 			CGValuedElement cgBody = doVisit(CGValuedElement.class, element.getOwnedBody());
 			cgBuiltInIterationCallExp.getBodies().add(cgBody);
-			if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
+			Parameter asParameter = PivotUtil.getOwnedParameter(asIteration, 0);
+			Type asParameterType = PivotUtil.getType(asParameter);
+			if (asParameterType instanceof LambdaType) {				// Always true
+				asParameter = PivotUtil.getOwnedResult((LambdaType)asParameterType);
+			}
+			if (asParameter.isIsRequired()) {
 				cgBody.setRequired(true);
 			}
 			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);

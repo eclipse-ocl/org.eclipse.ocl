@@ -28,13 +28,12 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSLeft2RightVisitor.CS2ASContext;
@@ -90,7 +89,6 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 
 	protected @Nullable CS2ASContext cs2asContext;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final @Nullable Type sourceType;
 	private @Nullable List<@NonNull Operation> ambiguities = null;
@@ -98,7 +96,6 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	protected AbstractOperationMatcher(@NonNull CS2ASContext cs2asContext, @Nullable Type sourceType) {
 		this.cs2asContext = cs2asContext;
 		this.environmentFactory = (EnvironmentFactoryInternal)cs2asContext.getEnvironmentFactory();
-		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.sourceType = sourceType;// != null ? PivotUtil.getBehavioralType(sourceType) : null;		// FIXME redundant
 	}
@@ -106,7 +103,6 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	protected AbstractOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
 		this.cs2asContext = null;
 		this.environmentFactory = environmentFactory;
-		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.sourceType = sourceType;// != null ? PivotUtil.getBehavioralType(sourceType) : null;		// FIXME redundant
 		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
@@ -170,7 +166,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		if (candidateConversions != referenceConversions) {
 			return candidateConversions - referenceConversions;
 		}
-		int verdict = metamodelManager.compareOperationMatches(reference, referenceBindings, candidate, candidateBindings);
+		int verdict = standardLibrary.compareOperationMatches(reference, referenceBindings, candidate, candidateBindings);
 		if (verdict != 0) {
 			return verdict;
 		}
@@ -293,13 +289,12 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 			if (!standardLibrary.conformsTo(expressionType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
 				boolean coerceable = false;
 				if (useCoercions) {
-					CompleteClass completeClass = metamodelManager.getCompleteClass(expressionType);
+					CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(expressionType);
 					for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 						if (partialClass instanceof PrimitiveType) {
 							for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
 								Type corcedSourceType = coercion.getType();
-							//	if ((corcedSourceType != null) && metamodelManager.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, TemplateParameterSubstitutions.EMPTY)) {
-								if ((corcedSourceType != null) && corcedSourceType.conformsTo(standardLibrary, candidateType)) {
+								if ((corcedSourceType != null) && standardLibrary.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
 									coerceable = true;
 									break;
 								}

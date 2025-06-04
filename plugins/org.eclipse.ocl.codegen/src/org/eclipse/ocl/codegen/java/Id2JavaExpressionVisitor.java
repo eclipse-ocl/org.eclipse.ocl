@@ -322,10 +322,13 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	public @Nullable Object visitTupleTypeId(@NonNull TupleTypeId id) {
 		js.appendClassReference(null, IdManager.class);
 		js.append(".getTupleTypeId(");
-		js.appendString(id.getName());
+		boolean isFirst = true;
 		for (PartId partId : id.getPartIds()) {
-			js.append(", ");
+			if (!isFirst) {
+				js.append(", ");
+			}
 			js.appendIdReference(partId);
+			isFirst = false;
 		}
 		js.append(")");
 		return null;

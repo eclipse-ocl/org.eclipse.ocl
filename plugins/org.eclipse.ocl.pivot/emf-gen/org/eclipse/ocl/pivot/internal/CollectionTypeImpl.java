@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -635,8 +634,7 @@ implements CollectionType {
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		CompleteEnvironment environment = idResolver.getEnvironment();
-		StandardLibrary standardLibrary = environment.getOwnedStandardLibrary();
+		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
 		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
 		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
 		CompleteInheritance commonInheritance = thisInheritance.getCommonInheritance(thatInheritance);

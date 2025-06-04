@@ -140,7 +140,6 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractEvaluationOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager;
@@ -164,7 +163,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
 import com.google.common.collect.Iterables;
@@ -1030,23 +1028,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			return true;
 		}
 		return false;
-	}
-
-	protected boolean isBoxedType(@NonNull CGValuedElement cgValue) {
-		Element ast = cgValue.getAst();
-		if (!(ast instanceof TypedElement)) {
-			return false;
-		}
-		Type type = ((TypedElement)ast).getType();
-		if (type == null) {
-			return false;
-		}
-		if (type instanceof Enumeration) {
-			return false;
-		}
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
-		Type oclTypeType = standardLibrary.getOclTypeType();
-		return standardLibrary.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
 
 	protected boolean isEnumerationLiteral(@NonNull CGValuedElement cgValue) {

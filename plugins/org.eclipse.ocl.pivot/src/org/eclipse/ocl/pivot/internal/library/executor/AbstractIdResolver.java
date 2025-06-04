@@ -22,7 +22,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -43,8 +42,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
@@ -89,7 +86,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
@@ -257,7 +253,6 @@ public abstract class AbstractIdResolver implements IdResolver
 	@SuppressWarnings("serial")
 	private static class MyList extends ArrayList<Object> {}	// Private list to ensure that My List is never confused with a user List
 
-	protected final @NonNull CompleteEnvironment environment;
 	protected final @NonNull StandardLibrary standardLibrary;
 	private final @NonNull Set<@NonNull EObject> directRoots = new HashSet<>();
 	private boolean directRootsProcessed = false;
@@ -286,9 +281,11 @@ public abstract class AbstractIdResolver implements IdResolver
 	 */
 	protected final @NonNull Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package> roots2package = new HashMap<>();
 
-	public AbstractIdResolver(@NonNull CompleteEnvironment environment) {
-		this.environment = environment;
-		this.standardLibrary = environment.getOwnedStandardLibrary();
+	/**
+	 * @since 7.0
+	 */
+	protected AbstractIdResolver(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
 	}
 
 	protected abstract org.eclipse.ocl.pivot.@NonNull Package addEPackage(@NonNull EPackage ePackage);
@@ -933,11 +930,6 @@ public abstract class AbstractIdResolver implements IdResolver
 	}
 
 	@Override
-	public @NonNull CompleteEnvironment getEnvironment() {
-		return environment;
-	}
-
-	@Override
 	public synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass) {
 		org.eclipse.ocl.pivot.Class asClass = key2class.get(javaClass);
 		if (asClass instanceof JavaType) {
@@ -1002,6 +994,26 @@ public abstract class AbstractIdResolver implements IdResolver
 	public @Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> getModelClassesOf(@NonNull Object value) {
 		return null;
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract org.eclipse.ocl.pivot.@NonNull Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
 	@Override
 	public @NonNull Operation getOperation(@NonNull OperationId operationId) {
@@ -1163,30 +1175,9 @@ public abstract class AbstractIdResolver implements IdResolver
 	}
 
 	@Override
-	public @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId) {
-		return getTuplePart(name, getType(typeId));
+	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
+		return standardLibrary.getTupleType(typeId);
 	}
-
-	public synchronized @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull Type type) {
-		String internedName = name.intern();
-		if (tupleParts == null) {
-			tupleParts = new WeakHashMap<>();
-		}
-		Map<@NonNull Type, @NonNull WeakReference<@Nullable TypedElement>> typeMap = tupleParts.get(internedName);
-		if (typeMap == null) {
-			typeMap = new WeakHashMap<>();
-			tupleParts.put(internedName, typeMap);
-		}
-		TypedElement tupleProperty = weakGet(typeMap, type);
-		if (tupleProperty == null) {
-			tupleProperty = new ExecutorTuplePart(type, internedName);
-			typeMap.put(type, new WeakReference<>(tupleProperty));
-		}
-		return tupleProperty;
-	}
-
-	@Override
-	public abstract @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId);
 
 	@Override
 	public final @NonNull Type getType(@NonNull TypeId typeId) {
@@ -1592,20 +1583,14 @@ public abstract class AbstractIdResolver implements IdResolver
 		return new EcoreEList.UnmodifiableEList<>(null, null, boxedValues.length, unboxedValues);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull Type visitClassId(@NonNull ClassId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
-		if (nestedType == null) {
-			CompletePackage asParentCompletePackage = environment.getOwnedCompleteModel().getCompletePackage(parentPackage);
-			CompleteClass nestedCompleteType = (CompleteClass) asParentCompletePackage.getType(id.getName());
-			nestedType = nestedCompleteType.getPrimaryClass();
-		//	environment.getOwnedCompleteModel().ge
-
-			nestedType = environment.getNestedType(parentPackage, id.getName());		// XXX debugging
-			throw new UnsupportedOperationException();
-		}
+		Type nestedType = getNestedClass(parentPackage, id.getName());
 		return nestedType;
 	}
 
@@ -1634,13 +1619,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	public @NonNull Type visitDataTypeId(@NonNull DataTypeId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
-		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
-			if (nestedType == null) {
-				throw new UnsupportedOperationException();
-			}
-		}
+		Type nestedType = getNestedDataType(parentPackage, id.getName());
 		return nestedType;
 	}
 
@@ -1648,14 +1627,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	public @NonNull Enumeration visitEnumerationId(@NonNull EnumerationId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
-		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
-			throw new UnsupportedOperationException();
-		}
-		if (!(nestedType instanceof Enumeration)) {
-			throw new UnsupportedOperationException();
-		}
+		Type nestedType = getNestedEnumeration(parentPackage, id.getName());
 		return (Enumeration) nestedType;
 	}
 
@@ -1691,11 +1663,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	public org.eclipse.ocl.pivot.@NonNull Package visitNestedPackageId(@NonNull NestedPackageId packageId) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) packageId.getParent().accept(this);
 		assert parentPackage != null;
-		org.eclipse.ocl.pivot.Package nestedPackage = environment.getNestedPackage(parentPackage, packageId.getName());
-		if (nestedPackage == null) {
-			throw new UnsupportedOperationException();
-		}
-		return nestedPackage;
+		return getNestedPackage(parentPackage, packageId.getName());
 	}
 
 	/*	@Override
@@ -1862,7 +1830,7 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public @NonNull Type visitTupleTypeId(@NonNull TupleTypeId id) {
-		return getTupleType(id);
+		return standardLibrary.getTupleType(id);
 	}
 
 	@Override

@@ -396,10 +396,10 @@ public final class IdManager
 	 * Return the named tuple typeId with the defined parts (which have not been alphabetically ordered by part name).
 	 * @since 7.0
 	 */
-	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull PartId> unOrderedPartIds) {
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull Collection<@NonNull PartId> unOrderedPartIds) {
 		@NonNull PartId @NonNull [] orderedPartIds = unOrderedPartIds.toArray(new @NonNull PartId [unOrderedPartIds.size()]);
 		Arrays.sort(orderedPartIds);
-		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, orderedPartIds);
+		return tupleTypes.getSingleton(PRIVATE_INSTANCE, orderedPartIds);
 	}
 
 	/**
@@ -407,8 +407,8 @@ public final class IdManager
 	 *
 	 * @since 7.0
 	 */
-	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull PartId @NonNull [] orderedPartIds) {
-		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, orderedPartIds);
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull PartId @NonNull [] orderedPartIds) {
+		return tupleTypes.getSingleton(PRIVATE_INSTANCE, orderedPartIds);
 	}
 
 	/**
@@ -580,36 +580,38 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
+	 * Return the named tuple typeId with the defined collection of parts (which need not be alphabetically ordered).
+	 * @since 7.0
 	 */
-	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull Collection<@NonNull ? extends PartId> parts) {
-		@NonNull PartId @NonNull [] orderedParts = new @NonNull PartId[parts.size()];
+	public static @NonNull TupleTypeId getTupleTypeId(@NonNull Collection<@NonNull ? extends PartId> unOrderedPartIds) {
+		@NonNull PartId @NonNull [] unOrderedPartIds2 = new @NonNull PartId[unOrderedPartIds.size()];
 		int i = 0;
-		for (PartId part : parts) {
-			orderedParts[i++] = part;
+		for (PartId part : unOrderedPartIds) {
+			unOrderedPartIds2[i++] = part;
 		}
 	//	Arrays.sort(orderedParts);
-		return getTupleTypeId(name, orderedParts);
+		return getTupleTypeId(unOrderedPartIds2);
 	}
 
 	/**
+	 * Return the named tuple typeId with the defined array of parts (which need not be alphabetically ordered).
 	 * @since 7.0
 	 */
-	public static @NonNull TupleTypeId getTupleTypeId(@NonNull String name, @NonNull PartId @NonNull ... parts) {
-		@NonNull PartId @NonNull [] orderedParts = new @NonNull PartId[parts.length];
+	public static @NonNull TupleTypeId getTupleTypeId(@NonNull PartId @NonNull ... unOrderedPartIds) {
+		@NonNull PartId @NonNull [] orderedParts = new @NonNull PartId[unOrderedPartIds.length];
 		int i = 0;
-		for (PartId part : parts) {
+		for (PartId part : unOrderedPartIds) {
 			orderedParts[i++] = part;
 		}
 		Arrays.sort(orderedParts);
 		int index = 0;
-		for (PartId part : parts) {
+		for (PartId part : unOrderedPartIds) {
 			if (part.getIndex() != index) {
-				orderedParts[i] = getPartId(index, part.getName(), part.getTypeId(), part.isRequired());
+				orderedParts[index] = getPartId(index, part.getName(), part.getTypeId(), part.isRequired());
 			}
 			index++;
 		}
-		return getOrderedTupleTypeId(name, orderedParts);
+		return getOrderedTupleTypeId(orderedParts);
 	}
 
 	/**

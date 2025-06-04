@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -23,41 +22,29 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.LambdaParameter;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -193,28 +180,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setOwnedStandardLibrary(StandardLibrary newOwnedStandardLibrary)
-	{
-		if (newOwnedStandardLibrary != ownedStandardLibrary)
-		{
-			NotificationChain msgs = null;
-			if (ownedStandardLibrary != null)
-				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, 4, StandardLibrary.class, msgs);
-			if (newOwnedStandardLibrary != null)
-				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, 4, StandardLibrary.class, msgs);
-			msgs = basicSetOwnedStandardLibrary(newOwnedStandardLibrary, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedStandardLibrary, newOwnedStandardLibrary));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -231,10 +196,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				if (ownedCompleteModel != null)
 					msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
 				return basicSetOwnedCompleteModel((CompleteModel)otherEnd, msgs);
-			case 5:
-				if (ownedStandardLibrary != null)
-					msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
-				return basicSetOwnedStandardLibrary((StandardLibrary)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -322,7 +283,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)newValue);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibrary)newValue);
+				setOwnedStandardLibrary((StandardLibraryInternal)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -354,7 +315,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)null);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibrary)null);
+				setOwnedStandardLibrary((StandardLibraryInternal)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -399,220 +360,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
 
 	private boolean isCodeGeneration = false;
-
-	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		//
-		//	Resolve first template parameters to its substitution
-		//
-		TemplateParameter firstTemplateParameter = firstType.isTemplateParameter();
-		if (firstTemplateParameter != null) {
-			Type firstSubstitution = firstSubstitutions.get(firstTemplateParameter);
-			if (firstSubstitution != null) {
-				firstType = firstSubstitution;
-			}
-		}
-		//
-		//	Accrue solution to the second template parameter
-		//
-		TemplateParameter secondTemplateParameter = secondType.isTemplateParameter();
-		if (secondTemplateParameter != null) {
-			//			Type secondSubstitution = secondSubstitutions.get(secondTemplateParameter);
-			//			if (secondSubstitution != null) {
-			//				secondType = secondSubstitution;
-			//			}
-			/*secondType =*/ secondSubstitutions.put(secondTemplateParameter, firstType);
-			return true;
-		}
-		if (firstType == secondType) {
-			return true;
-		}
-		//
-		//	Normalize types to their behavioral class
-		//
-		CompleteClass firstCompleteClass = getCompleteClass(firstType);
-		CompleteClass secondCompleteClass = getCompleteClass(secondType);
-		if (firstCompleteClass == secondCompleteClass) {
-			return true;
-		}
-	//	firstType = firstCompleteClass.getPrimaryClass();
-		Type behavioralClass = secondCompleteClass.getBehavioralClass();
-		if ((behavioralClass != null) && (behavioralClass != secondType)) {
-			secondCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 / Issue 2190 for discussion of this dodgy downcast
-			secondType = behavioralClass;
-		}
-		//
-		//	Use specialized conformance for constructed types, inheritance tree intersection for simple types
-		//
-		if (firstType == secondType) {
-			return true;
-		}
-		else if ((firstType instanceof DataType) && (secondType instanceof DataType)) {
-			if ((firstType instanceof CollectionType) && (secondType instanceof CollectionType)) {
-				return conformsToCollectionType((CollectionType)firstType, firstSubstitutions, (CollectionType)secondType, secondSubstitutions);
-			}
-			else if ((firstType instanceof MapType) && (secondType instanceof MapType)) {
-				return conformsToMapType((MapType)firstType, firstSubstitutions, (MapType)secondType, secondSubstitutions);
-			}
-			else if ((firstType instanceof LambdaType) && (secondType instanceof LambdaType)) {
-				return conformsToLambdaType((LambdaType)firstType, firstSubstitutions, (LambdaType)secondType, secondSubstitutions);
-			}
-			else if ((firstType instanceof TupleType) && (secondType instanceof TupleType)) {
-				return conformsToTupleType((TupleType)firstType, firstSubstitutions, (TupleType)secondType, secondSubstitutions);
-			}
-		}
-		firstCompleteClass = getCompleteClass(firstType);
-		secondCompleteClass = getCompleteClass(secondType);
-		CompleteInheritance firstInheritance = firstCompleteClass.getCompleteInheritance();
-		CompleteInheritance secondInheritance = secondCompleteClass.getCompleteInheritance();
-		return firstInheritance.isSubInheritanceOf(secondInheritance);
-	}
-
-	/*	@Override
-	public boolean conformsToCollectionType(@NonNull DomainCollectionType firstCollectionType, @NonNull DomainCollectionType secondCollectionType) {
-		CollectionType firstCollectionType2 = (CollectionType)firstCollectionType;
-		CollectionType secondCollectionType2 = (CollectionType)secondCollectionType;
-		TemplateParameterSubstitutions firstSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(this, firstCollectionType2, secondCollectionType2);
-		TemplateParameterSubstitutions secondSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(this, secondCollectionType2, firstCollectionType2);
-		return conformsToCollectionType(firstCollectionType2, firstSubstitutions, secondCollectionType2, secondSubstitutions);
-	} */
-
-	protected boolean conformsToCollectionType(@NonNull CollectionType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull CollectionType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		org.eclipse.ocl.pivot.Class firstContainerType = firstType.getContainerType();
-		org.eclipse.ocl.pivot.Class secondContainerType = secondType.getContainerType();
-		if (firstContainerType != secondContainerType) {
-			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
-			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
-			CompleteInheritance firstContainerInheritance = firstContainerCompleteClass.getCompleteInheritance();
-			CompleteInheritance secondContainerInheritance = secondContainerCompleteClass.getCompleteInheritance();
-			if (!firstContainerInheritance.isSubInheritanceOf(secondContainerInheritance)) {
-				return false;
-			}
-		}
-		Type firstElementType = firstType.getElementType();
-		Type secondElementType = secondType.getElementType();
-		if ((firstElementType == null) || (secondElementType == null)) {
-			return false;
-		}
-		IntegerValue firstLower = firstType.getLowerValue();
-		IntegerValue secondLower = secondType.getLowerValue();
-		if (firstLower.compareTo(secondLower) < 0) {
-			return false;
-		}
-		UnlimitedNaturalValue firstUpper = firstType.getUpperValue();
-		UnlimitedNaturalValue secondUpper = secondType.getUpperValue();
-		if (firstUpper.compareTo(secondUpper) > 0) {
-			return false;
-		}
-		return conformsTo(firstElementType, firstSubstitutions, secondElementType, secondSubstitutions);
-	}
-
-	protected boolean conformsToLambdaType(@NonNull LambdaType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull LambdaType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions) {
-		LambdaParameter actualContext = actualType.getOwnedContext();
-		LambdaParameter requiredContext = requiredType.getOwnedContext();
-		Type actualContextType = actualContext.getType();
-		Type requiredContextType = requiredContext.getType();
-		if ((actualContextType == null) || (requiredContextType == null)) {
-			return false;
-		}
-		if (actualContext.isIsRequired() != requiredContext.isIsRequired()) {
-			return false;
-		}
-		if (!conformsTo(actualContextType, actualSubstitutions, requiredContextType, requiredSubstitutions)) {
-			return false;
-		}
-		LambdaParameter actualResult = actualType.getOwnedResult();
-		LambdaParameter requiredResult = requiredType.getOwnedResult();
-		Type actualResultType = actualResult.getType();
-		Type requiredResultType = requiredResult.getType();
-		if ((actualResultType == null) || (requiredResultType == null)) {
-			return false;
-		}
-		if (actualResult.isIsRequired() != requiredResult.isIsRequired()) {
-			return false;
-		}
-		if (!conformsTo(requiredResultType, requiredSubstitutions, actualResultType, actualSubstitutions)) {	// contravariant
-			return false;
-		}
-		List<LambdaParameter> actualParameters = actualType.getOwnedParameters();
-		List<LambdaParameter> requiredParameters = requiredType.getOwnedParameters();
-		int iMax = actualParameters.size();
-		if (iMax != requiredParameters.size()) {
-			return false;
-		}
-		for (int i = 0; i < iMax; i++) {
-			LambdaParameter actualParameter = actualParameters.get(i);
-			LambdaParameter requiredParameter = requiredParameters.get(i);
-			Type actualParameterType = actualParameter.getType();
-			Type requiredParameterType = requiredParameter.getType();
-			if ((actualParameterType == null) || (requiredParameterType == null)) {
-				return false;
-			}
-			if (actualParameter.isIsRequired() != requiredParameter.isIsRequired()) {
-				return false;
-			}
-			if (!conformsTo(actualParameterType, actualSubstitutions, requiredParameterType, requiredSubstitutions)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	protected boolean conformsToMapType(@NonNull MapType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull MapType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		//		org.eclipse.ocl.pivot.Class firstContainerType = firstType.getContainerType();
-		//		org.eclipse.ocl.pivot.Class secondContainerType = secondType.getContainerType();
-		//		if (firstContainerType != secondContainerType) {
-		//			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
-		//			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
-		//			CompleteInheritance firstContainerInheritance = firstContainerCompleteClass.getCompleteInheritance();
-		//			CompleteInheritance secondContainerInheritance = secondContainerCompleteClass.getCompleteInheritance();
-		//			if (!firstContainerInheritance.isSubInheritanceOf(secondContainerInheritance)) {
-		//				return false;
-		//			}
-		//		}
-		Type firstKeyType = firstType.getKeyType();
-		Type secondKeyType = secondType.getKeyType();
-		if ((firstKeyType == null) || (secondKeyType == null)) {
-			return false;
-		}
-		if (!conformsTo(firstKeyType, firstSubstitutions, secondKeyType, secondSubstitutions)) {
-			return false;
-		}
-		Type firstValueType = firstType.getValueType();
-		Type secondValueType = secondType.getValueType();
-		if ((firstValueType == null) || (secondValueType == null)) {
-			return false;
-		}
-		return conformsTo(firstValueType, firstSubstitutions, secondValueType, secondSubstitutions);
-	}
-
-	protected boolean conformsToTupleType(@NonNull TupleType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull TupleType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions) {
-		List<Property> actualProperties = actualType.getOwnedProperties();
-		List<Property> requiredProperties = requiredType.getOwnedProperties();
-		if (actualProperties.size() != requiredProperties.size()) {
-			return false;
-		}
-		for (Property actualProperty : actualProperties) {
-			Property requiredProperty = NameUtil.getNameable(requiredProperties, actualProperty.getName());
-			if (requiredProperty == null) {
-				return false;
-			}
-			Type actualPropertyType = actualProperty.getType();
-			Type requiredPropertyType = requiredProperty.getType();
-			if ((actualPropertyType == null) || (requiredPropertyType == null)) {
-				return false;
-			}
-			if (!conformsTo(actualPropertyType, actualSubstitutions, requiredPropertyType, requiredSubstitutions)) {
-				return false;
-			}
-		}
-		return true;
-	}
 
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
@@ -700,12 +447,56 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return ClassUtil.requireNonNull(ownedStandardLibrary);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedStandardLibrary(StandardLibraryInternal newOwnedStandardLibrary, NotificationChain msgs)
+	{
+		StandardLibraryInternal oldOwnedStandardLibrary = ownedStandardLibrary;
+		ownedStandardLibrary = newOwnedStandardLibrary;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldOwnedStandardLibrary, newOwnedStandardLibrary);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedStandardLibrary(StandardLibraryInternal newOwnedStandardLibrary)
+	{
+		if (newOwnedStandardLibrary != ownedStandardLibrary)
+		{
+			NotificationChain msgs = null;
+			if (ownedStandardLibrary != null)
+				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
+			if (newOwnedStandardLibrary != null)
+				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
+			msgs = basicSetOwnedStandardLibrary(newOwnedStandardLibrary, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedStandardLibrary, newOwnedStandardLibrary));
+	}
+
+	@Override
+	public @NonNull StandardLibrary getStandardLibrary() {
+		return getOwnedStandardLibrary();
+	}
+
 	@Override
 	public @NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		CompleteModelInternal completeModelInternal = ((CompleteModelInternal)PivotFactory.eINSTANCE.createCompleteModel()).init(this);
 		setOwnedCompleteModel(completeModelInternal);
-		setOwnedStandardLibrary(((StandardLibraryInternal)PivotFactory.eINSTANCE.createStandardLibrary()).init(completeModelInternal));
+		setOwnedStandardLibrary(PivotFactory.eINSTANCE.createStandardLibraryInternal().init(completeModelInternal));
 		return this;
 	}
 

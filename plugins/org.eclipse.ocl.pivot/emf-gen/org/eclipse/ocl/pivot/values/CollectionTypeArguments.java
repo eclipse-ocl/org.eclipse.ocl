@@ -16,8 +16,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * @since 7.0
@@ -61,8 +61,8 @@ public class CollectionTypeArguments //implements Iterable<Object>
 		this.collectionTypeId = collectionTypeId;
 		this.elementType = elementType;
 		this.isNullFree = isNullFree;
-		this.lower = lower != null ? lower : ValueUtil.ZERO_VALUE;
-		this.upper = upper != null ? upper : ValueUtil.UNLIMITED_VALUE;
+		this.lower = lower != null ? lower : PivotConstants.DEFAULT_LOWER_BOUND;
+		this.upper = upper != null ? upper : PivotConstants.DEFAULT_UPPER_BOUND;
 		int hash = collectionTypeId.hashCode();
 		hash += 3 * elementType.getTypeId().hashCode();
 		hash += isNullFree ? 9876 : 0;

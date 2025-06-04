@@ -39,7 +39,7 @@ public class PivotExecutorManager extends ExecutorManager
 	private @Nullable ModelManager modelManager = null;
 
 	public PivotExecutorManager(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject contextObject) {
-		super(environmentFactory.getCompleteEnvironment());
+		super(environmentFactory.getStandardLibrary());
 		this.environmentFactory = environmentFactory;
 		this.idResolver = environmentFactory.getIdResolver();
 		this.contextObject = contextObject;

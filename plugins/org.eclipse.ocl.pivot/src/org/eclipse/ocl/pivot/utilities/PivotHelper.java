@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
@@ -56,7 +57,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -123,14 +123,14 @@ public class PivotHelper extends PivotUtil
 	}
 
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
-		Type commonType = metamodelManager.getCommonType(getType(asThen), TemplateParameterSubstitutions.EMPTY,
-			getType(asElse), TemplateParameterSubstitutions.EMPTY);
+		Type commonType = standardLibrary.getCommonType(getType(asThen), TemplateParameterSubstitutions.EMPTY, getType(asElse), TemplateParameterSubstitutions.EMPTY);
+		boolean commonIsRequired = standardLibrary.getCommonIsRequired(asThen.isIsRequired(), asElse.isIsRequired());
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);
 		asIf.setOwnedThen(asThen);
 		asIf.setOwnedElse(asElse);
 		asIf.setType(commonType);
-		asIf.setIsRequired(asThen.isIsRequired() && asElse.isIsRequired());
+		asIf.setIsRequired(commonIsRequired);
 		return asIf;
 	}
 
