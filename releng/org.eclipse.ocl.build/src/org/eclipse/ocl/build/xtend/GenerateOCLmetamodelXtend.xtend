@@ -115,7 +115,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.SetType;
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.ids.IdManager;
-			import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+			import org.eclipse.ocl.pivot.StandardLibraryInternal;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;

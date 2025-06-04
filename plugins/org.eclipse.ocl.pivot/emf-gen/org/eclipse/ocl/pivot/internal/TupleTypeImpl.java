@@ -87,7 +87,6 @@ public class TupleTypeImpl
 	public @NonNull TypeId computeId() {
 		TupleTypeId tupleTypeId2 = tupleTypeId;
 		if (tupleTypeId2 == null) {
-			String name2 = NameUtil.getSafeName(this);
 			List<Property> parts = getOwnedProperties();
 			int iSize = parts.size();
 			List<@NonNull PartId> partIds = new ArrayList<>(iSize);
@@ -97,7 +96,7 @@ public class TupleTypeImpl
 				TypeId partTypeId = part.getTypeId();
 				partIds.add(IdManager.getPartId(i, partName, partTypeId, part.isIsRequired()));
 			}
-			tupleTypeId = tupleTypeId2 = IdManager.getTupleTypeId(name2, partIds);
+			tupleTypeId = tupleTypeId2 = IdManager.getTupleTypeId(partIds);
 		}
 		return tupleTypeId2;
 	}

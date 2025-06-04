@@ -13,9 +13,9 @@ package org.eclipse.ocl.pivot.internal.complete;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 public interface CompleteEnvironmentInternal extends CompleteEnvironment
 {
@@ -23,8 +23,6 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	 * @since 7.0
 	 */
 	default @Nullable CompleteClassInternal basicGetCompleteClass(@NonNull Type asType) { return null; }
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	void dispose();
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);

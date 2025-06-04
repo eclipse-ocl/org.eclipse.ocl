@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -61,11 +60,11 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -83,7 +82,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
@@ -120,7 +118,6 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Iterables;
@@ -383,81 +380,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				as2xmIid.assignIds((ASResource) eResource, options);
 			}
 		}
-	}
-
-	/**
-	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
-	 * zero if both matches are of equal validity.
-	 */
-	@Override
-	public int compareOperationMatches(@NonNull Operation reference, @NonNull TemplateParameterSubstitutions referenceBindings,
-			@NonNull Operation candidate, @NonNull TemplateParameterSubstitutions candidateBindings) {
-		if ((reference instanceof Iteration) && (candidate instanceof Iteration)) {
-			int iteratorCountDelta = ((Iteration)candidate).getOwnedIterators().size() - ((Iteration)reference).getOwnedIterators().size();
-			if (iteratorCountDelta != 0) {
-				return iteratorCountDelta;
-			}
-			org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
-			org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
-			Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
-			Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
-			Type specializedReferenceType = referenceType != null ? standardLibrary.getSpecializedType(referenceType, referenceBindings) : null;
-			Type specializedCandidateType = candidateType != null ? standardLibrary.getSpecializedType(candidateType, candidateBindings) : null;
-			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
-				if (standardLibrary.conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-					return 1;
-				}
-				else if (standardLibrary.conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-					return -1;
-				}
-			}
-		}
-		List<Parameter> candidateParameters = candidate.getOwnedParameters();
-		List<Parameter> referenceParameters = reference.getOwnedParameters();
-		int parameterCountDelta = candidateParameters.size() - referenceParameters.size();
-		if (parameterCountDelta != 0) {
-			return parameterCountDelta;
-		}
-		boolean referenceConformsToCandidate = true;
-		boolean candidateConformsToReference = true;
-		for (int i = 0; i < candidateParameters.size(); i++) {
-			Parameter referenceParameter = referenceParameters.get(i);
-			Parameter candidateParameter = candidateParameters.get(i);
-			if ((referenceParameter == null) || (candidateParameter == null)) {					// Doesn't happen (just a spurious NPE guard)
-				referenceConformsToCandidate = false;
-				candidateConformsToReference = false;
-			}
-			else {
-				Type referenceType = ClassUtil.requireNonNull(PivotUtil.getType(referenceParameter));
-				Type candidateType = ClassUtil.requireNonNull(PivotUtil.getType(candidateParameter));
-				Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
-				Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
-				if (referenceType != candidateType) {
-					if (!standardLibrary.conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-						referenceConformsToCandidate = false;
-					}
-					if (!standardLibrary.conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-						candidateConformsToReference = false;
-					}
-				}
-			}
-		}
-		if (referenceConformsToCandidate != candidateConformsToReference) {
-			return referenceConformsToCandidate ? 1 : -1;
-		}
-		Type referenceType = ClassUtil.requireNonNull(reference.getOwningClass());
-		Type candidateType = ClassUtil.requireNonNull(candidate.getOwningClass());
-		Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
-		Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
-		if (referenceType != candidateType) {
-			if (standardLibrary.conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
-				return 1;
-			}
-			else if (standardLibrary.conformsTo(specializedCandidateType, candidateBindings, specializedReferenceType, referenceBindings)) {
-				return -1;
-			}
-		}
-		return 0;
 	}
 
 	/**
@@ -787,42 +709,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			}
 		}
 		return bodyExpression;
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
-			TupleTypeManager tupleManager = standardLibrary.getTupleManager();
-			Type commonType = tupleManager.getCommonType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
-			if (commonType == null) {
-				commonType = standardLibrary.getOclAnyType();
-			}
-			return commonType;
-		}
-		if ((leftType instanceof CollectionType) && (rightType instanceof CollectionType)) {
-			CompleteInheritance leftInheritance = leftType.getInheritance(standardLibrary);
-			CompleteInheritance rightInheritance = rightType.getInheritance(standardLibrary);
-			CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-			CollectionType commonCollectionType = (CollectionType)getPrimaryClass(commonInheritance.getPivotClass());
-			CollectionType leftCollectionType = (CollectionType)leftType;
-			CollectionType rightCollectionType = (CollectionType)rightType;
-			Type leftElementType = ClassUtil.requireNonNull(leftCollectionType.getElementType());
-			Type rightElementType = ClassUtil.requireNonNull(rightCollectionType.getElementType());
-			Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
-			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
-			return standardLibrary.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
-		}
-		if (standardLibrary.conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
-			return rightType;
-		}
-		if (standardLibrary.conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions)) {
-			return leftType;
-		}
-		CompleteInheritance leftInheritance = leftType.getInheritance(standardLibrary);
-		CompleteInheritance rightInheritance = rightType.getInheritance(standardLibrary);
-		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-		return getPrimaryClass(commonInheritance.getPivotClass());
 	}
 
 	@Override

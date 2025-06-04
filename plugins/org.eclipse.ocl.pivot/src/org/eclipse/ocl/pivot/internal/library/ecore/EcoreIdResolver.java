@@ -31,12 +31,10 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.PartId;
+import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
@@ -106,6 +104,38 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		throw new UnsupportedOperationException();				// XXX
 	}
 
+	@Override
+	protected org.eclipse.ocl.pivot.@NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		org.eclipse.ocl.pivot.Class nestedType = NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
+		if (nestedType == null) {
+			nestedType = getStandardLibrary().getPivotType(name);
+		}
+		return ClassUtil.requireNonNull(nestedType);
+	}
+
+	@Override
+	protected org.eclipse.ocl.pivot.@NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		org.eclipse.ocl.pivot.Class nestedType = NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
+		if (nestedType == null) {
+			nestedType = getStandardLibrary().getPivotType(name);
+		}
+		return ClassUtil.requireNonNull(nestedType);
+	}
+
+	@Override
+	protected org.eclipse.ocl.pivot.@NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		org.eclipse.ocl.pivot.Class nestedType = NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
+		if (nestedType == null) {
+			nestedType = getStandardLibrary().getPivotType(name);
+		}
+		return ClassUtil.requireNonNull(nestedType);
+	}
+
+	@Override
+	protected org.eclipse.ocl.pivot.@NonNull Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		return ClassUtil.requireNonNull(NameUtil.getNameable(parentPackage.getOwnedPackages(), name));
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -135,8 +165,8 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return ((ExecutableStandardLibrary)standardLibrary).getTupleType(typeId);
+	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
+		return getStandardLibrary().getTupleType(typeId);
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {
@@ -147,7 +177,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			String partName = NameUtil.getSafeName(part);
 			partsList.add(IdManager.getPartId(i, partName, part.getTypeId(), part.isIsRequired()));
 		}
-		return getTupleType(IdManager.getTupleTypeId(TypeId.TUPLE_NAME, partsList));
+		return getTupleType(IdManager.getTupleTypeId(partsList));
 	}
 
 	@Override

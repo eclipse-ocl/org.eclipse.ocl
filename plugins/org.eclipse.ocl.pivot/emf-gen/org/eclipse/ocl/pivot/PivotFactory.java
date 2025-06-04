@@ -675,13 +675,13 @@ extends EFactory {
 	@NonNull Slot createSlot();
 
 	/**
-	 * Returns a new object of class '<em>Standard Library</em>'.
+	 * Returns a new object of class '<em>Standard Library Internal</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Standard Library</em>'.
+	 * @return a new object of class '<em>Standard Library Internal</em>'.
 	 * @generated
 	 */
-	@NonNull StandardLibrary createStandardLibrary();
+	StandardLibraryInternal createStandardLibraryInternal();
 
 	/**
 	 * Returns a new object of class '<em>Message Type</em>'.

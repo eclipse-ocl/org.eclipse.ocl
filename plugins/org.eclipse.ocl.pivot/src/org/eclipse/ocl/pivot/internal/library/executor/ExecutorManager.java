@@ -136,7 +136,6 @@ public abstract class ExecutorManager implements Executor
 		}
 	};
 
-	protected final @NonNull CompleteEnvironment environment;
 	protected final @NonNull StandardLibrary standardLibrary;
 
 	/**
@@ -152,10 +151,12 @@ public abstract class ExecutorManager implements Executor
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
-	public ExecutorManager(@NonNull CompleteEnvironment environment) {
+	/**
+	 * @since 7.0
+	 */
+	public ExecutorManager(@NonNull StandardLibrary standardLibrary) {
 		CONSTRUCTION_COUNT++;
-		this.environment = environment;
-		this.standardLibrary = environment.getOwnedStandardLibrary();
+		this.standardLibrary = standardLibrary;
 //		System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
@@ -221,7 +222,7 @@ public abstract class ExecutorManager implements Executor
 
 	@Override
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return environment;
+		throw new UnsupportedOperationException();
 	}
 
 	/**

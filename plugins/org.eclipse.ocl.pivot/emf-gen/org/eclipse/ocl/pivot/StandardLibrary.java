@@ -12,15 +12,18 @@ package org.eclipse.ocl.pivot;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -32,12 +35,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * A representation of the model object '<em><b>Standard Library</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
- * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibrary()
  * @generated
@@ -45,31 +42,31 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public interface StandardLibrary extends Element
 {
 	/**
-	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owning Complete Environment</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owning Complete Environment</em>' container reference.
-	 * @see #setOwningCompleteEnvironment(CompleteEnvironment)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibrary_OwningCompleteEnvironment()
-	 * @see org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary
-	 * @generated
+	 * @since 7.0
 	 */
-	CompleteEnvironment getOwningCompleteEnvironment();
+	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owning Complete Environment</em>' container reference.
-	 * @see #getOwningCompleteEnvironment()
-	 * @generated
+	 * Return true if firstType + firstIsRequired augmented by firstSubstitutions conforms to
+	 * secondType + secondIsRequired augmented by secondSubstitutions.
+	 *
+	 * This method should be used during validation once nullity is determined and neds checking.
+	 *
+	 * @since 7.0
 	 */
-	void setOwningCompleteEnvironment(CompleteEnvironment value);
+	boolean conformsTo(@NonNull Type firstType, boolean firstIsRequired, @NonNull TemplateParameterSubstitutions firstSubstitutions,
+			@NonNull Type secondType, boolean secondIsRequired, @NonNull TemplateParameterSubstitutions secondSubstitutions);
+
+	/**
+	 * Return true if firstType augmented by firstSubstitutions conforms to
+	 * secondType augmented by secondSubstitutions.
+	 *
+	 * This method should be used during parsing before nullity is determined.
+	 *
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
+			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
 
@@ -133,6 +130,17 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull CollectionTypeManager getCollectionTypeManager();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+
+	/**
+	 * @since 7.0
+	 */
+	boolean getCommonIsRequired(boolean leftIsRequired, boolean rightIsRequired);
 
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
@@ -276,8 +284,6 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getOclTupleType();
 
-	Type getOclType(@NonNull String typeName);
-
 	/**
 	 * Obtains the single instance of the VoidType metatype, named
 	 * <tt>OclVoid</tt>.
@@ -286,8 +292,6 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull VoidType getOclVoidType();
-
-	Element getOperationTemplateParameter(@NonNull Operation anOperation, int index);
 
 	/**
 	 * Obtains the generic instance of the OrderedCollection metatype, named
@@ -318,39 +322,12 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Package getPackage();
 
-	default @Nullable Type getPrimitiveType(@NonNull PrimitiveTypeId typeId) {
-		if (typeId == TypeId.BOOLEAN) {
-			return getBooleanType();
-		}
-		else if (typeId == TypeId.INTEGER) {
-			return getIntegerType();
-		}
-		else if (typeId == TypeId.REAL) {
-			return getRealType();
-		}
-		else if (typeId == TypeId.STRING) {
-			return getStringType();
-		}
-		else if (typeId == TypeId.UNLIMITED_NATURAL) {
-			return getUnlimitedNaturalType();
-		}
-		else if (typeId == TypeId.OCL_ANY) {
-			return getOclAnyType();
-		}
-		else if (typeId == TypeId.OCL_COMPARABLE) {
-			return getOclComparableType();
-		}
-		else if (typeId == TypeId.OCL_ENUMERATION) {
-			return getOclEnumerationType();
-		}
-		else if (typeId == TypeId.OCL_SELF) {
-			return getOclSelfType();
-		}
-		else if (typeId == TypeId.OCL_SUMMABLE) {
-			return getOclSummableType();
-		}
-		throw new UnsupportedOperationException();
-	}
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Type getPrimaryType(@NonNull Type asType);
+
+	@Nullable Type getPrimitiveType(@NonNull PrimitiveTypeId typeId);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -360,8 +337,6 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull PrimitiveType getRealType();
-
-	org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name);
 
 	/**
 	 * Obtains the generic instance of the SequenceType metatype, named
@@ -408,10 +383,25 @@ public interface StandardLibrary extends Element
 	@NonNull PrimitiveType getStringType();
 
 	/**
+	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 * @since 7.0
 	 */
-	@NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
-			@Nullable TemplateParameterSubstitutions bindings);
+	@NonNull TupleType getTupleType(@NonNull List<@NonNull PartId> partList);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull TupleType getTupleType(@NonNull TupleTypeId typeId);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> parts, @Nullable TemplateParameterSubstitutions bindings);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull TupleTypeManager getTupleTypeManager();
 
 	/**
 	 * Obtains the generic instance of the UniqueCollection metatype, named

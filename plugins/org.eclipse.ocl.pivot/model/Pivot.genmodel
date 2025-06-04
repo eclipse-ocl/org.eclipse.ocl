@@ -874,8 +874,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Slot-ownedValues"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Slot-owningInstance"/>
     </genClasses>
-    <genClasses ecoreClass="Pivot.ecore#T-pivot-StandardLibrary">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-StandardLibrary-owningCompleteEnvironment"/>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-StandardLibrary"/>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-StandardLibraryInternal">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-StandardLibraryInternal-owningCompleteEnvironment"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-State">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-State-isComposite"/>

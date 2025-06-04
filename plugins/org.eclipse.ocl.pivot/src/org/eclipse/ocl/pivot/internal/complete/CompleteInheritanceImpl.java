@@ -87,6 +87,9 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 		return completeClass.getProperty(propertyName);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull String getMetaclassName() {
 		return completeClass.getPrimaryClass().getMetaclassName();

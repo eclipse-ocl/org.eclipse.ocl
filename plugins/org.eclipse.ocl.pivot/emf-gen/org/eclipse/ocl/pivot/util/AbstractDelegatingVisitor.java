@@ -560,6 +560,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitStandardLibraryInternal(org.eclipse.ocl.pivot.@NonNull StandardLibraryInternal object) {
+		return delegate.visitStandardLibraryInternal(object);
+	}
+
+	@Override
 	public R visitState(org.eclipse.ocl.pivot.@NonNull State object) {
 		return delegate.visitState(object);
 	}

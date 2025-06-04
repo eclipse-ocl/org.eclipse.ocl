@@ -1665,13 +1665,6 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.4
-	 */
-	public static @NonNull Type getContextType(@NonNull LambdaType lambdaType) {
-		return ClassUtil.requireNonNull(lambdaType.getContextType());
-	}
-
-	/**
 	 * Return the Java Class used by Ecore for elements of asProperty, or null if not known.
 	 */
 	public static @Nullable Class<?> getEcoreInstanceClass(@Nullable Property asProperty) {
@@ -1983,14 +1976,14 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull List<@NonNull OCLExpression> getOwnedBodiesList(@NonNull IterateExp iterateExp) {
+	public static @NonNull Iterable<@NonNull OCLExpression> getOwnedBodies(@NonNull IterateExp iterateExp) {
 		return ClassUtil.nullFree(iterateExp.getOwnedBodies());
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull List<@NonNull OCLExpression> getOwnedBodies(@NonNull IterateExp iterateExp) {
+	public static @NonNull List<@NonNull OCLExpression> getOwnedBodiesList(@NonNull IterateExp iterateExp) {
 		return ClassUtil.nullFree(iterateExp.getOwnedBodies());
 	}
 
@@ -2697,13 +2690,6 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getSuperClasses());
-	}
-
-	/**
-	 * @since 1.4
-	 */
-	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
-		return ClassUtil.requireNonNull(lambdaType.getResultType());
 	}
 
 	/**

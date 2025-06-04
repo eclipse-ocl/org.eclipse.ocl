@@ -129,7 +129,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 {
 	public static final @NonNull PartId TUPLE_MESSAGE_STATUS_0 = IdManager.getPartId(0, PivotConstants.MESSAGE_PART_NAME, TypeId.STRING, true);
 	public static final @NonNull PartId TUPLE_MESSAGE_STATUS_1 = IdManager.getPartId(1, PivotConstants.STATUS_PART_NAME, TypeId.BOOLEAN, false);
-	public static final @NonNull TupleTypeId TUPLE_MESSAGE_STATUS = IdManager.getTupleTypeId("Tuple", TUPLE_MESSAGE_STATUS_0, TUPLE_MESSAGE_STATUS_1);
+	public static final @NonNull TupleTypeId TUPLE_MESSAGE_STATUS = IdManager.getTupleTypeId(TUPLE_MESSAGE_STATUS_0, TUPLE_MESSAGE_STATUS_1);
 
 	public EssentialOCLDeclarationVisitor(@NonNull AS2CSConversion context) {
 		super(context);

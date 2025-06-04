@@ -138,7 +138,7 @@ public class UMLIdResolver extends PivotIdResolver
 				if (asPackage == null) {
 					String name = umlPackage.getName();
 					if (name != null) {
-						asPackage = standardLibrary.getRootPackage(name);
+						asPackage = getStandardLibrary().getRootPackage(name);
 					}
 				}
 			}

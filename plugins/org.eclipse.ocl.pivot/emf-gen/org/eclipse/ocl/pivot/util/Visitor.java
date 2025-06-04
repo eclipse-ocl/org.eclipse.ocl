@@ -139,6 +139,7 @@ public interface Visitor<R>
 	R visitSignal(org.eclipse.ocl.pivot.@NonNull Signal object);
 	R visitSlot(org.eclipse.ocl.pivot.@NonNull Slot object);
 	R visitStandardLibrary(org.eclipse.ocl.pivot.@NonNull StandardLibrary object);
+	R visitStandardLibraryInternal(org.eclipse.ocl.pivot.@NonNull StandardLibraryInternal object);
 	R visitState(org.eclipse.ocl.pivot.@NonNull State object);
 	R visitStateExp(org.eclipse.ocl.pivot.@NonNull StateExp object);
 	R visitStateMachine(org.eclipse.ocl.pivot.@NonNull StateMachine object);

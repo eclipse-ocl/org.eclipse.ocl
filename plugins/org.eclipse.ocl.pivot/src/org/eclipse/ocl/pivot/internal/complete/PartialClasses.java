@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Region;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -559,6 +560,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		return partials.get();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
 		return getCompleteModel().getStandardLibrary();
 	}
