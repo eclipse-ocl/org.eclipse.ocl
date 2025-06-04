@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.internal.utilities;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -58,6 +58,9 @@ public class OCLInternal extends OCL
 		return environmentFactory.getMetamodelManager();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
 		assert environmentFactory != null;

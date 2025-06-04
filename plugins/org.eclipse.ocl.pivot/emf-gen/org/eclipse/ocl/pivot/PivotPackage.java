@@ -2242,15 +2242,25 @@ extends EPackage
 	EClass getStandardLibrary();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.StandardLibraryInternal <em>Standard Library Internal</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owning Complete Environment</em>'.
-	 * @see org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment()
-	 * @see #getStandardLibrary()
+	 * @return the meta object for class '<em>Standard Library Internal</em>'.
+	 * @see org.eclipse.ocl.pivot.StandardLibraryInternal
 	 * @generated
 	 */
-	EReference getStandardLibrary_OwningCompleteEnvironment();
+	EClass getStandardLibraryInternal();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Owning Complete Environment</em>'.
+	 * @see org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment()
+	 * @see #getStandardLibraryInternal()
+	 * @generated
+	 */
+	EReference getStandardLibraryInternal_OwningCompleteEnvironment();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.MessageType <em>Message Type</em>}'.
@@ -7712,12 +7722,22 @@ extends EPackage
 		EClass STANDARD_LIBRARY = eINSTANCE.getStandardLibrary();
 
 		/**
-		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' container reference feature.
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.StandardLibraryInternalImpl <em>Standard Library Internal</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.StandardLibraryInternalImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStandardLibraryInternal()
+		 * @generated
+		 */
+		EClass STANDARD_LIBRARY_INTERNAL = eINSTANCE.getStandardLibraryInternal();
+
+		/**
+		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getStandardLibrary_OwningCompleteEnvironment();
+		EReference STANDARD_LIBRARY_INTERNAL__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getStandardLibraryInternal_OwningCompleteEnvironment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.MessageTypeImpl <em>Message Type</em>}' class.

@@ -535,6 +535,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitStandardLibraryInternal(org.eclipse.ocl.pivot.@NonNull StandardLibraryInternal object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitState(org.eclipse.ocl.pivot.@NonNull State object) {
 		return visiting(object);
 	}

@@ -120,14 +120,14 @@ public class CodegencompanyTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull PartId PARTid_ = IdManager.getPartId(0, "range", CodegencompanyTables.SEQ_PRIMid_Integer, true);
 	public static final /*@NonInvalid*/ @NonNull PartId PARTid__0 = IdManager.getPartId(1, "size", CodegencompanyTables.ENUMid_CompanySizeKind, true);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Employee = TypeId.SET.getSpecializedId(CodegencompanyTables.CLSSid_Employee, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid__0 = IdManager.getTupleTypeId("Tuple", CodegencompanyTables.PARTid__1, CodegencompanyTables.PARTid__2);
+	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid__0 = IdManager.getTupleTypeId(CodegencompanyTables.PARTid__1, CodegencompanyTables.PARTid__2);
 	public static final /*@NonInvalid*/ @NonNull IntegerRange global_0 = ValueUtil.createRange(CodegencompanyTables.INT_0, CodegencompanyTables.INT_49);
 	public static final /*@NonInvalid*/ @NonNull IntegerRange global_4 = ValueUtil.createRange(CodegencompanyTables.INT_1000, CodegencompanyTables.INT_1000000);
 	public static final /*@NonInvalid*/ @NonNull IntegerRange global_2 = ValueUtil.createRange(CodegencompanyTables.INT_50, CodegencompanyTables.INT_999);
 	public static final /*@NonInvalid*/ @NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(CodegencompanyTables.SEQ_PRIMid_Integer, CodegencompanyTables.global_0);
 	public static final /*@NonInvalid*/ @NonNull SequenceValue Sequence_1 = ValueUtil.createSequenceRange(CodegencompanyTables.SEQ_PRIMid_Integer, CodegencompanyTables.global_4);
 	public static final /*@NonInvalid*/ @NonNull SequenceValue Sequence_0 = ValueUtil.createSequenceRange(CodegencompanyTables.SEQ_PRIMid_Integer, CodegencompanyTables.global_2);
-	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", CodegencompanyTables.PARTid_, CodegencompanyTables.PARTid__0);
+	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId(CodegencompanyTables.PARTid_, CodegencompanyTables.PARTid__0);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_TUPLid_ = TypeId.SET.getSpecializedId(CodegencompanyTables.TUPLid_, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull TupleValue global_1 = ValueUtil.createTupleOfEach(CodegencompanyTables.TUPLid_, CodegencompanyTables.Sequence, CodegencompanyTables.ELITid_small);
 	public static final /*@NonInvalid*/ @NonNull TupleValue global_5 = ValueUtil.createTupleOfEach(CodegencompanyTables.TUPLid_, CodegencompanyTables.Sequence_1, CodegencompanyTables.ELITid_large);

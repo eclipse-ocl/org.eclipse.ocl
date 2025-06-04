@@ -543,6 +543,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitStandardLibraryInternal(org.eclipse.ocl.pivot.@NonNull StandardLibraryInternal object) {
+		return visitStandardLibrary(object);
+	}
+
+	@Override
 	public R visitState(org.eclipse.ocl.pivot.@NonNull State object) {
 		return visitNamespace(object);
 	}

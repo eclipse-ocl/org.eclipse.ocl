@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
@@ -66,7 +67,6 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
@@ -1086,13 +1086,13 @@ public class OCLinEcoreTablesUtils
 		if (element instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)element;
 			s.append("_");
-			getLegacyTemplateBindingsName(s, PivotUtil.getContextType(lambdaType));
+			getLegacyTemplateBindingsName(s, PivotUtil.getType(PivotUtil.getOwnedContext(lambdaType)));
 			for (@NonNull LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
 				s.append("_");
 				getLegacyTemplateBindingsName(s, PivotUtil.getType(parameter));
 			}
 			s.append("_");
-			getLegacyTemplateBindingsName(s, PivotUtil.getResultType(lambdaType));
+			getLegacyTemplateBindingsName(s, PivotUtil.getType(PivotUtil.getOwnedResult(lambdaType)));
 		}
 	}
 

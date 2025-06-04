@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -50,9 +51,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -345,7 +344,6 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	protected @NonNull TupleType getSpecializedTupleType(@NonNull TupleType type) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		TupleType specializedTupleType = type;
 		Map<String, Type> resolutions =  null;
 		List<Property> parts = specializedTupleType.getOwnedProperties();
@@ -361,6 +359,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				}
 			}
 		}
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		if (resolutions != null) {
 			List<@NonNull PartId> partIds = new ArrayList<>(parts.size());
 			Collections.sort(partIds);
@@ -372,8 +371,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				PartId partId = IdManager.getPartId(i, partName, partTypeId, part.isIsRequired());			// XXX
 				partIds.add(partId);
 			}
-			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.requireNonNull(type.getName()), partIds);
-			specializedTupleType = metamodelManager.getStandardLibrary().getTupleManager().getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
+			specializedTupleType = standardLibrary.getTupleType(partIds);
 			return specializedTupleType;
 		}
 		else {
@@ -381,12 +379,12 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			for (TypedElement part : type.getOwnedProperties()) {
 				Type type1 = part.getType();
 				if (type1 != null) {
-					Type type2 = metamodelManager.getPrimaryType(type1);
+					Type type2 = standardLibrary.getPrimaryType(type1);
 					Type type3 = specializeType(type2);
 					partList.add(IdManager.getPartId(-1, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired()));
 				}
 			}
-			return metamodelManager.getStandardLibrary().getTupleManager().getTupleType(NameUtil.getSafeName(type), partList);
+			return standardLibrary.getTupleType(partList);
 		}
 	}
 

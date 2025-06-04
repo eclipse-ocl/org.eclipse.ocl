@@ -1,45 +1,67 @@
-/*******************************************************************************
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+/**
+ * Copyright (c) 2010, 2025 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
- *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.complete;
+ *   E.D.Willink - Initial API and implementation
+ */
+package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.MapTypeManagerInternal;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.TupleTypeManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Standard Library Internal</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
+ * </ul>
+ *
+ * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibraryInternal()
+ * @generated
  */
 public interface StandardLibraryInternal extends StandardLibrary
 {
 	/**
-	 * @since 7.0
+	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owning Complete Environment</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owning Complete Environment</em>' reference.
+	 * @see #setOwningCompleteEnvironment(CompleteEnvironment)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibraryInternal_OwningCompleteEnvironment()
+	 * @generated
 	 */
-	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
+	CompleteEnvironment getOwningCompleteEnvironment();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owning Complete Environment</em>' reference.
+	 * @see #getOwningCompleteEnvironment()
+	 * @generated
+	 */
+	void setOwningCompleteEnvironment(CompleteEnvironment value);
 	/**
 	 * @since 1.17
 	 */
@@ -49,18 +71,20 @@ public interface StandardLibraryInternal extends StandardLibrary
 	@Nullable InvalidType basicGetOclInvalidType();
 
 	/**
+	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
+	 * zero if both matches are of equal validity.
+	 *
 	 * @since 7.0
 	 */
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
-
+	int compareOperationMatches(@NonNull Operation referenceOperation, @NonNull TemplateParameterSubstitutions referenceBindings,
+			@NonNull Operation candidateOperation, @NonNull TemplateParameterSubstitutions candidateBindings);
 
 	/**
 	 * @since 1.17
 	 */
 	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
-	@Nullable PrimitiveType getBehavioralClass(@NonNull Class<?> javaClass);
+	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull String getDefaultStandardLibraryURI();
 
@@ -80,28 +104,23 @@ public interface StandardLibraryInternal extends StandardLibrary
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	@NonNull MapTypeManagerInternal getMapTypeManager();
 	@Override
 	@NonNull Property getOclInvalidProperty();
 	org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType();
 	org.eclipse.ocl.pivot.@NonNull Class getOclTypeType();
 	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
-	org.eclipse.ocl.pivot.@NonNull Class getRequiredLibraryType(@NonNull String typeName);
+
+	org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name);
 	/**
 	 * @since 7.0
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
-	/**
-	 * @since 7.0
-	 */
-	@NonNull TupleTypeManager getTupleManager();
+	@Override
+	@NonNull TupleTypeManagerInternal getTupleTypeManager();
 	@NonNull StandardLibraryInternal init(@NonNull CompleteModelInternal completeModel);
 	boolean isExplicitDefaultStandardLibraryURI();
 	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
-}
+
+} // StandardLibraryInternal

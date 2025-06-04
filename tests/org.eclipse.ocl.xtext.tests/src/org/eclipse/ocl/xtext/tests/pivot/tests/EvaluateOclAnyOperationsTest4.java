@@ -927,8 +927,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		@SuppressWarnings("unused") StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class tupleTypeClass = environmentFactory.getASClass("TupleType");
 		PartId partId = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
-		TupleTypeId tupleId = IdManager.getTupleTypeId("Tuple", partId);
-		TupleType tupleType = ocl.getIdResolver().getTupleType(tupleId);
+		TupleTypeId tupleId = IdManager.getTupleTypeId(partId);
+		TupleType tupleType = standardLibrary.getTupleType(tupleId);
 		ocl.assertQueryEquals(null, tupleType, "Tuple{a:Integer=3}.oclType()");
 		ocl.assertQueryEquals(null, tupleType, "Tuple(a:Integer)");
 		ocl.assertQueryEquals(null, tupleTypeClass, "Tuple(a:Integer).oclType()");

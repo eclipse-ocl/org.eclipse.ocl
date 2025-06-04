@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
+import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
@@ -486,7 +486,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						Type partType = PivotUtil.getPivot(Type.class, csPartType);
 						if (partType != null) {
 							boolean isRequired = context.getConverter().isRequiredWithDefault(csPartType);
-							parts.add(new ExecutorTuplePart(partName, partType, isRequired));
+							parts.add(new TuplePart(partName, partType, isRequired));
 						}
 					}
 				}
@@ -494,7 +494,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				TemplateParameterSubstitutions templateSpecialization = namespace != null ? TemplateSpecialization.basicGetTemplateSpecialization(namespace) : null;
 			//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(namespace);
 			//	TemplateParameterSubstitutions templateParameterSubstitutions = new BasicTemplateSpecialization(namespace, templateParameterization);
-				TupleType tupleType = context.getStandardLibrary().getTupleType(name, parts, templateSpecialization);			// XXX pass parameterization from ancestral scope
+				TupleType tupleType = context.getStandardLibrary().getTupleType(parts, templateSpecialization);			// XXX pass parameterization from ancestral scope
 				context.installPivotTypeWithMultiplicity(tupleType, csElement);
 				List<Property> tupleParts = tupleType.getOwnedProperties();
 				for (TuplePartCS csTuplePart : csElement.getOwnedParts()) {
