@@ -492,6 +492,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return leftIsRequired && rightIsRequired;
 	}
 
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getLibraryClass(@NonNull String className) {
+		return ClassUtil.requireNonNull(basicGetLibraryClass(className));
+	}
+
 	/**
 	 * @since 7.0
 	 */

@@ -103,7 +103,6 @@ public interface StandardLibraryInternal extends StandardLibrary
 	 */
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
-	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
 	@Override
 	@NonNull Property getOclInvalidProperty();
 	org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType();

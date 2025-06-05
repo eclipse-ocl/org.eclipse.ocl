@@ -261,7 +261,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		if (classType != null) {
 			return classType;
 		}
-		classType = getPivotType(TypeId.CLASS_NAME);
+		classType = basicGetLibraryClass(TypeId.CLASS_NAME);
 		if (classType != null) {
 			return classType;
 		}
@@ -282,7 +282,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		if (enumerationType != null) {
 			return enumerationType;
 		}
-		enumerationType = getPivotType(TypeId.ENUMERATION_NAME);
+		enumerationType = basicGetLibraryClass(TypeId.ENUMERATION_NAME);
 		if (enumerationType != null) {
 			return enumerationType;
 		}
@@ -365,6 +365,25 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
 		return OCLstdlibTables.Types._Integer;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className) {
+		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+		if (extensions2 != null) {
+			for (@NonNull List<@NonNull EcoreExecutorPackage> packages : extensions2.values()) {
+				for (@NonNull EcoreExecutorPackage extensionPackage : packages) {
+					org.eclipse.ocl.pivot.Class executorType = extensionPackage.getOwnedClass(className);
+					if (executorType != null) {
+						return executorType;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -491,21 +510,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	public synchronized @Nullable EcoreExecutorPackage getPackage(@NonNull EPackage ePackage) {
 		String nsURI = ePackage.getNsURI();
 		return nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
-	}
-
-	public org.eclipse.ocl.pivot.@Nullable Class getPivotType(@NonNull String className) {
-		Map<EcoreExecutorPackage, List<EcoreExecutorPackage>> extensions2 = extensions;
-		if (extensions2 != null) {
-			for (@SuppressWarnings("null")@NonNull List<EcoreExecutorPackage> packages : extensions2.values()) {
-				for (@SuppressWarnings("null")@NonNull EcoreExecutorPackage extensionPackage : packages) {
-					org.eclipse.ocl.pivot.Class executorType = extensionPackage.getOwnedClass(className);
-					if (executorType != null) {
-						return executorType;
-					}
-				}
-			}
-		}
-		return null;
 	}
 
 	/**
