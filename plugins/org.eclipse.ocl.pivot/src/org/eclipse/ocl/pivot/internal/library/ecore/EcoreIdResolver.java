@@ -108,7 +108,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	protected org.eclipse.ocl.pivot.@NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
 		org.eclipse.ocl.pivot.Class nestedType = NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
 		if (nestedType == null) {
-			nestedType = getStandardLibrary().getPivotType(name);
+			nestedType = getStandardLibrary().basicGetLibraryClass(name);
 		}
 		return ClassUtil.requireNonNull(nestedType);
 	}
@@ -117,7 +117,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	protected org.eclipse.ocl.pivot.@NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
 		org.eclipse.ocl.pivot.Class nestedType = NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
 		if (nestedType == null) {
-			nestedType = getStandardLibrary().getPivotType(name);
+			nestedType = getStandardLibrary().basicGetLibraryClass(name);
 		}
 		return ClassUtil.requireNonNull(nestedType);
 	}
@@ -126,7 +126,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	protected org.eclipse.ocl.pivot.@NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
 		org.eclipse.ocl.pivot.Class nestedType = NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
 		if (nestedType == null) {
-			nestedType = getStandardLibrary().getPivotType(name);
+			nestedType = getStandardLibrary().basicGetLibraryClass(name);
 		}
 		return ClassUtil.requireNonNull(nestedType);
 	}
@@ -151,7 +151,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			org.eclipse.ocl.pivot.Class asClass = key2class.get(executorType);
 			if (asClass == null) {
 				String metaclassName = executorType.getTypeId().getMetaclassName();
-				asClass = getStandardLibrary().getPivotType(metaclassName);
+				asClass = getStandardLibrary().getLibraryClass(metaclassName);
 				key2class.put(executorType, asClass);
 			}
 			return asClass;
