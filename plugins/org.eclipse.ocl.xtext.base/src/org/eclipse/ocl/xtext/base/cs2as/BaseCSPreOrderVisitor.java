@@ -294,7 +294,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		public BasicContinuation<?> execute() {
 			String name = csElement.getName();
 			if (name != null) {
-				Type pivotType = context.getStandardLibrary().getLibraryType(name);
+				Type pivotType = context.getStandardLibrary().basicGetLibraryClass(name);
 				context.installPivotTypeWithMultiplicity(pivotType, csElement);
 			}
 			return null;

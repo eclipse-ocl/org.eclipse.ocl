@@ -105,7 +105,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				}
 			}
 			if (type == null) {
-				type = standardLibrary.getLibraryType(name);
+				type = standardLibrary.basicGetLibraryClass(name);
 			}
 			csElement.setPivot(type);
 			return null;
@@ -174,7 +174,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				}
 			}
 			if (type == null) {
-				type = metamodelManager.getStandardLibrary().getLibraryType(name);
+				type = metamodelManager.getStandardLibrary().basicGetLibraryClass(name);
 			}
 			context.installPivotTypeWithMultiplicity(type, csElement);
 			return null;

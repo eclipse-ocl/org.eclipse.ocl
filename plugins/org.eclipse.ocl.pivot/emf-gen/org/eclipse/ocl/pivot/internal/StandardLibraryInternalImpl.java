@@ -475,6 +475,16 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String typeName) {
+		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
+		if (nameToLibraryTypeMap2 == null) {
+			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
+			loadDefaultLibrary(defaultStandardLibraryURI);
+		}
+		return nameToLibraryTypeMap2.get(typeName);
+	}
+
+	@Override
 	public @Nullable AnyType basicGetOclAnyType() {
 		return oclAnyType;
 	}
@@ -751,16 +761,6 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 		return getLambdaManager().getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName) {
-		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
-		if (nameToLibraryTypeMap2 == null) {
-			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
-			loadDefaultLibrary(defaultStandardLibraryURI);
-		}
-		return nameToLibraryTypeMap2.get(typeName);
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -1002,10 +1002,10 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class getRequiredLibraryType(@NonNull String typeName) {
-		org.eclipse.ocl.pivot.Class type = getLibraryType(typeName);
+		org.eclipse.ocl.pivot.Class type = basicGetLibraryClass(typeName);
 		if (type == null) {
 			//			nameToLibraryTypeMap = null;
-			type = getLibraryType(typeName);	// FIXME just a debug retry
+			type = basicGetLibraryClass(typeName);	// FIXME just a debug retry
 			Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 			if ((nameToLibraryTypeMap2 == null) || nameToLibraryTypeMap2.isEmpty()) {
 				throw new IllegalLibraryException(PivotMessagesInternal.EmptyLibrary_ERROR_);

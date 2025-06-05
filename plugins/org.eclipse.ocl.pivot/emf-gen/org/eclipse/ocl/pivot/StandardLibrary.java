@@ -47,6 +47,11 @@ public interface StandardLibrary extends Element
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
 	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className);
+
+	/**
 	 * Return true if firstType + firstIsRequired augmented by firstSubstitutions conforms to
 	 * secondType + secondIsRequired augmented by secondSubstitutions.
 	 *
@@ -163,6 +168,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull PrimitiveType getIntegerType();
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getLibraryClass(@NonNull String className);
 
 	/**
 	 * @since 7.0
