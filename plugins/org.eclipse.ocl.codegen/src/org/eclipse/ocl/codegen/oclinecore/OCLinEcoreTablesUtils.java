@@ -828,7 +828,7 @@ public class OCLinEcoreTablesUtils
 			for (org.eclipse.ocl.pivot.Class type : oclstdlibPackage.getOwnedClasses()) {
 				assert type != null;
 				CompleteClass completeClass = metamodelManager.getCompleteClass(type);
-				if ((elementType == null) || !PivotUtil.isElementType(completeClass, elementType, oclVoidType)) {
+				if ((elementType == null) || !standardLibrary.isElementType(completeClass, elementType, oclVoidType)) {
 					types.add(type);
 				}
 			}
@@ -844,7 +844,7 @@ public class OCLinEcoreTablesUtils
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
 					if (partialPackage == oclstdlibPackage) {
-						if ((elementType != null) && !completeClass.conformsTo(elementType)) {
+						if ((elementType != null) && !standardLibrary.conformsTo(completeClass, elementType)) {
 							//							System.out.println("Prune " + type.getName());
 							pruned = true;
 						}

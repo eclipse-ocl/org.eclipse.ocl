@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.LambdaParameter;
@@ -133,6 +134,26 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments) {
 		return getCollectionTypeManager().basicGetCollectionType(typeArguments);
+	}
+
+	@Override
+	public boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull CompleteClass thatCompleteClass) {
+		CompleteInheritance thisInheritance = thisCompleteClass.getCompleteInheritance();
+		CompleteInheritance thatInheritance = thatCompleteClass.getCompleteInheritance();
+		if (thisInheritance == thatInheritance) {
+			return true;
+		}
+		return thatInheritance.isSuperInheritanceOf(thisInheritance);
+	}
+
+	@Override
+	public boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull Type thatType) {
+		CompleteInheritance thisInheritance = thisCompleteClass.getCompleteInheritance();
+		CompleteInheritance thatInheritance = thatType.getInheritance(this);
+		if (thisInheritance == thatInheritance) {
+			return true;
+		}
+		return thatInheritance.isSuperInheritanceOf(thisInheritance);
 	}
 
 	@Override

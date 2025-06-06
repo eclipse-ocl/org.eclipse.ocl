@@ -318,7 +318,10 @@ public class PivotHelper extends PivotUtil
 		return ClassUtil.requireNonNull(NameUtil.getNameable(getDataTypeClass().getOwnedProperties(), PivotConstants.DATA_TYPE_VALUE_NAME));
 	}
 
-	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

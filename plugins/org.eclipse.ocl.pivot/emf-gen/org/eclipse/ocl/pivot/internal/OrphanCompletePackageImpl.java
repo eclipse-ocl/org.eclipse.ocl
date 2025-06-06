@@ -17,7 +17,6 @@ import java.util.WeakHashMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -67,29 +66,6 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	@Deprecated
 	private class OrphanCompleteClassImpl extends CompleteClassImpl
 	{
-		@Override
-		public boolean conformsTo(final @NonNull CompleteClass thatCompleteClass) {
-			throw new UnsupportedOperationException();
-		/*	final org.eclipse.ocl.pivot.@NonNull Class thisClass = getPrimaryClass();
-			final org.eclipse.ocl.pivot.@NonNull Class thatClass = thatCompleteClass.getPrimaryClass();
-			CompleteEnvironmentImpl completeEnvironmentImpl = new CompleteEnvironmentImpl()	{	// FIXME avoid this horrible fudge
-				{
-					this.ownedCompleteModel = getCompleteModel();
-				}
-
-				@Override
-				public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type asType) {
-					if (asType == thisClass) {
-						return OrphanCompleteClassImpl.this;
-					}
-					if (asType == thatClass) {
-						return (@NonNull CompleteClassInternal) thatCompleteClass;
-					}
-					return super.getCompleteClass(asType);
-				}
-			};
-			return completeEnvironmentImpl.conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY); */
-		}
 
 		@Override
 		public @NonNull CompletePackageInternal getOwningCompletePackage() {
@@ -98,7 +74,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	}
 
 	private @NonNull Map<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>> class2orphanCompleteClass
-	= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>>();
+				= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>>();
 
 	protected OrphanCompletePackageImpl()
 	{
@@ -153,7 +129,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		OrphanCompleteClassImpl completeClass = new OrphanCompleteClassImpl();
 		completeClass.setName(orphanClass.getName());
 		completeClass.getPartialClasses().add(orphanClass);
-		class2orphanCompleteClass.put(orphanClass, new WeakReference<OrphanCompleteClassImpl>(completeClass));
+		class2orphanCompleteClass.put(orphanClass, new WeakReference<>(completeClass));
 		return completeClass;
 	}
 
