@@ -24,9 +24,9 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -80,7 +80,8 @@ public class FinalAnalysis
 				for (@NonNull CompleteClass subCompleteClass : subCompleteClasses) {
 					if (subCompleteClass != superCompleteClass) {
 						for (@NonNull Operation subOperation : subCompleteClass.getOperations(null)) {
-							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId()) && completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation)).conformsTo(superCompleteClass)) {
+							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId())
+								&& completeModel.getStandardLibrary().conformsTo(completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation)), superCompleteClass)) {
 								LibraryFeature subImplementation = metamodelManager.getImplementation(subOperation);
 								if ((domainImplementation != subImplementation)
 										|| (domainOperation.getBodyExpression() != subOperation.getBodyExpression())

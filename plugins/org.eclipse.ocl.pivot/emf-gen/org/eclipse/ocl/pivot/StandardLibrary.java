@@ -52,6 +52,16 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className);
 
 	/**
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull Type elementType);
+
+	/**
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull CompleteClass thatCompleteClass);
+
+	/**
 	 * Return true if firstType + firstIsRequired augmented by firstSubstitutions conforms to
 	 * secondType + secondIsRequired augmented by secondSubstitutions.
 	 *

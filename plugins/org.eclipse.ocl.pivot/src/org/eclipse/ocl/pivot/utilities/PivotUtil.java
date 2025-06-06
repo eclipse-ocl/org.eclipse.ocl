@@ -2818,15 +2818,6 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * Return true if completeClass conforms to elementType but not to oclVoidType.
-	 *
-	 * @since 7.0
-	 */
-	public static boolean isElementType(@NonNull CompleteClass completeClass, @NonNull Type elementType, @NonNull VoidType oclVoidType) {
-		return completeClass.conformsTo(elementType) && !completeClass.conformsTo(oclVoidType);
-	}
-
-	/**
 	 * Return true if the sole purpose of asPackage is to host implicit opposite properties.
 	 * @since 7.0
 	 */
