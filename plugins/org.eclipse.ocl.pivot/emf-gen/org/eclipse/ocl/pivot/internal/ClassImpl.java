@@ -706,33 +706,39 @@ implements org.eclipse.ocl.pivot.Class {
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
-				final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
-				/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedInvariants.iterator();
-				/*@NonInvalid*/ boolean result;
-				while (true) {
-					if (!ITERATOR__1.hasNext()) {
-						result = true;
-						break;
+				/*@Caught*/ @NonNull Object CAUGHT_result;
+				try {
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
+					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedInvariants.iterator();
+					/*@Thrown*/ boolean result;
+					while (true) {
+						if (!ITERATOR__1.hasNext()) {
+							result = true;
+							break;
+						}
+						@SuppressWarnings("null")
+						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITERATOR__1.next();
+						/**
+						 * name
+						 */
+						final /*@NonInvalid*/ @Nullable String name = _1.getName();
+						//
+						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
+							result = false;
+							break;			// Abort after second find
+						}
+						else {
+							accumulator.add(name);
+						}
 					}
-					@SuppressWarnings("null")
-					/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITERATOR__1.next();
-					/**
-					 * name
-					 */
-					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull String name = _1.getName();
-					//
-					if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
-						result = false;
-						break;			// Abort after second find
-					}
-					else {
-						accumulator.add(name);
-					}
+					CAUGHT_result = result;
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				catch (Exception e) {
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

@@ -118,6 +118,7 @@ public interface StandardLibraryInternal extends StandardLibrary
 	@Override
 	@NonNull TupleTypeManagerInternal getTupleTypeManager();
 	@NonNull StandardLibraryInternal init(@NonNull CompleteModelInternal completeModel);
+	boolean isElementType(@NonNull CompleteClass completeClass, @NonNull Type elementType, @NonNull VoidType oclVoidType);
 	boolean isExplicitDefaultStandardLibraryURI();
 	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);

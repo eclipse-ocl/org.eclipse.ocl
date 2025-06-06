@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
@@ -572,15 +573,16 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		if (asPackage == null) {
 			return null;
 		}
-		Package oclstdlibPackage = metamodelManager.getStandardLibrary().getBooleanType().getOwningPackage();
+		StandardLibraryInternal standardLibrary = metamodelManager.getStandardLibrary();
+		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Class elementType = metamodelManager.getASClass("Element");
 		if ((elementType != null) && (oclstdlibPackage != null)) {
-			VoidType oclVoidType = metamodelManager.getStandardLibrary().getOclVoidType();
+			VoidType oclVoidType = standardLibrary.getOclVoidType();
 			org.eclipse.ocl.pivot.Package pivotMetamodel = elementType.getOwningPackage();
 			assert pivotMetamodel != null;
 			if (oclstdlibPackage == asPackage) {
 				CompleteClass completeClass = metamodelManager.getCompleteClass(asClass);
-				if (PivotUtil.isElementType(completeClass, elementType, oclVoidType)) {
+				if (standardLibrary.isElementType(completeClass, elementType, oclVoidType)) {
 					return getGenPackage(pivotMetamodel);
 				}
 				else {
@@ -592,7 +594,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
 					if (partialPackage == oclstdlibPackage) {
-						if (!PivotUtil.isElementType(completeClass, elementType, oclVoidType)) {
+						if (!standardLibrary.isElementType(completeClass, elementType, oclVoidType)) {
 							return getGenPackage(oclstdlibPackage);
 						}
 					}

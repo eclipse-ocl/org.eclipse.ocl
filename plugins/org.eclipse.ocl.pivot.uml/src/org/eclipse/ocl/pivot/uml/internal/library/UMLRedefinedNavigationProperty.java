@@ -42,7 +42,7 @@ public class UMLRedefinedNavigationProperty extends ExplicitNavigationProperty
 		Property baseProperty = redefiningProperty;
 		for (@NonNull Property aProperty : PivotUtil.getRedefinedProperties(redefiningProperty)) {
 			CompleteClass aCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(aProperty));
-			if (baseCompleteClass.conformsTo(aCompleteClass)) {
+			if (completeModel.getOwningCompleteEnvironment().getStandardLibrary().conformsTo(baseCompleteClass, aCompleteClass)) {
 				baseCompleteClass = aCompleteClass;
 				baseProperty = aProperty;
 			}
