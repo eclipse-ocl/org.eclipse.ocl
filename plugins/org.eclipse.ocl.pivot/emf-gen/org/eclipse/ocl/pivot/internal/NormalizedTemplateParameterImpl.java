@@ -12,11 +12,11 @@ package org.eclipse.ocl.pivot.internal;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -189,9 +189,9 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 	private /*@LazyNonNull*/ TemplateParameterId templateParameterId;
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class lowerBound = /*PivotUtil.getLowerBound(this,*/ standardLibrary.getOclAnyType();//);
-		return standardLibrary.getInheritance(lowerBound);
+		return lowerBound.getFlatClass(standardLibrary);
 	}
 
 	@Override

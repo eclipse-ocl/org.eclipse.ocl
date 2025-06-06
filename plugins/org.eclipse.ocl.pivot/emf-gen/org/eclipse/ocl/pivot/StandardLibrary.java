@@ -17,6 +17,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -24,6 +26,7 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
@@ -87,11 +90,6 @@ public interface StandardLibrary extends Element
 	boolean conformsTo(@NonNull Type firstType, @Nullable TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @Nullable TemplateParameterSubstitutions secondSubstitutions);
 
-	/**
-	 * @since 7.0
-	 */
-	boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType);
-
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
 
 	/**
@@ -108,6 +106,8 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -187,14 +187,20 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getEnumerationType();
 
 	/**
+	 * Return the FlatClass for a given type.
+	 * @since 7.0
+	 */
+	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlatModel getFlatModel();
+
+	/**
 	 * @since 7.0
 	 */
 	@NonNull IdResolver getIdResolver();
-
-	/**
-	 * Return the Inheritance dispatch table for a given type.
-	 */
-	@NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -219,6 +225,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getLibraryClass(@NonNull String className);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LambdaTypeManager getLambdaManager();
 
 	/**
 	 * @since 7.0

@@ -15,6 +15,9 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
+/**
+ * @since 7.0
+ */
 public final class CompletePackageLabelGenerator extends AbstractLabelGenerator<CompletePackage>
 {
 	public static void initialize(@NonNull Registry registry) {

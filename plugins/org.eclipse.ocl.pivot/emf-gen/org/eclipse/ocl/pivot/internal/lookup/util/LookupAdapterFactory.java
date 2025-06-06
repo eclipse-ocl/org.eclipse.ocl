@@ -75,8 +75,8 @@ public class LookupAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected LookupSwitch<@Nullable Adapter> modelSwitch =
-		new LookupSwitch<@Nullable Adapter>() {
+	protected LookupSwitch<Adapter> modelSwitch =
+		new LookupSwitch<Adapter>() {
 			@Override
 			public Adapter caseLookupEnvironment(LookupEnvironment object) {
 				return createLookupEnvironmentAdapter();

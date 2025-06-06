@@ -55,7 +55,7 @@ public class ImplicitNonCompositionProperty extends AbstractProperty
 		ModelManager modelManager = executor.getModelManager();
 		if (modelManager instanceof EcoreModelManager) {
 			EObject esObject = oppositeProperty.getESObject();
-			if (esObject instanceof EReference) {
+			if (esObject instanceof EReference) {				// XXX may be UML Property
 				List<Object> resultList = new ArrayList<>();
 				if (sourceValue instanceof EObject) {
 					EReference oppositeEReference = (EReference)esObject;

@@ -10,26 +10,32 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
-import java.lang.ref.WeakReference;
-import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
+import org.eclipse.ocl.pivot.internal.ClassImpl;
+import org.eclipse.ocl.pivot.internal.EnumerationImpl;
+import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -42,9 +48,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 {
-	private @NonNull Map<EClassifier, WeakReference<CompleteInheritance>> typeMap = new WeakHashMap<>();
-
-	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull ExecutorStandardLibrary standardLibrary) {
+	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull PartialStandardLibraryImpl standardLibrary) {
 		super(standardLibrary);
 		for (@SuppressWarnings("null")@NonNull EObject root : roots) {
 			addRoot(root);
@@ -56,8 +60,8 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		String nsURI = ePackage.getNsURI();
 		org.eclipse.ocl.pivot.Package asPackage = nsURI2package.get(nsURI);
 		if (asPackage == null) {
-			PackageId packageId = IdManager.getPackageId(ePackage);
-			asPackage = new EcoreReflectivePackage(ePackage, this, packageId);
+			asPackage = createPackage(ePackage);			// XXX Re-use avoid duplicating Ecore2AS
+			PackageId packageId = asPackage.getPackageId();
 			nsURI2package.put(nsURI, asPackage);
 			if (packageId instanceof RootPackageId) {
 				roots2package.put(((RootPackageId)packageId).getName(), asPackage);
@@ -66,29 +70,96 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		return asPackage;
 	}
 
-	@Override
-	public synchronized @NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier) {
-		CompleteInheritance type = weakGet(typeMap, eClassifier);
-		if (type == null) {
-			EPackage ePackage = eClassifier.getEPackage();
-			assert ePackage != null;
-			ExecutorPackage execPackage = getStandardLibrary().getPackage(ePackage);
-			if (execPackage == null) {
-				PackageId packageId = IdManager.getPackageId(ePackage);
-				Element asPackage = packageId.accept(this);
-				if (asPackage instanceof ExecutorPackage) {
-					execPackage = (ExecutorPackage) asPackage;
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> computeClasses(org.eclipse.ocl.pivot.@NonNull Package evaluationPackage, @NonNull EPackage ePackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = new ArrayList<>();
+		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+			if (eClassifier != null) {
+				ClassImpl asClass;
+				if (eClassifier instanceof EEnum) {
+					EnumerationImpl asEnumeration = (EnumerationImpl) PivotFactory.eINSTANCE.createEnumeration();
+					for (@NonNull EnumerationLiteral asEnumerationLiteral : computeEnumerationLiterals((EEnum)eClassifier)) {
+						asEnumeration.getOwnedLiterals().add(asEnumerationLiteral);
+					}
+					asClass = asEnumeration;
 				}
-			}
-			if (execPackage != null) {
-				org.eclipse.ocl.pivot.Class asType = execPackage.getOwnedClass(eClassifier.getName());
-				if (asType != null) {
-					type = standardLibrary.getInheritance(asType);
-					typeMap.put(eClassifier, new WeakReference<>(type));
+				else {
+					asClass = (ClassImpl) PivotFactory.eINSTANCE.createClass();
 				}
+				asClass.setName(eClassifier.getName());
+				asClass.setESObject(eClassifier);
+				EcoreFlatModel flatModel = (EcoreFlatModel)getStandardLibrary().getFlatModel();
+				EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
+				asClass.setFlatClass(flatClass);
+				asClasses.add(asClass);
 			}
 		}
-		return ClassUtil.requireNonNull(type);
+		return asClasses;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull Iterable<@NonNull EnumerationLiteral> computeEnumerationLiterals(@NonNull EEnum eEnum) {
+		List<@NonNull EnumerationLiteral> asEnumerationLiterals = new ArrayList<>();
+		for (EEnumLiteral eEnumLiteral : eEnum.getELiterals()) {
+			if (eEnumLiteral != null) {
+				EnumerationLiteralImpl asEnumerationLiteral = (EnumerationLiteralImpl)PivotFactory.eINSTANCE.createEnumerationLiteral();
+				asEnumerationLiteral.setName(eEnumLiteral.getName());
+				asEnumerationLiteral.setESObject(eEnumLiteral);
+				asEnumerationLiterals.add(asEnumerationLiteral);
+			}
+		}
+		return asEnumerationLiterals;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> computeNestedPackages(@NonNull EPackage ePackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Package> nestedPackages = new ArrayList<>();
+		for (EPackage eSubPackage : ePackage.getESubpackages()) {
+			if (eSubPackage != null) {
+				org.eclipse.ocl.pivot.Package asPackage = createPackage(eSubPackage);
+				nestedPackages.add(asPackage);
+			}
+		}
+		return nestedPackages;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull EPackage ePackage) {
+		PackageId packageId = IdManager.getPackageId(ePackage);
+		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
+		asPackage.setName(ClassUtil.requireNonNull(ePackage.getName()));
+		asPackage.setNsPrefix(ePackage.getNsPrefix());
+		asPackage.setURI(ePackage.getNsURI());
+		asPackage.setPackageId(packageId);
+		asPackage.setESObject(ePackage);
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : computeClasses(asPackage, ePackage)) {
+			asPackage.getOwnedClasses().add(asClass);
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package asSubPackage : computeNestedPackages(ePackage)) {
+			asPackage.getOwnedPackages().add(asSubPackage);
+		}
+		return asPackage;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public synchronized @NonNull EcoreFlatClass getFlatClass(@NonNull EClassifier eClassifier) {
+		return ((EcoreFlatModel)standardLibrary.getFlatModel()).getEcoreFlatClass(eClassifier);
 	}
 
 	@Override
@@ -132,8 +203,8 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull ExecutorStandardLibrary getStandardLibrary() {
-		return (ExecutorStandardLibrary)standardLibrary;
+	public @NonNull PartialStandardLibraryImpl getStandardLibrary() {
+		return (PartialStandardLibraryImpl)standardLibrary;
 	}
 
 	@Override
@@ -141,9 +212,31 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 *
+	@Override
+	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
+		return standardLibrary.getTupleType(typeId);
+	} */
+
+	/**
+	 * @since 7.0
+	 *
+	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {
+		int iSize = parts.length;
+		List<@NonNull TuplePartId> partsList = new ArrayList<>(iSize);
+		for (int i = 0; i < iSize; i++) {
+			TypedElement part = parts[i];
+			String partName = NameUtil.getSafeName(part);
+			partsList.add(IdManager.getTuplePartId(i, partName, part.getTypeId()));
+		}
+		return getTupleType(IdManager.getTupleTypeId(TypeId.TUPLE_NAME, partsList));
+	} */
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull EClassifier eClassifier) {
-		return getInheritance(eClassifier).getPivotClass();
+		return getFlatClass(eClassifier).getPivotClass();
 	}
 
 	@Override

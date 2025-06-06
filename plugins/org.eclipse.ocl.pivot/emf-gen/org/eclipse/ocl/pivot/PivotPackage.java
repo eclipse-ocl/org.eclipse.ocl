@@ -2242,27 +2242,6 @@ extends EPackage
 	EClass getStandardLibrary();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.StandardLibraryInternal <em>Standard Library Internal</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Standard Library Internal</em>'.
-	 * @see org.eclipse.ocl.pivot.StandardLibraryInternal
-	 * @generated
-	 */
-	EClass getStandardLibraryInternal();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Owning Complete Environment</em>'.
-	 * @see org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment()
-	 * @see #getStandardLibraryInternal()
-	 * @generated
-	 */
-	EReference getStandardLibraryInternal_OwningCompleteEnvironment();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.MessageType <em>Message Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5222,6 +5201,27 @@ extends EPackage
 	EOperation getCompletePackage__GetOwnedCompleteClass__String();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary <em>Complete Standard Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Complete Standard Library</em>'.
+	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary
+	 * @generated
+	 */
+	EClass getCompleteStandardLibrary();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Owning Complete Environment</em>'.
+	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment()
+	 * @see #getCompleteStandardLibrary()
+	 * @generated
+	 */
+	EReference getCompleteStandardLibrary_OwningCompleteEnvironment();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.ConnectionPointReference <em>Connection Point Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7711,24 +7711,6 @@ extends EPackage
 		EClass STANDARD_LIBRARY = eINSTANCE.getStandardLibrary();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.StandardLibraryInternalImpl <em>Standard Library Internal</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.StandardLibraryInternalImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStandardLibraryInternal()
-		 * @generated
-		 */
-		EClass STANDARD_LIBRARY_INTERNAL = eINSTANCE.getStandardLibraryInternal();
-
-		/**
-		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference STANDARD_LIBRARY_INTERNAL__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getStandardLibraryInternal_OwningCompleteEnvironment();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.MessageTypeImpl <em>Message Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -10093,6 +10075,24 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING = eINSTANCE.getCompletePackage__GetOwnedCompleteClass__String();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl <em>Complete Standard Library</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCompleteStandardLibrary()
+		 * @generated
+		 */
+		EClass COMPLETE_STANDARD_LIBRARY = eINSTANCE.getCompleteStandardLibrary();
+
+		/**
+		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getCompleteStandardLibrary_OwningCompleteEnvironment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.ConnectionPointReferenceImpl <em>Connection Point Reference</em>}' class.

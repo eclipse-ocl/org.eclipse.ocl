@@ -21,12 +21,11 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 
 import com.google.common.base.Function;
@@ -74,8 +73,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 			super(4);
 		}
 
-		public void sort(@NonNull EnvironmentFactory environmentFactory) {
-			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		public void sort(@NonNull StandardLibrary standardLibrary) {
 			int size = size();
 			@NonNull Integer @NonNull [] keys = new @NonNull Integer[size];
 			/*@NonNull*/ Integer[] metrics = new @NonNull Integer[size];
@@ -85,8 +83,8 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 				keys[index] = index;
 				int metric = 0;
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
-				CompleteInheritance inheritance = owningClass.getInheritance(standardLibrary);
-				int depth = inheritance.getDepth();
+				FlatClass flatClass = owningClass.getFlatClass(standardLibrary);
+				int depth = flatClass.getDepth();
 				//				int isRedefinition = (operation instanceof Operation) && (((Operation)operation).getRedefinedOperation().size() > 0) ? 1 : 0;
 				metric = depth;
 				metrics[index] = metric;
@@ -137,12 +135,12 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 			assert list != null;
 			if ((list.size() > 1) && !sorted) {
 				// FIXME redefinitions
-				EnvironmentFactory environmentFactory = completeClass.getOwningCompletePackage().getCompleteModel().getEnvironmentFactory();
+				//	StandardLibrary standardLibrary = completeClass.getOwningCompletePackage().getCompleteModel().getStandardLibrary();
 				if (nonStaticOperations != null) {
-					nonStaticOperations.sort(environmentFactory);
+					nonStaticOperations.sort(standardLibrary);
 				}
 				if (staticOperations != null) {
-					staticOperations.sort(environmentFactory);
+					staticOperations.sort(standardLibrary);
 				}
 				sorted = true;
 			}
@@ -204,12 +202,18 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 		}
 	}
 
-	protected final @NonNull CompleteClassInternal completeClass;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull StandardLibrary standardLibrary;
 	protected final @NonNull String name;
 	private final @NonNull Map<@NonNull ParametersId, Object> map = new HashMap<@NonNull ParametersId, Object>();
 
-	public PartialOperations(@NonNull CompleteClassInternal completeClass, @NonNull String name) {
-		this.completeClass = completeClass;
+	/**
+	 * @since 7.0
+	 */
+	public PartialOperations(@NonNull StandardLibrary standardLibrary, @NonNull String name) {
+		this.standardLibrary = standardLibrary;
 		this.name = name;
 	}
 
@@ -349,7 +353,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 		});
 	}
 
-	public void initMemberOperationsPostProcess() {
+/*	public void initMemberOperationsPostProcess() {
 		for (Object partials : map.values()) {
 			if (partials instanceof Overloads) {
 				Overloads overloads = (Overloads)partials;
@@ -362,7 +366,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 		if (operations.size() > 1) {
 
 		}
-	}
+	} */
 
 	@Override
 	public @NonNull String toString() {

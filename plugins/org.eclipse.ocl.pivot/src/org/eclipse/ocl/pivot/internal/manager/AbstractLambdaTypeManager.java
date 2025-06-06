@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -46,7 +45,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
-	protected AbstractLambdaTypeManager(@NonNull StandardLibraryInternal standardLibrary) {
+	protected AbstractLambdaTypeManager(@NonNull StandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
 	}
 
@@ -120,7 +119,17 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		return lambdaParameter;
 	}
 
-	protected abstract @NonNull LambdaType createLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result);
+	protected @NonNull LambdaType createLambdaType(@NonNull TypedElement context,
+			@NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
+		LambdaType lambdaType = PivotFactory.eINSTANCE.createLambdaType();
+		lambdaType.setName(TypeId.LAMBDA_NAME);
+		lambdaType.setOwnedContext(createLambdaParameter(context));
+		for (TypedElement parameter : parameters) {
+			lambdaType.getOwnedParameters().add(createLambdaParameter(parameter));
+		}
+		lambdaType.setOwnedResult(createLambdaParameter(result));
+		return lambdaType;
+	}
 
 	@Override
 	public void dispose() {

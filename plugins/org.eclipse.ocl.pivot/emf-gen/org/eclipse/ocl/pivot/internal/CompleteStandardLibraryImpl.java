@@ -33,8 +33,8 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -64,6 +63,8 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -71,7 +72,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
@@ -114,31 +114,30 @@ import org.eclipse.osgi.util.NLS;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.StandardLibraryInternalImpl#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class StandardLibraryInternalImpl extends StandardLibraryImpl implements StandardLibraryInternal
+public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements CompleteStandardLibrary
 {
 	/**
-	 * The number of structural features of the '<em>Standard Library Internal</em>' class.
+	 * The number of structural features of the '<em>Complete Standard Library</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int STANDARD_LIBRARY_INTERNAL_FEATURE_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_FEATURE_COUNT + 1;
+	public static final int COMPLETE_STANDARD_LIBRARY_FEATURE_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of operations of the '<em>Standard Library Internal</em>' class.
+	 * The number of operations of the '<em>Complete Standard Library</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int STANDARD_LIBRARY_INTERNAL_OPERATION_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_OPERATION_COUNT + 0;
-
+	public static final int COMPLETE_STANDARD_LIBRARY_OPERATION_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_OPERATION_COUNT + 0;
 
 	/**
 	 * The cached value of the '{@link #getOwningCompleteEnvironment() <em>Owning Complete Environment</em>}' reference.
@@ -155,7 +154,7 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected StandardLibraryInternalImpl()
+	protected CompleteStandardLibraryImpl()
 	{
 		super();
 	}
@@ -168,7 +167,7 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	@Override
 	protected EClass eStaticClass()
 	{
-		return PivotPackage.Literals.STANDARD_LIBRARY_INTERNAL;
+		return PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY;
 	}
 
 	/**
@@ -334,32 +333,27 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	 */
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
-		return visitor.visitStandardLibraryInternal(this);
+		return visitor.visitCompleteStandardLibrary(this);
 	}
 
 	/**
-	 * CollectionTypeManagerInternal encapsulates the knowledge about known collection types.
+	 * CompleteCollectionTypeManager encapsulates the knowledge about known collection types.
 	 *
 	 * @since 7.0
 	 */
-	public static class CollectionTypeManagerInternal extends AbstractCollectionTypeManager
+	public static class CompleteCollectionTypeManager extends AbstractCollectionTypeManager
 	{
-		public CollectionTypeManagerInternal(@NonNull StandardLibraryInternal standardLibrary) {
+		public CompleteCollectionTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
 		@Override
 		protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
-			StandardLibraryInternal standardLibraryInternal = (StandardLibraryInternal)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = standardLibraryInternal.getEnvironmentFactory();
-			CollectionTypeId collectionTypeId = typeArguments.getCollectionTypeId();
-			Type elementType = typeArguments.getElementType();
-			boolean isNullFree = typeArguments.isNullFree();
-			IntegerValue lower = typeArguments.getLower();
-			UnlimitedNaturalValue upper = typeArguments.getUpper();
-			CollectionType genericCollectionType = getCollectionType(collectionTypeId);
-			CollectionType collectionType = PivotUtil.createCollectionType(genericCollectionType, elementType, isNullFree, lower, upper);
-			standardLibraryInternal.resolveSuperClasses(collectionType, genericCollectionType);
+			CollectionType collectionType = super.createCollectionType(typeArguments);
+			CollectionType genericCollectionType = (CollectionType)collectionType.getUnspecializedElement();
+			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
+			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			completeStandardLibrary.resolveSuperClasses(collectionType, genericCollectionType);
 			environmentFactory.addOrphanClass(collectionType);
 			return collectionType;
 		}
@@ -371,75 +365,56 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * JavaTypeManagerInternal encapsulates the knowledge about known java types.
-	 *
 	 * @since 7.0
 	 */
-	public static class JavaTypeManagerInternal extends AbstractJavaTypeManager
+	protected static class CompleteJavaTypeManager extends AbstractJavaTypeManager
 	{
-		public JavaTypeManagerInternal(@NonNull StandardLibraryInternal standardLibrary) {
+		protected CompleteJavaTypeManager( @NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 	}
 
 	/**
-	 * LambdaTypeManagerInternal encapsulates the knowledge about known lambda types.
+	 * CompleteLambdaTypeManager encapsulates the knowledge about known lambda types.
 	 *
 	 * @since 7.0
 	 */
-	public static class LambdaTypeManagerInternal extends AbstractLambdaTypeManager
+	public static class CompleteLambdaTypeManager extends AbstractLambdaTypeManager
 	{
-		public LambdaTypeManagerInternal(@NonNull StandardLibraryInternal standardLibrary) {
+		public CompleteLambdaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
 		@Override
 		protected @NonNull LambdaType createLambdaType(@NonNull TypedElement context,
 				@NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
-			StandardLibraryInternal standardLibraryInternal = (StandardLibraryInternal)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = standardLibraryInternal.getEnvironmentFactory();
-			LambdaType lambdaType = PivotFactory.eINSTANCE.createLambdaType();
-			lambdaType.setName(TypeId.LAMBDA_NAME);
-			lambdaType.setOwnedContext(createLambdaParameter(context));
-			for (TypedElement parameter : parameters) {
-				lambdaType.getOwnedParameters().add(createLambdaParameter(parameter));
-			}
-			lambdaType.setOwnedResult(createLambdaParameter(result));
+			LambdaType lambdaType = super.createLambdaType(context, parameters, result);
 			lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
+			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
+			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			environmentFactory.addOrphanClass(lambdaType);
 			return lambdaType;
 		}
 	}
 
 	/**
-	 * MapTypeManagerInternal encapsulates the knowledge about known map types.
+	 * CompleteMapTypeManager encapsulates the knowledge about known map types.
 	 *
 	 * @since 7.0
 	 */
-	public static class MapTypeManagerInternal extends AbstractMapTypeManager
+	public static class CompleteMapTypeManager extends AbstractMapTypeManager
 	{
-		public MapTypeManagerInternal(@NonNull StandardLibraryInternal standardLibrary) {
+		public CompleteMapTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
 		@Override
 		protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
-			StandardLibraryInternal standardLibraryInternal = (StandardLibraryInternal)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = standardLibraryInternal.getEnvironmentFactory();
-			Type keyType = typeArguments.getKeyType();
-			boolean keysAreNullFree = typeArguments.isKeysAreNullFree();
-			Type valueType = typeArguments.getValueType();
-			boolean valuesAreNullFree = typeArguments.isValuesAreNullFree();
-			MapType genericMapType = standardLibrary.getMapType();
-			MapType mapType;
-			if (entryClass == null) {
-				mapType = PivotUtil.createMapType(genericMapType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
-			}
-			else {
-				MapType specializedMapType = getMapType(typeArguments);
-				mapType = PivotUtil.createMapEntryType(specializedMapType, entryClass);
-			}
-			standardLibraryInternal.resolveSuperClasses(mapType, genericMapType);
+			MapType mapType = super.createMapType(typeArguments, entryClass);
+			MapType genericMapType = (MapType)mapType.getUnspecializedElement();
+			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
+			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			completeStandardLibrary.resolveSuperClasses(mapType, genericMapType);
 			environmentFactory.addOrphanClass(mapType);
 			return mapType;
 		}
@@ -451,13 +426,13 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * JavaTypeManagerInternal encapsulates the knowledge about known java types.
+	 * CompleteSpecializedTypeManager encapsulates the knowledge about known spedcialized types.
 	 *
 	 * @since 7.0
 	 */
-	public static class SpecializedTypeManagerInternal extends AbstractSpecializedTypeManager
+	public static class CompleteSpecializedTypeManager extends AbstractSpecializedTypeManager
 	{
-		public SpecializedTypeManagerInternal(@NonNull StandardLibraryInternal standardLibrary) {
+		public CompleteSpecializedTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
@@ -466,8 +441,6 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 		 */
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments) {
-			StandardLibraryInternal standardLibraryInternal = (StandardLibraryInternal)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = standardLibraryInternal.getEnvironmentFactory();
 			org.eclipse.ocl.pivot.Class unspecializedType = primaryClass;
 			String typeName = unspecializedType.getName();
 			TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
@@ -489,7 +462,9 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 				}
 			}
 			specializedType.getOwnedBindings().add(templateBinding);
-			standardLibraryInternal.resolveSuperClasses(specializedType, unspecializedType);
+			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
+			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			completeStandardLibrary.resolveSuperClasses(specializedType, unspecializedType);
 //			if (specializedType instanceof Metaclass) {
 //				Type instanceType = (Type) templateArguments.get(0);
 //				Metaclass specializedMetaclass = (Metaclass)specializedType;
@@ -502,19 +477,19 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * TupleTypeManagerInternal encapsulates the knowledge about known tuple types.
+	 * CompleteTupleTypeManager encapsulates the knowledge about known tuple types.
 	 * @since 7.0
 	 */
-	public static class TupleTypeManagerInternal extends AbstractTupleTypeManager
+	public static class CompleteTupleTypeManager extends AbstractTupleTypeManager
 	{
-		public TupleTypeManagerInternal(@NonNull StandardLibraryInternal standardLibrary) {
+		public CompleteTupleTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
 		@Override
 		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
-			StandardLibraryInternal standardLibraryInternal = (StandardLibraryInternal)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = standardLibraryInternal.getEnvironmentFactory();
+			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
+			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			TupleType tupleType = new TupleTypeImpl(tupleTypeId);
@@ -536,7 +511,7 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	private static final Logger logger = Logger.getLogger(StandardLibraryInternal.class);
+	private static final Logger logger = Logger.getLogger(CompleteStandardLibrary.class);
 
 	/**
 	 * The URI used by default for the OCL Standard Library. NB. This
@@ -703,7 +678,13 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
-		return new CollectionTypeManagerInternal(this);
+		return new CompleteCollectionTypeManager(this);
+	}
+
+	@Override
+	protected @NonNull CompleteFlatModel createFlatModel() {
+		assert completeModel != null;
+		return new CompleteFlatModel(this, completeModel);
 	}
 
 	@Override
@@ -713,27 +694,27 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 
 	@Override
 	protected @NonNull JavaTypeManager createJavaTypeManager() {
-		return new JavaTypeManagerInternal(this);
+		return new CompleteJavaTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull LambdaTypeManager createLambdaTypeManager() {
-		return new LambdaTypeManagerInternal(this);
+		return new CompleteLambdaTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull MapTypeManager createMapTypeManager() {
-		return new MapTypeManagerInternal(this);
+		return new CompleteMapTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull SpecializedTypeManager createSpecializedTypeManager() {
-		return new SpecializedTypeManagerInternal(this);
+		return new CompleteSpecializedTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull TupleTypeManager createTupleTypeManager() {
-		return new TupleTypeManagerInternal(this);
+		return new CompleteTupleTypeManager(this);
 	}
 
 	@Override
@@ -783,11 +764,6 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 			bagType2 = bagType = resolveRequiredTemplateableType(BagType.class, TypeId.BAG_NAME, 1);
 		}
 		return bagType2;
-	}
-
-	@Override
-	public @Nullable PrimitiveType getBehavioralClass(@NonNull Class<?> instanceClass) {
-		return (PrimitiveType)PivotUtil.getBehavioralClass(this, instanceClass);
 	}
 
 	@Override
@@ -860,12 +836,12 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 		return ClassUtil.requireNonNull(environmentFactory);
 	}
 
-	@Override
+/*	@Override
 	@NonNull
 	public CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
 		assert environmentFactory != null;
 		return environmentFactory.getMetamodelManager().getInheritance(type);
-	}
+	} */
 
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
@@ -874,6 +850,11 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 			integerType2 = integerType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.INTEGER_NAME);
 		}
 		return integerType2;
+	}
+
+	@Override
+	public @NonNull CompleteFlatModel getFlatModel() {
+		return (CompleteFlatModel)super.getFlatModel();
 	}
 
 	@Override
@@ -1285,7 +1266,7 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeModel = environmentFactory.getCompleteModel();
 		this.idResolver = environmentFactory.getIdResolver();
@@ -1497,8 +1478,8 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 							superTemplateArgumentList.add(actual);
 						}
 					}
-					CompleteInheritanceImpl superCompleteInheritance = superCompleteClass.getCompleteInheritance();
-					org.eclipse.ocl.pivot.Class genericSuperType = superCompleteInheritance.getCompleteClass().getPrimaryClass();
+					FlatClass superFlatClass = superCompleteClass.getFlatClass();
+					org.eclipse.ocl.pivot.Class genericSuperType = superFlatClass.getPivotClass(); //getCompleteClass().getPrimaryClass();
 					org.eclipse.ocl.pivot.Class specializedSuperType = environmentFactory.getStandardLibrary().getSpecializedType(genericSuperType, superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);
 				}
@@ -1515,4 +1496,4 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 		this.defaultStandardLibraryURI = defaultStandardLibraryURI;
 		this.explicitDefaultStandardLibraryURI = true;
 	}
-} //StandardLibraryInternalImpl
+} //CompleteStandardLibraryImpl

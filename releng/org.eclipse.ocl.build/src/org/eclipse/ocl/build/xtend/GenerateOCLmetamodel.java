@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -122,7 +122,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	@Override
 	protected String getExternalReference(@NonNull Element element) {
 		if ((element instanceof Library) && (element.eResource() instanceof OCLstdlib)) {
-			return "standardLibrary";
+			return "standardLibraryPackage";
 		}
 		return super.getExternalReference(element);
 	}
@@ -209,7 +209,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			log.info("Generating '" + fileName + "'");
 			assert asRoot instanceof Model;
 			Model asModel = (Model)asRoot;
-			StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 			addExternalReference(standardLibrary.getBooleanType(), asModel);
 			addExternalReference(standardLibrary.getIntegerType(), asModel);
 			addExternalReference(standardLibrary.getOclAnyType(), asModel);

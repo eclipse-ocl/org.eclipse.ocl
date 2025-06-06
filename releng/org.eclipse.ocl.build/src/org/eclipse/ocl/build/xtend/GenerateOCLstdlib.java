@@ -323,12 +323,12 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		EClassifier eClassifier = ePackage.getEClassifier(typeName);
 		if (eClassifier != null) {
 			if (eClassifier instanceof EClass) {
-				//				assert false;
+				assert false;
 				String name = eClassifier.getName();
-				ePackage.getEClassifiers().remove(eClassifier);
-				eClassifier = EcoreFactory.eINSTANCE.createEDataType();
-				eClassifier.setName(name);
-				ePackage.getEClassifiers().add(eClassifier);
+			//	ePackage.getEClassifiers().remove(eClassifier);
+			//	eClassifier = EcoreFactory.eINSTANCE.createEDataType();
+			//	eClassifier.setName(name);
+			//	ePackage.getEClassifiers().add(eClassifier);
 			}
 			if (!javaClass.getName().equals(eClassifier.getInstanceClassName())) {
 				log.error("Wrong " + typeName + "::instanceClassName - " + eClassifier.getInstanceClassName() + " rather than " + javaClass.getName());

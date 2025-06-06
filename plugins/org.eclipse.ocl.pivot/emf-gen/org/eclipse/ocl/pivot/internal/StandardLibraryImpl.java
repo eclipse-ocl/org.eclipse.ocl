@@ -16,8 +16,8 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -29,15 +29,14 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
-import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
-import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
@@ -127,6 +126,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	protected /*@NonNull*/ CollectionTypeManager collectionTypeManager = null;
 
 	/**
+	 * @since 7.0
+	 */
+	protected /*@NonNull*/ FlatModel flatModel = null;
+
+	/**
 	 * Resolver for facilities using ElementIds.
 	 * </br>
 	 * This is lazily cached since it it is rarely used and has timing challenges if cached eagerly.
@@ -146,7 +150,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 * Shared cache of the lazily created lazily deleted representations of each type as a Java type.
 	 * @since 7.0
 	 */
-	protected @Nullable LambdaTypeManager lambdaTypeManager = null;
+	protected /*@NonNull*/ LambdaTypeManager lambdaTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
@@ -371,9 +375,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 			else if (leftType instanceof LambdaType) {
 				if (rightType instanceof LambdaType) {
-					if (lambdaTypeManager != null) {
-						return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftSubstitutions, (LambdaType)rightType, rightSubstitutions, enforceNullity);
-					}
+					assert lambdaTypeManager != null;
+					return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftSubstitutions, (LambdaType)rightType, rightSubstitutions, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
@@ -386,7 +389,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 			else {
 				if (rightType instanceof DataType) {
-					Type behavioralRightType = basicGetBehavioralType(rightType);
+					Type behavioralRightType = ((DataType)rightType).getBehavioralClass();
 					if (behavioralRightType != null) {
 						rightType = behavioralRightType;
 					}
@@ -396,24 +399,38 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return conformsToSimpleType(leftType, rightType);
 	}
 
-	@Override
+	/**
+	 * Return true if leftType conforms to rightType, both of which are simple, i.e. not aggregates, but possibly specializations.
+	 * But also used to check unspecialized generic type conformance.
+	 * @since 7.0
+	 */
 	public boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType) {	// After compound types handled
+	//	assert !(leftType instanceof IterableType) && !(leftType instanceof LambdaType) && !(leftType instanceof TupleType);
+	//	assert !(rightType instanceof IterableType) && !(rightType instanceof LambdaType) && !(rightType instanceof TupleType);
 	//	assert leftType instanceof org.eclipse.ocl.pivot.Class;// && !(leftType instanceof DataType);
 	//	assert rightType instanceof org.eclipse.ocl.pivot.Class;// && !(rightType instanceof DataType);
 		if (leftType == rightType) {		// XXX specializations
 			return true;
 		}
+	//	assert leftType == getPrimaryType(leftType);
+	//	assert rightType == getPrimaryType(rightType);
 		Type leftPrimaryType = getPrimaryType(leftType);
 		Type rightPrimaryType = getPrimaryType(rightType);
-		CompleteInheritance leftInheritance = leftPrimaryType.getInheritance(this);
-		CompleteInheritance rightInheritance = rightPrimaryType.getInheritance(this);
-		return leftInheritance.isSubInheritanceOf(rightInheritance);
+		FlatClass leftFlatClass = leftPrimaryType.getFlatClass(this);
+		FlatClass rightFlatClass = rightPrimaryType.getFlatClass(this);
+	//	leftFlatClass.toString();		// XXX
+		return leftFlatClass.isSubFlatClassOf(rightFlatClass);
 	}
 
 	/**
 	 * @since 7.0
 	 */
 	protected abstract @NonNull CollectionTypeManager createCollectionTypeManager();
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull FlatModel createFlatModel();
 
 	/**
 	 * @since 7.0
@@ -428,7 +445,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @Nullable LambdaTypeManager createLambdaTypeManager();
+	protected abstract @NonNull LambdaTypeManager createLambdaTypeManager();
 
 	/**
 	 * @since 7.0
@@ -448,6 +465,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getBagType(), elementType, isNullFree, lower, upper);
+	}
+
+	@Override
+	public @Nullable Class getBehavioralClass(java.lang.@NonNull Class<?> javaClass) {
+		assert javaTypeManager != null;
+		return javaTypeManager.getBehavioralClass(javaClass);
 	}
 
 	/**
@@ -523,10 +546,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		else if (leftType instanceof DataType) {
 		//	if (rightType instanceof DataType) {			// XXX Avoid getBehavioralClass problem with conformsTo
-				CompleteInheritance leftInheritance = leftType.getInheritance(this);
-				CompleteInheritance rightInheritance = rightType.getInheritance(this);
-				CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-				return getPrimaryType(commonInheritance.getPivotClass());
+				FlatClass leftFlatClass = leftType.getFlatClass(this);
+				FlatClass rightFlatClass = rightType.getFlatClass(this);
+				FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
+				return getPrimaryType(commonFlatClass.getPivotClass());
 		//	}
 		//	return getOclAnyType();
 		}
@@ -536,15 +559,29 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions, false)) {
 			return leftType;
 		} */
-		CompleteInheritance leftInheritance = leftType.getInheritance(this);
-		CompleteInheritance rightInheritance = rightType.getInheritance(this);
-		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-		return getPrimaryType(commonInheritance.getPivotClass());
+		FlatClass leftFlatClass = leftType.getFlatClass(this);
+		FlatClass rightFlatClass = rightType.getFlatClass(this);
+		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
+		return getPrimaryType(commonFlatClass.getPivotClass());
 	}
 
 	@Override
 	public boolean getCommonIsRequired(boolean leftIsRequired, boolean rightIsRequired) {
 		return leftIsRequired && rightIsRequired;
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return getFlatModel().getFlatClass(type);
+	}
+
+	@Override
+	public @NonNull FlatModel getFlatModel() {
+		FlatModel flatModel2 = flatModel;
+		if (flatModel2 == null) {
+			flatModel = flatModel2 = createFlatModel();
+		}
+		return flatModel2;
 	}
 
 	@Override
@@ -614,18 +651,18 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 //	@Override
 	private org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull Type type) {
-		if (type instanceof ReflectiveInheritance) {
-			return ((ReflectiveInheritance)type).getPivotClass();
-		}
-		else if (type instanceof EcoreExecutorType) {
-			return (EcoreExecutorType)type;
-		}
-		else {
+	//	if (type instanceof ReflectiveInheritance) {
+	//		return ((ReflectiveInheritance)type).getPivotClass();
+	//	}
+	//	else if (type instanceof EcoreExecutorType) {
+	//		return (EcoreExecutorType)type;
+	//	}
+	//	else {
 			try {
-				return type.getInheritance(this).getPivotClass();
+				return type.getFlatClass(this).getPivotClass();
 			}
 			catch (Throwable e) {}
-		}
+	//	}
 		return getOclAnyType();			// FIXME should never happen;
 	}
 
@@ -739,10 +776,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 			return false;
 		}
-		else if (leftType instanceof AbstractReflectiveInheritanceType) {
-			AbstractReflectiveInheritanceType leftReflectiveType = (AbstractReflectiveInheritanceType)leftType;
-			return leftReflectiveType.getPivotClass() == rightType;
-		}
+	//	else if (leftType instanceof AbstractReflectiveInheritanceType) {
+	//		AbstractReflectiveInheritanceType leftReflectiveType = (AbstractReflectiveInheritanceType)leftType;
+	// XXX		return leftReflectiveType.getPivotClass() == rightType;
+	//	}
 		Type thisType = getNormalizedType(leftType);
 		Type thatType = getNormalizedType(rightType);
 		return thisType == thatType;

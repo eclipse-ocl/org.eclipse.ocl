@@ -29,8 +29,10 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl.ImmutablePartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl.MutablePartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
@@ -62,16 +64,16 @@ public class EcoreExecutorManager extends ExecutorManager
 	 *
 	 * @param contextObject a user object from which the user objects and their meta-models will be deduced
 	 * @param standardLibrary the OCL facilities
+	 * @since 7.0
 	 */
-	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull ExecutorStandardLibrary standardLibrary) {
-		super(new ExecutorStandardLibrary(standardLibrary));
-		assert !standardLibrary.isMutable();
+	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull ImmutablePartialStandardLibraryImpl standardLibrary) {
+		super(new MutablePartialStandardLibraryImpl(standardLibrary));
 		this.contextObject = contextObject;
 		ThreadLocalExecutor.setExecutor(this);
 	}
 
 	protected @NonNull IdResolver createIdResolver() {
-		ExecutorStandardLibrary standardLibrary2 = getStandardLibrary();
+		PartialStandardLibraryImpl standardLibrary2 = getStandardLibrary();
 		if (!(contextObject instanceof EObject)) {
 			@NonNull List<EObject> emptyList = Collections.<EObject>emptyList();
 			return new EcoreIdResolver(emptyList, standardLibrary2);
@@ -196,8 +198,8 @@ public class EcoreExecutorManager extends ExecutorManager
 	}
 
 	@Override
-	public @NonNull ExecutorStandardLibrary getStandardLibrary() {
-		return (ExecutorStandardLibrary)standardLibrary;
+	public @NonNull PartialStandardLibraryImpl getStandardLibrary() {
+		return (PartialStandardLibraryImpl)standardLibrary;
 	}
 
 	/**

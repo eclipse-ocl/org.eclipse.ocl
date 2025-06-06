@@ -19,12 +19,9 @@ public interface CompleteClassInternal extends CompleteClass
 {
 	void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
-//	@NonNull CompleteInheritance createCompleteInheritance();
 	boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	void dispose();
 	void uninstall();
-	@Override
-	@NonNull CompleteInheritanceImpl getCompleteInheritance();
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	/**
@@ -33,7 +30,5 @@ public interface CompleteClassInternal extends CompleteClass
 	@NonNull MetamodelManager getMetamodelManager();
 	@Override
 	CompletePackageInternal getOwningCompletePackage();
-	@Override
-	@NonNull PartialClasses getPartialClasses();
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();
 } // CompleteClass

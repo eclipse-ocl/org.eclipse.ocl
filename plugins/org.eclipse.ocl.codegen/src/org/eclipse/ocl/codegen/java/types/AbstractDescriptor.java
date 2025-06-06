@@ -28,7 +28,7 @@ import org.eclipse.ocl.codegen.java.JavaStream;
 import org.eclipse.ocl.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
@@ -265,7 +265,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 
 	@Override
 	public void appendEqualsValue(@NonNull JavaStream js, @NonNull CGValuedElement thisValue, @NonNull CGValuedElement thatValue, boolean notEquals) {
-		StandardLibraryInternal standardLibrary = js.getCodeGenerator().getEnvironmentFactory().getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = js.getCodeGenerator().getEnvironmentFactory().getStandardLibrary();
 		if (isBoxedType(standardLibrary, thisValue) && isBoxedType(standardLibrary, thatValue)) {
 			boolean nullSafe = thisValue.isNonNull() && thatValue.isNonNull();
 			if (!nullSafe) {
@@ -393,7 +393,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		return javaClass == Object.class;
 	}
 
-	protected boolean isBoxedType(@NonNull StandardLibraryInternal standardLibrary, @NonNull CGValuedElement cgValue) {
+	protected boolean isBoxedType(@NonNull CompleteStandardLibrary standardLibrary, @NonNull CGValuedElement cgValue) {
 		Element ast = cgValue.getAst();
 		if (!(ast instanceof TypedElement)) {
 			return false;

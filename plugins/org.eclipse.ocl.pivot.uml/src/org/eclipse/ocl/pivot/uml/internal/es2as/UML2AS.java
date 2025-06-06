@@ -1007,8 +1007,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * RedundantPropertyFilter sorts the properties alphabetically and removes the implicit part of an
-	 * imoplicit/non-implicit duplicates resulting from the gratuitous extra association in Eclipse UML.
+	 * RedundantPropertyFilter sorts the properties alphabetically and removes the implicit part of any
+	 * implicit/non-implicit duplicates resulting from the gratuitous extra association in Eclipse UML.
 	 * See #2374.
 	 */
 	private static final class RedundantPropertyFilter implements Comparator<@NonNull Property>
@@ -1044,19 +1044,21 @@ public abstract class UML2AS extends AbstractExternal2AS
 						redundantProperties2.add(p2);
 						p1.setOpposite(null);
 					}
-					System.out.println("UMLDerivedPropertyComparator resolved " + p1);
+					// ambiguous/redundant opposite removed
+					// System.out.println("RedundantPropertyFilter resolved " + p1);
 				}
 				else {
-					System.out.println("UMLDerivedPropertyComparator unresolved " + p1 + " " + n1 + " : " + on1 + "," + on2);
+					// disambiguating opposites unaffected
+					// System.out.println("RedundantPropertyFilter unresolved " + p1 + " " + n1 + " : " + on1 + "," + on2);
 				}
 			}
-			else if (i1 && i1) {
+			else if (i1 && i2) {
 				// multiple implicit opposites e.g entry/exit for connectionPointReference
-				// System.out.println("UMLDerivedPropertyComparator unresolved " + i1 + " " + p1);
+				// System.out.println("RedundantPropertyFilter unresolved " + i1 + " " + p1);
 			}
-			else { // !i1 && !i1
+			else { // !i1 && !i2
 				assert false : "Multiple properties named " + n1;
-				//System.out.println("UMLDerivedPropertyComparator unresolved " + i1 + " " + p1);
+				//System.out.println("RedundantPropertyFilter unresolved " + i1 + " " + p1);
 			}
 			return diff;
 		}

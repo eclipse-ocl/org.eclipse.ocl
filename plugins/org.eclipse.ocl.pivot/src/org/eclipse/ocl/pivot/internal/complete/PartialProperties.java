@@ -13,46 +13,47 @@ package org.eclipse.ocl.pivot.internal.complete;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
-import com.google.common.collect.Iterators;
-
-public class PartialProperties implements Iterable<@NonNull Property>
+public class PartialProperties // XXX Iterable malfunctions as single element // implements Iterable<@NonNull Property>
 {
-	//resolution = null, partials = null or empty => empty
-	// resolution = X, partials = null or empty or [X} => X
+	// resolution = null, partials = null or empty => empty
+	// resolution = X, partials = null or empty or {X} => X
 	// resolution = null, partials not empty => lazy unresolved 'ambiguity'
 	private boolean isResolved = false;
 	private @Nullable Property resolution = null;
 	private @Nullable List<@NonNull Property> partials = null;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull StandardLibrary standardLibrary;
 
-	public PartialProperties(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		this.environmentFactory = environmentFactory;
+	/**
+	 * @since 7.0
+	 */
+	public PartialProperties(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
 	}
 
 	public synchronized void didAddProperty(@NonNull Property pivotProperty) {
 		List<@NonNull Property> partials2 = partials;
-		@Nullable
-		Property resolution2 = resolution;
+		@Nullable Property resolution2 = resolution;
 		if (partials2 == null) {
 			if (resolution2 == null) {
 				resolution2 = resolution = pivotProperty;
 				isResolved = true;
 			}
 			else {
-				partials = partials2 = new ArrayList<@NonNull Property>();
+				partials = partials2 = new ArrayList<>();
 				partials2.add(resolution2);
 				if (resolution2 != pivotProperty) {
 					partials2.add(pivotProperty);
@@ -97,12 +98,13 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		if (isResolved) {
 			return resolution;
 		}
-		List<@NonNull Property> values = new ArrayList<@NonNull Property>(partials);
-		Map<@NonNull Type, @NonNull Property> primaryProperties = new HashMap<@NonNull Type, @NonNull Property>();
+		List<@NonNull Property> values = new ArrayList<>(partials);
+		Map<@NonNull Type, @NonNull Property> primaryProperties = new HashMap<>();
 		for (@NonNull Property property : values) {
 			org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 			if (owningType != null) {
-				Type domainType = environmentFactory.getMetamodelManager().getPrimaryType(owningType);
+				//	Type domainType = environmentFactory.getMetamodelManager().getPrimaryType(owningType);
+				Type domainType = standardLibrary.getFlatModel().getPrimaryType(owningType);
 				if (!primaryProperties.containsKey(domainType)) {
 					primaryProperties.put(domainType, property);	// FIXME something more deterministic than first
 				}
@@ -136,7 +138,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		return partials2.size() <= 0;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Iterator<@NonNull Property> iterator() {
 		if (!isResolved) {
 			resolve();
@@ -150,7 +152,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		else {
 			return ClassUtil.emptyIterator();
 		}
-	}
+	} */
 
 	public synchronized void remove(@NonNull Property pivotProperty) {
 		if (pivotProperty == resolution) {
@@ -163,7 +165,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 
 	private void resolve() {
 		assert !isResolved;
-		List<Property> partials2 = partials;
+		List<@NonNull Property> partials2 = partials;
 		if (partials2 == null) {
 			return;
 		}
@@ -175,22 +177,22 @@ public class PartialProperties implements Iterable<@NonNull Property>
 			isResolved = true;
 			resolution = partials2.get(0);
 		}
-		List<Property> values = new ArrayList<Property>(partials);
+		List<@NonNull Property> values = new ArrayList<>(partials);
 		for (int i = 0; i < values.size()-1;) {
 			boolean iRemoved = false;
-			@SuppressWarnings("null") @NonNull Property iValue = values.get(i);
+			@NonNull Property iValue = values.get(i);
 			for (int j = i + 1; j < values.size();) {
 				Class<? extends Property> iClass = iValue.getClass();
-				@SuppressWarnings("null") @NonNull Property jValue = values.get(j);
+				@NonNull Property jValue = values.get(j);
 				Class<? extends Property> jClass = jValue.getClass();
 				int verdict = 0;
 				for (Class<?> key : EnvironmentView.getDisambiguatorKeys()) {
 					if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
-						List<Comparator<Object>> disambiguators = EnvironmentView.getDisambiguators(key);
+						List<@NonNull Comparator<@NonNull Object>> disambiguators = EnvironmentView.getDisambiguators(key);
 						if (disambiguators != null) {
-							for (Comparator<Object> comparator : disambiguators) {
+							for (Comparator<@NonNull Object> comparator : disambiguators) {
 								if (comparator instanceof Disambiguator<?>) {
-									verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory, iValue, jValue);
+									verdict = ((Disambiguator<@NonNull Object>)comparator).compare(standardLibrary, iValue, jValue);
 								}
 								else {
 									verdict = comparator.compare(iValue, jValue);
@@ -206,12 +208,15 @@ public class PartialProperties implements Iterable<@NonNull Property>
 					}
 				}
 				if (verdict == 0) {
+				//	assert Integer.signum(verdict) == Disambiguator.MATCHES_EQUIVALENT;
 					j++;
 				} else if (verdict < 0) {
+				//	assert Integer.signum(verdict) == Disambiguator.MATCH1_INFERIOR;
 					values.remove(i);
 					iRemoved = true;
 					break;
 				} else {
+				//	assert Integer.signum(verdict) == Disambiguator.MATCH2_INFERIOR;
 					values.remove(j);
 				}
 			}

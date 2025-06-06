@@ -232,6 +232,15 @@ extends EFactory {
 	@NonNull CompletePackage createCompletePackage();
 
 	/**
+	 * Returns a new object of class '<em>Complete Standard Library</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Complete Standard Library</em>'.
+	 * @generated
+	 */
+	@NonNull CompleteStandardLibrary createCompleteStandardLibrary();
+
+	/**
 	 * Returns a new object of class '<em>Connection Point Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -673,15 +682,6 @@ extends EFactory {
 	 * @generated
 	 */
 	@NonNull Slot createSlot();
-
-	/**
-	 * Returns a new object of class '<em>Standard Library Internal</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Standard Library Internal</em>'.
-	 * @generated
-	 */
-	@NonNull StandardLibraryInternal createStandardLibraryInternal();
 
 	/**
 	 * Returns a new object of class '<em>Message Type</em>'.

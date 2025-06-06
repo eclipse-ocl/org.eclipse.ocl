@@ -32,7 +32,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -43,7 +42,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -1722,17 +1720,6 @@ implements Property {
 			redefinedProperties = new EObjectResolvingEList<Property>(Property.class, this, 27);
 		}
 		return redefinedProperties;
-	}
-
-	@Override
-	public @Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
-		if (owningType != null) {
-			return standardLibrary.getInheritance(owningType);
-		}
-		else {
-			return null;
-		}
 	}
 
 	private PropertyId propertyId = null;

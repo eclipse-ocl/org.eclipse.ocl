@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Vertex;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
@@ -41,13 +40,15 @@ import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
+/**
+ * @since 7.0
+ */
 public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull CompleteClassImpl completeClass;
@@ -58,9 +59,12 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;	// ??? demote to a UMLFlatClass
 
 	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClass completeClass) {
-		super(flatModel, NameUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
+		super(flatModel, PivotUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = (CompleteClassImpl)completeClass;
 		this.completeClass.addClassListener(this);
+		if ("Link".equals(completeClass.getName())) {
+			getClass();		// XXX
+		}
 	}
 
 	@Override
@@ -75,6 +79,12 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
+		if ("Class".equals(name)) {
+			getClass();			// XXX
+		}
+		if ("StructuredClassifier".equals(name)) {
+			getClass();			// XXX
+		}
 		List<@NonNull Property> asProperties = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
@@ -151,7 +161,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
 			EnvironmentFactoryInternal environmentFactory = completeClass.getEnvironmentFactory();
 			PackageId metapackageId = environmentFactory.getTechnology().getMetapackageId(environmentFactory, pivotPackage);
-			org.eclipse.ocl.pivot.Package metapackage = ((IdResolver.IdResolverExtension)environmentFactory.getIdResolver()).basicGetPackage(metapackageId);
+			org.eclipse.ocl.pivot.Package metapackage = environmentFactory.getIdResolver().basicGetPackage(metapackageId);
 			if (metapackage != null) {
 				CompletePackage metaCompletePackage = environmentFactory.getMetamodelManager().getCompletePackage(metapackage);
 				String metatypeName = pivotClass.eClass().getName();
@@ -219,7 +229,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 		State state = name2states2.get(name);
 		if (state == null) {
-			return PivotMetamodelManager.EMPTY_STATE_LIST;
+			return PivotConstants.EMPTY_STATE_LIST;
 		}
 		else {
 			return Collections.singletonList(state);
@@ -298,6 +308,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	public @NonNull String toString() {
-		return NameUtil.qualifiedNameFor(completeClass);
+//		return NameUtil.qualifiedNameFor(completeClass);
+		return completeClass.getPrimaryClass().toString();
 	}
 }

@@ -728,6 +728,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		testObjectDomain.eSet(eReferenceDomain_t2a_3a, testObjectT3a);
 		testObjectDomain.eSet(eReferenceDomain_t2b_2b, testObjectT2b);
 		testObjectDomain.eSet(eReferenceDomain_t3a, testObjectT3a);
+		ocl.assertQueryInvalid(testObjectDomain, "t1_3b.op6()", NLS.bind(PivotMessages.AmbiguousOperation, "Bug411154::T1::op6() : String", "Bug411154::T3b"), InvalidValueException.class);
+// XXX
 		//
 		ocl.assertQueryEquals(testObjectT2a, "T2a::op1", "self.op1()");
 		ocl.assertQueryEquals(testObjectT2a, "T2a::op2", "self.op2()");

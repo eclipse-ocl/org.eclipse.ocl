@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
-import org.eclipse.emf.codegen.ecore.genmodel.GenEnum;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -50,11 +49,10 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
@@ -65,9 +63,6 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
@@ -387,48 +382,10 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
-			s.append("new ");
-			s.appendClassReference(null, ExecutorSpecializedType.class);
-			s.append("(");
-			String name = PivotUtil.getName(type);
-			String typeIdName = null;
-			if (TypeId.BAG_NAME.equals(name)) {
-				typeIdName = "BAG";
-			}
-			else if (TypeId.COLLECTION_NAME.equals(name)) {
-				typeIdName = "COLLECTION";
-			}
-			else if (TypeId.ORDERED_COLLECTION_NAME.equals(name)) {
-				typeIdName = "ORDERED_COLLECTION";
-			}
-			else if (TypeId.ORDERED_SET_NAME.equals(name)) {
-				typeIdName = "ORDERED_SET";
-			}
-			else if (TypeId.SEQUENCE_NAME.equals(name)) {
-				typeIdName = "SEQUENCE";
-			}
-			else if (TypeId.SET_NAME.equals(name)) {
-				typeIdName = "SET";
-			}
-			else if (TypeId.UNIQUE_COLLECTION_NAME.equals(name)) {
-				typeIdName = "UNIQUE_COLLECTION";
-			}
-			if (typeIdName != null) {
-				s.appendClassReference(null, TypeId.class);
-				s.append(".");
-				s.append(typeIdName);
-			}
-			else {
-				s.appendString(name);		// Never happens
-			}
+			s.append("LIBRARY.getCollectionType(");
+			emitQualifiedLiteralVisitor.visit(type);
 			s.append(", ");
 			type.getElementType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getBooleanType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getIntegerType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getUnlimitedNaturalType().accept(this);
 			s.append(")");
 			return null;
 		}
@@ -453,11 +410,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitLambdaType(@NonNull LambdaType lambdaType) {
-			s.append("new ");
-			s.appendClassReference(null, ExecutorLambdaType.class);
-			s.append("(");
-			s.appendString(PivotUtil.getName(lambdaType));		// Never happens
-			s.append(", ");
+			s.append("LIBRARY.getLambdaType(");
 			lambdaType.getOwnedContext().accept(this);
 			for (LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
 				s.append(", ");
@@ -471,30 +424,12 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType type) {
-			s.append("new ");
-			s.appendClassReference(null, ExecutorSpecializedType.class);
-			s.append("(");
-			String name = PivotUtil.getName(type);
-			String typeIdName = null;
-			if (TypeId.MAP_NAME.equals(name)) {
-				typeIdName = "MAP";
-			}
-			if (typeIdName != null) {
-				s.appendClassReference(null, TypeId.class);
-				s.append(".");
-				s.append(typeIdName);
-			}
-			else {
-				s.appendString(name);		// Never happens
-			}
+			s.append("LIBRARY.getMapType(");
+			emitQualifiedLiteralVisitor.visit(type);
 			s.append(", ");
 			type.getKeyType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getBooleanType().accept(this);
 			s.append(", ");
 			type.getValueType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getBooleanType().accept(this);
 			s.append(")");
 			return null;
 		}
@@ -509,14 +444,16 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
-			s.append("new ");
-			s.appendClassReference(null, ExecutorTupleType.class);
-			s.append("(");
+			s.append("LIBRARY.createTupleType(");
 			s.appendString(ClassUtil.requireNonNull(tupleType.getName()));
 			s.append(", ");
 			for (Property part : tupleType.getOwnedProperties()) {
 				s.append(", ");
+				s.append("LIBRARY.createTuplePart(");
+				s.appendString(ClassUtil.requireNonNull(part.getName()));
+				s.append(", ");
 				part.getType().accept(this);
+				s.append(")");
 			}
 			s.append(")");
 			return null;
@@ -574,7 +511,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-			appendTablesPackageQualification(type);
+			appendTablesPackageQualification(unspecializedType);
 			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(unspecializedType);
@@ -606,7 +543,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
 			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
-			appendTablesPackageQualification(asMapType);
+			appendTablesPackageQualification(unspecializedType);
 			appendTablesSubackageQualification("Types");
 			s.append("_");
 			s.appendAndEncodeName(unspecializedType);
@@ -683,7 +620,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull CodeGenString s;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor;
 	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor;				// emit _ZZZ
@@ -718,7 +655,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
+		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
 		Type elementType = metamodelManager.getASClass("Element");
 		if (oclstdlibPackage == asPackage) {
@@ -808,7 +745,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
+		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
 		if (oclstdlibPackage == asPackage) {
 			return null;
@@ -1274,14 +1211,9 @@ public class OCLinEcoreTablesUtils
 	protected @NonNull Boolean hasEcore(@NonNull Type type) {
 		String typeName = type.getName();
 		if (typeName != null) {
-			List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage.getGenClasses());
-			GenClass genClass = getGenClassifier(genClasses, typeName);
-			if (genClass != null) {
-				return true;
-			}
-			List<@NonNull GenEnum> genEnums = ClassUtil.nullFree(genPackage.getGenEnums());
-			GenEnum genEnum = getGenClassifier(genEnums, typeName);
-			if (genEnum != null) {
+			List<@NonNull GenClassifier> genClassifiers = ClassUtil.nullFree(genPackage.getGenClassifiers());
+			GenClassifier genClassifier = getGenClassifier(genClassifiers, typeName);
+			if (genClassifier != null) {
 				return true;
 			}
 		}

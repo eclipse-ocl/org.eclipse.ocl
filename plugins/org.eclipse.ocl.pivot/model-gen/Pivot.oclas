@@ -167,8 +167,8 @@
     </ownedClasses>
     <ownedClasses xmi:id="LqaWx" name="CompleteEnvironment" superClasses="#t5rpa">
       <ownedProperties xmi:id="Cv6PO" isComposite="true" isRequired="true" name="ownedCompleteModel" opposite="#Tjqfq" type="#hzOMU"/>
-      <ownedProperties xmi:id="Qrg5Y" isComposite="true" isRequired="true" name="ownedStandardLibrary" opposite="#dHx0f" type="#MueG,"/>
-      <ownedProperties xmi:id="E02Yh" isImplicit="true" isRequired="true" name="StandardLibraryInternal" opposite="#SjlvN" type="#m6zgu"/>
+      <ownedProperties xmi:id="Qrg5Y" isComposite="true" isRequired="true" name="ownedStandardLibrary" opposite="#ffH8o" type="#2w6uT"/>
+      <ownedProperties xmi:id="u2SB2" isImplicit="true" isRequired="true" name="CompleteStandardLibrary" opposite="#U772W" type="#Anzva"/>
     </ownedClasses>
     <ownedClasses xmi:id="hzOMU" name="CompleteModel" superClasses="#0kVqz">
       <ownedOperations xmi:id="f+Wm," name="getOwnedCompletePackage" type="#+gDEJ">
@@ -191,6 +191,10 @@
       <ownedProperties xmi:id="SgDQD" name="owningCompleteModel" opposite="#AQg0n" type="#hzOMU"/>
       <ownedProperties xmi:id="vpFYN" name="owningCompletePackage" opposite="#pXZYG" type="#+gDEJ"/>
       <ownedProperties xmi:id="slBkJ" isRequired="true" name="partialPackages" opposite="#CUgnW" type="#4WjM+"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="2w6uT" name="CompleteStandardLibrary" superClasses="#v6b4D">
+      <ownedProperties xmi:id="U772W" name="owningCompleteEnvironment" opposite="#u2SB2" type="#LqaWx"/>
+      <ownedProperties xmi:id="ffH8o" isImplicit="true" name="CompleteEnvironment" opposite="#Qrg5Y" type="#LqaWx"/>
     </ownedClasses>
     <ownedClasses xmi:id="KXGhD" name="ConnectionPointReference" superClasses="#VVKEz">
       <ownedComments body="A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State."/>
@@ -1087,10 +1091,6 @@
       </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="v6b4D" isAbstract="true" name="StandardLibrary" superClasses="#t5rpa"/>
-    <ownedClasses xmi:id="MueG," name="StandardLibraryInternal" superClasses="#v6b4D">
-      <ownedProperties xmi:id="SjlvN" name="owningCompleteEnvironment" opposite="#E02Yh" type="#LqaWx"/>
-      <ownedProperties xmi:id="dHx0f" isImplicit="true" name="CompleteEnvironment" opposite="#Qrg5Y" type="#LqaWx"/>
-    </ownedClasses>
     <ownedClasses xmi:id="CwtUf" name="State" superClasses="#MzHoc #VVKEz">
       <ownedComments body="A State models a situation during which some (usually implicit) invariant condition holds."/>
       <ownedProperties xmi:id="PEoKN" isDerived="true" isReadOnly="true" isRequired="true" isTransient="true" isVolatile="true" name="isComposite"
@@ -1461,6 +1461,11 @@
         <ownedSubstitutions actual="#+gDEJ" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="Anzva" name="Bag" superClasses="#WCcxp">
+      <ownedBindings>
+        <ownedSubstitutions actual="#2w6uT" formal="&_0;#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="047h3" name="Bag" superClasses="#KUkjG">
       <ownedBindings>
         <ownedSubstitutions actual="#KXGhD" formal="&_0;#k2OA6"/>
@@ -1584,11 +1589,6 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="RTbhG" name="Bag" superClasses="#nuDjV">
       <ownedBindings>
         <ownedSubstitutions actual="#vWmsa" formal="&_0;#k2OA6"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="m6zgu" name="Bag" superClasses="#8Vci9">
-      <ownedBindings>
-        <ownedSubstitutions actual="#MueG," formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="setTi" name="Bag" superClasses="#C6VVx">
@@ -1724,6 +1724,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="j8mK0" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#+gDEJ" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="WCcxp" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#2w6uT" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KUkjG" name="Collection" superClasses="&_0;#jbMkR">
@@ -1979,11 +1984,6 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="stDjV" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#vWmsa" formal="&_0;#qs59R"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8Vci9" name="Collection" superClasses="&_0;#jbMkR">
-      <ownedBindings>
-        <ownedSubstitutions actual="#MueG," formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="C6VVx" name="Collection" superClasses="&_0;#jbMkR">

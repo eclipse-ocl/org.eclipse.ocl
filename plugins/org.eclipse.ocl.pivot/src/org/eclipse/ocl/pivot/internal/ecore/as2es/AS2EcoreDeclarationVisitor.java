@@ -679,24 +679,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EDataType eDataType = EcoreFactory.eINSTANCE.createEDataType();
 		copyDataTypeOrEnum(eDataType, pivotPrimitiveType);
-		/*		Class<?> instanceClass = null;
-		String name = pivotPrimitiveType.getName();
-		if ("Boolean".equals(name)) {
-			instanceClass = Boolean.class;
-		}
-		else if ("Integer".equals(name)) {
-			instanceClass = IntegerValue.class;
-		}
-		else if ("Real".equals(name)) {
-			instanceClass = RealValue.class;
-		}
-		else if ("String".equals(name)) {
-			instanceClass = String.class;
-		}
-		else if ("UnlimitedNatural".equals(name)) {
-			instanceClass = UnlimitedNaturalValue.class;
-		}
-		eDataType.setInstanceClass(instanceClass); */
 		return eDataType;
 	}
 

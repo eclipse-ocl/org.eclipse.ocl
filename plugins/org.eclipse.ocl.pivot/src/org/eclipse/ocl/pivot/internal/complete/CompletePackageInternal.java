@@ -19,7 +19,6 @@ public interface CompletePackageInternal extends CompletePackage
 	void dispose();
 	@Override
 	@NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType);
-	@NonNull CompleteInheritanceImpl getCompleteInheritance(@NonNull CompleteClassInternal completeClass);
 	@Override
 	@NonNull CompleteModelInternal getCompleteModel();
 	@Override

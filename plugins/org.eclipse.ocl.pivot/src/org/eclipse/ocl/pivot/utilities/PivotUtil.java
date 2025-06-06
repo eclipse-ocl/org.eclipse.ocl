@@ -13,8 +13,6 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -1372,70 +1370,6 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull Type getActual(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
 		return ClassUtil.requireNonNull(templateParameterSubstitution.getActual());
-	}
-
-	/**
-	 * @since 1.13
-	 */
-	public static org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull StandardLibrary standardLibrary, @NonNull Class<?> instanceClass) {
-		if (instanceClass == boolean.class) {
-			return standardLibrary.getBooleanType();
-		}
-		if (instanceClass == byte.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == char.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == double.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == float.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == int.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == long.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == short.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == BigDecimal.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == BigInteger.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Boolean.class) {
-			return standardLibrary.getBooleanType();
-		}
-		if (instanceClass == Byte.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Character.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Double.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == Float.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == Integer.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Long.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Short.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == String.class) {
-			return standardLibrary.getStringType();
-		}
-		return null;
 	}
 
 	/**

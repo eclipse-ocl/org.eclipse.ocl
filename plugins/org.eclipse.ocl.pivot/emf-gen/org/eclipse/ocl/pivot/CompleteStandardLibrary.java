@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -29,13 +30,13 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
  * </ul>
  *
- * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibraryInternal()
+ * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteStandardLibrary()
  * @generated
  */
-public interface StandardLibraryInternal extends StandardLibrary
+public interface CompleteStandardLibrary extends StandardLibrary
 {
 	/**
 	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' reference.
@@ -47,13 +48,13 @@ public interface StandardLibraryInternal extends StandardLibrary
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owning Complete Environment</em>' reference.
 	 * @see #setOwningCompleteEnvironment(CompleteEnvironment)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibraryInternal_OwningCompleteEnvironment()
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteStandardLibrary_OwningCompleteEnvironment()
 	 * @generated
 	 */
 	CompleteEnvironment getOwningCompleteEnvironment();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.StandardLibraryInternal#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Owning Complete Environment</em>' reference.
@@ -83,7 +84,8 @@ public interface StandardLibraryInternal extends StandardLibrary
 	 */
 	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
-	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
+	@Override
+	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull String getDefaultStandardLibraryURI();
 
@@ -92,9 +94,13 @@ public interface StandardLibraryInternal extends StandardLibrary
 	 */
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 
+	@Override
+	@NonNull CompleteFlatModel getFlatModel();
+
 	/**
 	 * @since 7.0
 	 */
+	@Override
 	@NonNull LambdaTypeManager getLambdaManager();
 
 	/**
@@ -112,10 +118,10 @@ public interface StandardLibraryInternal extends StandardLibrary
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
-	@NonNull StandardLibraryInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
+	@NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactoryInternal environmentFactory);
 	boolean isExplicitDefaultStandardLibraryURI();
 	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
 
-} // StandardLibraryInternal
+} // CompleteStandardLibrary

@@ -39,7 +39,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -319,7 +319,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_closureValidation_typeConformance_154695() {
 		MyOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
 		Model fakeRoot = PivotUtil.createModel(null);
 		org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");

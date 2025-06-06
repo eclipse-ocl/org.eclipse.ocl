@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -53,6 +52,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -501,7 +501,7 @@ implements Operation {
 	 * @generated NOT
 	 */
 	@Override
-	public TemplateableElement getUnspecializedElement()
+	public Operation getUnspecializedElement()
 	{
 		//		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
 		return null;
@@ -1567,19 +1567,14 @@ implements Operation {
 	}
 
 	@Override
-	public int getIndex() {
-		return -1;		// WIP
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		org.eclipse.ocl.pivot.Class owningType = PivotUtil.getOwningClass(this);
+		return owningType.getFlatClass(standardLibrary);
 	}
 
 	@Override
-	public @Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
-		if (owningType != null) {
-			return standardLibrary.getInheritance(owningType);
-		}
-		else {
-			return null;
-		}
+	public int getIndex() {
+		return -1;		// WIP
 	}
 
 	@Override

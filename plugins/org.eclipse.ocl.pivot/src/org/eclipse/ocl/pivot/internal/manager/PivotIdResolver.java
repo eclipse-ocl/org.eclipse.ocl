@@ -17,12 +17,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
@@ -70,9 +70,16 @@ public class PivotIdResolver extends AbstractIdResolver
 		return asPackage;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier) {
-		return metamodelManager.getInheritance(getType(eClassifier));
+	public @NonNull FlatClass getFlatClass(@NonNull EClassifier eClassifier) {
+		FlatClass flatClass = metamodelManager.getFlatClass(getType(eClassifier));
+	//	if (flatClass instanceof CompleteFlatClass) {
+	//		flatClass = ((CompleteFlatClass)flatClass).getCompleteClass().getPrimaryClass().getFlatClass(standardLibrary);
+	//	}
+		return flatClass;
 	}
 
 	@Override
@@ -146,8 +153,8 @@ public class PivotIdResolver extends AbstractIdResolver
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
-		return (StandardLibraryInternal)super.getStandardLibrary();
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
+		return (CompleteStandardLibrary)super.getStandardLibrary();
 	}
 
 	@Override

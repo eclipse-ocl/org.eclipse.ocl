@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 /**
  * A FlatClass caches the diverse vertical (supertype) and, for CompleteFlatClass, horizontal (partial) classes
  * to provide a single fast lookup for features.
+ * @since 7.0
  */
 public interface FlatClass extends Nameable
 {
@@ -68,7 +69,7 @@ public interface FlatClass extends Nameable
 
 		@Override
 		public @NonNull FlatFragment get(int index) {
-			return ClassUtil.nonNullState(array[firstIndex + index]);
+			return ClassUtil.requireNonNull(array[firstIndex + index]);
 		}
 
 		@Override
@@ -131,6 +132,7 @@ public interface FlatClass extends Nameable
 	@NonNull FlatModel getFlatModel();
 	@Override
 	@NonNull String getName();
+	@Nullable Operation getOperation(@NonNull OperationId id);
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 	@NonNull FlatFragment getSelfFragment();
 	@NonNull Operation @NonNull [] getSelfOperations();
@@ -149,9 +151,9 @@ public interface FlatClass extends Nameable
 	boolean isSuperFlatClassOf(@NonNull FlatClass that);
 	boolean isUnique();
 	boolean isUndefined();
-	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);
-	@NonNull LibraryFeature lookupImplementation(@NonNull Operation apparentOperation);
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
+	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
+	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);
 
 	/**
 	 * Reset the sub-fragment hierarchy following a class mutation.

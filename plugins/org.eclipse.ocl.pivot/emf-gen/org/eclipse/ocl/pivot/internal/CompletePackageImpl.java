@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
@@ -521,12 +520,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		return ClassUtil.requireNonNull(getOwnedCompleteClass(pivotType.getName()));
-	}
-
-	@Override
-	public @NonNull CompleteInheritanceImpl getCompleteInheritance(@NonNull CompleteClassInternal completeClass) {
-		assert this != getCompleteModel().getOrphanCompletePackage();		// OrphanCompletePackage overrides
-		return getPartialPackages().getCompleteInheritance(completeClass);
 	}
 
 	@Override

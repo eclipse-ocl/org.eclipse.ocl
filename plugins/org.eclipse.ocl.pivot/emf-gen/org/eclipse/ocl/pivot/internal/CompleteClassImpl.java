@@ -27,31 +27,32 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.PartialClasses;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -351,20 +352,33 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return eDynamicIsSet(featureID);
 	}
 
+	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
+
 	/**
 	 * The cached value of the '{@link #getPartialClasses() <em>Partial Classes</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getPartialClasses()
-	 * @generated NOT
+	 * @generated
 	 * @ordered
 	 */
-	protected final @NonNull PartialClasses partialClasses;
+	protected EList<org.eclipse.ocl.pivot.Class> partialClasses;
+
+	private @Nullable ClassListeners<ClassListeners.@NonNull IClassListener> classListeners = null;
+
+	/**
+	 * Map from actual types to specialization.
+	 * <br>
+	 * The specializations are weakly referenced so that stale specializations are garbage collected.
+	 */
+	// FIXME tests fail if keys are weak since GC is too aggressive across tests
+	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
+	//
+//	private @Nullable /*WeakHash*/Map<@NonNull TemplateParameters, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
 
 	protected CompleteClassImpl()
 	{
 		super();
-		partialClasses = new PartialClasses(this);
 	}
 
 	@Override
@@ -374,29 +388,38 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		partialClasses.add(partialClass);
+		getPartialClasses().add(partialClass);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.@NonNull IClassListener> classListeners2 = classListeners;
+		if (classListeners2 == null) {
+			classListeners2 = classListeners = new ClassListeners<>();
+		}
+		classListeners2.addListener(classListener);
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass rightCompleteClass) {
-		CompleteClass leftCompleteClass = this;
-		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
-		CompleteInheritance rightInheritance = rightCompleteClass.getCompleteInheritance();
-		if (leftInheritance == rightInheritance) {
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass thatCompleteClass) {
+		FlatClass thisFlatClass = getFlatClass();
+		FlatClass thatFlatClass = thatCompleteClass.getFlatClass();
+		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return rightInheritance.isSuperInheritanceOf(leftInheritance);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type rightType) {
-		CompleteClass leftCompleteClass = this;
-		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
-		CompleteInheritance rightInheritance = rightType.getInheritance(standardLibrary);
-		if (leftInheritance == rightInheritance) {
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType) {
+		FlatClass thisFlatClass = getFlatClass();
+		FlatClass thatFlatClass = thatType.getFlatClass(standardLibrary);
+		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return rightInheritance.isSuperInheritanceOf(leftInheritance);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	/**
@@ -418,13 +441,16 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void dispose() {
-		partialClasses.dispose();
+		CompletePackageInternal owningCompletePackage = getOwningCompletePackage();
+		if (owningCompletePackage != null) {
+			owningCompletePackage.getPartialPackages().uninstalled(this);
+		}
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass() {
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses2 = ClassUtil.nullFree(partialClasses);
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(this);
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			if (partialClass instanceof DataType) {
 				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)partialClass).getBehavioralClass();
 				if (behavioralClass != null) {
@@ -432,15 +458,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				}
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			return partialClass;
 		}
 		return null;
-	}
-
-	@Override
-	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
-		return partialClasses.getCompleteInheritance();
 	}
 
 	@Override
@@ -461,8 +482,21 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return getCompleteModel().getEnvironmentFactory();
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public final @NonNull CompleteFlatClass getFlatClass() {
+		CompleteFlatClass flatClass2 = flatClass;
+		if (flatClass2 == null) {
+			CompleteFlatModel completeFlatModel = getStandardLibrary().getFlatModel();
+			flatClass = flatClass2 = completeFlatModel.createFlatClass(this);
+		}
+		return flatClass2;
+	}
+
 	public @NonNull Iterable<Operation> getMemberOperations() {
-		return partialClasses.getOperations();
+		return getFlatClass().getOperations();
 	}
 
 	@Override
@@ -472,27 +506,27 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		return partialClasses.getOperation(operationId);
+		return getFlatClass().getOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull Operation operationId) {
-		return partialClasses.getOperation(operationId);
+		return getFlatClass().getOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		return partialClasses.getOperationOverloads(pivotOperation);
+		return getFlatClass().getOperationOverloads(pivotOperation);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
-		return partialClasses.getOperations(featureFilter);
+		return getFlatClass().getOperations(featureFilter);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		return partialClasses.getOperationOverloads(featureFilter, name);
+		return getFlatClass().getOperationOverloads(featureFilter, name);
 	}
 
 	/**
@@ -503,18 +537,47 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 * @generated NOT
 	 */
 	@Override
-	public @NonNull PartialClasses getPartialClasses() {
-		return partialClasses;
+	public @NonNull List<org.eclipse.ocl.pivot.Class> getPartialClasses() {
+		EList<org.eclipse.ocl.pivot.Class> partialClasses2 = partialClasses;
+		if (partialClasses2 == null)
+		{
+			partialClasses2 = partialClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES.getFeatureID()) // 6
+			{
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
+					assert partialClass != null;
+					if (classListeners != null) {
+						classListeners.didAddPartialClass(index, partialClass);
+					}
+					if (partialClass.getUnspecializedElement() == null) {
+						getCompleteModel().didAddClass(partialClass, CompleteClassImpl.this);
+					}
+				}
+
+				@Override
+				protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
+					assert partialClass != null;
+					if (classListeners != null) {
+						classListeners.didRemovePartialClass(index, partialClass);
+					}
+					// XXX ?? getCompleteModel().didRemove...
+				}
+			};
+		}
+		return partialClasses2;
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass() {
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(this);
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			if (partialClass.getESObject() != null) {
 				return partialClass;
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			return partialClass;
 		}
 		throw new IllegalStateException();
@@ -522,70 +585,77 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses() {
-		CompleteInheritance inheritance = getCompleteInheritance();
-		return Iterables.transform(inheritance.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, org.eclipse.ocl.pivot.@NonNull Class>()
+		FlatClass flatClass = getFlatClass();
+		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
 		{
 			@Override
-			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull InheritanceFragment input) {
-				return input.getBaseInheritance().getPivotClass();
+			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
+				return input.getBaseFlatClass().getPivotClass();
 			}
 		});
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses() {
-		CompleteInheritance inheritance = getCompleteInheritance();
-		return Iterables.transform(inheritance.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, @NonNull CompleteClass>()
+		FlatClass flatClass = getFlatClass();
+		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, @NonNull CompleteClass>()
 		{
 			@Override
-			public @NonNull CompleteClass apply(@NonNull InheritanceFragment input) {
-				return ((CompleteInheritanceImpl)input.getBaseInheritance()).getCompleteClass();		// FIXME cast
+			public @NonNull CompleteClass apply(@NonNull FlatFragment input) {
+				return ((CompleteFlatClass)input.getBaseFlatClass()).getCompleteClass();
 			}
 		});
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty) {
-		return partialClasses.getProperties(pivotProperty);
+		return getFlatClass().getProperties(null, PivotUtil.getName(pivotProperty));		// XXX surely the property we first thought of
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
-		return partialClasses.getProperties(featureFilter);
+		return getFlatClass().getProperties(featureFilter, null);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		return partialClasses.getProperties(featureFilter, name);
+		return getFlatClass().getProperties(featureFilter, name);
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName) {
-		return partialClasses.getProperties(propertyName);
+		return getFlatClass().getProperties(null, propertyName);
 	}
 
 	@Override
-	public @Nullable Property getProperty(@Nullable String propertyName) {
-		return partialClasses.getProperty(propertyName);
+	public @Nullable Property getProperty(@NonNull String propertyName) {
+		return getFlatClass().basicGetProperty(propertyName);
 	}
 
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return getCompleteModel().getStandardLibrary();
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull State> getStates() {
-		return partialClasses.getStates();
+		return getFlatClass().getStates();
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
-		return partialClasses.getStates(name);
+		return getFlatClass().getStates(name);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
-		return partialClasses.getSuperCompleteClasses();
+		FlatClass flatClass = getFlatClass();
+		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<FlatFragment, @NonNull CompleteClass>()
+		{
+			@Override
+			public @NonNull CompleteClass apply(FlatFragment input) {
+				return input.getBaseFlatClass().getCompleteClass();
+			}
+		});
 	}
 
 	/**
@@ -598,6 +668,43 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return conformsTo(standardLibrary, elementType) && !conformsTo(standardLibrary, oclVoidType);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.@NonNull IClassListener> classListeners2 = classListeners;
+		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
+			classListeners = null;
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void resetFragments() {
+		if (flatClass != null) {
+			flatClass.resetFragments();
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void resetOperations() {
+		if (flatClass != null) {
+			flatClass.resetOperations();
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void resetProperties() {
+		if (flatClass != null) {
+			flatClass.resetProperties();
+		}
+	}
+
 	@Override
 	public void setESObject(@NonNull EObject newTarget) {
 		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes'esObject");
@@ -605,6 +712,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void uninstall() {
-		partialClasses.dispose();
+		dispose();
 	}
 } //CompleteClassImpl

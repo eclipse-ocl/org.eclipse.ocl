@@ -14,6 +14,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 
+/**
+ * @since 7.0
+ */
 public final class CompleteClassLabelGenerator extends AbstractLabelGenerator<CompleteClass>
 {
 	public static void initialize(@NonNull Registry registry) {

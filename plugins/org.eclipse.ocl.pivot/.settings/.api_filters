@@ -8,7 +8,14 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="setOwnedStandardLibrary(StandardLibraryInternal)"/>
+                <message_argument value="setOwnedStandardLibrary(CompleteStandardLibrary)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteStandardLibrary.java" type="org.eclipse.ocl.pivot.CompleteStandardLibrary">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.CompleteStandardLibrary"/>
             </message_arguments>
         </filter>
     </resource>
@@ -87,6 +94,11 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="createCompleteStandardLibrary()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="createLambdaParameter()"/>
             </message_arguments>
         </filter>
@@ -95,13 +107,18 @@
                 <message_argument value="createNormalizedTemplateParameter()"/>
             </message_arguments>
         </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="createStandardLibraryInternal()"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getCompleteStandardLibrary()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getCompleteStandardLibrary_OwningCompleteEnvironment()"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getIterateExp_OwnedBodies()"/>
@@ -154,21 +171,21 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="getStandardLibraryInternal()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getStandardLibraryInternal_OwningCompleteEnvironment()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="getTemplateParameterSubstitution_ActualIsRequired()"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMPLETE_STANDARD_LIBRARY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATE_EXP__OWNED_BODIES"/>
@@ -221,16 +238,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="STANDARD_LIBRARY_INTERNAL"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="STANDARD_LIBRARY_INTERNAL__OWNING_COMPLETE_ENVIRONMENT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED"/>
             </message_arguments>
         </filter>
@@ -238,17 +245,17 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="BAG_CLSSid_StandardLibraryInternal"/>
+                <message_argument value="BAG_CLSSid_CompleteStandardLibrary"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_CompleteStandardLibrary"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CLSSid_LambdaParameter"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="CLSSid_StandardLibraryInternal"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -280,24 +287,17 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="_CompleteStandardLibrary"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="_LambdaParameter"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_NormalizedTemplateParameter"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_StandardLibraryInternal"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/StandardLibraryInternal.java" type="org.eclipse.ocl.pivot.StandardLibraryInternal">
-        <filter id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.StandardLibraryInternal"/>
             </message_arguments>
         </filter>
     </resource>
@@ -512,7 +512,14 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CompleteEnvironmentImpl.java" type="org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="basicSetOwnedStandardLibrary(StandardLibraryInternal, NotificationChain)"/>
+                <message_argument value="basicSetOwnedStandardLibrary(CompleteStandardLibrary, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CompleteStandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -583,13 +590,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryInternalImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryInternalImpl">
-        <filter id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.StandardLibraryInternalImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TemplateParameterSubstitutionImpl.java" type="org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl">
         <filter id="1143996420">
             <message_arguments>
@@ -599,6 +599,20 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ACTUAL_IS_REQUIRED_EFLAG"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_Class"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables$TypeParameters">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -612,7 +626,7 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="create(StandardLibraryInternal, String, String, String)"/>
+                <message_argument value="create(CompleteStandardLibrary, String, String, String)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -641,6 +655,11 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotAdapterFactory.java" type="org.eclipse.ocl.pivot.util.PivotAdapterFactory">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="createCompleteStandardLibraryAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="createLambdaParameterAdapter()"/>
             </message_arguments>
         </filter>
@@ -649,13 +668,13 @@
                 <message_argument value="createNormalizedTemplateParameterAdapter()"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createStandardLibraryInternalAdapter()"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotSwitch.java" type="org.eclipse.ocl.pivot.util.PivotSwitch">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseCompleteStandardLibrary(CompleteStandardLibrary)"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="caseLambdaParameter(LambdaParameter)"/>
@@ -666,13 +685,13 @@
                 <message_argument value="caseNormalizedTemplateParameter(NormalizedTemplateParameter)"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="caseStandardLibraryInternal(StandardLibraryInternal)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateCompleteStandardLibrary(CompleteStandardLibrary, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="validateLambdaParameter(LambdaParameter, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
@@ -683,13 +702,13 @@
                 <message_argument value="validateNormalizedTemplateParameter(NormalizedTemplateParameter, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="validateStandardLibraryInternal(StandardLibraryInternal, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/Visitor.java" type="org.eclipse.ocl.pivot.util.Visitor">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="visitCompleteStandardLibrary(CompleteStandardLibrary)"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="visitLambdaParameter(LambdaParameter)"/>
@@ -700,16 +719,32 @@
                 <message_argument value="visitNormalizedTemplateParameter(NormalizedTemplateParameter)"/>
             </message_arguments>
         </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="visitStandardLibraryInternal(StandardLibraryInternal)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/TupleValue.java" type="org.eclipse.ocl.pivot.values.TupleValue">
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getValue(PartId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/flat/CompleteFlatModel.java" type="org.eclipse.ocl.pivot.flat.CompleteFlatModel">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.flat.CompleteFlatModel"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/flat/PartialFlatClass.java" type="org.eclipse.ocl.pivot.flat.PartialFlatClass">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.flat.PartialFlatClass"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/flat/PartialFlatModel.java" type="org.eclipse.ocl.pivot.flat.PartialFlatModel">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.flat.PartialFlatModel"/>
             </message_arguments>
         </filter>
     </resource>
@@ -722,6 +757,25 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getPartIds()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/ecore/EcoreExecutorManager.java" type="org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="EcoreExecutorManager(Object, PartialStandardLibraryImpl)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getStandardLibrary()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/ecore/EcoreIdResolver.java" type="org.eclipse.ocl.pivot.internal.library.ecore.EcoreIdResolver">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="EcoreIdResolver(Iterable&lt;? extends EObject&gt;, PartialStandardLibraryImpl)"/>
             </message_arguments>
         </filter>
     </resource>

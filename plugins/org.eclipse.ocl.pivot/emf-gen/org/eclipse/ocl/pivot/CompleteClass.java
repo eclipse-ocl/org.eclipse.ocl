@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 
@@ -86,7 +87,10 @@ public interface CompleteClass extends NamedElement
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
-	@NonNull CompleteInheritance getCompleteInheritance();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlatClass getFlatClass();
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
 	@Nullable Operation getOperation(@NonNull Operation operationId);
 	@Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation);
@@ -98,7 +102,7 @@ public interface CompleteClass extends NamedElement
 	@Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
-	@Nullable Property getProperty(@Nullable String propertyName);
+	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
 	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();

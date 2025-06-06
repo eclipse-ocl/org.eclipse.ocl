@@ -27,7 +27,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -44,6 +43,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -591,9 +591,17 @@ implements DataType {
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		org.eclipse.ocl.pivot.Class flattenableClass = this;
 		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
-		return standardLibrary.getInheritance(behavioralType != null ? behavioralType : this);
+		if (behavioralType != null) {
+			flattenableClass = behavioralType;
+		}
+		org.eclipse.ocl.pivot.Class unspecializedClass = flattenableClass.getUnspecializedElement();
+		if (unspecializedClass != null) {
+			flattenableClass = unspecializedClass;
+		}
+		return standardLibrary.getFlatClass(flattenableClass);
 	}
 
 	/**

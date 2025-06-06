@@ -17,11 +17,12 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
@@ -80,7 +81,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 			@NonNull CollectionType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity) {
 		org.eclipse.ocl.pivot.Class leftContainerType = leftType.getContainerType();
 		org.eclipse.ocl.pivot.Class rightContainerType = rightType.getContainerType();
-		if (!standardLibrary.conformsToSimpleType(leftContainerType, rightContainerType)) {
+		if (!((StandardLibraryImpl)standardLibrary).conformsToSimpleType(leftContainerType, rightContainerType)) {
 			return false;
 		}
 		IntegerValue leftLower = leftType.getLowerValue();
@@ -110,7 +111,15 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		}
 	}
 
-	protected abstract @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments);
+	protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
+		CollectionTypeId collectionTypeId = typeArguments.getCollectionTypeId();
+		Type elementType = typeArguments.getElementType();
+		boolean isNullFree = typeArguments.isNullFree();
+		IntegerValue lower = typeArguments.getLower();
+		UnlimitedNaturalValue upper = typeArguments.getUpper();
+		CollectionType genericCollectionType = getCollectionType(collectionTypeId);
+		return PivotUtil.createCollectionType(genericCollectionType, elementType, isNullFree, lower, upper);
+	}
 
 	@Override
 	public void dispose() {
@@ -185,10 +194,10 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		CollectionType rightGenericType = PivotUtil.getUnspecializedTemplateableElement(rightCollectionType);
 		Type leftElementType = PivotUtil.getElementType(leftCollectionType);
 		Type rightElementType = PivotUtil.getElementType(rightCollectionType);
-		CompleteInheritance leftInheritance = leftGenericType.getInheritance(standardLibrary);				// XXX promote
-		CompleteInheritance rightInheritance = rightGenericType.getInheritance(standardLibrary);
-		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-		CollectionType commonGenericType = (CollectionType) commonInheritance.getPivotClass();
+		FlatClass leftFlatClass = leftGenericType.getFlatClass(standardLibrary);				// XXX promote
+		FlatClass rightFlatClass = rightGenericType.getFlatClass(standardLibrary);
+		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
+		CollectionType commonGenericType = (CollectionType) commonFlatClass.getPivotClass();
 		Type commonElementType = standardLibrary.getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
 		boolean commonIsNullFree = standardLibrary.getCommonIsRequired(leftCollectionType.isIsNullFree(), rightCollectionType.isIsNullFree());
 		IntegerValue commonLower = getCommonLowerValue(leftCollectionType.getLowerValue(), rightCollectionType.getLowerValue());
@@ -240,5 +249,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		return true;
 	}
 
-	protected abstract boolean isValid(@Nullable Type type);
+	protected boolean isValid(@Nullable Type type) {
+		return type != null;
+	}
 }

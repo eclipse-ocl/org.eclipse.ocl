@@ -27,16 +27,22 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+
+import com.google.common.collect.Lists;
 
 /**
- * An EcoreFlatClass identifies an EClassifoer and a corresponding Pivot Class as the client for which caches are provided.
+ * An EcoreFlatClass identifies an EClassifier and a corresponding Pivot Class as the client for which caches are provided.
+ * @since 7.0
  */
 public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull EClassifier eClassifier;
 
-	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		super(flatModel, asClass);
+	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass, int flags) {
+		super(flatModel, asClass, flags);
 		this.eClassifier = eClassifier;
 	}
 
@@ -101,6 +107,35 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 				if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
 					superFlatClasses.add(superFlatClass);
 				}
+			}
+		}
+		else  {
+			Class<?> instanceClass = eClassifier.getInstanceClass();
+			if (instanceClass != null) {
+				StandardLibrary standardLibrary = getStandardLibrary();
+				if (instanceClass == IntegerValue.class) {
+					FlatClass superFlatClass = standardLibrary.getRealType().getFlatClass(standardLibrary);
+					superFlatClasses = Collections.singletonList(superFlatClass);
+				}
+				else if (instanceClass == RealValue.class) {
+					FlatClass superFlatClass1 = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
+					FlatClass superFlatClass2 = standardLibrary.getOclSummableType().getFlatClass(standardLibrary);
+					superFlatClasses = Lists.newArrayList(superFlatClass1, superFlatClass2);
+				}
+				else if (instanceClass == String.class) {
+					FlatClass superFlatClass1 = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
+					FlatClass superFlatClass2 = standardLibrary.getOclSummableType().getFlatClass(standardLibrary);
+					superFlatClasses = Lists.newArrayList(superFlatClass1, superFlatClass2);
+				}
+				else if (instanceClass == UnlimitedNaturalValue.class) {
+					FlatClass superFlatClass = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
+					superFlatClasses = Collections.singletonList(superFlatClass);
+				}
+			//	org.eclipse.ocl.pivot.Class behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+			//	if (behavioralClass != null) {
+			//		FlatClass behavioralFlatClass = behavioralClass.getFlatClass(standardLibrary);
+			//		superFlatClasses = Collections.singletonList(behavioralFlatClass);
+			//	}
 			}
 		}
 		if (superFlatClasses == null) {

@@ -71,7 +71,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -254,7 +254,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	/*protected final @NonNull PivotNameResolver nameResolver;*/
 
 	/**
@@ -364,7 +364,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
 				if (owningClass != null) {
 					CompleteClass completeClass = metamodelManager.getCompleteClass(owningClass);
-					int depth = completeClass.getCompleteInheritance().getDepth();
+					int depth = completeClass.getFlatClass().getDepth();
 					if ((bestOperation == null) || (depth > bestDepth)) {
 						bestOperation = operation;
 						bestDepth = depth;

@@ -11,7 +11,6 @@
 package org.eclipse.ocl.build.xtend
 
 import org.eclipse.ocl.pivot.Model
-import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
@@ -21,7 +20,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
-		var Package pkg = root.ownedPackages.findPackage();
+		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
 		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
 		'''
 		«FOR pkge : sortedPackages»
@@ -59,7 +58,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 
 	protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var Model root = thisModel;
-		var Package pkg = root.ownedPackages.findPackage();
+		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
 		if (pkg === null) {
 			return null;
 		}
@@ -100,6 +99,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
+			import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 			import org.eclipse.ocl.pivot.Constraint;
 			import org.eclipse.ocl.pivot.DataType;
 			import org.eclipse.ocl.pivot.Enumeration;
@@ -115,7 +115,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.SetType;
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.ids.IdManager;
-			import org.eclipse.ocl.pivot.StandardLibraryInternal;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -153,7 +152,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 */
 				public static final @NonNull URI PIVOT_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
-				public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+				public static @NonNull Package create(@NonNull CompleteStandardLibrary standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);
 					Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
 					assert standardLibraryPackage != null;
@@ -323,8 +322,8 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 
-					protected Contents(@NonNull Package standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-						super(standardLibrary);
+					protected Contents(@NonNull Package standardLibraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+						super(standardLibraryPackage);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);

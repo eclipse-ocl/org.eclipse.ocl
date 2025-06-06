@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.ConnectionPointReference;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -106,7 +107,6 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StateMachine;
@@ -203,73 +203,73 @@ implements PivotFactory {
 			case 18: return createCompleteEnvironment();
 			case 19: return createCompleteModel();
 			case 20: return createCompletePackage();
-			case 21: return createConnectionPointReference();
-			case 22: return createConstraint();
-			case 23: return createDataType();
-			case 24: return createDetail();
-			case 25: return createDynamicBehavior();
-			case 26: return createDynamicElement();
-			case 27: return createDynamicProperty();
-			case 28: return createDynamicType();
-			case 29: return createDynamicValueSpecification();
-			case 31: return createElementExtension();
-			case 32: return createElementLiteralExp();
-			case 33: return createEnumLiteralExp();
-			case 34: return createEnumeration();
-			case 35: return createEnumerationLiteral();
-			case 36: return createExpressionInOCL();
-			case 39: return createFinalState();
-			case 40: return createIfExp();
-			case 41: return createImport();
-			case 42: return createInstanceSpecification();
-			case 43: return createIntegerLiteralExp();
-			case 44: return createInvalidLiteralExp();
-			case 45: return createInvalidType();
-			case 47: return createIterateExp();
-			case 48: return createIteration();
-			case 49: return createIteratorExp();
-			case 50: return createIteratorVariable();
-			case 51: return createLambdaParameter();
-			case 52: return createLambdaType();
-			case 54: return createLetExp();
-			case 55: return createLetVariable();
-			case 56: return createLibrary();
-			case 59: return createMapLiteralExp();
-			case 60: return createMapLiteralPart();
-			case 61: return createMapType();
-			case 62: return createMessageExp();
-			case 63: return createMessageType();
-			case 64: return createModel();
-			case 70: return createNormalizedTemplateParameter();
-			case 71: return createNullLiteralExp();
-			case 74: return createOperation();
-			case 75: return createOperationCallExp();
-			case 76: return createOppositePropertyCallExp();
-			case 77: return createOrderedSetType();
-			case 78: return createOrphanCompletePackage();
-			case 79: return createPackage();
-			case 80: return createParameter();
-			case 81: return createParameterVariable();
-			case 83: return createPrecedence();
-			case 84: return createPrimitiveCompletePackage();
-			case 86: return createPrimitiveType();
-			case 87: return createProfile();
-			case 88: return createProfileApplication();
-			case 89: return createProperty();
-			case 90: return createPropertyCallExp();
-			case 91: return createPseudostate();
-			case 92: return createRealLiteralExp();
-			case 94: return createRegion();
-			case 95: return createResultVariable();
-			case 96: return createSelfType();
-			case 97: return createSendSignalAction();
-			case 98: return createSequenceType();
-			case 99: return createSetType();
-			case 100: return createShadowExp();
-			case 101: return createShadowPart();
-			case 102: return createSignal();
-			case 103: return createSlot();
-			case 105: return createStandardLibraryInternal();
+			case 21: return createCompleteStandardLibrary();
+			case 22: return createConnectionPointReference();
+			case 23: return createConstraint();
+			case 24: return createDataType();
+			case 25: return createDetail();
+			case 26: return createDynamicBehavior();
+			case 27: return createDynamicElement();
+			case 28: return createDynamicProperty();
+			case 29: return createDynamicType();
+			case 30: return createDynamicValueSpecification();
+			case 32: return createElementExtension();
+			case 33: return createElementLiteralExp();
+			case 34: return createEnumLiteralExp();
+			case 35: return createEnumeration();
+			case 36: return createEnumerationLiteral();
+			case 37: return createExpressionInOCL();
+			case 40: return createFinalState();
+			case 41: return createIfExp();
+			case 42: return createImport();
+			case 43: return createInstanceSpecification();
+			case 44: return createIntegerLiteralExp();
+			case 45: return createInvalidLiteralExp();
+			case 46: return createInvalidType();
+			case 48: return createIterateExp();
+			case 49: return createIteration();
+			case 50: return createIteratorExp();
+			case 51: return createIteratorVariable();
+			case 52: return createLambdaParameter();
+			case 53: return createLambdaType();
+			case 55: return createLetExp();
+			case 56: return createLetVariable();
+			case 57: return createLibrary();
+			case 60: return createMapLiteralExp();
+			case 61: return createMapLiteralPart();
+			case 62: return createMapType();
+			case 63: return createMessageExp();
+			case 64: return createMessageType();
+			case 65: return createModel();
+			case 71: return createNormalizedTemplateParameter();
+			case 72: return createNullLiteralExp();
+			case 75: return createOperation();
+			case 76: return createOperationCallExp();
+			case 77: return createOppositePropertyCallExp();
+			case 78: return createOrderedSetType();
+			case 79: return createOrphanCompletePackage();
+			case 80: return createPackage();
+			case 81: return createParameter();
+			case 82: return createParameterVariable();
+			case 84: return createPrecedence();
+			case 85: return createPrimitiveCompletePackage();
+			case 87: return createPrimitiveType();
+			case 88: return createProfile();
+			case 89: return createProfileApplication();
+			case 90: return createProperty();
+			case 91: return createPropertyCallExp();
+			case 92: return createPseudostate();
+			case 93: return createRealLiteralExp();
+			case 95: return createRegion();
+			case 96: return createResultVariable();
+			case 97: return createSelfType();
+			case 98: return createSendSignalAction();
+			case 99: return createSequenceType();
+			case 100: return createSetType();
+			case 101: return createShadowExp();
+			case 102: return createShadowPart();
+			case 103: return createSignal();
+			case 104: return createSlot();
 			case 106: return createState();
 			case 107: return createStateExp();
 			case 108: return createStateMachine();
@@ -626,6 +626,18 @@ implements PivotFactory {
 	{
 		CompletePackageImpl completePackage = new CompletePackageImpl();
 		return completePackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull CompleteStandardLibrary createCompleteStandardLibrary()
+	{
+		CompleteStandardLibraryImpl completeStandardLibrary = new CompleteStandardLibraryImpl();
+		return completeStandardLibrary;
 	}
 
 	/**
@@ -1190,18 +1202,6 @@ implements PivotFactory {
 	{
 		SlotImpl slot = new SlotImpl();
 		return slot;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull StandardLibraryInternal createStandardLibraryInternal()
-	{
-		StandardLibraryInternalImpl standardLibraryInternal = new StandardLibraryInternalImpl();
-		return standardLibraryInternal;
 	}
 
 	/**

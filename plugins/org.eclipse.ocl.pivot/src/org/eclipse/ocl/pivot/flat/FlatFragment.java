@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.Property;
  * A FlatFragment provides the description of the properties and operations defined by some class when accessed by the same
  * or another class. The descriptions are normally built by direct static construction from auto-generated code, with instnaces defined
  * in isolation during construction then cross-references defined later by calls to init().
+ * @since 7.0
  */
 public /*final*/ class FlatFragment
 {
@@ -90,6 +91,7 @@ public /*final*/ class FlatFragment
 		@NonNull Property [] properties2 = this.properties;
 		if (properties2 == null) {
 			this.properties = properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
+		//	System.out.println("getProperties " + this + " " + NameUtil.debugSimpleName(properties2) + " " + properties2.length);
 		}
 		return properties2;
 	}

@@ -13,8 +13,8 @@ package org.eclipse.ocl.pivot.flat;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class PartialFlatModel extends AbstractFlatModel
@@ -23,12 +23,12 @@ public class PartialFlatModel extends AbstractFlatModel
 //	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull PartialFlatClass> asClass2flatClass =  new HashMap<>();
 
 	@Deprecated
-	public PartialFlatModel(@NonNull StandardLibrary standardLibrary) {
+	public PartialFlatModel(@NonNull PartialStandardLibrary standardLibrary) {
 		super(standardLibrary, "");
 		this.model = null;
 	}
 
-	public PartialFlatModel(@NonNull Model model, @NonNull StandardLibrary standardLibrary) {
+	public PartialFlatModel(@NonNull Model model, @NonNull PartialStandardLibrary standardLibrary) {
 		super(standardLibrary, PivotUtil.getName(model));
 		this.model = model;
 	}
@@ -60,5 +60,10 @@ public class PartialFlatModel extends AbstractFlatModel
 	@Override
 	public @NonNull Type getPrimaryType(org.eclipse.ocl.pivot.@NonNull Class owningType) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull PartialStandardLibrary getStandardLibrary() {
+		return (PartialStandardLibrary)standardLibrary;
 	}
 }

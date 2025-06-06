@@ -41,7 +41,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -56,6 +55,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -517,8 +517,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	protected org.eclipse.ocl.pivot.@NonNull Class computeDynamicClassOf(@NonNull Object value) {
 		EClass eClass = ((EObject)value).eClass();
 		assert eClass != null;
-		Object key = eClass;
-		Type type = getInheritance(eClass).getPivotClass();
+		Type type = getFlatClass(eClass).getPivotClass();
 		assert type != null;
 		org.eclipse.ocl.pivot.@NonNull Class dynamicClass = PivotUtil.getClass(type, standardLibrary);
 		org.eclipse.ocl.pivot.@NonNull Class staticClass = getStaticClassOf(value);
@@ -1541,8 +1540,8 @@ public abstract class AbstractIdResolver implements IdResolver
 		if (domainType == null) {
 			throw new UnsupportedOperationException();
 		}
-		CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
-		Operation memberOperation = inheritance.getMemberOperation(id);
+		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
+		Operation memberOperation = flatClass.getOperation(id);
 		if (memberOperation == null) {
 			throw new UnsupportedOperationException();
 		}
@@ -1572,8 +1571,8 @@ public abstract class AbstractIdResolver implements IdResolver
 		if (domainType == null) {
 			throw new UnsupportedOperationException();
 		}
-		CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
-		Property memberProperty = inheritance.getMemberProperty(id.getName());
+		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
+		Property memberProperty = flatClass.basicGetProperty(id.getName());
 		if (memberProperty == null) {
 			throw new UnsupportedOperationException();
 		}

@@ -21,6 +21,7 @@ import com.google.common.collect.Iterables;
 
 /**
  * An IterableAsImmutableList wraps an Iterable to look like a List for read-only accesses.
+ * @since 7.0
  */
 public class IterableAsImmutableList<T> implements List<T>
 {

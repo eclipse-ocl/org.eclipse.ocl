@@ -20,12 +20,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
@@ -118,7 +118,10 @@ public interface IdResolver extends IdVisitor<Element>
 	 */
 	org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfEach(@Nullable Object @NonNull ... values);
 
-	@NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlatClass getFlatClass(@NonNull EClassifier eClassifier);
 
 	/**
 	 * @since 7.0

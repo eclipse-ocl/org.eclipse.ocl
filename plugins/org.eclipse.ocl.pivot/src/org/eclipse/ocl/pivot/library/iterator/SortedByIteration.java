@@ -17,12 +17,12 @@ import java.util.Comparator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.ValueImpl;
@@ -130,15 +130,15 @@ public class SortedByIteration extends AbstractIteration
 	@Override
 	public SortedByIteration.@NonNull SortingValue createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
-		CompleteInheritance comparableType = standardLibrary.getOclComparableType().getInheritance(standardLibrary);
-		CompleteInheritance selfType = standardLibrary.getOclSelfType().getInheritance(standardLibrary);
-		Operation staticOperation = comparableType.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfType);
+		FlatClass comparableFlatClass = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
+		FlatClass selfFlatClass = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
+		Operation staticOperation = comparableFlatClass.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfFlatClass);
 		if (staticOperation != null) {
 			org.eclipse.ocl.pivot.Class bodyType = executor.getIdResolver().getClass(bodyTypeId, null);
 			LibraryFeature implementation = bodyType.lookupImplementation(standardLibrary, staticOperation);
 			return new SortingValue(executor, (CollectionTypeId)accumulatorTypeId, (LibraryBinaryOperation) implementation);
 		}
-		throw new InvalidValueException(PivotMessages.UndefinedOperation, String.valueOf(comparableType) + "::" + LibraryConstants.COMPARE_TO); //$NON-NLS-1$
+		throw new InvalidValueException(PivotMessages.UndefinedOperation, String.valueOf(comparableFlatClass) + "::" + LibraryConstants.COMPARE_TO); //$NON-NLS-1$
 	}
 
 	/**

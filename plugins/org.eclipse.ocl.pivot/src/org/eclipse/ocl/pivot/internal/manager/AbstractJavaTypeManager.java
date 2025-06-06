@@ -18,10 +18,10 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -46,8 +46,70 @@ public abstract class AbstractJavaTypeManager implements JavaTypeManager
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull Class<?> javaClass) {
+		if (javaClass == boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (javaClass == byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == char.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == int.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == BigDecimal.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == BigInteger.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (javaClass == Byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Character.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == Float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == Integer.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == String.class) {
+			return standardLibrary.getStringType();
+		}
+		return null;
+	}
+
+	@Override
 	public final synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object) {
-		if (object instanceof ExecutorType) {					// XXX going obsolete  ?? use getTypeId()
+		/*if (object instanceof ExecutorType) {					// XXX going obsolete  ?? use getTypeId()
 			ExecutorType type = (ExecutorType)object;
 			org.eclipse.ocl.pivot.Class asClass = key2class.get(type);
 			if (asClass == null) {
@@ -57,7 +119,7 @@ public abstract class AbstractJavaTypeManager implements JavaTypeManager
 			}
 			return asClass;
 		}
-		else if (object instanceof TypeId) {
+		else*/ if (object instanceof TypeId) {
 			TypeId typeId = (TypeId)object;
 			org.eclipse.ocl.pivot.Class asClass;
 			asClass = key2class.get(typeId);
@@ -100,7 +162,7 @@ public abstract class AbstractJavaTypeManager implements JavaTypeManager
 			@SuppressWarnings("null") @NonNull EClass eClass = eObject.eClass();
 			org.eclipse.ocl.pivot.Class asClass = key2class.get(eClass);
 			if (asClass == null) {
-				asClass = standardLibrary.getIdResolver().getInheritance(eClass).getPivotClass();
+				asClass = standardLibrary.getIdResolver().getFlatClass(eClass).getPivotClass();
 				key2class.put(eClass, asClass);
 			}
 			return asClass;

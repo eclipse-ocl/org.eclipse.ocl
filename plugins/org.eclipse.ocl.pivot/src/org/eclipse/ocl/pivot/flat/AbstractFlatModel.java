@@ -13,6 +13,9 @@ package org.eclipse.ocl.pivot.flat;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.StandardLibrary;
 
+/**
+ * @since 7.0
+ */
 public abstract class AbstractFlatModel implements FlatModel		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull StandardLibrary standardLibrary;

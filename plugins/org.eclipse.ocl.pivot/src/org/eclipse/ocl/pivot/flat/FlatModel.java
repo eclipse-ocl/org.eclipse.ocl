@@ -16,6 +16,9 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
+/**
+ * @since 7.0
+ */
 public interface FlatModel extends Nameable
 {
 	@NonNull CompleteModel getCompleteModel();

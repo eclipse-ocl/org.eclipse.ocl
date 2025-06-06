@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
@@ -44,14 +45,13 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -115,25 +115,44 @@ public class EnvironmentView
 
 	public static abstract class Disambiguator</*@NonNull*/ T> implements Comparator<T>
 	{
+		/**
+		 * @since 7.0
+		 */
+		public static final int MATCH1_INFERIOR = -1;
+		/**
+		 * @since 7.0
+		 */
+		public static final int MATCHES_EQUIVALENT = 0;
+		/**
+		 * @since 7.0
+		 */
+		public static final int MATCH2_INFERIOR = +1;
+
+		/**
+		 * Compare two alternative matches returning -ve, typically MATCH1_INFERIOR
+		 */
 		@Override
-		public int compare(/*@NonNull*/ T o1, /*@NonNull*/ T o2) {
+		public int compare(/*@NonNull*/ T match1, /*@NonNull*/ T match2) {
 			throw new UnsupportedOperationException();
 		}
 
-		public abstract int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull T o1, @NonNull T o2);
+		/**
+		 * @since 7.0
+		 */
+		public abstract int compare(@NonNull StandardLibrary standardLibrary, @NonNull T o1, @NonNull T o2);
 	}
 
 	private static final class ImplicitDisambiguator extends Disambiguator<@NonNull Object>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Object match1, @NonNull Object match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Object match1, @NonNull Object match2) {
 			boolean match1IsImplicit = (match1 instanceof Property) && ((Property)match1).isIsImplicit();
 			boolean match2IsImplicit = (match2 instanceof Property) && ((Property)match2).isIsImplicit();
 			if (!match1IsImplicit) {
-				return match2IsImplicit ? 1 : 0;				// match2 inferior
+				return match2IsImplicit ? MATCH2_INFERIOR : MATCHES_EQUIVALENT;				// match2 inferior
 			}
 			else {
-				return match2IsImplicit ? 0 : -1;				// match1 inferior
+				return match2IsImplicit ? MATCHES_EQUIVALENT : MATCH1_INFERIOR;				// match1 inferior
 			}
 		}
 	}
@@ -141,20 +160,28 @@ public class EnvironmentView
 	private static final class MetamodelMergeDisambiguator extends Disambiguator<@NonNull Feature>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Feature match1, @NonNull Feature match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Feature match1, @NonNull Feature match2) {
 			org.eclipse.ocl.pivot.Package p1 = PivotUtil.getContainingPackage(match1);
 			org.eclipse.ocl.pivot.Package p2 = PivotUtil.getContainingPackage(match2);
 			if (p1 == null) {
-				return 0;
+				return MATCHES_EQUIVALENT;
 			}
 			if (p2 == null) {
-				return 0;
+				return MATCHES_EQUIVALENT;
 			}
-			CompleteModel completeModel = environmentFactory.getCompleteModel();
+			CompleteModel completeModel = standardLibrary.getFlatModel().getCompleteModel();
 			CompletePackage s1 = completeModel.getCompletePackage(p1);
 			CompletePackage s2 = completeModel.getCompletePackage(p2);
 			if (s1 != s2) {
-				return 0;
+				return MATCHES_EQUIVALENT;
+			}
+			EObject o1 = match1.getESObject();
+			EObject o2 = match2.getESObject();
+			if (o1 instanceof EStructuralFeature) {
+				return MATCH2_INFERIOR;
+			}
+			if (o2 instanceof EStructuralFeature) {
+				return MATCH1_INFERIOR;
 			}
 			int i1 = s1.getIndex(p1);
 			int i2 = s2.getIndex(p2);
@@ -165,14 +192,14 @@ public class EnvironmentView
 	private static final class OperationDisambiguator extends Disambiguator<@NonNull Operation>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Operation match1, @NonNull Operation match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Operation match1, @NonNull Operation match2) {
 			if (isRedefinitionOf(match1, match2)) {
-				return 1;				// match2 inferior
+				return MATCH2_INFERIOR;				// match2 inferior
 			}
 			if (isRedefinitionOf(match2, match1)) {
-				return -1;				// match1 inferior
+				return MATCH1_INFERIOR;				// match1 inferior
 			}
-			return 0;
+			return MATCHES_EQUIVALENT;
 		}
 
 		protected boolean isRedefinitionOf(@NonNull Operation operation1, @NonNull Operation operation2) {
@@ -194,50 +221,50 @@ public class EnvironmentView
 	private static final class MergedPackageDisambiguator extends Disambiguator<org.eclipse.ocl.pivot.@NonNull Package>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package match1, org.eclipse.ocl.pivot.@NonNull Package match2) {
-			CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		public int compare(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Package match1, org.eclipse.ocl.pivot.@NonNull Package match2) {
+			CompleteModelInternal completeModel = (CompleteModelInternal) standardLibrary.getFlatModel().getCompleteModel();
 			CompletePackageInternal completePackage1 = completeModel.getCompletePackage(match1);
 			CompletePackageInternal completePackage2 = completeModel.getCompletePackage(match2);
 			if (completePackage1 == completePackage2) {
-				return 1;				// match2 inferior
+				return MATCH2_INFERIOR;				// match2 inferior
 			}
-			return 0;
+			return MATCHES_EQUIVALENT;
 		}
 	}
 
 	private static final class PropertyDisambiguator extends Disambiguator<@NonNull Property>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property match1, @NonNull Property match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Property match1, @NonNull Property match2) {
 			if (isRedefinitionOf(match1, match2)) {
-				return 1;				// match2 inferior
+				return MATCH2_INFERIOR;				// match2 inferior
 			}
 			if (isRedefinitionOf(match2, match1)) {
-				return -1;				// match1 inferior
+				return MATCH1_INFERIOR;				// match1 inferior
 			}
 			//
 			//	FIXME There should not be multiple properties, but as a consequence of Bug 510503 we need a fudge.
 			//
 			Property opposite1 = match1.getOpposite();
 			if ((opposite1 != null) && "base_Class".equals(opposite1.getName())) {
-				return -1;				// match1 inferior
+				return MATCH1_INFERIOR;				// match1 inferior
 			}
 			Property opposite2 = match2.getOpposite();
 			if ((opposite2 != null) && "base_Class".equals(opposite2.getName())) {
-				return 1;				// match2 inferior
+				return MATCH2_INFERIOR;				// match2 inferior
 			}
 			/*			org.eclipse.ocl.pivot.Class owningClass1 = match1.getOwningClass();
 			org.eclipse.ocl.pivot.Class owningClass2 = match2.getOwningClass();
 			if ((owningClass1 != null) && (owningClass2 != null) && (owningClass1 != owningClass2)) {
-				StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+				CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 				if (owningClass1.conformsTo(standardLibrary, owningClass2)) {
-					return 1;				// match2 inferior
+					return MATCH2_INFERIOR;				// match2 inferior
 				}
 				if (owningClass2.conformsTo(standardLibrary, owningClass1)) {
-					return -1;				// match1 inferior
+					return MATCH1_INFERIOR;				// match1 inferior
 				}
 			} */
-			return 0;
+			return MATCHES_EQUIVALENT;
 		}
 
 		protected boolean isRedefinitionOf(@NonNull Property property1, @NonNull Property property2) {
@@ -495,24 +522,26 @@ public class EnvironmentView
 	public void addAllProperties(org.eclipse.ocl.pivot.@NonNull Class type, @Nullable FeatureFilter featureFilter) {
 		if (accepts(PivotPackage.Literals.PROPERTY)
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
+			//	System.out.println("addAllProperties " + NameUtil.debugSimpleName(type) + " : " + type + " . " + this);
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
 			CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(type);
-			String name2 = name;
-			if (name2 != null) {
-				for (@NonNull Property property : completeClass.getProperties(featureFilter, name2)) {
+		//	String name2 = name;
+		//	if (name2 != null) {
+				for (@NonNull Property property : completeClass.getProperties(featureFilter, name)) {
 					addNamedElement(property);
 				}
-			}
-			else {
-				for (@NonNull Property property : completeClass.getProperties(featureFilter)) {
-					addNamedElement(property);
-				}
-			}
+		//	}
+		//	else {
+		//		for (@NonNull Property property : completeClass.getProperties(featureFilter)) {
+		//			addNamedElement(property);
+		//		}
+		//	}
+		//	System.out.println("addAllProperties " + NameUtil.debugSimpleName(type) + " : " + type + " . " + this);
 		}
 	}
 
 	public void addAllStates(@NonNull Type type) {
-		if (accepts(PivotPackage.Literals.STATE)) {
+		if (!isQualifier && accepts(PivotPackage.Literals.STATE)) {
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
 			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(type);
 			String name2 = name;
@@ -677,10 +706,10 @@ public class EnvironmentView
 		/*if (element instanceof PackageServer) {
 			element = ((PackageServer) element).getPrimaryPackage();		// FIXME lose casts
 		}
-		else*/ if (element instanceof CompleteInheritanceImpl) {
+		else*//* if (element instanceof CompleteInheritanceImpl) {
 			assert false;
 			element = ((CompleteInheritanceImpl) element).getCompleteClass().getPrimaryClass();		// FIXME lose casts
-		}
+		} */
 		if ((requiredType != null) && (name != null)) {
 			if (!requiredType.isInstance(element)) {
 				return;
@@ -922,7 +951,7 @@ public class EnvironmentView
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return environmentFactory.getStandardLibrary();
 	}
 
@@ -987,7 +1016,7 @@ public class EnvironmentView
 									assert comparators != null;
 									for (Comparator<Object> comparator : comparators) {
 										if (comparator instanceof Disambiguator<?>) {
-											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory, iValue, jValue);
+											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory.getStandardLibrary(), iValue, jValue);
 										}
 										else {
 											verdict = comparator.compare(iValue, jValue);

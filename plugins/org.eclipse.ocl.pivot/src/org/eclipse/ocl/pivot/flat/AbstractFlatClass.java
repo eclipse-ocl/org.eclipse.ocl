@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -33,9 +32,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.internal.complete.PartialOperations;
 import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
-//import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
@@ -43,6 +39,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -52,6 +49,7 @@ import com.google.common.collect.Iterables;
 /**
  * AbstractFlatClass provides the basic implementation of a FlatClass with name-to-property and name-to-operation
  * lookup caches resulting from aggregation of the fragments for each contributing class.
+ * @since 7.0
  */
 public abstract class AbstractFlatClass implements FlatClass, IClassListener
 {
@@ -59,7 +57,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
 	public static int computeFlags(@NonNull Type asType) {
-		assert !(asType instanceof JavaType);
+//		assert !(asType instanceof JavaType);
 //			return 0;			// XXX Avoid UOE from getTypeId().
 //		}
 		int flags = 0;
@@ -101,7 +99,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 * Cached mapping from a property name to the Property or PartialProperties that has that name within
 	 * the FlatClass hierarchy. The PartialProperties holds the ambiguity until a lazy resolution replaces it
 	 * by a Property or null
-	 */
+	 */				// XXX Use binary search of array rather than map
 	private @Nullable Map<@NonNull String, @Nullable Object> name2propertyOrProperties = null;	// Property or PartialProperties
 
 
@@ -116,7 +114,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 * Whether this flat class can evolve. Initally null. Set false by static initFragments from XXXTables.
 	 * Set true by reflective initFragments.
 	 */
-	private @Nullable Boolean mutable = null;
+	private @Nullable Boolean mutable = null;			// XXX (mutable != null) == (indexes != null)
 
 	/**
 	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
@@ -141,7 +139,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.flatModel = flatModel;
 		this.name = name;
 		this.flags = flags;
-	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags) + " in " + NameUtil.debugSimpleName(flatModel));
 	}
 
 	protected void addOperation(@NonNull Operation pivotOperation) {
@@ -174,11 +172,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	} */
 
 	protected void addProperty(@NonNull Property property) {
-		String name = NameUtil.getName(property);
-		assert name2propertyOrProperties != null;
-		Object old = name2propertyOrProperties.put(name, property);
+		String name = PivotUtil.getName(property);
+		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		assert name2propertyOrProperties2 != null;
+		Object old = name2propertyOrProperties2.get(name);
 		if (old == null) {
-			;
+			name2propertyOrProperties2.put(name, property);
 		}
 		else if (old == property) {
 			;																	// XXX FIXME should not have inherited legacy duplicates
@@ -189,12 +188,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				partialProperties = (PartialProperties)old;
 			}
 			else {
-				partialProperties = new PartialProperties(getStandardLibrary());		// XXX avoid EnvironmentFactory for partial Ecore
+				partialProperties = new PartialProperties(getStandardLibrary());
+				assert name2propertyOrProperties2 != null;
+				name2propertyOrProperties2.put(name, partialProperties);
 				partialProperties.didAddProperty((Property)old);
 			}
 			partialProperties.didAddProperty(property);
-			assert name2propertyOrProperties != null;
-			name2propertyOrProperties.put(name, partialProperties);
 		}
 	}
 
@@ -336,6 +335,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				localOperation = bestOverload;
 			}
 			else {
+				toString();		// XXX
 				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, this);
 			}
 		}
@@ -350,7 +350,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (fragments == null) {
 			initFragments();
 		}
-		@NonNull FlatFragment @NonNull [] fragments2 = ClassUtil.nonNullState(fragments);
+		@NonNull FlatFragment @NonNull [] fragments2 = ClassUtil.requireNonNull(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
 
@@ -359,7 +359,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (fragments == null) {
 			initFragments();
 		}
-		return new FragmentIterable(ClassUtil.nonNullState(fragments));
+		return new FragmentIterable(ClassUtil.requireNonNull(fragments));
 	}
 
 	@Override
@@ -532,12 +532,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				}
 			}
 			if (localOperation != null) {				// Trivial case, there is a local operation
-				libraryFeature = PivotUtilInternal.getImplementation(localOperation);
+				libraryFeature = PivotUtil.getImplementation(localOperation);
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
 				Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(derivedFlatClass, apparentOperation);
 				if (bestOverload != null) {
-					libraryFeature = PivotUtilInternal.getImplementation(bestOverload);
+					libraryFeature = PivotUtil.getImplementation(bestOverload);
 				}
 				else {
 					libraryFeature = OclAnyUnsupportedOperation.AMBIGUOUS;
@@ -562,6 +562,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name;
 	}
 
+	@Override
 	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
 		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
@@ -617,7 +618,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 		PartialOperations partialOperations = name2partialOperations2.get(name);
 		if (partialOperations == null) {
-			return PivotMetamodelManager.EMPTY_OPERATION_LIST;
+			return PivotConstants.EMPTY_OPERATION_LIST;
 		}
 		return partialOperations.getOperationOverloads(featureFilter);
 	}
@@ -663,8 +664,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			initProperties();
 		}
 		if (name != null) {
-			Property asProperty = resolvePropertyOrProperties(featureFilter, name);
-			return (asProperty != null) ? Collections.singletonList(asProperty) : Collections.emptyList();
+			return resolveProperties(featureFilter, name);
 		}
 		else {
 			List<@NonNull Property> asProperties = new ArrayList<>();
@@ -691,7 +691,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	//		throw new IllegalStateException("No self fragment"); //$NON-NLS-1$
 	//	}
 		return fragment; */
-		return getFragment(ClassUtil.nonNullState(fragments).length-1);
+		return getFragment(ClassUtil.requireNonNull(fragments).length-1);
 	}
 
 	@Override
@@ -711,7 +711,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
-		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes[depth], indexes[depth+1]);
+		return new FragmentIterable(ClassUtil.requireNonNull(fragments), indexes[depth], indexes[depth+1]);
 	}
 
 	@Override
@@ -755,7 +755,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 					}
 				}
 				if (allSuperFlatClassesHaveFragments) {
-				//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " init: " + NameUtil.debugSimpleName(candidateFlatClass) + " : " + candidateFlatClass);
+		//			System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " init: " + NameUtil.debugSimpleName(candidateFlatClass) + " : " + candidateFlatClass);
 					((AbstractFlatClass)candidateFlatClass).initFragments(candidateSuperFlatClasses);
 					flatClass2superFlatClasses.remove(candidateFlatClass);
 				}
@@ -770,6 +770,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				throw new IllegalStateException(s.toString());
 			}
 		}
+	//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " indexes: " + Arrays.toString(indexes) + " : " + Arrays.toString(fragments));
 		assert mutable == Boolean.TRUE;
 	}
 
@@ -977,7 +978,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-	//	assert standardLibrary == getStandardLibrary();
 		getDepth();
 		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);
 		if (apparentFlatClass != null) {
@@ -990,7 +990,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 					FlatFragment fragment = getFragment(i);
 					if (fragment.getBaseFlatClass() == apparentFlatClass) {
 						Operation actualOperation = getActualOperation(fragment, apparentOperation);
-						if (standardLibrary != getStandardLibrary()) {
+					/*	if (standardLibrary != getStandardLibrary()) {
 							FlatClass apparentFlatClass1 = apparentOperation.getFlatClass(getStandardLibrary());
 							if (apparentFlatClass1 != null) {
 								int apparentDepth1 = apparentFlatClass1.getDepth();
@@ -1006,8 +1006,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 									}
 								}
 							}
-
-						}
+						} */
 						return actualOperation;
 					}
 				}
@@ -1017,8 +1016,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public @NonNull LibraryFeature lookupImplementation(@NonNull Operation apparentOperation) {
-		StandardLibrary standardLibrary = getStandardLibrary();
+	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);		// Base of the operation hierarchy
 		if (apparentFlatClass != null) {
 			if (indexes == null) {
@@ -1036,14 +1034,14 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 						if (index >= 0) {
 							@NonNull Operation[] fragmentOperations = fragment.basicGetOperations();
 							assert fragmentOperations != null;
-							return ClassUtil.nonNullState(fragmentOperations[index].getImplementation());
+							return ClassUtil.requireNonNull(fragmentOperations[index].getImplementation());
 						}
 						return getImplementation(fragment, apparentOperation);
 					}
 				}
 			}
 		}
-		LibraryFeature implementation = PivotUtilInternal.getImplementation(apparentOperation);	// invoke apparent op for null and invalid
+		LibraryFeature implementation = PivotUtil.getImplementation(apparentOperation);	// invoke apparent op for null and invalid
 		if (implementation == null) {
 			implementation = UnsupportedOperation.INSTANCE;
 		}
@@ -1052,7 +1050,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes) {
-		assert standardLibrary == getStandardLibrary();
 		for (Operation localOperation : getPivotClass().getOwnedOperations()) {
 			if (localOperation.getName().equals(operationName)) {
 				ParametersId firstParametersId = localOperation.getParametersId();
@@ -1122,6 +1119,29 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	public void resetProperties() {
 		name2propertyOrProperties = null;
+	}
+
+	private @NonNull Iterable<@NonNull Property> resolveProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+		assert name2propertyOrProperties != null;
+		Object asPropertyOrProperties = name2propertyOrProperties.get(name);
+		List<@NonNull Property> asProperties = new ArrayList<>();
+		if (asPropertyOrProperties instanceof PartialProperties) {
+			Iterable<@NonNull Property> asPartialProperties = ((PartialProperties)asPropertyOrProperties).getPartials();
+			if (asPartialProperties != null) {
+				for (Property asProperty : asPartialProperties) {
+					if ((featureFilter == null) || featureFilter.accept(asProperty)) {
+						asProperties.add(asProperty);
+					}
+				}
+			}
+		}
+		else if (asPropertyOrProperties != null) {
+			Property asProperty = (Property)asPropertyOrProperties;
+			if ((featureFilter == null) || featureFilter.accept(asProperty)) {
+				asProperties.add(asProperty);
+			}
+		}
+		return asProperties;
 	}
 
 	private @Nullable Property resolvePropertyOrProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
