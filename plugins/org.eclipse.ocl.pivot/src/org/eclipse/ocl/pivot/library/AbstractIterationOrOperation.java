@@ -60,7 +60,8 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 		if (ownedSource != null) {
 			Type sourceType = ownedSource.getType();
 			if (sourceType instanceof CollectionType) {
-				returnIsRequired = ((CollectionType)sourceType).isIsNullFree();
+				boolean isSafe = callExp.isIsSafe();
+				returnIsRequired = ((CollectionType)sourceType).isIsNullFree() || isSafe;
 			}
 		}
 		return returnIsRequired;

@@ -216,71 +216,32 @@ implements CollectionLiteralExp {
 			/**
 			 *
 			 * inv CollectionKindIsConcrete:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = kind <> CollectionKind::Collection
+			 *       let result : Boolean[1] = kind <> CollectionKind::Collection
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_COLLECTION_KIND_IS_CONCRETE__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_COLLECTION_KIND_IS_CONCRETE__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'CollectionLiteralExp::kind\'");
-					}
-					@SuppressWarnings("null")
-					final /*@Thrown*/ @NonNull CollectionKind kind = this.getKind();
-					final /*@Thrown*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-					final /*@Thrown*/ boolean result = BOXED_kind != PivotTables.ELITid_Collection;
-					CAUGHT_result = result;
-				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
+				final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
+				final /*@NonInvalid*/ boolean result = BOXED_kind != PivotTables.ELITid_Collection;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -300,7 +261,7 @@ implements CollectionLiteralExp {
 			/**
 			 *
 			 * inv SetKindIsSet:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
@@ -313,48 +274,29 @@ implements CollectionLiteralExp {
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_SET_KIND_IS_SET__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_SET_KIND_IS_SET__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_eq;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CollectionLiteralExp::kind\'");
-						}
-						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull CollectionKind kind = this.getKind();
-						final /*@Thrown*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-						final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Set;
-						CAUGHT_eq = eq;
-					}
-					catch (Exception e) {
-						CAUGHT_eq = ValueUtil.createInvalidValue(e);
-					}
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
+					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
+					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Set;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_eq == ValueUtil.FALSE_VALUE) {
+					if (!eq) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType = idResolver.getClass(PivotTables.CLSSid_SetType, null);
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
-							}
-							final /*@Thrown*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SetType);
+							final /*@NonInvalid*/ @Nullable Type type = this.getType();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SetType).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception e) {
@@ -364,18 +306,10 @@ implements CollectionLiteralExp {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_eq instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_eq;
-							}
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							if (CAUGHT_oclIsKindOf == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = ValueUtil.FALSE_VALUE;
 						}
 					}
 					CAUGHT_result = result;
@@ -383,33 +317,10 @@ implements CollectionLiteralExp {
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -429,7 +340,7 @@ implements CollectionLiteralExp {
 			/**
 			 *
 			 * inv OrderedSetKindIsOrderedSet:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
@@ -442,48 +353,29 @@ implements CollectionLiteralExp {
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_ORDERED_SET_KIND_IS_ORDERED_SET__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_ORDERED_SET_KIND_IS_ORDERED_SET__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_eq;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CollectionLiteralExp::kind\'");
-						}
-						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull CollectionKind kind = this.getKind();
-						final /*@Thrown*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-						final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_OrderedSet;
-						CAUGHT_eq = eq;
-					}
-					catch (Exception e) {
-						CAUGHT_eq = ValueUtil.createInvalidValue(e);
-					}
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
+					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
+					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_OrderedSet;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_eq == ValueUtil.FALSE_VALUE) {
+					if (!eq) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OrderedSetType = idResolver.getClass(PivotTables.CLSSid_OrderedSetType, null);
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
-							}
-							final /*@Thrown*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_OrderedSetType);
+							final /*@NonInvalid*/ @Nullable Type type = this.getType();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_OrderedSetType).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception e) {
@@ -493,18 +385,10 @@ implements CollectionLiteralExp {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_eq instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_eq;
-							}
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							if (CAUGHT_oclIsKindOf == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = ValueUtil.FALSE_VALUE;
 						}
 					}
 					CAUGHT_result = result;
@@ -512,33 +396,10 @@ implements CollectionLiteralExp {
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -558,7 +419,7 @@ implements CollectionLiteralExp {
 			/**
 			 *
 			 * inv SequenceKindIsSequence:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
@@ -571,48 +432,29 @@ implements CollectionLiteralExp {
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_SEQUENCE_KIND_IS_SEQUENCE__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_SEQUENCE_KIND_IS_SEQUENCE__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_eq;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CollectionLiteralExp::kind\'");
-						}
-						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull CollectionKind kind = this.getKind();
-						final /*@Thrown*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-						final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Sequence;
-						CAUGHT_eq = eq;
-					}
-					catch (Exception e) {
-						CAUGHT_eq = ValueUtil.createInvalidValue(e);
-					}
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
+					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
+					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Sequence;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_eq == ValueUtil.FALSE_VALUE) {
+					if (!eq) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
-							}
-							final /*@Thrown*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SequenceType);
+							final /*@NonInvalid*/ @Nullable Type type = this.getType();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SequenceType).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception e) {
@@ -622,18 +464,10 @@ implements CollectionLiteralExp {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_eq instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_eq;
-							}
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							if (CAUGHT_oclIsKindOf == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = ValueUtil.FALSE_VALUE;
 						}
 					}
 					CAUGHT_result = result;
@@ -641,33 +475,10 @@ implements CollectionLiteralExp {
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -687,7 +498,7 @@ implements CollectionLiteralExp {
 			/**
 			 *
 			 * inv BagKindIsBag:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
@@ -700,48 +511,29 @@ implements CollectionLiteralExp {
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_BAG_KIND_IS_BAG__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_LITERAL_EXP___VALIDATE_BAG_KIND_IS_BAG__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_eq;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CollectionLiteralExp::kind\'");
-						}
-						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull CollectionKind kind = this.getKind();
-						final /*@Thrown*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-						final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Bag;
-						CAUGHT_eq = eq;
-					}
-					catch (Exception e) {
-						CAUGHT_eq = ValueUtil.createInvalidValue(e);
-					}
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
+					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
+					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Bag;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_eq == ValueUtil.FALSE_VALUE) {
+					if (!eq) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_BagType = idResolver.getClass(PivotTables.CLSSid_BagType, null);
-							if (this == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
-							}
-							final /*@Thrown*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_BagType);
+							final /*@NonInvalid*/ @Nullable Type type = this.getType();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_BagType).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception e) {
@@ -751,18 +543,10 @@ implements CollectionLiteralExp {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_eq instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_eq;
-							}
 							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_oclIsKindOf;
 							}
-							if (CAUGHT_oclIsKindOf == null) {
-								result = null;
-							}
-							else {
-								result = ValueUtil.FALSE_VALUE;
-							}
+							result = ValueUtil.FALSE_VALUE;
 						}
 					}
 					CAUGHT_result = result;
@@ -770,33 +554,10 @@ implements CollectionLiteralExp {
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

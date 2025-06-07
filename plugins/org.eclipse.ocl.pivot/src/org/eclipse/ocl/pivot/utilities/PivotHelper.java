@@ -439,7 +439,12 @@ public class PivotHelper extends PivotUtil
 			}
 		}
 		refreshName(contextVariable, selfVariableName);
-		setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
+		boolean contextIsRequired = true;
+		EObject eContainer = pivotSpecification.eContainer();
+		if ((eContainer instanceof Operation) && ((Operation)eContainer).isIsValidating()) {
+			contextIsRequired = false;
+		}
+		setType(contextVariable, contextType, contextIsRequired, contextInstance);
 	}
 
 	/**

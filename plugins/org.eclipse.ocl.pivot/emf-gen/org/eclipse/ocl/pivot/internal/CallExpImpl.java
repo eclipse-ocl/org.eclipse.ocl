@@ -220,7 +220,7 @@ public abstract class CallExpImpl
 			/**
 			 *
 			 * inv SafeSourceCanBeNull:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
@@ -233,34 +233,18 @@ public abstract class CallExpImpl
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isSafe;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CallExp::isSafe\'");
-						}
-						final /*@Thrown*/ boolean isSafe = this.isIsSafe();
-						CAUGHT_isSafe = isSafe;
-					}
-					catch (Exception e) {
-						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-					}
+					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_isSafe == ValueUtil.FALSE_VALUE) {
+					if (!isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -269,18 +253,8 @@ public abstract class CallExpImpl
 							/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-								if (this == null) {
-									throw new InvalidValueException("Null source for \'CallExp::ownedSource\'");
-								}
-								final /*@Thrown*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-								try {
-									CAUGHT_ownedSource = ownedSource;
-								}
-								catch (Exception e) {
-									CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-								}
-								final /*@NonInvalid*/ @NonNull Object type = CAUGHT_ownedSource == null;
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+								final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 								/*@Thrown*/ @Nullable Type safe_type_source;
 								if (type == Boolean.TRUE) {
 									safe_type_source = null;
@@ -290,10 +264,8 @@ public abstract class CallExpImpl
 									final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
 									safe_type_source = type_0;
 								}
-								final /*@Thrown*/ @Nullable CollectionType oclAsType = (@Nullable CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType);
-								if (oclAsType == null) {
-									throw new InvalidValueException("Null source for \'CollectionType::isNullFree\'");
-								}
+								@SuppressWarnings("null")
+								final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType);
 								final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
 								CAUGHT_isNullFree = isNullFree;
 							}
@@ -324,9 +296,6 @@ public abstract class CallExpImpl
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_isSafe instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_isSafe;
-							}
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
@@ -343,33 +312,10 @@ public abstract class CallExpImpl
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -389,7 +335,7 @@ public abstract class CallExpImpl
 			/**
 			 *
 			 * inv SafeSourceCannotBeMap:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
@@ -404,34 +350,18 @@ public abstract class CallExpImpl
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CANNOT_BE_MAP__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CANNOT_BE_MAP__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isSafe;
-					try {
-						if (this == null) {
-							throw new InvalidValueException("Null source for \'CallExp::isSafe\'");
-						}
-						final /*@Thrown*/ boolean isSafe = this.isIsSafe();
-						CAUGHT_isSafe = isSafe;
-					}
-					catch (Exception e) {
-						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-					}
+					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_isSafe == ValueUtil.FALSE_VALUE) {
+					if (!isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -439,18 +369,8 @@ public abstract class CallExpImpl
 						try {
 							/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
 							try {
-								if (this == null) {
-									throw new InvalidValueException("Null source for \'CallExp::ownedSource\'");
-								}
-								final /*@Thrown*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-								try {
-									CAUGHT_ownedSource = ownedSource;
-								}
-								catch (Exception e) {
-									CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-								}
-								final /*@NonInvalid*/ @NonNull Object type = CAUGHT_ownedSource == null;
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+								final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 								/*@Thrown*/ @Nullable Type safe_type_source;
 								if (type == Boolean.TRUE) {
 									safe_type_source = null;
@@ -483,13 +403,13 @@ public abstract class CallExpImpl
 							else {
 								/*@Caught*/ @Nullable Object CAUGHT_not;
 								try {
-									/*@Caught*/ @Nullable Object CAUGHT_oclIsKindOf;
+									/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 									try {
 										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 										if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 											throw (InvalidValueException)CAUGHT_safe_type_source;
 										}
-										final /*@Thrown*/ @Nullable Boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType);
+										final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, TYP_MapType).booleanValue();
 										CAUGHT_oclIsKindOf = oclIsKindOf;
 									}
 									catch (Exception e) {
@@ -542,9 +462,6 @@ public abstract class CallExpImpl
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_isSafe instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_isSafe;
-							}
 							if (CAUGHT_implies instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_implies;
 							}
@@ -561,33 +478,10 @@ public abstract class CallExpImpl
 				catch (Exception e) {
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -607,71 +501,32 @@ public abstract class CallExpImpl
 			/**
 			 *
 			 * inv TypeIsNotInvalid:
-			 *   let severity : Integer[?] = constraintName.getSeverity()
+			 *   let severity : Integer[1] = constraintName.getSeverity()
 			 *   in
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = type <> OclInvalid
+			 *       let result : Boolean[1] = type <> OclInvalid
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @Nullable IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
-			if (severity_0 == null) {
-				throw new InvalidValueException("Null \'\'OclComparable\'\' rather than \'\'OclVoid\'\' value required");
-			}
-			final /*@Thrown*/ @Nullable Boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0);
-			if (le == null) {
-				throw new InvalidValueException("Null if condition");
-			}
-			/*@NonInvalid*/ @Nullable Boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = ValueUtil.TRUE_VALUE;
+				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
-				try {
-					final /*@NonInvalid*/ @NonNull InvalidType TYP_OclInvalid = (@NonNull InvalidType)idResolver.getClass(TypeId.OCL_INVALID, null);
-					if (this == null) {
-						throw new InvalidValueException("Null source for \'TypedElement::type\'");
-					}
-					final /*@Thrown*/ @Nullable Type type = this.getType();
-					final /*@Thrown*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid.getTypeId()) : true;
-					CAUGHT_result = result;
-				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_this;
-				try {
-					if (this == null) {
-						throw new InvalidValueException("Null \'\'OclAny\'\' rather than \'\'OclVoid\'\' value required");
-					}
-					CAUGHT_this = this;
-				}
-				catch (Exception e) {
-					CAUGHT_this = ValueUtil.createInvalidValue(e);
-				}
-				/*@Caught*/ @NonNull Object CAUGHT_severity_0;
-				try {
-					CAUGHT_severity_0 = severity_0;
-				}
-				catch (Exception e) {
-					CAUGHT_severity_0 = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_this instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_this;
-				}
-				if (CAUGHT_severity_0 instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_severity_0;
-				}
-				final /*@NonInvalid*/ @Nullable Boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, CAUGHT_this, (Object)null, diagnostics, context, (Object)null, CAUGHT_severity_0, CAUGHT_result, PivotTables.INT_0);
+				final /*@NonInvalid*/ @NonNull InvalidType TYP_OclInvalid = (@NonNull InvalidType)idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ @Nullable Type type = this.getType();
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid.getTypeId()) : true;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
-			return Boolean.TRUE == IF_le;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

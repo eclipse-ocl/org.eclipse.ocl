@@ -211,7 +211,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		@NonNull Iterator<Object> ITERATOR__1 = CodegencompanyTables.table.iterator();
-		/*@Thrown*/ @NonNull TupleValue any;
+		/*@NonInvalid*/ @NonNull TupleValue any;
 		while (true) {
 			if (!ITERATOR__1.hasNext()) {
 				throw new InvalidValueException("Nothing to return for ''any''");
@@ -223,24 +223,21 @@ public class CompanyImpl extends EObjectImpl implements Company {
 			 */
 			@SuppressWarnings("null")
 			final /*@NonInvalid*/ @NonNull SequenceValue range = (@NonNull SequenceValue)_1.getValue(0/*range*/);
-			if (this == null) {
-				throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/test/Pivot/Company.ecore\'::Company::employees\'");
-			}
 			@SuppressWarnings("null")
-			final /*@Thrown*/ @NonNull List<Employee> employees = this.getEmployees();
-			final /*@Thrown*/ @NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
-			final /*@Thrown*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
-			final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
+			final /*@NonInvalid*/ @NonNull List<Employee> employees = this.getEmployees();
+			final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
+			final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
+			final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
 			//
-			if (includes != ValueUtil.FALSE_VALUE) {			// Carry on till something found
+			if (includes) {			// Carry on till something found
 				any = _1;
 				break;
 			}
 		}
 		@SuppressWarnings("null")
-		final /*@Thrown*/ @NonNull EnumerationLiteralId size_0 = (@NonNull EnumerationLiteralId)any.getValue(1/*size*/);
+		final /*@NonInvalid*/ @NonNull EnumerationLiteralId size_0 = (@NonNull EnumerationLiteralId)any.getValue(1/*size*/);
 		@SuppressWarnings("null")
-		final /*@Thrown*/ @NonNull CompanySizeKind ECORE_size_0 = (@NonNull CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, size_0);
+		final /*@NonInvalid*/ @NonNull CompanySizeKind ECORE_size_0 = (@NonNull CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, size_0);
 		return ECORE_size_0;
 	}
 

@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -635,10 +636,17 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Operation exampleOperation = getExampleOperation(invocations, sourceExp, csRoundBracketedClause);
 		if (exampleOperation != null) {
+			InfixExpCS csNavigationOperator = NavigationUtil.getNavigationInfixExp(csNameExp);
 			if (sourceExp == null) {
 				sourceExp = createImplicitSourceVariableExp(csNameExp, exampleOperation.getOwningClass());
 			}
 			OperationCallExp operationCallExp = refreshOperationCallExp(csNameExp, sourceExp);
+			if (sourceExp.getType() instanceof IterableType) {
+				if (csNavigationOperator != null) {										// For a->X(); X must be resolved in the navigation source type
+					boolean isSafeAggregate = isSafeAggregate = PivotConstants.SAFE_AGGREGATE_NAVIGATION_OPERATOR.equals(csNavigationOperator.getName());
+					operationCallExp.setIsSafe(isSafeAggregate);
+				}
+			}
 			if (invocations.getSingleResult() != null) {
 				context.setReferredOperation(operationCallExp, exampleOperation);
 			}
@@ -650,7 +658,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			//	Resolve the static operation/iteration by name and known operation argument types.
 			//
 			Type explicitSourceType = null;
-			InfixExpCS csNavigationOperator = NavigationUtil.getNavigationInfixExp(csNameExp);
 			if (csNavigationOperator != null) {										// For a->X(); X must be resolved in the navigation source type
 				explicitSourceType = csNameExp.getSourceTypeValue() != null ? csNameExp.getSourceTypeValue() : csNameExp.getSourceType();
 				if (explicitSourceType == null) {
@@ -842,6 +849,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	/**
 	 * Resolve an invocation such as name() or source.name(...)  or source-&gt;name(...)
+	 * @param isSafe
 	 */
 	protected @NonNull OCLExpression resolveInvocation(@Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
