@@ -589,7 +589,6 @@ public final class IdManager
 		for (PartId part : unOrderedPartIds) {
 			unOrderedPartIds2[i++] = part;
 		}
-	//	Arrays.sort(orderedParts);
 		return getTupleTypeId(unOrderedPartIds2);
 	}
 
