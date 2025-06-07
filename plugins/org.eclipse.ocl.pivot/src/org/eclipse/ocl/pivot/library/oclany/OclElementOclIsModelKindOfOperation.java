@@ -48,7 +48,7 @@ public class OclElementOclIsModelKindOfOperation extends AbstractUntypedBinaryOp
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type bestModelType = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class modelClass : modelClasses) {
-			if (modelClass.conformsTo(standardLibrary, argType)) {
+			if (standardLibrary.conformsTo(modelClass, argType)) {
 				if (bestModelType == null) {
 					bestModelType = modelClass;
 				}

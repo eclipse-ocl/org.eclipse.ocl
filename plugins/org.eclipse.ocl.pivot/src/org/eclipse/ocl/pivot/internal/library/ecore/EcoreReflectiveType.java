@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -35,7 +34,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperties;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 {
@@ -53,17 +51,6 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
 		this.templateParameters = new TemplateParameters(templateParameters);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		Class<?> instanceClass = eClassifier.getInstanceClass();
-		org.eclipse.ocl.pivot.@Nullable Class behavioralClass = instanceClass != null ? PivotUtil.getBehavioralClass(standardLibrary, instanceClass) : null;
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		if (behavioralClass == thatInheritance) {
-			return true;
-		}
-		return thatInheritance.isSuperInheritanceOf(this);
 	}
 
 	@Override
@@ -90,17 +77,6 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 			return ClassUtil.requireNonNull(element);
 		}
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (this == type) {
-			return this.getPivotClass();
-		}
-		CompleteInheritance firstInheritance = this;
-		CompleteInheritance secondInheritance = type.getInheritance(idResolver.getStandardLibrary());
-		CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
-		return commonInheritance.getPivotClass();
 	}
 
 	public final @NonNull EClassifier getEClassifier() {

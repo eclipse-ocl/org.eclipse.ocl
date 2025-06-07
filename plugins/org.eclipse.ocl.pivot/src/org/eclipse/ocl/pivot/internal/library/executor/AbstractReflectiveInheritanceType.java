@@ -29,15 +29,6 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		if (this == thatInheritance) {
-			return true;
-		}
-		return thatInheritance.isSuperInheritanceOf(this);
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.Class flattenedType() {
 		return this;
 	}
@@ -48,18 +39,8 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		return getPivotClass();
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class isClass() {
 		return getPivotClass();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		return getPivotClass() == type;
 	}
 
 	@Override

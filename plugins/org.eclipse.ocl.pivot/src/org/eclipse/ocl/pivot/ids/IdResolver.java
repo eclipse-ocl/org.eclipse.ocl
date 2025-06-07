@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -103,11 +102,6 @@ public interface IdResolver extends IdVisitor<Element>
 	org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypeId typeId, @Nullable Object context);
 
 	/**
-	 * @since 7.0
-	 */
-//	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeId typeId);
-
-	/**
 	 * Compute the type of value according to its content. Beware that this can be very expensive for collections and so
 	 * should only be used where it really is necessary to compute a content-dependent type.
 	 * @since 7.0
@@ -125,13 +119,6 @@ public interface IdResolver extends IdVisitor<Element>
 	org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfEach(@Nullable Object @NonNull ... values);
 
 	@NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier);
-
-	org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Type getMapType(@NonNull MapTypeId typeId);
 
 	/**
 	 * @since 7.0
@@ -163,20 +150,12 @@ public interface IdResolver extends IdVisitor<Element>
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getStaticClassOfEach(@Nullable Object @NonNull ... values);
 
-	@NonNull TupleType getTupleType(@NonNull TupleTypeId typeId);
-
 	org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull EClassifier eClassifier);
 
 	/**
 	 * @since 1.18
 	 */
 	@NonNull Type getType(@NonNull TypeId typeId);
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated /* @deprecated omit redundant context argument */
-	@NonNull Type/*Class*/ getType(@NonNull TypeId typeId, @Nullable Object/*Type*/ context);
 
 	/**
 	 * @since 7.0

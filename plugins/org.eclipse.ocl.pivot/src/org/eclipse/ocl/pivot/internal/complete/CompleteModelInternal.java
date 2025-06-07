@@ -56,7 +56,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@Override
 	@NonNull PrimitiveCompletePackageImpl getPrimitiveCompletePackage();
 
-	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void dispose();
 	void didAddPartialModel(@NonNull Model partialModel);
 	void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
@@ -69,5 +68,8 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull StandardLibraryInternal getStandardLibrary();
 	@Override
 	@NonNull CompleteEnvironmentInternal getCompleteEnvironment();
-	@NonNull CompleteModelInternal init(@NonNull CompleteEnvironmentInternal completeEnvironment);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
 }

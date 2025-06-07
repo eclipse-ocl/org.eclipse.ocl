@@ -681,7 +681,7 @@ extends EFactory {
 	 * @return a new object of class '<em>Standard Library Internal</em>'.
 	 * @generated
 	 */
-	StandardLibraryInternal createStandardLibraryInternal();
+	@NonNull StandardLibraryInternal createStandardLibraryInternal();
 
 	/**
 	 * Returns a new object of class '<em>Message Type</em>'.

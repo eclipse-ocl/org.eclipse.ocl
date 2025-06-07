@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * An AbstractDescriptor provides the most fundamental capabilities of any type description: the correspondence to a pivot ElementId.
@@ -411,7 +410,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			return false;
 		}
 		Type oclTypeType = standardLibrary.getOclTypeType();
-		return standardLibrary.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
+		return standardLibrary.conformsTo(type, null, oclTypeType, null);
 	}
 
 	@Override

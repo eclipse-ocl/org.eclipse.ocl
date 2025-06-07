@@ -519,6 +519,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests the nested name accesses
 	 */
 	@Test public void test_nested_names() throws InvocationTargetException {
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
@@ -535,7 +536,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		@SuppressWarnings("unchecked")
 		List<Object> treeFruits = (List<Object>) appleTree.eGet(tree_fruits);
 		treeFruits.add(redApple);
-		//
+		ocl.assertQueryEquals(redApple, redApple, "self.oclAsType(Apple)");
+//XXX		//
 		ocl.assertQueryEquals(redApple, "RedApple", "self.name");
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Fruit::name");
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Apple::name");

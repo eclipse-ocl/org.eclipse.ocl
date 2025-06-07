@@ -61,8 +61,6 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-
 import com.google.common.collect.Lists;
 
 /**
@@ -123,7 +121,7 @@ public class PivotHelper extends PivotUtil
 	}
 
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
-		Type commonType = standardLibrary.getCommonType(getType(asThen), TemplateParameterSubstitutions.EMPTY, getType(asElse), TemplateParameterSubstitutions.EMPTY);
+		Type commonType = standardLibrary.getCommonType(getType(asThen), null, getType(asElse), null);
 		boolean commonIsRequired = standardLibrary.getCommonIsRequired(asThen.isIsRequired(), asElse.isIsRequired());
 		IfExp asIf = PivotFactory.eINSTANCE.createIfExp();
 		asIf.setOwnedCondition(asCondition);
@@ -217,16 +215,16 @@ public class PivotHelper extends PivotUtil
 					OCLExpression asArgument = asArguments[i];
 					Type asArgumentType = asArgument.getType();
 					if (asParameterType instanceof SelfType) {
-						if (asArgumentType.conformsTo(standardLibrary, asType) && asType.conformsTo(standardLibrary, asArgumentType)) {
+						if (standardLibrary.conformsTo(asArgumentType, asType) && standardLibrary.conformsTo(asType, asArgumentType)) {
 							exactMatches++;
 						}
 					}
 					else {
-						if (!asArgumentType.conformsTo(standardLibrary, asParameterType)) {
+						if (!standardLibrary.conformsTo(asArgumentType, asParameterType)) {
 							gotOne = false;
 							break;
 						}
-						if (asParameterType.conformsTo(standardLibrary, asArgumentType)) {
+						if (standardLibrary.conformsTo(asParameterType, asArgumentType)) {
 							exactMatches++;
 						}
 					}

@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -83,10 +81,5 @@ public class InvalidTypeImpl
 	@Override
 	public @NonNull TypeId computeId() {
 		return TypeId.OCL_INVALID;
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		return true;
 	}
 } //InvalidTypeImpl

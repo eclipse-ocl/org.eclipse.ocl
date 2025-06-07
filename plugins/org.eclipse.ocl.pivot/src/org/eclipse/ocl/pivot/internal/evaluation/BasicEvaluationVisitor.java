@@ -678,7 +678,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 					Object onlyArgument = arguments.get(0).accept(undecoratedVisitor);
 					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticClassOf(onlyArgument);
-					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
+					actualSourceType = standardLibrary.getCommonType(actualSourceType, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
 					LibraryBinaryOperation implementation = (LibraryBinaryOperation) environmentFactory.getMetamodelManager().getImplementation(actualOperation);

@@ -41,23 +41,21 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -93,6 +91,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -100,6 +99,7 @@ import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -257,10 +257,6 @@ public abstract class AbstractIdResolver implements IdResolver
 	private final @NonNull Set<@NonNull EObject> directRoots = new HashSet<>();
 	private boolean directRootsProcessed = false;
 	private boolean crossReferencedRootsProcessed = false;
-	/**
-	 * @since 7.0
-	 */
-	protected final @NonNull Map<@NonNull Object, org.eclipse.ocl.pivot.@NonNull Class> key2class = new HashMap<>();	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull EnumerationLiteralId, @NonNull Enumerator> enumerationLiteral2enumerator = null;	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull Enumerator, @NonNull EnumerationLiteralId> enumerator2enumerationLiteralId = null;	// Concurrent puts are duplicates
 
@@ -685,7 +681,6 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public void dispose() {
-		key2class.clear();
 		enumerationLiteral2enumerator = null;
 		enumerator2enumerationLiteralId = null;
 	}
@@ -778,45 +773,6 @@ public abstract class AbstractIdResolver implements IdResolver
 		return (org.eclipse.ocl.pivot.Class)type;
 	}
 
-//	@Override
-//	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId typeId) {
-//		return getCollectionType(typeId, false, null, null);
-//	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId typeId, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		CollectionTypeId generalizedId = typeId.getGeneralizedId();
-		if ((typeId == generalizedId) && !isNullFree && (lower == null) && (upper == null)) {
-			return standardLibrary.getCollectionType(typeId);
-		}
-		else {
-			TypeId elementTypeId = typeId.getElementTypeId();
-			Type elementType = getType(elementTypeId);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(generalizedId, elementType, isNullFree, lower, upper);
-			return standardLibrary.getCollectionType(typeArguments);
-		/*	if (generalizedId == TypeId.BAG) {
-				return standardLibrary.getBagType(elementType, isNullFree, lower, upper);
-			}
-			else if (generalizedId == TypeId.COLLECTION) {
-				return standardLibrary.getCollectionType(standardLibrary.getCollectionType(), elementType, isNullFree, lower, upper);
-			}
-			else if (generalizedId == TypeId.ORDERED_SET) {
-				return standardLibrary.getOrderedSetType(elementType, isNullFree, lower, upper);
-			}
-			else if (generalizedId == TypeId.SEQUENCE) {
-				return standardLibrary.getSequenceType(elementType, isNullFree, lower, upper);
-			}
-			else if (generalizedId == TypeId.SET) {
-				return standardLibrary.getSetType(elementType, isNullFree, lower, upper);
-			}
-			else {
-				throw new UnsupportedOperationException();
-			} */
-		}
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -829,47 +785,32 @@ public abstract class AbstractIdResolver implements IdResolver
 			if (elementType == null) {
 				elementType = getType(collectionTypeId.getElementTypeId());
 			}
-			CollectionTypeId collectedId = collectionTypeId;
-			CollectionTypeId collectionId = collectedId.getGeneralizedId();
-			TypeId elementTypeId = elementType.getTypeId();
-			collectedId = collectionId.getSpecializedId(elementTypeId);
-			final IntegerValue size = collectionValue.size();
-			return getCollectionType(collectedId, false, size, size.asUnlimitedNaturalValue());		// FIXME dynamic isNullFree
+			CollectionTypeId generalizedId = collectionTypeId.getGeneralizedId();
+			boolean isNullFree = collectionValue.excludes(null);
+			IntegerValue lower = collectionValue.size();
+			UnlimitedNaturalValue upper = lower.asUnlimitedNaturalValue();
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(generalizedId, elementType, isNullFree, lower, upper);
+			return standardLibrary.getCollectionType(typeArguments);
+		}
+		else if (value instanceof MapValue) {
+			MapValue mapValue = (MapValue) value;
+			MapTypeId mapTypeId = mapValue.getTypeId();
+			CollectionValue keys = mapValue.getKeys();
+			CollectionValue values = mapValue.getValues();
+			Type keyType = getDynamicClassOfAll(keys);
+			if (keyType == null) {
+				keyType = getType(mapTypeId.getKeyTypeId());
+			}
+			Type valueType = getDynamicClassOfAll(values);
+			if (valueType == null) {
+				valueType = getType(mapTypeId.getValueTypeId());
+			}
+			boolean keysAreNullFree = keys.excludes(null);
+			boolean valuesAreNullFree = values.excludes(null);
+			MapTypeArguments typeArguments = new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+			return standardLibrary.getMapType(typeArguments);
 		}
 		return getStaticClassOf(value);
-/*		else if (value instanceof Value) {
-			return getStaticClassOf(value);
-		}
-		else if (value instanceof EObject) {
-			EClass eClass = ((EObject)value).eClass();
-			assert eClass != null;
-			Object key = eClass;
-			org.eclipse.ocl.pivot.Class asClass = key2dynamicClass.get(key);
-			if (asClass == null) {
-				asClass = computeDynamicClassOf(value);				// XXX avoid double execution
-				key2dynamicClass.put(key, asClass);
-			}
-			return asClass;
-		}
-		else if (value instanceof org.eclipse.ocl.pivot.Class) { */
-/*			EClass eClass = ((EObject)value).eClass();
-			assert eClass != null;
-//			Type type = key2type.get(eClass);
-//			if (type == null) {
-				Type type = getInheritance(eClass).getPivotClass();
-				assert type != null;
-//				key2type.put(eClass, type);
-//			}
-			return PivotUtil.getClass(type, standardLibrary);
-		//	return envF.get
-		//	return (org.eclipse.ocl.pivot.Class)value;
-//	*//*		return getStaticClassOf(value);
-		}
-		else {
-			return getStaticClassOf(value);
-//			throw new UnsupportedOperationException();			// XXX
-		//	return getStaticClassOf(value);
-		} */
 	}
 
 	@Override
@@ -894,7 +835,7 @@ public abstract class AbstractIdResolver implements IdResolver
 				bestType = valueType;
 			}
 			else {
-				bestType = (org.eclipse.ocl.pivot.Class)bestType.getCommonType(this, valueType);
+				bestType = standardLibrary.getCommonType(bestType, valueType);
 			}
 		}
 		return bestType;
@@ -919,58 +860,6 @@ public abstract class AbstractIdResolver implements IdResolver
 		String name = ClassUtil.requireNonNull(eEnumLiteral.getName());
 		EnumerationId enumerationId = getEnumerationId(eEnum);
 		return enumerationId.getEnumerationLiteralId(name);
-	}
-
-	@Override
-	public synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass) {
-		org.eclipse.ocl.pivot.Class asClass = key2class.get(javaClass);
-		if (asClass instanceof JavaType) {
-			return (JavaType)asClass;
-		}
-		assert asClass == null;
-		/*		if (javaClass == Boolean.class) {
-			type = standardLibrary.getBooleanType();
-		}
-		else if (javaClass == String.class) {
-			type = standardLibrary.getStringType();
-		}
-		else { */
-		JavaType javaType = new JavaType(javaClass);
-		//		}
-		key2class.put(javaClass, javaType);
-		return javaType;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull MapTypeId typeId) {
-		return getMapType(typeId, true, true);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull MapType getMapType(@NonNull MapTypeId typeId, boolean keysAreNullFree, boolean valuesAreNullFree) {
-		MapTypeId generalizedId = typeId.getGeneralizedId();
-		if (typeId == generalizedId) {
-			if (generalizedId == TypeId.MAP) {
-				return standardLibrary.getMapType();
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-		}
-		else {
-			TypeId keyTypeId = typeId.getKeyTypeId();
-			TypeId valueTypeId = typeId.getValueTypeId();
-			Type keyType = getType(keyTypeId);
-			Type valueType = getType(valueTypeId);
-			if (generalizedId == TypeId.MAP) {
-				return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-		}
 	}
 
 	/**
@@ -1061,15 +950,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	//	}
 		else if (value instanceof Value) {
 			TypeId typeId = ((Value)value).getTypeId();
-			asClass = key2class.get(typeId);
-			if (asClass == null) {
-				Type type = (Type)typeId.accept(this);
-				if (type == null) {
-					type = standardLibrary.getOclAnyType();
-				}
-				asClass = PivotUtil.getClass(type, standardLibrary);
-				key2class.put(typeId, asClass);
-			}
+			asClass = standardLibrary.getJavaType(typeId);
 		}
 		else if (value instanceof EnumerationLiteralId) {
 			EnumerationLiteral enumLiteral = (EnumerationLiteral) ((EnumerationLiteralId)value).accept(this);
@@ -1078,25 +959,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 		else {
 			Class<?> jClass = value.getClass();
-			asClass = key2class.get(jClass);
-			if (asClass == null) {
-				if (jClass == Boolean.class) {
-					asClass = standardLibrary.getBooleanType();
-				}
-				else if (jClass == String.class) {
-					asClass = standardLibrary.getStringType();
-				}
-				else if ((jClass == BigDecimal.class) || (jClass == Double.class) || (jClass == Float.class)) {
-					asClass = standardLibrary.getRealType();
-				}
-				else if ((jClass == BigInteger.class) || (jClass == Byte.class) || (jClass == Integer.class) || (jClass == Long.class) || (jClass == Short.class)) {
-					asClass = standardLibrary.getIntegerType();
-				}
-				else {
-					asClass = getJavaType(jClass);
-				}
-				key2class.put(jClass, asClass);
-			}
+			asClass = standardLibrary.getJavaType(jClass);
 		}
 	//	System.out.println("getStaticClassOf " + NameUtil.debugSimpleName(value) + " " + value + " => " + NameUtil.debugSimpleName(asClass) + " " + asClass);		// XXX
 		return asClass;
@@ -1125,13 +988,12 @@ public abstract class AbstractIdResolver implements IdResolver
 			Stereotype asStereotype = ((ElementExtension)eObject).getStereotype();
 			return asStereotype != null ? asStereotype : standardLibrary.getOclInvalidType();
 		}
-		@SuppressWarnings("null") @NonNull EClass eClass = eObject.eClass();
-		org.eclipse.ocl.pivot.Class asClass = key2class.get(eClass);
-		if (asClass == null) {
-			asClass = getInheritance(eClass).getPivotClass();
-			key2class.put(eClass, asClass);
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor != null) {
+			IdResolver idResolver2 = executor.getIdResolver();
+			assert idResolver2 == this;										// Check that idResolver is recoverable
 		}
-		return asClass;
+		return standardLibrary.getJavaType(eObject);
 	//	assert !(value instanceof TypeId) : "Use getType...) directly";		// Only EnumerationLiteralId occurs
 	//	if (value instanceof Enumeration) {
 	//		return standardLibrary.getEnumerationType();
@@ -1157,7 +1019,7 @@ public abstract class AbstractIdResolver implements IdResolver
 				bestType = type;
 			}
 			else if (type != bestType) {
-				org.eclipse.ocl.pivot.Class commonType = (org.eclipse.ocl.pivot.Class)bestType.getCommonType(this, type);	// XXX cast
+				org.eclipse.ocl.pivot.Class commonType = standardLibrary.getCommonType(bestType, type);	// XXX cast
 				if (commonType != bestType) {
 					bestType = type;
 				}
@@ -1167,22 +1029,11 @@ public abstract class AbstractIdResolver implements IdResolver
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return standardLibrary.getTupleType(typeId);
-	}
-
-	@Override
 	public final @NonNull Type getType(@NonNull TypeId typeId) {
 		Element type = typeId.accept(this);
 		assert type != null;
 		return (Type)type;
 	}
-
-	@Override
-	public /*final*/ @NonNull Type getType(@NonNull TypeId typeId, @Nullable Object context) {
-		return getType(typeId);
-	}
-
 
 	/**
 	 * @since 1.1
@@ -1224,47 +1075,6 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 		return false;
 	}
-
-	//	@Override
-	/*	public boolean oclEquals2(@Nullable Object thisValue, @Nullable Object thatValue) {
-		if (thisValue == thatValue) {
-			return true;
-		}
-		else if (thisValue instanceof OCLValue) {
-			if (thatValue instanceof OCLValue) {
-				return ((OCLValue)thisValue).oclEquals((OCLValue)thatValue);
-			}
-			else {
-				thatValue = boxedValueOf(thatValue);
-				if (thatValue instanceof OCLValue) {
-					return ((OCLValue)thisValue).oclEquals((OCLValue)thatValue);
-				}
-				else {
-					return false;
-				}
-			}
-		}
-		else if (thatValue instanceof OCLValue) {
-			thisValue = boxedValueOf(thisValue);
-			if (thisValue instanceof OCLValue) {
-				return ((OCLValue)thisValue).oclEquals((OCLValue)thatValue);
-			}
-			else {
-				return false;
-			}
-		}
-		else if (thisValue != null) {
-			if (thatValue != null) {
-				return thisValue.equals(thatValue);
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return thatValue == null;
-		}
-	} */
 
 	/**
 	 * Return true if this Value is equal to thatValue regardless of the prevailing ecore/boxed/unboxed
@@ -1648,7 +1458,18 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public @NonNull Type visitMapTypeId(@NonNull MapTypeId id) {
-		return getMapType(id);
+		MapTypeId generalizedId = id.getGeneralizedId();
+		assert generalizedId == TypeId.MAP;
+		if (id == generalizedId) {
+			return standardLibrary.getMapType();
+		}
+		else {
+			TypeId keyTypeId = id.getKeyTypeId();
+			TypeId valueTypeId = id.getValueTypeId();
+			Type keyType = getType(keyTypeId);
+			Type valueType = getType(valueTypeId);
+			return standardLibrary.getMapType(keyType, id.isKeysAreNullFree(), valueType, id.isValuesAreNullFree());
+		}
 	}
 
 	@Override

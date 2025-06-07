@@ -1058,7 +1058,9 @@ public class Ecore2AS extends AbstractExternal2AS
 			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, false, null, null);		// XXX EAnnotation / lower / upper
 			return standardLibrary.getCollectionType(typeArguments);
 		}
-		return metamodelManager.getLibraryType(unspecializedPivotClass, templateArguments);
+		else {
+			return standardLibrary.getSpecializedType(unspecializedPivotClass, templateArguments);
+		}
 	}
 
 	/**

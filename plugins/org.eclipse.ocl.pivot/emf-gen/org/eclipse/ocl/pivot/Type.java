@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
@@ -56,48 +55,14 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	Type specializeIn(CallExp expr, Type selfType);
 
 	/**
-	 * Return true if this type conform to thatType within standardLibrary.
-	 */
-	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
-
-	/**
-	 * Return the most derived type common to this type and thatType within standardLibrary.
-	 */
-	@NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type thatType);
-
-	/**
 	 * Return the inheritance description for this type within standardLibrary.
 	 */
 	@NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
-
-	/**
-	 * Return the unique executable form of this type within standardLibrary.
-	 */
-	org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary);
-
-	/**
-	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this type.
-	 *
-	 * @since 1.18
-	 */
-	@Deprecated /* @deprecated no longer different to getTypeId() */
-	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
 
 	/**
 	 * Return a unique StandardLibrary-independent identifier for this type.
 	 */
 	@NonNull TypeId getTypeId();
 
-	/**
-	 * Return true if this is the same type as thatType within standardLibrary.
-	 */
-	boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
 	boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type);
-
-	/**
-	 * Return true if this is an invalid type (with an associated error message).
-	 */
-//	boolean isInvalid();
-
-//	@NonNull Type specializeIn(@NonNull CallExp expr, @Nullable Type selfType);
 } // Type

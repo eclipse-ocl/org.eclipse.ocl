@@ -39,7 +39,7 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type returnType = executor.getIdResolver().getType(returnTypeId);
 		Object result;
-		if (returnType.conformsTo(standardLibrary, standardLibrary.getIntegerType())) {
+		if (standardLibrary.conformsTo(returnType, standardLibrary.getIntegerType())) {
 			result = ValueUtil.integerValueOf(0);
 		}
 		else {

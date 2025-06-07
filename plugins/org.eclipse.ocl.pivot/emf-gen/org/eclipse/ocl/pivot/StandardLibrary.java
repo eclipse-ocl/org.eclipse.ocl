@@ -18,14 +18,17 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
+import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.manager.JavaTypeManager;
+import org.eclipse.ocl.pivot.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -52,6 +55,12 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className);
 
 	/**
+	 * Return true if leftType conforms to rightType within standardLibrary.
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull Type leftType, @NonNull Type rightType);
+
+	/**
 	 * @since 7.0
 	 */
 	boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull Type elementType);
@@ -69,8 +78,14 @@ public interface StandardLibrary extends Element
 	 *
 	 * @since 7.0
 	 */
-	boolean conformsTo(@NonNull Type firstType, boolean firstIsRequired, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, boolean secondIsRequired, @NonNull TemplateParameterSubstitutions secondSubstitutions);
+	boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, boolean rightIsRequired, @Nullable TemplateParameterSubstitutions rightSubstitutions);
+
+	/**
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity);
 
 	/**
 	 * Return true if firstType augmented by firstSubstitutions conforms to
@@ -80,8 +95,13 @@ public interface StandardLibrary extends Element
 	 *
 	 * @since 7.0
 	 */
-	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
+	boolean conformsTo(@NonNull Type firstType, @Nullable TemplateParameterSubstitutions firstSubstitutions,
+			@NonNull Type secondType, @Nullable TemplateParameterSubstitutions secondSubstitutions);
+
+	/**
+	 * @since 7.0
+	 */
+	boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType);
 
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
 
@@ -149,13 +169,25 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+	boolean getCommonIsRequired(boolean leftIsRequired, boolean rightIsRequired);
 
 	/**
 	 * @since 7.0
 	 */
-	boolean getCommonIsRequired(boolean leftIsRequired, boolean rightIsRequired);
+	@NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions);
+
+	/**
+	 * Return the most derived type common to this type and thatType within this standardLibrary.
+	 * @since 7.0
+	 */
+	@NonNull Type getCommonType(@NonNull Type thisType, @NonNull Type thatType);
+
+	/**
+	 * Return the most derived type common to this type and thatType within this standardLibrary.
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getCommonType(org.eclipse.ocl.pivot.@NonNull Class thisType, org.eclipse.ocl.pivot.@NonNull Class thatType);
 
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
@@ -164,6 +196,11 @@ public interface StandardLibrary extends Element
 	 * @return the <tt>Enumeration</tt> type (an instance of Enumeration)
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getEnumerationType();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull IdResolver getIdResolver();
 
 	/**
 	 * Return the Inheritance dispatch table for a given type.
@@ -178,6 +215,16 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull PrimitiveType getIntegerType();
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull JavaTypeManager getJavaTypeManager();
 
 	/**
 	 * @since 7.0
@@ -203,6 +250,17 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull MapType getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments);
+
+	/**
+	 * Return the unique executable form of type within standardLibrary.
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull Type type);
 
 	org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI);
 
@@ -264,6 +322,13 @@ public interface StandardLibrary extends Element
 	@NonNull InvalidType getOclInvalidType();
 
 	/**
+	 * Obtains the single instance of the LambdaType metatype, named
+	 * <tt>OclLambda</tt>.
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType();
+
+	/**
 	 * Obtains the generic instance of the MessageType metatype, named
 	 * <tt>OclMessage</tt>.
 	 *
@@ -303,6 +368,15 @@ public interface StandardLibrary extends Element
 	 * @return the <tt>OclTuple</tt> type (an instance of Class)
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getOclTupleType();
+
+	/**
+	 * Obtains the single instance of the OclType metatype, named
+	 * <tt>OclTyp</tt>.
+	 *
+	 * @return the <tt>OclType</tt> type (an instance of Class)
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getOclTypeType();
 
 	/**
 	 * Obtains the single instance of the VoidType metatype, named
@@ -441,4 +515,10 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull PrimitiveType getUnlimitedNaturalType();
+
+	/**
+	 * Return true if leftType is the same type as rightType within this standardLibrary.
+	 * @since 7.0
+	 */
+	boolean isEqualTo(@NonNull Type leftType, @NonNull Type rightType);
 } // StandardLibrary

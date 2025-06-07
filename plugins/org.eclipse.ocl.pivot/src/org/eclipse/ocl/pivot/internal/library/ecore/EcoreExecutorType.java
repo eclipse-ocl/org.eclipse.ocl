@@ -28,14 +28,13 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperties;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperties;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeArgument;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
@@ -103,15 +102,6 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		if (this == thatInheritance) {
-			return true;
-		}
-		return thatInheritance.isSuperInheritanceOf(this);
-	}
-
-	@Override
 	public @NonNull EObject createInstance() {
 		EClassifier eClassifier2 = eClassifier;
 		if (eClassifier2 instanceof EClass) {
@@ -148,17 +138,6 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	@Override
 	public @NonNull FragmentIterable getAllSuperFragments() {
 		return new FragmentIterable(ClassUtil.requireNonNull(fragments));
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (this == type) {
-			return this.getPivotClass();
-		}
-		CompleteInheritance firstInheritance = this;
-		CompleteInheritance secondInheritance = type.getInheritance(idResolver.getStandardLibrary());
-		CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
-		return commonInheritance.getPivotClass();
 	}
 
 	@Override
@@ -222,11 +201,6 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 		else {
 			return getTypeId().getMetaclassName();
 		}
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		return this;
 	}
 
 	@Override
@@ -343,11 +317,6 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class isClass() {
 		return this;
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		return this == type;
 	}
 
 	@Override

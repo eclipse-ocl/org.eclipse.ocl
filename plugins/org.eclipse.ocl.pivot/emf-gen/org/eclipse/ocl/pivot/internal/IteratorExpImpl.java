@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.validation.ValidationWarning;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * <!-- begin-user-doc -->
@@ -231,7 +230,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				boolean isOk = false;
 				if (bodyType != null) {
 					specializedBodyType = specializedBodyType != null ? specializedBodyType/*.behavioralType()*/ : null;
-					if ((specializedBodyType != null) && standardLibrary.conformsTo(specializedBodyType, TemplateParameterSubstitutions.EMPTY, oclComparableType, TemplateParameterSubstitutions.EMPTY)) {
+					if ((specializedBodyType != null) && standardLibrary.conformsTo(specializedBodyType, null, oclComparableType, null)) {
 						isOk = true;
 					}
 				}

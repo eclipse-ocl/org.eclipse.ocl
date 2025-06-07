@@ -257,12 +257,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@Deprecated
-	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull Iterable<Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**

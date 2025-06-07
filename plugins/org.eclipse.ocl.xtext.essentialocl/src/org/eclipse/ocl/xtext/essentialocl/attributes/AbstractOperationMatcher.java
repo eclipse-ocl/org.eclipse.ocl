@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
@@ -87,6 +88,26 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		}
 	};
 
+	private static final @NonNull TemplateParameterSubstitutions NO_MATCH = new NoMatch();
+
+	private static class NoMatch implements TemplateParameterSubstitutions
+	{
+		@Override
+		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public boolean isEmpty() {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+			throw new IllegalStateException();
+		}
+	}
+
 	protected @Nullable CS2ASContext cs2asContext;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
@@ -108,8 +129,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
-	protected int compareMatches(@NonNull Object match1, @NonNull TemplateParameterSubstitutions referenceBindings,
-			@NonNull Object match2, @NonNull TemplateParameterSubstitutions candidateBindings, boolean useCoercions) {
+	protected int compareMatches(@NonNull Object match1, @Nullable TemplateParameterSubstitutions referenceBindings,
+			@NonNull Object match2, @Nullable TemplateParameterSubstitutions candidateBindings, boolean useCoercions) {
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		@NonNull Operation reference = (Operation) match1;
 		@NonNull Operation candidate = (Operation) match2;
@@ -125,10 +146,10 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 				return iteratorCountDelta;
 			}
 			if (referenceType != candidateType) {
-				if (standardLibrary.conformsTo(specializedReferenceType, TemplateParameterSubstitutions.EMPTY, specializedCandidateType, TemplateParameterSubstitutions.EMPTY)) {
+				if (standardLibrary.conformsTo(specializedReferenceType, null, specializedCandidateType, null)) {
 					return 1;
 				}
-				else if (standardLibrary.conformsTo(specializedCandidateType, TemplateParameterSubstitutions.EMPTY, specializedReferenceType, TemplateParameterSubstitutions.EMPTY)) {
+				else if (standardLibrary.conformsTo(specializedCandidateType, null, specializedReferenceType, null)) {
 					return -1;
 				}
 			}
@@ -136,9 +157,6 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		int referenceConversions = 0;
 		int candidateConversions = 0;
 		Type comparedSourceType = sourceType;
-		//		if (comparedSourceType instanceof DomainMetaclass) {
-		//			comparedSourceType = ((DomainMetaclass)comparedSourceType).getInstanceType();
-		//		}
 		if (comparedSourceType != specializedReferenceType) {
 			referenceConversions++;
 		}
@@ -213,13 +231,13 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	public @Nullable Operation getBestOperation(@NonNull Invocations invocations, boolean useCoercions) {
 		ambiguities = null;
 		Operation bestOperation = null;
-		TemplateParameterSubstitutions bestBindings = TemplateParameterSubstitutions.EMPTY;
+		TemplateParameterSubstitutions bestBindings = null;
 		List<@NonNull Operation> ambiguities2 = ambiguities;
 		for (NamedElement namedElement : invocations) {
 			if (namedElement instanceof Operation) {
 				Operation candidateOperation = (Operation)namedElement;
 				TemplateParameterSubstitutions candidateBindings = matches(candidateOperation, useCoercions);
-				if (candidateBindings != null) {
+				if (candidateBindings != NO_MATCH) {
 					if (bestOperation == null) {
 						bestOperation = candidateOperation;
 						bestBindings = candidateBindings;
@@ -261,11 +279,16 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		return false;
 	}
 
+	/**
+	 * Return the template parameter substitutions to support use of candidateOperation for the configured operation optionally using coercions or arguments.
+	 * The return may be null if no template parameter substitutions are required.
+	 * Returns NO_MATCH if no match is possible.
+	 */
 	protected @Nullable TemplateParameterSubstitutions matches(@NonNull Operation candidateOperation, boolean useCoercions) {
 		List<@NonNull Parameter> candidateParameters = PivotUtil.getOwnedParametersList(candidateOperation);
 		int iSize = getArgumentCount();
 		if (iSize != candidateParameters.size()) {
-			return null;
+			return NO_MATCH;
 		}
 		TemplateParameterSubstitutions bindings = null;
 		if (TemplateParameterSubstitutionVisitor.hasTemplateParameters(candidateOperation)) {
@@ -275,9 +298,6 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 				visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);
 			}
 		}
-		if (bindings == null) {
-			bindings = TemplateParameterSubstitutions.EMPTY;
-		}
 		for (int i = 0; i < iSize; i++) {
 			Parameter candidateParameter = candidateParameters.get(i);
 			OCLExpression expression = getArgument(i);
@@ -286,7 +306,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 			if ((cs2asContext != null) && (expressionType instanceof NormalizedTemplateParameter)) {
 				expressionType = cs2asContext.resolveTemplateParameter((NormalizedTemplateParameter)expressionType);
 			}
-			if (!standardLibrary.conformsTo(expressionType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
+			if (!standardLibrary.conformsTo(expressionType, null, candidateType, bindings)) {
 				boolean coerceable = false;
 				if (useCoercions) {
 					CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(expressionType);
@@ -294,7 +314,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 						if (partialClass instanceof PrimitiveType) {
 							for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
 								Type corcedSourceType = coercion.getType();
-								if ((corcedSourceType != null) && standardLibrary.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
+								if ((corcedSourceType != null) && standardLibrary.conformsTo(corcedSourceType, null, candidateType, bindings)) {
 									coerceable = true;
 									break;
 								}
@@ -306,7 +326,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 					}
 				}
 				if (!coerceable) {
-					return null;
+					return NO_MATCH;
 				}
 			}
 		}

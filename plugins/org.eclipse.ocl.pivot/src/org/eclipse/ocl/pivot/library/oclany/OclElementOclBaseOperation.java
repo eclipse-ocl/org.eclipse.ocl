@@ -40,7 +40,7 @@ public class OclElementOclBaseOperation extends AbstractPolyOperation
 		Element asBase = asElementExtension.getBase();
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type baseType = (Type)asBase; //executor.getIdResolver().getDynamicTypeOf(asBase);
-		boolean result = baseType.conformsTo(standardLibrary, asType);	// FIXME this can fail because ExecutableStandardLibrary.getMetaclass is bad
+		boolean result = standardLibrary.conformsTo(baseType, asType);	// FIXME this can fail because ExecutableStandardLibrary.getMetaclass is bad
 		if (!result) {
 			return null;
 		}

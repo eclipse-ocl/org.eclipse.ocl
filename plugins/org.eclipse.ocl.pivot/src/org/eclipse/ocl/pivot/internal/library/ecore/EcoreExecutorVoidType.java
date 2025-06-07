@@ -11,8 +11,6 @@
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
@@ -34,15 +32,5 @@ public class EcoreExecutorVoidType extends EcoreExecutorType implements VoidType
 	@Override
 	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
 		return OclVoidAllInstancesOperation.allInstances();
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (type instanceof EcoreExecutorInvalidType) {
-			return false;
-		}
-		else {
-			return true;
-		}
 	}
 }

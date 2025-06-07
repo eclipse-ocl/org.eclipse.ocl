@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
-import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -173,7 +173,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					}
 					isRequired = context.isRequiredWithDefault(csResult);
 					TypedElement resultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.RESULT_NAME, resultType, isRequired);
-					LambdaType lambdaType = context.getStandardLibrary().getLambdaType("Lambda", contextParameter, parameters, resultParameter, null);
+					LambdaType lambdaType = context.getStandardLibrary().getLambdaType(contextParameter, parameters, resultParameter, null);
 					if (lambdaParameter != null) {
 						lambdaParameter.setType(lambdaType);
 						lambdaParameter.toString();
@@ -213,8 +213,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			if ((csContext != null) && (csResult != null)) {
 				Type contextType = PivotUtil.getPivot(Type.class, csContext);
 				Type resultType = PivotUtil.getPivot(Type.class, csResult);
-				String name = csElement.getName();
-				if ((contextType != null) && (resultType != null) && (name != null)) {
+				if ((contextType != null) && (resultType != null)) {
 					CompleteModelInternal completeModel = context.getMetamodelManager().getCompleteModel();
 					Orphanage orphanage = completeModel.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
@@ -240,7 +239,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					}
 					isRequired = context.isRequiredWithDefault(csResult);
 					TypedElement resultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.RESULT_NAME, resultType, isRequired);
-					LambdaType lambdaType = context.getStandardLibrary().getLambdaType(name, contextParameter, parameters, resultParameter, null);
+					LambdaType lambdaType = context.getStandardLibrary().getLambdaType(contextParameter, parameters, resultParameter, null);
 					context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 				}
 			}

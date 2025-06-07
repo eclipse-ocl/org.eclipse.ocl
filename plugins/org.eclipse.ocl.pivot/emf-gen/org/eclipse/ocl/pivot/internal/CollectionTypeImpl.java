@@ -17,11 +17,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -29,7 +27,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -39,12 +36,8 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -615,66 +608,8 @@ implements CollectionType {
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (type instanceof CollectionType) {
-			return TypeUtil.conformsToCollectionType(standardLibrary, this, (CollectionType)type);
-		}
-		if (getUnspecializedElement() != null) {
-			return ((Type)getUnspecializedElement()).conformsTo(standardLibrary, type);
-		}
-		return super.conformsTo(standardLibrary, type);
-	}
-
-	@Override
 	public Type flattenedType() {
 		return getElementType();
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		CompleteInheritance commonInheritance = thisInheritance.getCommonInheritance(thatInheritance);
-		org.eclipse.ocl.pivot.Class commonType = commonInheritance.getPivotClass();
-		if (type instanceof CollectionType) {
-			CollectionType thatCollectionType = (CollectionType)type;
-			Type thisElementType = this.getElementType();
-			Type thatElementType = ClassUtil.requireNonNull(thatCollectionType.getElementType());
-			boolean commonIsNullFree = this.isIsNullFree() && thatCollectionType.isIsNullFree();
-			Type commonElementType = thisElementType.getCommonType(idResolver, thatElementType);
-			if ((commonInheritance instanceof CompleteInheritanceImpl) && !((CompleteInheritanceImpl)commonInheritance).isIsAbstract()) {
-				CollectionType commonCollectionType = (CollectionType)commonType;
-				return standardLibrary.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
-			}
-			else {
-				if (isOrdered() && thatCollectionType.isOrdered()) {
-					if (isUnique() && thatCollectionType.isUnique()) {
-						return standardLibrary.getOrderedSetType(commonElementType, commonIsNullFree, null, null);
-					}
-					else {
-						return standardLibrary.getSequenceType(commonElementType, commonIsNullFree, null, null);
-					}
-				}
-				else {
-					if (isUnique() && thatCollectionType.isUnique()) {
-						return standardLibrary.getSetType(commonElementType, commonIsNullFree, null, null);
-					}
-					else if ((this instanceof BagType) && (thatCollectionType instanceof BagType)) {
-						return standardLibrary.getBagType(commonElementType, commonIsNullFree, null, null);
-					}
-					else {
-						return standardLibrary.getCollectionType(standardLibrary.getCollectionType(), commonElementType, commonIsNullFree, null, null);
-					}
-				}
-			}
-		}
-		else {
-			return commonType;
-		}
 	}
 
 	@Override
@@ -686,17 +621,6 @@ implements CollectionType {
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {
 		return (CollectionTypeId) super.getTypeId();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof CollectionType)) {
-			return false;
-		}
-		return TypeUtil.isEqualToCollectionType(standardLibrary, this, (CollectionType)type);
 	}
 
 	@Override

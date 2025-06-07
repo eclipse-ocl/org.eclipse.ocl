@@ -129,7 +129,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 			return false;
 		}
 		Type thatType = ((UnboxedMapDescriptor)typeDescriptor).keyType;
-		return thatType.conformsTo(standardLibrary, keyType);
+		return standardLibrary.conformsTo(thatType, keyType);
 	}
 
 	@Override

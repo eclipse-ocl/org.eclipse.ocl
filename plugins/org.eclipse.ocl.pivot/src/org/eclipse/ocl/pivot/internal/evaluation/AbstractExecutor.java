@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -39,7 +40,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.IndentingLogger;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
@@ -347,12 +347,13 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	 */
 	@Override
 	public Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		Operation apparentOperation = operationCallExp.getReferredOperation();
 		assert apparentOperation != null;
 		//
 		//	Resolve source type.
 		//
-		Type actualSourceType = null;
+		org.eclipse.ocl.pivot.Class actualSourceType = null;
 		if (!apparentOperation.isIsStatic()) {
 			actualSourceType = idResolver.getStaticClassOf(sourceAndArgumentValues[0]);
 		}
@@ -363,8 +364,8 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		if (asParameters.size() == 1) {
 			Type parameterType = asParameters.get(0).getType();
 			if ((parameterType instanceof SelfType) && (actualSourceType != null)) {
-				Type actualArgType = idResolver.getStaticClassOf(sourceAndArgumentValues[1]);
-				actualSourceType = actualSourceType.getCommonType(idResolver, actualArgType);
+				org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticClassOf(sourceAndArgumentValues[1]);
+				actualSourceType = standardLibrary.getCommonType(actualSourceType, actualArgType);
 			}
 		}
 		//
@@ -372,7 +373,6 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		//
 		Operation actualOperation;
 		org.eclipse.ocl.pivot.Class actualSourceClass = null;
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		if (actualSourceType != null) {
 			actualSourceClass = actualSourceType.isClass();
 			if (actualSourceClass == null)  {

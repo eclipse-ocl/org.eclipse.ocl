@@ -14,19 +14,13 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -169,89 +163,12 @@ implements Type {
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.isSubInheritanceOf(thatInheritance);
-	}
-
-	/**
-	 * Create and return an instance of this type.
-	 *
-	 * Beware: this functionality is invalid if this type is in a dynamically loaded Ecore metamodel and has a supertype
-	 * from a generated Ecore metamodel. See Bug 532561. Direct creation of a DynamicEObjectImpl may be much better.
-	 *
-	 * This functionality is broken if the esObject has not been set. At this point the environmentFactory is not available
-	 * to perform a lazy AS2Ecore. The caller probably can.
-	 *
-	 * @deprecated caller can do better without this bad helper method.
-	 */
-	@Deprecated
-	public @NonNull EObject createInstance() {
-		EObject eTarget = getESObject();
-		if (eTarget instanceof EClass) {
-			EClass eClass = (EClass) eTarget;
-			EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
-			assert element != null;
-			return element;
-		}
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Create and return an instance of this data type from iytds string representation.
-	 *
-	 * This functionality is broken if the esObject has not been set. At this point the environmentFactory is not available
-	 * to perform a lazy AS2Ecore. The caller probably can.
-	 *
-	 * @deprecated caller can do better without this bad helper method.
-	 */
-	@Deprecated
-	public @Nullable Object createInstance(@NonNull String value) {
-		EObject eTarget = getESObject();
-		if (eTarget instanceof EDataType) {
-			EDataType eDataType = (EDataType) eTarget;
-			return eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
-		}
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (type == this) {
-			return this;
-		}
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.getCommonInheritance(thatInheritance).getPivotClass();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		Type thisType = this.getNormalizedType(standardLibrary);
-		Type thatType = type.getNormalizedType(standardLibrary);
-		return thisType == thatType;
-	}
-
-	@Override
 	public boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
 			return true;
 		}
 		return false;
 	}
-
-	//	@Override
-	//	public boolean isInvalid() {
-	//		return false;
-	//	}
 
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
@@ -266,22 +183,5 @@ implements Type {
 	@Override
 	public int oclHashCode() {
 		return getTypeId().hashCode();
-	}
-
-	//	@Override
-	//	@NonNull
-	//	public List<? extends Constraint> getOwnedRule() {
-	//		throw new UnsupportedOperationException();		// FIXME
-	//	}
-
-	public org.eclipse.ocl.pivot.Package getPackage() {
-		throw new UnsupportedOperationException();		// FIXME
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull TemplateParameters getTemplateParameters() {
-		throw new UnsupportedOperationException();		// FIXME
 	}
 } //TypeImpl

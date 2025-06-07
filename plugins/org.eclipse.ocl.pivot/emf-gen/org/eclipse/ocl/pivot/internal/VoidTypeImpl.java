@@ -12,10 +12,7 @@ package org.eclipse.ocl.pivot.internal;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -87,15 +84,5 @@ public class VoidTypeImpl
 	@Override
 	public @NonNull TypeId computeId() {
 		return TypeId.OCL_VOID;
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (type instanceof InvalidType) {
-			return false;
-		}
-		else {
-			return true;
-		}
 	}
 } //VoidTypeImpl

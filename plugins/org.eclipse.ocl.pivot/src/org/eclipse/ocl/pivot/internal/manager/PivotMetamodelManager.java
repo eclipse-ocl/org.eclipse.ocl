@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -68,7 +67,6 @@ import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
@@ -1091,43 +1089,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public @NonNull List<@NonNull Library> getLibraries() { return asLibraries; }
 	@Override
 	public @Nullable Resource getLibraryResource() { return asLibraryResource; }
-
-	@Override @Deprecated
-	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		//		assert !(libraryType instanceof CollectionType);
-		assert libraryType == PivotUtil.getUnspecializedTemplateableElement(libraryType);
-		TemplateSignature templateSignature = libraryType.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature != null ? templateSignature.getOwnedParameters() : EMPTY_TEMPLATE_PARAMETER_LIST2;
-		if (templateParameters.isEmpty()) {
-			return libraryType;
-		}
-		if (templateArguments.size() != templateParameters.size()) {
-			throw new IllegalArgumentException("Incorrect template bindings for template type " + libraryType.getName());
-		}
-		boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
-		if (isUnspecialized) {
-			return libraryType;
-		}
-		CompleteClassInternal libraryCompleteClass = getCompleteClass(libraryType);
-		org.eclipse.ocl.pivot.Class primaryClass = libraryCompleteClass.getPrimaryClass();
-		if (primaryClass instanceof CollectionType) {
-			throw new IllegalStateException("Use a CollectionType method");			// XXX
-		}
-		else if (primaryClass instanceof LambdaType) {
-			throw new IllegalStateException("Use a LambdaType method");			// XXX
-		}
-		else if (primaryClass instanceof MapType) {
-			throw new IllegalStateException("Use a MapType method");			// XXX
-		}
-		else if (primaryClass instanceof TupleType) {
-			throw new IllegalStateException("Use a TupleType method");			// XXX
-		}
-		else {
-			@SuppressWarnings("unchecked")
-			T specializedType = (T) standardLibrary.getSpecializedType(primaryClass, templateArguments);
-			return specializedType;
-		}
-	}
 
 	@Override
 	public @NonNull Iterable<Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {

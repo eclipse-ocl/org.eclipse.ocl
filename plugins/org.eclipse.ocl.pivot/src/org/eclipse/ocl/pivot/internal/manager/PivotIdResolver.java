@@ -84,7 +84,7 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
 		Type nestedType = environment.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			CompletePackage asParentCompletePackage = environment.getOwnedCompleteModel().getCompletePackage(parentPackage);
@@ -103,7 +103,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
 		Type nestedType = environment.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			nestedType = environment.getNestedType(parentPackage, name);
@@ -119,7 +119,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
 		Type nestedType = environment.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			nestedType = environment.getNestedType(parentPackage, name);
@@ -132,7 +132,7 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected org.eclipse.ocl.pivot.@NonNull Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = metamodelManager.getCompleteEnvironment();
+		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
 		org.eclipse.ocl.pivot.Package nestedPackage = environment.getNestedPackage(parentPackage, name);
 		if (nestedPackage == null) {
 			throw new UnsupportedOperationException();
@@ -186,7 +186,7 @@ public class PivotIdResolver extends AbstractIdResolver
 			logger.error("Failed to convert '" + eType + "'", e);
 		}
 		//		return new DomainInvalidTypeImpl(standardLibrary, "No object created by Ecore2AS");
-		return metamodelManager.getStandardLibrary().getOclInvalidType();
+		return environmentFactory.getStandardLibrary().getOclInvalidType();
 	}
 
 	@Override

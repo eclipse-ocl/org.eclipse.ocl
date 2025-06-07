@@ -31,7 +31,7 @@ public class UnlimitedNaturalOclAsTypeOperation extends OclAnyOclAsTypeOperation
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		Type argType = asType(argVal);
-		if (sourceType.conformsTo(standardLibrary, argType)) {
+		if (standardLibrary.conformsTo(sourceType, argType)) {
 			if (isUnlimited(sourceVal) && ((argType == standardLibrary.getRealType()) || (argType == standardLibrary.getIntegerType()))) {
 				throw new InvalidValueException(PivotMessages.NonFiniteIntegerValue);
 			}

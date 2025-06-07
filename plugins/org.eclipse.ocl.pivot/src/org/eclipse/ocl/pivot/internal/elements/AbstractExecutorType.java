@@ -20,7 +20,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
@@ -35,11 +34,6 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public Type flattenedType() {
 		throw new UnsupportedOperationException();
 	}
@@ -51,11 +45,6 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 
 	@Override
 	public @NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type thatType) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -102,11 +91,6 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType( @NonNull StandardLibrary standardLibrary) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		throw new UnsupportedOperationException();
 	}
@@ -128,11 +112,6 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class isClass() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType) {
 		throw new UnsupportedOperationException();
 	}
 

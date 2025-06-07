@@ -24,10 +24,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
@@ -37,9 +37,11 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -53,15 +55,21 @@ import org.eclipse.ocl.pivot.internal.executor.ExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
+import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.manager.JavaTypeManager;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
+import org.eclipse.ocl.pivot.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
+import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
@@ -110,17 +118,29 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	/**
+	 * ExecutorJavaTypeManager encapsulates the knowledge about known java types.
+	 *
+	 * @since 7.0
+	 */
+	public static class ExecutorJavaTypeManager extends AbstractJavaTypeManager
+	{
+		public ExecutorJavaTypeManager(@NonNull StandardLibrary standardLibrary) {
+			super(standardLibrary);
+		}
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	public static class ExecutorMapTypeManager extends AbstractMapTypeManager
 	{
 		public ExecutorMapTypeManager(@NonNull StandardLibrary standardLibrary) {
-			super(standardLibrary.getMapType());
+			super(standardLibrary);
 		}
 
 		@Override
 		protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
-			ExecutorMapType executorMapType = new ExecutorMapType(TypeId.MAP_NAME, genericMapType, typeArguments.getKeyType(), typeArguments.isKeysAreNullFree(), typeArguments.getValueType(), typeArguments.isValuesAreNullFree());
+			ExecutorMapType executorMapType = new ExecutorMapType(TypeId.MAP_NAME, standardLibrary.getMapType(), typeArguments.getKeyType(), typeArguments.isKeysAreNullFree(), typeArguments.getValueType(), typeArguments.isValuesAreNullFree());
 			if (entryClass != null) {
 				executorMapType.setEntryClass(entryClass);
 			}
@@ -158,17 +178,40 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	 */
 	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
-	private @NonNull Map<@NonNull String, WeakReference<@NonNull EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();		// Keys are interned
+	private @NonNull Map<@NonNull String, @NonNull WeakReference<@NonNull EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();		// Keys are interned
 	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull ExecutorReflectivePackage>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
+	private final boolean mutable;			//XXX split into two classes
 
 	public ExecutorStandardLibrary(EcoreExecutorPackage... execPackages) {
 		OCLstdlibTables.PACKAGE.getClass();
+		this.mutable = false;
 		for (EcoreExecutorPackage execPackage : execPackages) {
 			assert execPackage != null;
 			addPackage(execPackage, null);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public ExecutorStandardLibrary(@NonNull ExecutorStandardLibrary immutableStandardLibrary) {
+		assert !immutableStandardLibrary.mutable;
+		this.mutable = true;
+		for (WeakReference<@NonNull EcoreExecutorPackage> execPackageRef : immutableStandardLibrary.ePackageMap.values()) {
+			assert execPackageRef != null;
+			EcoreExecutorPackage execPackage = execPackageRef.get();
+			if (execPackage != null) {
+				addPackage(execPackage, null);
+			}
+		}
+		for (Map.Entry<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> entry : immutableStandardLibrary.extensions.entrySet()) {
+			EcoreExecutorPackage basePackage = entry.getKey();
+			for (@NonNull EcoreExecutorPackage extensionPackage : entry.getValue()) {
+				addExtension(basePackage, extensionPackage);
+			}
 		}
 	}
 
@@ -205,17 +248,30 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
-	protected @Nullable Type basicGetBehavioralType(@NonNull Type secondType) {
-		throw new UnsupportedOperationException();
+	protected @Nullable Type basicGetBehavioralType(@NonNull Type type) {
+		if (type instanceof DataType) {
+			return ((DataType)type).getBehavioralClass();
+		}
+		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	protected boolean conformsToType(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		if (firstType != secondType) {
-			throw new UnsupportedOperationException();
+	public org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className) {
+		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+		if (extensions2 != null) {
+			for (@NonNull List<@NonNull EcoreExecutorPackage> packages : extensions2.values()) {
+				for (@NonNull EcoreExecutorPackage extensionPackage : packages) {
+					org.eclipse.ocl.pivot.Class executorType = extensionPackage.getOwnedClass(className);
+					if (executorType != null) {
+						return executorType;
+					}
+				}
+			}
 		}
-		return true;
+		return null;
 	}
 
 	@Override
@@ -224,8 +280,30 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
+	protected @NonNull IdResolver createIdResolver() {
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		assert executor != null;
+		return executor.getIdResolver();
+	}
+
+	@Override
+	protected @NonNull JavaTypeManager createJavaTypeManager() {
+		return new ExecutorJavaTypeManager(this);
+	}
+
+	@Override
+	protected @Nullable LambdaTypeManager createLambdaTypeManager() {
+		return null;
+	}
+
+	@Override
 	protected @NonNull MapTypeManager createMapTypeManager() {
 		return new ExecutorMapTypeManager(this);
+	}
+
+	@Override
+	protected @Nullable SpecializedTypeManager createSpecializedTypeManager() {
+		return null;
 	}
 
 	@Override
@@ -273,6 +351,108 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		return OCLstdlibTables.Types._Collection;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+				@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+		if (leftType == rightType) {
+			return getPrimaryType(leftType);
+		}
+		if (leftType instanceof EcoreReflectiveType) {
+			CompleteInheritance firstInheritance = leftType.getInheritance(this);
+			CompleteInheritance secondInheritance = rightType.getInheritance(this);
+			CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
+			return commonInheritance.getPivotClass();
+		}
+		if (leftType instanceof ExecutorSpecializedType) {
+			throw new UnsupportedOperationException();			// WIP fixme
+		}
+
+		if (leftType instanceof JavaType) {
+			return getCommonJavaType((JavaType)leftType, rightType);
+		}
+		else if (leftType instanceof TemplateParameter) {
+			throw new UnsupportedOperationException();			// WIP fixme
+		}
+		return super.getCommonType(leftType, leftSubstitutions, rightType, rightSubstitutions);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected org.eclipse.ocl.pivot.@NonNull Class getCommonJavaType(@NonNull JavaType thisType, @NonNull Type thatType) {
+		if (thisType == thatType) {
+			return thisType;
+		}
+		if (!(thatType instanceof JavaType)) {
+			return getOclAnyType();
+		}
+		JavaType thisJavaType = thisType;
+		JavaType thatJavaType = (JavaType)thatType;
+		java.lang.Class<?> commonClass = getCommonClass1(thisJavaType.javaClass, thatJavaType.javaClass);
+		if (commonClass != null) {
+			return getJavaType(commonClass);
+		}
+		else {
+			return getOclAnyType();
+		}
+	}
+	private static java.lang.@Nullable Class<?> getCommonClass1(java.lang.@NonNull Class<?> thisClass, java.lang.@NonNull Class<?> thatClass) {
+		java.lang.Class<?> commonClass = getCommonClass2(thisClass, thatClass);
+		if (commonClass != null) {
+			return commonClass;
+		}
+		java.lang.Class<?> superclass = thisClass.getSuperclass();
+		if (superclass != null) {
+			commonClass = getCommonClass1(superclass, thatClass);
+			if (commonClass != null) {
+				return commonClass;
+			}
+		}
+		for (java.lang.Class<?> superInterface : thisClass.getInterfaces()) {
+			if (superInterface != null) {
+				commonClass = getCommonClass1(superInterface, thatClass);
+				if (commonClass != null) {
+					return commonClass;
+				}
+			}
+		}
+		return null;
+	}
+	private static java.lang.@Nullable Class<?> getCommonClass2(java.lang.@NonNull Class<?> thisClass, java.lang.@NonNull Class<?> thatClass) {
+		if (thisClass == thatClass) {
+			return thisClass;
+		}
+		java.lang.Class<?> superclass = thatClass.getSuperclass();
+		if (superclass != null) {
+			java.lang.Class<?> commonClass = getCommonClass2(thisClass, superclass);
+			if (commonClass != null) {
+				return commonClass;
+			}
+		}
+		for (java.lang.Class<?> superInterface : thatClass.getInterfaces()) {
+			if (superInterface != null) {
+				java.lang.Class<?> commonClass = getCommonClass2(thisClass, superInterface);
+				if (commonClass != null) {
+					return commonClass;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected org.eclipse.ocl.pivot.@NonNull Class getCommonTupleType(@NonNull TupleType thisType, @NonNull Type thatType) {
+		if (thisType != thatType) {
+			return getOclAnyType();
+		}
+		return thisType;				// XXX missing code
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
@@ -287,11 +467,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 			return enumerationType;
 		}
 		throw new IllegalStateException("No extension package defines Enumeration type"); //$NON-NLS-1$
-	}
-
-	private @NonNull IdResolver getIdResolver() {
-		throw new UnsupportedOperationException();			// XXX
-	//	return new EcoreIdResolver(zzannotatingComments, this);			// XXX
 	}
 
 	/**
@@ -367,25 +542,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		return OCLstdlibTables.Types._Integer;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className) {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
-		if (extensions2 != null) {
-			for (@NonNull List<@NonNull EcoreExecutorPackage> packages : extensions2.values()) {
-				for (@NonNull EcoreExecutorPackage extensionPackage : packages) {
-					org.eclipse.ocl.pivot.Class executorType = extensionPackage.getOwnedClass(className);
-					if (executorType != null) {
-						return executorType;
-					}
-				}
-			}
-		}
-		return null;
-	}
-
 	@Override
 	public @NonNull MapType getMapType() {
 		return OCLstdlibTables.Types._Map;
@@ -459,6 +615,14 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		return OCLstdlibTables.Types._OclInvalid;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType() {
+		return OCLstdlibTables.Types._OclLambda;
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getOclMessageType() {
 		return OCLstdlibTables.Types._OclMessage;
@@ -473,7 +637,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull Class getOclStereotypeType() {
+	public org.eclipse.ocl.pivot.@NonNull Class getOclStereotypeType() {
 		return OCLstdlibTables.Types._OclStereotype;
 	}
 
@@ -485,6 +649,14 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getOclTupleType() {
 		return OCLstdlibTables.Types._OclTuple;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getOclTypeType() {
+		return OCLstdlibTables.Types._OclType;
 	}
 
 	@Override
@@ -553,46 +725,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		return OCLstdlibTables.Types._String;
 	}
 
-	/*	public @NonNull DomainTupleType getTupleType(@NonNull List<? extends DomainTypedElement> parts) {
-		StringBuilder s = new StringBuilder();
-		for (DomainTypedElement part : parts) {
-			s.append(part.getName());
-			s.append("\n"); //$NON-NLS-1$
-		}
-		String key = s.toString();
-		synchronized (this) {
-			List<WeakReference<DomainTupleType>> tupleTypes = tupleTypeMap.get(key);
-			if (tupleTypes != null) {
-				for (int j = tupleTypes.size(); --j >= 0; ) {
-					WeakReference<DomainTupleType> tupleTypeRef = tupleTypes.get(j);
-					DomainTupleType tupleType = tupleTypeRef.get();
-					if (tupleType == null) {
-						tupleTypes.remove(j);		// Trim stale list entry.
-					}
-					else {
-						int i = 0;
-						for (; i < parts.size(); i++) {
-							List<? extends DomainTypedElement> ownedAttributes = tupleType.getOwnedAttribute();
-							if (ownedAttributes.get(i).getType() != parts.get(i).getType()) {
-								break;
-							}
-						}
-						if (i >= parts.size()) {
-							return tupleType;
-						}
-					}
-				}
-			}
-			else {
-				tupleTypes = new ArrayList<>();
-				tupleTypeMap.put(key, tupleTypes);
-			}
-			DomainTupleType tupleType = new AbstractTupleType(this, parts);
-			tupleTypes.add(new WeakReference<>(tupleType));
-			return tupleType;
-		}
-	} */
-
 	@Override
 	public @NonNull CollectionType getUniqueCollectionType() {
 		return OCLstdlibTables.Types._UniqueCollection;
@@ -601,6 +733,13 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Override
 	public @NonNull PrimitiveType getUnlimitedNaturalType() {
 		return OCLstdlibTables.Types._UnlimitedNatural;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean isMutable() {
+		return mutable;
 	}
 
 	public void resetSeverities() {

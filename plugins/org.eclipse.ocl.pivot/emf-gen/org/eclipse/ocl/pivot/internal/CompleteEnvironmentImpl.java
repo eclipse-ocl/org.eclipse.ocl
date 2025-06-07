@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StandardLibraryInternal;
@@ -494,9 +493,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public @NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		CompleteModelInternal completeModelInternal = ((CompleteModelInternal)PivotFactory.eINSTANCE.createCompleteModel()).init(this);
-		setOwnedCompleteModel(completeModelInternal);
-		setOwnedStandardLibrary(PivotFactory.eINSTANCE.createStandardLibraryInternal().init(completeModelInternal));
+		setOwnedCompleteModel(environmentFactory.getCompleteModel());
+		setOwnedStandardLibrary(environmentFactory.getStandardLibrary());
 		return this;
 	}
 

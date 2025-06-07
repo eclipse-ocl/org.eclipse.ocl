@@ -16,9 +16,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -76,8 +75,8 @@ public interface StandardLibraryInternal extends StandardLibrary
 	 *
 	 * @since 7.0
 	 */
-	int compareOperationMatches(@NonNull Operation referenceOperation, @NonNull TemplateParameterSubstitutions referenceBindings,
-			@NonNull Operation candidateOperation, @NonNull TemplateParameterSubstitutions candidateBindings);
+	int compareOperationMatches(@NonNull Operation referenceOperation, @Nullable TemplateParameterSubstitutions referenceBindings,
+			@NonNull Operation candidateOperation, @Nullable TemplateParameterSubstitutions candidateBindings);
 
 	/**
 	 * @since 1.17
@@ -101,12 +100,10 @@ public interface StandardLibraryInternal extends StandardLibrary
 	/**
 	 * @since 7.0
 	 */
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
+	@NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 	@Override
 	@NonNull Property getOclInvalidProperty();
-	org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType();
-	org.eclipse.ocl.pivot.@NonNull Class getOclTypeType();
 	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 
 	org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name);
@@ -115,12 +112,11 @@ public interface StandardLibraryInternal extends StandardLibrary
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
-	@Override
-	@NonNull TupleTypeManagerInternal getTupleTypeManager();
-	@NonNull StandardLibraryInternal init(@NonNull CompleteModelInternal completeModel);
+	@NonNull StandardLibraryInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
 	boolean isElementType(@NonNull CompleteClass completeClass, @NonNull Type elementType, @NonNull VoidType oclVoidType);
 	boolean isExplicitDefaultStandardLibraryURI();
 	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
+	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
 
 } // StandardLibraryInternal

@@ -70,16 +70,6 @@ implements AnyType {
 		return visitor.visitAnyType(this);
 	}
 
-	/*	@Override
-	public boolean conformsTo(@NonNull DomainStandardLibrary standardLibrary, @NonNull DomainType type) {
-		if (type instanceof AnyType) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	} */
-
 	@Override
 	public @NonNull TypeId computeId() {
 		if (TypeId.OCL_ANY_NAME.equals(name)) {

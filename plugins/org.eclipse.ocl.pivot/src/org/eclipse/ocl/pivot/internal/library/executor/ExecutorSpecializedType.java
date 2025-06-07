@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -54,16 +53,6 @@ public class ExecutorSpecializedType extends AbstractExecutorClass implements Ex
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		throw new UnsupportedOperationException();			// WIP fixme
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		throw new UnsupportedOperationException();			// WIP fixme
-	}
-
-	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		throw new UnsupportedOperationException();			// WIP fixme
 	}
@@ -74,11 +63,6 @@ public class ExecutorSpecializedType extends AbstractExecutorClass implements Ex
 	}
 
 	public Operation lookupOperation(StandardLibrary standardLibrary, @NonNull String operationName, Type... argumentTypes) {
-		throw new UnsupportedOperationException();			// WIP fixme
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		throw new UnsupportedOperationException();			// WIP fixme
 	}
 

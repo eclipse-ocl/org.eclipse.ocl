@@ -32,7 +32,7 @@ public class OclAnyOclIsKindOfOperation extends AbstractUntypedBinaryOperation
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		Type argType = asType(argVal);
-		boolean result = sourceType.conformsTo(standardLibrary, argType);	// FIXME this fails because ExecutableStandardLibrary.getMetaclass is bad
+		boolean result = standardLibrary.conformsTo(sourceType, argType);	// FIXME this fails because ExecutableStandardLibrary.getMetaclass is bad
 		return result;
 	}
 }

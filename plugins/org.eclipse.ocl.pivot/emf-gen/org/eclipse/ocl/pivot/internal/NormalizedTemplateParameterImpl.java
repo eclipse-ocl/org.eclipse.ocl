@@ -195,16 +195,6 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {			// XXX
-		try {
-			return getInheritance(standardLibrary).getPivotClass();
-		}
-		catch (Throwable e) {
-			return standardLibrary.getOclAnyType();			// FIXME should never happen
-		}
-	}
-
-	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
 		TemplateParameterId templateParameterId2 = templateParameterId;
 		if (templateParameterId2 == null) {

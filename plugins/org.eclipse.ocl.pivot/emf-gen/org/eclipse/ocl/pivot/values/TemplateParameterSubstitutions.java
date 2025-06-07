@@ -17,12 +17,12 @@ import org.eclipse.ocl.pivot.Type;
 
 /**
  * TemplateParameterSubstitutions defines the interaction with the matching of formal TemplateParameters and actual types.
- * Formal template parameters are identified by theit integer intexes in a flattened list starting at the outer-most TemplateableElement.
- * The template parameter indexes in Collection(T1)::product(T2)(...)... are therefore 0 for T1, and 1 for T2.
+ * Formal template parameters are identified by their integer intexes in a flattened list starting at the outer-most TemplateableElement.
+ * The template parameter indexes in Map(K,V)::excludesMap(K2,V2)(...)... are therefore 0 for K, 1 for V, 2 for K2, and 3 for V2.
  * <p>
  * A derived TemplateParameterSubstitutionVisitor determines the bindings by recursive analysis of a pair of formal and actual expression/type trees.
- * <p>
- * The EMPTY instance handles the degenerate case of no template parameters.
+ *
+ * A null rather than empty TemplateParameterSubstitutions is used for the common case of no substitutions.
  */
 public interface TemplateParameterSubstitutions
 {
@@ -37,33 +37,8 @@ public interface TemplateParameterSubstitutions
 	boolean isEmpty();
 
 	/**
-	 * Install actualType as the resolutions of formalTemplateParameter, returning the highest common type of actualType
+	 * Install actualType as the resolution of formalTemplateParameter, returning the highest common type of actualType
 	 * and any pre-existing resolution.
 	 */
 	@Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType);
-
-	public static final @NonNull TemplateParameterSubstitutions EMPTY = new Empty();
-
-	public static class Empty implements TemplateParameterSubstitutions
-	{
-		@Override
-		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
-			return null;
-		}
-
-		@Override
-		public boolean isEmpty() {
-			return true;
-		}
-
-		@Override
-		public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
-			return actualType;
-		}
-
-		@Override
-		public String toString() {
-			return "{}";
-		}
-	}
 }

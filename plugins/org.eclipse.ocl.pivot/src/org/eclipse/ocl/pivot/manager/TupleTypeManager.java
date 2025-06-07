@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.manager;
+package org.eclipse.ocl.pivot.manager;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -29,14 +28,16 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  */
 public interface TupleTypeManager
 {
+	boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateParameterSubstitutions actualSubstitutions,
+			@NonNull TupleType requiredType, @Nullable TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity);
+
 	void dispose();
 
-	@Nullable Type getCommonType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
+	@Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull TupleType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions);
 
 	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
-	 * @since 7.0
 	 */
 	@NonNull TupleType getTupleType(@NonNull List<@NonNull PartId> partIds);
 
@@ -44,4 +45,6 @@ public interface TupleTypeManager
 
 	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateParameterSubstitutions usageBindings);
 	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings);	// FIXME Remove duplication, unify type/multiplicity
+
+	boolean isEqualToTupleType(@NonNull TupleType leftTupleType, @NonNull TupleType rightTupleType);
 }

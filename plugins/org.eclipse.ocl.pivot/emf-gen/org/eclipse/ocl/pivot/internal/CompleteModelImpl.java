@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
@@ -44,35 +43,27 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteURIs;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 
 import com.google.common.collect.Lists;
 
@@ -795,9 +786,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal init(@NonNull CompleteEnvironmentInternal completeEnvironment) {
-		this.completeEnvironment = completeEnvironment;
-		this.environmentFactory = completeEnvironment.getEnvironmentFactory();
+	public @NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		this.environmentFactory = environmentFactory;
+		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;
@@ -809,78 +800,4 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 //			completeClass.dispose();
 		}
 	} */
-
-	@Override
-	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
-		List<TemplateBinding> specializedTemplateBindings = specializedClass.getOwnedBindings();
-		for (org.eclipse.ocl.pivot.Class superClass : unspecializedClass.getSuperClasses()) {
-			List<TemplateBinding> superTemplateBindings = superClass.getOwnedBindings();
-			if (superTemplateBindings.size() > 0) {
-				List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<TemplateParameterSubstitution>();
-				for (TemplateBinding superTemplateBinding : superTemplateBindings) {
-					for (TemplateParameterSubstitution superParameterSubstitution : superTemplateBinding.getOwnedSubstitutions()) {
-						TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution = null;
-						Type superActual = superParameterSubstitution.getActual();
-						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
-							for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
-								TemplateParameter specializedFormal = specializedParameterSubstitution.getFormal();
-								TemplateParameterId specializedTemplateParameterId = specializedFormal.getTemplateParameterId();
-								int specializedIndex = specializedTemplateParameterId.getIndex();
-								if (specializedFormal == superActual) {
-									Type specializedActual = ClassUtil.requireNonNull(specializedParameterSubstitution.getActual());
-									TemplateParameter superFormal = ClassUtil.requireNonNull(superParameterSubstitution.getFormal());
-									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
-									break;
-								}
-								else if (superActual instanceof NormalizedTemplateParameter) {
-									int superIndex = ((NormalizedTemplateParameter)superActual).getIndex();
-									if (specializedIndex == superIndex) {
-										Type specializedActual = ClassUtil.requireNonNull(specializedParameterSubstitution.getActual());
-										TemplateParameter superFormal = ClassUtil.requireNonNull(superParameterSubstitution.getFormal());
-										superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
-										break;
-									}
-								}
-							}
-							if (superSpecializedTemplateParameterSubstitution != null) {
-								break;
-							}
-						}
-						if (superSpecializedTemplateParameterSubstitution != null) {
-							superSpecializedTemplateParameterSubstitutions.add(superSpecializedTemplateParameterSubstitution);
-						}
-					}
-				}
-				org.eclipse.ocl.pivot.@NonNull Class unspecializedSuperClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
-				CompleteClassInternal superCompleteClass = environmentFactory.getMetamodelManager().getCompleteClass(unspecializedSuperClass);
-				org.eclipse.ocl.pivot.Class superPivotClass = superCompleteClass.getPrimaryClass();
-				if (superPivotClass instanceof CollectionType) {
-					if (superSpecializedTemplateParameterSubstitutions.size() == 1) {
-						Type templateArgument = superSpecializedTemplateParameterSubstitutions.get(0).getActual();
-						if (templateArgument != null) {
-							CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument, false, null, null);
-							org.eclipse.ocl.pivot.Class specializedSuperClass = environmentFactory.getStandardLibrary().getCollectionType(typeArguments);
-							specializedClass.getSuperClasses().add(specializedSuperClass);
-						}
-					}
-				}
-				else {
-					List<@NonNull Type> superTemplateArgumentList = new ArrayList<@NonNull Type>(superSpecializedTemplateParameterSubstitutions.size());
-					for (TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution : superSpecializedTemplateParameterSubstitutions) {
-						Type actual = superSpecializedTemplateParameterSubstitution.getActual();
-						if (actual != null) {
-							superTemplateArgumentList.add(actual);
-						}
-					}
-					CompleteInheritanceImpl superCompleteInheritance = superCompleteClass.getCompleteInheritance();
-					org.eclipse.ocl.pivot.Class genericSuperType = superCompleteInheritance.getCompleteClass().getPrimaryClass();
-					org.eclipse.ocl.pivot.Class specializedSuperType = environmentFactory.getStandardLibrary().getSpecializedType(genericSuperType, superTemplateArgumentList);
-					specializedClass.getSuperClasses().add(specializedSuperType);
-				}
-			}
-			else {
-				specializedClass.getSuperClasses().add(superClass);
-			}
-		}
-	}
 } //CompleteModelImpl

@@ -80,6 +80,6 @@ public class OCLVMModelManager extends AbstractModelManager
 				//				}
 			}
 		}
-		return (objectType != null) && objectType.conformsTo(environmentFactory.getStandardLibrary(), requiredType);
+		return (objectType != null) && environmentFactory.getStandardLibrary().conformsTo(objectType, requiredType);
 	}
 }

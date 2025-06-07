@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 
 

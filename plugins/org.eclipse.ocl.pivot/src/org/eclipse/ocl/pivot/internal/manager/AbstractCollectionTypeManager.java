@@ -17,11 +17,17 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * CollectionTypeManagerInternal encapsulates the knowledge about known collection types.
@@ -68,8 +74,39 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		}
 	}
 
+	@Override
+	public boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull CollectionType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity) {
+		org.eclipse.ocl.pivot.Class leftContainerType = leftType.getContainerType();
+		org.eclipse.ocl.pivot.Class rightContainerType = rightType.getContainerType();
+		if (!standardLibrary.conformsToSimpleType(leftContainerType, rightContainerType)) {
+			return false;
+		}
+		IntegerValue leftLower = leftType.getLowerValue();
+		IntegerValue rightLower = rightType.getLowerValue();
+		if (leftLower.compareTo(rightLower) < 0) {
+			return false;
+		}
+		UnlimitedNaturalValue leftUpper = leftType.getUpperValue();
+		UnlimitedNaturalValue rightUpper = rightType.getUpperValue();
+		if (leftUpper.compareTo(rightUpper) > 0) {
+			return false;
+		}
+		Type leftElementType = PivotUtil.getElementType(leftType);
+		Type rightElementType = PivotUtil.getElementType(rightType);
+		if (enforceNullity) {
+			boolean leftIsNullFree = leftType.isIsNullFree();
+			boolean rightIsNullFree = rightType.isIsNullFree();
+			return standardLibrary.conformsTo(leftElementType, leftIsNullFree, leftSubstitutions, rightElementType, rightIsNullFree, rightSubstitutions);
+		}
+		else {
+			return standardLibrary.conformsTo(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions, false);
+		}
+	}
+
 	protected abstract @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
+	@Override
 	public void dispose() {
 		collectionTypes.clear();
 	}
@@ -122,6 +159,68 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		else {
 			throw new UnsupportedOperationException();
 		}
+	}
+
+	@Override
+	public @NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull CollectionType rightCollectionType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+		CollectionType leftGenericType = PivotUtil.getUnspecializedTemplateableElement(leftCollectionType);
+		CollectionType rightGenericType = PivotUtil.getUnspecializedTemplateableElement(rightCollectionType);
+		Type leftElementType = PivotUtil.getElementType(leftCollectionType);
+		Type rightElementType = PivotUtil.getElementType(rightCollectionType);
+		CompleteInheritance leftInheritance = leftGenericType.getInheritance(standardLibrary);				// XXX promote
+		CompleteInheritance rightInheritance = rightGenericType.getInheritance(standardLibrary);
+		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
+		CollectionType commonGenericType = (CollectionType) commonInheritance.getPivotClass();
+		Type commonElementType = standardLibrary.getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
+		boolean commonIsNullFree = standardLibrary.getCommonIsRequired(leftCollectionType.isIsNullFree(), rightCollectionType.isIsNullFree());
+		IntegerValue commonLower = getCommonLowerValue(leftCollectionType.getLowerValue(), rightCollectionType.getLowerValue());
+		UnlimitedNaturalValue commonUpper = getCommonUpperValue(leftCollectionType.getUpperValue(), rightCollectionType.getUpperValue());
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(commonGenericType.getTypeId(), commonElementType, commonIsNullFree, commonLower, commonUpper);
+		return getCollectionType(typeArguments);
+	}
+
+	protected @NonNull IntegerValue getCommonLowerValue(@NonNull IntegerValue thisLowerValue, @NonNull IntegerValue thatLowerValue) {
+		return (IntegerValue)thisLowerValue.max(thatLowerValue);
+	}
+
+	protected @NonNull UnlimitedNaturalValue getCommonUpperValue(@NonNull UnlimitedNaturalValue thisUpperValue, @NonNull UnlimitedNaturalValue thatUpperValue) {
+		if (thisUpperValue.isUnlimited()) {
+			if (thatUpperValue.isUnlimited()) {
+				return thisUpperValue;
+			}
+			else {
+				return thatUpperValue;
+			}
+		}
+		else {
+			if (thatUpperValue.isUnlimited()) {
+				return thisUpperValue;
+			}
+			else {
+				return thisUpperValue.min(thatUpperValue);
+			}
+		}
+	}
+
+	@Override
+	public boolean isEqualToCollectionType(@NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType) {
+		Type leftContainerType = leftCollectionType.getContainerType();
+		Type rightContainerType = rightCollectionType.getContainerType();
+		if ((leftContainerType != rightContainerType) && !leftContainerType.isEqualToUnspecializedType(standardLibrary, rightContainerType)) {
+			return false;
+		}
+		Type leftElementType = leftCollectionType.getElementType();
+		Type rightElementType = rightCollectionType.getElementType();
+		if (leftElementType != rightElementType) {
+			if ((leftElementType == null) || (rightElementType == null)) {
+				return false;
+			}
+			if (!standardLibrary.isEqualTo(leftElementType, rightElementType)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	protected abstract boolean isValid(@Nullable Type type);
