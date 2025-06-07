@@ -15,12 +15,9 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * @since 1.18
@@ -51,41 +48,6 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 		this.valueType = valueType;
 		this.valuesAreNullFree = valuesAreNullFree;
 		this.typeId = IdManager.getMapTypeId(name).getSpecializedId(keyType.getTypeId(), valueType.getTypeId(), keyValuesAreNullFree, valuesAreNullFree);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof MapType)) {
-			return false;
-		}
-		return TypeUtil.conformsToMapType(standardLibrary, this, (MapType)type);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		if (!(type instanceof ExecutorMapType)) {
-			return standardLibrary.getOclAnyType();
-		}
-		ExecutorMapType thatClass = (ExecutorMapType) type;
-		// FIXME kind
-		org.eclipse.ocl.pivot.Class commonContainerClass = containerType;		// FIXME WIP
-		Type commonKeyClass = keyType.getCommonType(idResolver, thatClass.getKeyType());
-		Type commonValueClass = valueType.getCommonType(idResolver, thatClass.getValueType());
-		if ((commonContainerClass == containerType) && (commonKeyClass == keyType) && (commonValueClass == valueType)) {
-			return this;
-		}
-		else if ((commonContainerClass == thatClass.containerType) && (commonKeyClass == keyType) && (commonValueClass == valueType)) {
-			return thatClass;
-		}
-		else {
-			boolean commonKeysAreNullFree = false;				// XXX compute
-			boolean commonValuesAreNullFree = false;			// XXX compute
-			return standardLibrary.getMapType(commonKeyClass, commonKeysAreNullFree, commonValueClass, commonValuesAreNullFree);
-		}
 	}
 
 	@Override
@@ -129,17 +91,6 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	@Override
 	public @NonNull Type getValueType() {
 		return valueType;
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof MapType)) {
-			return false;
-		}
-		return TypeUtil.isEqualToMapType(standardLibrary, this, (MapType)type);
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -49,11 +50,11 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -415,8 +416,8 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			return actualType;
 		}
 		else if (oldType != null) {
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			Type commonType = oldType.getCommonType(idResolver, actualType);
+			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+			Type commonType = standardLibrary.getCommonType(oldType, actualType);	// FIXME casts
 			Type bestType = environmentFactory.getMetamodelManager().getPrimaryType(commonType);
 			if (bestType != oldType) {
 				templateSpecialization2.put(formalTemplateParameter, bestType);
@@ -496,14 +497,13 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
-			String typeName = PivotUtil.getName(lambdaType);
 			TypedElement specializedContext = specializeLambdaParameter(PivotUtil.getOwnedContext(lambdaType));
 			List<@NonNull TypedElement> specializedParameters = new ArrayList<>();
 			for (LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
 				specializedParameters.add(specializeLambdaParameter(parameter));
 			}
 			TypedElement specializedResult = specializeLambdaParameter(PivotUtil.getOwnedResult(lambdaType));
-			return standardLibrary.getLambdaType(typeName, specializedContext, specializedParameters, specializedResult, null);
+			return standardLibrary.getLambdaType(specializedContext, specializedParameters, specializedResult, null);
 		}
 		else if (templateSpecialization == null) {	// type instanceof Class
 			return type;
@@ -519,23 +519,17 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			if (partiallySpecializedType != templateSpecialization2.getSpecializedElement()) {
 				templateSpecialization2 = TemplateSpecialization.basicGetTemplateSpecialization(partiallySpecializedType);
 			}
-			if (templateSpecialization2 != null) {
-				List<@NonNull Type> templateArguments = new ArrayList<>();
-				for (int i = 0; i < templateSpecialization2.size(); i++) {
-					Type actualType = templateSpecialization2.get(i);
-					actualType = specializeType(actualType);
-					templateArguments.add(actualType);
-
-				}
-				return metamodelManager.getLibraryType(unspecializedType, templateArguments);
+			if (templateSpecialization2 == null) {
+				return unspecializedType;
 			}
-			TemplateParameterization templateParameterization = getTemplateParameterization();//TemplateParameterization.basicGetTemplateParameterization(partiallySpecializedType);
 			List<@NonNull Type> templateArguments = new ArrayList<>();
-			for (@NonNull TemplateParameter templateParameter : templateParameterization) {
-				Type actualType = specializeType(templateParameter);
+			for (int i = 0; i < templateSpecialization2.size(); i++) {
+				Type actualType = templateSpecialization2.get(i);
+				actualType = specializeType(actualType);
 				templateArguments.add(actualType);
+
 			}
-			return metamodelManager.getLibraryType(unspecializedType, templateArguments);
+			return standardLibrary.getSpecializedType(unspecializedType, templateArguments);
 		}
 	}
 

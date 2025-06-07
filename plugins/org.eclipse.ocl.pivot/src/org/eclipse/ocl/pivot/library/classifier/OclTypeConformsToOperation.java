@@ -32,7 +32,7 @@ public class OclTypeConformsToOperation extends AbstractUntypedBinaryOperation
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type thisType = asType(sourceVal);
 		Type thatType = asType(argVal);
-		boolean result = thisType.conformsTo(standardLibrary, thatType);
+		boolean result = standardLibrary.conformsTo(thisType, thatType);
 		return result;
 	}
 }

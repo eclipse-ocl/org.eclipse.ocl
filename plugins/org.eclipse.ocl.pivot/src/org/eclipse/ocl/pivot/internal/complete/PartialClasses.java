@@ -183,7 +183,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		boolean isRequired = false;
 		for (StereotypeExtender typeExtension : stereotype.getOwnedExtenders()) {
 			Type metatype = typeExtension.getClass_();
-			if ((metatype != null) && baseType.conformsTo(getStandardLibrary(), metatype)) {
+			if ((metatype != null) && getStandardLibrary().conformsTo(baseType, metatype)) {
 				isRequired = true;
 				break;
 			}

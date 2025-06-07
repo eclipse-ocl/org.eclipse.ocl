@@ -40,7 +40,7 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 			return null;
 		}
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
-		if (sourceType.conformsTo(standardLibrary, argType)) {
+		if (standardLibrary.conformsTo(sourceType, argType)) {
 			return sourceVal;
 		}
 		else {

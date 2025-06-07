@@ -46,7 +46,7 @@ public class CollectionSelectByKindOperation extends AbstractUntypedBinaryOperat
 			}
 			else {
 				Type elementType = idResolver.getDynamicClassOf(element);
-				if (elementType.conformsTo(standardLibrary, requiredElementType)) {
+				if (standardLibrary.conformsTo(elementType, requiredElementType)) {
 	        		newElements.add(element);
 	        	}
 	        	else {

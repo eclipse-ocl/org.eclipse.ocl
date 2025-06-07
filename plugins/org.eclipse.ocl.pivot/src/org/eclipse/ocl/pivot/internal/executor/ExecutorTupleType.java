@@ -14,13 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class ExecutorTupleType extends AbstractExecutorClass implements TupleType
 {
@@ -29,25 +26,6 @@ public class ExecutorTupleType extends AbstractExecutorClass implements TupleTyp
 	public ExecutorTupleType(@NonNull TupleTypeId typeId) {
 		super(TypeId.TUPLE_NAME, 0);
 		this.typeId = typeId;
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof TupleType)) {
-			return false;
-		}
-		return TypeUtil.conformsToTupleType(standardLibrary, this, (TupleType)type);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (type != this) {
-			return idResolver.getStandardLibrary().getOclAnyType();
-		}
-		return this;
 	}
 
 	@Override
@@ -66,17 +44,6 @@ public class ExecutorTupleType extends AbstractExecutorClass implements TupleTyp
 	@Override
 	public String getValue() {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof TupleType)) {
-			return false;
-		}
-		return TypeUtil.isEqualToTupleType(standardLibrary, this, (TupleType)type);
 	}
 
 	@Override

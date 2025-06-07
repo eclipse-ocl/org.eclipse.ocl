@@ -165,7 +165,7 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotType;
 	}
 
-	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(@NonNull T pivotType, @NonNull String name, @Nullable  String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
+	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(@NonNull T pivotType, @NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		pivotType.setName(name);
 		pivotType.setLower(lower != null ? StringUtil.createNumberFromString(lower) : Integer.valueOf(0));
 		pivotType.setUpper(upper != null ? StringUtil.createNumberFromString(upper) : Unlimited.INSTANCE);

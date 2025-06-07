@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -108,7 +109,8 @@ public class OCLQueryDelegate implements QueryDelegate
 			Object targetValue = idResolver.boxedValueOf(target);
 			Type requiredType = PivotUtil.getType(PivotUtil.getOwnedContext(nonNullSpecification));
 			Type targetType = idResolver.getStaticClassOf(targetValue);
-			if (!targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
+			StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+			if (!standardLibrary.conformsTo(targetType, requiredType)) {
 				String message = StringUtil.bind(PivotMessagesInternal.WrongContextClassifier_ERROR_, targetType, requiredType);
 				throw new OCLDelegateException(new SemanticException(message));
 			}
@@ -139,7 +141,7 @@ public class OCLQueryDelegate implements QueryDelegate
 					Object value = idResolver.boxedValueOf(object);
 					requiredType = PivotUtil.getType(parameterVariable);
 					targetType = idResolver.getStaticClassOf(value);
-					if (!targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
+					if (!standardLibrary.conformsTo(targetType, requiredType)) {
 						String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentType_ERROR_, name, targetType, requiredType);
 						throw new OCLDelegateException(new SemanticException(message));
 					}

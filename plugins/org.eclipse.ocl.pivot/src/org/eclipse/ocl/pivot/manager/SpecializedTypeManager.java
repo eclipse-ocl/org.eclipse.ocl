@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.manager;
+package org.eclipse.ocl.pivot.manager;
 
 import java.util.List;
 
@@ -16,11 +16,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Type;
 
 /**
- * SpecializationManager encapsulates the knowledge about known template specializations.
+ * SpecializationManager encapsulates the knowledge about known class type specializations.
  *
  * @since 7.0
  */
-public interface SpecializationManager
+public interface SpecializedTypeManager
 {
+	void dispose();
+
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull List<@NonNull ? extends Type> templateArguments);
 }

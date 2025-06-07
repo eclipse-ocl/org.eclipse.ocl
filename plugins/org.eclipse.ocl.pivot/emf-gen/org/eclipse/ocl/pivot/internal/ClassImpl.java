@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -1160,15 +1161,47 @@ implements org.eclipse.ocl.pivot.Class {
 		return computeId();
 	}
 
+	/**
+	 * Create and return an instance of this type.
+	 *
+	 * Beware: this functionality is invalid if this type is in a dynamically loaded Ecore metamodel and has a supertype
+	 * from a generated Ecore metamodel. See Bug 532561. Direct creation of a DynamicEObjectImpl may be much better.
+	 *
+	 * This functionality is broken if the esObject has not been set. At this point the environmentFactory is not available
+	 * to perform a lazy AS2Ecore. The caller probably can.
+	 *
+	 * @deprecated caller can do better without this bad helper method.
+	 */
 	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (type == this) {
-			return this;
+	@Deprecated
+	public @NonNull EObject createInstance() {
+		EObject eTarget = getESObject();
+		if (eTarget instanceof EClass) {
+			EClass eClass = (EClass) eTarget;
+			EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
+			assert element != null;
+			return element;
 		}
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.getCommonInheritance(thatInheritance).getPivotClass();
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Create and return an instance of this data type from its string representation.
+	 *
+	 * This functionality is broken if the esObject has not been set. At this point the environmentFactory is not available
+	 * to perform a lazy AS2Ecore. The caller probably can.
+	 *
+	 * @deprecated caller can do better without this bad helper method.
+	 */
+	@Override
+	@Deprecated
+	public @Nullable Object createInstance(@NonNull String value) {
+		EObject eTarget = getESObject();
+		if (eTarget instanceof EDataType) {
+			EDataType eDataType = (EDataType) eTarget;
+			return eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
+		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1179,16 +1212,6 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull String getMetaclassName() {
 		return ClassUtil.requireNonNull(eClass().getName());
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		try {
-			return getInheritance(standardLibrary).getPivotClass();
-		}
-		catch (Throwable e) {
-			return this;			// WIP FIXME should never happen
-		}
 	}
 
 	@Override

@@ -897,15 +897,4 @@ implements DataType {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
 	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (type instanceof DataType) {
-			org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)type).getBehavioralClass();
-			if (behavioralClass != null) {
-				type = behavioralClass;		// See Bug 574431 for discussion of this dodgy downcast
-			}
-		}
-		return super.conformsTo(standardLibrary, type);
-	}
 } //DataTypeImpl

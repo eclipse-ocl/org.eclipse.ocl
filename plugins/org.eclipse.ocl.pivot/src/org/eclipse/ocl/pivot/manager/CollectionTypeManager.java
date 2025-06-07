@@ -8,13 +8,14 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.manager;
+package org.eclipse.ocl.pivot.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * CollectionTypeManager encapsulates the knowledge about known collection types.
@@ -28,6 +29,9 @@ public interface CollectionTypeManager
 	 */
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
+	boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull CollectionType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity);
+
 	void dispose();
 
 	/**
@@ -36,4 +40,9 @@ public interface CollectionTypeManager
 	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
 	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId);
+
+	@NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+				@NonNull CollectionType rightCollectionType, @Nullable TemplateParameterSubstitutions rightSubstitutions);
+
+	boolean isEqualToCollectionType(@NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType);
 }

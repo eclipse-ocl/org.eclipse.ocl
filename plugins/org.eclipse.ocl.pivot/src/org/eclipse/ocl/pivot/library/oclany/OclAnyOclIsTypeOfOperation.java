@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 
 /**
- * OclAnyOclIsTypeOfOperation realises the OclAny::oclIsTypeOf() library operation.
+ * OclAnyOclIsTypeOfOperation realizes the OclAny::oclIsTypeOf() library operation.
  */
 public class OclAnyOclIsTypeOfOperation extends AbstractUntypedBinaryOperation
 {
@@ -30,7 +30,7 @@ public class OclAnyOclIsTypeOfOperation extends AbstractUntypedBinaryOperation
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		Type sourceType = executor.getIdResolver().getDynamicClassOf(sourceVal);
 		Type argType = asType(argVal);
-		boolean result = sourceType.isEqualTo(executor.getStandardLibrary(), argType);
+		boolean result = executor.getStandardLibrary().isEqualTo(sourceType, argType);
 		return result;
 	}
 }

@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -65,7 +66,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -162,7 +162,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 		@Override
 		public @Nullable Boolean visitCallExp(@NonNull CallExp object) {
-			if (!context.booleanType.conformsTo(standardLibrary, PivotUtil.getType(object))) {
+			if (!standardLibrary.conformsTo(context.booleanType, PivotUtil.getType(object))) {
 				return null;
 			}
 			OCLExpression asSource = PivotUtil.getOwnedSource(object);

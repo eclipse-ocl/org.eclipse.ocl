@@ -1739,6 +1739,7 @@ public class PivotUtil implements PivotConstants
 		}
 		if (executor == null) {
 			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+			// This leaks unless caller dispose()s
 		}
 		ThreadLocalExecutor.setExecutor(executor);
 		return executor;
@@ -1809,6 +1810,18 @@ public class PivotUtil implements PivotConstants
 	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
 		return ClassUtil.requireNonNull(mapType.getKeyType());
 	}
+
+/*	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {
+		int iParameter = 0;
+		List<LambdaParameter> ownedParameters = lambdaType.getOwnedParameters();
+		@NonNull Type @NonNull [] parameterTypes = new @NonNull Type[ownedParameters.size() + 2];
+		parameterTypes[iParameter++] = getContextType(lambdaType);
+		parameterTypes[iParameter++] = getResultType(lambdaType);
+		for (LambdaParameter parameter : ownedParameters) {
+			parameterTypes[iParameter++] = getType(parameter);
+		}
+		return parameterTypes;
+	} */
 
 	/**
 	 * @since 1.7
@@ -1923,6 +1936,35 @@ public class PivotUtil implements PivotConstants
 		T castElement = (T) pivotElement;
 		return castElement;
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Type @NonNull [] getOperationParameterTypes(@NonNull Operation anOperation) {
+		@NonNull Type @NonNull [] parameterTypes;
+		int iParameter = 0;
+		List<@NonNull ? extends TypedElement> ownedParameters = getOwnedParametersList(anOperation);
+		if (anOperation instanceof Iteration) {
+			Iteration anIteration = (Iteration)anOperation;
+			List<@NonNull ? extends TypedElement> ownedIterators = getOwnedIteratorsList(anIteration);
+			TypedElement ownedAccumulator = anIteration.getOwnedAccumulator();
+			parameterTypes = new @NonNull Type[ownedIterators.size() + (ownedAccumulator != null ? 1 : 0) + ownedParameters.size()];
+			for (@NonNull TypedElement ownedIterator : ownedIterators) {
+				parameterTypes[iParameter++] = getType(ownedIterator);
+			}
+			if (ownedAccumulator != null) {
+				parameterTypes[iParameter++] = getType(ownedAccumulator);
+			}
+		}
+		else {
+			parameterTypes = new @NonNull Type[ownedParameters.size()];
+		}
+		for (@NonNull TypedElement ownedParameter : ownedParameters) {
+			parameterTypes[iParameter++] = getType(ownedParameter);
+		}
+		return parameterTypes;
+	}
+
 
 	/**
 	 * @since 1.3

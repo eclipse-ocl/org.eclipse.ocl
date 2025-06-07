@@ -12,8 +12,6 @@ package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -34,10 +32,5 @@ public class EcoreExecutorInvalidType extends EcoreExecutorType implements Inval
 	@Override
 	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
 		return OclInvalidAllInstancesOperation.allInstances();
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		return true;
 	}
 }

@@ -1198,7 +1198,7 @@ implements PivotFactory {
 	 * @generated
 	 */
 	@Override
-	public StandardLibraryInternal createStandardLibraryInternal()
+	public @NonNull StandardLibraryInternal createStandardLibraryInternal()
 	{
 		StandardLibraryInternalImpl standardLibraryInternal = new StandardLibraryInternalImpl();
 		return standardLibraryInternal;

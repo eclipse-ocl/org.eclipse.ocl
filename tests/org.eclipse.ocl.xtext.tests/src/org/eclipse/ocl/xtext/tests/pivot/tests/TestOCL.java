@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -787,12 +788,14 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
+		assert ThreadLocalExecutor.basicGetExecutor() == null;			// In case previous execution created it.
 		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
 		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
 		PivotTestSuite.assertNoValidationErrors(expression, query);
 		try {
+			assert ThreadLocalExecutor.basicGetExecutor() == null;			// In case previous execution created it.
 			return evaluate(query, context);
 		} finally {
 			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
@@ -821,9 +824,14 @@ public class TestOCL extends OCLInternal
 			LibraryUnaryOperation testInstance = (LibraryUnaryOperation) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
 			assert testInstance != null;
 			Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY);
-			OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
-			callExp.setType(expr.getType());
-			result = testInstance.evaluate(executor, callExp.getTypeId(), self);
+			try {
+				OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
+				callExp.setType(expr.getType());
+				result = testInstance.evaluate(executor, callExp.getTypeId(), self);
+			}
+			finally {
+				executor.dispose();
+			}
 		}
 		//    	} catch (Exception e) {
 		//    		fail("Evaluation failed: " + e.getLocalizedMessage());

@@ -13,8 +13,6 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -57,21 +55,6 @@ public class ExecutorLambdaType extends AbstractExecutorClass implements Executo
 		this.context = null;
 		this.parameters = null;
 		this.result = null;
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		throw new UnsupportedOperationException();			// WIP fixme
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		throw new UnsupportedOperationException();			// WIP fixme
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		throw new UnsupportedOperationException();			// WIP fixme
 	}
 
 	@Override

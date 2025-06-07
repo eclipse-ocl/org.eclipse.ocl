@@ -16,13 +16,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -44,54 +41,6 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 		this.lower = lower != null ? lower : ValueUtil.ZERO_VALUE;
 		this.upper = upper != null ? upper : ValueUtil.UNLIMITED_VALUE;
 		this.typeId = IdManager.getCollectionTypeId(name).getSpecializedId(elementType.getTypeId(), isNullFree, this.lower, this.upper);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof CollectionType)) {
-			return false;
-		}
-		return TypeUtil.conformsToCollectionType(standardLibrary, this, (CollectionType)type);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		if (!(type instanceof ExecutorCollectionType)) {
-			return standardLibrary.getOclAnyType();
-		}
-		ExecutorCollectionType thatClass = (ExecutorCollectionType) type;
-		// FIXME kind
-		org.eclipse.ocl.pivot.Class commonContainerClass = containerType;		// FIXME WIP
-		Type commonElementClass = elementType.getCommonType(idResolver, thatClass.getElementType());
-		if ((commonContainerClass == containerType) && (commonElementClass == elementType)) {
-			return this;
-		}
-		else if ((commonContainerClass == thatClass.containerType) && (commonElementClass == thatClass.elementType)) {
-			return thatClass;
-		}
-		else {
-			boolean commonIsNullFree = this.isIsNullFree() && thatClass.isIsNullFree();
-			if (commonContainerClass.isOrdered()) {
-				if (commonContainerClass.isUnique()) {
-					return standardLibrary.getOrderedSetType(commonElementClass, commonIsNullFree, null, null);
-				}
-				else {
-					return standardLibrary.getSequenceType(commonElementClass, commonIsNullFree, null, null);
-				}
-			}
-			else {
-				if (commonContainerClass.isUnique()) {
-					return standardLibrary.getSetType(commonElementClass, commonIsNullFree, null, null);
-				}
-				else {
-					return standardLibrary.getBagType(commonElementClass, commonIsNullFree, null, null);
-				}
-			}
-		}
 	}
 
 	@Override
@@ -145,17 +94,6 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 	@Override
 	public String getValue() {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		if (this == type) {
-			return true;
-		}
-		if (!(type instanceof CollectionType)) {
-			return false;
-		}
-		return TypeUtil.isEqualToCollectionType(standardLibrary, this, (CollectionType)type);
 	}
 
 	@Override

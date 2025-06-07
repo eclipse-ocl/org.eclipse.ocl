@@ -8,12 +8,13 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.manager;
+package org.eclipse.ocl.pivot.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * MapTypeManager encapsulates the knowledge about known map type creation and access.
@@ -27,7 +28,13 @@ public interface MapTypeManager
 	 */
 	@Nullable MapType basicGetMapType(@NonNull MapTypeArguments typeArguments);
 
+	boolean conformsToMapType(@NonNull MapType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull MapType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity);
+
 	void dispose();
+
+	@NonNull MapType getCommonMapType(@NonNull MapType leftMapType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull MapType rightMapType, @Nullable TemplateParameterSubstitutions rightSubstitutions);
 
 	/**
 	 * Return, and if necessary create, the map entry type characterized by the typeArguments and entryClass.
@@ -38,4 +45,6 @@ public interface MapTypeManager
 	 * Return, and if necessary create, the map type characterized by the typeArguments.
 	 */
 	@NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments);
+
+	boolean isEqualToMapType(@NonNull MapType leftMapType, @NonNull MapType rightMapType);
 }

@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * EcoreOCLEValidator provides the validation support for Ecore elements that exploit OCL.
@@ -837,8 +836,8 @@ public class EcoreOCLEValidator implements EValidator
 				getClass();			// XXX
 			}
 		//	boolean expressionIsNonNull = expressionInOCL.isNonNull();	// XXX Issue 2176 need symbolic evaluation
-		//	if (!standardLibrary.conformsTo(asExpressionType, expressionIsNonNull, TemplateParameterSubstitutions.EMPTY, requiredType, requiredTypeIsRequired, TemplateParameterSubstitutions.EMPTY)) {
-			if (!standardLibrary.conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, requiredType, TemplateParameterSubstitutions.EMPTY)) {
+		//	if (!standardLibrary.conformsTo(asExpressionType, expressionIsNonNull, null, requiredType, requiredTypeIsRequired, null)) {
+			if (!standardLibrary.conformsTo(asExpressionType, null, requiredType, null)) {
 				allOk = false;
 				if (diagnostics != null) {
 					String role = PivotUtil.getSpecificationRole(asSpecification);
