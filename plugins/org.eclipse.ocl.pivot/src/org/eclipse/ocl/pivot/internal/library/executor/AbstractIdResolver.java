@@ -1167,7 +1167,9 @@ public abstract class AbstractIdResolver implements IdResolver
 	}
 
 	@Override
-	public abstract @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId);
+	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
+		return standardLibrary.getTupleType(typeId);
+	}
 
 	@Override
 	public final @NonNull Type getType(@NonNull TypeId typeId) {
