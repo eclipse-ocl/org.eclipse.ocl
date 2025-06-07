@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
@@ -662,8 +663,11 @@ implements CollectionType {
 					if (isUnique() && thatCollectionType.isUnique()) {
 						return standardLibrary.getSetType(commonElementType, commonIsNullFree, null, null);
 					}
-					else {
+					else if ((this instanceof BagType) && (thatCollectionType instanceof BagType)) {
 						return standardLibrary.getBagType(commonElementType, commonIsNullFree, null, null);
+					}
+					else {
+						return standardLibrary.getCollectionType(standardLibrary.getCollectionType(), commonElementType, commonIsNullFree, null, null);
 					}
 				}
 			}
