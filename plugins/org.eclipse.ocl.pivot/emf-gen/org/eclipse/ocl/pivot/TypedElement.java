@@ -110,14 +110,6 @@ public interface TypedElement extends NamedElement {
 	boolean CompatibleBody(ValueSpecification bodySpecification);
 
 	/**
-	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this typed element.
-	 *
-	 * @since 1.18
-	 */
-	@Deprecated /* @deprecated no longer different to getTypeId() */
-	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
-
-	/**
 	 * Return a unique StandardLibrary-independent identifier for this typed element.
 	 */
 	@NonNull TypeId getTypeId();

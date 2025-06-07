@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
@@ -25,7 +24,6 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId
@@ -147,13 +145,13 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 
 		/**
 		 * @since 7.0
-		 */
-		@Deprecated		/* XXX fudge */
+		 *
+		@Deprecated		/ * XXX fudge * /
 		public @NonNull TypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull Type @NonNull [] typeArguments) {
 			TypedElement context = LambdaTypeManager.createCandidateLambdaParameter(name, typeArguments[0], false);
 			TypedElement result = LambdaTypeManager.createCandidateLambdaParameter(name, typeArguments[0], false);
 			return getSingletonFor(new LambdaTypeIdValue(idManager, name, context, null, result));
-		}
+		} */
 	}
 
 	private static int computeHashCode(@NonNull String name, @NonNull TypedElement context, @Nullable List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {

@@ -82,7 +82,7 @@ public class UnboxedElementsDescriptor extends AbstractCollectionDescriptor impl
 			return false;
 		}
 		Type thatType = ((UnboxedElementsDescriptor)typeDescriptor).type;
-		return thatType.conformsTo(standardLibrary, type);
+		return standardLibrary.conformsTo(thatType, type);
 	}
 
 	@Override

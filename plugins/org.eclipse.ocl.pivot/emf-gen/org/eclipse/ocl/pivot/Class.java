@@ -318,7 +318,7 @@ extends Type, Namespace, TemplateableElement {
 	 * Return a new instance of this data type from valueFactory.
 	 * @param value string initial value
 	 */
-	@Nullable Object createInstance( @NonNull String value);
+	@Nullable Object createInstance(@NonNull String value);
 
 	/**
 	 * Return the name of the meta-type of this type.

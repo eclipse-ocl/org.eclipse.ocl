@@ -374,16 +374,6 @@ public class TemplateParameterImpl
 		return standardLibrary.getInheritance(lowerBound);
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		try {
-			return getInheritance(standardLibrary).getPivotClass();
-		}
-		catch (Throwable e) {
-			return standardLibrary.getOclAnyType();			// FIXME should never happen
-		}
-	}
-
 	private /*@LazyNonNull*/ TemplateParameterId templateParameterId;
 
 	@Override

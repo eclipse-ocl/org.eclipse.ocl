@@ -15,29 +15,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.types.TemplateArguments;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * CollectionTypeManagerInternal encapsulates the knowledge about known collection types.
+ * AbstractSpecializedTypeManager encapsulates the knowledge about known class specializations.
  *
  * @since 7.0
  */
-public class SpecializationManagerInternal implements SpecializationManager
+public abstract class AbstractSpecializedTypeManager implements SpecializedTypeManager
 {
-	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull StandardLibrary standardLibrary;
 
 	/**
 	 * Map from actual types to specialization.
@@ -49,52 +43,13 @@ public class SpecializationManagerInternal implements SpecializationManager
 	//
 	private @Nullable /*WeakHash*/Map<@NonNull TemplateArguments, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
 
-	public SpecializationManagerInternal(@NonNull CompleteModelInternal completeModel) {
-	//	super(completeModel.getStandardLibrary());
-		this.completeModel = completeModel;
+	protected AbstractSpecializedTypeManager(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments) {
-		org.eclipse.ocl.pivot.Class unspecializedType = primaryClass;
-		String typeName = unspecializedType.getName();
-		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		EClass eClass = unspecializedType.eClass();
-		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-		org.eclipse.ocl.pivot.Class specializedType = (org.eclipse.ocl.pivot.Class) eFactoryInstance.create(eClass);
-		specializedType.setName(typeName);
-		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-		for (int i = 0; i < templateParameters.size(); i++) {
-			TemplateParameter formalParameter = templateParameters.get(i);
-			if (formalParameter != null) {
-				Element templateArgument = templateArguments.get(i);
-				if (templateArgument instanceof Type) {
-					Type actualType = (Type) templateArgument;
-					TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, actualType);
-					templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
-				}
-			}
-		}
-		specializedType.getOwnedBindings().add(templateBinding);
-		completeModel.resolveSuperClasses(specializedType, unspecializedType);
-//		if (specializedType instanceof Metaclass) {
-//			Type instanceType = (Type) templateArguments.get(0);
-//			Metaclass specializedMetaclass = (Metaclass)specializedType;
-//			specializedMetaclass.setInstanceType(instanceType);
-//		}
-		specializedType.setUnspecializedElement(unspecializedType);
-		Orphanage orphanage = completeModel.getOrphanage();
-		specializedType.setOwningPackage(orphanage);
-		return specializedType;
-	}
+	protected abstract org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments);
 
-	/**
-	 * @since 7.0
-	 */
-	public synchronized @Nullable Type findSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments) {
+/*	public synchronized @Nullable Type findSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments) {
 		TemplateSignature templateSignature = primaryClass.getOwnedSignature();
 		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 		int iMax = templateParameters.size();
@@ -129,6 +84,11 @@ public class SpecializationManagerInternal implements SpecializationManager
 			}
 		}
 		return specializedType;
+	} */
+
+	@Override
+	public void dispose() {
+		specializations = null;
 	}
 
 	@Override
@@ -142,9 +102,6 @@ public class SpecializationManagerInternal implements SpecializationManager
 		return getSpecializedType(primaryClass, new TemplateArguments(primaryClass.getTypeId(), templateArguments));
 	}
 
-	/**
-	 * @since 7.0
-	 */
 	private synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments) {
 		Map<@NonNull TemplateArguments, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
 		if (specializations2 == null) {

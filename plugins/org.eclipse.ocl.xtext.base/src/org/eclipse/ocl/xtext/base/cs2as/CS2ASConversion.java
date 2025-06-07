@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -1350,7 +1349,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 						templateArguments.add(templateArgument);
 					}
 				}
-				specializedPivotElement = metamodelManager.getLibraryType(unspecializedPivotElement, templateArguments);
+				specializedPivotElement = standardLibrary.getSpecializedType(unspecializedPivotElement, templateArguments);
 			}
 		}
 		installPivotReference(csElement, specializedPivotElement, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__REFERRED_TYPE);
@@ -1451,8 +1450,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//	Load the library.
 		//
-		@SuppressWarnings("unused")
-		AnyType oclAnyType = metamodelManager.getStandardLibrary().getOclAnyType();
+		metamodelManager.getStandardLibrary().getOclAnyType();
 		//
 		//	Perform the post-order traversal to create and install the bulk of non-package/class
 		//	elements.

@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -709,10 +708,5 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	@Override
 	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		return stereotype.getInheritance(standardLibrary);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.Package getPackage() {
-		return PivotUtil.getContainingPackage(eContainer());
 	}
 } //ElementExtensionImpl

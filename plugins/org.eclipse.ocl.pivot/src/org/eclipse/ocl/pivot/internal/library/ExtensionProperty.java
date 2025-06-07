@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -54,10 +55,11 @@ public class ExtensionProperty extends AbstractProperty
 		if (element == null) {
 			return null;
 		}
+		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		List<@NonNull ElementExtension> selectedExtensions = null;
 		for (@NonNull ElementExtension elementExtension : PivotUtil.getOwnedExtensions(element)) {
 			Stereotype dynamicStereotype = elementExtension.getStereotype();
-			if ((staticType == null) || dynamicStereotype.conformsTo(executor.getStandardLibrary(), staticType)) {
+			if ((staticType == null) || standardLibrary.conformsTo(dynamicStereotype, staticType)) {
 				if (selectedExtensions == null) {
 					selectedExtensions = new ArrayList<>();
 				}

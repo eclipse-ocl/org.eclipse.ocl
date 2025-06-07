@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Slot;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -72,7 +73,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
@@ -219,9 +219,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Create(" + attachCount + ") " + toDebugString() + " => " + NameUtil.debugSimpleName(externalResourceSet) + ", " + NameUtil.debugSimpleName(asResourceSet));
 		}
 	//	adapt(externalResourceSet);
+		this.standardLibrary = createStandardLibrary();
+		this.completeModel = createCompleteModel();
 		this.completeEnvironment = createCompleteEnvironment();
-		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
-		this.completeModel = completeEnvironment.getOwnedCompleteModel();
+
+		this.completeModel.init(this);
+		this.standardLibrary.init(this);
+
+
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
@@ -410,6 +415,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		CompleteEnvironmentInternal completeEnvironment = (CompleteEnvironmentInternal)PivotFactory.eINSTANCE.createCompleteEnvironment();
 		completeEnvironment.init(this);
 		return completeEnvironment;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull CompleteModelInternal createCompleteModel() {
+		return (CompleteModelInternal)PivotFactory.eINSTANCE.createCompleteModel();
 	}
 
 	@Override
@@ -701,6 +713,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull StandardLibraryInternal createStandardLibrary() {
+		return PivotFactory.eINSTANCE.createStandardLibraryInternal();
 	}
 
 	/**

@@ -20,8 +20,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
@@ -49,17 +47,6 @@ public class ExecutorReflectiveType extends AbstractReflectiveInheritanceType
 	@Override
 	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
 		return new ExecutorReflectiveFragment(this, baseInheritance);
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		if (this == type) {
-			return this.getPivotClass();
-		}
-		CompleteInheritance firstInheritance = this;
-		CompleteInheritance secondInheritance = type.getInheritance(idResolver.getStandardLibrary());
-		CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
-		return commonInheritance.getPivotClass();
 	}
 
 	@Override

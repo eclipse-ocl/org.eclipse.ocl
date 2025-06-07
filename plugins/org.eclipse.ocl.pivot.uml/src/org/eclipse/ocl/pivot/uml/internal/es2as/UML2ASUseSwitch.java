@@ -43,13 +43,13 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.Region;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Vertex;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -417,7 +417,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 					asExpression = (ExpressionInOCL) doSwitch(umlValue);
 					Type requiredType = PivotUtil.getType(pivotElement);
 					Type defaultValueType = asExpression != null ? asExpression.getType() : null;
-					if ((defaultValueType != null) && !defaultValueType.conformsTo(standardLibrary, requiredType)) {
+					if ((defaultValueType != null) && !standardLibrary.conformsTo(defaultValueType, requiredType)) {
 						converter.error("Incompatible '" + defaultValueType + "' initializer for " + pivotElement + " when '" + requiredType + "' required");
 					}
 				}

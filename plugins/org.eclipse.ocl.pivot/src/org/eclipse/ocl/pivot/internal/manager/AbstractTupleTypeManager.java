@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.TypedElementImpl;
+import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -53,7 +54,6 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	protected final @NonNull StandardLibrary standardLibrary;
-	protected final org.eclipse.ocl.pivot.@NonNull Class oclTupleType;
 
 	/**
 	 * Map from the tuple typeId to the tuple type.
@@ -62,7 +62,37 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 
 	protected AbstractTupleTypeManager(@NonNull StandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
-		this.oclTupleType = standardLibrary.getOclTupleType();
+	}
+
+	@Override
+	public boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateParameterSubstitutions actualSubstitutions,
+			@NonNull TupleType requiredType, @Nullable TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity) {
+		List<Property> actualProperties = actualType.getOwnedProperties();
+		List<Property> requiredProperties = requiredType.getOwnedProperties();
+		if (actualProperties.size() != requiredProperties.size()) {
+			return false;
+		}
+		for (Property actualProperty : actualProperties) {
+			Property requiredProperty = NameUtil.getNameable(requiredProperties, actualProperty.getName());
+			if (requiredProperty == null) {
+				return false;
+			}
+			Type actualPropertyType = PivotUtil.getType(actualProperty);
+			Type requiredPropertyType = PivotUtil.getType(requiredProperty);
+			if (enforceNullity) {
+				boolean actualIsRequired = actualProperty.isIsRequired();
+				boolean requiredIsRequired = requiredProperty.isIsRequired();
+				if (!standardLibrary.conformsTo(actualPropertyType, actualIsRequired, actualSubstitutions, requiredPropertyType, requiredIsRequired, requiredSubstitutions)) {
+					return false;
+				}
+			}
+			else {
+				if (!standardLibrary.conformsTo(actualPropertyType, actualSubstitutions, requiredPropertyType, requiredSubstitutions, false)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	protected abstract @NonNull TupleType createTupleType(@NonNull TupleTypeId typeId);
@@ -73,8 +103,8 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	@Override
-	public @Nullable Type getCommonType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
+	public @Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull TupleType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
 		List<Property> leftProperties = leftType.getOwnedProperties();
 		List<Property> rightProperties = rightType.getOwnedProperties();
 		int iSize = leftProperties.size();
@@ -197,5 +227,12 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 		else {
 			return getTupleType(PivotUtil.getOwnedPropertiesList(type), usageBindings);
 		}
+	}
+
+	@Override
+	public boolean isEqualToTupleType(@NonNull TupleType leftTupleType, @NonNull TupleType rightTupleType) {
+		TypeId leftParts = leftTupleType.getTypeId();
+		TypeId rightParts = rightTupleType.getTypeId();
+		return leftParts == rightParts;
 	}
 }

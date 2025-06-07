@@ -20,28 +20,33 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.LambdaParameter;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
+import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
+import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.manager.JavaTypeManager;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
+import org.eclipse.ocl.pivot.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
+import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
@@ -84,7 +89,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	/**
 	 * The URI to provide the default Standard Library. This value may be
-	 * reassigned pior to any OCL analysis or evaluation to select a different
+	 * reassigned prior to any OCL analysis or evaluation to select a different
 	 * default. Alternatively the need for default may be bypassed by explicitly
 	 * invoking loadLibrary().
 	 */
@@ -93,11 +98,16 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected StandardLibraryImpl()
 	{
-		super();
+		this.collectionTypeManager = createCollectionTypeManager();
+		this.javaTypeManager = createJavaTypeManager();
+		this.lambdaTypeManager = createLambdaTypeManager();
+		this.mapTypeManager = createMapTypeManager();
+		this.specializedTypeManager = createSpecializedTypeManager();
+		this.tupleTypeManager = createTupleTypeManager();
 	}
 
 	/**
@@ -113,18 +123,49 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
+	 * @since 7.0
 	 */
-	private /*@LazyNonNull*/ CollectionTypeManager collectionTypeManager = null;
+	protected /*@NonNull*/ CollectionTypeManager collectionTypeManager = null;
+
+	/**
+	 * Resolver for facilities using ElementIds.
+	 * </br>
+	 * This is lazily cached since it it is rarely used and has timing challenges if cached eagerly.
+	 * </br>
+	 * Since the idResolver is lazily crreated, its creation is fully aware of the context and so can create an
+	 * appropriate derived IdResolver for e.g. UML avoiding the need for a UML-derivation of the StandardLibrary.
+	 */
+	private /*@LazyNonNull*/ IdResolver idResolver = null;
+
+	/**
+	 * Shared cache of the lazily created lazily deleted representations of each lambda type.
+	 * @since 7.0
+	 */
+	protected /*@NonNull*/ JavaTypeManager javaTypeManager = null;
+
+	/**
+	 * Shared cache of the lazily created lazily deleted representations of each type as a Java type.
+	 * @since 7.0
+	 */
+	protected @Nullable LambdaTypeManager lambdaTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
+	 * @since 7.0
 	 */
-	private /*@LazyNonNull*/ MapTypeManager mapTypeManager = null;
+	protected /*@NonNull*/ MapTypeManager mapTypeManager = null;
+
+	/**
+	 * Shared cache of the lazily created lazily deleted representations of each specialized class.
+	 * @since 7.0
+	 */
+	protected @Nullable SpecializedTypeManager specializedTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each tuple type.
+	 * @since 7.0
 	 */
-	private /*@LazyNonNull*/ TupleTypeManager tupleTypeManager = null;
+	protected /*@NonNull*/ TupleTypeManager tupleTypeManager = null;
 
 	/**
 	 * @since 7.0
@@ -133,297 +174,262 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments) {
-		return getCollectionTypeManager().basicGetCollectionType(typeArguments);
+		assert collectionTypeManager != null;
+		return collectionTypeManager.basicGetCollectionType(typeArguments);
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull CompleteClass thatCompleteClass) {
-		CompleteInheritance thisInheritance = thisCompleteClass.getCompleteInheritance();
-		CompleteInheritance thatInheritance = thatCompleteClass.getCompleteInheritance();
-		if (thisInheritance == thatInheritance) {
+	public boolean conformsTo(@NonNull Type leftType, @NonNull Type rightType) {
+		return conformsTo(leftType, null, rightType, null, false);
+	}
+
+/*	@Override
+	private boolean conformsTo1(@NonNull Type leftType, @NonNull Type rightType) {
+		if (leftType == rightType) {
 			return true;
 		}
-		return thatInheritance.isSuperInheritanceOf(thisInheritance);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull Type thatType) {
-		CompleteInheritance thisInheritance = thisCompleteClass.getCompleteInheritance();
-		CompleteInheritance thatInheritance = thatType.getInheritance(this);
-		if (thisInheritance == thatInheritance) {
+		if (leftType instanceof InvalidType) {
 			return true;
 		}
-		return thatInheritance.isSuperInheritanceOf(thisInheritance);
+		else if (leftType instanceof VoidType) {
+			if (rightType instanceof InvalidType) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else if (leftType instanceof CollectionType) {
+			CollectionType leftCollectionType = (CollectionType)leftType;
+			if (rightType instanceof CollectionType) {
+				assert collectionTypeManager != null;
+				return collectionTypeManager.conformsToCollectionType(leftCollectionType, null, (CollectionType)rightType, null, false);		/// XXX nullity
+			}
+			CollectionType leftGenericType = (CollectionType)leftCollectionType.getUnspecializedElement();
+			if (leftGenericType != null) {
+				return conformsTo(leftGenericType, rightType);
+			}
+			// Drop through to inheritance for e.g. OclAny
+		}
+		else if (leftType instanceof JavaType) {
+			throw new UnsupportedOperationException();		// WIP
+		}
+		else if (leftType instanceof LambdaType) {
+			LambdaType leftLambdaType = (LambdaType)leftType;
+			if (rightType instanceof LambdaType) {
+				if (lambdaTypeManager != null) {
+					return lambdaTypeManager.conformsToLambdaType(leftLambdaType, null, (LambdaType)rightType, null, false);		/// XXX nullity
+				}
+			}
+			// Drop through to inheritance for e.g. OclAny
+		}
+		else if (leftType instanceof MapType) {
+			MapType leftMapType = (MapType)leftType;
+			if (rightType instanceof MapType) {
+				assert mapTypeManager != null;
+				return mapTypeManager.conformsToMapType(leftMapType, null, (MapType)rightType, null, false);		/// XXX nullity
+			}
+			MapType leftGenericType = (MapType)leftMapType.getUnspecializedElement();
+			if (leftGenericType != null) {
+				return conformsTo(leftGenericType, rightType);
+			}
+			// Drop through to inheritance for e.g. OclAny
+		}
+		else if (leftType instanceof SelfType) {
+			throw new UnsupportedOperationException();		// WIP
+		}
+		else if (leftType instanceof TupleType) {
+			TupleType leftTupleType = (TupleType)leftType;
+			if (rightType instanceof TupleType) {
+				assert tupleTypeManager != null;
+				return tupleTypeManager.conformsToTupleType(leftTupleType, null, (TupleType)rightType, null, false);		/// XXX nullity
+			}
+			// Drop through to inheritance for e.g. OclAny
+		}
+		else if (leftType instanceof DataType) {			// XXX rewrite
+			if (rightType instanceof DataType) {
+				org.eclipse.ocl.pivot.Class rightBehavioralClass = ((DataType)rightType).getBehavioralClass();
+				if (rightBehavioralClass != null) {
+					rightType = rightBehavioralClass;		// See Bug 574431 for discussion of this dodgy downcast
+				}
+			}
+			// Drop through to inheritance
+		}
+		else if (leftType instanceof EcoreReflectiveType) {			// XXX
+			EcoreReflectiveType leftEcoreReflectiveType = (EcoreReflectiveType)leftType;
+			Class<?> leftInstanceClass = leftEcoreReflectiveType.getEClassifier().getInstanceClass();
+			org.eclipse.ocl.pivot.@Nullable Class leftBehavioralClass = leftInstanceClass != null ? PivotUtil.getBehavioralClass(this, leftInstanceClass) : null;
+			CompleteInheritance rightInheritance = rightType.getInheritance(this);
+			if (leftBehavioralClass == rightInheritance) {
+				return true;
+			}
+			return rightInheritance.isSuperInheritanceOf(leftEcoreReflectiveType);
+		}
+ 		CompleteInheritance leftInheritance = leftType.getInheritance(this);
+		CompleteInheritance rightInheritance = rightType.getInheritance(this);
+		return leftInheritance.isSubInheritanceOf(rightInheritance);
+	} */
+
+	@Override
+	public boolean conformsTo(@NonNull CompleteClass leftCompleteClass, @NonNull CompleteClass rightCompleteClass) {
+		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
+		CompleteInheritance rightInheritance = rightCompleteClass.getCompleteInheritance();
+		if (leftInheritance == rightInheritance) {
+			return true;
+		}
+		return rightInheritance.isSuperInheritanceOf(leftInheritance);
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull Type firstType, boolean firstIsRequired, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, boolean secondIsRequired, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		if (!firstIsRequired && secondIsRequired) {
+	public boolean conformsTo(@NonNull CompleteClass leftCompleteClass, @NonNull Type rightType) {
+		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
+		CompleteInheritance rightInheritance = rightType.getInheritance(this);
+		if (leftInheritance == rightInheritance) {
+			return true;
+		}
+		return rightInheritance.isSuperInheritanceOf(leftInheritance);
+	}
+
+	@Override
+	public boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, boolean rightIsRequired, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+		if (!leftIsRequired && rightIsRequired) {
 			return false;
 		}
-		return conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions, true);
+		return conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions, true);
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-		return conformsTo(firstType, firstSubstitutions, secondType, secondSubstitutions, false);
+	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+		return conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions, false);
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	protected boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions, boolean enforceNullity) {
-		if (firstType == secondType) {
+	@Override
+	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity) {
+		if (leftType == rightType) {
 			return true;
 		}
-		//
-		//	Resolve first template parameters to its substitution
-		//
-		TemplateParameter firstTemplateParameter = firstType.isTemplateParameter();
-		if (firstTemplateParameter != null) {
-			Type firstSubstitution = firstSubstitutions.get(firstTemplateParameter);
-			if (firstSubstitution != null) {
-				firstType = firstSubstitution;
+		if (leftType instanceof InvalidType) {
+			return true;
+		}
+		else if (leftType instanceof VoidType) {
+			if (rightType instanceof InvalidType) {
+				return false;
+			}
+			else {
+				return true;
 			}
 		}
 		//
-		//	Accrue solution to the second template parameter
+		//	Resolve left template parameters to its substitution
 		//
-		TemplateParameter secondTemplateParameter = secondType.isTemplateParameter();
-		if (secondTemplateParameter != null) {
-			//			Type secondSubstitution = secondSubstitutions.get(secondTemplateParameter);
-			//			if (secondSubstitution != null) {
-			//				secondType = secondSubstitution;
-			//			}
-			/*secondType =*/ secondSubstitutions.put(secondTemplateParameter, firstType);
+		if ((leftType instanceof TemplateParameter) && (leftSubstitutions != null)) {
+			TemplateParameter leftTemplateParameter = (TemplateParameter)leftType;
+			Type leftSubstitution = leftSubstitutions.get(leftTemplateParameter);
+			if (leftSubstitution != null) {
+				leftType = leftSubstitution;
+			}
+		}
+		//
+		//	Accrue solution to the right template parameter
+		//
+		if ((rightType instanceof TemplateParameter) && (rightSubstitutions != null)) {
+			TemplateParameter rightTemplateParameter = (TemplateParameter)rightType;
+			rightSubstitutions.put(rightTemplateParameter, leftType);
 			return true;
 		}
-		if (firstType == secondType) {
+		if (leftType == rightType) {
 			return true;
 		}
 		//
 		//	Normalize types to their behavioral class
 		//
-//		CompleteClass firstCompleteClass = getCompleteClass(firstType);
-//		CompleteClass secondCompleteClass = getCompleteClass(secondType);
-//		if (firstCompleteClass == secondCompleteClass) {
+//		CompleteClass leftCompleteClass = getCompleteClass(leftType);
+//		CompleteClass rightCompleteClass = getCompleteClass(rightType);
+//		if (leftCompleteClass == rightCompleteClass) {
 //			return true;
 //		}
-	//	firstType = firstCompleteClass.getPrimaryClass();
-//		Type behavioralClass = secondCompleteClass.getBehavioralClass();
-//		if ((behavioralClass != null) && (behavioralClass != secondType)) {
-//			secondCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 / Issue 2190 for discussion of this dodgy downcast
-//			secondType = behavioralClass;
+	//	leftType = leftCompleteClass.getPrimaryClass();
+//		Type behavioralClass = rightCompleteClass.getBehavioralClass();
+//		if ((behavioralClass != null) && (behavioralClass != rightType)) {
+//			rightCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 / Issue 2190 for discussion of this dodgy downcast
+//			rightType = behavioralClass;
 //		}
-		firstType = getPrimaryType(firstType);
-		secondType = getPrimaryType(secondType);
-		if (firstType == secondType) {
+		leftType = getPrimaryType(leftType);
+		rightType = getPrimaryType(rightType);
+		if (leftType == rightType) {
 			return true;
 		}
-		Type behavioralSecondType = basicGetBehavioralType(secondType);
-		if (behavioralSecondType != null) {
-			secondType = behavioralSecondType;
-		}
+	//	Type behavioralSecondType = basicGetBehavioralType(rightType);
+	//	if (behavioralSecondType != null) {
+	//		rightType = behavioralSecondType;
+	//	}
 		//
-		//	Use specialized conformance for constructed types, inheritance tree intersection for simple types
+		//	Use specialized conformance for compound types, inheritance tree intersection for simple types
 		//
-		if (firstType == secondType) {
+		if (leftType == rightType) {
 			return true;
 		}
-		else if ((firstType instanceof DataType) && (secondType instanceof DataType)) {
-			if ((firstType instanceof CollectionType) && (secondType instanceof CollectionType)) {
-				return conformsToCollectionType((CollectionType)firstType, firstSubstitutions, (CollectionType)secondType, secondSubstitutions, enforceNullity);
-			}
-			else if ((firstType instanceof MapType) && (secondType instanceof MapType)) {
-				return conformsToMapType((MapType)firstType, firstSubstitutions, (MapType)secondType, secondSubstitutions, enforceNullity);
-			}
-			else if ((firstType instanceof LambdaType) && (secondType instanceof LambdaType)) {
-				return conformsToLambdaType((LambdaType)firstType, firstSubstitutions, (LambdaType)secondType, secondSubstitutions, enforceNullity);
-			}
-			else if ((firstType instanceof TupleType) && (secondType instanceof TupleType)) {
-				return conformsToTupleType((TupleType)firstType, firstSubstitutions, (TupleType)secondType, secondSubstitutions, enforceNullity);
-			}
-		}
-		return conformsToType(firstType, firstSubstitutions, secondType, secondSubstitutions);
-	}
-
-	/*	@Override
-	public boolean conformsToCollectionType(@NonNull DomainCollectionType firstCollectionType, @NonNull DomainCollectionType secondCollectionType) {
-		CollectionType firstCollectionType2 = (CollectionType)firstCollectionType;
-		CollectionType secondCollectionType2 = (CollectionType)secondCollectionType;
-		TemplateParameterSubstitutions firstSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(this, firstCollectionType2, secondCollectionType2);
-		TemplateParameterSubstitutions secondSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(this, secondCollectionType2, firstCollectionType2);
-		return conformsToCollectionType(firstCollectionType2, firstSubstitutions, secondCollectionType2, secondSubstitutions);
-	} */
-
-	/**
-	 * @since 7.0
-	 */
-	protected boolean conformsToCollectionType(@NonNull CollectionType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull CollectionType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions, boolean enforceNullity) {
-		org.eclipse.ocl.pivot.Class firstContainerType = firstType.getContainerType();
-		org.eclipse.ocl.pivot.Class secondContainerType = secondType.getContainerType();
-		if (!conformsToType(firstContainerType, firstSubstitutions, secondContainerType, secondSubstitutions)) {
-			return false;
-		}
-		IntegerValue firstLower = firstType.getLowerValue();
-		IntegerValue secondLower = secondType.getLowerValue();
-		if (firstLower.compareTo(secondLower) < 0) {
-			return false;
-		}
-		UnlimitedNaturalValue firstUpper = firstType.getUpperValue();
-		UnlimitedNaturalValue secondUpper = secondType.getUpperValue();
-		if (firstUpper.compareTo(secondUpper) > 0) {
-			return false;
-		}
-		Type firstElementType = PivotUtil.getElementType(firstType);
-		Type secondElementType = PivotUtil.getElementType(secondType);
-		if (enforceNullity) {
-			boolean firstIsNullFree = firstType.isIsNullFree();
-			boolean secondIsNullFree = secondType.isIsNullFree();
-			return conformsTo(firstElementType, firstIsNullFree, firstSubstitutions, secondElementType, secondIsNullFree, secondSubstitutions);
-		}
-		else {
-			return conformsTo(firstElementType, firstSubstitutions, secondElementType, secondSubstitutions, false);
-		}
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected boolean conformsToLambdaType(@NonNull LambdaType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull LambdaType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity) {
-		LambdaParameter actualContext = PivotUtil.getOwnedContext(actualType);
-		LambdaParameter requiredContext = PivotUtil.getOwnedContext(requiredType);
-		Type actualContextType = PivotUtil.getType(actualContext);
-		Type requiredContextType = PivotUtil.getType(requiredContext);
-		if (enforceNullity) {
-			boolean actualIsRequired = actualContext.isIsRequired();
-			boolean requiredIsRequired = requiredContext.isIsRequired();
-			if (!conformsTo(actualContextType, actualIsRequired, actualSubstitutions, requiredContextType, requiredIsRequired, requiredSubstitutions)) {
-				return false;
-			}
-		}
-		else {
-			if (!conformsTo(actualContextType, actualSubstitutions, requiredContextType, requiredSubstitutions, false)) {
-				return false;
-			}
-		}
-		LambdaParameter actualResult = PivotUtil.getOwnedResult(actualType);
-		LambdaParameter requiredResult = PivotUtil.getOwnedResult(requiredType);
-		Type actualResultType = PivotUtil.getType(actualResult);
-		Type requiredResultType = PivotUtil.getType(requiredResult);
-		if (enforceNullity) {
-			boolean actualIsRequired = actualResult.isIsRequired();
-			boolean requiredIsRequired = requiredResult.isIsRequired();
-			if (!conformsTo(requiredResultType, requiredIsRequired, requiredSubstitutions, actualResultType, actualIsRequired, actualSubstitutions)) {	// contravariant
-				return false;
-			}
-		}
-		else {
-			if (!conformsTo(actualResultType, actualSubstitutions, requiredResultType, requiredSubstitutions, false)) {
-				return false;
-			}
-		}
-		List<@NonNull LambdaParameter> actualParameters = PivotUtil.getOwnedParametersList(actualType);
-		List<@NonNull LambdaParameter> requiredParameters = PivotUtil.getOwnedParametersList(requiredType);
-		int iMax = actualParameters.size();
-		if (iMax != requiredParameters.size()) {
-			return false;
-		}
-		for (int i = 0; i < iMax; i++) {
-			LambdaParameter actualParameter = actualParameters.get(i);
-			LambdaParameter requiredParameter = requiredParameters.get(i);
-			Type actualParameterType = PivotUtil.getType(actualParameter);
-			Type requiredParameterType = PivotUtil.getType(requiredParameter);
-			if (enforceNullity) {
-				boolean actualIsRequired = actualParameter.isIsRequired();
-				boolean requiredIsRequired = requiredParameter.isIsRequired();
-				if (!conformsTo(actualParameterType, actualIsRequired, actualSubstitutions, requiredParameterType, requiredIsRequired, requiredSubstitutions)) {
-					return false;
+		if (leftType instanceof DataType) {
+			if (leftType instanceof CollectionType) {
+				if (rightType instanceof CollectionType) {
+					assert collectionTypeManager != null;
+					return collectionTypeManager.conformsToCollectionType((CollectionType)leftType, leftSubstitutions, (CollectionType)rightType, rightSubstitutions, enforceNullity);
 				}
+				// Drop through to simple inheritance for e.g. OclAny
+			}
+			else if (leftType instanceof MapType) {
+				if (rightType instanceof MapType) {
+					assert mapTypeManager != null;
+					return mapTypeManager.conformsToMapType((MapType)leftType, leftSubstitutions, (MapType)rightType, rightSubstitutions, enforceNullity);
+				}
+				// Drop through to simple inheritance for e.g. OclAny
+			}
+			else if (leftType instanceof LambdaType) {
+				if (rightType instanceof LambdaType) {
+					if (lambdaTypeManager != null) {
+						return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftSubstitutions, (LambdaType)rightType, rightSubstitutions, enforceNullity);
+					}
+				}
+				// Drop through to simple inheritance for e.g. OclAny
+			}
+			else if (leftType instanceof TupleType) {
+				if (rightType instanceof TupleType) {
+					assert tupleTypeManager != null;
+					return tupleTypeManager.conformsToTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions, enforceNullity);
+				}
+				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else {
-				if (!conformsTo(actualParameterType, actualSubstitutions, requiredParameterType, requiredSubstitutions, false)) {
-					return false;
+				if (rightType instanceof DataType) {
+					Type behavioralRightType = basicGetBehavioralType(rightType);
+					if (behavioralRightType != null) {
+						rightType = behavioralRightType;
+					}
 				}
 			}
 		}
-		return true;
+		return conformsToSimpleType(leftType, rightType);
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	protected boolean conformsToMapType(@NonNull MapType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull MapType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions, boolean enforceNullity) {
-		Type firstKeyType = PivotUtil.getKeyType(firstType);
-		Type secondKeyType = PivotUtil.getKeyType(secondType);
-		if (enforceNullity) {
-			boolean firstKeysAreNullFree =  firstType.isKeysAreNullFree();
-			boolean secondKeysAreNullFree = secondType.isKeysAreNullFree();
-			if (!conformsTo(firstKeyType, firstKeysAreNullFree, firstSubstitutions, secondKeyType, secondKeysAreNullFree, secondSubstitutions)) {
-				return false;
-			}
+	@Override
+	public boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType) {	// After compound types handled
+	//	assert leftType instanceof org.eclipse.ocl.pivot.Class;// && !(leftType instanceof DataType);
+	//	assert rightType instanceof org.eclipse.ocl.pivot.Class;// && !(rightType instanceof DataType);
+		if (leftType == rightType) {		// XXX specializations
+			return true;
 		}
-		else {
-			if (!conformsTo(firstKeyType, firstSubstitutions, secondKeyType, secondSubstitutions, false)) {
-				return false;
-			}
-		}
-		Type firstValueType = PivotUtil.getValueType(firstType);
-		Type secondValueType = PivotUtil.getValueType(secondType);
-		if (enforceNullity) {
-			boolean firstValuesAreNullFree = firstType.isValuesAreNullFree();
-			boolean secondValuesAreNullFree = secondType.isValuesAreNullFree();
-			return conformsTo(firstValueType, firstValuesAreNullFree, firstSubstitutions, secondValueType, secondValuesAreNullFree, secondSubstitutions);
-		}
-		else {
-			return conformsTo(firstValueType, firstSubstitutions, secondValueType, secondSubstitutions, false);
-		}
+		Type leftPrimaryType = getPrimaryType(leftType);
+		Type rightPrimaryType = getPrimaryType(rightType);
+		CompleteInheritance leftInheritance = leftPrimaryType.getInheritance(this);
+		CompleteInheritance rightInheritance = rightPrimaryType.getInheritance(this);
+		return leftInheritance.isSubInheritanceOf(rightInheritance);
 	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected boolean conformsToTupleType(@NonNull TupleType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull TupleType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity) {
-		List<Property> actualProperties = actualType.getOwnedProperties();
-		List<Property> requiredProperties = requiredType.getOwnedProperties();
-		if (actualProperties.size() != requiredProperties.size()) {
-			return false;
-		}
-		for (Property actualProperty : actualProperties) {
-			Property requiredProperty = NameUtil.getNameable(requiredProperties, actualProperty.getName());
-			if (requiredProperty == null) {
-				return false;
-			}
-			Type actualPropertyType = PivotUtil.getType(actualProperty);
-			Type requiredPropertyType = PivotUtil.getType(requiredProperty);
-			if (enforceNullity) {
-				boolean actualIsRequired = actualProperty.isIsRequired();
-				boolean requiredIsRequired = requiredProperty.isIsRequired();
-				if (!conformsTo(actualPropertyType, actualIsRequired, actualSubstitutions, requiredPropertyType, requiredIsRequired, requiredSubstitutions)) {
-					return false;
-				}
-			}
-			else {
-				if (!conformsTo(actualPropertyType, actualSubstitutions, requiredPropertyType, requiredSubstitutions, false)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected abstract boolean conformsToType(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);	// XXX substitutions not used
 
 	/**
 	 * @since 7.0
@@ -433,7 +439,27 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	/**
 	 * @since 7.0
 	 */
+	protected abstract @NonNull IdResolver createIdResolver();
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull JavaTypeManager createJavaTypeManager();
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @Nullable LambdaTypeManager createLambdaTypeManager();
+
+	/**
+	 * @since 7.0
+	 */
 	protected abstract @NonNull MapTypeManager createMapTypeManager();
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @Nullable SpecializedTypeManager createSpecializedTypeManager();
 
 	/**
 	 * @since 7.0
@@ -450,58 +476,87 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments) {
-		return getCollectionTypeManager().getCollectionType(typeArguments);
+		assert collectionTypeManager != null;
+		return collectionTypeManager.getCollectionType(typeArguments);
 	}
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		return getCollectionTypeManager().getCollectionType(collectionTypeId);
+		assert collectionTypeManager != null;
+		return collectionTypeManager.getCollectionType(collectionTypeId);
 	}
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower, upper);
-		return getCollectionTypeManager().getCollectionType(typeArguments);
+		assert collectionTypeManager != null;
+		return collectionTypeManager.getCollectionType(typeArguments);
 	}
 
 	@Override
 	public @NonNull CollectionTypeManager getCollectionTypeManager() {
-		CollectionTypeManager collectionTypeManager2 = collectionTypeManager;
-		if (collectionTypeManager2 == null) {
-			collectionTypeManager = collectionTypeManager2 = createCollectionTypeManager();
-		}
-		return collectionTypeManager2;
+		assert collectionTypeManager != null;
+		return collectionTypeManager;
 	}
 
 	@Override
-	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
-			Type commonType = getTupleTypeManager().getCommonType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
-			if (commonType == null) {
-				commonType = getOclAnyType();
+	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(org.eclipse.ocl.pivot.@NonNull Class leftType, org.eclipse.ocl.pivot.@NonNull Class rightType) {
+		return (org.eclipse.ocl.pivot.@NonNull Class)getCommonType(leftType, null, rightType, null);
+	}
+
+	@Override
+	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull Type rightType) {
+		return getCommonType(leftType, null, rightType, null);
+	}
+
+	@Override
+	public @NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+		if (leftType instanceof CollectionType) {
+			if (rightType instanceof CollectionType) {
+				assert collectionTypeManager != null;
+				return collectionTypeManager.getCommonCollectionType((CollectionType)leftType, leftSubstitutions, (CollectionType)rightType, rightSubstitutions);
 			}
-			return commonType;
+			return getOclAnyType();
 		}
-		if ((leftType instanceof CollectionType) && (rightType instanceof CollectionType)) {
-			CompleteInheritance leftInheritance = leftType.getInheritance(this);
-			CompleteInheritance rightInheritance = rightType.getInheritance(this);
-			CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-			CollectionType commonCollectionType = (CollectionType)getPrimaryType(commonInheritance.getPivotClass());
-			CollectionType leftCollectionType = (CollectionType)leftType;
-			CollectionType rightCollectionType = (CollectionType)rightType;
-			Type leftElementType = ClassUtil.requireNonNull(leftCollectionType.getElementType());
-			Type rightElementType = ClassUtil.requireNonNull(rightCollectionType.getElementType());
-			Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
-			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
-			return getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
+		else if (leftType instanceof LambdaType) {
+			if (rightType instanceof LambdaType) {
+				throw new UnsupportedOperationException();			// XXX TODO FIXME
+			}
+			return getOclAnyType();
 		}
-		if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions, false)) {
+		else if (leftType instanceof MapType) {
+			if (rightType instanceof MapType) {
+				assert mapTypeManager != null;
+				return mapTypeManager.getCommonMapType((MapType)leftType, leftSubstitutions, (MapType)rightType, rightSubstitutions);
+			}
+			return getOclAnyType();
+		}
+		else if (leftType instanceof TupleType) {
+			if (rightType instanceof TupleType) {
+				assert tupleTypeManager != null;
+				TupleType commonTupleType = tupleTypeManager.getCommonTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
+				if (commonTupleType != null) {
+					return commonTupleType;
+				}
+			}
+			return getOclAnyType();
+		}
+		else if (leftType instanceof DataType) {
+		//	if (rightType instanceof DataType) {			// XXX Avoid getBehavioralClass problem with conformsTo
+				CompleteInheritance leftInheritance = leftType.getInheritance(this);
+				CompleteInheritance rightInheritance = rightType.getInheritance(this);
+				CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
+				return getPrimaryType(commonInheritance.getPivotClass());
+		//	}
+		//	return getOclAnyType();
+		}
+	/*	if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions, false)) {		// malfunctions in testOperationDependencyAnalysis_Companies for a TemplateParameter as right
 			return rightType;
 		}
 		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions, false)) {
 			return leftType;
-		}
+		} */
 		CompleteInheritance leftInheritance = leftType.getInheritance(this);
 		CompleteInheritance rightInheritance = rightType.getInheritance(this);
 		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
@@ -514,6 +569,30 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public @NonNull IdResolver getIdResolver() {
+		IdResolver idResolver2 = idResolver;
+		if (idResolver2 == null) {
+			idResolver = idResolver2 = createIdResolver();
+		}
+		return idResolver2;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object) {
+		assert javaTypeManager != null;
+		return javaTypeManager.getJavaType(object);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull JavaTypeManager getJavaTypeManager() {
+		assert javaTypeManager != null;
+		return javaTypeManager;
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getLibraryClass(@NonNull String className) {
 		return ClassUtil.requireNonNull(basicGetLibraryClass(className));
 	}
@@ -523,7 +602,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		return getMapTypeManager().getMapEntryType(entryClass);
+		assert mapTypeManager != null;
+		return mapTypeManager.getMapEntryType(entryClass);
 	}
 
 	/**
@@ -532,7 +612,16 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull MapType getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		MapTypeArguments typeArguments = new MapTypeArguments(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
-		return getMapTypeManager().getMapType(typeArguments);
+		return getMapType(typeArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments) {
+		assert mapTypeManager != null;
+		return mapTypeManager.getMapType(typeArguments);
 	}
 
 	/**
@@ -540,11 +629,25 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull MapTypeManager getMapTypeManager() {
-		MapTypeManager mapTypeManager2 = mapTypeManager;
-		if (mapTypeManager2 == null) {
-			mapTypeManager = mapTypeManager2 = createMapTypeManager();
+		assert mapTypeManager != null;
+		return mapTypeManager;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull Type type) {
+		if (type instanceof ReflectiveInheritance) {
+			return ((ReflectiveInheritance)type).getPivotClass();
 		}
-		return mapTypeManager2;
+		else if (type instanceof EcoreExecutorType) {
+			return (EcoreExecutorType)type;
+		}
+		else {
+			try {
+				return type.getInheritance(this).getPivotClass();
+			}
+			catch (Throwable e) {}
+		}
+		return getOclAnyType();			// FIXME should never happen;
 	}
 
 	@Override
@@ -599,17 +702,20 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> parts, @Nullable TemplateParameterSubstitutions bindings) {
-		return getTupleTypeManager().getTupleType(parts, bindings);
+		assert tupleTypeManager != null;
+		return tupleTypeManager.getTupleType(parts, bindings);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull List<@NonNull PartId> partIds) {
-		return getTupleTypeManager().getTupleType(partIds);
+		assert tupleTypeManager != null;
+		return tupleTypeManager.getTupleType(partIds);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return getTupleTypeManager().getTupleType(typeId);
+		assert tupleTypeManager != null;
+		return tupleTypeManager.getTupleType(typeId);
 	}
 
 	/**
@@ -617,21 +723,77 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull TupleTypeManager getTupleTypeManager() {
-		TupleTypeManager tupleTypeManager2 = tupleTypeManager;
-		if (tupleTypeManager2 == null) {
-			tupleTypeManager = tupleTypeManager2 = createTupleTypeManager();
+		assert tupleTypeManager != null;
+		return tupleTypeManager;
+	}
+
+
+	@Override
+	public boolean isEqualTo(@NonNull Type leftType, @NonNull Type rightType) {
+		if (leftType == rightType) {
+			return true;
 		}
-		return tupleTypeManager2;
+		else if (leftType instanceof CollectionType) {
+			if (rightType instanceof CollectionType) {
+				assert collectionTypeManager != null;
+				return collectionTypeManager.isEqualToCollectionType((CollectionType)leftType, (CollectionType)rightType);
+			}
+			return false;
+		}
+/*		else if (leftType instanceof LambdaType) {
+			if (rightType instanceof LambdaType) {
+				throw new UnsupportedOperationException();			// XXX TODO FIXME
+			}
+			return getOclAnyType();
+		} */
+		else if (leftType instanceof MapType) {
+			if (rightType instanceof MapType) {
+				assert mapTypeManager != null;
+				return mapTypeManager.isEqualToMapType((MapType)leftType, (MapType)rightType);
+			}
+			return false;
+		}
+		else if (leftType instanceof TupleType) {
+			if (rightType instanceof TupleType) {
+				assert tupleTypeManager != null;
+				return tupleTypeManager.isEqualToTupleType((TupleType)leftType, (TupleType)rightType);
+			}
+			return false;
+		}
+		else if (leftType instanceof AbstractReflectiveInheritanceType) {
+			AbstractReflectiveInheritanceType leftReflectiveType = (AbstractReflectiveInheritanceType)leftType;
+			return leftReflectiveType.getPivotClass() == rightType;
+		}
+		Type thisType = getNormalizedType(leftType);
+		Type thatType = getNormalizedType(rightType);
+		return thisType == thatType;
 	}
 
 	protected void resetLibrary() {
+	//	System.out.println("resetLibrary " + NameUtil.debugSimpleName(this));
 		if (collectionTypeManager != null) {
 			collectionTypeManager.dispose();
 			collectionTypeManager = null;
 		}
+		if (idResolver != null) {
+			idResolver.dispose();
+			idResolver = null;
+		}
+		if (javaTypeManager != null) {
+			javaTypeManager.dispose();
+			javaTypeManager = null;
+		}
+		if (lambdaTypeManager != null) {
+			lambdaTypeManager.dispose();
+			lambdaTypeManager = null;
+		}
 		if (mapTypeManager != null) {
 			mapTypeManager.dispose();
 			mapTypeManager = null;
+		}
+		if (specializedTypeManager != null) {
+			specializedTypeManager.dispose();
+			specializedTypeManager = null;
 		}
 		if (tupleTypeManager != null) {
 			tupleTypeManager.dispose();

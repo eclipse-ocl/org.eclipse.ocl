@@ -11,8 +11,6 @@
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -23,21 +21,15 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -83,15 +75,15 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			ExecutorPackage execPackage = getStandardLibrary().getPackage(ePackage);
 			if (execPackage == null) {
 				PackageId packageId = IdManager.getPackageId(ePackage);
-				Element domainPackage = packageId.accept(this);
-				if (domainPackage instanceof ExecutorPackage) {
-					execPackage = (ExecutorPackage) domainPackage;
+				Element asPackage = packageId.accept(this);
+				if (asPackage instanceof ExecutorPackage) {
+					execPackage = (ExecutorPackage) asPackage;
 				}
 			}
 			if (execPackage != null) {
-				org.eclipse.ocl.pivot.Class domainType = execPackage.getOwnedClass(eClassifier.getName());
-				if (domainType != null) {
-					type = standardLibrary.getInheritance(domainType);
+				org.eclipse.ocl.pivot.Class asType = execPackage.getOwnedClass(eClassifier.getName());
+				if (asType != null) {
+					type = standardLibrary.getInheritance(asType);
 					typeMap.put(eClassifier, new WeakReference<>(type));
 				}
 			}
@@ -145,39 +137,8 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	protected org.eclipse.ocl.pivot.@Nullable Class getStaticClassOfEObject(@NonNull EObject eObject) {
-		if (eObject instanceof ExecutorType) {
-			ExecutorType executorType = (ExecutorType)eObject;
-			org.eclipse.ocl.pivot.Class asClass = key2class.get(executorType);
-			if (asClass == null) {
-				String metaclassName = executorType.getTypeId().getMetaclassName();
-				asClass = getStandardLibrary().getLibraryClass(metaclassName);
-				key2class.put(executorType, asClass);
-			}
-			return asClass;
-		}
-		return super.getStaticClassOfEObject(eObject);
-	}
-
-	@Override
 	public Notifier getTarget() {
 		return null;
-	}
-
-	@Override
-	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return getStandardLibrary().getTupleType(typeId);
-	}
-
-	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {
-		int iSize = parts.length;
-		List<@NonNull PartId> partsList = new ArrayList<>(iSize);
-		for (int i = 0; i < iSize; i++) {
-			TypedElement part = parts[i];
-			String partName = NameUtil.getSafeName(part);
-			partsList.add(IdManager.getPartId(i, partName, part.getTypeId(), part.isIsRequired()));
-		}
-		return getTupleType(IdManager.getTupleTypeId(partsList));
 	}
 
 	@Override

@@ -34,10 +34,10 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -221,6 +221,7 @@ public class OCLstdlibTests extends XtextTestCase
 						"    type Boolean : BooleanType conformsTo OclAny {}\n"+
 						"    type Collection(T) : CollectionType conformsTo OclAny {}\n"+
 						"    type Integer : PrimitiveType conformsTo Real {}\n"+
+						"    type Map(K,V) : MapType conformsTo OclAny {}\n"+
 						"    type OclComparable conformsTo OclAny {\n"+
 						"        operation compareTo(that : OclSelf) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';\n"+
 						"    }\n"+
@@ -228,6 +229,7 @@ public class OCLstdlibTests extends XtextTestCase
 						"    type OclEnumeration conformsTo OclAny {}\n"+
 						"    type OclInvalid : InvalidType {}\n"+
 						"    type OclSelf : SelfType conformsTo OclAny {}\n"+
+						"    type OclTuple conformsTo OclAny {}	\n"+
 						"    type OclVoid : VoidType {}\n"+
 						"    type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}\n"+
 						"    type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}\n"+

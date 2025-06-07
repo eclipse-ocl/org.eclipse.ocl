@@ -59,7 +59,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 import com.google.common.collect.Iterables;
 
@@ -365,7 +364,7 @@ public final class IdManager
 		int typeParametersSize = templateParameters.parametersSize();
 		ParametersId parametersId;
 		if ((typeParametersSize <= 0) || (anOperation.getUnspecializedElement() != null)) {	// If unspecializeable or specialized
-			@NonNull Type @NonNull [] parameterTypes = TypeUtil.getOperationParameterTypes(anOperation);
+			@NonNull Type @NonNull [] parameterTypes = PivotUtil.getOperationParameterTypes(anOperation);
 			parametersId = getParametersId(parameterTypes);
 		}
 		else {																				// If unspecialized

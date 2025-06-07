@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * An EcoreExecutorManager instance provides the bridge between a conventional EMF execution context
@@ -63,14 +64,17 @@ public class EcoreExecutorManager extends ExecutorManager
 	 * @param standardLibrary the OCL facilities
 	 */
 	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull ExecutorStandardLibrary standardLibrary) {
-		super(standardLibrary);
+		super(new ExecutorStandardLibrary(standardLibrary));
+		assert !standardLibrary.isMutable();
 		this.contextObject = contextObject;
+		ThreadLocalExecutor.setExecutor(this);
 	}
 
 	protected @NonNull IdResolver createIdResolver() {
+		ExecutorStandardLibrary standardLibrary2 = getStandardLibrary();
 		if (!(contextObject instanceof EObject)) {
 			@NonNull List<EObject> emptyList = Collections.<EObject>emptyList();
-			return new EcoreIdResolver(emptyList, getStandardLibrary());
+			return new EcoreIdResolver(emptyList, standardLibrary2);
 		}
 		EObject rootContainer = EcoreUtil.getRootContainer((EObject)contextObject);
 		Notifier notifier;
@@ -107,7 +111,7 @@ public class EcoreExecutorManager extends ExecutorManager
 					roots = resource.getContents();
 				}
 			}
-			org.eclipse.ocl.pivot.Package root = standardLibrary.getPackage();
+			org.eclipse.ocl.pivot.Package root = standardLibrary2.getPackage();
 			if (root instanceof PivotObject) {
 				if (roots == null) {
 					roots = new ArrayList<EObject>();
@@ -118,10 +122,16 @@ public class EcoreExecutorManager extends ExecutorManager
 				roots = Collections.singletonList(rootContainer);
 			}
 			assert roots != null;
-			EcoreIdResolver adapter = new EcoreIdResolver(roots, getStandardLibrary());
+			EcoreIdResolver adapter = new EcoreIdResolver(roots, standardLibrary2);
 			eAdapters.add(adapter);
 			return adapter;
 		}
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		ThreadLocalExecutor.setExecutor(null);
 	}
 
 	@Override

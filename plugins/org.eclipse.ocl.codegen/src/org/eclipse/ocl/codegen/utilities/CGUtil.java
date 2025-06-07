@@ -287,10 +287,10 @@ public class CGUtil
 		assert asActualTypeId != null;
 		Type asReferenceType = idResolver.getType(asReferenceTypeId);
 		Type asActualType = idResolver.getType(asActualTypeId);
-		if (asActualType.conformsTo(standardLibrary, asReferenceType)) {
+		if (standardLibrary.conformsTo(asActualType, asReferenceType)) {
 			return Boolean.TRUE;				// Guaranteed conformance
 		}
-		else if (!asReferenceType.conformsTo(standardLibrary, asActualType)) {
+		else if (!standardLibrary.conformsTo(asReferenceType, asActualType)) {
 			return Boolean.FALSE;				// Guaranteed non-conformance
 		}
 		else {

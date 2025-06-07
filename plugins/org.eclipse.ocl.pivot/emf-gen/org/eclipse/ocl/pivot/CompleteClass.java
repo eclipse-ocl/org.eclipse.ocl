@@ -77,9 +77,6 @@ public interface CompleteClass extends NamedElement
 	 */
 	@NonNull List<org.eclipse.ocl.pivot.Class> getPartialClasses();
 
-//	boolean conformsTo(@NonNull Type elementType);
-//	boolean conformsTo(@NonNull CompleteClass thatCompleteClass);
-
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
 	@NonNull CompleteInheritance getCompleteInheritance();
 	@Nullable Operation getOperation(@NonNull OperationId operationId);

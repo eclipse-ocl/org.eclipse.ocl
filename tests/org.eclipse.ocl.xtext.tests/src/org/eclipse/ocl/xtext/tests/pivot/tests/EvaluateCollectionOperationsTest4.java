@@ -1278,7 +1278,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(Sequence(OclAny))->oclType().lower");
 		String string = useCodeGen ? "Set(OclAny[*|?])" : "Set(OclAny)"; 		// FIXME See Bug 578117
 		ocl.assertQueryInvalid(null, "Sequence{1, 2.0, '3'}->oclAsType(Set(OclAny))->oclType().lower",
-			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Sequence(OclAny[3|?])", string), InvalidValueException.class);
+			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Sequence(OclAny[3|1])", string), InvalidValueException.class);
 		ocl.assertSemanticErrorQuery(null, "Sequence{1, 2.0, '3'}->oclAsType(OclVoid).oclType().lower",
 			PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclVoid", "lower");
 		ocl.assertSemanticErrorQuery(null, "Sequence{1, 2.0, '3'}->oclAsType(OclAny).oclType().lower",
