@@ -99,10 +99,23 @@ public interface PivotConstants
 	static final @NonNull String SYSML_ANNOTATION_SOURCE = "http://www.omg.org/spec/SysML";
 
 	/**
-	 * ETypedElement annotation identifying that a collection is non-free.
+	 * ETypedElement annotation source identifying that a collection is null-free or that a nested collection has bounds.
 	 */
 	static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
+	/**
+	 * ETypedElement annotation detail key specifying the null-free-ness of a collection or nested collection.
+	 */
 	static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
+	/**
+	 * ETypedElement annotation detail key specifying the lower bound of a nested collection.
+	 * @since 7.0
+	 */
+	static final @NonNull String COLLECTION_LOWER = "lower";
+	/**
+	 * ETypedElement annotation detail key specifying the upper bound of a nested collection.
+	 * @since 7.0
+	 */
+	static final @NonNull String COLLECTION_UPPER = "upper";
 
 	/**
 	 * The default non-null of non-aggregates. This is not intended to be changed;

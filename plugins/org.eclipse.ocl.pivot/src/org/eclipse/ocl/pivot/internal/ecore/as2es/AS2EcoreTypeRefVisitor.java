@@ -11,9 +11,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
@@ -32,6 +35,7 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -40,7 +44,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -48,8 +51,10 @@ import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * @since 1.23
@@ -252,16 +257,49 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		EObject eClassifier2 = safeVisit(PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)pivotType));
 		eGenericType.setEClassifier((EClassifier) eClassifier2);
 		TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(pivotType);
-		safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedSubstitutions());
-		// FIXME supers
-		Number lower = pivotType.getLower();
-		Number upper = pivotType.getUpper();
-		if ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited))) {
-			// FIXME Ecore does not support nested multiplicities
-			//			eGenericType.setLower(lower.longValue());
-			//			eGenericType.setUpper(upper instanceof Unlimited) ? -1 : upper.longValue());
+	//	safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedSubstitutions());
+		List<@NonNull EAnnotation> nestedEAnnotations = null;
+		for (Element pivotObject : templateSpecialization.getOwnedSubstitutions()) {
+			EObject eObject = safeVisit(pivotObject);
+			if (eObject instanceof EGenericType) {
+				EGenericType nestedEGenericType = (EGenericType)eObject;
+				eGenericType.getETypeArguments().add(nestedEGenericType);
+			}
+			else if (eObject instanceof EAnnotation) {
+				EAnnotation nestedEAnnotation = (EAnnotation)eObject;
+				EGenericType nestedEGenericType = (EGenericType)nestedEAnnotation.getReferences().get(0);
+				eGenericType.getETypeArguments().add(nestedEGenericType);
+				if (nestedEAnnotations == null) {
+					nestedEAnnotations = new ArrayList<>();
+				}
+				nestedEAnnotations.add(nestedEAnnotation);
+			}
+			// else error
 		}
-		return eGenericType;
+		// FIXME supers
+		boolean isNullFree = pivotType.isIsNullFree();
+		IntegerValue lowerValue = pivotType.getLowerValue();
+		UnlimitedNaturalValue upperValue = pivotType.getUpperValue();
+		if ((isNullFree == PivotConstants.DEFAULT_IS_NULL_FREE) && lowerValue.equals(PivotConstants.DEFAULT_LOWER_BOUND) && upperValue.equals(PivotConstants.DEFAULT_UPPER_BOUND)) {
+			return eGenericType;
+		}
+		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
+		eAnnotation.getReferences().add(eGenericType);
+		EMap<String, String> eDetails = eAnnotation.getDetails();
+		if (isNullFree != PivotConstants.DEFAULT_IS_NULL_FREE) {
+			eDetails.put(PivotConstants.COLLECTION_IS_NULL_FREE, Boolean.toString(isNullFree));
+		}
+		if (!lowerValue.equals(PivotConstants.DEFAULT_LOWER_BOUND)) {
+			eDetails.put(PivotConstants.COLLECTION_LOWER, lowerValue.toString());
+		}
+		if (!upperValue.equals(PivotConstants.DEFAULT_UPPER_BOUND)) {
+			eDetails.put(PivotConstants.COLLECTION_UPPER, upperValue.toString());
+		}
+		if (nestedEAnnotations != null) {
+			eAnnotation.getEAnnotations().addAll(nestedEAnnotations);
+		}
+		return eAnnotation;
 	}
 
 	@Override
@@ -366,7 +404,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	public EObject visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution pivotTemplateParameterSubstitution) {
 		Type actual = pivotTemplateParameterSubstitution.getActual();
 		EObject actualType = safeVisit(actual);
-		if (actualType instanceof EGenericType) {
+		if ((actualType instanceof EGenericType) || (actualType instanceof EAnnotation)) {
 			return actualType;
 		}
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
