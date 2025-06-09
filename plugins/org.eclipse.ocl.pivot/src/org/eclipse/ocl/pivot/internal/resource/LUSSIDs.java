@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -399,7 +400,10 @@ public abstract class LUSSIDs
 		}
 	}
 
-	protected void assignLUSSIDs(@NonNull AS2ID as2id) {
+	/**
+	 * @since 7.0
+	 */
+	protected void assignLUSSIDs(@NonNull AS2ID as2id, @NonNull Set<@NonNull Resource> alreadyAssigned) {
 		assignmentStarted = true;
 		UniqueList<@NonNull ASResource> referencedASResources = null;
 		for (@NonNull EObject eObject : new TreeIterable(asResource)) {
@@ -444,7 +448,7 @@ public abstract class LUSSIDs
 		}
 		if (referencedASResources != null) {
 			for (@NonNull ASResource referencedASResource : referencedASResources) {
-				as2id.assignLUSSIDs(referencedASResource);
+				as2id.assignLUSSIDs(referencedASResource, alreadyAssigned);
 			}
 		}
 	}
