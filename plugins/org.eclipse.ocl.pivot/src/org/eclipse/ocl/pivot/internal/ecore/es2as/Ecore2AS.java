@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
-import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
@@ -93,7 +92,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * Manage conversio  of a *.ecore model to a *.ecore.oclas.
@@ -115,6 +117,26 @@ public class Ecore2AS extends AbstractExternal2AS
 		External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
 		Ecore2AS castAdapter = (Ecore2AS)adapter;
 		return castAdapter;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable EMap<String, String> basicGetCollectionDetails(@NonNull EGenericType eGenericType) {
+		for (EObject eObject = eGenericType; (eObject != null); eObject = eObject.eContainer()) {
+			if (eObject instanceof EModelElement) {
+				for (EAnnotation eAnnotation : ((EModelElement)eObject).getEAnnotations()) {
+					if (PivotConstants.COLLECTION_ANNOTATION_SOURCE.equals(eAnnotation.getSource())) {
+						List<EObject> references = eAnnotation.getReferences();
+						if (!references.isEmpty() && (references.get(0) == eGenericType)) {
+							return eAnnotation.getDetails();
+						}
+					}
+				}
+				break;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -177,6 +199,45 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static boolean getCollectionIsNullFreeDetail(@Nullable EMap<String, String> eDetails) {
+		if (eDetails != null) {
+			String isNullFreeText = eDetails.get(PivotConstants.COLLECTION_IS_NULL_FREE);
+			if (isNullFreeText != null) {
+				return Boolean.parseBoolean(isNullFreeText);
+			}
+		}
+		return PivotConstants.DEFAULT_IS_NULL_FREE;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull IntegerValue getCollectionLowerValueDetail(@Nullable EMap<String, String> eDetails) {
+		if (eDetails != null) {
+			String lowerText = eDetails.get(PivotConstants.COLLECTION_LOWER);
+			if (lowerText != null) {
+				return ValueUtil.integerValueOf(lowerText);
+			}
+		}
+		return PivotConstants.DEFAULT_LOWER_BOUND;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull UnlimitedNaturalValue getCollectionUpperValueDetail(@Nullable EMap<String, String> eDetails) {
+		if (eDetails != null) {
+			String upperText = eDetails.get(PivotConstants.COLLECTION_UPPER);
+			if (upperText != null) {
+				return ValueUtil.unlimitedNaturalValueOf(upperText);
+			}
+		}
+		return PivotConstants.DEFAULT_UPPER_BOUND;
+	}
+
+	/**
 	 * Convert an (annotated) Ecore resource to a Pivot Model.
 	 * @param alias
 	 *
@@ -199,11 +260,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		return false;
 	}
 
-	@Deprecated /* @deprecated for API compatibility */
-	public static boolean isNullFree(@NonNull ETypedElement eObject) {
-		return isNullFree((ENamedElement)eObject);
-	}
-
 	/**
 	 * @since 1.18
 	 */
@@ -219,7 +275,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				isNullFree = isNullFree((ENamedElement)eContainer);
 			}
 			else {
-				isNullFree = true;		// UML collections are always null-free.Make it the undeclared default.
+				isNullFree = PivotConstants.DEFAULT_IS_NULL_FREE;
 			}
 		}
 		return isNullFree;
@@ -319,10 +375,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected final @NonNull Resource ecoreResource;
 
 	protected Model pivotModel = null;						// Set by importResource
-	@Deprecated /* Now a local variable */
-	protected final Ecore2ASDeclarationSwitch declarationPass = null;
-	@Deprecated /* Now a local variable */
-	protected final Ecore2ASReferenceSwitch referencePass = null;
 	private @NonNull Map</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap = new HashMap<>();
 
 	/**
@@ -537,11 +589,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
 		assert eDataTypes == null;
 		return newCreateMap;
-	}
-
-	@Deprecated
-	public @NonNull Map<EClassifier, Type> getEcore2ASMap() {
-		return ecore2asMap;
 	}
 
 	public @Nullable Resource getEcoreResource() {
@@ -1055,7 +1102,12 @@ public class Ecore2AS extends AbstractExternal2AS
 		//	CompleteClassInternal libraryCompleteClass = metamodelManager.getCompleteClass(elementType);
 		//	org.eclipse.ocl.pivot.Class elementClass = libraryCompleteClass.getPrimaryClass();
 
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, false, null, null);		// XXX EAnnotation / lower / upper
+			EMap<String, String> eDetails = basicGetCollectionDetails(eGenericType);
+			boolean isNullFree = getCollectionIsNullFreeDetail(eDetails);
+			IntegerValue lowerValue = getCollectionLowerValueDetail(eDetails);
+			UnlimitedNaturalValue upperValue = getCollectionUpperValueDetail(eDetails);
+
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
 			return standardLibrary.getCollectionType(typeArguments);
 		}
 		else {

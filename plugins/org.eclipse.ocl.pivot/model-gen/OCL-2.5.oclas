@@ -2577,7 +2577,7 @@
     <ownedPrecedences xmi:id="1Odhg" name="IMPLIES"/>
   </ownedPackages>
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="EGgED" isNullFree="true" name="Bag" superClasses="#ViIGS">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="EGgED" isNullFree="true" name="Bag" superClasses="#ahIGS">
       <ownedBindings>
         <ownedSubstitutions actual="#NxGT6" formal="#k2OA6"/>
       </ownedBindings>
@@ -2587,7 +2587,7 @@
         <ownedSubstitutions actual="#OxGT6" formal="#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="dHgED" isNullFree="true" name="Bag" superClasses="#ujIGS">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="dHgED" isNullFree="true" name="Bag" superClasses="#ziIGS">
       <ownedBindings>
         <ownedSubstitutions actual="#OxGT6" formal="#k2OA6"/>
       </ownedBindings>
@@ -2615,11 +2615,6 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="4eSgX" name="Bag" superClasses="#O66hm">
       <ownedBindings>
         <ownedSubstitutions actual="#urQRp" formal="#k2OA6"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ViIGS" name="Collection" superClasses="#jbMkR">
-      <ownedBindings>
-        <ownedSubstitutions actual="#NxGT6" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ahIGS" isNullFree="true" name="Collection" superClasses="#jbMkR">
@@ -2652,7 +2647,7 @@
         <ownedSubstitutions actual="#nwL7b" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1d1Sm" name="Collection" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="6c1Sm" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#tYtCd" formal="#qs59R"/>
       </ownedBindings>
@@ -2662,12 +2657,17 @@
         <ownedSubstitutions actual="#l+ONa" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="7aA3o" name="Collection" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AaA3o" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#jbMkR" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="LVlMV" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#zfDWR" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QUlMV" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#zfDWR" formal="#qs59R"/>
       </ownedBindings>
@@ -2682,12 +2682,17 @@
         <ownedSubstitutions actual="#zlfMH" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QkRyc" name="Collection" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Qqp5N" isNullFree="true" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#zlfMH" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="VjRyc" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#AlwVZ" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="3vsZ2" name="Collection" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8usZ2" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#,5eVD" formal="#qs59R"/>
       </ownedBindings>
@@ -2748,12 +2753,7 @@
         <ownedSubstitutions actual="#QxGT6" formal="#HeAuH"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="iy9cI" name="OrderedCollection" superClasses="#ViIGS">
-      <ownedBindings>
-        <ownedSubstitutions actual="#NxGT6" formal="#feFHs"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="nx9cI" isNullFree="true" name="OrderedCollection" superClasses="#ViIGS">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="nx9cI" isNullFree="true" name="OrderedCollection" superClasses="#ahIGS">
       <ownedBindings>
         <ownedSubstitutions actual="#NxGT6" formal="#feFHs"/>
       </ownedBindings>
@@ -2763,17 +2763,22 @@
         <ownedSubstitutions actual="#OxGT6" formal="#feFHs"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Cuqpc" name="OrderedCollection" superClasses="#1d1Sm">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Az9cI" isNullFree="true" name="OrderedCollection" superClasses="#ziIGS">
+      <ownedBindings>
+        <ownedSubstitutions actual="#OxGT6" formal="#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Htqpc" isNullFree="true" name="OrderedCollection" superClasses="#6c1Sm">
       <ownedBindings>
         <ownedSubstitutions actual="#tYtCd" formal="#feFHs"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="d0GJT" name="OrderedCollection" superClasses="#QkRyc">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="izGJT" isNullFree="true" name="OrderedCollection" superClasses="#VjRyc">
       <ownedBindings>
         <ownedSubstitutions actual="#AlwVZ" formal="#feFHs"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="xJbRn" isNullFree="true" name="OrderedSet" superClasses="#iy9cI #Gd4BC">
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="xJbRn" isNullFree="true" name="OrderedSet" superClasses="#nx9cI #Lc4BC">
       <ownedBindings>
         <ownedSubstitutions actual="#NxGT6" formal="#53+C2"/>
       </ownedBindings>
@@ -2783,12 +2788,12 @@
         <ownedSubstitutions actual="#OxGT6" formal="#53+C2"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="KLbRn" isNullFree="true" name="OrderedSet" superClasses="#7z9cI #fe4BC">
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="KLbRn" isNullFree="true" name="OrderedSet" superClasses="#Az9cI #kd4BC">
       <ownedBindings>
         <ownedSubstitutions actual="#OxGT6" formal="#53+C2"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="9l9WX" isNullFree="true" name="Sequence" superClasses="#iy9cI">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="9l9WX" isNullFree="true" name="Sequence" superClasses="#nx9cI">
       <ownedBindings>
         <ownedSubstitutions actual="#NxGT6" formal="#l1i6D"/>
       </ownedBindings>
@@ -2798,22 +2803,22 @@
         <ownedSubstitutions actual="#OxGT6" formal="#l1i6D"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="Wn9WX" isNullFree="true" name="Sequence" superClasses="#7z9cI">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="Wn9WX" isNullFree="true" name="Sequence" superClasses="#Az9cI">
       <ownedBindings>
         <ownedSubstitutions actual="#OxGT6" formal="#l1i6D"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="dhqjr" isNullFree="true" name="Sequence" superClasses="#Cuqpc">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="dhqjr" isNullFree="true" name="Sequence" superClasses="#Htqpc">
       <ownedBindings>
         <ownedSubstitutions actual="#tYtCd" formal="#l1i6D"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="4nGDi" isNullFree="true" name="Sequence" superClasses="#d0GJT">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="4nGDi" isNullFree="true" name="Sequence" superClasses="#izGJT">
       <ownedBindings>
         <ownedSubstitutions actual="#AlwVZ" formal="#l1i6D"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="eHkED" isNullFree="true" name="Set" superClasses="#Gd4BC">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="eHkED" isNullFree="true" name="Set" superClasses="#Lc4BC">
       <ownedBindings>
         <ownedSubstitutions actual="#NxGT6" formal="#ODsm5"/>
       </ownedBindings>
@@ -2823,12 +2828,12 @@
         <ownedSubstitutions actual="#OxGT6" formal="#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="3IkED" isNullFree="true" name="Set" superClasses="#fe4BC">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="3IkED" isNullFree="true" name="Set" superClasses="#kd4BC">
       <ownedBindings>
         <ownedSubstitutions actual="#OxGT6" formal="#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="U6ALG" isNullFree="true" name="Set" superClasses="#8PVIF">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="U6ALG" isNullFree="true" name="Set" superClasses="#BPVIF">
       <ownedBindings>
         <ownedSubstitutions actual="#zfDWR" formal="#ODsm5"/>
       </ownedBindings>
@@ -2838,12 +2843,12 @@
         <ownedSubstitutions actual="#zlfMH" formal="#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="UQF4+" isNullFree="true" name="Set" superClasses="#8lZ19">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="UQF4+" isNullFree="true" name="Set" superClasses="#BlZ19">
       <ownedBindings>
         <ownedSubstitutions actual="#zlfMH" formal="#ODsm5"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="AVIYn" isNullFree="true" name="Set" superClasses="#oqcVm">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="AVIYn" isNullFree="true" name="Set" superClasses="#tpcVm">
       <ownedBindings>
         <ownedSubstitutions actual="#,5eVD" formal="#ODsm5"/>
       </ownedBindings>
@@ -2852,12 +2857,7 @@
       <ownedProperties xmi:id="Lv1aA" name="first" type="#qs59R"/>
       <ownedProperties xmi:id="P28lE" name="second" type="#yzGsR"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Gd4BC" name="UniqueCollection" superClasses="#ViIGS">
-      <ownedBindings>
-        <ownedSubstitutions actual="#NxGT6" formal="#jdfjE"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Lc4BC" isNullFree="true" name="UniqueCollection" superClasses="#ViIGS">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Lc4BC" isNullFree="true" name="UniqueCollection" superClasses="#ahIGS">
       <ownedBindings>
         <ownedSubstitutions actual="#NxGT6" formal="#jdfjE"/>
       </ownedBindings>
@@ -2867,12 +2867,17 @@
         <ownedSubstitutions actual="#OxGT6" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="xUwyY" isNullFree="true" name="UniqueCollection" superClasses="#7aA3o">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="kd4BC" isNullFree="true" name="UniqueCollection" superClasses="#ziIGS">
+      <ownedBindings>
+        <ownedSubstitutions actual="#OxGT6" formal="#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="xUwyY" isNullFree="true" name="UniqueCollection" superClasses="#AaA3o">
       <ownedBindings>
         <ownedSubstitutions actual="#jbMkR" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8PVIF" name="UniqueCollection" superClasses="#LVlMV">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="BPVIF" isNullFree="true" name="UniqueCollection" superClasses="#QUlMV">
       <ownedBindings>
         <ownedSubstitutions actual="#zfDWR" formal="#jdfjE"/>
       </ownedBindings>
@@ -2882,7 +2887,12 @@
         <ownedSubstitutions actual="#zlfMH" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oqcVm" name="UniqueCollection" superClasses="#3vsZ2">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="BlZ19" isNullFree="true" name="UniqueCollection" superClasses="#Qqp5N">
+      <ownedBindings>
+        <ownedSubstitutions actual="#zlfMH" formal="#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tpcVm" isNullFree="true" name="UniqueCollection" superClasses="#8usZ2">
       <ownedBindings>
         <ownedSubstitutions actual="#,5eVD" formal="#jdfjE"/>
       </ownedBindings>

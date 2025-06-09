@@ -106,14 +106,15 @@ public class RoundTripTests extends XtextTestCase
 	}
 	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		XtextResource xtextResource = (XtextResource)resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
-		((BaseCSResource)xtextResource).updateFrom(asResource, environmentFactory);
+		BaseCSResource xtextResource = (BaseCSResource)resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
+		xtextResource.updateFrom(asResource, environmentFactory);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.requireNonNull(xtextResource.getURI().toString()));
+		xtextResource.saveAsXMI(xtextResource.getURI().appendFileExtension("xmi"));
 		xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
-		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
-		return (BaseCSResource) xtextResource;
+		assertNoDiagnosticErrors("Concrete Syntax validation failed", (XtextResource)xtextResource);
+		return xtextResource;
 	}
 	public BaseCSResource createXtextFromURI(@NonNull EnvironmentFactoryInternal environmentFactory, URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
@@ -273,6 +274,7 @@ public class RoundTripTests extends XtextTestCase
 		EnvironmentFactoryInternal environmentFactory1 = ocl1.getEnvironmentFactory();
 		//		environmentFactory1.adapt(resourceSet);
 		BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
+		xtextResource1.saveAsXMI(xtextResource1.getURI().appendFileExtension("xmi"));
 		ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
 		Resource ecoreResource = createEcoreFromPivot(environmentFactory1, pivotResource1, ecoreURI);
 		ThreadLocalExecutor.resetEnvironmentFactory();
@@ -431,7 +433,7 @@ public class RoundTripTests extends XtextTestCase
 /*						"property bag0 : B[3..5|1] {!unique};\n" +
 						"property bag0a : B[3..5|?] {!unique};\n" +
 						"property bag1 : B[*] {!unique};\n" +
-*/						"property bag2 : Bag(B)[*|1];\n" +
+*/						"property bag2 : Set(Bag(B[8..9|1])[6..7|1])[4..5|1];\n" +
 //						"property bag3 : B[3..5] {!unique};\n" +
 //						"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443
 /*						"property bag5 : Bag(B)[4..6|1];\n" +

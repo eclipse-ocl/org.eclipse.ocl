@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EGenericType;
@@ -33,8 +34,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * Ecore2Moniker supports generation of a hierarchically derived moniker for
@@ -197,13 +201,25 @@ public class Ecore2Moniker extends EcoreSwitch<Object> implements PivotConstants
 		append(parentSeparator);
 	}
 
-	protected void appendType(EGenericType eGenericType) {
+	protected void appendType(@NonNull EGenericType eGenericType) {
 		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
 		EClassifier eClassifier = eGenericType.getEClassifier();
 		if (eClassifier != null) {
 			appendParent(eClassifier, MONIKER_SCOPE_SEPARATOR);
 			append(eClassifier.getName());
 			appendTypeArguments(eGenericType.getETypeArguments(), eClassifier.getETypeParameters());
+			EMap<String, String> collectionDetails = Ecore2AS.basicGetCollectionDetails(eGenericType);
+			if (collectionDetails != null) {
+				boolean isNullFree = Ecore2AS.getCollectionIsNullFreeDetail(collectionDetails);
+				IntegerValue lowerValue = Ecore2AS.getCollectionLowerValueDetail(collectionDetails);
+				UnlimitedNaturalValue upperValue = Ecore2AS.getCollectionUpperValueDetail(collectionDetails);
+				append(COLLECTION_ELEMENT_SEPARATOR);
+				append(isNullFree ? "T" : "F");
+				append(COLLECTION_ELEMENT_SEPARATOR);
+				append(lowerValue.toString());
+				append(COLLECTION_ELEMENT_SEPARATOR);
+				append(upperValue.toString());
+			}
 		}
 		else if (eTypeParameter != null){
 			appendElement(eTypeParameter);

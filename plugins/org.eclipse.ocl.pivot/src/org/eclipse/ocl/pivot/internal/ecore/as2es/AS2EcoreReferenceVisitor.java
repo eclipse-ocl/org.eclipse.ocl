@@ -43,13 +43,13 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -80,11 +80,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	private static final Logger logger = Logger.getLogger(AS2EcoreReferenceVisitor.class);
 
 	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;				// Optional
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* not used */
-	protected final @Nullable AS2EcoreTypeRefVisitor requiredTypeRefVisitor;		// Required
 
 	private final @NonNull AnyType oclAnyType;
 	private final org.eclipse.ocl.pivot.@NonNull Class oclElementType;
@@ -93,7 +88,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	public AS2EcoreReferenceVisitor(@NonNull AS2Ecore context) {
 		super(context);
 		typeRefVisitor = new AS2EcoreTypeRefVisitor(context);
-		requiredTypeRefVisitor = null;
 		StandardLibraryInternal standardLibrary = context.getStandardLibrary();
 		oclAnyType = standardLibrary.getOclAnyType();
 		oclElementType = standardLibrary.getOclElementType();
@@ -338,18 +332,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
-	/* @deprecated provide isRequired argument */
-	@Deprecated
-	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType) {
-		setEType(eTypedElement, pivotType, false);
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	/* @deprecated only called from setETypeAndMultiplicity */
-	@Deprecated
-	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
+	private void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
 		assert !(pivotType instanceof MapType);
 		/*	if (pivotType instanceof MapType) {
 			org.eclipse.ocl.pivot.Class entryClass = ((MapType)pivotType).getEntryClass();
@@ -403,7 +386,17 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			Type elementType = collectionType.getElementType();
 			EObject eObject = typeRefVisitor.safeVisit(elementType, false);
 			if (eObject instanceof EGenericType) {
-				eTypedElement.setEGenericType((EGenericType)eObject);
+				EGenericType eGenericType = (EGenericType)eObject;
+				eTypedElement.setEGenericType(eGenericType);
+			}
+			else if (eObject instanceof EAnnotation) {
+				EAnnotation eAnnotation = (EAnnotation)eObject;
+				EGenericType eGenericType = (EGenericType)eAnnotation.getReferences().get(0);
+				eTypedElement.setEGenericType(eGenericType);
+				eTypedElement.getEAnnotations().add(eAnnotation);
+				while (!eAnnotation.getEAnnotations().isEmpty() && (eAnnotation = eAnnotation.getEAnnotations().remove(0)) != null) {
+					eTypedElement.getEAnnotations().add(eAnnotation);
+				}
 			}
 			else if (eObject instanceof EClassifier) {
 				eTypedElement.setEType((EClassifier)eObject);
@@ -430,17 +423,23 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			} catch (InvalidValueException e) {
 				logger.error("Illegal upper bound", e);
 			}
-			EAnnotation eAnnotation = eTypedElement.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
-			if (!collectionType.isIsNullFree()) {
-				if (eAnnotation == null) {
-					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
+			EAnnotation rootEAnnotation = null;
+			for (EAnnotation eAnnotation : eTypedElement.getEAnnotations()) {
+				if (PivotConstants.COLLECTION_ANNOTATION_SOURCE.equals(eAnnotation.getSource()) && eAnnotation.getReferences().isEmpty()) {
+					rootEAnnotation = eAnnotation;
+					break;
 				}
-				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, "false");
-				eTypedElement.getEAnnotations().add(eAnnotation);
 			}
-			else {
-				eTypedElement.getEAnnotations().remove(eAnnotation);
+			if (collectionType.isIsNullFree() != PivotConstants.DEFAULT_IS_NULL_FREE) {
+				if (rootEAnnotation == null) {
+					rootEAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+					rootEAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
+				}
+				rootEAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, Boolean.toString(collectionType.isIsNullFree()));
+				eTypedElement.getEAnnotations().add(rootEAnnotation);
+			}
+			else if (rootEAnnotation != null) {
+				eTypedElement.getEAnnotations().remove(rootEAnnotation);
 			}
 		}
 		else if (pivotType instanceof MapType) {
