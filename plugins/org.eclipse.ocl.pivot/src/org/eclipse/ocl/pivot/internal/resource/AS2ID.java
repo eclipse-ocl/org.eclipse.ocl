@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -21,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
  * AS2ID computes the predictable xmi:ids for ASResources using LUSSIDs.
@@ -47,8 +49,9 @@ public class AS2ID
 	public static final @NonNull String DEBUG_XMIID_COLLISIONS = "DEBUG_XMIID_COLLISIONS";
 
 	public static void assignIds(@NonNull ASResource resource, @Nullable Map<@NonNull Object, @Nullable Object> options) {
+		Set<@NonNull Resource> alreadyAssigned = new UniqueList<>();
 		AS2ID as2id = new AS2ID(options);
-		as2id.assignLUSSIDs(resource);
+		as2id.assignLUSSIDs(resource, alreadyAssigned);
 		as2id.assignXMIIDs();
 		as2id.assignErrors();
 	}
@@ -57,11 +60,12 @@ public class AS2ID
 	 * @since 1.9
 	 */
 	public static void assignIds(@NonNull List</*@NonNull*/ Resource> resources, @Nullable Map<@NonNull Object, @Nullable Object> options) {
+		Set<@NonNull Resource> alreadyAssigned = new UniqueList<>();
 		AS2ID as2id = new AS2ID(options);
 		for (int i = 0; i < resources.size(); i++) {		// Proxy resolution may add new resources
 			Resource resource = resources.get(i);
-			if (resource instanceof ASResource) {
-				as2id.assignLUSSIDs((ASResource) resource);
+			if (resource instanceof ASResource) {			// XXX gather transistive resource to avoid redundant re-assigns
+				as2id.assignLUSSIDs((ASResource) resource, alreadyAssigned);
 			}
 		}
 		as2id.assignXMIIDs();
@@ -103,23 +107,29 @@ public class AS2ID
 		}
 	}
 
-	protected void assignLUSSIDs(@NonNull ASResource asResource) {
+	/**
+	 * @since 7.0
+	 */
+	protected void assignLUSSIDs(@NonNull ASResource asResource, @NonNull Set<@NonNull Resource> alreadyAssigned) {
+		if (!alreadyAssigned.add(asResource)) {
+			return;
+		}
 		LUSSIDs lussids = asResource.basicGetLUSSIDs();
 		if ((lussids != null) && lussids.isAssignmentStarted()) {
-			//	System.out.println("re-assignLUSSIDs to "  + asResource.getURI());
+				System.out.println("re-assignLUSSIDs to "  + asResource.getURI());
 			lussids.assignErrors();
 			//			if (!oldLUSSIDs.contains(lussids)) {
 			//				oldLUSSIDs.add(lussids);
 			//			}
 		}
 		else {
-			//	System.out.println("assignLUSSIDs to "  + asResource.getURI());
+				System.out.println("assignLUSSIDs to "  + asResource.getURI());
 			lussids = asResource.getLUSSIDs(options);
 			if (newLUSSIDs.contains(lussids)) {
 				return;
 			}
 			newLUSSIDs.add(lussids);
-			lussids.assignLUSSIDs(this);
+			lussids.assignLUSSIDs(this, alreadyAssigned);
 		}
 	}
 
