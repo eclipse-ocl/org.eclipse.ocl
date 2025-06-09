@@ -633,8 +633,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return mapTypeManager;
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull Type type) {
+//	@Override
+	private org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull Type type) {
 		if (type instanceof ReflectiveInheritance) {
 			return ((ReflectiveInheritance)type).getPivotClass();
 		}

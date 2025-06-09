@@ -1475,12 +1475,25 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 				CompleteClassInternal superCompleteClass = environmentFactory.getMetamodelManager().getCompleteClass(unspecializedSuperClass);
 				org.eclipse.ocl.pivot.Class superPivotClass = superCompleteClass.getPrimaryClass();
 				if (superPivotClass instanceof CollectionType) {
+					CollectionType specializedCollection = (CollectionType)specializedClass;
 					if (superSpecializedTemplateParameterSubstitutions.size() == 1) {
 						Type templateArgument = superSpecializedTemplateParameterSubstitutions.get(0).getActual();
 						if (templateArgument != null) {
 							CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
-								PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+								specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = environmentFactory.getStandardLibrary().getCollectionType(typeArguments);
+							specializedClass.getSuperClasses().add(specializedSuperClass);
+						}
+					}
+				}
+				else if (superPivotClass instanceof MapType) {
+					MapType specializedMap = (MapType)specializedClass;
+					if (superSpecializedTemplateParameterSubstitutions.size() == 2) {
+						Type keyArgument = superSpecializedTemplateParameterSubstitutions.get(0).getActual();
+						Type valueArgument = superSpecializedTemplateParameterSubstitutions.get(1).getActual();
+						if ((keyArgument != null) && (valueArgument != null)) {
+							MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
+							org.eclipse.ocl.pivot.Class specializedSuperClass = environmentFactory.getStandardLibrary().getMapType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
 					}
@@ -1501,14 +1514,6 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 			}
 			else {
 				specializedClass.getSuperClasses().add(superClass);
-			}
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(unspecializedClass)) {
-			if (superClass instanceof CollectionType) {
-				CollectionType superCollection = (CollectionType)superClass;
-				assert superCollection.isIsNullFree();
-				assert superCollection.getLowerValue() == PivotConstants.DEFAULT_LOWER_BOUND;
-				assert superCollection.getUpperValue() == PivotConstants.DEFAULT_UPPER_BOUND;
 			}
 		}
 	}

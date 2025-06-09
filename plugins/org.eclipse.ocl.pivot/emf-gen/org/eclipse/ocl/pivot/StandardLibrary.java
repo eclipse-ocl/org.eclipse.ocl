@@ -256,12 +256,6 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments);
 
-	/**
-	 * Return the unique executable form of type within standardLibrary.
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull Type type);
-
 	org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI);
 
 	/**

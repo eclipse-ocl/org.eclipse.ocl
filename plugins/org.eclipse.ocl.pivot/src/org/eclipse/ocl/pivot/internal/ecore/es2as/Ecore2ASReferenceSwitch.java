@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -48,13 +47,13 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -79,17 +78,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 {
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final String PROPERTY_OPPOSITE_ROLE_NAME_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_NAME_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_ORDERED_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_LOWER_KEY;
-	@Deprecated /* @deprected moved to PropertyDetails */
-	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = OppositePropertyDetails.PROPERTY_OPPOSITE_ROLE_UPPER_KEY;
-
 	protected final @NonNull Ecore2AS converter;
 	/**
 	 * @since 7.0
@@ -459,7 +447,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						pivotType = standardLibrary.getMapEntryType((org.eclipse.ocl.pivot.Class)pivotType);
 					}
 					else {
-						boolean isNullFree = Ecore2AS.isNullFree((ENamedElement)eTypedElement);
+						boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
 						boolean isOrdered = eTypedElement.isOrdered();
 						boolean isUnique = eTypedElement.isUnique();
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);

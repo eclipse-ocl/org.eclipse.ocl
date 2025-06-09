@@ -42,7 +42,15 @@ public class OCL_Collection_EAnnotationConverter extends AbstractEAnnotationConv
 		for (Map.Entry<String, String> detail : eAnnotation.getDetails()) {
 			if (PivotConstants.COLLECTION_IS_NULL_FREE.equals(detail.getKey())) {
 				String isNullFree = detail.getValue();
-				return Boolean.parseBoolean(isNullFree);		// XXX There is no 'set' here
+			//	return Boolean.parseBoolean(isNullFree);		// XXX There is no 'set' here
+			}
+			else if (PivotConstants.COLLECTION_LOWER.equals(detail.getKey())) {
+				String lowerText = detail.getValue();
+			//	return Integer.parseInt(lowerText);		// XXX There is no 'set' here
+			}
+			else if (PivotConstants.COLLECTION_UPPER.equals(detail.getKey())) {
+				String upperText = detail.getValue();
+			//	return Integer.parseInt(upperText);		// XXX There is no 'set' here
 			}
 			else {
 				hasFurtherDetails = true;
