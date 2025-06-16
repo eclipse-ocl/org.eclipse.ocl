@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -33,8 +32,8 @@ public class AS2CS extends AbstractConversion
 {
 	public static interface Factory {
 		@NonNull BaseDeclarationVisitor createDeclarationVisitor(@NonNull AS2CSConversion converter);
-		@NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
-		@NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
+		@NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter);
+		@NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter);
 
 		/**
 		 * Return a list of classes for which this AS2CS overrides a base AS2CS.
@@ -50,12 +49,12 @@ public class AS2CS extends AbstractConversion
 		}
 
 		@Override
-		public @NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
-			return createReferenceVisitor(converter, scope);
+		public @NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter) {
+			return createReferenceVisitor(converter);
 		}
 
 		@Override
-		public @NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
+		public @NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter) {
 			return new BaseReferenceVisitor(converter);
 		}
 
