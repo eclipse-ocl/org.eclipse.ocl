@@ -806,7 +806,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		if ((pivotType == null) || pivotType.eIsProxy()) {
 			pivotType = getStandardLibrary().getOclInvalidType();
 		}
-		boolean isNullFree = false;
+		boolean isNullFree = PivotConstants.DEFAULT_IS_REQUIRED;
 		int lower = 0;
 		int upper = 1;
 		MultiplicityCS multiplicity = csElement.getOwnedMultiplicity();
@@ -1116,7 +1116,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		org.eclipse.ocl.pivot.Class type = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csTypeRef);
 		Boolean isRequired = converter.isRequired(csTypeRef);
 		if (isRequired == null) {
-			isRequired = false;
+			isRequired = PivotConstants.DEFAULT_IS_REQUIRED;
 		}
 		getHelper().setType(pivotElement, type, isRequired.booleanValue());
 	}
@@ -1320,12 +1320,16 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				TemplateParameterSubstitutionCS csTemplateParameterSubstitution = ownedTemplateBinding.getOwnedSubstitutions().get(0);
 				Type templateArgument = PivotUtil.getPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
 				templateArgument = getNormalizedType(templateArgument);
-				boolean isNullFree = true;
+				boolean isNullFree = PivotConstants.DEFAULT_IS_REQUIRED;
+				IntegerValue lower = PivotConstants.DEFAULT_LOWER_BOUND;
+				UnlimitedNaturalValue upper = PivotConstants.DEFAULT_UPPER_BOUND;
 				MultiplicityCS csMultiplicity = ownedTemplateBinding.getOwnedMultiplicity();
 				if (csMultiplicity != null) {
 					isNullFree = csMultiplicity.isIsNullFree();
+					lower = ValueUtil.integerValueOf(csMultiplicity.getLower());
+					upper = ValueUtil.unlimitedNaturalValueOf(csMultiplicity.getUpper());
 				}
-				specializedPivotElement = templateArgument != null ? standardLibrary.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
+				specializedPivotElement = templateArgument != null ? standardLibrary.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, lower, upper) : unspecializedPivotElement;
 			}
 			else {
 				List<@NonNull Type> templateArguments = new ArrayList<>();

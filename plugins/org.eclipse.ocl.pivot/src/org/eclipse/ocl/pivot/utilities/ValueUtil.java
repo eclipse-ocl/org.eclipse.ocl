@@ -49,8 +49,8 @@ import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.PartId;
+import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -1335,15 +1335,18 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull UnlimitedNaturalValue unlimitedNaturalValueOf(@Nullable BigInteger value) {
-		return (UnlimitedNaturalValue)integerValueOf(value);
+		if (value == null) {
+			throw new InvalidValueException(PivotMessages.InvalidInteger, value);
+		}
+		return value.signum() < 0 ? UNLIMITED_VALUE : (UnlimitedNaturalValue)integerValueOf(value);
 	}
 
 	public static @NonNull UnlimitedNaturalValue unlimitedNaturalValueOf(int value) {
-		return (UnlimitedNaturalValue)integerValueOf(value);
+		return value < 0 ? UNLIMITED_VALUE : (UnlimitedNaturalValue)integerValueOf(value);
 	}
 
 	public static @NonNull UnlimitedNaturalValue unlimitedNaturalValueOf(long value) {
-		return (UnlimitedNaturalValue)integerValueOf(value);
+		return value < 0 ? UNLIMITED_VALUE : (UnlimitedNaturalValue)integerValueOf(value);
 	}
 
 	public static @NonNull UnlimitedNaturalValue unlimitedNaturalValueOf(@Nullable Object aValue) {
