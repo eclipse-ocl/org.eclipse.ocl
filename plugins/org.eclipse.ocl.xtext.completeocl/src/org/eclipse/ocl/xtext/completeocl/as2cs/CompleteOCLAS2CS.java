@@ -15,8 +15,6 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -40,8 +38,8 @@ public class CompleteOCLAS2CS extends EssentialOCLAS2CS
 		}
 
 		@Override
-		public @NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
-			return new EssentialOCLReferenceVisitor(converter, scope);
+		public @NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter) {
+			return new EssentialOCLReferenceVisitor(converter);
 		}
 
 		@SuppressWarnings("null")
@@ -75,6 +73,6 @@ public class CompleteOCLAS2CS extends EssentialOCLAS2CS
 
 	@Override
 	public @NonNull BaseReferenceVisitor createDefaultReferenceVisitor(@NonNull AS2CSConversion converter) {
-		return new EssentialOCLReferenceVisitor(converter, null);
+		return new EssentialOCLReferenceVisitor(converter);
 	}
 }

@@ -305,30 +305,19 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		return declarationVisitor;
 	}
 
-	public @Nullable BaseReferenceVisitor getExpressionVisitor(@NonNull EClass eClass, @Nullable Namespace scope) {
-		if (scope == null) {
-			BaseReferenceVisitor expressionVisitor = expressionVisitorMap.get(eClass);
-			if ((expressionVisitor == null) && !expressionVisitorMap.containsKey(eClass)) {
-				Factory factory = converter.getFactory(eClass);
-				if (factory != null) {
-					expressionVisitor = factory.createExpressionVisitor(this, null);
-				}
-				else {
-					expressionVisitor = defaultExpressionVisitor;
-				}
-				expressionVisitorMap.put(eClass, expressionVisitor);
-			}
-			return expressionVisitor;
-		}
-		else {
+	public @Nullable BaseReferenceVisitor getExpressionVisitor(@NonNull EClass eClass) {
+		BaseReferenceVisitor expressionVisitor = expressionVisitorMap.get(eClass);
+		if ((expressionVisitor == null) && !expressionVisitorMap.containsKey(eClass)) {
 			Factory factory = converter.getFactory(eClass);
 			if (factory != null) {
-				return factory.createExpressionVisitor(this, scope);
+				expressionVisitor = factory.createExpressionVisitor(this);
 			}
 			else {
-				return defaultExpressionVisitor;
+				expressionVisitor = defaultExpressionVisitor;
 			}
+			expressionVisitorMap.put(eClass, expressionVisitor);
 		}
+		return expressionVisitor;
 	}
 
 	/**
@@ -358,30 +347,19 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		return metamodelManager.getPrecedenceManager();
 	}
 
-	public @Nullable BaseReferenceVisitor getReferenceVisitor(@NonNull EClass eClass, @Nullable Namespace scope) {
-		if (scope == null) {
-			BaseReferenceVisitor referenceVisitor = referenceVisitorMap.get(eClass);
-			if ((referenceVisitor == null) && !referenceVisitorMap.containsKey(eClass)) {
-				Factory factory = converter.getFactory(eClass);
-				if (factory != null) {
-					referenceVisitor = factory.createReferenceVisitor(this, null);
-				}
-				else {
-					referenceVisitor = defaultReferenceVisitor;
-				}
-				referenceVisitorMap.put(eClass, referenceVisitor);
-			}
-			return referenceVisitor;
-		}
-		else {
+	public @Nullable BaseReferenceVisitor getReferenceVisitor(@NonNull EClass eClass) {
+		BaseReferenceVisitor referenceVisitor = referenceVisitorMap.get(eClass);
+		if ((referenceVisitor == null) && !referenceVisitorMap.containsKey(eClass)) {
 			Factory factory = converter.getFactory(eClass);
 			if (factory != null) {
-				return factory.createReferenceVisitor(this, scope);
+				referenceVisitor = factory.createReferenceVisitor(this);
 			}
 			else {
-				return defaultReferenceVisitor;
+				referenceVisitor = defaultReferenceVisitor;
 			}
+			referenceVisitorMap.put(eClass, referenceVisitor);
 		}
+		return referenceVisitor;
 	}
 
 	public org.eclipse.ocl.pivot.Class getScope() {
@@ -651,7 +629,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		}
 		if (elementType != null) {
 			PivotUtil.debugWellContainedness(elementType);
-			TypedRefCS typeRef = visitReference(TypedRefCS.class, elementType, PivotUtil.getContainingNamespace(object));
+			TypedRefCS typeRef = visitReference(TypedRefCS.class, elementType);
 			csElement.setOwnedType(typeRef);
 		}
 		else {
@@ -761,9 +739,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		return csElements;
 	}
 
-	public @Nullable <T extends ElementCS> T visitReference(@NonNull Class<T> csClass, @NonNull EObject eObject, @Nullable Namespace scope) {
+	public @Nullable <T extends ElementCS> T visitReference(@NonNull Class<T> csClass, @NonNull EObject eObject) {
 		@SuppressWarnings("null") @NonNull EClass eClass = eObject.eClass();
-		BaseReferenceVisitor referenceVisitor = getReferenceVisitor(eClass, scope);
+		BaseReferenceVisitor referenceVisitor = getReferenceVisitor(eClass);
 		if ((referenceVisitor == null) || !(eObject instanceof Visitable)) {
 			logger.warn("Unsupported reference " + eObject.eClass().getName());
 			return null;
@@ -790,7 +768,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		List<T> csElements = new ArrayList<>();
 		for (V eObject : eObjects) {
 			if ((eObject != null) && ((predicate == null) || predicate.filter(eObject))) {
-				@Nullable T csElement = visitReference(csClass, eObject, null);
+				@Nullable T csElement = visitReference(csClass, eObject);
 				if (csElement != null) {
 					csElements.add(csElement);
 				}

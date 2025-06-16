@@ -14,8 +14,6 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -36,13 +34,13 @@ public class EssentialOCLAS2CS extends BaseAS2CS
 		}
 
 		@Override
-		public @NonNull EssentialOCLExpressionVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
-			return new EssentialOCLExpressionVisitor(converter, scope);
+		public @NonNull EssentialOCLExpressionVisitor createExpressionVisitor(@NonNull AS2CSConversion converter) {
+			return new EssentialOCLExpressionVisitor(converter);
 		}
 
 		@Override
-		public @NonNull EssentialOCLReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
-			return new EssentialOCLReferenceVisitor(converter, scope);
+		public @NonNull EssentialOCLReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter) {
+			return new EssentialOCLReferenceVisitor(converter);
 		}
 
 		@SuppressWarnings("null")

@@ -12,15 +12,13 @@ package org.eclipse.ocl.xtext.essentialocl.as2cs;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 
 public class EssentialOCLExpressionVisitor extends EssentialOCLReferenceVisitor
 {
 	public static final Logger logger = Logger.getLogger(EssentialOCLExpressionVisitor.class);
 
-	public EssentialOCLExpressionVisitor(@NonNull AS2CSConversion context, @Nullable Namespace scope) {
-		super(context, scope);
+	public EssentialOCLExpressionVisitor(@NonNull AS2CSConversion context) {
+		super(context);
 	}
 }
