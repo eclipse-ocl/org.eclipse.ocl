@@ -278,26 +278,28 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		final /*@NonInvalid*/ @NonNull List<Employee> employees = company.getEmployees();
 		final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
 		/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createOrderedSetAccumulatorValue(CodegencompanyTables.ORD_CLSSid_Employee);
-		@NonNull Iterator<Object> ITERATOR__1 = BOXED_employees.iterator();
-		/*@NonInvalid*/ @NonNull OrderedSetValue select;
+		@Nullable Iterator<Object> ITERATOR__1 = BOXED_employees.iterator();
+		/*@Thrown*/ @NonNull OrderedSetValue select;
 		while (true) {
 			if (!ITERATOR__1.hasNext()) {
 				select = accumulator;
 				break;
 			}
-			@SuppressWarnings("null")
-			/*@NonInvalid*/ @NonNull Employee _1 = (@NonNull Employee)ITERATOR__1.next();
+			/*@NonInvalid*/ @Nullable Employee _1 = (@Nullable Employee)ITERATOR__1.next();
 			/**
 			 * manager = self
 			 */
-			final /*@NonInvalid*/ @Nullable Employee manager_0 = _1.getManager();
-			final /*@NonInvalid*/ boolean eq = this.equals(manager_0);
+			if (_1 == null) {
+				throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/test/Pivot/Company.ecore\'::Employee::manager\'");
+			}
+			final /*@Thrown*/ @Nullable Employee manager_0 = _1.getManager();
+			final /*@Thrown*/ boolean eq = this.equals(manager_0);
 			//
-			if (eq) {
+			if (eq == ValueUtil.TRUE_VALUE) {
 				accumulator.add(_1);
 			}
 		}
-		final /*@NonInvalid*/ @NonNull List<Employee> ECORE_select = idResolver.ecoreValueOfAll(Employee.class, select);
+		final /*@Thrown*/ @NonNull List<Employee> ECORE_select = idResolver.ecoreValueOfAll(Employee.class, select);
 		return (EList<Employee>)ECORE_select;
 	}
 
@@ -314,8 +316,8 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_company_c_c_Employee_0 = idResolver.getClass(CodegencompanyTables.CLSSid_Employee, null);
-		final /*@NonInvalid*/ @NonNull SetValue allInstances = ClassifierAllInstancesOperation.INSTANCE.evaluate(executor, CodegencompanyTables.SET_CLSSid_Employee, TYP_company_c_c_Employee_0);
-		/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(CodegencompanyTables.SET_CLSSid_Employee);
+		final /*@NonInvalid*/ @NonNull SetValue allInstances = ClassifierAllInstancesOperation.INSTANCE.evaluate(executor, CodegencompanyTables.SET_CLSSid_Employee_0, TYP_company_c_c_Employee_0);
+		/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(CodegencompanyTables.SET_CLSSid_Employee_0);
 		@NonNull Iterator<Object> ITERATOR__1 = allInstances.iterator();
 		/*@NonInvalid*/ @NonNull SetValue select;
 		while (true) {

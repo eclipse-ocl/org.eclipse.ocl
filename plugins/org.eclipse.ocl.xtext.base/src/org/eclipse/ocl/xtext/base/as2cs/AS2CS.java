@@ -115,6 +115,14 @@ public class AS2CS extends AbstractConversion
 		return factoryMap.get(eClass);
 	}
 
+	/**
+	 * Return true if the CS resource complements rather than defines the model. A complementing CS
+	 * requires an import of the complemented model.
+	 */
+	public boolean isComplement() {
+		return false;
+	}
+
 	public void update() {
 		AS2CSConversion conversion = new AS2CSConversion(this);
 		for (@NonNull BaseCSResource csResource : getCSResources()) {
