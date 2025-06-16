@@ -12,20 +12,16 @@ package org.eclipse.ocl.xtext.essentialocl.as2cs;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -50,11 +46,8 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 {
 	public static final Logger logger = Logger.getLogger(EssentialOCLReferenceVisitor.class);
 
-	protected final @Nullable Namespace scope;
-
-	public EssentialOCLReferenceVisitor(@NonNull AS2CSConversion context, @Nullable Namespace scope) {
+	public EssentialOCLReferenceVisitor(@NonNull AS2CSConversion context) {
 		super(context);		// NB this class is stateless since separate instances exist per CS package
-		this.scope = scope;
 	}
 
 	@Override
@@ -143,10 +136,11 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 
 	@Override
 	public ElementCS visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {
-		assert scope != null;
-		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(scope);
-		TemplateParameter asTemplateParameter = templateParameterization.get(object.getIndex());
-		return visitTemplateParameter(asTemplateParameter);
+//		assert scope != null;
+//		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(scope);
+//		TemplateParameter asTemplateParameter = templateParameterization.get(object.getIndex());
+//		return visitTemplateParameter(asTemplateParameter);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -188,7 +182,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 			assert csPathName != null;
 			csRef.setOwnedPathName(csPathName);
 		}
-		context.refreshPathName(csPathName, object, scope);
+		context.refreshPathName(csPathName, object, null);
 		if (object instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Package typePackage = ((org.eclipse.ocl.pivot.Class)object).getOwningPackage();
 			if (typePackage != null) {

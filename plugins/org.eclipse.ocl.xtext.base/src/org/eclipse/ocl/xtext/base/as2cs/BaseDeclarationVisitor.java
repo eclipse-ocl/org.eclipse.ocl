@@ -323,7 +323,7 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		if (asConstrainingClasses.size() > 0) {
 			List<TypedRefCS> csExtends = new ArrayList<TypedRefCS>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asConstrainingClass : asConstrainingClasses) {
-				TypedRefCS typeRef = context.visitReference(TypedRefCS.class, asConstrainingClass, PivotUtil.getContainingNamespace(object));
+				TypedRefCS typeRef = context.visitReference(TypedRefCS.class, asConstrainingClass);
 				csExtends.add(typeRef);
 			}
 			PivotUtil.refreshList(csElement.getOwnedExtends(), csExtends);

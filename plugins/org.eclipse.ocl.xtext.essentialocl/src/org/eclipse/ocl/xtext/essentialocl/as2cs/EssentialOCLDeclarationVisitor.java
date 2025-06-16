@@ -244,11 +244,11 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	}
 
 	protected @Nullable TypedRefCS createTypeRefCS(@Nullable Type asType) {
-		return asType != null ? context.visitReference(TypedRefCS.class, asType, null) : null;
+		return asType != null ? context.visitReference(TypedRefCS.class, asType) : null;
 	}
 
 	protected @Nullable TypedRefCS createTypeRefCS(Type asType, @Nullable Namespace scope) {
-		return asType != null ? context.visitReference(TypedRefCS.class, asType, scope) : null;
+		return asType != null ? context.visitReference(TypedRefCS.class, asType) : null;
 	}
 
 	/**
@@ -416,7 +416,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		}
 		if (elementType != null) {
 			PivotUtil.debugWellContainedness(elementType);
-			TypedRefCS typeRef = context.visitReference(TypedRefCS.class, elementType, null);
+			TypedRefCS typeRef = context.visitReference(TypedRefCS.class, elementType);
 			csElement.setOwnedType(typeRef);
 		}
 		else {

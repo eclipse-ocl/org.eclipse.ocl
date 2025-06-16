@@ -79,7 +79,7 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 					Type actual = templateParameterSubstitution.getActual();
 					if (actual != null) {
 						TemplateParameterSubstitutionCS csTemplateParameterSubstitution = BaseCSFactory.eINSTANCE.createTemplateParameterSubstitutionCS();
-						TypeRefCS csParameterable = context.visitReference(TypeRefCS.class, actual, context.getScope());
+						TypeRefCS csParameterable = context.visitReference(TypeRefCS.class, actual);
 						csTemplateParameterSubstitution.setOwnedActualParameter(csParameterable);
 						csParameterSubstitutions.add(csTemplateParameterSubstitution);
 						csTemplateParameterSubstitution.setPivot(templateParameterSubstitution);
