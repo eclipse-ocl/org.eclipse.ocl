@@ -528,15 +528,30 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			s.append(buf, 0, len);
 		}
 		reader.close();
+		StringBuilder sErrors = null;
 		String string = s.toString();
-		int index = string.indexOf("#//@");
-		if (index < 0) {
+		for (int iStart = 0; true; ) {
+			int index = string.indexOf("#//@", iStart);
+			if (index <= iStart) {
+				break;
+			}
+			if (index > 0) {
+				int quoteStartIndex = string.lastIndexOf('"', index);
+				if (quoteStartIndex != index-1) {
+					if (sErrors == null) {
+						sErrors = new StringBuilder();
+					}
+					sErrors.append("\n\t");
+					int quoteEndIndex = string.indexOf('"', index);
+					sErrors.append(string.substring(quoteStartIndex+1, quoteEndIndex));
+				}
+			}
+			iStart = index+1;
+		}
+		if (sErrors == null) {
 			return true;
 		}
-		int preIndex = string.lastIndexOf("\n", index);
-		int postIndex = string.indexOf("\n", index);
-		String refText = string.substring(preIndex, postIndex).trim();
-		System.err.println("Missing xmi:id for reference in \'" + uri + "'\n\t" + refText);
+		System.err.println("Missing xmi:id for references in \'" + uri + "'" + sErrors.toString());
 		// PivotLUSSIDs.isExternallyReferenceable determines what gets xmi:ids
 		return false;
 	}
