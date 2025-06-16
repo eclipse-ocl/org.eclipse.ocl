@@ -46,11 +46,14 @@ public class CompleteOCLAS2CS extends EssentialOCLAS2CS
 		@Override
 		public @NonNull EClass @NonNull [] getEClasses() {
 			return new @NonNull EClass @NonNull [] {
+				PivotPackage.Literals.BOOLEAN_TYPE,
 				PivotPackage.Literals.CLASS,
 				PivotPackage.Literals.CONSTRAINT,
+				PivotPackage.Literals.DATA_TYPE,
 				PivotPackage.Literals.OPERATION,
 				PivotPackage.Literals.PACKAGE,
 				PivotPackage.Literals.PARAMETER,
+				PivotPackage.Literals.PRIMITIVE_TYPE,
 				PivotPackage.Literals.PROPERTY,
 				PivotPackage.Literals.TYPE
 			};
@@ -74,5 +77,10 @@ public class CompleteOCLAS2CS extends EssentialOCLAS2CS
 	@Override
 	public @NonNull BaseReferenceVisitor createDefaultReferenceVisitor(@NonNull AS2CSConversion converter) {
 		return new EssentialOCLReferenceVisitor(converter);
+	}
+
+	@Override
+	public boolean isComplement() {
+		return true;
 	}
 }

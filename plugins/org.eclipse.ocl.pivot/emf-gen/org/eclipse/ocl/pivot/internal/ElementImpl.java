@@ -222,10 +222,10 @@ public abstract class ElementImpl
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ @NonNull StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		final /*@NonInvalid*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Element, this);
+		final /*@NonInvalid*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Element_0, this);
 		final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticClassOf(oclAsSet);
 		final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
-		final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Element, PivotTables.SET_CLSSid_Element);
+		final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Element_1, PivotTables.SET_CLSSid_Element);
 		/**
 		 * Implementation of the iteration evaluation body.
 		 */
@@ -246,7 +246,7 @@ public abstract class ElementImpl
 				return selectByKind;
 			}
 		};
-		final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element, BODY0_closure_1, oclAsSet, ACC_closure_0);
+		final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element_1, BODY0_closure_1, oclAsSet, ACC_closure_0);
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = idResolver.ecoreValueOfAll(Element.class, closure);

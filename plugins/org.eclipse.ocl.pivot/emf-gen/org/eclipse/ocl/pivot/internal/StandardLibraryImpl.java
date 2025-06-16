@@ -372,9 +372,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		//
 		//	Use specialized conformance for compound types, inheritance tree intersection for simple types
 		//
-		if (leftType == rightType) {
-			return true;
-		}
+	//	if (leftType == rightType) {
+	//		return true;
+	//	}
 		if (leftType instanceof DataType) {
 			if (leftType instanceof CollectionType) {
 				if (rightType instanceof CollectionType) {

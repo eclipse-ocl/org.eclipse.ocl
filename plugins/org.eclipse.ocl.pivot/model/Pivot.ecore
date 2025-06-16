@@ -3,9 +3,6 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="P-pivot" name="pivot" nsURI="http://www.eclipse.org/ocl/2015/Pivot"
     nsPrefix="pivot">
   <eAnnotations source="http://www.eclipse.org/OCL/ASMetamodel"/>
-  <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-    <details key="nullFree" value="true"/>
-  </eAnnotations>
   <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
     <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
     <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
@@ -96,11 +93,23 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Annotation" name="Annotation"
       eSuperTypes="#T-pivot-NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Annotation-ownedContents"
-        name="ownedContents" upperBound="-1" eType="#T-pivot-Element" containment="true"/>
+        name="ownedContents" upperBound="-1" eType="#T-pivot-Element" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Annotation-ownedDetails"
-        name="ownedDetails" upperBound="-1" eType="#T-pivot-Detail" containment="true"/>
+        name="ownedDetails" upperBound="-1" eType="#T-pivot-Detail" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Annotation-references"
-        name="references" upperBound="-1" eType="#T-pivot-Element"/>
+        name="references" upperBound="-1" eType="#T-pivot-Element">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-AnyType" name="AnyType" eSuperTypes="#T-pivot-Class"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-AssociationClass" name="AssociationClass"
@@ -110,7 +119,11 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-AssociationClass-unownedAttributes"
         name="unownedAttributes" ordered="false" upperBound="-1" eType="#T-pivot-Property"
-        eOpposite="#F-pivot-Property-associationClass"/>
+        eOpposite="#F-pivot-Property-associationClass">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-AssociationClassCallExp" name="AssociationClassCallExp"
       eSuperTypes="#T-pivot-NavigationCallExp">
@@ -252,7 +265,11 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-extenders"
         name="extenders" ordered="false" upperBound="-1" eType="#T-pivot-StereotypeExtender"
-        eOpposite="#F-pivot-StereotypeExtender-class"/>
+        eOpposite="#F-pivot-StereotypeExtender-class">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Class-instanceClassName"
         name="instanceClassName" eType="#T-pivot-String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Class-isAbstract"
@@ -272,16 +289,26 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-ownedBehaviors"
         name="ownedBehaviors" ordered="false" upperBound="-1" eType="#T-pivot-Behavior"
         containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Behaviors owned by a BehavioredClassifier."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-ownedInvariants"
         name="ownedInvariants" ordered="false" upperBound="-1" eType="#T-pivot-Constraint"
-        containment="true"/>
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-ownedOperations"
         name="ownedOperations" upperBound="-1" eType="#T-pivot-Operation" containment="true"
         eOpposite="#F-pivot-Operation-owningClass">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Operations owned by the Class."/>
       </eAnnotations>
@@ -289,6 +316,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-ownedProperties"
         name="ownedProperties" upperBound="-1" eType="#T-pivot-Property" containment="true"
         eOpposite="#F-pivot-Property-owningClass">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Properties owned by the StructuredClassifier.&#xA;&#xA;The attributes (i.e., the Properties) owned by the Class."/>
       </eAnnotations>
@@ -296,7 +326,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-owningPackage"
         name="owningPackage" eType="#T-pivot-Package" eOpposite="#F-pivot-Package-ownedClasses"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-superClasses"
-        name="superClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class"/>
+        name="superClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionItem" name="CollectionItem"
       eSuperTypes="#T-pivot-CollectionLiteralPart">
@@ -407,7 +441,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CollectionLiteralExp-kind"
         name="kind" lowerBound="1" eType="#T-pivot-CollectionKind"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CollectionLiteralExp-ownedParts"
-        name="ownedParts" upperBound="-1" eType="#T-pivot-CollectionLiteralPart" containment="true"/>
+        name="ownedParts" upperBound="-1" eType="#T-pivot-CollectionLiteralPart" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionLiteralPart" name="CollectionLiteralPart"
       abstract="true" eSuperTypes="#T-pivot-TypedElement">
@@ -453,6 +491,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Comment-annotatedElements"
         name="annotatedElements" ordered="false" upperBound="-1" eType="#T-pivot-Element"
         eOpposite="#F-pivot-Element-annotatingComments">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="References the Element(s) being commented."/>
       </eAnnotations>
@@ -471,7 +512,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteClass-owningCompletePackage"
         name="owningCompletePackage" eType="#T-pivot-CompletePackage" eOpposite="#F-pivot-CompletePackage-ownedCompleteClasses"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteClass-partialClasses"
-        name="partialClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class"/>
+        name="partialClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteEnvironment" name="CompleteEnvironment"
       eSuperTypes="#T-pivot-Element">
@@ -492,11 +537,19 @@
         transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteModel-ownedCompletePackages"
         name="ownedCompletePackages" ordered="false" upperBound="-1" eType="#T-pivot-CompletePackage"
-        containment="true" eOpposite="#F-pivot-CompletePackage-owningCompleteModel"/>
+        containment="true" eOpposite="#F-pivot-CompletePackage-owningCompleteModel">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteModel-owningCompleteEnvironment"
         name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedCompleteModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteModel-partialModels"
-        name="partialModels" ordered="false" upperBound="-1" eType="#T-pivot-Model"/>
+        name="partialModels" ordered="false" upperBound="-1" eType="#T-pivot-Model">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteModel-primitiveCompletePackage"
         name="primitiveCompletePackage" eType="#T-pivot-PrimitiveCompletePackage"
         changeable="false" transient="true" derived="true" resolveProxies="false"/>
@@ -508,16 +561,28 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompletePackage-ownedCompleteClasses"
         name="ownedCompleteClasses" ordered="false" upperBound="-1" eType="#T-pivot-CompleteClass"
-        containment="true" eOpposite="#F-pivot-CompleteClass-owningCompletePackage"/>
+        containment="true" eOpposite="#F-pivot-CompleteClass-owningCompletePackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompletePackage-ownedCompletePackages"
         name="ownedCompletePackages" ordered="false" upperBound="-1" eType="#T-pivot-CompletePackage"
-        containment="true" eOpposite="#F-pivot-CompletePackage-owningCompletePackage"/>
+        containment="true" eOpposite="#F-pivot-CompletePackage-owningCompletePackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompletePackage-owningCompleteModel"
         name="owningCompleteModel" eType="#T-pivot-CompleteModel" eOpposite="#F-pivot-CompleteModel-ownedCompletePackages"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompletePackage-owningCompletePackage"
         name="owningCompletePackage" eType="#T-pivot-CompletePackage" eOpposite="#F-pivot-CompletePackage-ownedCompletePackages"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompletePackage-partialPackages"
-        name="partialPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"/>
+        name="partialPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ConnectionPointReference"
       name="ConnectionPointReference" eSuperTypes="#T-pivot-Vertex">
@@ -526,12 +591,18 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ConnectionPointReference-entries"
         name="entries" ordered="false" upperBound="-1" eType="#T-pivot-Pseudostate">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The entryPoint Pseudostates corresponding to this connection point."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ConnectionPointReference-exits"
         name="exits" ordered="false" upperBound="-1" eType="#T-pivot-Pseudostate">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The exitPoints kind Pseudostates corresponding to this connection point."/>
       </eAnnotations>
@@ -580,6 +651,9 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Constraint-constrainedElements"
         name="constrainedElements" upperBound="-1" eType="#T-pivot-Element">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The ordered set of Elements referenced by this Constraint."/>
       </eAnnotations>
@@ -605,7 +679,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Constraint-owningTransition"
         name="owningTransition" eType="#T-pivot-Transition" eOpposite="#F-pivot-Transition-ownedGuard"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Constraint-redefinedConstraints"
-        name="redefinedConstraints" ordered="false" upperBound="-1" eType="#T-pivot-Constraint"/>
+        name="redefinedConstraints" ordered="false" upperBound="-1" eType="#T-pivot-Constraint">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-DataType" name="DataType"
       eSuperTypes="#T-pivot-Class">
@@ -684,7 +762,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Detail" name="Detail" eSuperTypes="#T-pivot-NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Detail-values"
-        name="values" ordered="false" lowerBound="1" upperBound="-1" eType="#T-pivot-String"/>
+        name="values" ordered="false" lowerBound="1" upperBound="-1" eType="#T-pivot-String">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-DynamicBehavior" name="DynamicBehavior"
       eSuperTypes="#T-pivot-Behavior #T-pivot-DynamicType"/>
@@ -704,7 +786,11 @@
       eSuperTypes="#T-pivot-Class #T-pivot-DynamicElement">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-DynamicType-ownedDynamicProperties"
         name="ownedDynamicProperties" ordered="false" upperBound="-1" eType="#T-pivot-DynamicProperty"
-        containment="true"/>
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-DynamicValueSpecification"
       name="DynamicValueSpecification" eSuperTypes="#T-pivot-ValueSpecification"/>
@@ -713,6 +799,9 @@
       <details key="documentation" value="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
     </eAnnotations>
     <eOperations name="allOwnedElements" ordered="false" upperBound="-1" eType="#T-pivot-Element">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="self->closure(oclContents()->selectByKind(Element))"/>
       </eAnnotations>
@@ -729,19 +818,34 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Element-annotatingComments"
         name="annotatingComments" ordered="false" upperBound="-1" eType="#T-pivot-Comment"
-        eOpposite="#F-pivot-Comment-annotatedElements"/>
+        eOpposite="#F-pivot-Comment-annotatedElements">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Element-ownedAnnotations"
-        name="ownedAnnotations" upperBound="-1" eType="#T-pivot-Element" containment="true"/>
+        name="ownedAnnotations" upperBound="-1" eType="#T-pivot-Element" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Element-ownedComments"
         name="ownedComments" ordered="false" upperBound="-1" eType="#T-pivot-Comment"
         containment="true" eOpposite="#F-pivot-Comment-owningElement">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Comments owned by this Element."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Element-ownedExtensions"
         name="ownedExtensions" ordered="false" upperBound="-1" eType="#T-pivot-ElementExtension"
-        containment="true" eOpposite="#F-pivot-ElementExtension-base"/>
+        containment="true" eOpposite="#F-pivot-ElementExtension-base">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ElementExtension" name="ElementExtension"
       eSuperTypes="#T-pivot-Class">
@@ -794,6 +898,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Enumeration-ownedLiterals"
         name="ownedLiterals" upperBound="-1" eType="#T-pivot-EnumerationLiteral" containment="true"
         eOpposite="#F-pivot-EnumerationLiteral-owningEnumeration">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The ordered set of literals owned by this Enumeration."/>
       </eAnnotations>
@@ -822,7 +929,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ExpressionInOCL-ownedContext"
         name="ownedContext" eType="#T-pivot-Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ExpressionInOCL-ownedParameters"
-        name="ownedParameters" upperBound="-1" eType="#T-pivot-Variable" containment="true"/>
+        name="ownedParameters" upperBound="-1" eType="#T-pivot-Variable" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ExpressionInOCL-ownedResult"
         name="ownedResult" eType="#T-pivot-Variable" containment="true"/>
   </eClassifiers>
@@ -958,6 +1069,9 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-InstanceSpecification-classes"
         name="classes" ordered="false" upperBound="-1" eType="#T-pivot-Class">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them."/>
       </eAnnotations>
@@ -965,6 +1079,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-InstanceSpecification-ownedSlots"
         name="ownedSlots" ordered="false" upperBound="-1" eType="#T-pivot-Slot" containment="true"
         eOpposite="#F-pivot-Slot-owningInstance">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A Slot giving the value or values of a StructuralFeature of the instance. An InstanceSpecification can have one Slot per StructuralFeature of its Classifiers, including inherited features. It is not necessary to model a Slot for every StructuralFeature, in which case the InstanceSpecification is a partial description."/>
       </eAnnotations>
@@ -1119,20 +1236,24 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-IterateExp-ownedBodies"
         name="ownedBodies" lowerBound="1" upperBound="-1" eType="#T-pivot-OCLExpression"
-        containment="true"/>
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-IterateExp-ownedResult"
         name="ownedResult" eType="#T-pivot-Variable" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Iteration" name="Iteration"
       eSuperTypes="#T-pivot-Operation">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Iteration-ownedAccumulator"
-        name="ownedAccumulator" eType="#T-pivot-Parameter" containment="true">
+        name="ownedAccumulator" eType="#T-pivot-Parameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Iteration-ownedIterators"
+        name="ownedIterators" upperBound="-1" eType="#T-pivot-Parameter" containment="true">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Iteration-ownedIterators"
-        name="ownedIterators" upperBound="-1" eType="#T-pivot-Parameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IteratorExp" name="IteratorExp"
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
@@ -1510,7 +1631,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-ownedContext"
         name="ownedContext" lowerBound="1" eType="#T-pivot-LambdaParameter" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-ownedParameters"
-        name="ownedParameters" upperBound="-1" eType="#T-pivot-LambdaParameter" containment="true"/>
+        name="ownedParameters" upperBound="-1" eType="#T-pivot-LambdaParameter" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LambdaType-ownedResult"
         name="ownedResult" lowerBound="1" eType="#T-pivot-LambdaParameter" containment="true"/>
   </eClassifiers>
@@ -1640,7 +1765,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Library" name="Library" eSuperTypes="#T-pivot-Package">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Library-ownedPrecedences"
-        name="ownedPrecedences" upperBound="-1" eType="#T-pivot-Precedence" containment="true"/>
+        name="ownedPrecedences" upperBound="-1" eType="#T-pivot-Precedence" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LiteralExp" name="LiteralExp"
       abstract="true" eSuperTypes="#T-pivot-OCLExpression"/>
@@ -1777,20 +1906,24 @@
         transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedCoIterators"
         name="ownedCoIterators" upperBound="-1" eType="#T-pivot-IteratorVariable"
-        containment="true">
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedIterators"
+        name="ownedIterators" upperBound="-1" eType="#T-pivot-Variable" containment="true">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="false"/>
+        <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedIterators"
-        name="ownedIterators" upperBound="-1" eType="#T-pivot-Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-referredIteration"
         name="referredIteration" eType="#T-pivot-Iteration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapLiteralExp" name="MapLiteralExp"
       eSuperTypes="#T-pivot-LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapLiteralExp-ownedParts"
-        name="ownedParts" upperBound="-1" eType="#T-pivot-MapLiteralPart" containment="true"/>
+        name="ownedParts" upperBound="-1" eType="#T-pivot-MapLiteralPart" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapLiteralPart" name="MapLiteralPart"
       eSuperTypes="#T-pivot-Element">
@@ -1856,7 +1989,11 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MessageExp-ownedArguments"
-        name="ownedArguments" upperBound="-1" eType="#T-pivot-OCLExpression" containment="true"/>
+        name="ownedArguments" upperBound="-1" eType="#T-pivot-OCLExpression" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MessageExp-ownedCalledOperation"
         name="ownedCalledOperation" eType="#T-pivot-CallOperationAction" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MessageExp-ownedSentSignal"
@@ -1878,10 +2015,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Model-externalURI"
         name="externalURI" eType="#T-pivot-String"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Model-ownedImports"
-        name="ownedImports" upperBound="-1" eType="#T-pivot-Import" containment="true"/>
+        name="ownedImports" upperBound="-1" eType="#T-pivot-Import" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Model-ownedPackages"
         name="ownedPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"
-        containment="true"/>
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Model-xmiidVersion"
         name="xmiidVersion" lowerBound="1" eType="#T-pivot-Integer" defaultValueLiteral="0"/>
   </eClassifiers>
@@ -1911,6 +2056,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Namespace-ownedConstraints"
         name="ownedConstraints" ordered="false" upperBound="-1" eType="#T-pivot-Constraint"
         containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Specifies a set of Constraints owned by this Namespace."/>
       </eAnnotations>
@@ -1921,7 +2069,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-NavigationCallExp-navigationSource"
         name="navigationSource" eType="#T-pivot-Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-NavigationCallExp-qualifiers"
-        name="qualifiers" upperBound="-1" eType="#T-pivot-OCLExpression"/>
+        name="qualifiers" upperBound="-1" eType="#T-pivot-OCLExpression">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NormalizedTemplateParameter"
       name="NormalizedTemplateParameter" eSuperTypes="#T-pivot-TemplateParameter">
@@ -2048,6 +2200,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-ownedParameters"
         name="ownedParameters" upperBound="-1" eType="#T-pivot-Parameter" containment="true"
         eOpposite="#F-pivot-Parameter-owningOperation">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The ordered set of formal Parameters of this BehavioralFeature.&#xA;&#xA;The parameters owned by this Operation."/>
       </eAnnotations>
@@ -2055,6 +2210,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-ownedPostconditions"
         name="ownedPostconditions" ordered="false" upperBound="-1" eType="#T-pivot-Constraint"
         containment="true" eOpposite="#F-pivot-Constraint-owningPostContext">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An optional set of Constraints specifying the state of the system when the Operation is completed."/>
       </eAnnotations>
@@ -2062,6 +2220,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-ownedPreconditions"
         name="ownedPreconditions" ordered="false" upperBound="-1" eType="#T-pivot-Constraint"
         containment="true" eOpposite="#F-pivot-Constraint-owningPreContext">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An optional set of Constraints on the state of the system when the Operation is invoked."/>
       </eAnnotations>
@@ -2076,12 +2237,18 @@
         name="precedence" eType="#T-pivot-Precedence"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-raisedExceptions"
         name="raisedExceptions" ordered="false" upperBound="-1" eType="#T-pivot-Type">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Types representing exceptions that may be raised during an invocation of this BehavioralFeature.&#xA;&#xA;The Types representing exceptions that may be raised during an invocation of this operation."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Operation-redefinedOperations"
         name="redefinedOperations" ordered="false" upperBound="-1" eType="#T-pivot-Operation">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Operations that are redefined by this Operation."/>
       </eAnnotations>
@@ -2169,7 +2336,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-OperationCallExp-isVirtual"
         name="isVirtual" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-OperationCallExp-ownedArguments"
-        name="ownedArguments" upperBound="-1" eType="#T-pivot-OCLExpression" containment="true"/>
+        name="ownedArguments" upperBound="-1" eType="#T-pivot-OCLExpression" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-OperationCallExp-referredOperation"
         name="referredOperation" eType="#T-pivot-Operation"/>
   </eClassifiers>
@@ -2229,12 +2400,19 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Package-importedPackages"
-        name="importedPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"/>
+        name="importedPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Package-nsPrefix"
         name="nsPrefix" eType="#T-pivot-String"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Package-ownedClasses"
         name="ownedClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class"
         containment="true" eOpposite="#F-pivot-Class-owningPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="References the packaged elements that are Types."/>
       </eAnnotations>
@@ -2242,6 +2420,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Package-ownedInstances"
         name="ownedInstances" ordered="false" upperBound="-1" eType="#T-pivot-InstanceSpecification"
         containment="true" eOpposite="#F-pivot-InstanceSpecification-owningPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The instance specification that owns this slot."/>
       </eAnnotations>
@@ -2249,6 +2430,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Package-ownedPackages"
         name="ownedPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"
         containment="true" eOpposite="#F-pivot-Package-owningPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="References the packaged elements that are Packages."/>
       </eAnnotations>
@@ -2256,6 +2440,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Package-ownedProfileApplications"
         name="ownedProfileApplications" ordered="false" upperBound="-1" eType="#T-pivot-ProfileApplication"
         containment="true" eOpposite="#F-pivot-ProfileApplication-owningPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="References the ProfileApplications that indicate which profiles have been applied to the Package."/>
       </eAnnotations>
@@ -2322,7 +2509,11 @@
       <details key="documentation" value="A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-PrimitiveType-coercions"
-        name="coercions" upperBound="-1" eType="#T-pivot-Operation"/>
+        name="coercions" upperBound="-1" eType="#T-pivot-Operation">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Profile" name="Profile" eSuperTypes="#T-pivot-Package">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2330,7 +2521,11 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Profile-profileApplications"
         name="profileApplications" ordered="false" upperBound="-1" eType="#T-pivot-ProfileApplication"
-        eOpposite="#F-pivot-ProfileApplication-appliedProfile"/>
+        eOpposite="#F-pivot-ProfileApplication-appliedProfile">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ProfileApplication" name="ProfileApplication"
       eSuperTypes="#T-pivot-Element">
@@ -2419,7 +2614,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isVolatile"
         name="isVolatile" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Property-keys"
-        name="keys" ordered="false" upperBound="-1" eType="#T-pivot-Property"/>
+        name="keys" ordered="false" upperBound="-1" eType="#T-pivot-Property">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Property-opposite"
         name="opposite" eType="#T-pivot-Property">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2436,6 +2635,9 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Property-redefinedProperties"
         name="redefinedProperties" ordered="false" upperBound="-1" eType="#T-pivot-Property">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The properties that are redefined by this property, if any."/>
       </eAnnotations>
@@ -2444,6 +2646,9 @@
         name="referredProperty" eType="#T-pivot-Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Property-subsettedProperty"
         name="subsettedProperty" ordered="false" upperBound="-1" eType="#T-pivot-Property">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The properties of which this Property is constrained to be a subset, if any."/>
       </eAnnotations>
@@ -2582,6 +2787,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Region-ownedSubvertexes"
         name="ownedSubvertexes" ordered="false" upperBound="-1" eType="#T-pivot-Vertex"
         containment="true" eOpposite="#F-pivot-Vertex-owningRegion">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The set of Vertices that are owned by this Region."/>
       </eAnnotations>
@@ -2589,6 +2797,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Region-ownedTransitions"
         name="ownedTransitions" ordered="false" upperBound="-1" eType="#T-pivot-Transition"
         containment="true" eOpposite="#F-pivot-Transition-owningRegion">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The set of Transitions owned by the Region."/>
       </eAnnotations>
@@ -2774,7 +2985,11 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ShadowExp-ownedParts"
-        name="ownedParts" upperBound="-1" eType="#T-pivot-ShadowPart" containment="true"/>
+        name="ownedParts" upperBound="-1" eType="#T-pivot-ShadowPart" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-ShadowExp-value"
         name="value" eType="#T-pivot-String"/>
   </eClassifiers>
@@ -2847,6 +3062,9 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Slot-ownedValues"
         name="ownedValues" upperBound="-1" eType="#T-pivot-ValueSpecification" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The value or values held by the Slot."/>
       </eAnnotations>
@@ -2901,6 +3119,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-State-ownedConnectionPoints"
         name="ownedConnectionPoints" ordered="false" upperBound="-1" eType="#T-pivot-Pseudostate"
         containment="true" eOpposite="#F-pivot-Pseudostate-owningState">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The entry and exit Pseudostates of a composite State. These can only be entry or exit Pseudostates, and they must have different names. They can only be defined for composite States."/>
       </eAnnotations>
@@ -2908,6 +3129,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-State-ownedConnections"
         name="ownedConnections" ordered="false" upperBound="-1" eType="#T-pivot-ConnectionPointReference"
         containment="true" eOpposite="#F-pivot-ConnectionPointReference-owningState">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The entry and exit connection points used in conjunction with this (submachine) State, i.e., as targets and sources, respectively, in the Region with the submachine State. A connection point reference references the corresponding definition of a connection point Pseudostate in the StateMachine referenced by the submachine State."/>
       </eAnnotations>
@@ -2915,6 +3139,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-State-ownedDeferrableTriggers"
         name="ownedDeferrableTriggers" ordered="false" upperBound="-1" eType="#T-pivot-Trigger"
         containment="true" eOpposite="#F-pivot-Trigger-owningState">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A list of Triggers that are candidates to be retained by the StateMachine if they trigger no Transitions out of the State (not consumed). A deferred Trigger is retained until the StateMachine reaches a State configuration where it is no longer deferred."/>
       </eAnnotations>
@@ -2940,6 +3167,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-State-ownedRegions"
         name="ownedRegions" ordered="false" upperBound="-1" eType="#T-pivot-Region"
         containment="true" eOpposite="#F-pivot-Region-owningState">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Regions owned directly by the State."/>
       </eAnnotations>
@@ -2991,6 +3221,9 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StateMachine-extendedStateMachines"
         name="extendedStateMachines" ordered="false" upperBound="-1" eType="#T-pivot-StateMachine">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The StateMachines of which this is an extension."/>
       </eAnnotations>
@@ -2998,6 +3231,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StateMachine-ownedConnectionPoints"
         name="ownedConnectionPoints" ordered="false" upperBound="-1" eType="#T-pivot-Pseudostate"
         containment="true" eOpposite="#F-pivot-Pseudostate-owningStateMachine">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The connection points defined for this StateMachine. They represent the interface of the StateMachine when used as part of submachine State"/>
       </eAnnotations>
@@ -3005,6 +3241,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StateMachine-ownedRegions"
         name="ownedRegions" ordered="false" lowerBound="1" upperBound="-1" eType="#T-pivot-Region"
         containment="true" eOpposite="#F-pivot-Region-owningStateMachine">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Regions owned directly by the StateMachine."/>
       </eAnnotations>
@@ -3012,6 +3251,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StateMachine-submachineStates"
         name="submachineStates" ordered="false" upperBound="-1" eType="#T-pivot-State"
         eOpposite="#F-pivot-State-submachines">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="References the submachine(s) in case of a submachine State. Multiple machines are referenced in case of a concurrent State."/>
       </eAnnotations>
@@ -3024,7 +3266,11 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Stereotype-ownedExtenders"
         name="ownedExtenders" ordered="false" upperBound="-1" eType="#T-pivot-StereotypeExtender"
-        containment="true" eOpposite="#F-pivot-StereotypeExtender-owningStereotype"/>
+        containment="true" eOpposite="#F-pivot-StereotypeExtender-owningStereotype">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-StereotypeExtender" name="StereotypeExtender"
       eSuperTypes="#T-pivot-Element">
@@ -3048,6 +3294,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateBinding-ownedSubstitutions"
         name="ownedSubstitutions" ordered="false" lowerBound="1" upperBound="-1" eType="#T-pivot-TemplateParameterSubstitution"
         containment="true" eOpposite="#F-pivot-TemplateParameterSubstitution-owningBinding">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The TemplateParameterSubstitutions owned by this TemplateBinding."/>
       </eAnnotations>
@@ -3072,7 +3321,11 @@
       <details key="documentation" value="A TemplateParameter exposes a ParameterableElement as a formal parameter of a template."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameter-constrainingClasses"
-        name="constrainingClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class"/>
+        name="constrainingClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameter-owningSignature"
         name="owningSignature" lowerBound="1" eType="#T-pivot-TemplateSignature" eOpposite="#F-pivot-TemplateSignature-ownedParameters">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3120,6 +3373,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateSignature-ownedParameters"
         name="ownedParameters" lowerBound="1" upperBound="-1" eType="#T-pivot-TemplateParameter"
         containment="true" eOpposite="#F-pivot-TemplateParameter-owningSignature">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The formal parameters that are owned by this TemplateSignature."/>
       </eAnnotations>
@@ -3139,6 +3395,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-ownedBindings"
         name="ownedBindings" ordered="false" upperBound="-1" eType="#T-pivot-TemplateBinding"
         containment="true" eOpposite="#F-pivot-TemplateBinding-owningElement">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The optional TemplateBindings from this TemplateableElement to one or more templates."/>
       </eAnnotations>
@@ -3180,6 +3439,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Transition-ownedTriggers"
         name="ownedTriggers" ordered="false" upperBound="-1" eType="#T-pivot-Trigger"
         containment="true" eOpposite="#F-pivot-Trigger-owningTransition">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Specifies the Triggers that may fire the transition."/>
       </eAnnotations>
@@ -3215,7 +3477,11 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TupleLiteralExp" name="TupleLiteralExp"
       eSuperTypes="#T-pivot-LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TupleLiteralExp-ownedParts"
-        name="ownedParts" upperBound="-1" eType="#T-pivot-TupleLiteralPart" containment="true"/>
+        name="ownedParts" upperBound="-1" eType="#T-pivot-TupleLiteralPart" containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TupleLiteralPart" name="TupleLiteralPart"
       eSuperTypes="#T-pivot-VariableDeclaration">
@@ -3451,6 +3717,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Vertex-incomingTransitions"
         name="incomingTransitions" ordered="false" upperBound="-1" eType="#T-pivot-Transition"
         changeable="false" eOpposite="#F-pivot-Transition-target">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Specifies the Transitions entering this Vertex."/>
       </eAnnotations>
@@ -3458,6 +3727,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Vertex-outgoingTransitions"
         name="outgoingTransitions" ordered="false" upperBound="-1" eType="#T-pivot-Transition"
         changeable="false" eOpposite="#F-pivot-Transition-source">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Specifies the Transitions departing from this Vertex."/>
       </eAnnotations>

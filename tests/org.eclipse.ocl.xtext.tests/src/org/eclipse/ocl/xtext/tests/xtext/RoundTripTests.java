@@ -296,6 +296,8 @@ public class RoundTripTests extends XtextTestCase
 		pivotResource1.save(XMIUtil.createSaveOptions(pivotResource1));
 		pivotResource3.setSaveable(true);
 		pivotResource3.save(XMIUtil.createSaveOptions(pivotResource3));
+	//	System.out.println("expected " + NameUtil.debugSimpleName(pivotResource1) + " " + pivotResource1.getURI());
+	//	System.out.println("actual   " + NameUtil.debugSimpleName(pivotResource3) + " " + pivotResource3.getURI());
 		String expected = EmfFormatter.listToStr(pivotResource1.getContents());
 		String actual = EmfFormatter.listToStr(pivotResource3.getContents()).replace(".regenerated.oclinecore", ".oclinecore");
 		assertEquals(expected, actual);
@@ -430,13 +432,13 @@ public class RoundTripTests extends XtextTestCase
 						"{\n" +
 						"class B\n" +
 						"{\n" +
-/*						"property bag0 : B[3..5|1] {!unique};\n" +
+						"property bag0 : B[3..5|1] {!unique};\n" +
 						"property bag0a : B[3..5|?] {!unique};\n" +
 						"property bag1 : B[*] {!unique};\n" +
-*/						"property bag2 : Set(Bag(B[8..9|1])[6..7|1])[4..5|1];\n" +
-//						"property bag3 : B[3..5] {!unique};\n" +
-//						"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443
-/*						"property bag5 : Bag(B)[4..6|1];\n" +
+						"property bag2 : Set(Bag(B[8..9|1])[6..7|1])[4..5|1];\n" +
+						"property bag3 : B[3..5] {!unique};\n" +
+						"property bag4 : Bag(B[1..3])[4..6];\n" +
+						"property bag5 : Bag(B)[4..6|1];\n" +
 						"property setCollection : Set(Collection(B));\n" +
 						"property collection2 : Collection(B);\n" +
 						"property orderedset1 : B[*] {ordered};\n" +
@@ -445,7 +447,7 @@ public class RoundTripTests extends XtextTestCase
 						"property sequence2 : Sequence(B)[*|1];\n" +
 						"property set1 : B[*];\n" +
 						"property set2 : Set(B)[*|1];\n" +
-*/						//				"property tuple : Tuple(b : B);\n" +		// Bug 401938
+						//				"property tuple : Tuple(b : B);\n" +		// Bug 401938
 						"}\n" +
 						"}\n";
 		TestFile testFile = createFile("Aggregates.oclinecore", testFileContents);

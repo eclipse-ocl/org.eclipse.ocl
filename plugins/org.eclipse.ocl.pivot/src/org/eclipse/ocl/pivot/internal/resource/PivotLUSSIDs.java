@@ -131,7 +131,7 @@ public class PivotLUSSIDs extends LUSSIDs
 				}
 				Number upper = collectionType.getUpper();
 				if (!(upper instanceof Unlimited)) {
-					localId += COLLECTION_UPPER_BOUND_MULTIPLIER * upper.intValue();
+					localId += COLLECTION_UPPER_BOUND_MULTIPLIER * (upper.intValue() + 1);
 				}
 			}
 			else if (element instanceof MapType) {

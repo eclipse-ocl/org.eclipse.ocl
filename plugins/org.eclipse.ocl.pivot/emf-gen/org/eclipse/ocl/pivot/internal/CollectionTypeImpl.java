@@ -225,6 +225,9 @@ implements CollectionType {
 	@Override
 	public void setUpper(Number newUpper)
 	{
+		String s = String.valueOf(newUpper);
+	//	assert !s.startsWith("0");			// XXX
+		assert !s.contains("-");
 		Number oldUpper = upper;
 		upper = newUpper;
 		if (eNotificationRequired())

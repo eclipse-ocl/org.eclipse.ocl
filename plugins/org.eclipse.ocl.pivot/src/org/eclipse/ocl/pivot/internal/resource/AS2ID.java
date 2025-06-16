@@ -16,12 +16,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
@@ -69,6 +73,26 @@ public class AS2ID
 			}
 		}
 		as2id.assignXMIIDs();
+		for (Resource resource : alreadyAssigned) {
+			if (resource instanceof ASResource) {
+				ASResource asResource = (ASResource)resource;
+				if (asResource.isSaveable()) {
+					LUSSIDs lussids = asResource.getLUSSIDs(new HashMap<>());
+					for (@NonNull EObject eObject : new TreeIterable(asResource)) {
+						EClass eClass = eObject.eClass();
+						assert eClass != null;
+						boolean isExternallyReferenceable = lussids.isExternallyReferenceable(eObject);
+						if (isExternallyReferenceable) {
+							String id = asResource.getID(eObject);
+						//	assert id != null;
+							if (id == null) {
+								System.out.println("Missing xmi:id for " + NameUtil.debugSimpleName(eObject) + " " + eObject);
+							}
+						}
+					}
+				}
+			}
+		}
 		as2id.assignErrors();
 	}
 
@@ -115,15 +139,19 @@ public class AS2ID
 			return;
 		}
 		LUSSIDs lussids = asResource.basicGetLUSSIDs();
+		if (lussids != null) {
+			asResource.resetLUSSIDs();				// RE-assignment not supported
+			lussids = null;
+		}
 		if ((lussids != null) && lussids.isAssignmentStarted()) {
-				System.out.println("re-assignLUSSIDs to "  + asResource.getURI());
+		//	System.out.println("re-assignLUSSIDs to " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
 			lussids.assignErrors();
 			//			if (!oldLUSSIDs.contains(lussids)) {
 			//				oldLUSSIDs.add(lussids);
 			//			}
 		}
 		else {
-				System.out.println("assignLUSSIDs to "  + asResource.getURI());
+		//	System.out.println("assignLUSSIDs to "  + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
 			lussids = asResource.getLUSSIDs(options);
 			if (newLUSSIDs.contains(lussids)) {
 				return;

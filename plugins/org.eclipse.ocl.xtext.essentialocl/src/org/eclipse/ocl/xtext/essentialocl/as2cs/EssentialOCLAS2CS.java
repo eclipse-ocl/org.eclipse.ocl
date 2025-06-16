@@ -48,10 +48,12 @@ public class EssentialOCLAS2CS extends BaseAS2CS
 		public @NonNull EClass @NonNull [] getEClasses() {
 			return new EClass @NonNull [] {
 				PivotPackage.Literals.BAG_TYPE,
+				PivotPackage.Literals.BOOLEAN_TYPE,
 				PivotPackage.Literals.COLLECTION_TYPE,
 				PivotPackage.Literals.MAP_TYPE,
 				PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER,
 				PivotPackage.Literals.ORDERED_SET_TYPE,
+				PivotPackage.Literals.PRIMITIVE_TYPE,
 				PivotPackage.Literals.SEQUENCE_TYPE,
 				PivotPackage.Literals.SET_TYPE
 			};

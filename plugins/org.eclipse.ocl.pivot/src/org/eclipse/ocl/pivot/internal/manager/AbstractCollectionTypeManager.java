@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -89,8 +90,13 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		}
 		UnlimitedNaturalValue leftUpper = leftType.getUpperValue();
 		UnlimitedNaturalValue rightUpper = rightType.getUpperValue();
-		if (leftUpper.compareTo(rightUpper) > 0) {
-			return false;
+		if (rightUpper instanceof Unlimited) {
+			if (leftUpper instanceof Unlimited) {
+				return false;
+			}
+			if (leftUpper.compareTo(rightUpper) > 0) {
+				return false;
+			}
 		}
 		Type leftElementType = PivotUtil.getElementType(leftType);
 		Type rightElementType = PivotUtil.getElementType(rightType);
