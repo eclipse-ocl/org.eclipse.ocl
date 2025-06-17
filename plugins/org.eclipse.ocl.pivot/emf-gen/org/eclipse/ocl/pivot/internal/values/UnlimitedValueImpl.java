@@ -149,7 +149,7 @@ public class UnlimitedValueImpl extends NumberValueImpl implements UnlimitedValu
 
 	@Override
 	public int intValue() {
-		throw new InvalidValueException(PivotMessages.InvalidInteger, null, null, this);
+		return -1;
 	}
 
 	@Override
