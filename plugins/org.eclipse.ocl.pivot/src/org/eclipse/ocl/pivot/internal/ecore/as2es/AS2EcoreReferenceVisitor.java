@@ -419,7 +419,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				logger.error("Illegal lower bound", e);
 			}
 			try {
-				eTypedElement.setUpperBound(upper.isUnlimited() ? -1 : upper.intValue());
+				eTypedElement.setUpperBound(upper.intValue());
 			} catch (InvalidValueException e) {
 				logger.error("Illegal upper bound", e);
 			}

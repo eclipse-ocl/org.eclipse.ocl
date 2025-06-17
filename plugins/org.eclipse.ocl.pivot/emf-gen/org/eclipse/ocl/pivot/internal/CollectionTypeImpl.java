@@ -225,9 +225,6 @@ implements CollectionType {
 	@Override
 	public void setUpper(Number newUpper)
 	{
-		String s = String.valueOf(newUpper);
-	//	assert !s.startsWith("0");			// XXX
-		assert !s.contains("-");
 		Number oldUpper = upper;
 		upper = newUpper;
 		if (eNotificationRequired())
@@ -651,7 +648,21 @@ implements CollectionType {
 	public @NonNull UnlimitedNaturalValue getUpperValue() {
 		Number upper2 = upper;
 		assert upper2 != null;
-		return ValueUtil.unlimitedNaturalValueOf(upper2);
+		if (upper instanceof Unlimited) {
+			return ValueUtil.UNLIMITED_VALUE;
+		}
+		else if (upper instanceof UnlimitedNaturalValue) {
+			return (UnlimitedNaturalValue)upper2;
+		}
+		else if (upper == ValueUtil.UNLIMITED_VALUE) {
+			return ValueUtil.unlimitedNaturalValueOf(upper2);
+		}
+		else {
+			return (UnlimitedNaturalValue)ValueUtil.integerValueOf(upper2.intValue());
+
+		}
+	//	}
+	//	return upper2.intValue() == -2 ? (UnlimitedNaturalValue)ValueUtil.integerValueOf(-2) : ValueUtil.unlimitedNaturalValueOf(upper2);
 	}
 
 	@Override
