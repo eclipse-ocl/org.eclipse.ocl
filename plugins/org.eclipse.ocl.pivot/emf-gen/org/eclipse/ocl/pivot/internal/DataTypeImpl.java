@@ -654,7 +654,7 @@ implements DataType {
 							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticClassOf(BOXED_superClasses);
 							final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
-							final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class_0, PivotTables.SET_CLSSid_Class);
+							final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
 							/**
 							 * Implementation of the iteration evaluation body.
 							 */
@@ -674,7 +674,7 @@ implements DataType {
 									return BOXED_superClasses_0;
 								}
 							};
-							final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class_0, BODY0_closure_1, BOXED_superClasses, ACC_closure_0);
+							final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY0_closure_1, BOXED_superClasses, ACC_closure_0);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;

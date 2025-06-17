@@ -369,7 +369,7 @@
                             <ownedRight xsi:type="essentialoclcs:NameExpCS">
                               <ownedPathName>
                                 <ownedPathElements>
-                                  <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#qbiWE"/>
+                                  <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#LojWE"/>
                                 </ownedPathElements>
                               </ownedPathName>
                               <ownedRoundBracketedClause>
@@ -409,7 +409,7 @@
                           <ownedRight xsi:type="essentialoclcs:NameExpCS">
                             <ownedPathName>
                               <ownedPathElements>
-                                <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#qbiWE"/>
+                                <referredElement xsi:type="pivot:Operation" href="http://www.eclipse.org/ocl/2015/Library.oclas#LojWE"/>
                               </ownedPathElements>
                             </ownedPathName>
                             <ownedRoundBracketedClause>
