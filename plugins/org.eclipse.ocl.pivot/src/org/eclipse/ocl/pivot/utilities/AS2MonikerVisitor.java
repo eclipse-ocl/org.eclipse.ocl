@@ -342,7 +342,7 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 				context.append("_" + upper);
 			}
 		}
-		if (!object.isIsNullFree()) {
+		if (object.isIsNullFree()) {
 			context.append(COLLECTION_ELEMENT_SEPARATOR);
 			context.append("1");
 		}

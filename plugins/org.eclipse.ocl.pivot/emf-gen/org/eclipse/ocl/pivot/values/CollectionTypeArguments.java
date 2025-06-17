@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -58,6 +59,9 @@ public class CollectionTypeArguments //implements Iterable<Object>
 
 	public CollectionTypeArguments(@NonNull CollectionTypeId collectionTypeId, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		assert collectionTypeId == collectionTypeId.getGeneralizedId();
+		if (isNullFree && (collectionTypeId == TypeId.ORDERED_SET)) {
+			getClass();			// XXX
+		}
 		this.collectionTypeId = collectionTypeId;
 		this.elementType = elementType;
 		this.isNullFree = isNullFree;

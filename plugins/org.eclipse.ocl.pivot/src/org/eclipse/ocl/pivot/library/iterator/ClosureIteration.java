@@ -12,20 +12,12 @@ package org.eclipse.ocl.pivot.library.iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.IteratorExp;
-import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
@@ -43,39 +35,6 @@ public class ClosureIteration extends AbstractIteration
 	@Override
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createCollectionAccumulatorValue((CollectionTypeId) accumulatorTypeId);
-	}
-
-	/**
-	 *	Special case processing for closure() that deduces nullFree both source and argument.
-	 *
-	 * @since 1.15
-	 */
-	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		if (returnType instanceof CollectionType) {
-			OCLExpression ownedSource = callExp.getOwnedSource();
-			if (ownedSource != null) {
-				Type sourceType = ownedSource.getType();
-				if (sourceType instanceof CollectionType) {
-					CollectionType sourceCollectionType = (CollectionType)sourceType;
-					OCLExpression body = ((IteratorExp)callExp).getOwnedBody();
-					Type bodyType = body.getType();
-					if (bodyType instanceof CollectionType) {
-						CollectionType argumentCollectionType = (CollectionType)bodyType;
-						boolean isNullFree = sourceCollectionType.isIsNullFree() && argumentCollectionType.isIsNullFree();
-						CollectionType returnCollectionType = (CollectionType)returnType;
-						if (returnCollectionType.isIsNullFree() != isNullFree) {
-							@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-							StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-							CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
-							CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
-							returnType = standardLibrary.getCollectionType(typeArguments);
-						}
-					}
-				}
-			}
-		}
-		return returnType;
 	}
 
 	/**

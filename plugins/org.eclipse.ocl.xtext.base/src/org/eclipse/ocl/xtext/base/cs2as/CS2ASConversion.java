@@ -1080,8 +1080,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			boolean defaultIsRequired = PivotConstants.DEFAULT_IS_REQUIRED;
 			pivotType = PivotUtil.getPivot(Type.class, ownedType);
 			int lower;
-			int upper;
-			if (pivotType instanceof LambdaType) {			// The lambda exprssion is mandatory, for compatibility we propagate the return nullity
+			int upper;		// XXX uniform DEFAULT_AGGREGATE_IS_REQUIRED
+			if (pivotType instanceof LambdaType) {			// The lambda expression is mandatory, for compatibility we propagate the return nullity
 				defaultIsRequired = PivotConstants.DEFAULT_AGGREGATE_IS_REQUIRED;		// XXX all aggregates ??
 			}
 			MultiplicityCS csMultiplicity = ownedType.getOwnedMultiplicity();
