@@ -36,8 +36,10 @@ import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.MessageExp;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
@@ -184,7 +186,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		return csNavigatingArg;
 	}
 
-	protected NavigatingArgCS createNavigatingArgCS(@Nullable String prefix, /*@NonNull*/ NamedElement asNamedElement, @Nullable TypedElement asTypedElement, @Nullable OCLExpression csInit) {
+	protected @NonNull NavigatingArgCS createNavigatingArgCS(@Nullable String prefix, /*@NonNull*/ NamedElement asNamedElement, @Nullable TypedElement asTypedElement, @Nullable OCLExpression csInit) {
 		NavigatingArgCS csNavigatingArg = EssentialOCLCSFactory.eINSTANCE.createNavigatingArgCS();
 		csNavigatingArg.setPrefix(prefix);
 		csNavigatingArg.setOwnedNameExpression(createNameExpCS(asNamedElement));
@@ -448,6 +450,31 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		return csElement;
 	}
 
+	protected void setExplicitIteratorMultiplicity(@NonNull NavigatingArgCS csNavigatingArg, @NonNull Variable asIterator) {
+		LoopExp asLoopExp = (LoopExp) asIterator.eContainer();
+		OCLExpression asSource = PivotUtil.getOwnedSource(asLoopExp);
+		boolean asIteratorIsRequired = asIterator.isIsRequired();
+		Type asSourceType = asSource.getType();
+		boolean sourceIsNullFree = (asSourceType instanceof CollectionType) ? ((CollectionType)asSourceType).isIsNullFree() : ((MapType)asSourceType).isKeysAreNullFree();
+		if (asIteratorIsRequired && !sourceIsNullFree) {			// Not inferrable
+			TypedRefCS csTypedRef = csNavigatingArg.getOwnedType();
+			if (csTypedRef != null) {
+				MultiplicityCS csMultiplicity = context.createMultiplicityCS(1, 1, false);
+				csTypedRef.setOwnedMultiplicity(csMultiplicity);
+			}
+		}
+	}
+
+	protected void setExplicitVariableMultiplicity(@Nullable TypedRefCS csTypedRef, @NonNull Variable asVariable) {
+		OCLExpression asInit = PivotUtil.getOwnedInit(asVariable);
+		boolean asVariableIsRequired = asVariable.isIsRequired();
+		boolean asInitIsRequired = asInit.isIsRequired();
+		if (asVariableIsRequired && !asInitIsRequired && (csTypedRef != null)) {			// Not inferrable
+			MultiplicityCS csMultiplicity = context.createMultiplicityCS(1, 1, false);
+			csTypedRef.setOwnedMultiplicity(csMultiplicity);
+		}
+	}
+
 	@Override
 	public @Nullable ElementCS visitBooleanLiteralExp(@NonNull BooleanLiteralExp asBooleanLiteralExp) {
 		BooleanLiteralExpCS csBooleanLiteralExp = EssentialOCLCSFactory.eINSTANCE.createBooleanLiteralExpCS();
@@ -601,6 +628,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			Variable asIterator = asIterators.get(i);
 			if (!asIterator.isIsImplicit()) {
 				NavigatingArgCS csNavigatingArg = createNavigatingArgCS(prefix, asIterator, asIterator, null);
+				setExplicitIteratorMultiplicity(csNavigatingArg, asIterator);
 				if (i < asCoIterators.size()) {
 					Variable asCoIterator = asCoIterators.get(i);
 					if (!asCoIterator.isIsImplicit()) {
@@ -657,6 +685,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			Variable asIterator = asIterators.get(i);
 			if (!asIterator.isIsImplicit()) {
 				NavigatingArgCS csNavigatingArg = createNavigatingArgCS(prefix, asIterator, asIterator, null);
+				setExplicitIteratorMultiplicity(csNavigatingArg, asIterator);
 				if (i < asCoIterators.size()) {
 					Variable asCoIterator = asCoIterators.get(i);
 					if (!asCoIterator.isIsImplicit()) {
@@ -682,11 +711,16 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		csLetExp.setPivot(asLetExp);
 		csLetExp.setOwnedInExpression(createExpCS(asLetExp.getOwnedIn()));
 		Variable asVariable = asLetExp.getOwnedVariable();
+		OCLExpression asInit = asVariable.getOwnedInit();
+		boolean asInitIsRequired = asInit.isIsRequired();
+		boolean asVariableIsRequired = asVariable.isIsRequired();
 		LetVariableCS csLetVariable = EssentialOCLCSFactory.eINSTANCE.createLetVariableCS();
 		csLetVariable.setPivot(asVariable);
 		csLetVariable.setName(asVariable.getName());
-		csLetVariable.setOwnedInitExpression(createExpCS(asVariable.getOwnedInit()));
-		csLetVariable.setOwnedType(createTypeRefCS(asVariable.getType()));
+		csLetVariable.setOwnedInitExpression(createExpCS(asInit));
+		TypedRefCS csTypeRef = createTypeRefCS(asVariable.getType());
+		csLetVariable.setOwnedType(csTypeRef);
+		setExplicitVariableMultiplicity(csTypeRef, asVariable);
 		csLetExp.getOwnedVariables().add(csLetVariable);
 		return csLetExp;
 	}

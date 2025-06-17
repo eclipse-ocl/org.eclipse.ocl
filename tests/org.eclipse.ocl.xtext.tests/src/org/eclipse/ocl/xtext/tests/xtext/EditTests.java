@@ -31,9 +31,9 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -1085,7 +1085,7 @@ public class EditTests extends XtextTestCase
 		assertNoResourceErrors("Loading input", asResource);
 		//
 		Type myType = ClassUtil.requireNonNull(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(TypeId.SEQUENCE, myType, true, null, null);
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(TypeId.SEQUENCE, myType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 		WeakReference<Type> sequenceMyType = new WeakReference<>(standardLibrary.basicGetCollectionType(typeArguments));
 		assertNull(sequenceMyType.get());
 		//
