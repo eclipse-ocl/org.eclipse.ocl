@@ -141,7 +141,13 @@ public abstract class ValueUtil
 	public static final @NonNull IntegerValue ZERO_VALUE = integerValueOf(0);
 
 	public static final @NonNull UnlimitedNaturalValue UNLIMITED_ONE_VALUE = (UnlimitedNaturalValue)ONE_VALUE;
-	public static final @NonNull UnlimitedValue UNLIMITED_VALUE = new UnlimitedValueImpl();
+	public static final @NonNull UnlimitedValue UNLIMITED_VALUE = new UnlimitedValueImpl();	// UNBOUNDED_MULTIPLICITY in EMF
+
+	/**
+	 * EMF uses an UNSPECIFIED_MULTIPLICITY in XMLType.ecore.
+	 * @since 7.0
+	 */
+	public static final @NonNull UnlimitedNaturalValue UNSPECIFIED_VALUE = (UnlimitedNaturalValue)integerValueOf(-2);
 	/**
 	 * @since 1.18
 	 */

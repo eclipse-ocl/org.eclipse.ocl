@@ -432,7 +432,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				}
 				else {
 					isRequired = true;
-					if (converter.isEntryClass(eClassifier) && (lower == 0) && (upper < 0)) {
+					if (converter.isEntryClass(eClassifier) && (lower == 0) && (upper != -1)) {
 						Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
 						Property keyProperty1 = NameUtil.getNameable(ownedProperties, "key");
 						Property valueProperty1 = NameUtil.getNameable(ownedProperties, "value");
@@ -451,7 +451,17 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						boolean isOrdered = eTypedElement.isOrdered();
 						boolean isUnique = eTypedElement.isUnique();
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
-						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
+						UnlimitedNaturalValue upperValue;
+						if (upper == -1) {
+							upperValue = ValueUtil.UNLIMITED_VALUE;
+						}
+						else if (upper == -2) {
+							upperValue = ValueUtil.UNSPECIFIED_VALUE;
+						}
+						else {
+							upperValue = (UnlimitedNaturalValue)ValueUtil.integerValueOf(upper);
+						}
+
 						pivotType = converter.getNormalizedType(pivotType);
 						assert pivotType != null;
 						CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);

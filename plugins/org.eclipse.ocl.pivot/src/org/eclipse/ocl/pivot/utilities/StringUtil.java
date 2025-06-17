@@ -63,7 +63,7 @@ public class StringUtil
 	 * A -ve upper signals unlimited.
 	 */
 	public static void appendMultiplicity(@NonNull StringBuilder s, long lower, long upper, boolean isNullFree) {
-		if ((lower == 0) && (upper < 0) && (isNullFree == PivotConstants.DEFAULT_IS_NULL_FREE)) {
+		if ((lower == 0) && (upper == -1) && (isNullFree == PivotConstants.DEFAULT_IS_NULL_FREE)) {
 			return;
 		}
 		s.append("[");
@@ -76,7 +76,7 @@ public class StringUtil
 					s.append(lower);
 					s.append("..");
 				}
-				s.append("*");
+				s.append(upper == -2 ? "**" : "*");		// -2 is used by EMF in XMLType.ecore
 			}
 		}
 		else if ((lower == 0) && (upper == 1)) {
