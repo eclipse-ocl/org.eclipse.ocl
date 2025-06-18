@@ -17,8 +17,11 @@ import java.util.WeakHashMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
@@ -66,6 +69,26 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	@Deprecated
 	private class OrphanCompleteClassImpl extends CompleteClassImpl
 	{
+		@Override
+		public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass rightCompleteClass) {
+			CompleteClass leftCompleteClass = this;
+			if (rightCompleteClass instanceof OrphanCompleteClassImpl) {
+				org.eclipse.ocl.pivot.Class leftPrimaryClass = leftCompleteClass.getPrimaryClass();
+				org.eclipse.ocl.pivot.Class rightPrimaryClass = rightCompleteClass.getPrimaryClass();
+				return standardLibrary.conformsTo(leftPrimaryClass, rightPrimaryClass);
+			}
+			else {
+				return super.conformsTo(standardLibrary, rightCompleteClass);
+			}
+		}
+
+		@Override
+		public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type rightType) {
+			CompleteClass leftCompleteClass = this;
+			org.eclipse.ocl.pivot.Class leftPrimaryClass = leftCompleteClass.getPrimaryClass();
+			Type rightPrimaryClass = rightType;
+			return standardLibrary.conformsTo(leftPrimaryClass, rightPrimaryClass);
+		}
 
 		@Override
 		public @NonNull CompletePackageInternal getOwningCompletePackage() {

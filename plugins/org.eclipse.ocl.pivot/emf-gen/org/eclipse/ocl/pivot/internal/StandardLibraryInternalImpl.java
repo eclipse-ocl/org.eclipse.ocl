@@ -1291,16 +1291,6 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 		return this;
 	}
 
-	/**
-	 * Return true if completeClass conforms to elementType but not to oclVoidType.
-	 *
-	 * @since 7.0
-	 */
-	@Override
-	public boolean isElementType(@NonNull CompleteClass completeClass, @NonNull Type elementType, @NonNull VoidType oclVoidType) {
-		return conformsTo(completeClass, elementType) && !conformsTo(completeClass, oclVoidType);
-	}
-
 	@Override
 	public boolean isExplicitDefaultStandardLibraryURI() {
 		return explicitDefaultStandardLibraryURI;

@@ -582,7 +582,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			assert pivotMetamodel != null;
 			if (oclstdlibPackage == asPackage) {
 				CompleteClass completeClass = metamodelManager.getCompleteClass(asClass);
-				if (standardLibrary.isElementType(completeClass, elementType, oclVoidType)) {
+				if (completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
 					return getGenPackage(pivotMetamodel);
 				}
 				else {
@@ -594,7 +594,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
 					if (partialPackage == oclstdlibPackage) {
-						if (!standardLibrary.isElementType(completeClass, elementType, oclVoidType)) {
+						if (!completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
 							return getGenPackage(oclstdlibPackage);
 						}
 					}

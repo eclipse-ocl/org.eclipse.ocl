@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -2844,7 +2845,7 @@ public class PivotUtil implements PivotConstants
 	 * Return true if type uses an aggregate (-&gt;) rather than object (.) navigation operator.
 	 */
 	public static boolean isAggregate(Type type) {
-		return (type instanceof CollectionType) || (type instanceof MapType);
+		return type instanceof IterableType;
 	}
 
 	public static boolean isAggregateNavigationOperator(/*@NonNull*/ String operatorName) {

@@ -10,19 +10,30 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.collection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TupleValue;
@@ -53,27 +64,20 @@ public class CollectionProductOperation extends AbstractBinaryOperation
 	}
 
 	@Override
-	public boolean resolveReturnNullity(
-			@NonNull EnvironmentFactory environmentFactory,
-			@NonNull CallExp callExp, boolean returnIsRequired) {
-		// TODO Auto-generated method stub
-		return super.resolveReturnNullity(environmentFactory, callExp,
-			returnIsRequired);
-	}
-
-	@Override
-	public @Nullable Type resolveReturnType(
-			@NonNull EnvironmentFactory environmentFactory,
-			@NonNull CallExp callExp, @Nullable Type returnType) {
-		// TODO Auto-generated method stub
-		return super.resolveReturnType(environmentFactory, callExp, returnType);
-	}
-
-	@Override
-	public @Nullable Object resolveReturnValue(
-			@NonNull EnvironmentFactory environmentFactory,
-			@NonNull CallExp callExp) {
-		// TODO Auto-generated method stub
-		return super.resolveReturnValue(environmentFactory, callExp);
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		OCLExpression first = PivotUtil.getOwnedSource(callExp);
+		OCLExpression second = PivotUtil.getOwnedArgument((OperationCallExp)callExp, 0);
+		CollectionType firstCollectionType = (CollectionType)PivotUtil.getType(first);
+		CollectionType secondCollectionType = (CollectionType)PivotUtil.getType(second);
+		Type firstElementType = PivotUtil.getElementType(firstCollectionType);
+		Type secondElementType = PivotUtil.getElementType(secondCollectionType);
+		boolean firstIsNullFree = firstCollectionType.isIsNullFree();
+		boolean secondIsNullFree = secondCollectionType.isIsNullFree();
+		List<PartId> partIds = new ArrayList<>();
+		partIds.add(IdManager.getPartId(0, "first", firstElementType.getTypeId(), firstIsNullFree));
+		partIds.add(IdManager.getPartId(1, "second", secondElementType.getTypeId(), secondIsNullFree));
+		TupleType tupleType = standardLibrary.getTupleType(partIds);
+		return standardLibrary.getSetType(tupleType, true, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 }
