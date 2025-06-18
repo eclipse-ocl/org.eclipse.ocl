@@ -77,6 +77,14 @@ public interface CompleteClass extends NamedElement
 	 */
 	@NonNull List<org.eclipse.ocl.pivot.Class> getPartialClasses();
 
+	/**
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass thatCompleteClass);
+	/**
+	 * @since 7.0
+	 */
+	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
 	@NonNull CompleteInheritance getCompleteInheritance();
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
@@ -94,4 +102,8 @@ public interface CompleteClass extends NamedElement
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
 	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();
+	/**
+	 * @since 7.0
+	 */
+	boolean isElementType(@NonNull StandardLibrary standardLibrary, @NonNull Type elementType, @NonNull VoidType oclVoidType);
 } // CompleteClass

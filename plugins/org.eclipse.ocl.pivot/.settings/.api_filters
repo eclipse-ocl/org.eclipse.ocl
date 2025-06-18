@@ -243,22 +243,12 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="BAG_CLSSid_TypeUsage"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="CLSSid_LambdaParameter"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CLSSid_StandardLibraryInternal"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="CLSSid_TypeUsage"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -283,17 +273,7 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="SET_CLSSid_Class_1"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="SET_CLSSid_Element_0"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="SET_CLSSid_Element_1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -311,11 +291,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_StandardLibraryInternal"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_TypeUsage"/>
             </message_arguments>
         </filter>
     </resource>
@@ -845,18 +820,6 @@
             </message_arguments>
         </filter>
         <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getPartIds()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ids/OclVoidTypeIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getPartId(String)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getPartIds()"/>
             </message_arguments>

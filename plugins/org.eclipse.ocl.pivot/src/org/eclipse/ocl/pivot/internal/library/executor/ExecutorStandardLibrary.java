@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
@@ -44,6 +45,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
@@ -69,6 +71,7 @@ import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -163,9 +166,19 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		}
 
 		@Override
-		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId typeId) {
-			return new ExecutorTupleType(typeId);
-			// 		parts.add(new ExecutorTuplePart(partName, partType, isRequired));
+		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
+			IdResolver idResolver = standardLibrary.getIdResolver();
+			@NonNull PartId[] partIds = tupleTypeId.getPartIds();
+			List<@NonNull Property> parts = new ArrayList<>(partIds.length);
+			for (@NonNull PartId partId : partIds) {
+				Type partType = idResolver.getType(partId.getTypeId());
+				Property property = PivotFactory.eINSTANCE.createProperty();
+				property.setName(NameUtil.getSafeName(partId));
+				property.setIsRequired(partId.isRequired());
+				property.setType(partType);
+				parts.add(property);
+			}
+			return new ExecutorTupleType(tupleTypeId, parts);
 		}
 	}
 

@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -42,7 +43,8 @@ public class UMLRedefinedNavigationProperty extends ExplicitNavigationProperty
 		Property baseProperty = redefiningProperty;
 		for (@NonNull Property aProperty : PivotUtil.getRedefinedProperties(redefiningProperty)) {
 			CompleteClass aCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(aProperty));
-			if (completeModel.getOwningCompleteEnvironment().getStandardLibrary().conformsTo(baseCompleteClass, aCompleteClass)) {
+			StandardLibrary standardLibrary = completeModel.getOwningCompleteEnvironment().getStandardLibrary();
+			if (baseCompleteClass.conformsTo(standardLibrary, aCompleteClass)) {
 				baseCompleteClass = aCompleteClass;
 				baseProperty = aProperty;
 			}

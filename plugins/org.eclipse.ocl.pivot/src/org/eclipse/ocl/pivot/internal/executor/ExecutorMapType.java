@@ -95,12 +95,12 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 
 	@Override
 	public boolean isKeysAreNullFree() {
-		throw new UnsupportedOperationException();
+		return keyValuesAreNullFree;
 	}
 
 	@Override
 	public boolean isValuesAreNullFree() {
-		throw new UnsupportedOperationException();
+		return valuesAreNullFree;
 	}
 
 	@Override
@@ -130,6 +130,19 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 
 	@Override
 	public String toString() {
-		return String.valueOf(containerType) + "(" + String.valueOf(keyType) + "," + String.valueOf(valueType) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+		StringBuilder s = new StringBuilder();
+		s.append(containerType);
+		s.append("(");
+		s.append(keyType);
+		if (isKeysAreNullFree()) {
+			s.append("[1]");
+		}
+		s.append(",");
+		s.append(valueType);
+		if (isValuesAreNullFree()) {
+			s.append("[1]");
+		}
+		s.append(")");
+		return s.toString();
 	}
 }

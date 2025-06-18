@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.executor;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -22,10 +25,23 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 public class ExecutorTupleType extends AbstractExecutorClass implements TupleType
 {
 	protected final @NonNull TupleTypeId typeId;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull List<@NonNull Property> parts;
 
-	public ExecutorTupleType(@NonNull TupleTypeId typeId) {
+	/**
+	 * @since 7.0
+	 */
+	public ExecutorTupleType(@NonNull TupleTypeId typeId, @NonNull List<@NonNull Property> parts) {
 		super(TypeId.TUPLE_NAME, 0);
 		this.typeId = typeId;
+		this.parts = parts;
+	}
+
+	@Override
+	public @NonNull List<Property> getOwnedProperties() {
+		return parts;
 	}
 
 	@Override
