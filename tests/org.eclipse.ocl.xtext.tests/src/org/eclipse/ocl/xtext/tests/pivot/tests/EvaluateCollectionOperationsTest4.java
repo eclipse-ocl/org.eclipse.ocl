@@ -1642,15 +1642,15 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Set{Tuple{first = null, second = 3}, Tuple{first = null, second = 4}}", "Set{null}->product(Bag{3, 4})");
 		ocl.assertQueryResults(null, "Set{Tuple{first = null, second = 3}, Tuple{first = null, second = 4}}", "OrderedSet{null}->product(Sequence{3, 4})");
 
-		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first = 4, second = 3}}", "Sequence{null, 4}->product(Sequence{3})");
-		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first = 4, second = 3}}", "Bag{null, 4}->product(Set{3})");
-		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first = 4, second = 3}}", "Set{null, 4}->product(Bag{3})");
-		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first = 4, second = 3}}", "OrderedSet{null, 4}->product(Sequence{3})");
+		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first:Integer[?] = 4, second = 3}}", "Sequence{null, 4}->product(Sequence{3})");
+		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first:Integer[?] = 4, second = 3}}", "Bag{null, 4}->product(Set{3})");
+		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first:Integer[?] = 4, second = 3}}", "Set{null, 4}->product(Bag{3})");
+		ocl.assertQueryResults(null, "let nu : Integer = null in Set{Tuple{first = nu, second = 3}, Tuple{first:Integer[?] = 4, second = 3}}", "OrderedSet{null, 4}->product(Sequence{3})");
 
-		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first = 4.0, second = 3}}", "Sequence{null, 4.0}->product(Sequence{3})");
-		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first = 4.0, second = 3}}", "Bag{null, 4.0}->product(Sequence{3})");
-		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first = 4.0, second = 3}}", "Set{null, 4.0}->product(Sequence{3})");
-		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first = 4.0, second = 3}}", "OrderedSet{null, 4.0}->product(Sequence{3})");
+		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first:Real[?] = 4.0, second = 3}}", "Sequence{null, 4.0}->product(Sequence{3})");
+		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first:Real[?] = 4.0, second = 3}}", "Bag{null, 4.0}->product(Sequence{3})");
+		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first:Real[?] = 4.0, second = 3}}", "Set{null, 4.0}->product(Sequence{3})");
+		ocl.assertQueryResults(null, "let n : Real = null in Set{Tuple{first = n, second = 3}, Tuple{first:Real[?] = 4.0, second = 3}}", "OrderedSet{null, 4.0}->product(Sequence{3})");
 		ocl.dispose();
 	}
 

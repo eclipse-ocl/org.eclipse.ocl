@@ -273,7 +273,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			if (!typedElement.isIsRequired()) {
 			//	append("[?]");
 			}
-			else if (!(type instanceof IterableType) && !(type instanceof LambdaType)) {
+			else if (!(type instanceof IterableType) && !(type instanceof LambdaType) && !(type instanceof TupleType)) {
 				append("[1]");
 			}
 		}

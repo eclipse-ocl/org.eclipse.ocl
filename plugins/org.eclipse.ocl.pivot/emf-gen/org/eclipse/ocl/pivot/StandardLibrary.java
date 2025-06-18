@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Standard Library</b></em>'.
@@ -59,16 +58,6 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	boolean conformsTo(@NonNull Type leftType, @NonNull Type rightType);
-
-	/**
-	 * @since 7.0
-	 */
-	boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull Type elementType);
-
-	/**
-	 * @since 7.0
-	 */
-	boolean conformsTo(@NonNull CompleteClass thisCompleteClass, @NonNull CompleteClass thatCompleteClass);
 
 	/**
 	 * Return true if firstType + firstIsRequired augmented by firstSubstitutions conforms to

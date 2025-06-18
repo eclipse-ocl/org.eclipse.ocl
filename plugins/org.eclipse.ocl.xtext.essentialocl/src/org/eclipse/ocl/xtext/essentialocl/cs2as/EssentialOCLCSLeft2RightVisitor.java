@@ -2510,8 +2510,20 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression initExpression = revisit(OCLExpression.class, csInitExpression);
 				pivotElement.setOwnedInit(initExpression);
 				TypedRefCS csType = csTupleLiteralPart.getOwnedType();
+				Boolean isRequired = null;
+				if (csType != null) {
+					isRequired = context.getConverter().isRequired(csType);
+				}
+				if (isRequired == null) {
+					if (initExpression != null) {
+						isRequired = initExpression.isIsRequired();
+					}
+					else {
+						isRequired = PivotConstants.DEFAULT_IS_REQUIRED;
+					}
+				}
 				Type type = csType != null ? PivotUtil.getPivot(Type.class, csType) : initExpression != null ? initExpression.getType() : null;
-				helper.setType(pivotElement, type, (initExpression != null ? initExpression.isIsRequired() : false) || context.getConverter().isRequiredWithDefault(csType), null);
+				helper.setType(pivotElement, type, isRequired);
 			}
 		}
 		return pivotElement;

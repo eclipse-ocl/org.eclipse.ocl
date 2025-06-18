@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -269,26 +268,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		CompleteInheritance rightInheritance = rightType.getInheritance(this);
 		return leftInheritance.isSubInheritanceOf(rightInheritance);
 	} */
-
-	@Override
-	public boolean conformsTo(@NonNull CompleteClass leftCompleteClass, @NonNull CompleteClass rightCompleteClass) {
-		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
-		CompleteInheritance rightInheritance = rightCompleteClass.getCompleteInheritance();
-		if (leftInheritance == rightInheritance) {
-			return true;
-		}
-		return rightInheritance.isSuperInheritanceOf(leftInheritance);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull CompleteClass leftCompleteClass, @NonNull Type rightType) {
-		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
-		CompleteInheritance rightInheritance = rightType.getInheritance(this);
-		if (leftInheritance == rightInheritance) {
-			return true;
-		}
-		return rightInheritance.isSuperInheritanceOf(leftInheritance);
-	}
 
 	@Override
 	public boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateParameterSubstitutions leftSubstitutions,

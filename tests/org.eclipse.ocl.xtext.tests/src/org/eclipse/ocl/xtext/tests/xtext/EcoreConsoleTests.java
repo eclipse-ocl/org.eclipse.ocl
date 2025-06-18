@@ -94,9 +94,9 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 		assertConsoleResult(consolePage, ecoreBook, "name", "'Book'\n");
 		assertConsoleResult(consolePage, ecoreBook, "copies", "<b><error>Parsing failure\n</error></b><error>\n1:1: Unresolved Element '::copies'\n</error>");
 		assertConsoleResult(consolePage, ecoreBook, "oclType().ownedProperties->sortedBy(name)",
-			"ecore::EClass::EClass : Bag(ecore::EClass[*|?])\n"
-			+ "ecore::EClass::EClass : Bag(ecore::EClass[*|?])\n"
-			+ "ecore::EClass::EReference : Bag(ecore::EReference[*|?])\n"
+			"ecore::EClass::EClass : Bag(ecore::EClass)\n"
+			+ "ecore::EClass::EClass : Bag(ecore::EClass)\n"
+			+ "ecore::EClass::EReference : Bag(ecore::EReference)\n"
 			+ "ecore::EClass::abstract : Boolean[1]\n"
 			+ "ecore::EClass::eAllAttributes : OrderedSet(ecore::EAttribute)\n"
 			+ "ecore::EClass::eAllContainments : OrderedSet(ecore::EReference)\n"
@@ -107,7 +107,7 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 			+ "ecore::EClass::eAllSuperTypes : OrderedSet(ecore::EClass)\n"
 			+ "ecore::EClass::eAttributes : OrderedSet(ecore::EAttribute)\n"
 			+ "ecore::EClass::eGenericSuperTypes : OrderedSet(ecore::EGenericType)\n"
-			+ "ecore::EClass::eIDAttribute : ecore::EAttribute[?]\n"
+			+ "ecore::EClass::eIDAttribute : ecore::EAttribute\n"
 			+ "ecore::EClass::eOperations : OrderedSet(ecore::EOperation)\n"
 			+ "ecore::EClass::eReferences : OrderedSet(ecore::EReference)\n"
 			+ "ecore::EClass::eStructuralFeatures : OrderedSet(ecore::EStructuralFeature)\n"

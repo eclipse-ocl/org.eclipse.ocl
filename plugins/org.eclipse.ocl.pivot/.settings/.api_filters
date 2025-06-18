@@ -273,17 +273,7 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="SET_CLSSid_Class_1"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="SET_CLSSid_Element_0"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="SET_CLSSid_Element_1"/>
             </message_arguments>
         </filter>
     </resource>

@@ -113,7 +113,6 @@ public interface StandardLibraryInternal extends StandardLibrary
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
 	@NonNull StandardLibraryInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
-	boolean isElementType(@NonNull CompleteClass completeClass, @NonNull Type elementType, @NonNull VoidType oclVoidType);
 	boolean isExplicitDefaultStandardLibraryURI();
 	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);

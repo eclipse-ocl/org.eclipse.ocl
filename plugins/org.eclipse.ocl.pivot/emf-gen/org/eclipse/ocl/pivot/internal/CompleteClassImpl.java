@@ -36,8 +36,11 @@ import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -374,6 +377,28 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		partialClasses.add(partialClass);
 	}
 
+	@Override
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass rightCompleteClass) {
+		CompleteClass leftCompleteClass = this;
+		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
+		CompleteInheritance rightInheritance = rightCompleteClass.getCompleteInheritance();
+		if (leftInheritance == rightInheritance) {
+			return true;
+		}
+		return rightInheritance.isSuperInheritanceOf(leftInheritance);
+	}
+
+	@Override
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type rightType) {
+		CompleteClass leftCompleteClass = this;
+		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
+		CompleteInheritance rightInheritance = rightType.getInheritance(standardLibrary);
+		if (leftInheritance == rightInheritance) {
+			return true;
+		}
+		return rightInheritance.isSuperInheritanceOf(leftInheritance);
+	}
+
 	/**
 	 * Eliminate a partialClass from a CompleteClass returning true if the CompleteClass is empty.
 	 */
@@ -561,6 +586,16 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
 		return partialClasses.getSuperCompleteClasses();
+	}
+
+	/**
+	 * Return true if completeClass conforms to elementType but not to oclVoidType.
+	 *
+	 * @since 7.0
+	 */
+	@Override
+	public boolean isElementType(@NonNull StandardLibrary standardLibrary, @NonNull Type elementType, @NonNull VoidType oclVoidType) {
+		return conformsTo(standardLibrary, elementType) && !conformsTo(standardLibrary, oclVoidType);
 	}
 
 	@Override

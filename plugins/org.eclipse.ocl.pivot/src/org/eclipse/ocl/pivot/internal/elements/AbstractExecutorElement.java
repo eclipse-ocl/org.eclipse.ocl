@@ -108,7 +108,7 @@ public class AbstractExecutorElement implements Element
 
 	@Override
 	public boolean eIsProxy() {
-		throw new UnsupportedOperationException();
+		return false;
 	}
 
 	@Override
