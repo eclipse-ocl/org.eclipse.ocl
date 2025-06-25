@@ -37,6 +37,22 @@ public abstract class TestFileSystem
 		this.pathFromCurrentWorkingDirectoryToFileSystem = pathFromCurrentWorkingDirectoryToFileSystem;
 	}
 
+	protected @NonNull String getJDTcorePreferenceContents() {
+		return "eclipse.preferences.version=1\n"
+//				+ "org.eclipse.jdt.core.compiler.codegen.methodParameters=do not generate\n"
+				+ "org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8\n"
+//				+ "org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve\n"
+				+ "org.eclipse.jdt.core.compiler.compliance=1.8\n"
+//				+ "org.eclipse.jdt.core.compiler.debug.lineNumber=generate\n"
+//				+ "org.eclipse.jdt.core.compiler.debug.localVariable=generate\n"
+//				+ "org.eclipse.jdt.core.compiler.debug.sourceFile=generate\n"
+//				+ "org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures=disabled\n"
+//				+ "org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=warning\n"
+				+ "org.eclipse.jdt.core.compiler.release=disabled\n"
+				+ "org.eclipse.jdt.core.compiler.source=1.8\n"
+				+ "";
+	}
+
 	protected @NonNull String getResourcesPreferenceContents() {
 		return "eclipse.preferences.version=1\n" + "encoding/<project>=UTF-8\n";
 	}
