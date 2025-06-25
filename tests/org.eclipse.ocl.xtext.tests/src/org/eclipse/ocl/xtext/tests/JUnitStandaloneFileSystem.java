@@ -260,6 +260,8 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 				helper.createFile(resourcesFile, getResourcesPreferenceContents());
 				File runtimeFile = new File(settingsFolder, "org.eclipse.core.runtime.prefs");
 				helper.createFile(runtimeFile, getRuntimePreferenceContents());
+				File jdtCoreFile = new File(settingsFolder, "org.eclipse.jdt.core.prefs");
+				helper.createFile(jdtCoreFile, getJDTcorePreferenceContents());
 				File dotProjectFile = new File(projectFolder, ".project");
 				if (!dotProjectFile.exists()) {
 					helper.createDotProjectFile(projectFolder, projectName);
