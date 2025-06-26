@@ -201,12 +201,6 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		return new AS2MonikerVisitor(as2moniker);
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id) {
-		return new org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor(as2id);
-	}
-
 	@Override
 	public @NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull ASSaver asSaver) {
 		return new ASSaverNormalizeVisitor(asSaver);

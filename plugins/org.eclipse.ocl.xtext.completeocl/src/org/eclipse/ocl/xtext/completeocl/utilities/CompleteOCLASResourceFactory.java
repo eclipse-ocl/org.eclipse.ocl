@@ -57,12 +57,6 @@ public class CompleteOCLASResourceFactory extends AbstractASResourceFactory
 		super(ASResource.COMPLETE_OCL_CONTENT_TYPE, null);
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id) {
-		return new CompleteOCLAS2XMIidVisitor(as2id);
-	}
-
 	@Override
 	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		return new CompleteOCLCS2AS(environmentFactory, csResource, asResource);

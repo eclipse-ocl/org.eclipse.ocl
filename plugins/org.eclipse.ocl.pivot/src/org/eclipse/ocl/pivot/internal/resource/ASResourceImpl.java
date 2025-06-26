@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 /**
@@ -271,7 +270,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	protected final @NonNull ASResourceFactory asResourceFactory;
 	private @Nullable LUSSIDs lussids = null;
-	private @Nullable Map<@NonNull String, @NonNull EObject> legacyXMIId2eObject = null;
 
 	/**
 	 * An attempt to save an unsaveable ASResource is ignored, probably because it is immutable..
@@ -440,9 +438,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		if (eObject != null) {
 			return eObject;
 		}
-		if (isLoading()) {
+	//	if (isLoading()) {
 			return null;
-		}
+	/*	}
 		// FIXME Use getXmiidVersion() to select appropriate algorithm
 		Map<@NonNull String, @NonNull EObject> legacyXMIId2eObject2 = legacyXMIId2eObject;
 		if (legacyXMIId2eObject2 == null) {
@@ -452,18 +450,21 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				if (eObject2 instanceof Element) {
 					Element element = (Element)eObject2;
 					org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor idVisitor = asResourceFactory.createAS2XMIidVisitor(as2id);
-					Boolean status = element.accept(idVisitor);
-					if (status == Boolean.TRUE) {
-						String legacyId = idVisitor.toString();
-						if (legacyId != null) {
-							legacyXMIId2eObject2.put(legacyId,  eObject2);;
+					try {
+						Boolean status = element.accept(idVisitor);
+						if (status == Boolean.TRUE) {
+							String legacyId = idVisitor.toString();
+							if (legacyId != null) {
+								legacyXMIId2eObject2.put(legacyId,  eObject2);;
+							}
 						}
 					}
+					catch (Throwable e) { /* No legacy policy * / }
 				}
 			}
 		}
 		EObject eObject2 = legacyXMIId2eObject2.get(id);
-		return eObject2;
+		return eObject2; */
 	}
 
 	/**
