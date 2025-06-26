@@ -94,12 +94,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@Deprecated /* @deprecated only used when AS2XMIID generates legacy Model.xmiidVersion 0 xmiids */
-	void assignLibraryIds(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2xmIid, @Nullable Map<@NonNull String, @Nullable Object> options);
-
-	/**
-	 * @since 7.0
-	 */
 	void createImplicitOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
 			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 

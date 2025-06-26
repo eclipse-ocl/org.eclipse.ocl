@@ -79,14 +79,6 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	@NonNull AS2MonikerVisitor createAS2MonikerVisitor(@NonNull AS2Moniker as2moniker);
 
 	/**
-	 * Create a visitor to compute the xmi:id value of an element.
-	 *
-	 * @deprecated AS2XMIid replaced by as2IS
-	 */
-	@Deprecated
-	org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id);
-
-	/**
 	 * Create a visitor to normalize content.
 	 *
 	 * @since 1.18
