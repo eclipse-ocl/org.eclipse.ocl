@@ -12,7 +12,6 @@ package org.eclipse.ocl.build.xtend
 
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker
-//import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis
@@ -32,7 +31,6 @@ class GenerateASVisitors extends GenerateVisitorsXtend
 		ePackage.generateAbstractMergedVisitor();
 		ePackage.generateAbstractWrappingVisitor();
 		if (isDerived()) {
-//			ePackage.generateAbstractGenericVisitor("AS2XMIid", typeof(Boolean), typeof(AS2XMIid));
 			ePackage.generateAbstractGenericVisitor("AS2Moniker", typeof(Object), typeof(AS2Moniker));
 			ePackage.generateAbstractGenericVisitor("ASSaverNormalize", typeof(Object), typeof(ASSaver));
 			ePackage.generateAbstractTemplateParameterSubstitutionVisitor("TemplateParameterSubstitution", typeof(Object), typeof(EnvironmentFactoryInternal));

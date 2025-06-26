@@ -257,7 +257,7 @@ public interface PivotConstants
 	 * Original xmi:id approach using AS2XMIID to generate long unique hierarchical moniker-based xmi:ids.
 	 * @since 1.4
 	 */
-	static final int XMIIDS_USING_MONIKERS = 0;
+	static final int XMIIDS_USING_MONIKERS = 0;			// No longer used/supported.
 
 	/**
 	 * New xmi:id approach using AS2ID and LUSSIDS to generate nominally 5-letter xmi:ids based on unique-ish hierarchical hashcodes.

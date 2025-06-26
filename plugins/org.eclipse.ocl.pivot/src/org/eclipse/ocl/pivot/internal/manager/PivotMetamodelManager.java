@@ -367,20 +367,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	/**
-	 * Assign xmi:id values to referenceable elements in the libraries.
-	 */
-	@Override
-	@Deprecated /* @deprecated only used when AS2XMIID generates legacy Model.xmiidVersion 0 xmiids */
-	public void assignLibraryIds(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2xmIid, @Nullable Map<@NonNull String, @Nullable Object> options) {
-		for (@NonNull Library asLibrary : asLibraries) {
-			Resource eResource = asLibrary.eResource();
-			if (eResource instanceof ASResource) {
-				as2xmIid.assignIds((ASResource) eResource, options);
-			}
-		}
-	}
-
-	/**
 	 * @since 1.8
 	 */
 	@Override
