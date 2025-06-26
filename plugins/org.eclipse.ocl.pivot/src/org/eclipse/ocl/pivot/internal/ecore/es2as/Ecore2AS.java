@@ -1111,6 +1111,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			return standardLibrary.getCollectionType(typeArguments);
 		}
 		else {
+			unspecializedPivotClass = (org.eclipse.ocl.pivot.Class)standardLibrary.getPrimaryType(unspecializedPivotClass);			// Side effect ensures OCLmetamodel loaded
 			return standardLibrary.getSpecializedType(unspecializedPivotClass, templateArguments);
 		}
 	}
