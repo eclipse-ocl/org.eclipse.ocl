@@ -1247,14 +1247,15 @@ public class StandardLibraryInternalImpl extends StandardLibraryImpl implements 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> templateArguments) {
+		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
 		assert specializedTypeManager != null;
 		return specializedTypeManager.getSpecializedType(genericClass, templateArguments);
 	}
 
-	private @NonNull SpecializedTypeManager getSpecializedTypeManager() {
-		assert specializedTypeManager != null;
-		return specializedTypeManager;
-	}
+//	private @NonNull SpecializedTypeManager getSpecializedTypeManager() {
+//		assert specializedTypeManager != null;
+//		return specializedTypeManager;
+//	}
 
 	@Override
 	public @NonNull PrimitiveType getStringType() {
