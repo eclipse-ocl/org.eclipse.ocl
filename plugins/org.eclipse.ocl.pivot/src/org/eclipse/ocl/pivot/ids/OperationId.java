@@ -55,6 +55,11 @@ public interface OperationId extends TemplateableId
 	 */
 	public static final @NonNull OperationId OCLANY_NOT_EQUALS = TypeId.OCL_ANY.getOperationId(0, "<>", ParametersId.OCL_SELF);
 
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull OperationId OCLANY_OCL_IS_UNDEFINED = TypeId.OCL_ANY.getOperationId(0, "oclIsUndefined", ParametersId.EMPTY);
+
 	@Override
 	@NonNull OperationId getGeneralizedId();
 	@Override

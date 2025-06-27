@@ -84,6 +84,11 @@ public class FlowAnalysisDeducerFromTrueVisitor extends AbstractDeducer
 			}
 			// if isFutureNull ...
 		}
+		else if (PivotUtil.isSameOperation(operationId, OperationId.OCLANY_OCL_IS_UNDEFINED)) {
+			OCLExpression ownedSource = PivotUtil.getOwnedSource(object);
+			context.addNullExpression(ownedSource);
+			return Boolean.TRUE;
+		}
 		return super.visitOperationCallExp(object);
 	}
 }
