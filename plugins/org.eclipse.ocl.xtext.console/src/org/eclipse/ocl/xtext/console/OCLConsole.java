@@ -33,7 +33,7 @@ public class OCLConsole
 
 	private static OCLConsole instance;
 //	private OCLConsolePage page;
-	
+
 	/**
 	 * Initializes me.
 	 */
@@ -44,7 +44,7 @@ public class OCLConsole
 				XtextConsolePlugin.getInstance().getBundle().getEntry(
 					"/icons/ocl.gif"))); //$NON-NLS-1$
 	}
-	
+
 	/**
 	 * Closes me and clears the singleton instance reference, so that it will
 	 * be reinitialized when another console is requested.
@@ -58,7 +58,7 @@ public class OCLConsole
 			instance = null;
 		}
 	}
-	
+
 	@Override
 	public IPageBookViewPage createPage(IConsoleView view) {
 		OCLConsolePage page = new OCLConsolePage(this);
@@ -67,7 +67,7 @@ public class OCLConsole
 
 	/**
 	 * Obtains the singleton instance.  It is created, if necessary.
-	 * 
+	 *
 	 * @return the singleton console instance
 	 */
 	public static OCLConsole getInstance() {
@@ -76,22 +76,8 @@ public class OCLConsole
 			ConsolePlugin.getDefault().getConsoleManager().addConsoles(
 				new IConsole[] {instance});
 		}
-		
-		return instance;
-	}
 
-	/*
-	 * @deprecated supply contextClass(es)
-	 */
-	@Deprecated
-	public void setSelection(EObject contextObject) {
-		String typeName = "null"; //$NON-NLS-1$;
-		String objectName = "null"; //$NON-NLS-1$
-		if (contextObject != null) {
-			objectName = LabelUtil.getLabel(contextObject);
-			typeName = contextObject.eClass().getName();				
-		}
-		setName(NLS.bind(ConsoleMessages.Console_TitleWithContext, objectName, typeName));		
+		return instance;
 	}
 
 	public void setSelection(@Nullable EObject contextObject, org.eclipse.ocl.pivot.@Nullable Class contextClass) {
@@ -103,6 +89,6 @@ public class OCLConsole
 				typeName = contextClass.getName();
 			}
 		}
-		setName(NLS.bind(ConsoleMessages.Console_TitleWithContext, objectName, typeName));		
+		setName(NLS.bind(ConsoleMessages.Console_TitleWithContext, objectName, typeName));
 	}
 }

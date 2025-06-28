@@ -29,9 +29,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
  */
 public class EnumerationAllInstancesOperation extends AbstractAllInstancesOperation
 {
-	@Deprecated /* @deprecated invoke the polymorphic EnumerationImpl.allInstances() */
-	public static final @NonNull EnumerationAllInstancesOperation INSTANCE = new EnumerationAllInstancesOperation();
-
 	/**
 	 * @since 1.18
 	 */

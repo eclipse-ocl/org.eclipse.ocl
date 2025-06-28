@@ -57,7 +57,6 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -848,27 +847,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				}
 			}
 		}
-		if (allParameterTypes.size() > 0) {
-		//	s.append("\n");
-			List<@NonNull ParameterTypes> sortedLists = new ArrayList<>(allParameterTypes);
-			Collections.sort(sortedLists, leegacyTemplateBindingNameComparator);
-			for (@NonNull ParameterTypes types : sortedLists) {
-				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
-					String legacyTemplateBindingsName = getLegacyTemplateBindingsName(types);
-					String templateBindingsName = getTemplateBindingsName(types);
-					if (!legacyTemplateBindingsName.equals(templateBindingsName) && !(types.get(0) instanceof LambdaType)) {		// legacy never defined LambdaType
-						s.append("		@Deprecated /* @deprecated use normalized name */\n");
-						s.append("		public static final ");
-						s.appendClassReference(true, ParameterTypes.class);
-						s.append(" ");
-						s.append(legacyTemplateBindingsName);
-						s.append(" = ");
-						s.append(templateBindingsName);
-						s.append(";\n");
-					}
-				}
-			}
-		}
 		appendInitializationEnd(false);
 		s.append("	}\n");
 	}
@@ -1164,37 +1142,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.appendString(PivotUtil.getName(asNormalizedTemplateParameter));
 				s.append(");\n");
 			}
-			for (@NonNull String name : names) {
-				TemplateParameter asTemplateParameter = name2templateParameter.get(name);
-				assert asTemplateParameter != null;
-				s.append("		@Deprecated /* @deprecated use normalized name */\n");
-				s.append("		public static final ");
-				s.appendClassReference(true, ExecutorTypeParameter.class);
-				s.append(" ");
-				s.append(name);
-				s.append(" = ");
-				s.append(normalizedTemplateParameters.get(asTemplateParameter.getTemplateParameterId().getIndex()).getName());
-				s.append(";\n");
-			//	s.append(" = new ");
-			//	s.appendClassReference(null, ExecutorTypeParameter.class);
-			//	s.append("(");
-			//	s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
-			//	s.append(", ");
-			//	s.appendString(ClassUtil.requireNonNull(asTemplateParameter.getName()));
-			//	s.append(");\n");
-			}
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
-			TemplateSignature templateSignature = asClass.getOwnedSignature();
-			if (templateSignature != null) {
-				declareTypeParameters(templateSignature);
-			}
-			for (@NonNull Operation operation : getLocalOperationsSortedBySignature(asClass)) {
-				templateSignature = operation.getOwnedSignature();
-				if (templateSignature != null) {
-					declareTypeParameters(templateSignature);
-				}
-			}
 		}
 		appendInitializationEnd(false);
 		s.append("	}\n");
@@ -1208,39 +1155,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			if (!name2templateParameter.containsKey(name)) {
 				name2templateParameter.put(name, asTemplateParameter);
 			}
-		}
-	}
-
-	protected void declareTypeParameters(@NonNull TemplateSignature templateSignature) {
-		for (@NonNull TemplateParameter asTemplateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
-			s.append("		@Deprecated /* @deprecated use normalized name */\n");
-			s.append("		public static final ");
-			s.appendClassReference(true, ExecutorTypeParameter.class);
-			s.append(" ");
-			TemplateSignature asTemplateSignature = asTemplateParameter.getOwningSignature();
-			TemplateableElement asTemplateableElement = asTemplateSignature.getOwningElement();
-			org.eclipse.ocl.pivot.Class asClass = null;
-			if (asTemplateableElement instanceof Operation) {
-				Operation asOperation = (Operation)asTemplateableElement;
-				asClass = PivotUtil.getOwningClass(asOperation);
-			}
-			else if (asTemplateableElement instanceof org.eclipse.ocl.pivot.Class) {
-				asClass = (org.eclipse.ocl.pivot.Class)asTemplateableElement;
-			}
-			if (asClass != null) {
-				if (asTemplateableElement instanceof Operation) {
-					s.append("_");
-				}
-				asTemplateableElement.accept(emitLiteralVisitor);
-				s.append("_");
-				s.appendAndEncodeName(asTemplateParameter);
-			}
-			else {
-				s.append("null");
-			}
-			s.append(" = ");
-			asTemplateParameter.accept(emitLiteralVisitor);
-			s.append(";\n");
 		}
 	}
 

@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
@@ -609,34 +608,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the reference '{@link java.util.Map#getKeyType <em>Key Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Key Type</em>'.
-	 * @see java.util.Map#getKeyType()
-	 * @see #getMap()
-	 * @generated
-	 */
-	public EReference getMap_KeyType() {
-		return (EReference)mapEClass.getEStructuralFeatures().get(0);
-	}
-
-
-	/**
-	 * Returns the meta object for the reference '{@link java.util.Map#getValueType <em>Value Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Value Type</em>'.
-	 * @see java.util.Map#getValueType()
-	 * @see #getMap()
-	 * @generated
-	 */
-	public EReference getMap_ValueType() {
-		return (EReference)mapEClass.getEStructuralFeatures().get(1);
-	}
-
-
-	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -695,48 +666,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	public EClass getCollection() {
 		return collectionEClass;
 	}
-
-	/**
-	 * Returns the meta object for the reference '{@link java.util.Collection#getElementType <em>Element Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Element Type</em>'.
-	 * @see java.util.Collection#getElementType()
-	 * @see #getCollection()
-	 * @generated
-	 */
-	public EReference getCollection_ElementType() {
-		return (EReference)collectionEClass.getEStructuralFeatures().get(0);
-	}
-
-
-	/**
-	 * Returns the meta object for the attribute '{@link java.util.Collection#getLower <em>Lower</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Lower</em>'.
-	 * @see java.util.Collection#getLower()
-	 * @see #getCollection()
-	 * @generated
-	 */
-	public EAttribute getCollection_Lower() {
-		return (EAttribute)collectionEClass.getEStructuralFeatures().get(1);
-	}
-
-
-	/**
-	 * Returns the meta object for the attribute '{@link java.util.Collection#getUpper <em>Upper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Upper</em>'.
-	 * @see java.util.Collection#getUpper()
-	 * @see #getCollection()
-	 * @generated
-	 */
-	public EAttribute getCollection_Upper() {
-		return (EAttribute)collectionEClass.getEStructuralFeatures().get(2);
-	}
-
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}'.
@@ -819,13 +748,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		bagEClass = createEClass(0);
 
 		collectionEClass = createEClass(1);
-		createEReference(collectionEClass, 0);
-		createEAttribute(collectionEClass, 1);
-		createEAttribute(collectionEClass, 2);
 
 		mapEClass = createEClass(2);
-		createEReference(mapEClass, 0);
-		createEReference(mapEClass, 1);
 
 		oclAnyEClass = createEClass(3);
 
@@ -901,9 +825,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		// Create type parameters
 		ETypeParameter bagEClass_T = addETypeParameter(bagEClass, "T"); //$NON-NLS-1$
-		ETypeParameter collectionEClass_T = addETypeParameter(collectionEClass, "T"); //$NON-NLS-1$
-		ETypeParameter mapEClass_K = addETypeParameter(mapEClass, "K"); //$NON-NLS-1$
-		ETypeParameter mapEClass_V = addETypeParameter(mapEClass, "V"); //$NON-NLS-1$
+		addETypeParameter(collectionEClass, "T"); //$NON-NLS-1$
+		addETypeParameter(mapEClass, "K"); //$NON-NLS-1$
+		addETypeParameter(mapEClass, "V"); //$NON-NLS-1$
 		ETypeParameter orderedCollectionEClass_T = addETypeParameter(orderedCollectionEClass, "T"); //$NON-NLS-1$
 		ETypeParameter orderedSetEClass_T = addETypeParameter(orderedSetEClass, "T"); //$NON-NLS-1$
 		ETypeParameter sequenceEClass_T = addETypeParameter(sequenceEClass, "T"); //$NON-NLS-1$
@@ -959,16 +883,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEClass(bagEClass, Bag.class, "Bag", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(collectionEClass, Collection.class, "Collection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		g1 = createEGenericType(collectionEClass_T);
-		initEReference(getCollection_ElementType(), g1, null, "elementType", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getCollection_Lower(), this.getInteger(), "lower", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getCollection_Upper(), this.getInteger(), "upper", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mapEClass, Map.class, "Map", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		g1 = createEGenericType(mapEClass_K);
-		initEReference(getMap_KeyType(), g1, null, "keyType", null, 1, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		g1 = createEGenericType(mapEClass_V);
-		initEReference(getMap_ValueType(), g1, null, "valueType", null, 1, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(oclAnyEClass, Object.class, "OclAny", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -1281,22 +1197,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass MAP = eINSTANCE.getMap();
 
 		/**
-		 * The meta object literal for the '<em><b>Key Type</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EReference MAP__KEY_TYPE = eINSTANCE.getMap_KeyType();
-
-		/**
-		 * The meta object literal for the '<em><b>Value Type</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EReference MAP__VALUE_TYPE = eINSTANCE.getMap_ValueType();
-
-		/**
 		 * The meta object literal for the '<em>Real</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1345,30 +1245,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass COLLECTION = eINSTANCE.getCollection();
-
-		/**
-		 * The meta object literal for the '<em><b>Element Type</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EReference COLLECTION__ELEMENT_TYPE = eINSTANCE.getCollection_ElementType();
-
-		/**
-		 * The meta object literal for the '<em><b>Lower</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute COLLECTION__LOWER = eINSTANCE.getCollection_Lower();
-
-		/**
-		 * The meta object literal for the '<em><b>Upper</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute COLLECTION__UPPER = eINSTANCE.getCollection_Upper();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}' class.

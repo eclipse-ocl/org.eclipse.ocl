@@ -59,11 +59,6 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 		}
 
 		@Override
-		public boolean add(@Nullable Object value) {
-			return false;
-		}
-
-		@Override
 		public void add(@Nullable Object key, @Nullable Object value) {
 			boxedValues.put(key, value);
 		}

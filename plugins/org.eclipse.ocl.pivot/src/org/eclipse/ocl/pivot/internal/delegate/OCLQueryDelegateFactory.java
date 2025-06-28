@@ -46,10 +46,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLQueryDelegateFactory extends AbstractOCLDelegateFactory
 		implements QueryDelegate.Factory
 {
-	@Deprecated
-	public OCLQueryDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
-	}
 	/**
 	 * @since 7.0
 	 */

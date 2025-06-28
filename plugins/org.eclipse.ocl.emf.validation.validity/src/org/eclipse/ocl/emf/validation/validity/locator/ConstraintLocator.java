@@ -108,19 +108,7 @@ public interface ConstraintLocator
 	 * This is not necessarily unique in the constraining elements view since multiple constraining models may contribute
 	 * constraints to the same type.
 	 */
-	@Deprecated /* @deprecated pass validityManager */
-	default @Nullable TypeURI getTypeURI(@NonNull EObject eObject) {
-		return null;
-	}
-
-	/**
-	 * Return the URI that provides a distinct identity for a constraining element when applied to a validatable element.
-	 * This is not necessarily unique in the constraining elements view since multiple constraining models may contribute
-	 * constraints to the same type.
-	 */
-	default @Nullable TypeURI getTypeURI(@NonNull ValidityManager validityManager, @NonNull EObject eObject) {
-		return getTypeURI(eObject);
-	}
+	@Nullable TypeURI getTypeURI(@NonNull ValidityManager validityManager, @NonNull EObject eObject);
 
 	/**
 	 * Return the type URIs of all 'types' that provide constraints for validatableObject.

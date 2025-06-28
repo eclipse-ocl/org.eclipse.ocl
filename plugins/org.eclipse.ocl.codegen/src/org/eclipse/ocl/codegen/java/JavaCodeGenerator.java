@@ -105,93 +105,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	private static final @NonNull AbstractCGModelResourceFactory CG_RESOURCE_FACTORY = new AbstractCGModelResourceFactory();
 
-	/**
-	 * The known classes that templates may use in unqualified form. The list is
-	 * here in a Java form to reduce the impact of refactoring templates.
-	 *
-	 * @deprecated no longer used; the import generator is smart enough to analyze what is actually used
-	 */
-	@Deprecated
-	public static final @NonNull Class<?>[] knownClasses = {
-		java.lang.Class.class,
-		java.lang.Object.class,
-		java.lang.Package.class,
-		java.util.Iterator.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleMapIterationManager.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorType.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter.class,
-		org.eclipse.ocl.pivot.CollectionType.class,
-		org.eclipse.ocl.pivot.Element.class,
-		org.eclipse.ocl.pivot.ParameterTypes.class,
-		org.eclipse.ocl.pivot.PivotPackage.class,
-		org.eclipse.ocl.pivot.Property.class,
-		org.eclipse.ocl.pivot.StandardLibrary.class,
-		org.eclipse.ocl.pivot.TupleType.class,
-		org.eclipse.ocl.pivot.Type.class,
-		org.eclipse.ocl.pivot.TypedElement.class,
-		org.eclipse.ocl.pivot.evaluation.Executor.class,
-		org.eclipse.ocl.pivot.ids.ClassId.class,
-		org.eclipse.ocl.pivot.ids.CollectionTypeId.class,
-		org.eclipse.ocl.pivot.ids.DataTypeId.class,
-		org.eclipse.ocl.pivot.ids.EnumerationId.class,
-		org.eclipse.ocl.pivot.ids.IdManager.class,
-		org.eclipse.ocl.pivot.ids.PackageId.class,
-		org.eclipse.ocl.pivot.ids.PrimitiveTypeId.class,
-		org.eclipse.ocl.pivot.ids.TemplateParameterId.class,
-		org.eclipse.ocl.pivot.ids.PartId.class,
-		org.eclipse.ocl.pivot.ids.TupleTypeId.class,
-		org.eclipse.ocl.pivot.ids.TypeId.class,
-		org.eclipse.ocl.pivot.library.AbstractBinaryOperation.class,
-		org.eclipse.ocl.pivot.library.AbstractProperty.class,
-		org.eclipse.ocl.pivot.library.AbstractSimpleOperation.class,
-		org.eclipse.ocl.pivot.library.AbstractTernaryOperation.class,
-		org.eclipse.ocl.pivot.library.AbstractUnaryOperation.class,
-		org.eclipse.ocl.pivot.library.LibraryBinaryOperation.class,
-		org.eclipse.ocl.pivot.library.LibraryIteration.class,
-		org.eclipse.ocl.pivot.library.LibraryProperty.class,
-		org.eclipse.ocl.pivot.library.LibraryTernaryOperation.class,
-		org.eclipse.ocl.pivot.library.LibraryUnaryOperation.class,
-		org.eclipse.ocl.pivot.messages.PivotMessages.class,
-	//	org.eclipse.ocl.pivot.types.TemplateArguments.class,
-		org.eclipse.ocl.pivot.types.TemplateParameters.class,
-		org.eclipse.ocl.pivot.values.BagValue.class,
-		org.eclipse.ocl.pivot.values.CollectionValue.class,
-		org.eclipse.ocl.pivot.values.IntegerRange.class,
-		org.eclipse.ocl.pivot.values.IntegerValue.class,
-		org.eclipse.ocl.pivot.values.InvalidValue.class,
-		org.eclipse.ocl.pivot.values.MapValue.class,
-		org.eclipse.ocl.pivot.values.OrderedSetValue.class,
-		org.eclipse.ocl.pivot.values.RealValue.class,
-		org.eclipse.ocl.pivot.values.SequenceValue.class,
-		org.eclipse.ocl.pivot.values.SetValue.class,
-		org.eclipse.ocl.pivot.values.TupleValue.class,
-		org.eclipse.ocl.pivot.values.UnlimitedValue.class,
-		org.eclipse.ocl.pivot.values.Value.class,
-		org.eclipse.ocl.pivot.values.InvalidValueException.class,
-		org.eclipse.ocl.pivot.utilities.ClassUtil.class,
-		org.eclipse.ocl.pivot.utilities.PivotUtil.class,
-		org.eclipse.ocl.pivot.utilities.ValueUtil.class,
-		org.eclipse.osgi.util.NLS.class
-	};
-
 	public static void initPrimitive(Class<?> class1, Class<?> class2) {
 		javaPrimitiveClasses.put(class1, class2);
 		javaPrimitiveNames.put(class1.getName(), class2);
@@ -203,11 +116,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private /*@LazyNonNull*/ GlobalPlace globalPlace = null;
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
-
-	@Deprecated /* @deprecated pass a genmodel - necessary for UML support */
-	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		this(environmentFactory, null);
-	}
 
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);

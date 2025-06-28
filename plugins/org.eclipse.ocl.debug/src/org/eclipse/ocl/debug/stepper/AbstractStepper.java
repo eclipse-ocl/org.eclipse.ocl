@@ -22,18 +22,11 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.xtext.base.as2cs.BaseLocationInFileProvider;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
-import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.util.ITextRegion;
 
 public abstract class AbstractStepper implements IStepper
 {
-	@Deprecated		// use AS Elements and locationInFileProvider
-	public static @NonNull UnitLocation createUnitLocation(@NonNull VMEvaluationEnvironment evalEnv, @NonNull Element element, @Nullable INode startNode, @Nullable INode endNode) {
-		int startPosition = startNode != null ? startNode.getOffset() : 0;
-		int endPosition = endNode != null ? ElementUtil.getEndOffset(endNode) : 0;
-		return new UnitLocation(startPosition, endPosition, evalEnv, element);
-	}
-
+	@Override
 	public @NonNull UnitLocation createUnitLocation(@NonNull VMEvaluationEnvironment evalEnv, @NonNull Element element) {
 		BaseLocationInFileProvider locationInFileProvider = evalEnv.getDebugCore().getLocationInFileProvider();
 		ITextRegion significantTextRegion = locationInFileProvider.getSignificantTextRegion(element);
@@ -72,6 +65,7 @@ public abstract class AbstractStepper implements IStepper
 		return null;
 	}
 
+	@Override
 	public @Nullable Element getFirstElement(@NonNull VMEvaluationStepper vmEvaluationVisitor, @Nullable Element element) {
 		if (element != null) {
 			IStepperVisitor stepperVisitor = vmEvaluationVisitor.getStepperVisitor();

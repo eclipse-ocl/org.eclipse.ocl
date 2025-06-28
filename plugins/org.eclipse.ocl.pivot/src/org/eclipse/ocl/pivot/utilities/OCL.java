@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -128,20 +127,6 @@ public class OCL
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.setPackageRegistry(ePackageRegistry);
 		return newInstance(NO_PROJECTS, resourceSet);
-	}
-
-	/**
-	 * Creates a new <code>OCL</code> using the specified Ecore environment
-	 * factory.
-	 *
-	 * @param environmentFactory an environment factory for Ecore
-	 * @return the new <code>OCL</code>
-	 *
-	 * @deprecated use environmentFactory.createOCL()
-	 */
-	@Deprecated
-	public static @NonNull OCL newInstance(@NonNull EnvironmentFactory environmentFactory) {
-		return environmentFactory.createOCL();
 	}
 
 	/**
@@ -559,39 +544,12 @@ public class OCL
 	}
 
 	/**
-	 * Queries whether tracing of evaluation is enabled. Tracing logs the
-	 * progress of evaluation to the console, which may be of use in diagnosing
-	 * problems.
-	 * <p>
-	 * In an Eclipse environment, tracing is also enabled by turning on the
-	 * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option.
-	 * </p>
-	 *
-	 * @return whether evaluation tracing is enabled
-	 *
-	 * @see #setEvaluationTracingEnabled(boolean)
-	 */
-	@Deprecated // Has no functionality
-	public boolean isEvaluationTracingEnabled() {
-		return traceEvaluation;
-	}
-
-	/**
-	 * Load the Complete OCL document specified by the URI into the external ResourceSet and
-	 * return the concrete syntax resource.
-	 */
-	@Deprecated // Use getCSResource
-	public @Nullable CSResource load(@NonNull URI uri) {
-		ResourceSet externalResourceSet = getResourceSet();
-		return (CSResource) externalResourceSet.getResource(uri, true);
-	}
-
-	/**
 	 * Load the Complete OCL document specified by the URI into the external ResourceSet and
 	 * parse the concrete syntax resource returning the resulting abstract syntax resource.
 	 */
 	public @Nullable ASResource parse(@NonNull URI uri) {
-		CSResource csResource = load(uri);
+		ResourceSet externalResourceSet = getResourceSet();
+		CSResource csResource = (CSResource)externalResourceSet.getResource(uri, true);
 		return csResource != null ? cs2as(csResource) : null;
 	}
 
@@ -609,33 +567,6 @@ public class OCL
 	public @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
 		return environmentFactory.parseSpecification(specification);
 	}
-	/**
-	 * @throws ParserException
-	 * @deprecated use parseSpecification(specification)
-	 */
-	@Deprecated
-	public @NonNull ExpressionInOCL parseSpecification(@Nullable Object unusedObject, @NonNull LanguageExpression specification) throws ParserException {
-		return environmentFactory.parseSpecification(specification);
-	}
-
-	/**
-	 * Sets whether tracing of evaluation is enabled. Tracing logs the progress
-	 * of parsing to the console, which may be of use in diagnosing problems.
-	 * <p>
-	 * In an Eclipse environment, tracing is also enabled by turning on the
-	 * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option.
-	 * </p>
-	 *
-	 * @param b
-	 *            whether evaluation tracing is enabled
-	 *
-	 * @see #isEvaluationTracingEnabled()
-	 */
-	@Deprecated // Has no functionality
-	public void setEvaluationTracingEnabled(boolean b) {
-		traceEvaluation = b;
-		environmentFactory.setEvaluationTracingEnabled(traceEvaluation);
-	}
 
 	/**
 	 * Assigns a custom extent map to define the extents of classes in
@@ -648,78 +579,5 @@ public class OCL
 	 */
 	public void setModelManager(@Nullable ModelManager modelManager) {
 		this.modelManager = modelManager;
-	}
-
-	/**
-	 * Validates an OCL expression, which may have been loaded from some
-	 * resource or constructed via the API (perhaps by translation from some
-	 * other language).
-	 *
-	 * @param expression
-	 *            an expression to validate
-	 *
-	 * @throws SemanticException
-	 *             on detection of any well-formedness problem in the expression
-	 *
-	 * @see #validate(Constraint)
-	 */
-	@Deprecated // Has no functionality
-	public void validate(@NonNull OCLExpression expression) throws SemanticException {
-		throw new UnsupportedOperationException(getClass().getName() + ".validate");
-		// clear out old diagnostics
-		/*		ProblemHandler ph = OCLUtil.getAdapter(rootEnvironment,
-			ProblemHandler.class);
-		if (ph != null) {
-			ph.beginValidation();
-		}
-
-		expression.accept(ValidationVisitor.getInstance(rootEnvironment));
-
-		if (ph != null) {
-			ph.endValidation();
-
-			try {
-				OCLUtil.checkForErrors(ph);
-			} catch (SyntaxException e) {
-				// shouldn't actually be able to get this from validation
-				throw new SemanticException(e.getDiagnostic());
-			}
-		} */
-	}
-
-	/**
-	 * Validates an OCL constraint, which may have been loaded from some
-	 * resource or constructed via the API (perhaps by translation from some
-	 * other language).
-	 *
-	 * @param constraint
-	 *            a constraint to validate
-	 *
-	 * @throws SemanticException
-	 *             on detection of any well-formedness problem in the constraint
-	 */
-	@Deprecated // Has no functionality
-	public void validate(@NonNull Constraint constraint) throws SemanticException {
-		throw new UnsupportedOperationException(getClass().getName() + ".validate");
-		// clear out old diagnostics
-		/*		ProblemHandler ph = OCLUtil.getAdapter(rootEnvironment,
-			ProblemHandler.class);
-		if (ph != null) {
-			ph.beginValidation();
-		}
-
-		ValidationVisitor.getInstance(rootEnvironment).visitConstraint(
-			constraint);
-
-		if (ph != null) {
-			ph.endValidation();
-
-			try {
-				OCLUtil.checkForErrors(ph);
-			} catch (SyntaxException e) {
-				// shouldn't actually be able to get this from validation
-				throw new SemanticException(e.getDiagnostic());
-			}
-		} */
 	}
 }

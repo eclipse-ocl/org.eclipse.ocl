@@ -24,9 +24,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
  */
 public class OclInvalidAllInstancesOperation extends AbstractAllInstancesOperation
 {
-	@Deprecated /* @deprecated invoke the polymorphic InvalidTypeImpl.allInstances() */
-	public static final @NonNull OclInvalidAllInstancesOperation INSTANCE = new OclInvalidAllInstancesOperation();
-
 	/**
 	 * @since 1.18
 	 */

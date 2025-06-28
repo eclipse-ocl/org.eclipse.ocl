@@ -219,12 +219,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 	}
 
-	@Deprecated /* @deprecated not used */
-	protected @Nullable EAnnotation copyConstraint(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint) {
-		EStringToStringMapEntryImpl eDetail = copyConstraintDetail(eModelElement, pivotConstraint);
-		return eDetail != null ? (EAnnotation)eDetail.eContainer() : null;
-	}
-
 	/**
 	 * @since 7.0
 	 */

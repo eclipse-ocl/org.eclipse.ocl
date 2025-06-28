@@ -43,11 +43,6 @@ public class IdHash
 		return (int)hash;
 	}
 
-	@Deprecated /* @deprecated provide null values */
-	public static int createParametersHash(@NonNull Class<?> globalContext, @NonNull ElementId @NonNull [] typeIds) {
-		return createParametersHash(globalContext, typeIds, null);
-	}
-
 	/**
 	 * @since 1.18
 	 */

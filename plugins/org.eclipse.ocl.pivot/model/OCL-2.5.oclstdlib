@@ -184,12 +184,6 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	*/
 	operation "<>"(object2 : OclSelf) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
 	/*
-	Returns oclText[Set{false, true}].
-	
-	@Deprecated - retained with broken signature for referential API compatibility.
-	*/
-	operation allInstances(dummy : Integer) : Set(OclSelf[2|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
-	/*
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[true].
 	*/
@@ -578,24 +572,6 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 	*/
 	operation union(c : Collection(T)) : Bag(T) => 'org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation';
 --	operation "->"(T)(object2 : OclAny) : T precedence=NAVIGATION => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
-	/*
-	Evaluates to the type of the collection elements.
-	
-	@Deprecated Use regular CollectionType property
-	*/
-	static property elementType : T[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
-	/*
-	Evaluates to the lower bound on the number of collection elements.
-	
-	@Deprecated Use regular CollectionType property
-	*/
-	static property lower : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
-	/*
-	Evaluates to the upper bound on the number of collection elements.
-	
-	@Deprecated Use regular CollectionType property
-	*/
-	static property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
 /*
@@ -836,18 +812,6 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	The Bag comprising all the values of the key-value pairs in oclText[self].
 	*/
 	operation values() : Bag(V) => 'org.eclipse.ocl.pivot.library.map.MapValuesOperation';
-	/*
-	The key type of the key-value pairs of oclText[self].
-	
-	@Deprecated Use regular MapType property
-	*/
-	static property keyType : K[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
-	/*
-	The value type of the key-value pairs of oclText[self].
-
-	@Deprecated Use regular MapType property
-	*/
-	static property valueType : V[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
 	/*
@@ -1002,12 +966,6 @@ for OclElement are therefore applicable to all user-defined types.
 abstract type OclElement conformsTo OclAny {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
-	Return a set of all instances of the type and derived types of self.
-	
-	@Deprecated - retained with broken signature for referential API compatibility.
-	*/
-	operation allInstances(dummy : Integer) : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
-	/*
 	Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].
 	
 	Most model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].
@@ -1097,12 +1055,6 @@ OclInvalid is itself an instance of the metatype InvalidType.
 */
 abstract type OclInvalid : InvalidType conformsTo OclVoid {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
-	/*
-	Returns oclText[invalid].
-	
-	@Deprecated - retained with broken signature for referential API compatibility.
-	*/
-	operation allInstances(dummy : Integer) : Set(OclSelf) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/*
 	Returns oclText[invalid].
 	*/
@@ -1202,12 +1154,6 @@ for OclStereotype are therefore applicable to all UML stereotypes.
 */
 abstract type OclStereotype conformsTo OclType {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
-	/*
-	Return a set of all instances of the stereotype and derived types of self.
-	
-	@Deprecated - retained with broken signature for referential API compatibility.
-	*/
-	operation allInstances(dummy : Integer) : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
 /*
@@ -1253,12 +1199,6 @@ OclVoid is itself an instance of the metatype VoidType.
 */
 abstract type OclVoid : VoidType conformsTo OclAny {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
-	/*
-	Returns oclText[Set{null}].
-	
-	@Deprecated - retained with broken signature for referential API compatibility.
-	*/
-	operation allInstances(dummy : Integer) : Set(OclSelf[1|?]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/*
 	Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]
 	if object is oclText[invalid], oclText[false] otherwise.
@@ -1929,12 +1869,6 @@ abstract type OclType conformsTo OclElement {
  */
 abstract type OclEnumeration conformsTo OclType {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
-	/*
-	Return a set of all enumeration values of oclText[self].
-	
-	@Deprecated - retained with broken signature for referential API compatibility.
-	*/
-	operation allInstances(dummy : Integer) : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
 /*

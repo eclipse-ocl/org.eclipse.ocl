@@ -212,12 +212,6 @@ public interface TypeId extends ElementId
 	 */
 	@NonNull PropertyId getPropertyId(@NonNull String name);
 
-	/**
-	 * Return the typeId for the named type parameter of this typeId.
-	 * <p>
-	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have type parameters.
-	 */
-	@NonNull TemplateParameterId getTemplateParameterId(int index);
 	int getTemplateParameters();
 
 	/**

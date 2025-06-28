@@ -28,12 +28,10 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -110,17 +108,6 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		return property;
 	}
 
-	@Deprecated /* @deprecated not used any more */
-	protected @Nullable Object evaluateEcore(@NonNull OCL ocl, @NonNull ExpressionInOCL query, @Nullable Object unboxedObject) {
-		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-		ModelManager modelManager = ocl.getModelManager();
-		if (modelManager == null) {
-			modelManager = environmentFactory.createModelManager(unboxedObject);
-		}
-		QueryImpl query2 = new QueryImpl(environmentFactory, query);
-		return query2.evaluateEcore(eStructuralFeature.getEType().getInstanceClass(), unboxedObject);
-	}
-
 	@Override
 	protected Object get(InternalEObject ecoreObject, boolean resolve, boolean coreType) {
 		assert ecoreObject != null;
@@ -167,23 +154,6 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 			}
 		}
 		return property2;
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@Deprecated /* @deprecated pass EnvironmentFactory */
-	protected @NonNull ExpressionInOCL getQuery() {
-		ExpressionInOCL query2 = query;
-		if ((query2 == null) || query2.eIsProxy()) {
-		//	OCL ocl = delegateDomain.getOCL();
-		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
-			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(null);
-			Property property2 = getProperty();
-			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
-			SettingBehavior.INSTANCE.validate(property2);
-		}
-		return query2;
 	}
 
 	/**

@@ -89,11 +89,6 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return importNameManager;
 	}
 
-	@Deprecated /* deprecated use getImportManager */
-	public @NonNull Set<String> getImports() {
-		return importNameManager.getLong2ShortImportNames().keySet();
-	}
-
 	public @NonNull String getInstanceName() {
 		return instanceName;
 	}

@@ -43,6 +43,8 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLSettingDelegate;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
@@ -160,7 +162,8 @@ public class OCLDebugSettingDelegate extends OCLSettingDelegate
 	@Override
 	protected Object get(InternalEObject owner, boolean resolve, boolean coreType) {
 		try {
-			ExpressionInOCL query2 = getQuery();
+			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(null);
+			ExpressionInOCL query2 = getQuery(environmentFactory);
 
 
 

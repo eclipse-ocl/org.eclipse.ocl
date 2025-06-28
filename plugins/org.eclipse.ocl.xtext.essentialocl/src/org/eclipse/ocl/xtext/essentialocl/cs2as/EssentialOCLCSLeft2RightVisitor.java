@@ -559,12 +559,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				|| ((type instanceof CollectionType) && (((CollectionType)type).getElementType() instanceof InvalidType));
 	}
 
-	/** @deprecated use ElementUtil */
-	@Deprecated
-	protected boolean isRequired(@Nullable TypedRefCS csTypeRef) {
-		return ElementUtil.isRequired(csTypeRef);
-	}
-
 	protected @NonNull OperationCallExp refreshOperationCallExp(@NonNull AbstractNameExpCS csNameExp, @Nullable OCLExpression sourceExp) {
 		OperationCallExp callExp = context.refreshModelElement(OperationCallExp.class, PivotPackage.Literals.OPERATION_CALL_EXP, csNameExp);
 		callExp.setOwnedSource(sourceExp);

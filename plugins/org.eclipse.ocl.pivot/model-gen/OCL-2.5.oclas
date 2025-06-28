@@ -138,11 +138,6 @@
         <ownedComments body="&#xA;Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.&#xA;"/>
         <ownedParameters xmi:id="BnMe8" name="object2" type="#zlfMH"/>
       </ownedOperations>
-      <ownedOperations xmi:id="tGkCu" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          name="allInstances" type="#XVF4+">
-        <ownedComments body="&#xA;Returns oclText[Set{false, true}].&#xA;&#xA;@Deprecated - retained with broken signature for referential API compatibility.&#xA;"/>
-        <ownedParameters xmi:id="MP1Nu" name="dummy" type="#tYtCd"/>
-      </ownedOperations>
       <ownedOperations xmi:id="FufYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isInvalidating="true"
           isValidating="true" name="and" precedence="#VT87C" type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;&#x9;&#x9;if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;&#x9;elseif b = false then false&#xA;&#x9;&#x9;&#x9;&#x9;else self&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;  elseif self = false then false&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif b = false then false&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then null&#xA;&#x9;&#x9;&#x9;  else true&#xA;&#x9;&#x9;&#x9;  endif"
@@ -798,18 +793,6 @@
         <ownedComments body="&#xA;The bag consisting of all elements in oclText[self] and all elements in c.&#xA;"/>
         <ownedParameters xmi:id="6ZOjT" isRequired="true" name="c" type="#ViIGS"/>
       </ownedOperations>
-      <ownedProperties xmi:id="WTuwp" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          isStatic="true" name="elementType" type="#NxGT6">
-        <ownedComments body="&#xA;Evaluates to the type of the collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
-      </ownedProperties>
-      <ownedProperties xmi:id="BucvH" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          isStatic="true" name="lower" type="#tYtCd">
-        <ownedComments body="&#xA;Evaluates to the lower bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
-      </ownedProperties>
-      <ownedProperties xmi:id="ikPPI" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          isStatic="true" name="upper" type="#tYtCd">
-        <ownedComments body="&#xA;Evaluates to the upper bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
-      </ownedProperties>
       <ownedSignature>
         <ownedParameters xmi:id="qs59R" name="T"/>
       </ownedSignature>
@@ -1180,14 +1163,6 @@
           type="#YIgED">
         <ownedComments body="&#xA;The Bag comprising all the values of the key-value pairs in oclText[self].&#xA;"/>
       </ownedOperations>
-      <ownedProperties xmi:id="w,Rmk" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          isStatic="true" name="keyType" type="#NxGT6">
-        <ownedComments body="&#xA;The key type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
-      </ownedProperties>
-      <ownedProperties xmi:id="CoDkn" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          isStatic="true" name="valueType" type="#OxGT6">
-        <ownedComments body="&#xA;The value type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
-      </ownedProperties>
       <ownedSignature>
         <ownedParameters xmi:id="8dAuH" name="K"/>
         <ownedParameters xmi:id="HeAuH" name="V"/>
@@ -1368,11 +1343,6 @@
         </ownedDetails>
       </ownedAnnotations>
       <ownedComments body="&#xA;The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined&#xA;for OclElement are therefore applicable to all user-defined types.&#xA;"/>
-      <ownedOperations xmi:id="Z00bc" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          name="allInstances" type="#UQF4+">
-        <ownedComments body="&#xA;Return a set of all instances of the type and derived types of self.&#xA;&#xA;@Deprecated - retained with broken signature for referential API compatibility.&#xA;"/>
-        <ownedParameters xmi:id="IGeN3" name="dummy" type="#tYtCd"/>
-      </ownedOperations>
       <ownedOperations xmi:id="2xDak" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation" isInvalidating="true"
           isRequired="true" name="oclAsModelType" type="#NxGT6">
         <ownedComments body="&#xA;Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].&#xA;&#xA;Most model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].&#xA;&#xA;Model elements such as UML's InstnaceSpecification that do support distinct model and metamodel types return oclText[self]&#xA;with the cast type oclText[TT] that may be used for further navigation.&#xA;If the actual model type of oclText[self] at evaluation time does not conform to oclText[TT],&#xA;then the oclAsType operation evaluates to oclText[invalid].&#xA;&#xA;If oclText[self] is a multiply classified instance, the current classification used for OCL navigation&#xA;is changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if&#xA;the classification is ambiguous.&#xA;"/>
@@ -1454,11 +1424,6 @@
         </ownedDetails>
       </ownedAnnotations>
       <ownedComments body="&#xA;The OclEnumeration type is the implicit supertype of any user Enumeration type.&#xA;FIXME This is probably obsolete now that static / meta-types clarified.&#xA;"/>
-      <ownedOperations xmi:id="4MVBY" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          name="allInstances" type="#XTF4+">
-        <ownedComments body="&#xA;Return a set of all enumeration values of oclText[self].&#xA;&#xA;@Deprecated - retained with broken signature for referential API compatibility.&#xA;"/>
-        <ownedParameters xmi:id="rsEjc" name="dummy" type="#tYtCd"/>
-      </ownedOperations>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:InvalidType" xmi:id="urQRp" instanceClassName="org.eclipse.ocl.pivot.InvalidType" isAbstract="true"
         name="OclInvalid" superClasses="#7u3MH">
@@ -1477,11 +1442,6 @@
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Returns oclText[invalid].&#xA;"/>
         <ownedParameters xmi:id="QpzsY" name="object2" type="#zlfMH"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="oAM9H" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          name="allInstances" type="#PRF4+">
-        <ownedComments body="&#xA;Returns oclText[invalid].&#xA;&#xA;@Deprecated - retained with broken signature for referential API compatibility.&#xA;"/>
-        <ownedParameters xmi:id="bRccK" name="dummy" type="#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="AoHTu" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isValidating="true"
           name="and" precedence="#VT87C" type="#XEMMs">
@@ -1584,11 +1544,6 @@
         </ownedDetails>
       </ownedAnnotations>
       <ownedComments body="&#xA;The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined&#xA;for OclStereotype are therefore applicable to all UML stereotypes.&#xA;"/>
-      <ownedOperations xmi:id="nLWZo" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          name="allInstances" type="#UQF4+">
-        <ownedComments body="&#xA;Return a set of all instances of the stereotype and derived types of self.&#xA;&#xA;@Deprecated - retained with broken signature for referential API compatibility.&#xA;"/>
-        <ownedParameters xmi:id="egtqr" name="dummy" type="#tYtCd"/>
-      </ownedOperations>
     </ownedClasses>
     <ownedClasses xmi:id="D4eXY" isAbstract="true" name="OclSummable" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -1655,11 +1610,6 @@
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]&#xA;if object is oclText[invalid], oclText[false] otherwise.&#xA;"/>
         <ownedParameters xmi:id="FmfUY" name="object2" type="#zlfMH"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="BHK7n" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
-          name="allInstances" type="#SUF4+">
-        <ownedComments body="&#xA;Returns oclText[Set{null}].&#xA;&#xA;@Deprecated - retained with broken signature for referential API compatibility.&#xA;"/>
-        <ownedParameters xmi:id="QOIEK" name="dummy" type="#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="ZuFRO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation" isInvalidating="true"
           isValidating="true" name="and" precedence="#VT87C" type="#XEMMs">

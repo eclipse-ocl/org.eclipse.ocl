@@ -22,11 +22,6 @@ public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<
 {
 	protected final @NonNull PackageId parent;
 
-	@Deprecated
-	protected GeneralizedNestedTypeIdImpl(@NonNull PackageId parent, int templateParameters, @NonNull String name) {
-		this(name.hashCode(), parent, templateParameters, name);
-	}
-
 	/**
 	 * @since 1.18
 	 */

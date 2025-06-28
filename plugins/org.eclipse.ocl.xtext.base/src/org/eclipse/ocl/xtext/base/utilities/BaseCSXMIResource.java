@@ -257,12 +257,6 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	}
 
 	@Override
-	@Deprecated /* @deprecated caller should PivotUtil.getEnvironmentFactory(Notifier) */ // XXX
-	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		return PivotUtil.getEnvironmentFactory(getResourceSet());
-	}
-
-	@Override
 	protected void handleLoadResponse(Map<?, ?> response, Map<?, ?> options) {
 		super.handleLoadResponse(response, options);
 		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(getResourceSet());

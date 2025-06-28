@@ -89,10 +89,4 @@ public class BaseUIMessages
 	public static String ResourceGroup_emptyName;
 	public static String ResourceGroup_invalidFilename;
 	public static String ResourceGroup_pathOccupied;
-
-	/*
-	 * @deprecated no longer used
-	 */
-	@Deprecated
-	public static String DeferredDocumentProvider_PleaseWait;
 }

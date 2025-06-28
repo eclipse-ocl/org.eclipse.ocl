@@ -13,7 +13,6 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.AbstractCollection;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -163,12 +162,6 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		for (E anElement : someElements) {
 			add(anElement);
 		}
-	}
-
-	/* @deprecated retained only for API compatibility */
-	@Deprecated
-	public BagImpl(@NonNull Collection<? extends E> someElements) {
-		addAll(someElements);
 	}
 
 	/**

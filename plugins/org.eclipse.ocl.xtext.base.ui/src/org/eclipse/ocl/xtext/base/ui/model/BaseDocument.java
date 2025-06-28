@@ -33,13 +33,10 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
-import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
-import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic;
@@ -62,26 +59,17 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		 * The part thread on which the BaseEditor created the BaseDocument.
 		 */
 		private @Nullable ThreadLocalExecutor partThread = null;
-		@Deprecated
-		private EnvironmentFactoryInternal environmentFactory = null;
 
 		protected BaseDocumentLocker() {
 			super();
 		}
 
 		public @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
-			return environmentFactory != null ? environmentFactory : partThread != null ? partThread.localBasicGetEnvironmentFactory() : null;
-		}
-
-		@Deprecated
-		public void initEnvironmentFactory(@Nullable EnvironmentFactoryInternal environmentFactory) {
-			assert this.environmentFactory == environmentFactory;
-			this.environmentFactory = environmentFactory;
+			return partThread != null ? partThread.localBasicGetEnvironmentFactory() : null;
 		}
 
 		public void initPartThread(@NonNull ThreadLocalExecutor partThread) {
 			this.partThread = partThread;
-			this.environmentFactory = null;
 		}
 
 		@Override
@@ -144,7 +132,6 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 
 		public void resetPartThread() {
 			this.partThread = null;
-			this.environmentFactory = null;
 		}
 	}
 
@@ -233,21 +220,6 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		if (Thread.currentThread() == Display.getDefault().getThread()) {
 			super.fireDocumentAboutToBeChanged(event);
 		}
-	}
-
-	@Deprecated	/* @deprecated not used */
-	protected RootCSAttribution getDocumentAttribution() {
-		return readOnly(new IUnitOfWork<RootCSAttribution, XtextResource>()
-		{
-			@Override
-			public RootCSAttribution exec(@Nullable XtextResource resource) throws Exception {
-				if ((resource != null) && !resource.getContents().isEmpty()) {
-					ElementCS csElement = (ElementCS) resource.getContents().get(0);
-					return ElementUtil.getDocumentAttribution(csElement);
-				}
-				return null;
-			}
-		});
 	}
 
 	@Override

@@ -511,10 +511,6 @@ public class JavaStream
 		}
 	}
 
-	@Deprecated /* @deprecated not used, provide isRequired argument */
-	public void appendClassReference(@Nullable Class<?> javaClass) {
-		appendClassReference(null, javaClass);
-	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass) {
 		if (javaClass != null) {
 			if (JavaCodeGenerator.javaPrimitiveClasses.containsKey(javaClass)) {
@@ -544,22 +540,10 @@ public class JavaStream
 		}
 	}
 
-	@Deprecated /* @deprecated not used, provide isRequired argument */
-	public void appendClassReference(@NonNull TypeDescriptor typeDescriptor) {
-		appendClassReference(null, typeDescriptor);
-	}
 	public void appendClassReference(@Nullable Boolean isRequired, @NonNull TypeDescriptor typeDescriptor) {
 		typeDescriptor.append(this, isRequired);
 	}
 
-	@Deprecated /* @deprecated not used, provide isRequired, useExtends arguments */
-	public void appendClassReference(@Nullable Class<?> javaClass, @NonNull Class<?>... typeParameters) {
-		appendClassReference(null, javaClass, false, typeParameters);
-	}
-	@Deprecated /* @deprecated not used, provide isRequired argument */
-	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull Class<?>... typeParameters) {
-		appendClassReference(null, javaClass, useExtends, typeParameters);
-	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass, boolean useExtends, @NonNull Class<?>... typeParameters) {
 		if (javaClass != null) {
 			appendClassReference(isRequired, javaClass.getName());
@@ -570,10 +554,6 @@ public class JavaStream
 		}
 	}
 
-	@Deprecated /* @deprecated not used, provide isRequired argument */
-	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull String... typeParameters) {
-		appendClassReference(null, javaClass, useExtends, typeParameters);
-	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass, boolean useExtends, @NonNull String... typeParameters) {
 		if (javaClass != null) {
 			appendClassReference(isRequired, javaClass.getName());
@@ -584,20 +564,6 @@ public class JavaStream
 		}
 	}
 
-	/*	public void appendClassReference(@Nullable String className, boolean useExtends, @NonNull Class<?>... typeParameters) {
-		if (className != null) {
-			appendClassReference(className);
-			appendTypeParameters(useExtends, typeParameters);
-		}
-		else {
-			appendClassReference(Object.class);
-		}
-	} */
-
-	@Deprecated /* @deprecated not used, provide isRequired argument */
-	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor ... typeDescriptors) {
-		appendClassReference(null, javaClass, useExtends, typeDescriptors);
-	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass, boolean useExtends, @NonNull TypeDescriptor ... typeDescriptors) {
 		if (javaClass != null) {
 			appendClassReference(isRequired, javaClass.getName());
@@ -628,10 +594,6 @@ public class JavaStream
 		}
 	}
 
-	@Deprecated /* @deprecated not used, provide isRequired argument */
-	public void appendClassReference(@Nullable String className) {
-		appendClassReference(null, className);
-	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
 		assert className != null;
 		append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
@@ -1212,19 +1174,6 @@ public class JavaStream
 			name = "<null-" + cgElement.eClass().getName() + ">";
 		}
 		return name;
-	}
-
-	/** @deprecated use isPrimitive() */
-	@Deprecated
-	public boolean is_boolean(@NonNull CGValuedElement cgValue) {
-		if (cgValue.getNamedValue().isCaught()) {
-			return false;
-		}
-		else {
-			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-			Class<?> javaClass = typeDescriptor.getJavaClass();
-			return (javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isNonNull());
-		}
 	}
 
 	/**

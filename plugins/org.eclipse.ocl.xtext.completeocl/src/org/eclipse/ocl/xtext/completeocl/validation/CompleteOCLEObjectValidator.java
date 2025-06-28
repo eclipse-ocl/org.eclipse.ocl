@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin;
@@ -52,17 +51,6 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 		super(null);
 		this.ePackage = ePackage;
 		this.oclURI = oclURI;
-	}
-
-	/**
-	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
-	 * for the meta-models managed by environmentFactory.
-	 *
-	 * @deprecated environmentFactory is not used. Use ThreadLocalExecutor.getEnvironmentFactory()
-	 */
-	@Deprecated
-	public CompleteOCLEObjectValidator(@NonNull EPackage ePackage, @NonNull URI oclURI, @NonNull EnvironmentFactory environmentFactory) {
-		this(ePackage, oclURI);
 	}
 
 	//	@Override

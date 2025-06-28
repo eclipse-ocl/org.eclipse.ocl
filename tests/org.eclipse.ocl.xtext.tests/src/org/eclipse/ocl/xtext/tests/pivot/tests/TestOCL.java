@@ -879,11 +879,6 @@ public class TestOCL extends OCLInternal
 		//    	return new GenModelCodeGenHelper(genModel, metamodelManager);
 	}
 
-	@Deprecated /* @deprecated use getError */
-	public Resource.Diagnostic getDiagnostic(@NonNull Resource resource) {
-		return getError(resource);
-	}
-
 	public @NonNull Value getEmptyBagValue() {
 		return getIdResolver().createBagOfEach(TypeId.BAG.getSpecializedId(TypeId.OCL_VOID));
 	}

@@ -576,14 +576,6 @@ implements CollectionType {
 		return visitor.visitCollectionType(this);
 	}
 
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	protected Type elementType = null;
-
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	public Type basicGetElementType() {
-		return getElementType();
-	}
-
 	@Override
 	public @NonNull TypeId computeId() {
 		TemplateableElement unspecializedElement2 = getUnspecializedElement();

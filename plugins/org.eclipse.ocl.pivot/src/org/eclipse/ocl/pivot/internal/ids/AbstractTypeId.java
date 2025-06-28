@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl.OperationIdSingletonScope;
 
@@ -54,11 +53,6 @@ public abstract class AbstractTypeId extends AbstractElementId implements TypeId
 
 	@Override
 	public @NonNull PropertyId getPropertyId(@NonNull String name) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index) {
 		throw new UnsupportedOperationException();
 	}
 

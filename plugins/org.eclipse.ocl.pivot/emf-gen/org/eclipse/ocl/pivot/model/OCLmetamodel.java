@@ -2931,7 +2931,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Parameter_Iteration_ownedIterators = createProperty("Iteration", _Iteration);
 		private final @NonNull Property pr_Parameter_Variable_representedParameter = createProperty("Variable", _Bag_Variable_F);
 		private final @NonNull Property pr_Precedence_associativity = createProperty(PivotPackage.Literals.PRECEDENCE__ASSOCIATIVITY, _AssociativityKind);
-		private final @NonNull Property pr_Precedence_order = createProperty(PivotPackage.Literals.PRECEDENCE__ORDER, _Integer);
 		private final @NonNull Property pr_Precedence_Library_ownedPrecedences = createProperty("Library", _Library);
 		private final @NonNull Property pr_Precedence_Operation_precedence = createProperty("Operation", _Bag_Operation_F);
 		private final @NonNull Property pr_PrimitiveCompletePackage_CompleteModel_primitiveCompletePackage = createProperty("CompleteModel", _Bag_CompleteModel_F);
@@ -4234,10 +4233,6 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Precedence_associativity);
 			property.setIsResolveProxies(true);
 			property.setDefaultValueString("left");
-			ownedProperties.add(property = pr_Precedence_order);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setDefaultValueString("0");
 			ownedProperties.add(property = pr_Precedence_Library_ownedPrecedences);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);

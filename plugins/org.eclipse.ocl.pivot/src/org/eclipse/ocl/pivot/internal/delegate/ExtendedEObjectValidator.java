@@ -363,46 +363,6 @@ public class ExtendedEObjectValidator extends EObjectValidator
 		return eClass2delegateURIs;
 	}
 
-//	@Deprecated /* @deprecated all resources XXX */
-/*	private static @NonNull Map<@NonNull EClass, @NonNull Collection<@NonNull URI>> getEClass2Constraints2(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
-		Map<@NonNull EClass, @NonNull Collection<@NonNull URI>> eClass2constraintURIs = new HashMap<>();
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		for (@NonNull TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
-			if (eObject instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)eObject;
-				CompleteClass completeClass = completeModel.getCompleteClass(asClass);
-				Iterable<@NonNull Object> allInvariantOrInvariants = completeModel.getAllCompleteInvariants(asClass);
-				if (allInvariantOrInvariants != null) {
-					EObject esObject = completeClass.getPrimaryClass().getESObject();
-					if (esObject instanceof EClass) {
-						EClass eClass = (EClass)esObject;
-						Collection<@NonNull URI> constraintURIs = eClass2constraintURIs.get(eClass);
-						if (constraintURIs == null) {
-							constraintURIs = new ArrayList<>();
-							eClass2constraintURIs.put(eClass, constraintURIs);
-						}
-						for (Object invariantOrInvariants : allInvariantOrInvariants) {
-							if (invariantOrInvariants instanceof Constraint) {
-								Constraint asConstraint = (Constraint)invariantOrInvariants;
-								addConstraint(environmentFactory, constraintURIs, asConstraint);
-							}
-							else {
-								@SuppressWarnings("unchecked")
-								List<@NonNull Constraint> invariants = (List<@NonNull Constraint>)invariantOrInvariants;
-								for (Constraint asConstraint : invariants) {
-									addConstraint(environmentFactory, constraintURIs, asConstraint);
-								}
-							}
-						}
-					}
-				}
-				tit.prune();
-			}
-		}
-		return eClass2constraintURIs;
-	} */
-
 	public static void installFor(@NonNull ResourceSet userResourceSet, @NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage, @NonNull ASResource asResource) throws SemanticException {
 		assert userResourceSet == environmentFactory.getUserResourceSet();			// XXX
 		EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);

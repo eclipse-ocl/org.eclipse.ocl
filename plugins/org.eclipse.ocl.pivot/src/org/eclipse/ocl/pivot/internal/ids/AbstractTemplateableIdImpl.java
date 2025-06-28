@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.SpecializedId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
 
 public abstract class AbstractTemplateableIdImpl<@NonNull T extends TemplateableId> extends AbstractElementId implements TemplateableId
@@ -110,11 +109,6 @@ public abstract class AbstractTemplateableIdImpl<@NonNull T extends Templateable
 	public @NonNull T getSpecializedId(@NonNull ElementId... templateBindings) {
 		assert templateBindings.length == templateParameters;
 		return getSpecializedId(IdManager.getBindingsId(templateBindings));
-	}
-
-	@Deprecated /* @deprecated normalization no longer used for TemplateParameterId */
-	public @NonNull TemplateParameterId getTemplateParameterId(int index) {
-		return IdManager.getTemplateParameterId(index);
 	}
 
 	@Override

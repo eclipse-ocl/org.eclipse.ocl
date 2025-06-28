@@ -522,9 +522,6 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		}
 	}
 
-	@Deprecated  /* @deprecated FIXME Bug 548500 workaround */
-	public void installRootContents(@NonNull CSResource csResource2) {}
-
 	/**
 	 * Return true if csTypeRef refers to a type that cannot be null, e.g. T[1],
 	 * or false if it refers to a type that may be null, e.g. T[?],

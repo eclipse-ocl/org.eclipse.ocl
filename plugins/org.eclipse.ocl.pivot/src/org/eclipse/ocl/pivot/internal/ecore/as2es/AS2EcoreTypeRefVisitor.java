@@ -73,14 +73,6 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		this.standardLibrary = context.getStandardLibrary();
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	/* @deprecated isRequired argument moved to safeVisit */
-	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context, boolean isRequired) {
-		this(context);
-	}
-
 	private <T extends EObject> @Nullable T getESObject(@NonNull Class<T> requiredClass, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		Iterable<org.eclipse.ocl.pivot.Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
 		for (org.eclipse.ocl.pivot.Class type : partialClasses) {

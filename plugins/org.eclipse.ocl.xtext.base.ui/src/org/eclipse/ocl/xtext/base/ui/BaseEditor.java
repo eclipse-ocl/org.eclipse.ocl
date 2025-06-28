@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.ui;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jface.text.TextViewer;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
@@ -69,15 +68,6 @@ public class BaseEditor extends XtextEditor
 		return BaseUiModule.MARKER_ID;
 	}
 
-	/**
-	 * @deprecated no longer used - retained for API compatibility
-	 */
-	@Deprecated
-	@SuppressWarnings("null")
-	public @NonNull TextViewer getTextViewer() {
-		return (TextViewer) getSourceViewer();
-	}
-
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		InitWrapperCallBack<Object, PartInitException> callBack = new InitWrapperCallBack<Object, PartInitException>()
@@ -107,12 +97,6 @@ public class BaseEditor extends XtextEditor
 			throw throwable;
 		}
 	}
-
-	/**
-	 * @deprecated no longer used - does nothing - retained for API compatibility
-	 */
-	@Deprecated
-	protected void scheduleDeferredSetTextJob() {}
 
 	@Override
 	protected void setDocumentProvider(IDocumentProvider provider) {

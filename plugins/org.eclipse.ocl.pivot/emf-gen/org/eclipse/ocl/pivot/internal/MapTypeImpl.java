@@ -556,21 +556,6 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		return visitor.visitMapType(this);
 	}
 
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	protected Type keyType = null;
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	protected Type valueType = null;
-
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	public Type basicGetKeyType() {
-		return getKeyType();
-	}
-
-	@Deprecated /* @deprecated no longer duplicates template binding */
-	public Type basicGetValueType() {
-		return getValueType();
-	}
-
 	@Override
 	public @NonNull TypeId computeId() {
 		if (getUnspecializedElement() == null) {

@@ -163,11 +163,6 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	}
 
 	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public int getTemplateParameters() {
 		throw new UnsupportedOperationException();
 	}

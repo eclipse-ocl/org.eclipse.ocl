@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
-import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -54,7 +53,6 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
-import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
@@ -343,17 +341,6 @@ public class ElementUtil
 		return delegationModes;
 	}
 
-	@Deprecated	/* @deprecated transitively not used */
-	public static @Nullable RootCSAttribution getDocumentAttribution(@NonNull ElementCS context) {
-		for (ElementCS target = context, parent; (parent = target.getParent()) != null; target = parent) {
-			Attribution attribution = Attribution.REGISTRY.getAttribution(parent);
-			if (attribution instanceof RootCSAttribution) {
-				return (RootCSAttribution) attribution;
-			}
-		}
-		return null;
-	}
-
 	public static @Nullable List<@NonNull ILeafNode> getDocumentationNodes(@NonNull ICompositeNode node) {
 		List<@NonNull ILeafNode> documentationNodes = null;
 		for (ILeafNode leafNode : node.getLeafNodes()) {
@@ -550,16 +537,6 @@ public class ElementUtil
 		return rawText != null ? rawText : "";
 	}
 
-	/**
-	 * Return the raw text associated with a csElement. This preserves leading/trailing whitespace, which is necessary when propagating
-	 * the original user formatting through an Ecore EAnnotation.
-	 */
-	@Deprecated	/* @deprecated use the clearer getRawText() unless getTrimmedText() was actually the intent. */
-	public static @Nullable String getText(@NonNull ElementCS csElement) {
-		ICompositeNode node = NodeModelUtils.getNode(csElement);
-		return node != null ? NodeModelUtils.getTokenText(node) : null;
-	}
-
 	// FIXME is this fallback iregularity just for ShadowPartCSImpl ever really used / necessary ?
 	public static @Nullable String getText(@NonNull ElementCS csElement, /*@NonNull*/ EReference feature) {
 		@SuppressWarnings("null")@NonNull List<INode> nodes = NodeModelUtils.findNodesForFeature(csElement, feature);
@@ -583,7 +560,8 @@ public class ElementUtil
 	 * Return the logical text associated with a csElement. (Escaped identifers are unescaped.)
 	 */
 	public static @Nullable String getTextName(@NonNull ElementCS csElement) {
-		String text = getText(csElement);
+		ICompositeNode node = NodeModelUtils.getNode(csElement);
+		String text = node != null ? NodeModelUtils.getTokenText(node) : null;
 		if (text == null) {
 			return null;
 		}
@@ -656,23 +634,6 @@ public class ElementUtil
 		Class<?> instanceClass = esObject.getInstanceClass();
 		return (instanceClass == boolean.class) || (instanceClass == byte.class) || (instanceClass == char.class) || (instanceClass == double.class)
 				|| (instanceClass == float.class) || (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class);
-	}
-
-	/**
-	 * @deprecated  Use CS2AS.isRequired to handle [?]/[1]/blank
-	 */
-	@Deprecated
-	public static boolean isRequired(@Nullable TypedRefCS csTypeRef) {
-		if (csTypeRef != null) {
-			MultiplicityCS csMultiplicity = csTypeRef.getOwnedMultiplicity();
-			if (csMultiplicity != null) {
-				int lower = csMultiplicity.getLower();
-				if (lower > 0) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	public static boolean isSpecialization(@NonNull TemplateBindingCS csTemplateBinding) {

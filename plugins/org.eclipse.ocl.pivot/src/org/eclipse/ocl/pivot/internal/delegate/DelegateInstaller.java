@@ -347,12 +347,6 @@ public class DelegateInstaller
 		return oclAnnotation;
 	}
 
-	@Deprecated /* @deprecated not used */
-	public @Nullable EAnnotation createConstraintDelegate(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint, @Nullable URI ecoreURI) {
-		EStringToStringMapEntryImpl eDetail = createConstraintDelegateDetail(eModelElement, pivotConstraint, ecoreURI);
-		return eDetail != null ? (EAnnotation)eDetail.eContainer() : null;
-	}
-
 	/**
 	 * @since 7.0
 	 */

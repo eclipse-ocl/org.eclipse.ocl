@@ -24,11 +24,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLSettingDelegateFactory extends AbstractOCLDelegateFactory
 		implements EStructuralFeature.Internal.SettingDelegate.Factory
 {
-	@Deprecated
-	public OCLSettingDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
-	}
-
 	/**
 	 * @since 7.0
 	 */

@@ -22,7 +22,6 @@ package org.eclipse.ocl.pivot;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.Precedence#getAssociativity <em>Associativity</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.Precedence#getOrder <em>Order</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getPrecedence()
@@ -59,36 +58,5 @@ extends NamedElement {
 	 * @generated
 	 */
 	void setAssociativity(AssociativityKind value);
-
-	/**
-	 * Returns the value of the '<em><b>Order</b></em>' attribute.
-	 * The default value is <code>"0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Order</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * @deprecated - no longer used - use PrecedenceManager$OrderedPrecedence
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Order</em>' attribute.
-	 * @see #setOrder(Number)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getPrecedence_Order()
-	 * @generated
-	 */
-	@Deprecated
-	Number getOrder();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.Precedence#getOrder <em>Order</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * </p>
-	 * @deprecated - no longer used - use PrecedenceManager$OrderedPrecedence
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Order</em>' attribute.
-	 * @see #getOrder()
-	 * @generated
-	 */
-	@Deprecated
-	void setOrder(Number value);
 
 } // Precedence

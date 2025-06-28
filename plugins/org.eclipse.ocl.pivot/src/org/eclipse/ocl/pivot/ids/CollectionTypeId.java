@@ -33,12 +33,6 @@ public interface CollectionTypeId extends BuiltInTypeId, TemplateableId
 	@Override
 	@NonNull CollectionTypeId getSpecializedId(@NonNull BindingsId templateBindings);
 
-	@Deprecated
-	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
-		assert templateBindings.length == 1;			// Legacy compatibility
-		return getSpecializedId(templateBindings[0], false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	}
-
 	/**
 	 * @since 1.18
 	 */

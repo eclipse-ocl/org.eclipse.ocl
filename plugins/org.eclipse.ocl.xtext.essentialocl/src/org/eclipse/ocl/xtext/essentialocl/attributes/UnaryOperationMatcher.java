@@ -15,19 +15,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSLeft2RightVisitor.CS2ASContext;
 
 public class UnaryOperationMatcher extends AbstractOperationMatcher
 {
 	public UnaryOperationMatcher(@NonNull CS2ASContext cs2asContext, @Nullable Type sourceType) {
 		super(cs2asContext, sourceType);
-	}
-
-	@Deprecated /* @deprecated pass CS2ASContext */
-	public UnaryOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
-		super(environmentFactory, sourceType, null);
-		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	@Override

@@ -29,15 +29,6 @@ public abstract class AbstractOCLDelegateFactory
 
 	/**
 	 * Construct a factory for an unknown delegate domain; often the global factory.
-	 */
-	@Deprecated
-	protected AbstractOCLDelegateFactory(@NonNull String delegateURI) {
-		this.delegateURI = delegateURI;
-		this.isGlobal = false;
-	}
-
-	/**
-	 * Construct a factory for an unknown delegate domain; often the global factory.
 	 * @since 7.0
 	 */
 	protected AbstractOCLDelegateFactory(@NonNull String delegateURI, boolean isGlobal) {

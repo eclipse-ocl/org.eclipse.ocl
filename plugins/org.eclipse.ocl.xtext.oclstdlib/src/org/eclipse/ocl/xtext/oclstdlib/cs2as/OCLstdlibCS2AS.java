@@ -19,7 +19,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -99,18 +98,6 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 
 	public @Nullable Precedence getPrecedence(@NonNull String precedenceName) {
 		return name2precedence.get(precedenceName);
-	}
-
-	@Deprecated /* @deprecated - pass String argument */
-	public @Nullable MetaclassNameCS lookUpMetaTypeName(@NonNull EObject csElement, /*@NonNull*/ EStructuralFeature eFeature) {
-		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csElement, eFeature);
-		if ((featureNodes != null) && (featureNodes.size() > 0)) {
-			String metaclassNameText = NodeModelUtils.getTokenText(featureNodes.get(0));
-			MetaclassNameCS csMetaclassName = metaclassNameText != null ? getMetaclassNameCS(metaclassNameText) : null;
-			csElement.eSet(eFeature, csMetaclassName);
-			return csMetaclassName;
-		}
-		return null;
 	}
 
 	public @Nullable String resolveJavaClassCS(@NonNull JavaImplementationCS csJavaImplementation) {

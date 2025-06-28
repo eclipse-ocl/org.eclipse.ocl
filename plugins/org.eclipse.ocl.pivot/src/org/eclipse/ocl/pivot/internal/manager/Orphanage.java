@@ -409,8 +409,6 @@ public class Orphanage extends PackageImpl
 	}
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.requireNonNull(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
-	@Deprecated /* @deprecated The global Orphanage is never used */
-	private static Orphanage ORPHAN_PACKAGE = null;
 
 	/**
 	 * @since 7.0
@@ -498,18 +496,6 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
-	 * @since 1.18
-	 */
-	@Deprecated
-	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanage() {
-		org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
-		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
-		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
-		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
-		return orphanage;
-	}
-
-	/**
 	 * Create and return the local orphanage Package within resource.
 	 *
 	 * @since 1.18
@@ -536,14 +522,6 @@ public class Orphanage extends PackageImpl
 		orphanageResource.getContents().add(orphanModel);
 		resourceSet.getResources().add(orphanageResource);
 		return orphanage;
-	}
-
-	@Deprecated /* @deprecated Never used */
-	public static void disposeInstance() {
-		if (ORPHAN_PACKAGE != null) {
-			ORPHAN_PACKAGE.dispose();
-			ORPHAN_PACKAGE = null;
-		}
 	}
 
 	/**
@@ -595,39 +573,10 @@ public class Orphanage extends PackageImpl
 		return (WildcardType)wildcardType;
 	}
 
-
 	/**
-	 * Return the Orphanage for an eObject, which is the Orphanage resource in the same ResourceSet as
-	 * the eObject, else the global Orphanage.
+	 * Return the Orphanage for a resourceSet.
 	 */
-	@Deprecated /* @deprecated - not used */
-	public static @Nullable Orphanage getOrphanage(@NonNull EObject eObject) {
-		//		if (eObject == null) {
-		//			return null;
-		//		}
-		Resource resource = eObject.eResource();
-		if (resource == null) {
-			return null;
-		}
-		ResourceSet resourceSet = resource.getResourceSet();
-		if (resourceSet == null) {
-			return null;
-		}
-		return getOrphanage(resourceSet);
-	}
-
-	/**
-	 * Return the Orphanage for a resourceSet if non-null. Obsolete deprecated functionality returns a global Orphanage if null.
-	 */
-	public static @NonNull Orphanage getOrphanage(@Nullable ResourceSet resourceSet) {
-		if (resourceSet == null) {
-			assert false : "Use of the global Orphanage is deprecated";
-			Orphanage instance2 = ORPHAN_PACKAGE;
-			if (instance2 == null) {
-				instance2 = ORPHAN_PACKAGE = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
-			}
-			return instance2;
-		}
+	public static @NonNull Orphanage getOrphanage(@NonNull ResourceSet resourceSet) {
 		for (Resource aResource : resourceSet.getResources()) {
 			for (EObject eContent : aResource.getContents()) {
 				if (eContent instanceof Model) {

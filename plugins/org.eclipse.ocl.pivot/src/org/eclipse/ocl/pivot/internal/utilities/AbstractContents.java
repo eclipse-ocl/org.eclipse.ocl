@@ -208,18 +208,6 @@ public abstract class AbstractContents extends PivotUtil
 		return lambdaParameter;
 	}
 
-	@Deprecated /* @deprecated add ePackage */
-	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId) {
-		Library pivotLibrary = PivotFactory.eINSTANCE.createLibrary();
-		pivotLibrary.setName(name);
-		pivotLibrary.setNsPrefix(nsPrefix);
-		if (packageId != null) {
-			((LibraryImpl)pivotLibrary).setPackageId(packageId);  // FIXME Add to API
-		}
-		pivotLibrary.setURI(nsURI);
-		return pivotLibrary;
-	}
-
 	/**
 	 * @since 1.17
 	 */

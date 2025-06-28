@@ -97,13 +97,6 @@ public class StringUtil
 		}
 		s.append("]");
 	}
-	/**
-	 * @deprecated add isNullFree argument
-	 */
-	@Deprecated
-	public static void appendMultiplicity(@NonNull StringBuilder s, long lower, long upper) {
-		appendMultiplicity(s, lower, upper, false);
-	}
 
 	public static @NonNull String bind(String messageTemplate, Object... bindings) {
 		@SuppressWarnings("null") @NonNull String result = NLS.bind(messageTemplate, bindings);
@@ -305,15 +298,6 @@ public class StringUtil
 			s.append(strings.get(i));
 		}
 		return s.toString();
-	}
-
-	/**
-	 * Return the uppercase hex ASCII character for the least significant 4 bits of value.
-	 */
-	@Deprecated /* @deprecated this routine is no longer used */
-	public static char toHex(int value) {
-		int nibble = value & 0xF;
-		return nibble2uchex[nibble];
 	}
 
 	/**

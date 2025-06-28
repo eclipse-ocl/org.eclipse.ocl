@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
@@ -834,11 +833,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		for (@NonNull CGValuedElement cgElement : sortedElements) {
 			cgElement.accept(this);
 		}
-	}
-
-	@Deprecated /* deprecated use getImportManager */
-	public @NonNull Set<String> getAllImports() {
-		return getImportNameManager().getLong2ShortImportNames().keySet();
 	}
 
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
