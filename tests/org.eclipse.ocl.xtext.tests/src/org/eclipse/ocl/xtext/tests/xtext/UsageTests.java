@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -2007,7 +2008,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 						// Reload ... Ecore Next Finish
 					//	System.out.println("\nReload ... Ecore Next Finish");
-						Ecore2AS es2as = (Ecore2AS) Ecore2AS.findAdapter(ecoreResource, environmentFactory);
+						Ecore2AS es2as = (Ecore2AS) External2AS.findAdapter(ecoreResource, environmentFactory);
 						if (es2as == null) {
 							es2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 						}

@@ -100,7 +100,7 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 	@Override
 	public @NonNull String toString() {
 		if (resourceSet != null) {
-			return "«resourceSetAware» " + contentType;
+			return "«resourceSetAware» " + asContentType;
 		}
 		else {
 			return super.toString();

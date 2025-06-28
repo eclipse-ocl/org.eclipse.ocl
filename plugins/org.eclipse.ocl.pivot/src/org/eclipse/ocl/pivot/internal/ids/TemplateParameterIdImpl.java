@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ids;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -17,7 +20,6 @@ import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdHash;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -69,8 +71,28 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 		}
 	}
 
+	/**
+	 * List of template parameters; 0 index at least index ... up to most nested
+	 */
+	private static /*@LazyNonNull*/ List<@NonNull TemplateParameterIdImpl> templateParameterNormalizedIds = null;
+
 	private static int computeHashCode(@NonNull TemplateableId generalizedId, @NonNull String name) {
 		return IdHash.createChildHash(generalizedId, name);
+	}
+
+	public static synchronized @NonNull TemplateParameterId getTemplateParameterId(int index) {
+		assert index >= 0;
+		if (templateParameterNormalizedIds == null) {
+			templateParameterNormalizedIds = new ArrayList<>(10);
+		}
+		if (index >= templateParameterNormalizedIds.size()) {
+			while (index >= templateParameterNormalizedIds.size()) {
+				templateParameterNormalizedIds.add(new TemplateParameterIdImpl(templateParameterNormalizedIds.size()));
+			}
+		}
+		TemplateParameterIdImpl templateParameterId = templateParameterNormalizedIds.get(index);
+		assert templateParameterId != null;
+		return templateParameterId;
 	}
 
 	private final @Nullable TemplateableId templateableId;
@@ -79,8 +101,7 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	private final @NonNull String name;
 	private final int hashCode;
 
-	@Deprecated /* @deprecated normalization no longer used for TemplateParameterId */
-	public TemplateParameterIdImpl(@NonNull IdManager idManager, int index) {
+	private TemplateParameterIdImpl(int index) {
 		//		System.out.println("create " + ClassUtil.debugFullName(this));
 		this.templateableId = null;
 		this.index = index;
@@ -91,7 +112,7 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	/**
 	 * @since 1.18
 	 */
-	public TemplateParameterIdImpl(@NonNull TemplateableId templateableId, int index, @NonNull String name) {
+	private TemplateParameterIdImpl(@NonNull TemplateableId templateableId, int index, @NonNull String name) {
 		//		System.out.println("create " + ClassUtil.debugFullName(this));
 		this.templateableId = templateableId;
 		this.index = index;
@@ -122,7 +143,6 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 		return index;
 	}
 
-	@Deprecated /* @deprecated no longer used */
 	@Override
 	public @Nullable String getLiteralName() {
 		if (this == TypeId.T_1) {

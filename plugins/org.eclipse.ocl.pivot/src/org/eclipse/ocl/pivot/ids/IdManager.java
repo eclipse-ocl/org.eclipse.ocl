@@ -111,11 +111,6 @@ public final class IdManager
 	private static final @NonNull RootPackageIdSingletonScope roots = new RootPackageIdSingletonScope();
 
 	/**
-	 * List of template parameters; 0 index at least index ... up to most nested
-	 */
-	private static final @NonNull List<@NonNull TemplateParameterIdImpl> templateParameterNormalizedIds = new ArrayList<>(10);
-
-	/**
 	 * Map from the Tuple hashCode to the tuple typeIds with the same hash.
 	 */
 	private static final @NonNull TupleTypeIdSingletonScope tupleTypes = new TupleTypeIdSingletonScope();
@@ -560,22 +555,12 @@ public final class IdManager
 	public static @NonNull TemplateParameterId getTemplateParameterIndexId(@NonNull TemplateParameter templateParameter) {
 		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(templateParameter);
 		int index = templateParameterization.indexOf(templateParameter);
-		return getTemplateParameterId(index);
+		return TemplateParameterIdImpl.getTemplateParameterId(index);
 	}
 
-	@Deprecated /* @deprecated change to private and probably inlined */
 	public static @NonNull TemplateParameterId getTemplateParameterId(int index) {
 		assert index >= 0;
-		if (index >= templateParameterNormalizedIds.size()) {
-			synchronized (templateParameterNormalizedIds) {
-				while (index >= templateParameterNormalizedIds.size()) {
-					templateParameterNormalizedIds.add(new TemplateParameterIdImpl(PRIVATE_INSTANCE, templateParameterNormalizedIds.size()));
-				}
-			}
-		}
-		TemplateParameterIdImpl templateParameterId = templateParameterNormalizedIds.get(index);
-		assert templateParameterId != null;
-		return templateParameterId;
+		return TemplateParameterIdImpl.getTemplateParameterId(index);
 	}
 
 	/**
