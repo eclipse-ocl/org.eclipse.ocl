@@ -661,12 +661,6 @@ public abstract class ValueUtil
 		return new MapEntryImpl(key, value);
 	}
 
-	@Deprecated /* @deprecated not used */
-	public static @NonNull MapValue createMapValue(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<Object, Object> boxedValues) {
-	//	BindingsId bindingsId = IdManager.getBindingsId(keyTypeId, valueTypeId, false, false);
-		return createMapValue(TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, false, false), boxedValues);
-	}
-
 	/**
 	 * @since 1.18
 	 */
@@ -681,10 +675,6 @@ public abstract class ValueUtil
 	public static OrderedSetValue.@NonNull Accumulator createOrderedSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new SparseOrderedSetValueImpl.Accumulator(collectedId);
 	}
-
-	//	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
-	//		return new RangeOrderedSetValueImpl(typeId, range);
-	//	}
 
 	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
@@ -1320,16 +1310,6 @@ public abstract class ValueUtil
 				s.append("...");
 			}
 		}
-	}
-
-	/**
-	 * @since 1.1
-	 * @deprecated use IterableValue
-	 */
-	@Deprecated
-	@SuppressWarnings("unchecked")
-	public static @NonNull <T> Iterable<T> typedIterable(Class<T> elementClass, @NonNull CollectionValue collectionValue) {
-		return (Iterable<T>)collectionValue;
 	}
 
 	/**
