@@ -717,7 +717,6 @@
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Pivotable"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Precedence">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-Precedence-associativity"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-Precedence-order"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-PrimitiveCompletePackage"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-PrimitiveLiteralExp"/>

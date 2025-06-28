@@ -72,12 +72,6 @@ public abstract class LUSSIDs
 	 * @since 7.0
 	 */
 	protected static final int PARAMETER_IS_OPTIONAL_MULTIPLIER = 73;
-	@Deprecated /* not used */
-	protected static final int LAMBDA_TYPE_CONTEXT_MULTIPLIER = 71;
-	@Deprecated /* not used */
-	protected static final int LAMBDA_TYPE_PARAMETER_TYPE_MULTIPLIER = 73;
-	@Deprecated /* not used */
-	protected static final int LAMBDA_TYPE_RETURN_TYPE_MULTIPLIER = 79;
 	protected static final int MAP_KEYS_ARE_NULL_FREE_MULTIPLIER = 101;
 	protected static final int MAP_VALUES_ARE_NULL_FREE_MULTIPLIER = 103;
 	protected static final int OPERATION_PARAMETER_TYPE_MULTIPLIER = 83;

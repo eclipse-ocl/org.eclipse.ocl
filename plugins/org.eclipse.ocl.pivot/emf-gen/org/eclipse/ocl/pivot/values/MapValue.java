@@ -33,8 +33,6 @@ public interface MapValue extends IterableValue {
 	 * @generated NOT
 	 */
 	interface Accumulator extends MapValue {
-		@Deprecated /* @deprecated erroneous never-used signature */
-		boolean add(@Nullable Object value);
 		/**
 		 * @since 1.6
 		 */

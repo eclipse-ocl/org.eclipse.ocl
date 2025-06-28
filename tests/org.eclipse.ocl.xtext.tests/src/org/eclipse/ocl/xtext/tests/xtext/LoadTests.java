@@ -106,40 +106,6 @@ public class LoadTests extends AbstractLoadTests
 		}
 	} */
 
-	@Deprecated /* @deprecated - not used */
-	public Resource doLoad_Pivot(@NonNull OCL ocl, @NonNull String stem, @NonNull String extension) throws IOException {
-		//		long startTime = System.currentTimeMillis();
-		//		System.out.println("Start at " + startTime);
-		String inputName = stem + "." + extension;
-		URI inputURI = getProjectFileURI(inputName);
-		Resource asResource = null;
-		try {
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
-			asResource = ocl.getMetamodelManager().getASResourceSet().getResource(inputURI, true);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
-			assertNoResourceErrors("Load failed", asResource);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
-			assertNoUnresolvedProxies("Unresolved proxies", asResource);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
-			assertNoValidationErrors("Validation errors", asResource.getContents().get(0));
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-			//			xtextResource.setURI(output2URI);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			//			xtextResource.save(null);
-			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
-			//			assertNoResourceErrors("Save failed", xtextResource);
-		}
-		finally {
-			//			unloadCS(resourceSet);
-			//			if (xtextResource instanceof BaseCSResource) {
-			//				CS2ASResourceAdapter adapter = CS2ASResourceAdapter.getAdapter((BaseCSResource)xtextResource, null);
-			//				adapter.dispose();
-			//			}
-			//			unloadPivot(metamodelManager);
-		}
-		return asResource;
-	}
-
 	public void testLoad_Annotations_ecore() throws IOException, InterruptedException {
 		OCL ocl = createOCL();
 		doLoadEcore(ocl, getTestModelURI("models/ecore/Annotations.ecore"));

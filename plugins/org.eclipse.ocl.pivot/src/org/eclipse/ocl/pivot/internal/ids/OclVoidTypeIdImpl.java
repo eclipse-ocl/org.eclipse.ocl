@@ -15,11 +15,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.PartId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -97,11 +96,6 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 
 	@Override
 	public @NonNull OclVoidTypeIdImpl getSpecializedId(@NonNull BindingsId templateBindings) {
-		return this;
-	}
-
-	@Override
-	public @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
 		return this;
 	}
 

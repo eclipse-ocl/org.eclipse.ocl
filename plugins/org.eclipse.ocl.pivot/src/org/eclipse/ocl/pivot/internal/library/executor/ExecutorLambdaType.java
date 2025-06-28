@@ -46,17 +46,6 @@ public class ExecutorLambdaType extends AbstractExecutorClass implements Executo
 		this.result = result;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	public ExecutorLambdaType(String name, @NonNull ExecutorTypeParameter $$0) {
-		super(name, 0);
-		this.context = null;
-		this.parameters = null;
-		this.result = null;
-	}
-
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		throw new UnsupportedOperationException();			// WIP fixme

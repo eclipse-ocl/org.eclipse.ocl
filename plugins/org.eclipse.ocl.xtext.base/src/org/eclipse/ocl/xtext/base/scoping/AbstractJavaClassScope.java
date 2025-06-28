@@ -10,13 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.scoping;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractScope;
 
@@ -24,44 +18,13 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
  * An AbstractJavaClassScope provides the abstract support for ClassName lookup in the base plugin. The real
  * lookup is only appropriate for OCLstdlib where the derived JavaClassScope resides.
  */
-public abstract class AbstractJavaClassScope extends AbstractScope implements Adapter
+public abstract class AbstractJavaClassScope extends AbstractScope
 {
-	@Deprecated /* @deprecated No longer used - JavaClassScope is an OCLstdlibCS2AS field rather than CSResource adapter */
-	public static @Nullable AbstractJavaClassScope findAdapter(@NonNull CSResource csResource) {
-		return ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
-	}
-
-	private Notifier target;
-
 	protected AbstractJavaClassScope() {
 		super(IScope.NULLSCOPE, false);
 	}
 
 	public abstract void addClassLoaders(@NonNull Iterable<@NonNull ClassLoader> classLoaders);
-
-	@Deprecated /* @deprecated not used */
-	public abstract void getAdapter(@NonNull CSResource importedResource);
-
-	@Override
-	public Notifier getTarget() {
-		return target;
-	}
-
-	@Deprecated /* @deprecated not used */
-	public abstract void installContents(@NonNull CSResource csResource);
-
-	@Override
-	public boolean isAdapterForType(Object type) {
-		return type == AbstractJavaClassScope.class;
-	}
-
-	@Override
-	public void notifyChanged(Notification notification) {}
-
-	@Override
-	public void setTarget(Notifier newTarget) {
-		this.target = newTarget;
-	}
 
 	@Override
 	public String toString() {

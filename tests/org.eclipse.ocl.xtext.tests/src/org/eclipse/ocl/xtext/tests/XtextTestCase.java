@@ -305,11 +305,6 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	}
 
-	@Deprecated
-	public static void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) throws IOException, InterruptedException {
-		TestUtil.assertSameModel(expectedResource, actualResource);
-	}
-
 	protected void doBadLoadFromString(@NonNull OCLInternal ocl, @NonNull String fileName, @NonNull String testContents, @NonNull Bag<String> expectedErrorMessages) throws Exception {
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		metamodelManager.addClassLoader(ClassUtil.requireNonNull(getClass().getClassLoader()));

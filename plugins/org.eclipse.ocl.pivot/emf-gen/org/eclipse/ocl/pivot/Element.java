@@ -137,12 +137,6 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	/*@Nullable*/ EObject getESObject();
 
 	/**
-	 * @deprecated use getESObject
-	 */
-	@Deprecated
-	@Nullable EObject getETarget();
-
-	/**
 	 * Return the EObject whose URI (or the externalURI for a Model) that should enable the esObject to be reloaded.
 	 *
 	 * @since 7.0

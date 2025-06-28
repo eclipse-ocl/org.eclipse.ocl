@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -71,7 +72,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2ASDeclarationSwitch;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -658,7 +658,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				instanceClassName = (String) object;
 			}
 		}
-		PrimitiveType asPrimitiveType = getPrimitiveTypeByOCLStereotype(umlDataType);
+		PrimitiveType asPrimitiveType = converter.getPrimitiveTypeByOCLStereotype(umlDataType);
 		if (asPrimitiveType != null) {
 			if (instanceClassName == null) {
 				if (asPrimitiveType == standardLibrary.getIntegerType()) {
@@ -1059,15 +1059,5 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 
 	protected @Nullable PrimitiveType getPrimitiveTypeByEcoreStereotype(org.eclipse.uml2.uml.@NonNull Stereotype ecoreStereotype, @NonNull String instanceClassName) {
 		return converter.getPrimitiveTypeByEcoreStereotype(ecoreStereotype, instanceClassName);
-	}
-
-	@Deprecated /* @deprecated use converter version */
-	protected @Nullable PrimitiveType getPrimitiveTypeByName(org.eclipse.uml2.uml.@NonNull PrimitiveType umlPrimitiveType) {
-		return converter.getPrimitiveTypeByName(umlPrimitiveType);
-	}
-
-	@Deprecated /* @deprecated use converter version */
-	protected @Nullable PrimitiveType getPrimitiveTypeByOCLStereotype(org.eclipse.uml2.uml.@NonNull DataType umlDataType) {
-		return converter.getPrimitiveTypeByOCLStereotype(umlDataType);
 	}
 }

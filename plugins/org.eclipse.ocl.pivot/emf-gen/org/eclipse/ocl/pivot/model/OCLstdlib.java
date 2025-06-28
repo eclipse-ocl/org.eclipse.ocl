@@ -1099,7 +1099,6 @@ public class OCLstdlib extends ASResourceImpl
 
 		private final @NonNull Operation op_Boolean__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Boolean__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		private final @NonNull Operation op_Boolean_allInstances = createOperation("allInstances", _Set_OclSelf_T_L2_U2, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_Boolean_and = createOperation("and", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		private final @NonNull Operation op_Boolean_and2 = createOperation("and2", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
 		private final @NonNull Operation op_Boolean_implies = createOperation("implies", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation", org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
@@ -1260,7 +1259,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclComparable__gt_ = createOperation(">", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation.INSTANCE);
 		private final @NonNull Operation op_OclComparable__gt__eq_ = createOperation(">=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclComparable_compareTo = createOperation("compareTo", _Integer, "org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
-		private final @NonNull Operation op_OclElement_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclAsModelType = createOperation("oclAsModelType", $$0, "org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE, tp_OclElement_oclAsModelType_TT);
 		private final @NonNull Operation op_OclElement_oclBase = createOperation("oclBase", _OclType, "org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclBase_1 = createOperation("oclBase", _OclType, "org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
@@ -1272,10 +1270,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclElement_oclIsModelKindOf = createOperation("oclIsModelKindOf", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclModelType = createOperation("oclModelType", _OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclModelTypes = createOperation("oclModelTypes", _Set_OclSelf_F_L1_U1, "org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
-		private final @NonNull Operation op_OclEnumeration_allInstances = createOperation("allInstances", _Set_OclSelf_T_L1_U1, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		private final @NonNull Operation op_OclInvalid_allInstances = createOperation("allInstances", _Set_OclSelf_F, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_and = createOperation("and", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_implies = createOperation("implies", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation", org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_oclAsSet = createOperation("oclAsSet", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
@@ -1292,7 +1288,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclMessage_isOperationCall = createOperation("isOperationCall", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclMessage_isSignalSent = createOperation("isSignalSent", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclMessage_result = createOperation("result", _OclAny, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		private final @NonNull Operation op_OclStereotype_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclSummable_sum = createOperation("sum", _OclSelf, null, null);
 		private final @NonNull Operation op_OclSummable_zero = createOperation("zero", _OclSelf, null, null);
 		private final @NonNull Operation op_OclTuple__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1301,7 +1296,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclVoid__add_ = createOperation("+", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		private final @NonNull Operation op_OclVoid_allInstances = createOperation("allInstances", _Set_OclSelf_F_L1_U1, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_and = createOperation("and", _Boolean, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_concat = createOperation("concat", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_implies = createOperation("implies", _Boolean, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
@@ -1387,10 +1381,6 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
-			ownedOperations.add(operation = op_Boolean_allInstances);
-			operation.setIsRequired(true);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_Boolean_and);
 			operation.setIsInvalidating(true);
 			operation.setIsValidating(true);
@@ -1982,10 +1972,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
 
 			ownedOperations = _OclElement.getOwnedOperations();
-			ownedOperations.add(operation = op_OclElement_allInstances);
-			operation.setIsRequired(true);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_OclElement_oclAsModelType);
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(true);
@@ -2019,12 +2005,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_OclElement_oclModelTypes);
 			operation.setIsRequired(true);
 
-			ownedOperations = _OclEnumeration.getOwnedOperations();
-			ownedOperations.add(operation = op_OclEnumeration_allInstances);
-			operation.setIsRequired(true);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
-
 			ownedOperations = _OclInvalid.getOwnedOperations();
 			ownedOperations.add(operation = op_OclInvalid__lt__gt_);
 			operation.setIsRequired(true);
@@ -2034,10 +2014,6 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
-			ownedOperations.add(operation = op_OclInvalid_allInstances);
-			operation.setIsRequired(true);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_OclInvalid_and);
 			operation.setIsValidating(true);
 			ownedParameters = operation.getOwnedParameters();
@@ -2087,12 +2063,6 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_OclMessage_result);
 
-			ownedOperations = _OclStereotype.getOwnedOperations();
-			ownedOperations.add(operation = op_OclStereotype_allInstances);
-			operation.setIsRequired(true);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
-
 			ownedOperations = _OclSummable.getOwnedOperations();
 			ownedOperations.add(operation = op_OclSummable_sum);
 			operation.setIsRequired(true);
@@ -2130,10 +2100,6 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
-			ownedOperations.add(operation = op_OclVoid_allInstances);
-			operation.setIsRequired(true);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("dummy", _Integer, false));
 			ownedOperations.add(operation = op_OclVoid_and);
 			operation.setIsInvalidating(true);
 			operation.setIsValidating(true);
@@ -2860,14 +2826,9 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 
-		private final @NonNull Property pr_Collection_elementType = createProperty(OCLstdlibPackage.Literals.COLLECTION__ELEMENT_TYPE, $$0);
-		private final @NonNull Property pr_Collection_lower = createProperty(OCLstdlibPackage.Literals.COLLECTION__LOWER, _Integer);
-		private final @NonNull Property pr_Collection_upper = createProperty(OCLstdlibPackage.Literals.COLLECTION__UPPER, _Integer);
 		private final @NonNull Property pr_CollectionType_elementType = createProperty("elementType", _Type);
 		private final @NonNull Property pr_CollectionType_lower = createProperty("lower", _Integer);
 		private final @NonNull Property pr_CollectionType_upper = createProperty("upper", _Integer);
-		private final @NonNull Property pr_Map_keyType = createProperty(OCLstdlibPackage.Literals.MAP__KEY_TYPE, $$0);
-		private final @NonNull Property pr_Map_valueType = createProperty(OCLstdlibPackage.Literals.MAP__VALUE_TYPE, $$1);
 		private final @NonNull Property pr_MapType_keyType = createProperty("keyType", _Type);
 		private final @NonNull Property pr_MapType_valueType = createProperty("valueType", _Type);
 		private final @NonNull Property pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid_F);
@@ -2883,26 +2844,6 @@ public class OCLstdlib extends ASResourceImpl
 		private void installProperties() {
 			List<Property> ownedProperties;
 			Property property;
-
-			ownedProperties = _Collection_Collection_T.getOwnedProperties();
-			ownedProperties.add(property = pr_Collection_elementType);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setIsStatic(true);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
-			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-			ownedProperties.add(property = pr_Collection_lower);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setIsStatic(true);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
-			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-			ownedProperties.add(property = pr_Collection_upper);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setIsStatic(true);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
-			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 			ownedProperties = _CollectionType.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionType_elementType);
@@ -2921,20 +2862,6 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
-
-			ownedProperties = _Map_Map_K_Map_V.getOwnedProperties();
-			ownedProperties.add(property = pr_Map_keyType);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setIsStatic(true);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
-			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-			ownedProperties.add(property = pr_Map_valueType);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setIsStatic(true);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
-			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 			ownedProperties = _MapType.getOwnedProperties();
 			ownedProperties.add(property = pr_MapType_keyType);
@@ -3174,7 +3101,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(_Boolean, "The standard type Boolean represents the common true/false values.\nBoolean is itself an instance of the metatype PrimitiveType (from UML).");
 			installComment(op_Boolean__lt__gt_, "Returns oclText[true] if the logical value of oclText[self] is the not same as the numeric value of object2, oclText[false] otherwise.");
 			installComment(op_Boolean__eq_, "Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
-			installComment(op_Boolean_allInstances, "Returns oclText[Set{false, true}].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
 			installComment(op_Boolean_and, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[true].");
 			installComment(op_Boolean_and2, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[true].");
 			installComment(op_Boolean_implies, "oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[false].");
@@ -3286,7 +3212,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(it_Collection_collectNested, "The Collection of elements which results from applying body to every member of the source collection.");
 			installComment(it_Collection_collect, "The Collection of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
 			installComment(op_Collection_count, "The number of times that object occurs in the collection oclText[self].");
-			installComment(pr_Collection_elementType, "Evaluates to the type of the collection elements.\n\n@Deprecated Use regular CollectionType property");
 			installComment(op_Collection_excludes, "True if object is not an element of oclText[self], oclText[false] otherwise.");
 			installComment(op_Collection_excludesAll, "Does oclText[self] contain none of the elements of c2 ?");
 			installComment(op_Collection_excluding, "The collection containing all elements of oclText[self] apart from object.");
@@ -3310,7 +3235,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(it_Collection_isUnique, "Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].");
 			installComment(it_Collection_isUnique, "The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.\nThe result is not flattened.");
 			installComment(it_Collection_iterate, "Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source collection.");
-			installComment(pr_Collection_lower, "Evaluates to the lower bound on the number of collection elements.\n\n@Deprecated Use regular CollectionType property");
 			installComment(op_Collection_max, "The element with the maximum value of all elements in oclText[self].\nElements must be of a type supporting the max operation.\nThe max operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
 			installComment(op_Collection_min, "The element with the minimum value of all elements in oclText[self].\nElements must be of a type supporting the min operation.\nThe min operation - supported by the elements - must take one parameter of type T and be both associative and commutative.\nUnlimitedNatural, Integer and Real fulfill this condition.");
 			installComment(op_Collection_notEmpty, "Is oclText[self] not the empty collection?\n\noclText[null->notEmpty()] returns oclText[false] in virtue of the implicit casting from oclText[null] to oclText[Bag{}].");
@@ -3324,7 +3248,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(it_Collection_sortedBy, "Results in the Collection containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
 			installComment(op_Collection_sum, "The addition of all elements in oclText[self].\nElements must be of an oclText[OclSummable] type to provide the zero() and sum() operations.\nThe e[sum] operation must be both associative: a.sum(b).sum(c) = a.sum(b.sum(c)), and commutative: a.sum(b) = b.sum(a).\nInteger and Real fulfill this condition.\n\nIf the e[sum] operation is not both associative and commutative, the e[sum] expression is not well-formed,\nwhich may result in unpredictable results during evaluation.\nIf an implementation is able to detect a lack of associativity or commutativity,\nthe implementation may bypass the evaluation and return an oclText[invalid] result.");
 			installComment(op_Collection_union, "The bag consisting of all elements in oclText[self] and all elements in c.");
-			installComment(pr_Collection_upper, "Evaluates to the upper bound on the number of collection elements.\n\n@Deprecated Use regular CollectionType property");
 			installComment(_Enumeration, "@Deprecated: Use OclEnumeration\nThe Enumeration type is the type of an OrderedSet of EnumerationLiteral.");
 			installComment(op_Enumeration_allInstances, "Return a set of all enumeration values of oclText[self].");
 			installComment(_EnumerationLiteral, "The standard type EnumerationLiteral represents a named constant value of an Enumeration.");
@@ -3364,14 +3287,12 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Map_isEmpty, "True if oclText[self] is the empty map, oclText[false] otherwise.");
 			installComment(it_Map_isUnique, "Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].");
 			installComment(it_Map_iterate, "Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.");
-			installComment(pr_Map_keyType, "The key type of the key-value pairs of oclText[self].\n\n@Deprecated Use regular MapType property");
 			installComment(op_Map_keys, "A Set comprising all the keys of the key-value pairs in oclText[self].");
 			installComment(op_Map_notEmpty, "True if oclText[self] not the empty map, oclText[false] otherwise.");
 			installComment(it_Map_one, "Results in oclText[true] if there is exactly one element in the source map for which body is oclText[true].");
 			installComment(it_Map_reject, "The subset of the source set for which body is oclText[false].");
 			installComment(it_Map_select, "The subset of set for which expr is oclText[true].");
 			installComment(op_Map_size, "The number of key-value pairs in oclText[self].");
-			installComment(pr_Map_valueType, "The value type of the key-value pairs of oclText[self].\n\n@Deprecated Use regular MapType property");
 			installComment(op_Map_values, "The Bag comprising all the values of the key-value pairs in oclText[self].");
 			installComment(_OclAny, "The number of elements in the collection oclText[self].essions.\nOclAny is itself an instance of the metatype AnyType.\n\nAll classes in a UML model inherit all operations defined on OclAny.\nTo avoid name conflicts between properties in the model and the properties inherited from OclAny,\nall names on the properties of OclAny start with \u2018ocl.\u2019\nAlthough theoretically there may still be name conflicts, they can be avoided.\nOne can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.\n\nOperations of OclAny, where the instance of OclAny is called object.");
 			installComment(op_OclAny__lt__gt_, "True if oclText[self] is a different object from object2. Infix operator.");
@@ -3396,7 +3317,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OclComparable__gt__eq_, "True if oclText[self] is greater than or equal to oclText[that].");
 			installComment(op_OclComparable_compareTo, "Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.\n\nThe compareTo operation should be commutative.");
 			installComment(_OclElement, "The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined\nfor OclElement are therefore applicable to all user-defined types.");
-			installComment(op_OclElement_allInstances, "Return a set of all instances of the type and derived types of self.\n\n@Deprecated - retained with broken signature for referential API compatibility.");
 			installComment(op_OclElement_oclAsModelType, "Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].\n\nMost model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].\n\nModel elements such as UML\'s InstnaceSpecification that do support distinct model and metamodel types return oclText[self]\nwith the cast type oclText[TT] that may be used for further navigation.\nIf the actual model type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if\nthe classification is ambiguous.");
 			installComment(op_OclElement_oclBase, "Returns the application class that is extended by this extension element. Returns null for an orphan extension of nothing.");
 			installComment(op_OclElement_oclBase_1, "Returns the application class conforming to base extended by this extension element. Returns null if no such class.");
@@ -3411,11 +3331,9 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OclElement_oclModelType, "Evaluates to the most derived model type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply\nclassified model type, the return is the most derived type of the current classification which is established\nby an oclText[oclAsModelType()] call.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
 			installComment(op_OclElement_oclModelTypes, "Evaluates to all of the most derived model types of which oclText[self] is an instance. The return from oclText[oclModelTypes()]\nis normally equivalent to that from oclText[oclModelType()] unless oclText[self] is an instance of multiply classified model type.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
 			installComment(_OclEnumeration, "The OclEnumeration type is the implicit supertype of any user Enumeration type.\nFIXME This is probably obsolete now that static / meta-types clarified.");
-			installComment(op_OclEnumeration_allInstances, "Return a set of all enumeration values of oclText[self].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
 			installComment(_OclInvalid, "The type OclInvalid is a type that conforms to all other types.\nIt has one single instance, identified as  oclText[invalid].\nAny property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().\nOclInvalid is itself an instance of the metatype InvalidType.");
 			installComment(op_OclInvalid__lt__gt_, "Returns oclText[invalid].");
 			installComment(op_OclInvalid__eq_, "Returns oclText[invalid].");
-			installComment(op_OclInvalid_allInstances, "Returns oclText[invalid].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
 			installComment(op_OclInvalid_oclBadOperation, "An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.");
 			installComment(pr_OclInvalid_oclBadProperty, "An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.");
 			installComment(op_OclInvalid_toString, "Returns \'invalid\'.");
@@ -3427,7 +3345,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OclMessage_result, "Returns the result of the called operation, if type of template parameter is an operation call,\nand the called operation has returned a value. Otherwise the oclText[invalid] value is returned.");
 			installComment(_OclSelf, "The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation\nand Iteration signatures. Instances of OclSelf are never created.");
 			installComment(_OclStereotype, "The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined\nfor OclStereotype are therefore applicable to all UML stereotypes.");
-			installComment(op_OclStereotype_allInstances, "Return a set of all instances of the stereotype and derived types of self.\n\n@Deprecated - retained with broken signature for referential API compatibility.");
 			installComment(_OclSummable, "The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived\nsum and zero implementations may be summed.");
 			installComment(op_OclSummable_sum, "Return the sum of self and that.\n\nThe sum operation should be associative.");
 			installComment(op_OclSummable_zero, "Return the \'zero\' value of self to initialize a summation.\n\nzero().sum(self) = self.");
@@ -3437,7 +3354,6 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(_OclVoid, "The type OclVoid is a type that conforms to all other types except OclInvalid.\nIt has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.\nAny property call applied on oclText[null] results in oclText[invalid], except for the\noclIsUndefined(), oclIsInvalid(), =(OclAny) and <>(OclAny) operations.\nHowever, by virtue of the implicit conversion to a collection literal,\nan expression evaluating to oclText[null] can be used as source of collection operations (such as \u2018isEmpty\u2019).\nIf the source is the oclText[null] literal, it is implicitly converted to Bag{}.\n\nOclVoid is itself an instance of the metatype VoidType.");
 			installComment(op_OclVoid__add_, "The concatenation of oclText[null] and s.");
 			installComment(op_OclVoid__eq_, "Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]\nif object is oclText[invalid], oclText[false] otherwise.");
-			installComment(op_OclVoid_allInstances, "Returns oclText[Set{null}].\n\n@Deprecated - retained with broken signature for referential API compatibility.");
 			installComment(op_OclVoid_concat, "The concatenation of oclText[null] and s.");
 			installComment(op_OclVoid_toString, "Returns oclText[null].");
 			installComment(_OrderedCollection_OrderedCollection_T, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");

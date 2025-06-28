@@ -4314,17 +4314,6 @@ extends EPackage
 	EAttribute getPrecedence_Associativity();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Precedence#getOrder <em>Order</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Order</em>'.
-	 * @see org.eclipse.ocl.pivot.Precedence#getOrder()
-	 * @see #getPrecedence()
-	 * @generated
-	 */
-	EAttribute getPrecedence_Order();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.PrimitiveCompletePackage <em>Primitive Complete Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9394,14 +9383,6 @@ extends EPackage
 		 * @generated
 		 */
 		EAttribute PRECEDENCE__ASSOCIATIVITY = eINSTANCE.getPrecedence_Associativity();
-
-		/**
-		 * The meta object literal for the '<em><b>Order</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PRECEDENCE__ORDER = eINSTANCE.getPrecedence_Order();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl <em>Primitive Complete Package</em>}' class.

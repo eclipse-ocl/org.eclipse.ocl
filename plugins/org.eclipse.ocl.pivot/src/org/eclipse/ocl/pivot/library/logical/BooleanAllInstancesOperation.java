@@ -24,8 +24,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
  */
 public class BooleanAllInstancesOperation extends AbstractAllInstancesOperation
 {
-	@Deprecated /* @deprecated invoke the polymorphic BooleanTypeImpl.allInstances() */
-	public static final @NonNull BooleanAllInstancesOperation INSTANCE = new BooleanAllInstancesOperation();
 	public static final @NonNull CollectionTypeId SET_BOOLEAN = TypeId.SET.getSpecializedId(TypeId.BOOLEAN);
 
 	/**

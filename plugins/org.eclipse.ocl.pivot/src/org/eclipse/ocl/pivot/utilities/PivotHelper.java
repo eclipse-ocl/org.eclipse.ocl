@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+
 import com.google.common.collect.Lists;
 
 /**
@@ -71,13 +72,11 @@ public class PivotHelper extends PivotUtil
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
-	@Deprecated /* change to lazy */
-	private final @NonNull MetamodelManager metamodelManager;
+	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
 		this.standardLibrary = this.environmentFactory.getStandardLibrary();
-		this.metamodelManager = environmentFactory.getMetamodelManager();			// FIXME avoid this cast;
 	}
 
 	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {
@@ -309,7 +308,7 @@ public class PivotHelper extends PivotUtil
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
-		return ClassUtil.requireNonNull(metamodelManager.getASClass(TypeId.DATA_TYPE_NAME));
+		return ClassUtil.requireNonNull(getMetamodelManager().getASClass(TypeId.DATA_TYPE_NAME));
 	}
 
 	public @NonNull Property getDataTypeValueProperty() {
@@ -327,7 +326,11 @@ public class PivotHelper extends PivotUtil
 	 * @since 7.0
 	 */
 	protected @NonNull MetamodelManager getMetamodelManager() {
-		return metamodelManager;
+		MetamodelManager metamodelManager2 = metamodelManager;
+		if (metamodelManager2 == null) {
+			this.metamodelManager = metamodelManager2 = environmentFactory.getMetamodelManager();
+		}
+		return metamodelManager2;
 	}
 
 	public @NonNull StandardLibrary getStandardLibrary() {
@@ -365,6 +368,7 @@ public class PivotHelper extends PivotUtil
 			for (CallExp unsafeCallExp : unsafeCallExps) {
 				OCLExpression source = unsafeCallExp.getOwnedSource();
 				assert source != null;
+				MetamodelManager metamodelManager = getMetamodelManager();
 				if (source.getType() instanceof CollectionType) {
 					rewriteUnsafeCollectionCallExp(metamodelManager, excludingOperation, unsafeCallExp);
 				}
@@ -490,7 +494,7 @@ public class PivotHelper extends PivotUtil
 
 	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Type typeValue) {
 		setType(asExpression, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue != null ? getMetamodelManager().getPrimaryType(typeValue) : null;
 		if (primaryTypeValue != asExpression.getTypeValue()) {
 			asExpression.setTypeValue(primaryTypeValue);
 		}
@@ -501,14 +505,14 @@ public class PivotHelper extends PivotUtil
 	 */
 	public void setType(@NonNull VariableDeclaration asVariable, Type type, boolean isRequired, @Nullable Type typeValue) {
 		setType(asVariable, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue != null ? getMetamodelManager().getPrimaryType(typeValue) : null;
 		if (primaryTypeValue != asVariable.getTypeValue()) {
 			asVariable.setTypeValue(primaryTypeValue);
 		}
 	}
 
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
-		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+		Type primaryType = type != null ? getMetamodelManager().getPrimaryType(type) : null;
 		if (primaryType != asTypedElement.getType()) {
 			asTypedElement.setType(primaryType);
 		}

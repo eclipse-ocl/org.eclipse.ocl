@@ -845,7 +845,6 @@
         superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="7Wa4a" name="Precedence" superClasses="#0kVqz">
       <ownedProperties xmi:id="B4T3O" defaultValueString="left" name="associativity" type="#,Swbo"/>
-      <ownedProperties xmi:id="1q9Jp" defaultValueString="0" isRequired="true" name="order" type="#vCSey"/>
       <ownedProperties xmi:id="eJex6" isImplicit="true" name="Library" opposite="#Yf0DL" type="#sQ8qH"/>
       <ownedProperties xmi:id="0bJBA" isImplicit="true" isRequired="true" name="Operation" opposite="#aQIF3" type="#SI01z"/>
     </ownedClasses>

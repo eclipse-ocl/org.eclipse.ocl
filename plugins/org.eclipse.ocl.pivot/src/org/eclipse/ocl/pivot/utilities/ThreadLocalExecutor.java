@@ -317,17 +317,6 @@ public class ThreadLocalExecutor implements Nameable
 	}
 
 	/**
-	 * Perform up to 10 garbage collects followed by 10 millisecond sleep until basicGetEnvironmentFactory
-	 * returns false indicating that GC of an EnvironmentFactory held by a WeakReference has succeeded.
-	 * Return false if an EnvironmentFactory remains active.
-	 */
-	@Deprecated /* @deprecated no longer used */
-	public static boolean waitForGC() throws InterruptedException {
-		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		return (threadLocalExecutor != null) && threadLocalExecutor.localWaitForGC() ;
-	}
-
-	/**
 	 * Distinctive name for debug purposes, avoiding a GC-hazard.
 	 *
 	 */
@@ -631,27 +620,5 @@ public class ThreadLocalExecutor implements Nameable
 		else {
 			return "**** CONCURRENT ENVIRONMENT FACTORIES ****";
 		}
-	}
-
-	@Deprecated /* @deprecated no longer used */
-	public boolean localWaitForGC() throws InterruptedException {
-		if (concurrentEnvironmentFactories) {
-			return false;
-		}
-		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
-		if (environmentFactory2 == null) {
-			return true;
-		}
-		for (int i = 0; i < 10; i++) {
-			ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory2);
-			System.gc();
-			System.runFinalization();
-			if (environmentFactory2.isDisposed()) {
-				return true;
-			}
-		//	System.out.println("Waiting for EnvironmentFactory GC");
-			Thread.sleep(10);
-		}
-		return false;
 	}
 }

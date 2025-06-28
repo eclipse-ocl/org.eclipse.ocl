@@ -26,13 +26,13 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 
 /**
  * BaseDocumentProvider provides an OCL instance whose lifetime correlates
  * with the editor and which is accessible from the Xtext SynchronizedResourceSet.
  */
-@SuppressWarnings("deprecation")
-public class BaseDocumentProvider extends DeferredDocumentProvider
+public class BaseDocumentProvider extends XtextDocumentProvider
 {
 	private @Nullable OCLInternal ocl;		// FIXME move to BaseEditor just like EmbeddedXtextEditor
 

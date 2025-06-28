@@ -131,10 +131,6 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 	 */
 	public static class LambdaTypeIdSingletonScope extends AbstractSingletonScope<@NonNull LambdaTypeId, @NonNull LambdaTypeIdValue>
 	{
-	//	public @NonNull LambdaTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull ParametersId parametersId) {
-	//		return getSingletonFor(new LambdaTypeIdValue(idManager, name, parametersId));
-	//	}
-
 		/**
 		 * @since 7.0
 		 */
@@ -142,16 +138,6 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 				@NonNull TypedElement context, @Nullable List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
 			return getSingletonFor(new LambdaTypeIdValue(idManager, name, context, parameters, result));
 		}
-
-		/**
-		 * @since 7.0
-		 *
-		@Deprecated		/ * XXX fudge * /
-		public @NonNull TypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull Type @NonNull [] typeArguments) {
-			TypedElement context = LambdaTypeManager.createCandidateLambdaParameter(name, typeArguments[0], false);
-			TypedElement result = LambdaTypeManager.createCandidateLambdaParameter(name, typeArguments[0], false);
-			return getSingletonFor(new LambdaTypeIdValue(idManager, name, context, null, result));
-		} */
 	}
 
 	private static int computeHashCode(@NonNull String name, @NonNull TypedElement context, @Nullable List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
@@ -180,13 +166,6 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 	private @NonNull LambdaParameterId context;
 	private @Nullable List<@NonNull LambdaParameterId> parameters;
 	private @NonNull LambdaParameterId result;
-
-/*	@Deprecated / * @deprecated use simpler constructor * /
-	public GeneralizedLambdaTypeIdImpl(@NonNull Integer hashCode, @NonNull String name, @NonNull ParametersId parametersId) {
-		super(hashCode, 0, name);
-		this.parametersId = parametersId;
-		assert this.hashCode == computeHashCode(name, parametersId);
-	} */
 
 	private GeneralizedLambdaTypeIdImpl(@NonNull IdManager idManager, @NonNull String name,
 			@NonNull TypedElement context, @Nullable List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {

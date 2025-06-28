@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.tests.xtext;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -43,13 +42,10 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
-import org.eclipse.ocl.pivot.uml.internal.as2es.AS2UML;
-import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -60,7 +56,6 @@ import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.tests.TestFile;
 import org.eclipse.ocl.xtext.tests.TestUtil;
 import org.eclipse.ocl.xtext.tests.XtextTestCase;
-import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UML402UMLExtendedMetaData;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.EmfFormatter;
@@ -304,59 +299,6 @@ public class RoundTripTests extends XtextTestCase
 		ocl3.dispose();
 		ocl1.activate();
 		ocl1.dispose();
-	}
-
-	@Deprecated /* @deprecated - not used */
-	public void doRoundTripFromUml(String stem) throws IOException, InterruptedException, ParserException {
-		//		Environment.Registry.INSTANCE.registerEnvironment(
-		//			OCL.createEnvironmentFactory().createEnvironment());
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
-		//		assertNull(org.eclipse.ocl.uml.OCL.initialize(null));
-		//		org.eclipse.uml2.uml.Package umlMetamodel = (org.eclipse.uml2.uml.Package) resourceSet.getResource(
-		//			URI.createURI(UMLResource.UML_METAMODEL_URI),
-		//			true).getContents().get(0);
-		//		org.eclipse.uml2.uml.Package umlPrimitiveTypes = (org.eclipse.uml2.uml.Package) resourceSet.getResource(
-		//			URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI),
-		//			true).getContents().get(0);
-		//		org.eclipse.uml2.uml.Package ecorePrimitiveTypes = (org.eclipse.uml2.uml.Package) resourceSet.getResource(
-		//			URI.createURI(UMLResource.ECORE_PRIMITIVE_TYPES_LIBRARY_URI),
-		//			true).getContents().get(0);
-		String inputName = stem + ".uml";
-		String pivotName = stem + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-		String outputName = stem + ".regenerated.uml";
-		URI inputURI = getProjectFileURI(inputName);
-		URI pivotURI = getTestFileURI(pivotName);
-		URI outputURI = getTestFileURI(outputName);
-		Resource inputResource = ClassUtil.requireNonNull(resourceSet.getResource(inputURI, true));
-		assertNoResourceErrors("UML load", inputResource);
-		assertNoValidationErrors("UML load", inputResource);
-
-		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		UML2AS uml2as = UML2AS.getAdapter(inputResource, environmentFactory);
-		Model pivotModel = uml2as.getASModel();
-		Resource asResource = pivotModel.eResource();
-		asResource.setURI(pivotURI);
-		assertNoResourceErrors("UML2AS failed", asResource);
-		asResource.save(XMIUtil.createSaveOptions());
-		assertNoValidationErrors("UML2AS invalid", asResource);
-
-		List<? extends @NonNull EObject> outputObjects = new ArrayList<>(AS2UML.createResource(environmentFactory, asResource));
-		@SuppressWarnings("unchecked")
-		List<? extends org.eclipse.uml2.uml.@NonNull NamedElement> castOutputObjects = (List<? extends org.eclipse.uml2.uml.@NonNull NamedElement>)outputObjects;
-		outputObjects.remove(getNamedElement(castOutputObjects, "orphanage"));
-		if (outputObjects.size() == 1) {
-			org.eclipse.uml2.uml.Package outputPackages = ClassUtil.requireNonNull(((org.eclipse.uml2.uml.Package)outputObjects.get(0)));
-			outputObjects = ClassUtil.nullFree(outputPackages.getNestedPackages());
-		}
-		Resource outputResource = resourceSet.createResource(outputURI);
-		outputResource.getContents().addAll(outputObjects);
-		assertNoResourceErrors("UML2AS failed", outputResource);
-		outputResource.save(XMIUtil.createSaveOptions());
-		assertNoValidationErrors("UML2AS invalid", outputResource);
-		TestUtil.assertSameModel(inputResource, outputResource);
-		ocl.dispose();
 	}
 
 	public static <T extends org.eclipse.uml2.uml.NamedElement> @Nullable T getNamedElement(Collection<T> elements, String name) {

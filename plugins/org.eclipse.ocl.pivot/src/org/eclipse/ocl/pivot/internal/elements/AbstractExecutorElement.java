@@ -152,11 +152,6 @@ public class AbstractExecutorElement implements Element
 	}
 
 	@Override
-	public EObject getETarget() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	@NonNull
 	public List<ElementExtension> getOwnedExtensions() {
 		throw new UnsupportedOperationException();

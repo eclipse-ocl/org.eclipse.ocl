@@ -303,12 +303,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 	}
 
 	/**
-	 * @generated NOT
-	 */
-	@Deprecated /* @deprecated not used, no functionality */
-	protected void createImportAnnotations() {}
-
-	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
 	 * <!-- begin-user-doc -->
 	 * @since 1.1

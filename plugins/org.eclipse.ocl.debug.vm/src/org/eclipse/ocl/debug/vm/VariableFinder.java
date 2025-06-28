@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -61,12 +60,6 @@ import org.eclipse.ocl.pivot.values.Value;
 public class VariableFinder
 {
 	public static final @NonNull String CONTAINER_VARIABLE_NAME = "$container";
-
-	/** @deprecated use non-static method */
-	@Deprecated
-	public static @Nullable String computeDetail(@NonNull URI variableURI, @NonNull VMEvaluationEnvironment fEvalEnv) {
-		return newInstance(fEvalEnv, true).computeDetail(variableURI);
-	}
 
 	public static @NonNull URI createURI(@NonNull String @NonNull [] varPath) {
 		return createURI(varPath, varPath.length - 1);
@@ -168,12 +161,6 @@ public class VariableFinder
 		return URI.createURI(variableURI);
 	}
 
-	/** @deprecated use non-static method */
-	@Deprecated
-	public static VMResponse process(@NonNull VMVariableRequest request, @NonNull List<UnitLocation> stack, @NonNull VMEvaluationEnvironment vmEvaluationEnvironment) {
-		return newInstance(vmEvaluationEnvironment, true).process(request, stack);
-	}
-
 	private static EClass selectEClass(EClass eClass, int index) {
 		if(index > 0) {
 			EList<EClass> superClasses = eClass.getEAllSuperTypes();
@@ -183,97 +170,6 @@ public class VariableFinder
 		}
 
 		return eClass;
-	}
-
-	/** @deprecated use non-static method */
-	@Deprecated
-	public static void setValueAndType(@NonNull VMVariableData variable, @Nullable Object value, @Nullable Type optDeclaredType, @NonNull EvaluationEnvironment evalEnv) {
-		String declaredTypeName = (optDeclaredType != null) ? optDeclaredType.toString() : null;
-		setValueAndType(variable, value, declaredTypeName, evalEnv);
-	}
-
-	/** @deprecated use non-static method */
-	@Deprecated
-	public static void setValueAndType(@NonNull VMVariableData variable, @Nullable Object value, @Nullable EClassifier optDeclaredType, @NonNull EvaluationEnvironment evalEnv) {
-		String declaredTypeName = (optDeclaredType != null) ? optDeclaredType.getName() : null;
-		setValueAndType(variable, value, declaredTypeName, evalEnv);
-	}
-
-	/** @deprecated use non-static method */
-	@Deprecated
-	public static void setValueAndType(@NonNull VMVariableData variable, @Nullable Object value, @Nullable String declaredTypeName, @NonNull EvaluationEnvironment evalEnv) {
-		VMValueData vmValue;
-		VMTypeData vmType;
-		if (value == null) {
-			vmType = new VMTypeData(VMTypeData.DATATYPE, "OclVoid", declaredTypeName); //$NON-NLS-1$
-			vmValue = null;
-		} else if (value instanceof InvalidValueException) {
-			vmValue = new VMValueData(VMValueData.INVALID, "invalid - " + ((InvalidValueException)value).getMessage());
-			vmType = new VMTypeData(VMTypeData.DATATYPE, "OclInvalid", declaredTypeName); //$NON-NLS-1$
-		} else if (value instanceof Resource) {
-			Resource resource = (Resource) value;
-			//			EClass eClass = eObject.eClass();
-			@NonNull String strVal = String.valueOf(resource.getURI());
-			vmValue = new VMValueData(VMValueData.RESOURCE, strVal, true);
-			@NonNull String className = resource.getClass().getSimpleName();
-			vmType = new VMTypeData(VMTypeData.EOBJECT, className, declaredTypeName);
-		} else if (value instanceof EObject) {
-			EObject eObject = (EObject) value;
-			EClass eClass = eObject.eClass();
-			String qualifiedName = eClass != null ? eClass.getEPackage().getName() + "::" + eClass.getName() : eObject.getClass().getSimpleName();
-			String strVal = qualifiedName + " @" + Integer.toHexString(System.identityHashCode(value));
-			boolean hasVariables = (eClass == null) || !eClass.getEAllStructuralFeatures().isEmpty() || value instanceof Resource;
-			vmValue = new VMValueData(VMValueData.OBJECT_REF, strVal, hasVariables);
-			@SuppressWarnings("null")@NonNull String className = eClass != null ? eClass.getName() : eObject.getClass().getSimpleName();
-			vmType = new VMTypeData(VMTypeData.EOBJECT, className, declaredTypeName);
-		} else if (value instanceof Collection<?>) {
-			Collection<?> collection = (Collection<?>) value;
-			Class<?> javaType = value.getClass();
-
-			StringBuilder strVal = new StringBuilder();
-			if (declaredTypeName != null) {
-				strVal.append(declaredTypeName);
-			} else {
-				strVal.append(javaType.getSimpleName());
-			}
-
-			strVal.append('[').append(collection.size()).append(']');
-			String string = strVal.toString();
-			vmValue = new VMValueData(VMValueData.COLLECTION_REF, string, !collection.isEmpty());
-			// TODO - use mapping by runtime class to OCL type
-			@NonNull String className = javaType.getSimpleName();
-			vmType = new VMTypeData(VMTypeData.COLLECTION, className, declaredTypeName);
-
-		} else if (value instanceof CollectionValue) {
-			CollectionValue collection = (CollectionValue) value;
-			Class<?> javaType = value.getClass();
-
-			StringBuilder strVal = new StringBuilder();
-			if (declaredTypeName != null) {
-				strVal.append(declaredTypeName);
-			} else {
-				strVal.append(javaType.getSimpleName());
-			}
-
-			strVal.append('[').append(collection.size()).append(']');
-			String string = strVal.toString();
-			vmValue = new VMValueData(VMValueData.COLLECTION_REF, string, !collection.isEmpty());
-			// TODO - use mapping by runtime class to OCL type
-			@NonNull String className = javaType.getSimpleName();
-			vmType = new VMTypeData(VMTypeData.COLLECTION, className, declaredTypeName);
-
-		} else {
-			// everything else we see as a data type
-			@NonNull String valueOf = String.valueOf(value);
-			if (value.getClass().equals(String.class)) {
-				valueOf = "'" + valueOf + "'";
-			}
-			vmValue = new VMValueData(VMValueData.PRIMITIVE, valueOf);
-			@NonNull String className = value.getClass().getSimpleName();
-			vmType = new VMTypeData(VMTypeData.DATATYPE, className, declaredTypeName);
-		}
-		variable.type = vmType;
-		variable.value = vmValue;
 	}
 
 	protected final @NonNull VMEvaluationEnvironment fEvalEnv;

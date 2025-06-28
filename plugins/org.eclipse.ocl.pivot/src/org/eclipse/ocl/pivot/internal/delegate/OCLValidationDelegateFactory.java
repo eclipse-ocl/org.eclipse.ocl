@@ -32,11 +32,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class OCLValidationDelegateFactory extends AbstractOCLDelegateFactory
 		implements ValidationDelegate.Factory, ValidationDelegate
 {
-	@Deprecated
-	public OCLValidationDelegateFactory(@NonNull String delegateURI) {
-		super(delegateURI);
-	}
-
 	/**
 	 * @since 7.0
 	 */

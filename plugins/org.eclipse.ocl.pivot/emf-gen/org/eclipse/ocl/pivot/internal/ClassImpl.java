@@ -1154,14 +1154,6 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
-	 * @since 1.18
-	 */
-	@Deprecated /* @deprecated no longer different to computeId() */
-	public @NonNull TypeId computeNormalizedId() {
-		return computeId();
-	}
-
-	/**
 	 * Create and return an instance of this type.
 	 *
 	 * Beware: this functionality is invalid if this type is in a dynamically loaded Ecore metamodel and has a supertype

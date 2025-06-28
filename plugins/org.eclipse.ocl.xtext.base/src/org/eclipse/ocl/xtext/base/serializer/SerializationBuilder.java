@@ -80,13 +80,6 @@ public class SerializationBuilder
 	public static final @NonNull String PUSH_NEXT = new String("push-next");
 
 	/**
-	 * The virtual character/string to start a new line without applying any indentation to subsequent text.
-	 * @deprecated This supports dubious legacy JUnit test behaviour that could be revised.
-	 */
-	@Deprecated
-	public static final @NonNull String RAW_NEW_LINE = new String("raw-new-line");
-
-	/**
 	 * The virtual character/string to start a new line, but avoid multiple new lines.
 	 */
 	public static final @NonNull String SOFT_NEW_LINE = new String("soft-new-line");
@@ -1243,7 +1236,6 @@ public class SerializationBuilder
 			else if (nextString == POP) traceString = "POP";
 			else if (nextString == NEW_LINE) traceString = "NEW_LINE";
 			else if (nextString == NO_NEW_LINE) traceString = "NO_NEW_LINE";
-			else if (nextString == RAW_NEW_LINE) traceString = "RAW_NEW_LINE";
 			else if (nextString == HALF_NEW_LINE) traceString = "HALF_NEW_LINE";
 			else if (nextString == SOFT_NEW_LINE) traceString = "SOFT_NEW_LINE";
 			else if (nextString == SOFT_SPACE) traceString = "SOFT_SPACE";
@@ -1278,11 +1270,6 @@ public class SerializationBuilder
 			trailingStringState = NO_SPACE;			// NO_NEW_LINE to propagate forwards
 			hasHalfNewLine = false;
 		}
-		else if (nextString == RAW_NEW_LINE) {
-			s.appendNewLine(true);
-			trailingStringState = NO_SPACE;
-			hasHalfNewLine = false;
-		}
 		else if (nextString == HALF_NEW_LINE) {
 			if (hasHalfNewLine) {
 				s.appendNewLine(false);
@@ -1303,7 +1290,7 @@ public class SerializationBuilder
 			if (trailingStringState == NO_SPACE) {
 				trailingStringState = NO_SPACE;
 			}
-			else if ((trailingStringState == NEW_LINE) || (trailingStringState == RAW_NEW_LINE) || (trailingStringState == HALF_NEW_LINE)) {
+			else if ((trailingStringState == NEW_LINE) || (trailingStringState == HALF_NEW_LINE)) {
 				trailingStringState = NO_SPACE;
 			}
 			else if (trailingStringState == SOFT_NEW_LINE) {

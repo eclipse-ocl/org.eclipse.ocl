@@ -34,50 +34,6 @@ public class ImportUtils
 		return IMPORTS_PREFIX + className + IMPORTS_SUFFIX;
 	}
 
-	@Deprecated /* @depreacted use ImportNameManager */
-	public static @NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames(@NonNull Iterable<@NonNull String> allImports) {
-		ImportNameManager importManager = new JavaImportNameManager();
-		for (String longName : allImports) {
-			importManager.addImport(null, longName);
-		}
-		return importManager.getLong2ShortImportNames();
-	}
-
-	/*	public static @NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames(@NonNull Iterable<String> allImports) {
-		Map<String, String> long2shortNames = new HashMap<String, String>();
-		Map<String, String> shortables = new HashMap<String, String>();
-		for (String longName : allImports) {
-			int index = longName.lastIndexOf(".");
-			String shortName = index >= 0 ? longName.substring(index+1) : longName;
-			if (shortables.containsKey(shortName)) {
-				String oldImport = shortables.get(shortName);
-				long2shortNames.put(oldImport, null);
-				long2shortNames.put(longName, null);
-				shortables.put(shortName, null);
-			}
-			else {
-				long2shortNames.put(longName, shortName);
-				shortables.put(shortName, longName);
-			}
-		}
-		Map<@NonNull String, @Nullable String> long2short = new HashMap<@NonNull String, @Nullable String>();
-		for (String longName : long2shortNames.keySet()) {
-			String shortName = long2shortNames.get(longName);
-			if (longName != null) {
-				long2short.put(longName, shortName != null ? shortName : null);
-			}
-		}
-		return long2short;
-	} */
-
-	/**
-	 * @deprecated add skipStartMarker
-	 */
-	@Deprecated
-	public static @NonNull String resolveImports(@NonNull String source, @NonNull Map<@NonNull String, @Nullable String> long2short) {
-		return resolveImports(source, long2short, false);
-	}
-
 	public static @NonNull String resolveImports(@NonNull String source, @NonNull Map<@NonNull String, @Nullable String> long2short, boolean skipStartMarker)
 	{
 		StringBuilder s = new StringBuilder();
