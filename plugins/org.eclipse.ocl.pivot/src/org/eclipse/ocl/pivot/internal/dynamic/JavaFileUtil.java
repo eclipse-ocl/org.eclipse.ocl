@@ -26,7 +26,6 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -37,7 +36,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
-import org.osgi.framework.Bundle;
 
 /**
  * @since 7.0
@@ -246,7 +244,7 @@ public abstract class JavaFileUtil
 	/**
 	 * Return a list comprising a JavaFileObject for each *.java file in or below folder.
 	 * A non-null compilationUnits may be provided for use as the returned list.
-	 */
+	 *
 	private static @NonNull List<@NonNull JavaFileObject> gatherCompilationUnits(@NonNull File folder, @Nullable List<@NonNull JavaFileObject> compilationUnits) throws IOException {
 		if (compilationUnits == null) {
 			compilationUnits = new ArrayList<@NonNull JavaFileObject>();
@@ -264,7 +262,7 @@ public abstract class JavaFileUtil
 			}
 		}
 		return compilationUnits;
-	}
+	} */
 
 	public static @NonNull List<@NonNull String> gatherPackageNames(@NonNull File binFolder, @Nullable String packagePath) {
 		List<@NonNull String> packagePaths = new ArrayList<>();
@@ -305,26 +303,6 @@ public abstract class JavaFileUtil
 		//	Otherwise the JDK compiler
 		//
 		return ToolProvider.getSystemJavaCompiler();
-	}
-
-	/**
-	 * Return the absolute path to the 'bin' folder of a workspace bundle or the jar of a plugin.
-	 */
-	@Deprecated /* @deprecated Use JavaClasspath */
-	public static @NonNull File getOSGIClassPath(@NonNull Bundle bundle) throws IOException {
-		//
-		//  We could be helpful and use the classes from  a project, but that would be really confusing
-		//  since template classes would come from the development project whereas referenced classes
-		//  would come from the run-time plugin. Ignore the project files.
-		//
-		File bundleFile = FileLocator.getBundleFile(bundle);
-		if (bundleFile.isDirectory()) {
-			File outputPath = getOutputClassPath(bundleFile);
-			if (outputPath != null) {
-				return outputPath;
-			}
-		}
-		return bundleFile;
 	}
 
 	/**

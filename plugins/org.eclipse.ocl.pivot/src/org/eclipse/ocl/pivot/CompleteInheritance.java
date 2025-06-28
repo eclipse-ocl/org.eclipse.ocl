@@ -92,9 +92,6 @@ public interface CompleteInheritance extends Nameable
 	 */
 	@NonNull IndexableIterable<@NonNull InheritanceFragment> getSuperFragments(int depth);
 
-	@Deprecated // Use getPivotClass
-	org.eclipse.ocl.pivot.@NonNull Class getType();
-
 	boolean isOclAny();
 	boolean isSubInheritanceOf(@NonNull CompleteInheritance inheritance);
 	boolean isSuperInheritanceOf(@NonNull CompleteInheritance inheritance);

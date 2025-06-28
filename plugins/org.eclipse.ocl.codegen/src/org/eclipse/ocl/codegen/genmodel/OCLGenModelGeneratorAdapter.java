@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
@@ -99,6 +100,30 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 			}
 			return templateClass;
 		}
+	}
+
+
+	/**
+	 * Return the absolute path to the 'bin' folder of a workspace bundle or the jar of a plugin.
+	 */
+	@Deprecated /* @deprecated Use JavaClasspath */
+	private static @NonNull File getOSGIClassPath(@NonNull Bundle bundle) throws IOException {
+		//
+		//  We could be helpful and use the classes from  a project, but that would be really confusing
+		//  since template classes would come from the development project whereas referenced classes
+		//  would come from the run-time plugin. Ignore the project files.
+		//
+		File bundleFile = FileLocator.getBundleFileLocation(bundle).orElse(null);
+		if (bundleFile == null) {
+			throw new IOException("Unable to locate the bundle file: " + bundle);
+		}
+		if (bundleFile.isDirectory()) {
+			File outputPath = JavaFileUtil.getOutputClassPath(bundleFile);
+			if (outputPath != null) {
+				return outputPath;
+			}
+		}
+		return bundleFile;
 	}
 
 	/**
@@ -232,7 +257,7 @@ public class OCLGenModelGeneratorAdapter extends GenModelGeneratorAdapter
 						Bundle bundle = Platform.getBundle(projectName);
 						BundleWiring bundleWiring = ClassUtil.requireNonNull(bundle.adapt(BundleWiring.class));
 						classLoader = bundleWiring.getClassLoader();
-						templateClassPathFile = JavaFileUtil.getOSGIClassPath(bundle);
+						templateClassPathFile = getOSGIClassPath(bundle);
 					}
 					else {
 						String templateClassPath2 = getStandaloneTemplateClassPath(workspaceName);

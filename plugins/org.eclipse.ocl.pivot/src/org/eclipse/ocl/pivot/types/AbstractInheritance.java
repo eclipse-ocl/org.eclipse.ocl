@@ -180,11 +180,6 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		return null;
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getType() {
-		return getPivotClass();
-	}
-
 	public final boolean isInvalid() {
 		return (flags & OCL_INVALID) != 0;
 	}

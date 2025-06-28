@@ -102,12 +102,8 @@ public class EInvokeOperation extends AbstractOperation
 		return evaluate(executor, typeId, sourceValue, argumentValues);
 	}
 
-	/**
-	 * @since 1.1
-	 */
-	/** @deprecated use boxedSourceAndArgumentValues */
-	@Deprecated
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue,
+	// FIXME use boxedSourceAndArgumentValues
+	private @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue,
 			@Nullable Object... boxedArgumentValues) {
 		EObject eObject = asNavigableObject(sourceValue, eOperation, executor);
 		//		EList<Object> ecoreArguments = executor.getIdResolver().ecoreValuesOfEach(null, boxedArgumentValues);
