@@ -48,16 +48,9 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryContribution
 {
 	/**
-	 * Configure the MetamodelManager's external ResourceSet. Implementations may install
-	 * any required extension or content to factory mappings in the resource factory registry.
-	 */
-	@Deprecated /* @deprecated Use two argument version */
-	void configure(@NonNull ResourceSet resourceSet);
-
-	/**
 	 * @since 1.10
 	 */
-	default void configureResourceFactoryRegistry(@NonNull ResourceSet resourceSet) {}
+	void configureResourceFactoryRegistry(@NonNull ResourceSet resourceSet);
 
 	/**
 	 * Configure the MetamodelManager's internal asResourceSet and external csResourceSet.
@@ -66,12 +59,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 *
 	 * @since 1.10
 	 */
-	default void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
-		if (asResourceSet != null) {
-			configure(asResourceSet);
-		}
-		configure(csResourceSet);
-	}
+	void configureResourceSets(@Nullable ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet);
 
 	/**
 	 * Create a visitor to compute a structural descriptor for an element.

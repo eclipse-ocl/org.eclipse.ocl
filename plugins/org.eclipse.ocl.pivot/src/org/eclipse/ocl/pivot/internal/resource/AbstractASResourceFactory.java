@@ -119,8 +119,9 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 
 	/**
 	 * The EMF ResourceFactoryRegistry ContentTypeToFactoryMap key at which this ASResourceFactory is stored.
+	 * @since 7.0
 	 */
-	protected final @NonNull String contentType;		// FIXME refactor to asContentType
+	protected final @NonNull String asContentType;
 
 	/**
 	 * The EMF ResourceFactoryRegistry ExtensionToFactoryMap key at which this ASResourceFactory is stored.
@@ -129,15 +130,15 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	 *
 	 * FIXME can the many *.oclas ASRefesourceFatories be folded into one exploiting CSawareASResourceFactory ?
 	 *
-	 * @since 1.10
+	 * @since 7.0
 	 */
-	private final @Nullable String asFileExtension;		// FIXME refactor to protected, @NonNull.
+	protected final @Nullable String asFileExtension;
 
 	/**
 	 * @since 1.10
 	 */
 	protected AbstractASResourceFactory(@NonNull String asContentType, @Nullable String asFileExtension) {
-		this.contentType = asContentType;
+		this.asContentType = asContentType;
 		this.asFileExtension = asFileExtension;
 	}
 
@@ -146,18 +147,12 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		return this;
 	}
 
-	@Override
-	public void configure(@NonNull ResourceSet resourceSet) {
-		Resource.Factory.Registry resourceFactoryRegistry = resourceSet.getResourceFactoryRegistry();
-		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
-	}
-
 	/**
 	 * @since 1.10
 	 */
 	protected void configureASResourceSet(@NonNull ResourceSet asResourceSet, @NonNull ResourceSet csResourceSet) {
 		Resource.Factory.Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
-		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
+		resourceFactoryRegistry.getContentTypeToFactoryMap().put(asContentType, this);
 		if (asFileExtension != null) {
 			ASResourceFactory extensionASResourceFactory = createResourceSetAwareASResourceFactory(csResourceSet);
 			if (extensionASResourceFactory == null) {
@@ -172,7 +167,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	 */
 	protected void configureCSResourceSet(@NonNull ResourceSet csResourceSet) {
 		Resource.Factory.Registry resourceFactoryRegistry = csResourceSet.getResourceFactoryRegistry();
-		resourceFactoryRegistry.getContentTypeToFactoryMap().put(contentType, this);
+		resourceFactoryRegistry.getContentTypeToFactoryMap().put(asContentType, this);
 	}
 
 	protected void configureResource(@NonNull ASResource asResource) {
@@ -293,7 +288,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 
 	@Override
 	public @NonNull String getContentType() {
-		return contentType;
+		return asContentType;
 	}
 
 	@Override
@@ -371,7 +366,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	 * of UML which may not be loaded so we cannot use UML classes. See Bug 526813.
 	 */
 	protected void install(@Nullable String nonASextension, @Nullable String resourceClassName) {
-		ASResourceFactoryRegistry.INSTANCE.addASResourceFactory(contentType, nonASextension, resourceClassName, this);
+		ASResourceFactoryRegistry.INSTANCE.addASResourceFactory(asContentType, nonASextension, resourceClassName, this);
 	}
 
 	@Override
@@ -381,6 +376,6 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 
 	@Override
 	public @NonNull String toString() {
-		return "«basic» " + contentType;
+		return "«basic» " + asContentType;
 	}
 }

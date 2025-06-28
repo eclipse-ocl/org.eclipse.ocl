@@ -179,11 +179,8 @@ public interface TypeId extends ElementId
 
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
 
-	@Deprecated /* @deprecated no longer used */
 	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0);
-	@Deprecated /* @deprecated no longer used */
 	public static final @NonNull TemplateParameterId T_2 = IdManager.getTemplateParameterId(1);
-	@Deprecated /* @deprecated no longer used */
 	public static final @NonNull TemplateParameterId T_3 = IdManager.getTemplateParameterId(2);
 
 	public static final @NonNull String @NonNull [] NULL_STRING_ARRAY = new @NonNull String[0];
