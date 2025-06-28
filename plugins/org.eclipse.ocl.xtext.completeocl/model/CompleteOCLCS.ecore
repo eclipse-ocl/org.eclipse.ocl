@@ -149,9 +149,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedDefaultExpressions"
         upperBound="-1" eType="ecore:EClass ../../org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore#//ExpSpecificationCS"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedDerivedInvariants"
-        upperBound="-1" eType="ecore:EClass ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ConstraintCS"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" eType="ecore:EClass ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Property"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
   </eClassifiers>
