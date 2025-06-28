@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.completeoclcs;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
 
 /**
@@ -25,7 +24,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS#getOwnedDefaultExpressions <em>Owned Default Expressions</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS#getOwnedDerivedInvariants <em>Owned Derived Invariants</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS#getReferredProperty <em>Referred Property</em>}</li>
  * </ul>
  *
@@ -66,22 +64,5 @@ extends FeatureContextDeclCS {
 	 * @generated
 	 */
 	EList<ExpSpecificationCS> getOwnedDefaultExpressions();
-
-	/**
-	 * Returns the value of the '<em><b>Owned Derived Invariants</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.xtext.basecs.ConstraintCS}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Derived Invariants</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owned Derived Invariants</em>' containment reference list.
-	 * @see org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage#getPropertyContextDeclCS_OwnedDerivedInvariants()
-	 * @model containment="true"
-	 * @generated
-	 */
-	@Deprecated /* @deprecated See Bug 543608; there are no Propoerty invariants */
-	EList<ConstraintCS> getOwnedDerivedInvariants();
 
 } // PropertyContextDeclCS

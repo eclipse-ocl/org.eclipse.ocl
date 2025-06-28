@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
-import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.impl.ModelElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
@@ -40,7 +39,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.impl.PropertyContextDeclCSImpl#getOwnedDefaultExpressions <em>Owned Default Expressions</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.impl.PropertyContextDeclCSImpl#getOwnedDerivedInvariants <em>Owned Derived Invariants</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.impl.PropertyContextDeclCSImpl#getReferredProperty <em>Referred Property</em>}</li>
  * </ul>
  *
@@ -57,7 +55,7 @@ public class PropertyContextDeclCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PROPERTY_CONTEXT_DECL_CS_FEATURE_COUNT = FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 3;
+	public static final int PROPERTY_CONTEXT_DECL_CS_FEATURE_COUNT = FeatureContextDeclCSImpl.FEATURE_CONTEXT_DECL_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getOwnedDefaultExpressions() <em>Owned Default Expressions</em>}' containment reference list.
@@ -68,16 +66,6 @@ public class PropertyContextDeclCSImpl
 	 * @ordered
 	 */
 	protected EList<ExpSpecificationCS> ownedDefaultExpressions;
-
-	/**
-	 * The cached value of the '{@link #getOwnedDerivedInvariants() <em>Owned Derived Invariants</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedDerivedInvariants()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ConstraintCS> ownedDerivedInvariants;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -110,8 +98,6 @@ public class PropertyContextDeclCSImpl
 			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getOwnedDefaultExpressions();
 			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
-				return getOwnedDerivedInvariants();
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return getReferredProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -131,10 +117,6 @@ public class PropertyContextDeclCSImpl
 				getOwnedDefaultExpressions().clear();
 				getOwnedDefaultExpressions().addAll((Collection<? extends ExpSpecificationCS>)newValue);
 				return;
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
-				getOwnedDerivedInvariants().clear();
-				getOwnedDerivedInvariants().addAll((Collection<? extends ConstraintCS>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -150,9 +132,6 @@ public class PropertyContextDeclCSImpl
 		{
 			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				getOwnedDefaultExpressions().clear();
-				return;
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
-				getOwnedDerivedInvariants().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -170,8 +149,6 @@ public class PropertyContextDeclCSImpl
 			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ownedDefaultExpressions != null && !ownedDefaultExpressions.isEmpty();
 			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
-				return ownedDerivedInvariants != null && !ownedDerivedInvariants.isEmpty();
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4:
 				return getReferredProperty() != null;
 		}
 		return super.eIsSet(featureID);
@@ -228,28 +205,12 @@ public class PropertyContextDeclCSImpl
 	 * @generated
 	 */
 	@Override
-	public EList<ConstraintCS> getOwnedDerivedInvariants() {
-		if (ownedDerivedInvariants == null)
-		{
-			ownedDerivedInvariants = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
-		}
-		return ownedDerivedInvariants;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
 			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ((InternalEList<?>)getOwnedDefaultExpressions()).basicRemove(otherEnd, msgs);
-			case ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3:
-				return ((InternalEList<?>)getOwnedDerivedInvariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}

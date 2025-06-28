@@ -331,17 +331,6 @@ extends EPackage {
 	EReference getPropertyContextDeclCS_OwnedDefaultExpressions();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS#getOwnedDerivedInvariants <em>Owned Derived Invariants</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Owned Derived Invariants</em>'.
-	 * @see org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS#getOwnedDerivedInvariants()
-	 * @see #getPropertyContextDeclCS()
-	 * @generated
-	 */
-	EReference getPropertyContextDeclCS_OwnedDerivedInvariants();
-
-	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -725,14 +714,6 @@ extends EPackage {
 		 * @generated
 		 */
 		EReference PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS = eINSTANCE.getPropertyContextDeclCS_OwnedDefaultExpressions();
-
-		/**
-		 * The meta object literal for the '<em><b>Owned Derived Invariants</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PROPERTY_CONTEXT_DECL_CS__OWNED_DERIVED_INVARIANTS = eINSTANCE.getPropertyContextDeclCS_OwnedDerivedInvariants();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.ClassifierContextDeclCSImpl <em>Classifier Context Decl CS</em>}' class.
