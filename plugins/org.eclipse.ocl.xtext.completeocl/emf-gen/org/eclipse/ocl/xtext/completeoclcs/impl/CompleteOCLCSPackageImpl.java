@@ -330,7 +330,7 @@ implements CompleteOCLCSPackage {
 	@Override
 	public EReference getPropertyContextDeclCS_ReferredProperty()
 	{
-		return (EReference)propertyContextDeclCSEClass.getEStructuralFeatures().get(2);
+		return (EReference)propertyContextDeclCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -342,17 +342,6 @@ implements CompleteOCLCSPackage {
 	public EReference getPropertyContextDeclCS_OwnedDefaultExpressions()
 	{
 		return (EReference)propertyContextDeclCSEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getPropertyContextDeclCS_OwnedDerivedInvariants()
-	{
-		return (EReference)propertyContextDeclCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -688,7 +677,6 @@ implements CompleteOCLCSPackage {
 		propertyContextDeclCSEClass = createEClass(12);
 		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2);
 		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 3);
-		createEReference(propertyContextDeclCSEClass, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 4);
 	}
 
 	/**
@@ -790,7 +778,6 @@ implements CompleteOCLCSPackage {
 
 		initEClass(propertyContextDeclCSEClass, PropertyContextDeclCS.class, "PropertyContextDeclCS", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPropertyContextDeclCS_OwnedDefaultExpressions(), theEssentialOCLCSPackage.getExpSpecificationCS(), null, "ownedDefaultExpressions", null, 0, -1, PropertyContextDeclCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPropertyContextDeclCS_OwnedDerivedInvariants(), theBaseCSPackage.getConstraintCS(), null, "ownedDerivedInvariants", null, 0, -1, PropertyContextDeclCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPropertyContextDeclCS_ReferredProperty(), thePivotPackage.getProperty(), null, "referredProperty", null, 0, 1, PropertyContextDeclCS.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		// Create resource

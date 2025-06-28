@@ -67,7 +67,6 @@
     </genClasses>
     <genClasses ecoreClass="CompleteOCLCS.ecore#//PropertyContextDeclCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CompleteOCLCS.ecore#//PropertyContextDeclCS/ownedDefaultExpressions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CompleteOCLCS.ecore#//PropertyContextDeclCS/ownedDerivedInvariants"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference CompleteOCLCS.ecore#//PropertyContextDeclCS/referredProperty"/>
     </genClasses>
   </genPackages>
