@@ -37,8 +37,6 @@ import org.eclipse.jdt.core.IParent;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.xtext.naming.QualifiedName;
@@ -62,36 +60,6 @@ public class JavaClassScope extends AbstractJavaClassScope
 {
 	public static boolean SUPPRESS_WORK_THREAD = false;		// Set true to avoid WorkerThread delay when testing
 
-	@Deprecated /* @deprecated No longer used - JavaClassScope is a BaseCS2AS field rather than CSResource adapter */
-	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull ClassLoader classLoader) {
-		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
-		if (adapter == null) {
-			adapter = new JavaClassScope(classLoader);
-			csResource.eAdapters().add(adapter);
-		}
-		return (JavaClassScope) adapter;
-	}
-
-	@Deprecated /* @deprecated No longer used - JavaClassScope is an BaseCS2AS field rather than CSResource adapter */
-	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull List<@NonNull ClassLoader> classLoaders) {
-		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
-		if (adapter == null) {
-			adapter = new JavaClassScope(classLoaders);
-			csResource.eAdapters().add(adapter);
-		}
-		return (JavaClassScope) adapter;
-	}
-
-	@Deprecated /* @deprecated No longer used - JavaClassScope is an BaseCS2AS field rather than CSResource adapter */
-	public static @NonNull JavaClassScope getAdapter(@NonNull CSResource csResource, @NonNull IProject project) {
-		AbstractJavaClassScope adapter = ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
-		if (adapter == null) {
-			adapter = new JavaClassScope(project);
-			csResource.eAdapters().add(adapter);
-		}
-		return (JavaClassScope) adapter;
-	}
-
 	/**
 	 * ClassLoaders to help resolve references.
 	 */
@@ -110,13 +78,6 @@ public class JavaClassScope extends AbstractJavaClassScope
 	private final @NonNull Resource javaResource = new XMIResourceImpl(URI.createURI("JavaClassCS-instances"));
 
 	private boolean doneFullScan = false;
-
-	/* @deprecated use Iterable argument */
-	@Deprecated
-	public JavaClassScope(@NonNull ClassLoader classLoader) {
-		this.classLoaders.add(classLoader);
-		this.projects = null;
-	}
 
 	public JavaClassScope(@NonNull Iterable<@NonNull ClassLoader> classLoaders) {
 		this.projects = null;
@@ -176,19 +137,6 @@ public class JavaClassScope extends AbstractJavaClassScope
 		//		}
 		for (@NonNull String className : classNames) {
 			getEObjectDescription(className);
-		}
-	}
-
-	@Override
-	@Deprecated /* @deprecated not used */
-	public void getAdapter(@NonNull CSResource importedResource) {
-		if (classLoaders.size() > 0) {
-			getAdapter(importedResource, classLoaders);
-		}
-		else if (projects != null) {
-			for (IProject project : projects) {
-				getAdapter(importedResource, project);
-			}
 		}
 	}
 
@@ -315,10 +263,6 @@ public class JavaClassScope extends AbstractJavaClassScope
 		}
 		return getEObjectDescription(name);
 	}
-
-	@Override
-	@Deprecated /* @deprecated not used */
-	public void installContents(@NonNull CSResource csResource) {}
 
 	protected @Nullable String resolveClassName(@NonNull String name) {
 		if (!name.endsWith(".class")) {

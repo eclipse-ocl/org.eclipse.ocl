@@ -5651,16 +5651,6 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getPrecedence_Order() {
-		return (EAttribute)precedenceEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getPrimitiveCompletePackage()
 	{
 		return primitiveCompletePackageEClass;
@@ -7730,7 +7720,6 @@ implements PivotPackage  {
 
 		precedenceEClass = createEClass(83);
 		createEAttribute(precedenceEClass, 5);
-		createEAttribute(precedenceEClass, 6);
 
 		primitiveCompletePackageEClass = createEClass(84);
 
@@ -9241,7 +9230,6 @@ implements PivotPackage  {
 
 		initEClass(precedenceEClass, Precedence.class, "Precedence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getPrecedence_Associativity(), this.getAssociativityKind(), "associativity", "left", 0, 1, Precedence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(getPrecedence_Order(), this.getInteger(), "order", "0", 1, 1, Precedence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(primitiveCompletePackageEClass, PrimitiveCompletePackage.class, "PrimitiveCompletePackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

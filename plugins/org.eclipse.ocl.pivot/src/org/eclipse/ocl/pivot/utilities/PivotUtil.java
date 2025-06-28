@@ -192,24 +192,6 @@ public class PivotUtil implements PivotConstants
 	private static long startTime = System.currentTimeMillis();
 
 	/**
-	 * 'Highest' precedence first
-	 *
-	 * @deprecated (Not used) The Precedence.order is not a constant in a shared library. Use the PrecedenceManager.
-	 */
-	@Deprecated
-	public static class PrecedenceComparator implements Comparator<Precedence>
-	{
-		public static final PrecedenceComparator INSTANCE = new PrecedenceComparator();
-
-		@Override
-		public int compare(Precedence p1, Precedence p2) {
-			int o1 = p1 != null ? p1.getOrder().intValue() : -1;
-			int o2 = p2 != null ? p2.getOrder().intValue() : -1;
-			return o1 - o2; // NB least positive is highest precedence
-		}
-	}
-
-	/**
 	 * In TemplateSignature order.
 	 */
 	public static class TemplateParameterSubstitutionComparator
@@ -1486,15 +1468,6 @@ public class PivotUtil implements PivotConstants
 			return behavioralClass != null ? behavioralClass : type;
 		}
 		return type;
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@Deprecated /* @deprecated no longer used = behavioralType() now handled within Type::conformsTo */
-	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
-		Type type = element != null ? getTypeInternal(element) : null;
-		return type != null ? getBehavioralType(type) : null;
 	}
 
 	/**

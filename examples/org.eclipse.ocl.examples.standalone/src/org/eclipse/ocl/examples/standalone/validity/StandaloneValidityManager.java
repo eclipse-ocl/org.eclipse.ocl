@@ -87,11 +87,6 @@ public class StandaloneValidityManager extends ValidityManager
 		return Iterables.filter(super.getActiveConstraintLocators(nsURI), isActivePredicate);
 	}
 
-	@Deprecated /* @deprecated pass null monitor */
-	public void runValidation() {
-		runValidation(null, null);
-	}
-
 	public void setRunJavaConstraints(boolean runJavaConstraints) {
 		isActivePredicate.runJavaConstraints = runJavaConstraints;
 	}

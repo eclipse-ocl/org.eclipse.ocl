@@ -1045,10 +1045,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgIterator;
 	}
 
-	@Deprecated // add explicitName argument
-	public @NonNull CGParameter getParameter(@NonNull Variable aParameter) {
-		return getParameter(aParameter, null);
-	}
 	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @Nullable String explicitName) {
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
@@ -1127,11 +1123,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		return referencedOperations;
-	}
-
-	@Deprecated
-	public @NonNull CGParameter getSelfParameter(@NonNull Variable aParameter) {
-		return getParameter(aParameter, null);
 	}
 
 	/**
@@ -1235,8 +1226,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				|| (libraryProperty instanceof ImplicitNonCompositionProperty)		// FIXME surely this isn't Ecore
 				|| (libraryProperty instanceof StaticProperty)
 				|| (libraryProperty instanceof StereotypeProperty)
-				|| (libraryProperty instanceof ConstrainedProperty)
-				|| (libraryProperty instanceof org.eclipse.ocl.pivot.internal.ecore.EObjectProperty);
+				|| (libraryProperty instanceof ConstrainedProperty);
 	}
 
 	/**

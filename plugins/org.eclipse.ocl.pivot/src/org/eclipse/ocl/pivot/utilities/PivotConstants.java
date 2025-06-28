@@ -182,8 +182,6 @@ public interface PivotConstants
 
 	static final @NonNull String AGGREGATE_NAVIGATION_OPERATOR = "->";
 	static final @NonNull String SAFE_AGGREGATE_NAVIGATION_OPERATOR = "?->";
-	@Deprecated
-	static final @NonNull String COLLECTION_NAVIGATION_OPERATOR = AGGREGATE_NAVIGATION_OPERATOR;
 	static final @NonNull String OBJECT_NAVIGATION_OPERATOR = ".";
 	static final @NonNull String SAFE_OBJECT_NAVIGATION_OPERATOR = "?.";
 	static final @NonNull String GREATER_THAN_OPERATOR = ">";

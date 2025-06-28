@@ -47,13 +47,6 @@ public class PivotValidationOptions
 			PivotPlugin.PLUGIN_ID, "redundant.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
 
 	/**
-	 * A Map from all the safe navigation constraint names to the validation options that control them.
-	 * This avoids the need for distinct options for Operation/Property/Iteration control of the same concept.
-	 */
-	@Deprecated /* @deprecated no longer used; use safeValidationOperation2severityOption */
-	public static final @NonNull Map<String, EnumeratedOption<StatusCodes.Severity>> safeValidationName2severityOption = new HashMap<>();
-
-	/**
 	 * A Map from all the safe navigation constraint validation operation literals to the validation options that control them.
 	 * This avoids the need for distinct options for Operation/Property/Iteration control of the same concept.
 	 *

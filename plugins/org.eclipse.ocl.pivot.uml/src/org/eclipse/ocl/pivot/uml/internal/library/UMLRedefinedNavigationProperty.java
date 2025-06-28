@@ -52,9 +52,7 @@ public class UMLRedefinedNavigationProperty extends ExplicitNavigationProperty
 		return baseProperty;
 	}
 
-	/** @deprecated the inherited property is now the base property */
-	@Deprecated
-	protected final @NonNull Property baseProperty;
+	// protected final @NonNull Property baseProperty;	-- the inherited property is the base property
 
 	/**
 	 * @since 1.5
@@ -63,7 +61,6 @@ public class UMLRedefinedNavigationProperty extends ExplicitNavigationProperty
 
 	public UMLRedefinedNavigationProperty(@NonNull CompleteModel completeModel, @NonNull Property redefiningProperty) {
 		super(getBaseProperty(completeModel, redefiningProperty));
-		this.baseProperty = property;
 		this.redefiningProperty = redefiningProperty;
 	}
 

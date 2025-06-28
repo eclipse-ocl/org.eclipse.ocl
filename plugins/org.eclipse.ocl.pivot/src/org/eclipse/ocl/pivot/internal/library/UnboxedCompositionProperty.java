@@ -29,24 +29,14 @@ import org.eclipse.ocl.pivot.library.AbstractProperty;
 
 public class UnboxedCompositionProperty extends AbstractProperty
 {
-	/** @deprecated use propertyId */
-	@Deprecated
-	protected @NonNull String containmentFeatureName;
-	private @Nullable PropertyId propertyId;		// null for deprecated compatobility
+	private final @NonNull PropertyId propertyId;
 	private EStructuralFeature eFeature = null;
-
-	/** @deprecated use PropertyId argument */
-	@Deprecated
-	public UnboxedCompositionProperty(@NonNull String containmentFeatureName) {
-		this.containmentFeatureName = containmentFeatureName;
-	}
 
 	/**
 	 * @since 1.3
 	 */
 	public UnboxedCompositionProperty(@NonNull PropertyId propertyId) {
 		this.propertyId = propertyId;
-		this.containmentFeatureName = propertyId.getName();
 	}
 
 	@Override
@@ -65,49 +55,37 @@ public class UnboxedCompositionProperty extends AbstractProperty
 			}
 		}
 		else {
-			PropertyId propertyId2 = propertyId;
-			if (propertyId2 == null) {
-				if (!containmentFeatureName.equals(eContainmentFeature.getName())) {
+			NestedTypeId typeId = (NestedTypeId) propertyId.getParent();
+			EClass eClass = eContainmentFeature.getEContainingClass();
+			if (!typeId.getName().equals(eClass.getName())) {
+				return null;				// Contained but by some other property
+			}
+			PackageId packageId = typeId.getParent();
+			EPackage ePackage = eClass.getEPackage();
+			while (packageId instanceof NestedPackageId) {
+				if (!((NestedPackageId)packageId).getName().equals(ePackage.getName())) {
 					return null;				// Contained but by some other property
 				}
-				eFeature = eContainmentFeature;
+				packageId = ((NestedPackageId)packageId).getParent();
+				ePackage = ePackage.getESuperPackage();
+				if (ePackage == null) {
+					return null;				// Contained but by some other property
+				}
+			}
+			if (packageId instanceof NsURIPackageId) {
+				if (!((NsURIPackageId)packageId).getNsURI().equals(ePackage.getNsURI())) {
+					return null;				// Contained but by some other property
+				}
+			}
+			else if (packageId instanceof RootPackageId) {
+				if (!((RootPackageId)packageId).getName().equals(ePackage.getName())) {
+					return null;				// Contained but by some other property
+				}
 			}
 			else {
-				if (!propertyId2.getName().equals(eContainmentFeature.getName())) {
-					return null;				// Contained but by some other property
-				}
-				NestedTypeId typeId = (NestedTypeId) propertyId2.getParent();
-				EClass eClass = eContainmentFeature.getEContainingClass();
-				if (!typeId.getName().equals(eClass.getName())) {
-					return null;				// Contained but by some other property
-				}
-				PackageId packageId = typeId.getParent();
-				EPackage ePackage = eClass.getEPackage();
-				while (packageId instanceof NestedPackageId) {
-					if (!((NestedPackageId)packageId).getName().equals(ePackage.getName())) {
-						return null;				// Contained but by some other property
-					}
-					packageId = ((NestedPackageId)packageId).getParent();
-					ePackage = ePackage.getESuperPackage();
-					if (ePackage == null) {
-						return null;				// Contained but by some other property
-					}
-				}
-				if (packageId instanceof NsURIPackageId) {
-					if (!((NsURIPackageId)packageId).getNsURI().equals(ePackage.getNsURI())) {
-						return null;				// Contained but by some other property
-					}
-				}
-				else if (packageId instanceof RootPackageId) {
-					if (!((RootPackageId)packageId).getName().equals(ePackage.getName())) {
-						return null;				// Contained but by some other property
-					}
-				}
-				else {
-					throw new UnsupportedOperationException();
-				}
-				eFeature = eContainmentFeature;
+				throw new UnsupportedOperationException();
 			}
+			eFeature = eContainmentFeature;
 		}
 		return eContainer;
 	}

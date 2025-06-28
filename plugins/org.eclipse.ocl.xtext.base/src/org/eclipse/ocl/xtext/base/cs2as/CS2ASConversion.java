@@ -1479,7 +1479,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//	Put all orphan root pivot elements in their resources.
 		//
 		installRootContents(csResource);		// FIXME ExpressionInOCL very late
-		converter.installRootContents(csResource);		// FIXME Bug 548500 workaround
 		//
 		boolean hasNoMoreErrors = checkForNoErrors(csResource);
 		if (!hasNoMoreErrors) {

@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -36,7 +35,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.PrecedenceImpl#getAssociativity <em>Associativity</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.PrecedenceImpl#getOrder <em>Order</em>}</li>
  * </ul>
  *
  * @generated
@@ -52,7 +50,7 @@ public class PrecedenceImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PRECEDENCE_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 2;
+	public static final int PRECEDENCE_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Precedence</em>' class.
@@ -111,16 +109,6 @@ public class PrecedenceImpl
 	protected static final int ASSOCIATIVITY_EFLAG = 1 << ASSOCIATIVITY_EFLAG_OFFSET;
 
 	/**
-	 * The default value of the '{@link #getOrder() <em>Order</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOrder()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Number ORDER_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0");
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -164,40 +152,6 @@ public class PrecedenceImpl
 	}
 
 	/**
-	 * The cached value of the '{@link #getOrder() <em>Order</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOrder()
-	 * @generated
-	 * @ordered
-	 */
-	protected Number order = ORDER_EDEFAULT; // FIXME a) use int, b) get not volatile to work from UML.
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Number getOrder() {
-		return order;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOrder(Number newOrder)
-	{
-		Number oldOrder = order;
-		order = newOrder;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldOrder, order));
-	}
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -218,8 +172,6 @@ public class PrecedenceImpl
 				return getName();
 			case 5:
 				return getAssociativity();
-			case 6:
-				return getOrder();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -256,9 +208,6 @@ public class PrecedenceImpl
 			case 5:
 				setAssociativity((AssociativityKind)newValue);
 				return;
-			case 6:
-				setOrder((Number)newValue);
-				return;
 		}
 		eDynamicSet(featureID, newValue);
 	}
@@ -290,9 +239,6 @@ public class PrecedenceImpl
 			case 5:
 				setAssociativity(ASSOCIATIVITY_EDEFAULT);
 				return;
-			case 6:
-				setOrder(ORDER_EDEFAULT);
-				return;
 		}
 		eDynamicUnset(featureID);
 	}
@@ -318,8 +264,6 @@ public class PrecedenceImpl
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 5:
 				return (eFlags & ASSOCIATIVITY_EFLAG) != ASSOCIATIVITY_EFLAG_DEFAULT;
-			case 6:
-				return ORDER_EDEFAULT == null ? order != null : !ORDER_EDEFAULT.equals(order);
 		}
 		return eDynamicIsSet(featureID);
 	}

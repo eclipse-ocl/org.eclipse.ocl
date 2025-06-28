@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.codegen.oclinjunit;
 
-import java.util.Set;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.cgmodel.CGClass;
@@ -34,12 +32,6 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		super(codeGenerator);
 		this.expInOcl = expInOcl;
 		this.sortedGlobals = sortedGlobals;
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public @NonNull Set<String> getAllImports() {
-		return globalContext.getImports();
 	}
 
 	@Override

@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -35,17 +34,6 @@ import org.eclipse.xtext.linking.lazy.LazyLinker;
  */
 public class CS2ASLinker extends LazyLinker
 {
-	@Deprecated /* @deprecatedc Use EnvironmentView.DiagnosticWrappedException */
-	public static class DiagnosticWrappedException extends EnvironmentView.DiagnosticWrappedException
-	{
-		private static final long serialVersionUID = 1L;
-
-		public DiagnosticWrappedException(Exception exception)
-		{
-			super(exception);
-		}
-	}
-
 	@Override
 	protected void afterModelLinked(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
 		Resource eResource = model.eResource();		// FIXME Try to do a narrower refresh

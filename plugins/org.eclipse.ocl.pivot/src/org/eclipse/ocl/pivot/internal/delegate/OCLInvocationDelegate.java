@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -100,11 +99,6 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 		catch (EvaluationException e) {
 			throw new OCLDelegateException(new EvaluationException(e, PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, operation));
 		}
-	}
-
-	@Deprecated /* @deprecated not usedc */
-	protected Object evaluate(@NonNull OCL ocl, @NonNull ExpressionInOCL query2, InternalEObject ecoreObject, List<?> arguments) {
-		return null;
 	}
 
 	/**

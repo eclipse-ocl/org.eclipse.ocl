@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -45,7 +44,6 @@ import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 //import org.eclipse.ocl.utilities.UMLReflection;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
-import org.eclipse.ocl.pivot.validation.ValidationContext;
 
 public class LabelUtil
 {
@@ -108,22 +106,6 @@ public class LabelUtil
 
 	public static <E extends EObject> E copy(E newObject) {
 		return EcoreUtil.copy(newObject);
-	}
-
-	/**
-	 * Return a context map for use by EValidator.validate in which the EValidator.class key
-	 * is mapped to the eValidator, and the EValidator.SubstitutionLabelProvider.class key
-	 * is mapped to a SubstitutionLabelProvider that uses getLabel().
-	 */
-	@Deprecated /* @deprecated shift to Diagnostician /  caller */
-	public static @NonNull Map<Object, Object> createDefaultContext(@NonNull EValidator eValidator) {
-		Diagnostician diagnostician = (eValidator instanceof Diagnostician) ? (Diagnostician)eValidator : Diagnostician.INSTANCE;
-		Map<Object, Object> context = diagnostician.createDefaultContext();
-		context.put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
-		context.put(EValidator.class, eValidator);
-	//	context.put(EValidator.ValidationDelegate.Registry.class, diagnostician.get);
-		ValidationContext.getEnvironmentFactory(context, null);			// Eager EnvironmentFactory resolution
-		return context;
 	}
 
 	/**

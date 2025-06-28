@@ -289,22 +289,6 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 		return PERSIST_AS_TEXT.equals(loadedAs);
 	}
 
-	/**
-	 * @deprecated No longer used.
-	 */
-	@Deprecated
-	protected boolean isXML(@NonNull InputStream inputStream) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		try {
-			String line = reader.readLine();
-			inputStream.reset();
-			return (line != null) && line.startsWith("<?xml");
-		}
-		finally {
-			reader.close();
-		}
-	}
-
 	protected boolean isXML(@NonNull InputStream inputStream, String encoding) throws IOException {
 		String xmlIntro = "<?xml";
 		inputStream.mark(xmlIntro.length());
@@ -600,12 +584,6 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			boolean overwrite) throws CoreException {
 		super.doSaveDocument(monitor, element, document, overwrite);
 	}
-
-	/**
-	 * @deprecated no longer used - does nothing - retained for API compatibility
-	 */
-	@Deprecated
-	protected void superSetDocumentText(@NonNull XtextDocument document, @NonNull String displayText) throws CoreException {}
 
 	protected void superSetDocumentContent(IDocument document, InputStream inputStream, String encoding) throws CoreException {
 		super.setDocumentContent(document, inputStream, encoding);

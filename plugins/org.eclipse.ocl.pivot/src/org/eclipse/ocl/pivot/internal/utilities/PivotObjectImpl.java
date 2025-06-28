@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -127,19 +126,9 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		return esObject;
 	}
 
-	@Deprecated // Use getESObject()
-	public @Nullable EObject getETarget() {
-		return esObject;
-	}
-
 	@Override
 	public Object getImage() {
 		return null;
-	}
-
-	@Deprecated // Use getESObject()
-	public @Nullable EObject getTarget() {
-		return esObject;
 	}
 
 	@Override
@@ -161,11 +150,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		esObject = newTarget;
 	}
 
-	@Deprecated // Use setESObject()
-	public void setTarget(@Nullable EObject newTarget) {
-		esObject = newTarget;
-	}
-
 	/**
 	 * Eliminate the esObject to facilitate leaking testing after a JUnit tearDown()
 	 *
@@ -175,11 +159,5 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		if ((esObject != null) && eIsProxy()) {
 			esObject = null;
 		}
-	}
-
-	@Deprecated /* @deprecated no longer used, moved to preUnload() */
-	public void unloaded(@NonNull ASResource asResource) {
-		assert esObject == null;
-		esObject = null;
 	}
 }

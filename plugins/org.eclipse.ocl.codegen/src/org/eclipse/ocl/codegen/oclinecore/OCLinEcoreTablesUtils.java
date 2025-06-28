@@ -37,7 +37,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.common.NameQueries;
 import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.codegen.generator.GenModelHelper;
-import org.eclipse.ocl.codegen.java.ImportUtils;
 import org.eclipse.ocl.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -47,7 +46,6 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -71,6 +69,7 @@ import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -79,7 +78,6 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.xtext.util.Strings;
@@ -88,16 +86,6 @@ public class OCLinEcoreTablesUtils
 {
 	private static int SHOW_TABLES_PACKAGE = 1;
 	private static int SHOW_TABLES_SUBPACKAGE = 2;
-
-	public Comparator<@NonNull ParameterTypes> leegacyTemplateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
-	{
-		@Override
-		public int compare(@NonNull ParameterTypes o1, @NonNull ParameterTypes o2) {
-			String n1 = getLegacyTemplateBindingsName(o1);
-			String n2 = getLegacyTemplateBindingsName(o2);
-			return n1.compareTo(n2);
-		}
-	};
 
 	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
 	{
@@ -271,10 +259,6 @@ public class OCLinEcoreTablesUtils
 			}
 		}
 
-		@Deprecated /* @deprecated use isRequired argument */
-		public @NonNull String addClassReference(@NonNull Class<?> referencedClass) {
-			return addClassReference(null, referencedClass);
-		}
 		public @NonNull String addClassReference(@Nullable Boolean isRequired, @NonNull Class<?> referencedClass) {
 			//	@NonNull String simpleName = referencedClass.getSimpleName();
 			@NonNull String fullName = referencedClass.getName();
@@ -290,33 +274,12 @@ public class OCLinEcoreTablesUtils
 			s.append(AbstractGenModelHelper.encodeName(namedElement));
 		}
 
-		@Deprecated /* @deprecated use isRequired argument */
-		public void appendClassReference(@NonNull Class<?> referencedClass) {
-			appendClassReference(null, referencedClass);
-		}
 		public void appendClassReference(@Nullable Boolean isRequired, @NonNull Class<?> referencedClass) {
 			String classReferenceText = addClassReference(isRequired, referencedClass);
 			s.append(classReferenceText);
 		}
 
-		@Deprecated /* @deprecated use isRequired argument */
-		public void appendClassReference(@NonNull String referencedClass) {
-			appendClassReference(null, referencedClass);
-		}
 		public void appendClassReference(@Nullable Boolean isRequired, @NonNull String referencedClass) {
-			/*	String key = referencedClass;
-			int i = referencedClass.lastIndexOf(".");
-			if (i > 0) {
-				@NonNull String trimmedKey = referencedClass.substring(i+1);
-				key = trimmedKey;
-				s.append(key);
-			}
-			else {
-				//				s.append("<%");
-				s.append(referencedClass);
-				//				s.append("%>");
-			}
-			//	addClassReference(key, referencedClass); */
 			s.append(addImport(isRequired, referencedClass));
 		}
 
@@ -359,71 +322,6 @@ public class OCLinEcoreTablesUtils
 			List<@NonNull String> names = new ArrayList<>(importNameManager.getLong2ShortImportNames().keySet());
 			Collections.sort(names);
 			return names;
-		}
-
-		/**
-		 * Rewrite double imports to suit the EMF generators. If importManager is null, as is the case
-		 * since it is not obvious how to re-use the ImportManager between the OCL pre-generate and the Ecore generate
-		 * sessions, an import such as &lt;%x.y.@p.q z%&gt; is chnaged to x.y.@&lt;%p.q%&gt; z so that the @p.q gets handler by
-		 * the Ecore ImportmManager. If importManager is non-null both imports are shortened.
-		 */
-		@Deprecated /* no longer used; use ImportNameManager */
-		public @NonNull String rewriteManagedImports(@NonNull String source)
-		{
-			return ImportUtils.resolveImports(source, importNameManager.getLong2ShortImportNames(), true);
-			/*			int iMax = source.length();
-			int iStart = 0;
-			StringBuilder s = new StringBuilder();
-			while (true) {
-				int iPrefix = source.indexOf(ImportUtils.IMPORTS_PREFIX, iStart);
-				if (iPrefix < 0) {
-					break;
-				}
-				int iSuffix = source.indexOf(ImportUtils.IMPORTS_SUFFIX, iPrefix);
-				if (iSuffix < 0) {
-					break;
-				}
-				s.append(source, iStart, iPrefix);
-				String annotatedName = source.substring(iPrefix+ImportUtils.IMPORTS_PREFIX.length(), iSuffix);
-				String longAnnotationName = null;
-				String longTypeName = annotatedName;
-				int startIndex = annotatedName.indexOf("@");
-				int endIndex = annotatedName.indexOf(" ");
-				if ((0 <= startIndex) && (startIndex < endIndex)) {
-					longTypeName = annotatedName.substring(0, startIndex) + annotatedName.substring(endIndex).trim();
-					longAnnotationName = annotatedName.substring(startIndex+1, endIndex).trim();
-					addClassReference(longAnnotationName, longAnnotationName);
-				}
-				addClassReference(longTypeName, longTypeName);
-				String shortTypeName = classReferences.get(longTypeName);
-				String shortAnnotationName = longAnnotationName != null ? classReferences.get(longAnnotationName) : null;
-				if (longAnnotationName == null) {
-//					s.append(IMPORTS_PREFIX);
-					s.append(shortTypeName != null ? shortTypeName : longTypeName);
-//					s.append(IMPORTS_SUFFIX);
-				}
-				else if ((shortTypeName != null) && !shortTypeName.equals(longTypeName)) {
-					s.append("@");
-//					s.append(IMPORTS_PREFIX);
-					s.append(longAnnotationName);
-//					s.append(IMPORTS_SUFFIX);
-					s.append(" ");
-					s.append(shortTypeName);
-				}
-				else {
-					s.append(annotatedName.substring(0, startIndex));
-					s.append("@");
-//					s.append(IMPORTS_PREFIX);
-					s.append(longAnnotationName);
-//					s.append(IMPORTS_SUFFIX);
-					s.append(" ");
-					s.append(annotatedName.substring(endIndex).trim());
-				}
-				iStart = iSuffix + ImportUtils.IMPORTS_SUFFIX.length();
-			}
-			s.append(source, iStart, iMax);
-			@SuppressWarnings("null")@NonNull String string = s.toString();
-			return string; */
 		}
 
 		@Override
@@ -755,10 +653,11 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
-		//	appendLegacyTemplateParameterName(asTemplateParameter);
-		//	appendTablesPackageQualification(asClass);
+			int index = asTemplateParameter.getTemplateParameterId().getIndex();
+			Orphanage orphanage = environmentFactory.getOrphanage();
+			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(orphanage, index);
 			appendTablesSubackageQualification(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
-			s.append(getTemplateParameterName(asTemplateParameter));
+			s.append(normalizedTemplateParameter.getName());
 			return null;
 		}
 
@@ -1401,50 +1300,6 @@ public class OCLinEcoreTablesUtils
 			}
 		}
 		return null;
-	}
-
-	@Deprecated /* no longer used - has child stealing issues */
-	protected void mergeLibrary(org.eclipse.ocl.pivot.@NonNull Package primaryPackage) {
-		//		primaryPackage.setName("ocl");
-		List<org.eclipse.ocl.pivot.@NonNull Class> primaryTypes = ClassUtil.nullFree(primaryPackage.getOwnedClasses());
-		for (@NonNull Library library : metamodelManager.getLibraries()) {
-			Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> typeMap = new HashMap<>();
-			List<org.eclipse.ocl.pivot.@NonNull Class> libraryTypes = new ArrayList<>(ClassUtil.nullFree(library.getOwnedClasses()));
-			for (org.eclipse.ocl.pivot.@NonNull Class secondaryType : libraryTypes) {
-				org.eclipse.ocl.pivot.Class primaryType = NameUtil.getNameable(primaryTypes, secondaryType.getName());
-				if (primaryType != null) {
-					typeMap.put(secondaryType, primaryType);
-				}
-				else {
-					primaryTypes.add(secondaryType);
-				}
-			}
-			for (org.eclipse.ocl.pivot.@NonNull Class secondaryType : libraryTypes) {
-				org.eclipse.ocl.pivot.Class primaryType = typeMap.get(secondaryType);
-				if (primaryType != null) {
-					List<org.eclipse.ocl.pivot.@NonNull Class> primarySuperClasses = ClassUtil.nullFree(primaryType.getSuperClasses());
-					for (org.eclipse.ocl.pivot.@NonNull Class secondarySuperClass : ClassUtil.nullFree(secondaryType.getSuperClasses())) {
-						org.eclipse.ocl.pivot.Class primarySuperClass = typeMap.get(secondarySuperClass);
-						if (primarySuperClass == null) {
-							primarySuperClasses.add(secondarySuperClass);
-						}
-						else if (!primarySuperClasses.contains(primarySuperClass)) {
-							primarySuperClasses.add(primarySuperClass);
-						}
-					}
-					primaryType.getOwnedOperations().addAll(secondaryType.getOwnedOperations());
-					primaryType.getOwnedProperties().addAll(secondaryType.getOwnedProperties());
-				}
-			}
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Class primaryType : primaryTypes) {
-			List<org.eclipse.ocl.pivot.@NonNull Class> primarySuperClasses = ClassUtil.nullFree(primaryType.getSuperClasses());
-			Type classType = NameUtil.getNameable(primarySuperClasses, TypeId.CLASS_NAME);
-			Type metaclass = NameUtil.getNameable(primarySuperClasses, "Classifier");
-			if ((classType != null) && (metaclass != null)) {
-				primarySuperClasses.remove(classType);		// WIP FIXME fix at source
-			}
-		}
 	}
 }
 

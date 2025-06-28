@@ -2496,8 +2496,6 @@
       eSuperTypes="#T-pivot-NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Precedence-associativity"
         name="associativity" eType="#T-pivot-AssociativityKind" defaultValueLiteral="left"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Precedence-order"
-        name="order" lowerBound="1" eType="#T-pivot-Integer" defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-PrimitiveCompletePackage"
       name="PrimitiveCompletePackage" eSuperTypes="#T-pivot-CompletePackage"/>

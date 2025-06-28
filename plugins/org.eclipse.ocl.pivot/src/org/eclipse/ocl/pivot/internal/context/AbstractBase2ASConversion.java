@@ -11,15 +11,12 @@
 package org.eclipse.ocl.pivot.internal.context;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
@@ -27,9 +24,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -42,58 +37,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractBase2ASConversion extends AbstractConversion implements Base2ASConversion
 {
-	/**
-	 * Set of all expression nodes whose type involves an UnspecifiedType. These are
-	 * created during the left2right pass and are finally resolved to
-	 * minimize invalidity.
-	 *
-	 * @deprecated no longer used
-	 */
-	@Deprecated
-	private HashSet<TypedElement> underspecifiedTypedElements = null;
-
 	protected AbstractBase2ASConversion(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
-	}
-
-	/* @deprecated no longer used */
-	@Deprecated
-	protected void addUnderspecifiedTypedElement(@NonNull TypedElement pivotElement) {
-		if (underspecifiedTypedElements == null) {
-			underspecifiedTypedElements  = new HashSet<>();
-		}
-		underspecifiedTypedElements.add(pivotElement);
-	}
-
-	/* @deprecated no longer used / use PivotHelper.refreshName() */
-	@Deprecated
-	public void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
-		String oldName = pivotNamedElement.getName();
-		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
-			pivotNamedElement.setName(newName);
-		}
-	}
-
-	/* @deprecated no longer used / use PivotHelper.refreshNsURI() */
-	@Deprecated
-	public void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
-		String oldNsURI = pivotPackage.getURI();
-		if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
-			pivotPackage.setURI(newNsURI);
-		}
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setBehavioralType() */
-	@Deprecated
-	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
-		if (!sourceElement.eIsProxy()) {
-			Type type = PivotUtil.getType(sourceElement);
-			if (type.eIsProxy()) {
-				type = null;
-			}
-			boolean isRequired = sourceElement.isIsRequired();
-			getHelper().setType(targetElement, type, isRequired);
-		}
 	}
 
 	@Override
@@ -223,50 +168,6 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 		else {
 			pivotSpecification.setOwnedResult(null);
-		}
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setType() */
-	@Deprecated
-	public void setType(@NonNull TypedElement pivotElement, Type type) {
-		getHelper().setType(pivotElement, type, pivotElement.isIsRequired());
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setType() */
-	@Deprecated
-	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
-		getHelper().setType(pivotElement, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
-		if (primaryTypeValue != pivotElement.getTypeValue()) {
-			pivotElement.setTypeValue(primaryTypeValue);
-		}
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setType() */
-	@Deprecated
-	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
-		getHelper().setType(pivotElement, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
-		if (primaryTypeValue != pivotElement.getTypeValue()) {
-			pivotElement.setTypeValue(primaryTypeValue);
-		}
-	}
-
-	/* @deprecated no longer used / use PivotHelper.setType() */
-	@Deprecated
-	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
-		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
-		if (primaryType != pivotElement.getType()) {
-			pivotElement.setType(primaryType);
-		}
-		boolean wasRequired = pivotElement.isIsRequired();
-		if (wasRequired != isRequired) {
-			pivotElement.setIsRequired(isRequired);
-		}
-		if (primaryType != null) {
-			if (!PivotUtil.debugWellContainedness(primaryType)) {
-				primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
-			}
 		}
 	}
 }
