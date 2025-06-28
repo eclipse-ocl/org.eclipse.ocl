@@ -52,14 +52,6 @@ public class ComposedEValidator implements EValidator
 	}
 
 	/**
-	 * Install a ComposedEValidator for ePackage displacing the prevailing EValidator.Registry.INSTANCE
-	 * entry and adding it as the first ComposedEValidator child.
-	 */
-	@Deprecated /* @deprecated specify a specific (probably local) registry */
-	public static synchronized @NonNull ComposedEValidator install(@NonNull EPackage ePackage) {
-		return install(ValidationRegistryAdapter.getFallbackGlobalValidationRegistry(), ePackage);
-	}
-	/**
 	 * Install a ComposedEValidator for ePackage displacing the prevailing validationRegistry
 	 * entry and adding it as the first ComposedEValidator child.
 	 *

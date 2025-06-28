@@ -906,7 +906,6 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	@Deprecated /* supply a representedParameter */
 	public static @NonNull ParameterVariable createParameterVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
 		ParameterVariable asVariable = PivotFactory.eINSTANCE.createParameterVariable();
 		asVariable.setName(name);
