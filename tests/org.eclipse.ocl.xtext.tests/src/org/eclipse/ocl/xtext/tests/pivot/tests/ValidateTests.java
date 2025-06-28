@@ -610,12 +610,11 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 	public void testValidate_Pivot_oclas() throws IOException, InterruptedException {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		//		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-		getProjectMap().initializeResourceSet(resourceSet);
-		OCLASResourceFactory.getInstance().configure(resourceSet);
-		//		}
-		Resource resource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true), true);
+		ResourceSet csResourceSet = new ResourceSetImpl();
+		getProjectMap().initializeResourceSet(csResourceSet);
+		Resource.Factory.Registry resourceFactoryRegistry = csResourceSet.getResourceFactoryRegistry();
+		resourceFactoryRegistry.getContentTypeToFactoryMap().put(PivotPackage.eCONTENT_TYPE, OCLASResourceFactory.getInstance());
+		Resource resource = csResourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true), true);
 		assertNoValidationErrors("Validating", ClassUtil.requireNonNull(resource));
 	}
 
@@ -925,7 +924,6 @@ public class ValidateTests extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	@SuppressWarnings("null")
 	public void testValidate_Validate_oclinecore() throws IOException, InterruptedException {
 		//
 		//	Create model
