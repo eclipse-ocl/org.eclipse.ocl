@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -32,10 +33,16 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 /**
  * An instance of StereotypeProperty supports evaluation of a property call that accesses a stereotype extension property.
  */
-public class StereotypeProperty extends ConstrainedProperty
+public class StereotypeProperty extends AbstractProperty
 {
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull Property property;
+//	protected /*@LazyNonNull*/ ExpressionInOCL expression = null;
+
 	public StereotypeProperty(@NonNull Property property) {
-		super(property);
+		this.property = property;
 	}
 
 	@Override

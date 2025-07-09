@@ -14,18 +14,14 @@ package org.eclipse.ocl.pivot.internal.library;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
-import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * An instance of ConstrainedProperty supports evaluation of
@@ -34,35 +30,26 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class ConstrainedProperty extends AbstractProperty
 {
 	protected final @NonNull Property property;
-	protected /*@LazyNonNull*/ ExpressionInOCL expression = null;
+	protected final @NonNull ExpressionInOCL expression;
 
-	public ConstrainedProperty(@NonNull Property property) {
+	/**
+	 * @since 7.0
+	 */
+	public ConstrainedProperty(@NonNull Property property, @NonNull ExpressionInOCL expression) {
 		this.property = property;
+		this.expression = expression;
 	}
 
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		ExpressionInOCL expression2 = expression;
-		if (expression2 == null) {
-			LanguageExpression defaultSpecification = property.getOwnedExpression();
-			if (defaultSpecification == null) {
-				throw new InvalidValueException("No defaultExpression for '{0}'", property);
-			}
-			try {
-				EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) executor.getEnvironmentFactory();
-				expression = expression2 = environmentFactory.parseSpecification(defaultSpecification);
-			} catch (ParserException e) {
-				throw new InvalidValueException(e, "Bad defaultExpression for '{0}'", property);
-			}
-		}
-		PivotUtil.checkExpression(expression2);
-		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(expression2, (Object)null);
-		Variable contextVariable = expression2.getOwnedContext();
+		PivotUtil.checkExpression(expression);
+		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(expression, (Object)null);
+		Variable contextVariable = expression.getOwnedContext();
 		if (contextVariable != null) {
 			nestedEvaluationEnvironment.add(contextVariable, sourceValue);
 		}
 		try {
-			OCLExpression bodyExpression = expression2.getOwnedBody();
+			OCLExpression bodyExpression = expression.getOwnedBody();
 			assert bodyExpression != null;
 			return executor.evaluate(bodyExpression);
 		}

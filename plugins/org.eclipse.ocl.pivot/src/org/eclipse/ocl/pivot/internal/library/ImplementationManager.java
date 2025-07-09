@@ -130,7 +130,7 @@ public class ImplementationManager
 		//		}
 		ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);
 		if (property.isIsDerived() && (specification != null)) {
-			return new ConstrainedProperty(property);
+			return new ConstrainedProperty(property, specification);
 		}
 		Property opposite = property.getOpposite();
 		if ((opposite != null) && opposite.isIsComposite()) {
