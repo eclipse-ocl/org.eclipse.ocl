@@ -1861,6 +1861,20 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public void notifyChanged(Notification notification) {}
 
 	@Override
+	public void removeASResource(@NonNull ASResource asResource) {
+		Model asModel = PivotUtil.getModel(asResource);
+		String externalURIString = asModel.getExternalURI();
+		URI externalURI = URI.createURI(externalURIString);
+		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
+		if (uri2es2as2 != null) {
+			external2asMap.remove(externalURI);
+			uri2es2as2.remove(externalURI);
+		}
+		asResource.unload();
+		asResource.eAdapters().clear();
+	}
+
+	@Override
 	public void removeExternalResource(@NonNull External2AS external2as) {
 		external2asMap.remove(external2as.getURI());
 	}

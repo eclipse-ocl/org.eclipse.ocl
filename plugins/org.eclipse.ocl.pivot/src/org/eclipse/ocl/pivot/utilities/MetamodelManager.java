@@ -370,6 +370,11 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
+	void removeASResource(@NonNull ASResource asResource);
+
+	/**
+	 * @since 7.0
+	 */
 	void removeExternalResource(@NonNull External2AS external2as);
 
 	/**

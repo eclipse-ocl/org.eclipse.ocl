@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.Property;
 
 /**
  * AssociationClassProperties manages the AS properties for an AS AssociationClass, supporting random access
- * by UML source/target property in order to workaround OMG BUG UMLR-677 whereby association redifinitions do
+ * by UML source/target property in order to workaround OMG BUG UMLR-677 whereby association redefinitions do
  * not respect memberEnds ordering.
  */
 class AssociationClassProperties

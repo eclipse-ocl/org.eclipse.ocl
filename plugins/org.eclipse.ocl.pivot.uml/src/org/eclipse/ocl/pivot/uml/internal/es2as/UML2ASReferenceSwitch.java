@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Slot;
+import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -39,7 +40,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -47,6 +47,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.uml2.uml.util.UMLSwitch;
 
 //
@@ -297,6 +299,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	private @NonNull AssociationClass createAssociationClassProperties(org.eclipse.uml2.uml.@NonNull Association umlAssociation) {
 		AssociationClass asAssociationClass = converter.getCreated(AssociationClass.class, umlAssociation);
 		assert asAssociationClass != null;
+		assert converter.getAssociationClassProperties(asAssociationClass) == null;
 		List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds = converter.getSafeMemberEnds(umlAssociation);
 		AssociationClassProperties asAssociationClassProperties = new AssociationClassProperties(umlMemberEnds);
 		String associationName = asAssociationClass.getName();
@@ -486,7 +489,12 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			return asClass;
 		}
 		CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, true);
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		boolean isNullFree = true;			// No associations to null in UML.
+		int lower = umlProperty.getLower();
+		int upper = umlProperty.getUpper();
+		IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
+		UnlimitedNaturalValue upperValue = ValueUtil.unlimitedNaturalValueOf(upper);
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, asClass, isNullFree, lowerValue, upperValue);
 		return standardLibrary.getCollectionType(typeArguments);
 	}
 

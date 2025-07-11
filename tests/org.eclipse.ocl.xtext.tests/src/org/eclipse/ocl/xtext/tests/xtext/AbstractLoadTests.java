@@ -13,6 +13,8 @@ package org.eclipse.ocl.xtext.tests.xtext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
@@ -37,6 +39,7 @@ import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -70,61 +73,79 @@ public class AbstractLoadTests extends XtextTestCase
 		}
 	}
 
-	protected @NonNull ASResource checkLoadableFromXMI(@NonNull URI xmiCSuri, @NonNull String... messages) throws IOException {
+	@SuppressWarnings("finally")
+	protected void checkLoadableFromXMI(@NonNull URI xmiCSuri, @NonNull String... messages) throws IOException {
 	//	System.out.println("checkLoadableFromXMI " + xmiCSuri);
 		OCL ocl = createOCLWithProjectMap();
 		try {
+			//
+			//	Load the CS resource.
+			//
 			CSResource csResource = (CSResource)ocl.getResourceSet().getResource(xmiCSuri, true);
-			assertNoResourceErrors("Load failed", csResource);
-			assertNoUnresolvedProxies("Load failed", csResource);
-			assertNoUnresolvedPivots("Load failed", csResource);
-			ICS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
-			ASResource asResource = cs2as.getASResource();
-			assertNoValidationErrors("Loaded pivot", asResource);
-			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
-			saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
-			saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
-			AS2ID.assignIds(asResource, saveOptions);
-			assertResourceErrors("Pre-save", asResource, messages);
-		//	return doLoad_Concrete2(ocl, xtextResource, inputURI);
-		//	unloadResourceSet(asResource.getResourceSet());
-			for (Resource resource : ocl.getEnvironmentFactory().getASResourceSet().getResources()) {
-				String scheme = resource.getURI().scheme();
-				if (!"http".equals(scheme) && !"pathmap".equals(scheme)) {
-				//	System.out.println("checkLoadableFromXMI unload " + resource.getURI());
-					resource.unload();
-				}
+			{
+				assertNoResourceErrors("Load failed", csResource);
+				assertNoUnresolvedProxies("Load failed", csResource);
+				assertNoUnresolvedPivots("Load failed", csResource);
+				ICS2AS cs2as = csResource.getCS2AS(ocl.getEnvironmentFactory());
+				ASResource asResource = cs2as.getASResource();
+				assertNoValidationErrors("Loaded pivot", asResource);
+				Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
+				saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+				saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+				AS2ID.assignIds(asResource, saveOptions);
+				assertResourceErrors("Pre-save", asResource, messages);
+				cs2as = null;
 			}
-		//	asResource = (ASResource)ocl.getEnvironmentFactory().getASResourceSet().getResources().get(1);		// XXX
-		//	asResource.unload();
-			for (EObject eObject : new TreeIterable(csResource)) {
-				if (eObject instanceof PivotableElementCS) {
-					for (EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
-						if (eStructuralFeature instanceof EReference) {
-							EReference eReference = (EReference)eStructuralFeature;
-							EClass eType = eReference.getEReferenceType();
-							if (!eReference.isContainment() && !BaseCSPackage.Literals.ELEMENT_CS.isSuperTypeOf(eType)) {
-						//	if (!eReference.isResolveProxies()) {
-						//		System.out.println("!isResolveProxies " + eReference + " " + eReference.isResolveProxies());
-						//	}
+			//
+			//	Explicitly unload the dynamic AS resources.
+			//
+			{
+				EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+				ResourceSet asResourceSet = environmentFactory.getASResourceSet();
+				List<@NonNull Resource> asResources = asResourceSet.getResources();
+				List<@NonNull Resource> asResourcesCopy = new ArrayList<>(asResources);
+				for (Resource resource : asResourcesCopy) {
+					ASResource asUnloadResource = (ASResource)resource;
+					String scheme = asUnloadResource.getURI().scheme();
+					if (!"http".equals(scheme) && !"pathmap".equals(scheme)) {
+					//	System.out.println("checkLoadableFromXMI unload " + asUnloadResource.getURI());
+						ocl.getEnvironmentFactory().getMetamodelManager().removeASResource(asUnloadResource);
+						asResources.remove(asUnloadResource);
+					}
+				}
+				environmentFactory = null;
+				asResourcesCopy = null;
+			}
+			getClass();		// XXX
+			//
+			//	Check that AS resource proxies can be resolved.
+			//
+			{
+				for (EObject eObject : new TreeIterable(csResource)) {
+					if (eObject instanceof PivotableElementCS) {
+						for (EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
+							if (eStructuralFeature instanceof EReference) {
+								EReference eReference = (EReference)eStructuralFeature;
+								EClass eType = eReference.getEReferenceType();
+								if (!eReference.isContainment() && !BaseCSPackage.Literals.ELEMENT_CS.isSuperTypeOf(eType)) {
+							//	if (!eReference.isResolveProxies()) {
+							//		System.out.println("!isResolveProxies " + eReference + " " + eReference.isResolveProxies());
+							//	}
+								}
 							}
 						}
-					}
-					Element pivot = ((PivotableElementCS)eObject).getPivot();
-					if (pivot != null) {
-						Resource eResource = pivot.eResource();
-					//	if (eResource == null) {
+						Element pivot = ((PivotableElementCS)eObject).getPivot();
+						if (pivot != null) {
+							Resource eResource = pivot.eResource();
 							assert eResource != null : "Failed to proxify " + NameUtil.debugSimpleName(pivot);
-					//	}
+						}
 					}
 				}
 			}
-		//	Map<EObject, Collection<Setting>> unresolvedProxies = UnresolvedProxyCrossReferencer.find(asResource);
-		//	assert (unresolvedProxies.size() > 0) {
-		//	assertNoUnresolvedProxies("Unload then resolve failed", csResource);
 		//	System.out.println("checkLoadableFromXMI pre-resolveAll");
 			EcoreUtil.resolveAll(csResource);
 		//	System.out.println("checkLoadableFromXMI post-resolveAll");
+			getClass();		// XXX
 			for (EObject eObject : new TreeIterable(csResource)) {		// XXX redundant
 				if (eObject instanceof PivotableElementCSImpl) {
 					Element pivot = ((PivotableElementCSImpl)eObject).getPivot();
@@ -135,7 +156,14 @@ public class AbstractLoadTests extends XtextTestCase
 			}
 			assertNoUnresolvedProxies("Unload then resolve failed", csResource);
 			assertNoUnresolvedPivots("Unload then resolve failed", csResource);
-			return asResource;
+		}
+		catch (Throwable e) {
+			try {
+				ocl.dispose();
+			}
+			finally {
+				throw e;		// Don't let a dispose failure occlude the first problem.
+			}
 		}
 		finally {
 			ocl.dispose();
