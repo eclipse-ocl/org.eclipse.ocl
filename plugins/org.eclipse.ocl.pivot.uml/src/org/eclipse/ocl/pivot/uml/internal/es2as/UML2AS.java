@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.uml.internal.es2as;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -490,23 +491,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 		@Override
 		public void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
-			//	if (eObject instanceof ENamedElement) {//&& "EnglishClass".equals(((ENamedElement)eObject).getName())) {
-			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " in " + NameUtil.debugSimpleName(createMap));
-			//	}
-			//	else if (eObject instanceof org.eclipse.uml2.uml.NamedElement) {//&& "EnglishClass".equals(((org.eclipse.uml2.uml.NamedElement)eObject).getName())) {
-			//		System.out.println("Define " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement));
-			//	}
+			assert !pivotElement.eIsProxy();
 			@SuppressWarnings("unused")
 			Element oldElement = createMap.put(eObject, pivotElement);
-			/*			if ((oldElement != null) && (oldElement != pivotElement)) {
-				System.out.println("Reassigned : " + eObject);
-			}
-			else if (eObject instanceof EAnnotation) {
-//				System.out.println("Assigned : " + eObject);
-			}
-			else {
-//				System.out.println("Assigned : " + eObject);
-			} */
 		}
 
 		@Override
@@ -572,9 +559,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		public void addProperty(org.eclipse.ocl.pivot.@NonNull Class asType, @NonNull Property asProperty) {
 			List<@NonNull Property> asProperties = type2properties.get(asType);
 			if (asProperties == null) {
-				asProperties = new UniqueList<>();
+				asProperties = new ArrayList<>();
 				type2properties.put(asType, asProperties);
 			}
+			assert !asProperties.contains(asProperty);		// Duplicate properties do not occur, duplicate names do occur see #2374
 			asProperties.add(asProperty);
 		}
 
@@ -811,12 +799,15 @@ public abstract class UML2AS extends AbstractExternal2AS
 						else {
 							Map<@NonNull EObject, @NonNull Element> importedCreatedMap = adapter.getCreatedMap();
 							if (importedCreatedMap != null) {
-								createMap.putAll(importedCreatedMap);
-								//								for (@NonNull EObject key : importedCreatedMap.keySet()) {
-								//									Element value = importedCreatedMap.get(key);
-								//									assert value != null;
-								//									addCreated(key, value);
-								//								}
+							//	createMap.putAll(importedCreatedMap);
+								for (Map.Entry<@NonNull EObject, @NonNull Element> entry : importedCreatedMap.entrySet()) {
+									EObject eObject = entry.getKey();
+									Element asElement = entry.getValue();
+									if (!asElement.eIsProxy()) {
+										Element old = createMap.put(eObject, asElement);
+										assert (old == asElement) || (old == null);
+									}
+								}
 							}
 						}
 					}
@@ -906,12 +897,17 @@ public abstract class UML2AS extends AbstractExternal2AS
 			}
 			Set<Type> allPropertiedTypes = new HashSet<>(typeProperties.keySet()); */
 			//			allPropertiedTypes.addAll(stereotypeProperties.keySet());
+			RedundantPropertyFilter umlDerivedPropertyComparator = new RedundantPropertyFilter();
 			for (org.eclipse.ocl.pivot.@NonNull Class pivotType : type2properties.keySet()) {
+				if ("Dependency".equals(pivotType.getName())) {
+					getClass();			// XXX
+				}
 				List<@NonNull Property> asProperties = type2properties.get(pivotType);
-				Collections.sort(asProperties, NameUtil.NAMEABLE_COMPARATOR);
+				umlDerivedPropertyComparator.resolve(asProperties);
 				refreshList(PivotUtil.getOwnedPropertiesList(pivotType), asProperties);
 			}
 		}
+
 
 		protected void installReferencers() {
 			for (EObject eObject : referencers) {
@@ -1010,6 +1006,72 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 	}
 
+	/**
+	 * RedundantPropertyFilter sorts the properties alphabetically and removes the implicit part of an
+	 * imoplicit/non-implicit duplicates resulting from the gratuitous extra association in Eclipse UML.
+	 * See #2374.
+	 */
+	private static final class RedundantPropertyFilter implements Comparator<@NonNull Property>
+	{
+		private @Nullable List<@NonNull Property> redundantProperties = null;
+
+		@Override
+		public int compare(@NonNull Property p1, @NonNull Property p2) {
+			String n1 = NameUtil.getSafeName(p1);
+			String n2 = NameUtil.getSafeName(p2);
+			int diff = ClassUtil.safeCompareTo(n1, n2);
+			if (diff != 0) {
+				return diff;
+			}
+			boolean i1 = p1.isIsImplicit();
+			boolean i2 = p2.isIsImplicit();
+			if (i1 != i2) {
+				Property o1 = PivotUtil.getOpposite(p1);
+				Property o2 = PivotUtil.getOpposite(p2);
+				String on1 = NameUtil.getSafeName(o1);
+				String on2 = NameUtil.getSafeName(o2);
+			//	assert !on1.equals(on2) : "Matching opposite names for " + n1 + " : " + on1;
+				if (on1.equals(on2)) {
+					List<@NonNull Property> redundantProperties2 = redundantProperties;
+					if (redundantProperties2 == null) {
+						redundantProperties = redundantProperties2 = new UniqueList<>();
+					}
+					if (i1) {
+						redundantProperties2.add(p1);
+						p2.setOpposite(null);
+					}
+					else {
+						redundantProperties2.add(p2);
+						p1.setOpposite(null);
+					}
+					System.out.println("UMLDerivedPropertyComparator resolved " + p1);
+				}
+				else {
+					System.out.println("UMLDerivedPropertyComparator unresolved " + p1 + " " + n1 + " : " + on1 + "," + on2);
+				}
+			}
+			else if (i1 && i1) {
+				// multiple implicit opposites e.g entry/exit for connectionPointReference
+				// System.out.println("UMLDerivedPropertyComparator unresolved " + i1 + " " + p1);
+			}
+			else { // !i1 && !i1
+				assert false : "Multiple properties named " + n1;
+				//System.out.println("UMLDerivedPropertyComparator unresolved " + i1 + " " + p1);
+			}
+			return diff;
+		}
+
+		public void resolve(List<@NonNull Property> asProperties) {
+			if (redundantProperties != null) {
+				redundantProperties.clear();
+			}
+			Collections.sort(asProperties, this);
+			if ((redundantProperties != null) && !redundantProperties.isEmpty()) {
+				asProperties.removeAll(redundantProperties);
+			}
+		}
+	}
+
 	protected final @NonNull Resource umlResource;
 	protected Model pivotModel = null;	// Set by installDeclarations
 	private URI umlURI = null;
@@ -1031,7 +1093,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	/*public*/ void addAssociationClassProperties(@NonNull AssociationClass asAssociationClass, @NonNull AssociationClassProperties asProperties) {
-		association2properties.put(asAssociationClass, asProperties);
+		AssociationClassProperties old = association2properties.put(asAssociationClass, asProperties);
+		assert old == null;
 	}
 
 	public abstract void addCreated(@NonNull EObject umlElement, @NonNull Element pivotElement);
@@ -1199,9 +1262,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 			@SuppressWarnings("null")@NonNull ClassLoader classLoader = ecoreStereotype.getClass().getClassLoader();
 			Class<?> instanceClass = classLoader.loadClass(instanceClassName);
 			if (instanceClass != null) {
-				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
-				if (behavioralClass != null) {
-					return behavioralClass;
+				org.eclipse.ocl.pivot.Class behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+				if (behavioralClass instanceof PrimitiveType) {
+					return (PrimitiveType)behavioralClass;
 				}
 				instanceClass.getDeclaredMethod("compareTo", instanceClass);
 				//						converter.queueReference(eObject2);			// Defer synthesis till supertypes resolved
