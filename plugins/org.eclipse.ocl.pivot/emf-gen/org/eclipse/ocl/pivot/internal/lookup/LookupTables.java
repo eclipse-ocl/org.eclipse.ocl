@@ -58,7 +58,7 @@ public class LookupTables extends AbstractTables
 	/**
 	 *	The library of all packages and types.
 	 */
-	public static final @NonNull PartialStandardLibraryImpl LIBRARY = OCLstdlibTables.LIBRARY;
+	public static final PartialStandardLibraryImpl.@NonNull ImmutablePartialStandardLibraryImpl LIBRARY = OCLstdlibTables.LIBRARY;
 
 	/**
 	 *	The package descriptor for the package.

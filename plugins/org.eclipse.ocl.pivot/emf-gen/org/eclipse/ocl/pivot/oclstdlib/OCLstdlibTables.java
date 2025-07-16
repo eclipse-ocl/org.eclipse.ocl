@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl.ImmutablePartialStandardLibraryImpl;
 // import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
@@ -52,7 +51,7 @@ public class OCLstdlibTables extends AbstractTables
 	/**
 	 *	The library of all packages and types.
 	 */
-	public static final @NonNull ImmutablePartialStandardLibraryImpl LIBRARY = new PartialStandardLibraryImpl.ImmutablePartialStandardLibraryImpl();
+	public static final PartialStandardLibraryImpl.@NonNull ImmutablePartialStandardLibraryImpl LIBRARY = new PartialStandardLibraryImpl.ImmutablePartialStandardLibraryImpl();
 
 	/**
 	 *	The package descriptor for the package.

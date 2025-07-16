@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -321,25 +322,19 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 
 	private void setInstanceClassName(@NonNull EPackage ePackage, String typeName, Class<?> javaClass, @Nullable String comment) {
 		EClassifier eClassifier = ePackage.getEClassifier(typeName);
-		if (eClassifier != null) {
-			if (eClassifier instanceof EClass) {
-				assert false;
-				String name = eClassifier.getName();
-			//	ePackage.getEClassifiers().remove(eClassifier);
-			//	eClassifier = EcoreFactory.eINSTANCE.createEDataType();
-			//	eClassifier.setName(name);
-			//	ePackage.getEClassifiers().add(eClassifier);
-			}
+		if (eClassifier instanceof EDataType) {
 			if (!javaClass.getName().equals(eClassifier.getInstanceClassName())) {
 				log.error("Wrong " + typeName + "::instanceClassName - " + eClassifier.getInstanceClassName() + " rather than " + javaClass.getName());
 			}
-		//	eClassifier.setInstanceClassName(javaClass.getName());
 			if (comment != null) {
 				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 				eAnnotation.setSource(GenModelPackage.eNS_URI);
 				eAnnotation.getDetails().put("body", comment);
 				eClassifier.getEAnnotations().add(eAnnotation);
 			}
+		}
+		else if (eClassifier instanceof EClass) {
+			assert false: "Unexpected setInstanceClassName for EClass " + eClassifier.getName();
 		}
 	}
 
