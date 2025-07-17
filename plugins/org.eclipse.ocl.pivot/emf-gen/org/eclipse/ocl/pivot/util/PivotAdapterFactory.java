@@ -116,7 +116,7 @@ import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StateMachine;
@@ -314,6 +314,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseCompletePackage(CompletePackage object)
 			{
 				return createCompletePackageAdapter();
+			}
+			@Override
+			public Adapter caseCompleteStandardLibrary(CompleteStandardLibrary object)
+			{
+				return createCompleteStandardLibraryAdapter();
 			}
 			@Override
 			public Adapter caseConnectionPointReference(ConnectionPointReference object)
@@ -734,11 +739,6 @@ extends AdapterFactoryImpl {
 			public Adapter caseStandardLibrary(StandardLibrary object)
 			{
 				return createStandardLibraryAdapter();
-			}
-			@Override
-			public Adapter caseStandardLibraryInternal(StandardLibraryInternal object)
-			{
-				return createStandardLibraryInternalAdapter();
 			}
 			@Override
 			public Adapter caseState(State object)
@@ -1654,21 +1654,6 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStandardLibraryAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.StandardLibraryInternal <em>Standard Library Internal</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.StandardLibraryInternal
-	 * @generated
-	 */
-	public Adapter createStandardLibraryInternalAdapter()
 	{
 		return null;
 	}
@@ -2608,6 +2593,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCompletePackageAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary <em>Complete Standard Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary
+	 * @generated
+	 */
+	public Adapter createCompleteStandardLibraryAdapter()
 	{
 		return null;
 	}

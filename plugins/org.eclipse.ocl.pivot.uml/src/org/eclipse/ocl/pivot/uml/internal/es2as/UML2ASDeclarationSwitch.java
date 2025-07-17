@@ -59,7 +59,7 @@ import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -91,7 +91,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 	protected final @NonNull Ecore2ASDeclarationSwitch ecoreSwitch;
 	protected final @NonNull UML2AS converter;
 	protected final @NonNull MetamodelManager metamodelManager;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	public UML2ASDeclarationSwitch(@NonNull UML2AS converter) {
 		this.converter = converter;

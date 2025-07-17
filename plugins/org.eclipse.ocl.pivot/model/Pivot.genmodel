@@ -213,6 +213,9 @@
         <genParameters ecoreParameter="Pivot.ecore#//CompletePackage/getOwnedCompleteClass/name"/>
       </genOperations>
     </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-CompleteStandardLibrary">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"/>
+    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-ConnectionPointReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-ConnectionPointReference-entries"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-ConnectionPointReference-exits"/>
@@ -874,9 +877,6 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Slot-owningInstance"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-StandardLibrary"/>
-    <genClasses ecoreClass="Pivot.ecore#T-pivot-StandardLibraryInternal">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-StandardLibraryInternal-owningCompleteEnvironment"/>
-    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-State">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-State-isComposite"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-State-isOrthogonal"/>

@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -46,7 +46,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
-	protected AbstractLambdaTypeManager(@NonNull StandardLibraryInternal standardLibrary) {
+	protected AbstractLambdaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
 	}
 

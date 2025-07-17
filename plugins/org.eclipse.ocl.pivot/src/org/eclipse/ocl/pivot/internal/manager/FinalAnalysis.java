@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -82,7 +82,7 @@ public class FinalAnalysis
 					if (subCompleteClass != superCompleteClass) {
 						for (@NonNull Operation subOperation : subCompleteClass.getOperations(null)) {
 							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId())) {
-								StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
+								CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 								CompleteClassInternal subOwningCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation));
 								if (subOwningCompleteClass.conformsTo(standardLibrary, superCompleteClass)) {
 									LibraryFeature subImplementation = metamodelManager.getImplementation(subOperation);
@@ -132,7 +132,7 @@ public class FinalAnalysis
 			return Collections.singletonList(operation);
 		}
 		List<@NonNull Operation> results = new ArrayList<>();
-		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
 		for (@NonNull Operation override : overrides) {
 			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
@@ -174,7 +174,7 @@ public class FinalAnalysis
 			return operation;
 		}
 		Operation candidate = null;
-		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
 		for (@NonNull Operation override : overrides) {
 			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);

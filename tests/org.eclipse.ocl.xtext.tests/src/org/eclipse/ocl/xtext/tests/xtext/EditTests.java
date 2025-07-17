@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
@@ -1069,7 +1069,7 @@ public class EditTests extends XtextTestCase
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		String testDocument =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
 						"library ocl : ocl = '" + LibraryConstants.STDLIB_URI + "' {\n" +
