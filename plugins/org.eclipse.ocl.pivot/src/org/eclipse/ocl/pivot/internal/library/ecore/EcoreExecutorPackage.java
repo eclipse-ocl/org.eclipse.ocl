@@ -23,7 +23,8 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -32,7 +33,7 @@ import com.google.common.collect.Lists;
 public class EcoreExecutorPackage extends ExecutorPackage
 {
 	protected final EPackage ePackage;
-	private ExecutorStandardLibrary standardLibrary = null;
+	private PartialStandardLibrary standardLibrary = null;
 	private @NonNull AbstractExecutorClass[] types = null;
 	private @Nullable List<org.eclipse.ocl.pivot.Package> packages = null;
 
@@ -66,7 +67,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 					packages2 = packages = new ArrayList<org.eclipse.ocl.pivot.Package>();
 					for (EPackage eSubPackage : ePackage.getESubpackages()) {
 						assert eSubPackage != null;
-						EcoreExecutorPackage subPackage = standardLibrary.getPackage(eSubPackage);
+						EcoreExecutorPackage subPackage = ((PartialStandardLibraryImpl)standardLibrary).getPackage(eSubPackage);
 						if (subPackage != null) {
 							packages2.add(subPackage);
 						}
@@ -117,13 +118,13 @@ public class EcoreExecutorPackage extends ExecutorPackage
 	/**
 	 * @since 7.0
 	 */
-	public void init(@Nullable ExecutorStandardLibrary standardLibrary, @NonNull EcoreExecutorType @NonNull [] types) {
+	public void init(@Nullable PartialStandardLibrary standardLibrary, @NonNull EcoreExecutorType @NonNull [] types) {
 		assert this.standardLibrary == null;
 		assert this.types == null;
 		this.standardLibrary = standardLibrary;
 		this.types = types;
 		if (standardLibrary != null) {
-			standardLibrary.addPackage(this, null);
+			((PartialStandardLibraryImpl)standardLibrary).addPackage(this, null);
 		}
 	}
 
