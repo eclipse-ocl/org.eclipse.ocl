@@ -46,7 +46,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
-	protected AbstractLambdaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
+	protected AbstractLambdaTypeManager(@NonNull StandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
 	}
 
@@ -120,7 +120,17 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		return lambdaParameter;
 	}
 
-	protected abstract @NonNull LambdaType createLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result);
+	protected @NonNull LambdaType createLambdaType(@NonNull TypedElement context,
+			@NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
+		LambdaType lambdaType = PivotFactory.eINSTANCE.createLambdaType();
+		lambdaType.setName(TypeId.LAMBDA_NAME);
+		lambdaType.setOwnedContext(createLambdaParameter(context));
+		for (TypedElement parameter : parameters) {
+			lambdaType.getOwnedParameters().add(createLambdaParameter(parameter));
+		}
+		lambdaType.setOwnedResult(createLambdaParameter(result));
+		return lambdaType;
+	}
 
 	@Override
 	public void dispose() {

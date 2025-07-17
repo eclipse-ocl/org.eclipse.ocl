@@ -110,7 +110,15 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		}
 	}
 
-	protected abstract @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments);
+	protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
+		CollectionTypeId collectionTypeId = typeArguments.getCollectionTypeId();
+		Type elementType = typeArguments.getElementType();
+		boolean isNullFree = typeArguments.isNullFree();
+		IntegerValue lower = typeArguments.getLower();
+		UnlimitedNaturalValue upper = typeArguments.getUpper();
+		CollectionType genericCollectionType = getCollectionType(collectionTypeId);
+		return PivotUtil.createCollectionType(genericCollectionType, elementType, isNullFree, lower, upper);
+	}
 
 	@Override
 	public void dispose() {
@@ -240,5 +248,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		return true;
 	}
 
-	protected abstract boolean isValid(@Nullable Type type);
+	protected boolean isValid(@Nullable Type type) {
+		return type != null;
+	}
 }

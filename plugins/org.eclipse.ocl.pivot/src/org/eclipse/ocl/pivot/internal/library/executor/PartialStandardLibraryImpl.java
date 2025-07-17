@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -51,7 +53,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorBagType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorMapType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorSetType;
@@ -60,6 +61,7 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -75,9 +77,10 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+
+import com.google.common.collect.Lists;
 
 /**
  * @since 7.0
@@ -135,7 +138,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	/**
-	 * ExecutorJavaTypeManager encapsulates the knowledge about known java types.
+	 * @since 7.0
 	 */
 	public static class PartialJavaTypeManager extends AbstractJavaTypeManager
 	{
@@ -144,24 +147,25 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 	}
 
+	/**
+	 * PartialLambdaTypeManager encapsulates the knowledge about known lambda types.
+	 *
+	 * @since 7.0
+	 */
+	public static class PartialLambdaTypeManager extends AbstractLambdaTypeManager
+	{
+		public PartialLambdaTypeManager(@NonNull StandardLibrary standardLibrary) {
+			super(standardLibrary);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static class PartialMapTypeManager extends AbstractMapTypeManager
 	{
 		public PartialMapTypeManager(@NonNull StandardLibrary standardLibrary) {
 			super(standardLibrary);
-		}
-
-		@Override
-		protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
-			ExecutorMapType executorMapType = new ExecutorMapType(TypeId.MAP_NAME, standardLibrary.getMapType(), typeArguments.getKeyType(), typeArguments.isKeysAreNullFree(), typeArguments.getValueType(), typeArguments.isValuesAreNullFree());
-			if (entryClass != null) {
-				executorMapType.setEntryClass(entryClass);
-			}
-			return executorMapType;
-		}
-
-		@Override
-		protected boolean isValid(@Nullable Type type) {
-			return type != null;
 		}
 	}
 
@@ -305,8 +309,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	protected @Nullable LambdaTypeManager createLambdaTypeManager() {
-		return null;
+	protected @NonNull LambdaTypeManager createLambdaTypeManager() {
+		return new PartialLambdaTypeManager(this);
 	}
 
 	@Override
@@ -541,6 +545,20 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
 		return OCLstdlibTables.Types._Integer;
+	}
+
+	@Override
+	public @NonNull LambdaTypeManager getLambdaManager() {
+		assert lambdaTypeManager != null;
+		return lambdaTypeManager;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Type getLambdaType(@NonNull TypedElement context, @NonNull TypedElement result, @NonNull TypedElement ... parameters) {
+		List<@NonNull TypedElement> parameterList = parameters != null ? Lists.newArrayList(parameters) : Collections.emptyList();
+		return getLambdaManager().getLambdaType(context, parameterList, result, null);
 	}
 
 	@Override
