@@ -21,8 +21,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
@@ -91,7 +91,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		knownSubInheritances.add(subInheritance);
 	}
 
-	protected abstract @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance);
+	protected abstract @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance);
 
 	@Override
 	public @NonNull EObject createInstance() {
@@ -112,7 +112,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		if (!inheritances.contains(this)) {
 			inheritances.add(this);
 			if (fragments == null) {
-				for (@NonNull CompleteInheritance superInheritance : getInitialSuperInheritances()) {
+				for (@NonNull FlatClass superInheritance : getInitialSuperInheritances()) {
 					if (superInheritance instanceof ReflectiveInheritance) {
 						if (((ReflectiveInheritance)superInheritance).gatherUninstalledInheritances(inheritances)) {
 							gotOne = true;		// Transitively installed
@@ -194,7 +194,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	/**
 	 * Return the immediate superinheritances without reference to the fragments.
 	 */
-	protected abstract @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances();
+	protected abstract @NonNull Iterable<@NonNull ? extends FlatClass> getInitialSuperInheritances();
 
 	@Override
 	public @NonNull InheritanceFragment getSelfFragment() {
@@ -285,12 +285,12 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			installOclAny();
 		}
 		else {
-			List<@NonNull List<@NonNull CompleteInheritance>> all = new ArrayList<>();
-			for (@NonNull CompleteInheritance superInheritance : getInitialSuperInheritances()) {
+			List<@NonNull List<@NonNull FlatClass>> all = new ArrayList<>();
+			for (@NonNull FlatClass superInheritance : getInitialSuperInheritances()) {
 				//				installIn(superInheritance, this, all);
 				int j = 0;
 				for (int i = 0; i < superInheritance.getIndexes()-1; i++) {
-					List<@NonNull CompleteInheritance> some = (i < all.size()) ? all.get(i) : null;
+					List<@NonNull FlatClass> some = (i < all.size()) ? all.get(i) : null;
 					if (some == null) {
 						some = new ArrayList<>();
 						all.add(some);
@@ -298,7 +298,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 					int jMax = superInheritance.getIndex(i+1);
 					for (; j < jMax; j++) {
 						InheritanceFragment fragment = superInheritance.getFragment(j);
-						CompleteInheritance baseInheritance = fragment.getBaseInheritance();
+						FlatClass baseInheritance = fragment.getBaseInheritance();
 						if (!some.contains(baseInheritance)) {
 							some.add(baseInheritance);
 							if (baseInheritance instanceof ReflectiveInheritance) {
@@ -310,7 +310,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			}
 			int superDepths = all.size();
 			int superInheritances = 0;
-			for (List<CompleteInheritance> some : all) {
+			for (List<FlatClass> some : all) {
 				superInheritances += some.size();
 			}
 			assert superDepths > 0;
@@ -319,7 +319,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			int j = 0;
 			indexes2[0] = 0;
 			for (int i = 0; i < superDepths; i++) {
-				for (CompleteInheritance some : all.get(i)) {
+				for (FlatClass some : all.get(i)) {
 					fragments2[j++] = createFragment(some);
 				}
 				indexes2[i+1] = j;
@@ -353,7 +353,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			return true;
 		}
 		//		DomainInheritance oclAnyInheritance = getOclAnyInheritance();
-		for (CompleteInheritance superInheritance : getInitialSuperInheritances()) {
+		for (FlatClass superInheritance : getInitialSuperInheritances()) {
 			if ((superInheritance instanceof ReflectiveInheritance) && !((ReflectiveInheritance)superInheritance).isInstalled()) {
 				//				System.out.println("isInstallable false " + this);
 				return false;
@@ -382,7 +382,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		if (isNonNull && (fragments2 != null)) {
 			//			System.out.println("Uninstall " + this);
 			for (InheritanceFragment fragment : fragments2) {
-				CompleteInheritance baseInheritance = fragment.getBaseInheritance();
+				FlatClass baseInheritance = fragment.getBaseInheritance();
 				if (baseInheritance instanceof ReflectiveInheritance) {
 					((ReflectiveInheritance)baseInheritance).removeSubInheritance(this);
 				}

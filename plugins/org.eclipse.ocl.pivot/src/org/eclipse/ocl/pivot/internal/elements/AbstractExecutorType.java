@@ -13,13 +13,13 @@ package org.eclipse.ocl.pivot.internal.elements;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
@@ -75,7 +75,7 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance( @NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getInheritance( @NonNull StandardLibrary standardLibrary) {
 		//		return standardLibrary.getInheritance(this);
 		throw new UnsupportedOperationException();
 	}

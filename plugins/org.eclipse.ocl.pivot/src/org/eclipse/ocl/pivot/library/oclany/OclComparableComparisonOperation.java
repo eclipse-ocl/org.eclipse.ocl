@@ -12,10 +12,10 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
@@ -36,11 +36,11 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object left, @Nullable Object right) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		IdResolver idResolver = executor.getIdResolver();
-		CompleteInheritance leftType = idResolver.getDynamicClassOf(left).getInheritance(standardLibrary);
-		CompleteInheritance rightType = idResolver.getDynamicClassOf(right).getInheritance(standardLibrary);
-		CompleteInheritance commonType = leftType.getCommonInheritance(rightType);
-		CompleteInheritance comparableType = standardLibrary.getOclComparableType().getInheritance(standardLibrary);
-		CompleteInheritance selfType = standardLibrary.getOclSelfType().getInheritance(standardLibrary);
+		FlatClass leftType = idResolver.getDynamicClassOf(left).getInheritance(standardLibrary);
+		FlatClass rightType = idResolver.getDynamicClassOf(right).getInheritance(standardLibrary);
+		FlatClass commonType = leftType.getCommonInheritance(rightType);
+		FlatClass comparableType = standardLibrary.getOclComparableType().getInheritance(standardLibrary);
+		FlatClass selfType = standardLibrary.getOclSelfType().getInheritance(standardLibrary);
 		Operation staticOperation = comparableType.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfType);
 		int intComparison;
 		LibraryBinaryOperation implementation = null;

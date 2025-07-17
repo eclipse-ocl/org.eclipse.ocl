@@ -16,8 +16,8 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -26,29 +26,29 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class ReflectivePackage extends ExecutorPackage
 {
-	protected @Nullable Map<org.eclipse.ocl.pivot.Class, CompleteInheritance> class2inheritance = null;
+	protected @Nullable Map<org.eclipse.ocl.pivot.Class, FlatClass> class2inheritance = null;
 
 	public ReflectivePackage(@NonNull String name, @Nullable String nsPrefix, @Nullable String nsURI, @NonNull PackageId packageId) {
 		super(name, nsPrefix, nsURI, packageId);
 	}
-	
-	protected synchronized @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteInheritance> computeClasses() {
-		Map<org.eclipse.ocl.pivot.Class, CompleteInheritance> class2inheritance2 = class2inheritance = new HashMap<org.eclipse.ocl.pivot.Class, CompleteInheritance>();
+
+	protected synchronized @NonNull Map<org.eclipse.ocl.pivot.Class, FlatClass> computeClasses() {
+		Map<org.eclipse.ocl.pivot.Class, FlatClass> class2inheritance2 = class2inheritance = new HashMap<org.eclipse.ocl.pivot.Class, FlatClass>();
 		for (org.eclipse.ocl.pivot.Class domainClass : getDomainClasses()) {
 			if (domainClass != null) {
-				CompleteInheritance executorType = createInheritance(domainClass);
+				FlatClass executorType = createInheritance(domainClass);
 				class2inheritance2.put(domainClass, executorType);
 			}
 		}
 		return class2inheritance2;
 	}
 
-	protected abstract @NonNull CompleteInheritance createInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass);
+	protected abstract @NonNull FlatClass createInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass);
 
 	protected abstract @NonNull List<org.eclipse.ocl.pivot.Class> getDomainClasses();
 
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
-		Map<org.eclipse.ocl.pivot.Class, CompleteInheritance> class2inheritance2 = class2inheritance;
+	public @NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
+		Map<org.eclipse.ocl.pivot.Class, FlatClass> class2inheritance2 = class2inheritance;
 		if (class2inheritance2 == null) {
 			class2inheritance2 = computeClasses();
 		}
