@@ -8,22 +8,24 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot;
+package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 /**
  * An InheritanceFragment identifies the capabilities introduced by a particular inheritance.
+ * @since 7.0
  */
-public interface InheritanceFragment
+public interface FlatFragment
 {
 	/**
 	 * Return the unoverloaded fragment, which is getBaseInheritance().getSelfFragment().
 	 */
-	@NonNull InheritanceFragment getBaseFragment();
+	@NonNull FlatFragment getBaseFragment();
 
 	/**
 	 * Return the inheritance that introduces the operations and properties in this fragment.

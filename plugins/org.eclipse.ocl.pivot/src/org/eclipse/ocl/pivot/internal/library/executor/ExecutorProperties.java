@@ -16,9 +16,9 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 
 import com.google.common.base.Predicate;
@@ -35,7 +35,7 @@ public class ExecutorProperties
 
 	public ExecutorProperties(@NonNull FlatClass inheritance) {
 		this.inheritance = inheritance;
-		InheritanceFragment selfFragment = inheritance.getSelfFragment();
+		FlatFragment selfFragment = inheritance.getSelfFragment();
 		for (@NonNull Property property : selfFragment.getLocalProperties()) {
 			name2property.put(property.getName(), property);
 		}

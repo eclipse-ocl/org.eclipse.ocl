@@ -11,13 +11,13 @@
 package org.eclipse.ocl.pivot.types;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
-public abstract class AbstractFragment implements InheritanceFragment
+public abstract class AbstractFragment implements FlatFragment
 {
 	public final @NonNull FlatClass derivedInheritance;
 	public final @NonNull FlatClass baseInheritance;
@@ -44,10 +44,10 @@ public abstract class AbstractFragment implements InheritanceFragment
 			int bestDepth = -1;
 			int minDepth = baseInheritance.getDepth();
 			for (int depth = derivedInheritance.getDepth()-1; depth >= minDepth; depth--) {
-				Iterable<InheritanceFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
-				for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
+				Iterable<FlatFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
+				for (FlatFragment derivedSuperFragment : derivedSuperFragments) {
 					FlatClass superInheritance = derivedSuperFragment.getBaseInheritance();
-					InheritanceFragment superFragment = superInheritance.getFragment(baseInheritance);
+					FlatFragment superFragment = superInheritance.getFragment(baseInheritance);
 					if (superFragment != null) {
 						Operation overload = superFragment.getLocalOperation(apparentOperation);
 						if (overload != null) {
@@ -61,7 +61,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 								depth = -1;
 								break;
 							}
-							else if (!bestInheritance.isSubInheritanceOf(superInheritance)) {	// Non-occluded child candidate
+							else if (!bestInheritance.isSubFlatClassOf(superInheritance)) {	// Non-occluded child candidate
 								bestOverload = null;
 								depth = -1;
 								break;
@@ -90,7 +90,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 	}
 
 	@Override
-	public final @NonNull InheritanceFragment getBaseFragment() {
+	public final @NonNull FlatFragment getBaseFragment() {
 		return baseInheritance.getSelfFragment();
 	}
 
