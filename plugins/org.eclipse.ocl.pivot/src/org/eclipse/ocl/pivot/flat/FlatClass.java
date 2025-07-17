@@ -8,10 +8,14 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot;
+package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.InheritanceFragment;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
@@ -25,8 +29,10 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  * The allSuperInheritances relationship is computed lazily and invalidated whenever a superclass changes.
  * KnownSubInheritances are also notified of invalidation avoiding the need for an adapting Inheritance
  * to adapt more than its own target class.
+ *
+ * @since 7.0
  */
-public interface CompleteInheritance extends Nameable
+public interface FlatClass extends Nameable
 {
 	/**
 	 * @since 7.0
@@ -53,7 +59,7 @@ public interface CompleteInheritance extends Nameable
 	 */
 	public static final int OCL_INVALID = 1 << 4;			// NB. OCL_INVALID assumed greater than OCL_VOID by isSuper/SubInheritanceOf
 
-	public static @NonNull CompleteInheritance @NonNull [] EMPTY_ARRAY = new @NonNull CompleteInheritance[0];
+	public static @NonNull FlatClass @NonNull [] EMPTY_ARRAY = new @NonNull FlatClass[0];
 
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
@@ -65,7 +71,7 @@ public interface CompleteInheritance extends Nameable
 	 */
 	@NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments();
 
-	@NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance inheritance);
+	@NonNull FlatClass getCommonInheritance(@NonNull FlatClass inheritance);
 
 	/**
 	 * Return the inheritance depth of the target type: OclAny is at depth 0.
@@ -75,7 +81,7 @@ public interface CompleteInheritance extends Nameable
 	/**
 	 * Return the InheritanceFragment of this inheritance whose baseInheritance is thatInheritance. Return null if no InheritanceFragment corresponds.
 	 */
-	@Nullable InheritanceFragment getFragment(@NonNull CompleteInheritance thatInheritance);
+	@Nullable InheritanceFragment getFragment(@NonNull FlatClass thatInheritance);
 	@NonNull Iterable<@NonNull InheritanceFragment> getFragments();
 	/*@Nullable*/ InheritanceFragment getFragment(int fragmentNumber);
 	int getIndex(int fragmentNumber);
@@ -93,8 +99,8 @@ public interface CompleteInheritance extends Nameable
 	@NonNull IndexableIterable<@NonNull InheritanceFragment> getSuperFragments(int depth);
 
 	boolean isOclAny();
-	boolean isSubInheritanceOf(@NonNull CompleteInheritance inheritance);
-	boolean isSuperInheritanceOf(@NonNull CompleteInheritance inheritance);
+	boolean isSubInheritanceOf(@NonNull FlatClass inheritance);
+	boolean isSuperInheritanceOf(@NonNull FlatClass inheritance);
 	boolean isUndefined();
 
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
@@ -103,5 +109,5 @@ public interface CompleteInheritance extends Nameable
 	 * by the given Standard Library.
 	 */
 	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
-	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, CompleteInheritance... argumentTypes);
+	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, FlatClass... argumentTypes);
 }

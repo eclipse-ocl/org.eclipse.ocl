@@ -20,12 +20,12 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 {
-	public static final @NonNull List<CompleteInheritance> EMPTY_INHERITANCES = Collections.emptyList();
+	public static final @NonNull List<FlatClass> EMPTY_INHERITANCES = Collections.emptyList();
 	protected final @NonNull EcoreReflectivePackage evaluationPackage;
 	protected final @NonNull EClassifier eClassifier;
 	/**
@@ -54,7 +54,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
+	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
 		return new EcoreReflectiveFragment(this, baseInheritance);
 	}
 
@@ -89,14 +89,14 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
+	public @NonNull Iterable<@NonNull ? extends FlatClass> getInitialSuperInheritances() {
 		List<EClass> eSuperTypes = eClassifier instanceof EClass ? ((EClass)eClassifier).getESuperTypes() : Collections.<EClass>emptyList();
 		final Iterator<EClass> iterator = eSuperTypes.iterator();
-		return new Iterable<@NonNull CompleteInheritance>()
+		return new Iterable<@NonNull FlatClass>()
 		{
 			@Override
-			public @NonNull Iterator<@NonNull CompleteInheritance> iterator() {
-				return new Iterator<@NonNull CompleteInheritance>()
+			public @NonNull Iterator<@NonNull FlatClass> iterator() {
+				return new Iterator<@NonNull FlatClass>()
 				{
 					private boolean gotOne = false;
 
@@ -106,7 +106,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 					}
 
 					@Override
-					public @NonNull CompleteInheritance next() {
+					public @NonNull FlatClass next() {
 						if (!gotOne) {
 							gotOne = true;
 							if (!iterator.hasNext()) {

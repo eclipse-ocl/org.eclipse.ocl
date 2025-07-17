@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.executor;
 
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 
 /**
  * An ExecutorType defines a Type using a compact representation suitable for efficient
  * execution and static construction.
  */
-public interface ExecutorType extends Type, CompleteInheritance
+public interface ExecutorType extends Type, FlatClass
 {
 }

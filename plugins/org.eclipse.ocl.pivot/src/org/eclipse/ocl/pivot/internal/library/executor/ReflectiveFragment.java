@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
@@ -34,7 +34,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 	protected Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
 	protected Map<@NonNull Property, @NonNull LibraryFeature> propertyMap = null;
 
-	public ReflectiveFragment(@NonNull CompleteInheritance derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	public ReflectiveFragment(@NonNull FlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 	}
 
@@ -67,13 +67,13 @@ public abstract class ReflectiveFragment extends AbstractFragment
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
 				Operation bestOverload = null;
-				CompleteInheritance bestInheritance = null;
+				FlatClass bestInheritance = null;
 				int bestDepth = -1;
 				int minDepth = baseInheritance.getDepth();
 				for (int depth = derivedInheritance.getDepth()-1; depth >= minDepth; depth--) {
 					Iterable<InheritanceFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
 					for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
-						CompleteInheritance superInheritance = derivedSuperFragment.getBaseInheritance();
+						FlatClass superInheritance = derivedSuperFragment.getBaseInheritance();
 						InheritanceFragment superFragment = superInheritance.getFragment(baseInheritance);
 						if (superFragment != null) {
 							Operation overload = superFragment.getLocalOperation(apparentOperation);

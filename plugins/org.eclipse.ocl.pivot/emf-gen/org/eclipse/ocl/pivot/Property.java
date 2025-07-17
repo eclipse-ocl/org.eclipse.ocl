@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 
 /**
@@ -530,7 +530,7 @@ public interface Property extends Feature {
 	/**
 	 * Return the Inheritance dispatch table for the owning type, or null for an orphan property owned by an Annotation.
 	 */
-	@Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
+	@Nullable FlatClass getInheritance(@NonNull StandardLibrary standardLibrary);
 
 	/**
 	 * Initialize the value of this property within objectValue to propertyValue.

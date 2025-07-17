@@ -21,9 +21,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 {
-	private @NonNull Map<EClassifier, WeakReference<CompleteInheritance>> typeMap = new WeakHashMap<>();
+	private @NonNull Map<EClassifier, WeakReference<FlatClass>> typeMap = new WeakHashMap<>();
 
 	/**
 	 * @since 7.0
@@ -71,8 +71,8 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public synchronized @NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier) {
-		CompleteInheritance type = weakGet(typeMap, eClassifier);
+	public synchronized @NonNull FlatClass getInheritance(@NonNull EClassifier eClassifier) {
+		FlatClass type = weakGet(typeMap, eClassifier);
 		if (type == null) {
 			EPackage ePackage = eClassifier.getEPackage();
 			assert ePackage != null;

@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;

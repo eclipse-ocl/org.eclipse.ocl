@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -29,6 +28,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -67,7 +67,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
 		return standardLibrary.getInheritance(this);
 	}
 

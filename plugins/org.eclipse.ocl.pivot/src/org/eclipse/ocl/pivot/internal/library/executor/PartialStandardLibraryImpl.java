@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -45,6 +44,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -375,9 +375,9 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return getPrimaryType(leftType);
 		}
 		if (leftType instanceof EcoreReflectiveType) {
-			CompleteInheritance firstInheritance = leftType.getInheritance(this);
-			CompleteInheritance secondInheritance = rightType.getInheritance(this);
-			CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
+			FlatClass firstInheritance = leftType.getInheritance(this);
+			FlatClass secondInheritance = rightType.getInheritance(this);
+			FlatClass commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
 			return commonInheritance.getPivotClass();
 		}
 		if (leftType instanceof ExecutorSpecializedType) {
@@ -478,9 +478,9 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if (asClass instanceof CompleteInheritance) {
-			return (CompleteInheritance) asClass;
+	public @NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass instanceof FlatClass) {
+			return (FlatClass) asClass;
 		}
 		/*		if (type instanceof DomainMetaclass) {
 			DomainType instanceType = ClassUtil.nonNullPivot(((DomainMetaclass)type).getInstanceType());
@@ -507,7 +507,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
 			if (ecoreExecutorPackage != null) {
 				String name = asClass.getName();
-				CompleteInheritance executorType = ecoreExecutorPackage.getOwnedClass(name);
+				FlatClass executorType = ecoreExecutorPackage.getOwnedClass(name);
 				if (executorType != null) {
 					return executorType;
 				}

@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 /**
@@ -27,12 +28,12 @@ public interface InheritanceFragment
 	/**
 	 * Return the inheritance that introduces the operations and properties in this fragment.
 	 */
-	@NonNull CompleteInheritance getBaseInheritance();
+	@NonNull FlatClass getBaseInheritance();
 
 	/**
 	 * Return the inheritance that overloads the operations and properties in this fragment.
 	 */
-	@NonNull CompleteInheritance getDerivedInheritance();
+	@NonNull FlatClass getDerivedInheritance();
 
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.

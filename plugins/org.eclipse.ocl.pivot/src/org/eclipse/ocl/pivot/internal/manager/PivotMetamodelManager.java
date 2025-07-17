@@ -42,8 +42,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -63,13 +63,13 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -643,7 +643,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	public @NonNull Iterable<? extends Property> getAllProperties(@NonNull Property pivotProperty) {
-		CompleteInheritance pivotClass = pivotProperty.getInheritance(standardLibrary);
+		FlatClass pivotClass = pivotProperty.getInheritance(standardLibrary);
 		if (pivotClass == null) {
 			throw new IllegalStateException("Missing owning type");
 		}
@@ -1063,7 +1063,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
+	public @NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
 		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
 		org.eclipse.ocl.pivot.Class unspecializedType = (org.eclipse.ocl.pivot.Class) type1.getUnspecializedElement();
 		org.eclipse.ocl.pivot.Class theType = unspecializedType != null ? unspecializedType : type1;
@@ -1111,7 +1111,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		CompleteInheritance pivotClass = pivotOperation.getInheritance(standardLibrary);
+		FlatClass pivotClass = pivotOperation.getInheritance(standardLibrary);
 		if (pivotClass == null) {
 			throw new IllegalStateException("Missing owning type");
 		}
@@ -1186,7 +1186,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
-		CompleteInheritance pivotClass = pivotOperation.getInheritance(standardLibrary);
+		FlatClass pivotClass = pivotOperation.getInheritance(standardLibrary);
 		if (pivotClass != null) {					// Null for an EAnnotation element
 			CompleteClass completeClass = completeModel.getCompleteClass(pivotClass.getPivotClass());
 			Operation operation = completeClass.getOperation(pivotOperation);
@@ -1249,7 +1249,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				return PivotUtil.getOpposite(getPrimaryProperty(opposite));
 			}
 		}
-		CompleteInheritance owningInheritance = pivotProperty.getInheritance(standardLibrary);
+		FlatClass owningInheritance = pivotProperty.getInheritance(standardLibrary);
 		if (owningInheritance == null) {
 			return pivotProperty;
 		}

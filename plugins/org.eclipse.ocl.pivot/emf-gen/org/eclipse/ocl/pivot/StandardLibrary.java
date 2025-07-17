@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -200,7 +201,7 @@ public interface StandardLibrary extends Element
 	/**
 	 * Return the Inheritance dispatch table for a given type.
 	 */
-	@NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
+	@NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named

@@ -11,18 +11,18 @@
 package org.eclipse.ocl.pivot.types;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 public abstract class AbstractFragment implements InheritanceFragment
 {
-	public final @NonNull CompleteInheritance derivedInheritance;
-	public final @NonNull CompleteInheritance baseInheritance;
+	public final @NonNull FlatClass derivedInheritance;
+	public final @NonNull FlatClass baseInheritance;
 
-	public AbstractFragment(@NonNull CompleteInheritance derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	public AbstractFragment(@NonNull FlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
 		this.derivedInheritance = derivedInheritance;
 		this.baseInheritance = baseInheritance;
 	}
@@ -40,13 +40,13 @@ public abstract class AbstractFragment implements InheritanceFragment
 		}
 		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
 			Operation bestOverload = null;
-			CompleteInheritance bestInheritance = null;
+			FlatClass bestInheritance = null;
 			int bestDepth = -1;
 			int minDepth = baseInheritance.getDepth();
 			for (int depth = derivedInheritance.getDepth()-1; depth >= minDepth; depth--) {
 				Iterable<InheritanceFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
 				for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
-					CompleteInheritance superInheritance = derivedSuperFragment.getBaseInheritance();
+					FlatClass superInheritance = derivedSuperFragment.getBaseInheritance();
 					InheritanceFragment superFragment = superInheritance.getFragment(baseInheritance);
 					if (superFragment != null) {
 						Operation overload = superFragment.getLocalOperation(apparentOperation);
@@ -95,12 +95,12 @@ public abstract class AbstractFragment implements InheritanceFragment
 	}
 
 	@Override
-	public final @NonNull CompleteInheritance getBaseInheritance() {
+	public final @NonNull FlatClass getBaseInheritance() {
 		return baseInheritance;
 	}
 
 	@Override
-	public final @NonNull CompleteInheritance getDerivedInheritance() {
+	public final @NonNull FlatClass getDerivedInheritance() {
 		return derivedInheritance;
 	}
 

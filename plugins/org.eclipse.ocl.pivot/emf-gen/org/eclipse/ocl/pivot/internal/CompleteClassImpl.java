@@ -27,8 +27,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -37,10 +37,10 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -380,8 +380,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass rightCompleteClass) {
 		CompleteClass leftCompleteClass = this;
-		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
-		CompleteInheritance rightInheritance = rightCompleteClass.getCompleteInheritance();
+		FlatClass leftInheritance = leftCompleteClass.getCompleteInheritance();
+		FlatClass rightInheritance = rightCompleteClass.getCompleteInheritance();
 		if (leftInheritance == rightInheritance) {
 			return true;
 		}
@@ -391,8 +391,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type rightType) {
 		CompleteClass leftCompleteClass = this;
-		CompleteInheritance leftInheritance = leftCompleteClass.getCompleteInheritance();
-		CompleteInheritance rightInheritance = rightType.getInheritance(standardLibrary);
+		FlatClass leftInheritance = leftCompleteClass.getCompleteInheritance();
+		FlatClass rightInheritance = rightType.getInheritance(standardLibrary);
 		if (leftInheritance == rightInheritance) {
 			return true;
 		}
@@ -522,7 +522,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses() {
-		CompleteInheritance inheritance = getCompleteInheritance();
+		FlatClass inheritance = getCompleteInheritance();
 		return Iterables.transform(inheritance.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, org.eclipse.ocl.pivot.@NonNull Class>()
 		{
 			@Override
@@ -534,7 +534,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses() {
-		CompleteInheritance inheritance = getCompleteInheritance();
+		FlatClass inheritance = getCompleteInheritance();
 		return Iterables.transform(inheritance.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, @NonNull CompleteClass>()
 		{
 			@Override

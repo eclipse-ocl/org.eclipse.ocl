@@ -14,13 +14,13 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -66,8 +66,8 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	}
 
 	@Override
-	public final @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return (CompleteInheritance) type;
+	public final @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
+		return (FlatClass) type;
 	}
 
 	@Override

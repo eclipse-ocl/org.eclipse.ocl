@@ -15,11 +15,11 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
@@ -45,21 +45,21 @@ public class ExecutorReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
+	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
 		return new ExecutorReflectiveFragment(this, baseInheritance);
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
+	public @NonNull Iterable<@NonNull ? extends FlatClass> getInitialSuperInheritances() {
 		Iterable<? extends org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(domainClass.getSuperClasses());
 		StandardLibrary standardLibrary = evaluationPackage.getStandardLibrary();
 		if (Iterables.isEmpty(superClasses)) {
 			return Collections.singletonList(standardLibrary.getOclAnyType().getInheritance(standardLibrary));
 		}
-		return Iterables.transform(superClasses, new Function<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteInheritance>()
+		return Iterables.transform(superClasses, new Function<org.eclipse.ocl.pivot.@NonNull Class, @NonNull FlatClass>()
 		{
 			@Override
-			public @NonNull CompleteInheritance apply(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			public @NonNull FlatClass apply(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 				return asClass.getInheritance(standardLibrary);
 			}
 		});

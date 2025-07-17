@@ -21,10 +21,10 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -133,9 +133,9 @@ public class FinalAnalysis
 		}
 		List<@NonNull Operation> results = new ArrayList<>();
 		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
-		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
+		FlatClass requiredInheritance = completeClass.getCompleteInheritance();
 		for (@NonNull Operation override : overrides) {
-			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
+			FlatClass overrideInheritance = override.getInheritance(standardLibrary);
 			if ((overrideInheritance != null) && requiredInheritance.isSuperInheritanceOf(overrideInheritance)) {
 				results.add(override);
 			}
@@ -175,9 +175,9 @@ public class FinalAnalysis
 		}
 		Operation candidate = null;
 		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
-		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
+		FlatClass requiredInheritance = completeClass.getCompleteInheritance();
 		for (@NonNull Operation override : overrides) {
-			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
+			FlatClass overrideInheritance = override.getInheritance(standardLibrary);
 			if ((overrideInheritance != null) && requiredInheritance.isSuperInheritanceOf(overrideInheritance)) {
 				if (candidate != null) {
 					return null;
