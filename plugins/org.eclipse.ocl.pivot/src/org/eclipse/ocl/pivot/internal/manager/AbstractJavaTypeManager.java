@@ -163,7 +163,7 @@ public abstract class AbstractJavaTypeManager implements JavaTypeManager
 			@SuppressWarnings("null") @NonNull EClass eClass = eObject.eClass();
 			org.eclipse.ocl.pivot.Class asClass = key2class.get(eClass);
 			if (asClass == null) {
-				asClass = standardLibrary.getIdResolver().getInheritance(eClass).getPivotClass();
+				asClass = standardLibrary.getIdResolver().getFlatClass(eClass).getPivotClass();
 				key2class.put(eClass, asClass);
 			}
 			return asClass;

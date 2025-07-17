@@ -66,7 +66,7 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	}
 
 	@Override
-	public final @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public final @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		return (FlatClass) type;
 	}
 

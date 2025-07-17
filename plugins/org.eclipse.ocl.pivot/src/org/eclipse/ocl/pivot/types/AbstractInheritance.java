@@ -221,7 +221,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
-		FlatClass apparentInheritance = apparentOperation.getInheritance(standardLibrary);
+		FlatClass apparentInheritance = apparentOperation.getFlatClass(standardLibrary);
 		int apparentDepth = ClassUtil.requireNonNull(apparentInheritance).getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
@@ -239,7 +239,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
-		FlatClass apparentInheritance = apparentOperation.getInheritance(standardLibrary);
+		FlatClass apparentInheritance = apparentOperation.getFlatClass(standardLibrary);
 		int apparentDepth = ClassUtil.requireNonNull(apparentInheritance).getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);

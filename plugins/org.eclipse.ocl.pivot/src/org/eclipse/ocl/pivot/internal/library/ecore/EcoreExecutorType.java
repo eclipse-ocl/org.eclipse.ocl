@@ -175,7 +175,7 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 	}
 
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		return this;
 	}
 

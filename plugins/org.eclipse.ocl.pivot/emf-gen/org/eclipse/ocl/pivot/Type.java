@@ -59,7 +59,7 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * Return the inheritance description for this type within standardLibrary.
 	 * @since 7.0
 	 */
-	@NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary);
+	@NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
 
 	/**
 	 * Return a unique StandardLibrary-independent identifier for this type.

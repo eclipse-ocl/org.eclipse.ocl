@@ -54,7 +54,12 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
+	public @NonNull FlatClass getFlatClass( @NonNull StandardLibrary standardLibrary) {
+		//		return standardLibrary.getInheritance(this);
+		throw new UnsupportedOperationException();
+	}
 
+	@Override
 	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
 		throw new UnsupportedOperationException();
 	}
@@ -71,12 +76,6 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 
 	@Override
 	public int getIndexes() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull FlatClass getInheritance( @NonNull StandardLibrary standardLibrary) {
-		//		return standardLibrary.getInheritance(this);
 		throw new UnsupportedOperationException();
 	}
 

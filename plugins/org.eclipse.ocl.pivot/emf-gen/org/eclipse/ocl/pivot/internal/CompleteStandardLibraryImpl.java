@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -71,7 +72,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
@@ -839,9 +839,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	@NonNull
-	public FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
+	public FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		assert environmentFactory != null;
-		return environmentFactory.getMetamodelManager().getInheritance(type);
+		return environmentFactory.getMetamodelManager().getFlatClass(type);
 	}
 
 	@Override
@@ -1474,7 +1474,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 							superTemplateArgumentList.add(actual);
 						}
 					}
-					CompleteInheritanceImpl superCompleteInheritance = superCompleteClass.getCompleteInheritance();
+					AbstractFlatClass superCompleteInheritance = superCompleteClass.getFlatClass();
 					org.eclipse.ocl.pivot.Class genericSuperType = superCompleteInheritance.getCompleteClass().getPrimaryClass();
 					org.eclipse.ocl.pivot.Class specializedSuperType = environmentFactory.getStandardLibrary().getSpecializedType(genericSuperType, superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);

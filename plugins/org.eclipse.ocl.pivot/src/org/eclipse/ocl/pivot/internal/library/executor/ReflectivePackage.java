@@ -36,18 +36,24 @@ public abstract class ReflectivePackage extends ExecutorPackage
 		Map<org.eclipse.ocl.pivot.Class, FlatClass> class2inheritance2 = class2inheritance = new HashMap<org.eclipse.ocl.pivot.Class, FlatClass>();
 		for (org.eclipse.ocl.pivot.Class domainClass : getDomainClasses()) {
 			if (domainClass != null) {
-				FlatClass executorType = createInheritance(domainClass);
+				FlatClass executorType = createFlatClass(domainClass);
 				class2inheritance2.put(domainClass, executorType);
 			}
 		}
 		return class2inheritance2;
 	}
 
-	protected abstract @NonNull FlatClass createInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass);
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull FlatClass createFlatClass(org.eclipse.ocl.pivot.@NonNull Class domainClass);
 
 	protected abstract @NonNull List<org.eclipse.ocl.pivot.Class> getDomainClasses();
 
-	public @NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
 		Map<org.eclipse.ocl.pivot.Class, FlatClass> class2inheritance2 = class2inheritance;
 		if (class2inheritance2 == null) {
 			class2inheritance2 = computeClasses();

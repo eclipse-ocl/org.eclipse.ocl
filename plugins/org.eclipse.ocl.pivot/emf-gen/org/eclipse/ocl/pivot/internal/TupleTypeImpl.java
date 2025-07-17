@@ -107,9 +107,9 @@ public class TupleTypeImpl
 	}
 
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		Type tupleType = standardLibrary.getOclTupleType();
-		return tupleType.getInheritance(standardLibrary);
+		return tupleType.getFlatClass(standardLibrary);
 	}
 
 	@Override

@@ -85,7 +85,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 				keys[index] = index;
 				int metric = 0;
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
-				FlatClass inheritance = owningClass.getInheritance(standardLibrary);
+				FlatClass inheritance = owningClass.getFlatClass(standardLibrary);
 				int depth = inheritance.getDepth();
 				//				int isRedefinition = (operation instanceof Operation) && (((Operation)operation).getRedefinedOperation().size() > 0) ? 1 : 0;
 				metric = depth;

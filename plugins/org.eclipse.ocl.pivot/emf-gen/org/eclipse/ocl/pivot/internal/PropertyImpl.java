@@ -1725,10 +1725,10 @@ implements Property {
 	}
 
 	@Override
-	public @Nullable FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @Nullable FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
 		if (owningType != null) {
-			return standardLibrary.getInheritance(owningType);
+			return standardLibrary.getFlatClass(owningType);
 		}
 		else {
 			return null;

@@ -54,13 +54,13 @@ public class ExecutorReflectiveType extends AbstractReflectiveInheritanceType
 		Iterable<? extends org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(domainClass.getSuperClasses());
 		StandardLibrary standardLibrary = evaluationPackage.getStandardLibrary();
 		if (Iterables.isEmpty(superClasses)) {
-			return Collections.singletonList(standardLibrary.getOclAnyType().getInheritance(standardLibrary));
+			return Collections.singletonList(standardLibrary.getOclAnyType().getFlatClass(standardLibrary));
 		}
 		return Iterables.transform(superClasses, new Function<org.eclipse.ocl.pivot.@NonNull Class, @NonNull FlatClass>()
 		{
 			@Override
 			public @NonNull FlatClass apply(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-				return asClass.getInheritance(standardLibrary);
+				return asClass.getFlatClass(standardLibrary);
 			}
 		});
 	}

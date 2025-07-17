@@ -525,12 +525,13 @@ public interface Property extends Feature {
 	 */
 	@NonNull List<Property> getRedefinedProperties();
 
-	@NonNull PropertyId getPropertyId();
-
 	/**
 	 * Return the Inheritance dispatch table for the owning type, or null for an orphan property owned by an Annotation.
+	 * @since 7.0
 	 */
-	@Nullable FlatClass getInheritance(@NonNull StandardLibrary standardLibrary);
+	@Nullable FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
+
+	@NonNull PropertyId getPropertyId();
 
 	/**
 	 * Initialize the value of this property within objectValue to propertyValue.

@@ -364,7 +364,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
 				if (owningClass != null) {
 					CompleteClass completeClass = metamodelManager.getCompleteClass(owningClass);
-					int depth = completeClass.getCompleteInheritance().getDepth();
+					int depth = completeClass.getFlatClass().getDepth();
 					if ((bestOperation == null) || (depth > bestDepth)) {
 						bestOperation = operation;
 						bestDepth = depth;

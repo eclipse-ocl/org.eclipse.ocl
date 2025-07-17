@@ -87,7 +87,10 @@ public interface CompleteClass extends NamedElement
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
-	@NonNull FlatClass getCompleteInheritance();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlatClass getFlatClass();
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
 	@Nullable Operation getOperation(@NonNull Operation operationId);
 	@Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation);
@@ -99,7 +102,7 @@ public interface CompleteClass extends NamedElement
 	@Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
-	@Nullable Property getProperty(@Nullable String propertyName);
+	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
 	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();

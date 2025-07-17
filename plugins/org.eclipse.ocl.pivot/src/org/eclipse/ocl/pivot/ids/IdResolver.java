@@ -118,7 +118,10 @@ public interface IdResolver extends IdVisitor<Element>
 	 */
 	org.eclipse.ocl.pivot.@Nullable Class getDynamicClassOfEach(@Nullable Object @NonNull ... values);
 
-	@NonNull FlatClass getInheritance(@NonNull EClassifier eClassifier);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlatClass getFlatClass(@NonNull EClassifier eClassifier);
 
 	/**
 	 * @since 7.0

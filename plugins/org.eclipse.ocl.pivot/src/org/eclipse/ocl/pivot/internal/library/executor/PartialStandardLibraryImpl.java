@@ -375,8 +375,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return getPrimaryType(leftType);
 		}
 		if (leftType instanceof EcoreReflectiveType) {
-			FlatClass firstInheritance = leftType.getInheritance(this);
-			FlatClass secondInheritance = rightType.getInheritance(this);
+			FlatClass firstInheritance = leftType.getFlatClass(this);
+			FlatClass secondInheritance = rightType.getFlatClass(this);
 			FlatClass commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
 			return commonInheritance.getPivotClass();
 		}
@@ -478,7 +478,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	public @NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof FlatClass) {
 			return (FlatClass) asClass;
 		}
@@ -491,13 +491,13 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		if (asClass instanceof CollectionType) {
 			Type containerType = ((CollectionType)asClass).getContainerType();
 			if (containerType != asClass) {
-				return containerType.getInheritance(this);
+				return containerType.getFlatClass(this);
 			}
 		}
 		if (asClass instanceof MapType) {
 			Type containerType = ((MapType)asClass).getContainerType();
 			if (containerType != asClass) {
-				return containerType.getInheritance(this);
+				return containerType.getFlatClass(this);
 			}
 		}
 		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
@@ -538,7 +538,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 				executorPackage = new ExecutorReflectivePackage(this, asPackage);
 				asPackageMap2.put(asPackage, new WeakReference<>(executorPackage));
 			}
-			return executorPackage.getInheritance(asClass);
+			return executorPackage.getFlatClass(asClass);
 		}
 	}
 

@@ -51,7 +51,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
+import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -677,9 +677,9 @@ public class EnvironmentView
 		/*if (element instanceof PackageServer) {
 			element = ((PackageServer) element).getPrimaryPackage();		// FIXME lose casts
 		}
-		else*/ if (element instanceof CompleteInheritanceImpl) {
+		else*/ if (element instanceof AbstractFlatClass) {
 			assert false;
-			element = ((CompleteInheritanceImpl) element).getCompleteClass().getPrimaryClass();		// FIXME lose casts
+			element = ((AbstractFlatClass) element).getCompleteClass().getPrimaryClass();		// FIXME lose casts
 		}
 		if ((requiredType != null) && (name != null)) {
 			if (!requiredType.isInstance(element)) {

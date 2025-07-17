@@ -194,14 +194,15 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getEnumerationType();
 
 	/**
+	 * Return the Inheritance dispatch table for a given type.
+	 * @since 7.0
+	 */
+	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
 	 * @since 7.0
 	 */
 	@NonNull IdResolver getIdResolver();
-
-	/**
-	 * Return the Inheritance dispatch table for a given type.
-	 */
-	@NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named

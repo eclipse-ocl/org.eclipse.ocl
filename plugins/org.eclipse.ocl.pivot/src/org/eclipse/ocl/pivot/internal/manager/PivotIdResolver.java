@@ -74,8 +74,8 @@ public class PivotIdResolver extends AbstractIdResolver
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull EClassifier eClassifier) {
-		return metamodelManager.getInheritance(getType(eClassifier));
+	public @NonNull FlatClass getFlatClass(@NonNull EClassifier eClassifier) {
+		return metamodelManager.getFlatClass(getType(eClassifier));
 	}
 
 	@Override
