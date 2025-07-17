@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -146,8 +146,8 @@ public class PivotIdResolver extends AbstractIdResolver
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
-		return (StandardLibraryInternal)super.getStandardLibrary();
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
+		return (CompleteStandardLibrary)super.getStandardLibrary();
 	}
 
 	@Override

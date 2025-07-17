@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -165,7 +165,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public NotificationChain basicSetOwnedStandardLibrary(StandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
 	{
 		StandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
-		ownedStandardLibrary = (StandardLibraryInternal) newOwnedStandardLibrary;
+		ownedStandardLibrary = (CompleteStandardLibrary) newOwnedStandardLibrary;
 		if (eNotificationRequired())
 		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY.getFeatureID(), oldOwnedStandardLibrary, newOwnedStandardLibrary);
@@ -282,7 +282,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)newValue);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibraryInternal)newValue);
+				setOwnedStandardLibrary((CompleteStandardLibrary)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -314,7 +314,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)null);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibraryInternal)null);
+				setOwnedStandardLibrary((CompleteStandardLibrary)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -355,7 +355,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 	protected /*final @NonNull*/ EnvironmentFactoryInternal environmentFactory;
 	protected /*final @NonNull*/ CompleteModelInternal ownedCompleteModel;
-	protected /*final @NonNull*/ StandardLibraryInternal ownedStandardLibrary;
+	protected /*final @NonNull*/ CompleteStandardLibrary ownedStandardLibrary;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
 
 	private boolean isCodeGeneration = false;
@@ -442,7 +442,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal getOwnedStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getOwnedStandardLibrary() {
 		return ClassUtil.requireNonNull(ownedStandardLibrary);
 	}
 
@@ -451,9 +451,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOwnedStandardLibrary(StandardLibraryInternal newOwnedStandardLibrary, NotificationChain msgs)
+	public NotificationChain basicSetOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
 	{
-		StandardLibraryInternal oldOwnedStandardLibrary = ownedStandardLibrary;
+		CompleteStandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
 		ownedStandardLibrary = newOwnedStandardLibrary;
 		if (eNotificationRequired())
 		{
@@ -469,7 +469,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * @generated
 	 */
 	@Override
-	public void setOwnedStandardLibrary(StandardLibraryInternal newOwnedStandardLibrary)
+	public void setOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary)
 	{
 		if (newOwnedStandardLibrary != ownedStandardLibrary)
 		{

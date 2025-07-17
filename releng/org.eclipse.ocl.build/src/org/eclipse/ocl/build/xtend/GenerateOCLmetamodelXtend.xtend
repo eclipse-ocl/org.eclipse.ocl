@@ -100,6 +100,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
+			import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 			import org.eclipse.ocl.pivot.Constraint;
 			import org.eclipse.ocl.pivot.DataType;
 			import org.eclipse.ocl.pivot.Enumeration;
@@ -115,7 +116,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.SetType;
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.ids.IdManager;
-			import org.eclipse.ocl.pivot.StandardLibraryInternal;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -153,7 +153,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 */
 				public static final @NonNull URI PIVOT_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
-				public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+				public static @NonNull Package create(@NonNull CompleteStandardLibrary standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);
 					Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
 					assert standardLibraryPackage != null;

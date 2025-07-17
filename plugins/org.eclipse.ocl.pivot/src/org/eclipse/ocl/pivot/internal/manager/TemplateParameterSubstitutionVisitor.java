@@ -41,7 +41,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -360,7 +360,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				}
 			}
 		}
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		if (resolutions != null) {
 			List<@NonNull PartId> partIds = new ArrayList<>(parts.size());
 			Collections.sort(partIds);
@@ -443,7 +443,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	}
 
 	public @NonNull Type specializeType(@NonNull Type type) {
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		if (type instanceof NormalizedTemplateParameter) {
 			Type actualType = getTemplateSpecialization().get(((NormalizedTemplateParameter)type).getIndex());

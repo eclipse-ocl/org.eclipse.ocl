@@ -74,7 +74,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -326,7 +326,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		else if (instanceClass != null) {
 			try {
 				MetamodelManager metamodelManager = converter.getMetamodelManager();
-				StandardLibraryInternal standardLibrary = metamodelManager.getStandardLibrary();
+				CompleteStandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
 				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
 				if (behavioralClass == null) {
 					instanceClass.getDeclaredMethod("compareTo", instanceClass);

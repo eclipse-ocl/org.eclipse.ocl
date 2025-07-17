@@ -66,11 +66,11 @@ public interface CompleteEnvironment extends Element
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Standard Library</em>' containment reference.
-	 * @see #setOwnedStandardLibrary(StandardLibraryInternal)
+	 * @see #setOwnedStandardLibrary(CompleteStandardLibrary)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteEnvironment_OwnedStandardLibrary()
 	 * @generated
 	 */
-	@NonNull StandardLibraryInternal getOwnedStandardLibrary();
+	@NonNull CompleteStandardLibrary getOwnedStandardLibrary();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}' containment reference.
@@ -80,7 +80,7 @@ public interface CompleteEnvironment extends Element
 	 * @see #getOwnedStandardLibrary()
 	 * @generated
 	 */
-	void setOwnedStandardLibrary(StandardLibraryInternal value);
+	void setOwnedStandardLibrary(CompleteStandardLibrary value);
 
 	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 

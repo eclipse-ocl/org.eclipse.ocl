@@ -36,7 +36,7 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -330,7 +330,7 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull StandardLibraryInternal getStandardLibrary();
+	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
 	 * @since 7.0

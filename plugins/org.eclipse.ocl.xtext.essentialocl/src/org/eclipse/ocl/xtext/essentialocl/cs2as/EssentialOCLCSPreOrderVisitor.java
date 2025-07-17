@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -66,7 +66,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 			TypedRefCS csElementType = csElement.getOwnedType();
 			Type type = null;
 			String name = csElement.getName();
@@ -165,7 +165,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				keyType = context.getNormalizedType(keyType);
 				valueType = context.getNormalizedType(valueType);
 				if ((keyType != null) && (valueType != null)) {
-					StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+					CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 					if (keyType.eIsProxy() || valueType.eIsProxy()) {
 						type = standardLibrary.getOclInvalidType();
 					}

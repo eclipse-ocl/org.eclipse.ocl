@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -64,7 +64,7 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 				if (asExpression != null) {
 					Type asExpressionType = asExpression.getType();
 					Type asContextType = PivotUtil.getPivot(Type.class, csTypedRef);
-					StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+					CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 					if ((asContextType != null) && !standardLibrary.conformsTo(asExpressionType, asContextType)) {
 						PrimitiveType integerType = standardLibrary.getIntegerType();
 						Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");

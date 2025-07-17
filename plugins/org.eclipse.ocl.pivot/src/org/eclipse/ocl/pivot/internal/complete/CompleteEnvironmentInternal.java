@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.internal.complete;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 
@@ -30,7 +30,7 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	@Override
 	@NonNull CompleteModelInternal getOwnedCompleteModel();
 	@Override
-	@NonNull StandardLibraryInternal getOwnedStandardLibrary();
+	@NonNull CompleteStandardLibrary getOwnedStandardLibrary();
 	@NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
 	boolean isCodeGeneration();
 	void setCodeGeneration(boolean isCodeGeneration);

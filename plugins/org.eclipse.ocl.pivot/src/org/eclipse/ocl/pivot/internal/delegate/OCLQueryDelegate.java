@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -109,7 +109,7 @@ public class OCLQueryDelegate implements QueryDelegate
 			Object targetValue = idResolver.boxedValueOf(target);
 			Type requiredType = PivotUtil.getType(PivotUtil.getOwnedContext(nonNullSpecification));
 			Type targetType = idResolver.getStaticClassOf(targetValue);
-			StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			if (!standardLibrary.conformsTo(targetType, requiredType)) {
 				String message = StringUtil.bind(PivotMessagesInternal.WrongContextClassifier_ERROR_, targetType, requiredType);
 				throw new OCLDelegateException(new SemanticException(message));

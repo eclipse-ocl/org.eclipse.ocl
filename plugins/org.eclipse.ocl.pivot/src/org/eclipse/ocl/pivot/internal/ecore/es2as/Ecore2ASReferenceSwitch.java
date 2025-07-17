@@ -47,7 +47,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -84,14 +84,14 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	 */
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull Property oclInvalidProperty;
 
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
 		this.metamodelManager = converter.getMetamodelManager();
-		this.standardLibrary = (StandardLibraryInternal)environmentFactory.getStandardLibrary();
+		this.standardLibrary = (CompleteStandardLibrary)environmentFactory.getStandardLibrary();
 		this.oclInvalidProperty = standardLibrary.getOclInvalidProperty();
 	}
 

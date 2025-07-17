@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
@@ -44,7 +45,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -229,7 +229,7 @@ public class EnvironmentView
 			/*			org.eclipse.ocl.pivot.Class owningClass1 = match1.getOwningClass();
 			org.eclipse.ocl.pivot.Class owningClass2 = match2.getOwningClass();
 			if ((owningClass1 != null) && (owningClass2 != null) && (owningClass1 != owningClass2)) {
-				StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+				CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 				if (owningClass1.conformsTo(standardLibrary, owningClass2)) {
 					return 1;				// match2 inferior
 				}
@@ -922,7 +922,7 @@ public class EnvironmentView
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return environmentFactory.getStandardLibrary();
 	}
 

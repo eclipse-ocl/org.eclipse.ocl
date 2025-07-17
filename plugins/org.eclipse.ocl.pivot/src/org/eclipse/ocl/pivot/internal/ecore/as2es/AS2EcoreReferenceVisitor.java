@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -88,7 +88,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	public AS2EcoreReferenceVisitor(@NonNull AS2Ecore context) {
 		super(context);
 		typeRefVisitor = new AS2EcoreTypeRefVisitor(context);
-		StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 		oclAnyType = standardLibrary.getOclAnyType();
 		oclElementType = standardLibrary.getOclElementType();
 		oclTypeType = standardLibrary.getOclTypeType();

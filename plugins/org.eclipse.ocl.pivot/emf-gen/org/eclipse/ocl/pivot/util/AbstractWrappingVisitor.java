@@ -334,6 +334,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
+	public R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitCompleteStandardLibrary(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
 	public R visitConnectionPointReference(org.eclipse.ocl.pivot.@NonNull ConnectionPointReference object) {
 		@Nullable P prologue = preVisit(object);
 		try {
@@ -1286,18 +1298,6 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 		@Nullable P prologue = preVisit(object);
 		try {
 			R result = delegate.visitStandardLibrary(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	@Override
-	public R visitStandardLibraryInternal(org.eclipse.ocl.pivot.@NonNull StandardLibraryInternal object) {
-		@Nullable P prologue = preVisit(object);
-		try {
-			R result = delegate.visitStandardLibraryInternal(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {

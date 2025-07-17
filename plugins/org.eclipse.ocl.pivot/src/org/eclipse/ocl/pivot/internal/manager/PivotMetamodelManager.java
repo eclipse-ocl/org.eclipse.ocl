@@ -63,7 +63,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -219,7 +219,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	private final @NonNull StandardLibraryInternal standardLibrary;
+	private final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 
 	/**
@@ -1365,7 +1365,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return standardLibrary;
 	}
 
