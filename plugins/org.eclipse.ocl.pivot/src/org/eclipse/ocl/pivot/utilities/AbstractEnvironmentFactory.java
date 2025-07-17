@@ -57,7 +57,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -147,7 +147,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 7.0
 	 */
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private @Nullable ICSI2ASMapping csi2asMapping;
 	/**
 	 * The known packages.
@@ -718,8 +718,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 7.0
 	 */
-	protected @NonNull StandardLibraryInternal createStandardLibrary() {
-		return PivotFactory.eINSTANCE.createStandardLibraryInternal();
+	protected @NonNull CompleteStandardLibrary createStandardLibrary() {
+		return PivotFactory.eINSTANCE.createCompleteStandardLibrary();
 	}
 
 	/**
@@ -1069,7 +1069,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return standardLibrary;
 	}
 

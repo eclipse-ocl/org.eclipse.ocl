@@ -135,6 +135,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitConnectionPointReference(org.eclipse.ocl.pivot.@NonNull ConnectionPointReference object) {
 		return visiting(object);
 	}
@@ -531,11 +536,6 @@ public abstract class AbstractMergedVisitor<R, C>
 
 	@Override
 	public R visitStandardLibrary(org.eclipse.ocl.pivot.@NonNull StandardLibrary object) {
-		return visiting(object);
-	}
-
-	@Override
-	public R visitStandardLibraryInternal(org.eclipse.ocl.pivot.@NonNull StandardLibraryInternal object) {
 		return visiting(object);
 	}
 

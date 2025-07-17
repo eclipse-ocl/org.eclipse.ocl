@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.ReferringElement;
-import org.eclipse.ocl.pivot.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.Variable;
@@ -209,7 +209,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		}
 		Diagnostic diagnostic = null;
 		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(this);
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		try {
 			org.eclipse.ocl.pivot.Class oclComparableType = standardLibrary.getOclComparableType();
 			CompleteInheritance comparableInheritance = oclComparableType.getInheritance(standardLibrary);
