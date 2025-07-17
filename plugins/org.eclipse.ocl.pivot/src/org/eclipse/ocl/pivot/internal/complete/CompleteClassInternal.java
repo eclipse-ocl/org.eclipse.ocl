@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.complete;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
@@ -24,7 +25,7 @@ public interface CompleteClassInternal extends CompleteClass
 	void dispose();
 	void uninstall();
 	@Override
-	@NonNull CompleteInheritanceImpl getCompleteInheritance();
+	@NonNull AbstractFlatClass getFlatClass();
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	/**

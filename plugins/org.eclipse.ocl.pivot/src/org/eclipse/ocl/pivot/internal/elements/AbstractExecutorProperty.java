@@ -53,8 +53,8 @@ public abstract class AbstractExecutorProperty extends AbstractExecutorFeature i
 	}
 
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return type.getInheritance(standardLibrary);
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return type.getFlatClass(standardLibrary);
 	}
 
 	@Override

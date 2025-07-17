@@ -8,7 +8,7 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.complete;
+package org.eclipse.ocl.pivot.flat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,9 +18,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
@@ -31,10 +31,11 @@ import com.google.common.base.Function;
 
 /**
  * An AbstractTypeServer provides the co-ordinated operation, property and superclass lookup caches for one or more merged types.
+ * @since 7.0
  */
-public class CompleteInheritanceImpl extends ReflectiveInheritance implements FlatClass
+public class AbstractFlatClass extends ReflectiveInheritance implements FlatClass
 {
-	public static final @NonNull List<@NonNull CompleteInheritanceImpl> EMPTY_LIST = Collections.<@NonNull CompleteInheritanceImpl>emptyList();
+	public static final @NonNull List<org.eclipse.ocl.pivot.flat.AbstractFlatClass> EMPTY_LIST = Collections.<org.eclipse.ocl.pivot.flat.AbstractFlatClass>emptyList();
 
 	public static final class BestOperation implements Function<List<Operation>, Operation> {
 
@@ -48,7 +49,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Fl
 
 	protected final @NonNull CompleteClassInternal completeClass;
 
-	public CompleteInheritanceImpl(@NonNull CompleteClassInternal completeClass) {
+	public AbstractFlatClass(@NonNull CompleteClassInternal completeClass) {
 		super(ClassUtil.requireNonNull(completeClass.getName()), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = completeClass;
 //		org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();

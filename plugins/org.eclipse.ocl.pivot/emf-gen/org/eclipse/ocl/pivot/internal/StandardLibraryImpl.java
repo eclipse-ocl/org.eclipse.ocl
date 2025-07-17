@@ -404,8 +404,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		Type leftPrimaryType = getPrimaryType(leftType);
 		Type rightPrimaryType = getPrimaryType(rightType);
-		FlatClass leftInheritance = leftPrimaryType.getInheritance(this);
-		FlatClass rightInheritance = rightPrimaryType.getInheritance(this);
+		FlatClass leftInheritance = leftPrimaryType.getFlatClass(this);
+		FlatClass rightInheritance = rightPrimaryType.getFlatClass(this);
 		return leftInheritance.isSubInheritanceOf(rightInheritance);
 	}
 
@@ -528,8 +528,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		else if (leftType instanceof DataType) {
 		//	if (rightType instanceof DataType) {			// XXX Avoid getBehavioralClass problem with conformsTo
-				FlatClass leftInheritance = leftType.getInheritance(this);
-				FlatClass rightInheritance = rightType.getInheritance(this);
+				FlatClass leftInheritance = leftType.getFlatClass(this);
+				FlatClass rightInheritance = rightType.getFlatClass(this);
 				FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
 				return getPrimaryType(commonInheritance.getPivotClass());
 		//	}
@@ -541,8 +541,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions, false)) {
 			return leftType;
 		} */
-		FlatClass leftInheritance = leftType.getInheritance(this);
-		FlatClass rightInheritance = rightType.getInheritance(this);
+		FlatClass leftInheritance = leftType.getFlatClass(this);
+		FlatClass rightInheritance = rightType.getFlatClass(this);
 		FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
 		return getPrimaryType(commonInheritance.getPivotClass());
 	}
@@ -627,7 +627,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		else {
 			try {
-				return type.getInheritance(this).getPivotClass();
+				return type.getFlatClass(this).getPivotClass();
 			}
 			catch (Throwable e) {}
 		}

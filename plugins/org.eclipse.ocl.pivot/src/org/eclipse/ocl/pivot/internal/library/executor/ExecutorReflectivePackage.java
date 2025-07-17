@@ -36,7 +36,7 @@ public class ExecutorReflectivePackage extends ReflectivePackage
 	}
 
 	@Override
-	protected @NonNull ReflectiveInheritance createInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
+	protected @NonNull ReflectiveInheritance createFlatClass(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
 		return new ExecutorReflectiveType(this, domainClass);
 	}
 

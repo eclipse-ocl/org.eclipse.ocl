@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Vertex;
+import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -112,7 +113,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	 */
 	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;
 
-	protected /*@NonNull*/ CompleteInheritanceImpl completeInheritance;
+	protected /*@NonNull*/ AbstractFlatClass completeInheritance;
 
 	public PartialClasses(@NonNull CompleteClassImpl completeClass) {
 		super(org.eclipse.ocl.pivot.Class.class, completeClass, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES.getFeatureID());
@@ -282,8 +283,8 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			stereotype = metamodelManager.getPrimaryElement(stereotype);
 			if (allStereotypes.add(stereotype)) {
 				CompleteClass superCompleteClass = null;
-				if (stereotype instanceof CompleteInheritanceImpl) {
-					superCompleteClass = ((CompleteInheritanceImpl)stereotype).getCompleteClass();
+				if (stereotype instanceof AbstractFlatClass) {
+					superCompleteClass = ((AbstractFlatClass)stereotype).getCompleteClass();
 				}
 				else {
 					superCompleteClass = getCompleteModel().getCompleteClass(stereotype);
@@ -316,8 +317,8 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		return (CompleteClassImpl) owner;
 	}
 
-	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
-		CompleteInheritanceImpl completeInheritance2 = completeInheritance;
+	public final @NonNull AbstractFlatClass getCompleteInheritance() {
+		AbstractFlatClass completeInheritance2 = completeInheritance;
 		if (completeInheritance2 == null) {
 			CompleteClassInternal completeClass = getCompleteClass();
 			CompletePackageInternal completePackage = completeClass.getOwningCompletePackage();
@@ -341,7 +342,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		{
 			@Override
 			public @NonNull FlatClass apply(@NonNull CompleteClassInternal completeClass) {
-				return completeClass.getCompleteInheritance();
+				return completeClass.getFlatClass();
 			}
 		});
 	}
@@ -550,12 +551,12 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
-		FlatClass inheritance = getCompleteClass().getCompleteInheritance();
+		FlatClass inheritance = getCompleteClass().getFlatClass();
 		return Iterables.transform(inheritance.getAllSuperFragments(), new Function<InheritanceFragment, @NonNull CompleteClass>()
 		{
 			@Override
 			public @NonNull CompleteClass apply(InheritanceFragment input) {
-				return ((CompleteInheritanceImpl)input.getBaseInheritance()).getCompleteClass();
+				return ((AbstractFlatClass)input.getBaseInheritance()).getCompleteClass();
 			}
 		});
 	}

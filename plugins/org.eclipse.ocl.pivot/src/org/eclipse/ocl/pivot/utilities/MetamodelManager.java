@@ -201,6 +201,11 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
+	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
+	 * @since 7.0
+	 */
 	@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
 
 	/**
@@ -232,11 +237,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	@NonNull ImplementationManager getImplementationManager();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * @since 7.0
