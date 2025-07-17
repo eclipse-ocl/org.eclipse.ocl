@@ -16,8 +16,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.collect.Lists;
@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
  * or another class. The descriptions are normally built by direct static construction from auto-generated code, with instnaces defined
  * in isolation during construction then cross-references defined later by calls to init().
  */
-public class ExecutorFragment extends AbstractFragment
+public class ExecutorFragment extends FlatFragment
 {
 	private @NonNull ExecutorOperation[] operations;
 	private @NonNull ExecutorProperty[] properties;

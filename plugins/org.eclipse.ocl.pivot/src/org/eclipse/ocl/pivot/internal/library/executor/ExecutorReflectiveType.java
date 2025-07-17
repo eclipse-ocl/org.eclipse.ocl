@@ -20,9 +20,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -45,7 +45,7 @@ public class ExecutorReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
+	protected @NonNull FlatFragment createFragment(@NonNull FlatClass baseInheritance) {
 		return new ExecutorReflectiveFragment(this, baseInheritance);
 	}
 

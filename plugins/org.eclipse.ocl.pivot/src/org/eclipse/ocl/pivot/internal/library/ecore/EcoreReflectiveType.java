@@ -26,12 +26,12 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperties;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -53,8 +53,11 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		this.templateParameters = new TemplateParameters(templateParameters);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
+	protected @NonNull FlatFragment createFragment(@NonNull FlatClass baseInheritance) {
 		return new EcoreReflectiveFragment(this, baseInheritance);
 	}
 
@@ -140,11 +143,17 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		throw new UnsupportedOperationException();		// FIXME
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @Nullable Operation basicGetOperation(@NonNull OperationId operationId) {
 		throw new UnsupportedOperationException();					// FIXME
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @Nullable Property basicGetProperty(@NonNull String name) {
 		ExecutorProperties allProperties2 = allProperties;

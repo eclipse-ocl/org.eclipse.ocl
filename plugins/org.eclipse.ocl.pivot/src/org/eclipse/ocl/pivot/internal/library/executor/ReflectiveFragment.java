@@ -21,14 +21,13 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A ReflectiveFragment provides the description of the properties and operations defined by some class when accessed by the same
  * or another class. The descriptions are normally built lazily and one name at a time using reflective access to some meta-model.
  */
-public abstract class ReflectiveFragment extends AbstractFragment
+public abstract class ReflectiveFragment extends FlatFragment
 {
 	protected Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
 	protected Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
