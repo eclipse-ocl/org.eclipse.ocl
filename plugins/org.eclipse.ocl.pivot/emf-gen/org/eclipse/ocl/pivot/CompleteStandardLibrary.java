@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -83,6 +82,7 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 */
 	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
+	@Override
 	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull String getDefaultStandardLibraryURI();
@@ -91,11 +91,6 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 * @since 7.0
 	 */
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull LambdaTypeManager getLambdaManager();
 
 	/**
 	 * @since 7.0

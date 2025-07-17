@@ -38,7 +38,7 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 		IdResolver idResolver = executor.getIdResolver();
 		FlatClass leftType = idResolver.getDynamicClassOf(left).getFlatClass(standardLibrary);
 		FlatClass rightType = idResolver.getDynamicClassOf(right).getFlatClass(standardLibrary);
-		FlatClass commonType = leftType.getCommonInheritance(rightType);
+		FlatClass commonType = leftType.getCommonFlatClass(rightType);
 		FlatClass comparableType = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
 		FlatClass selfType = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
 		Operation staticOperation = comparableType.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfType);

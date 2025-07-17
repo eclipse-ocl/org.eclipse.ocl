@@ -80,12 +80,12 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
-	public @Nullable Operation getMemberOperation(@NonNull OperationId id) {
+	public @Nullable Operation basicGetOperation(@NonNull OperationId id) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public @Nullable Property getMemberProperty(@NonNull String name) {
+	public @Nullable Property basicGetProperty(@NonNull String name) {
 		throw new UnsupportedOperationException();
 	}
 

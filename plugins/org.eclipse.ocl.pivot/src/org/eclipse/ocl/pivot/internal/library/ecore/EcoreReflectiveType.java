@@ -141,12 +141,12 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	public @Nullable Operation getMemberOperation(@NonNull OperationId operationId) {
+	public @Nullable Operation basicGetOperation(@NonNull OperationId operationId) {
 		throw new UnsupportedOperationException();					// FIXME
 	}
 
 	@Override
-	public @Nullable Property getMemberProperty(@NonNull String name) {
+	public @Nullable Property basicGetProperty(@NonNull String name) {
 		ExecutorProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
 			allProperties = allProperties2 = new ExecutorProperties(this);

@@ -377,7 +377,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		if (leftType instanceof EcoreReflectiveType) {
 			FlatClass firstInheritance = leftType.getFlatClass(this);
 			FlatClass secondInheritance = rightType.getFlatClass(this);
-			FlatClass commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
+			FlatClass commonInheritance = firstInheritance.getCommonFlatClass(secondInheritance);
 			return commonInheritance.getPivotClass();
 		}
 		if (leftType instanceof ExecutorSpecializedType) {
