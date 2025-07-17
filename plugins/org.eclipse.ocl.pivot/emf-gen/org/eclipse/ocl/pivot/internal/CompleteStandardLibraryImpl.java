@@ -337,13 +337,13 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * CollectionTypeManagerInternal encapsulates the knowledge about known collection types.
+	 * CompleteCollectionTypeManager encapsulates the knowledge about known collection types.
 	 *
 	 * @since 7.0
 	 */
-	public static class CollectionTypeManagerInternal extends AbstractCollectionTypeManager
+	public static class CompleteCollectionTypeManager extends AbstractCollectionTypeManager
 	{
-		public CollectionTypeManagerInternal(@NonNull CompleteStandardLibrary standardLibrary) {
+		public CompleteCollectionTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
@@ -370,25 +370,25 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * JavaTypeManagerInternal encapsulates the knowledge about known java types.
+	 * CompleteJavaTypeManager encapsulates the knowledge about known java types.
 	 *
 	 * @since 7.0
 	 */
-	public static class JavaTypeManagerInternal extends AbstractJavaTypeManager
+	public static class CompleteJavaTypeManager extends AbstractJavaTypeManager
 	{
-		public JavaTypeManagerInternal(@NonNull CompleteStandardLibrary standardLibrary) {
+		public CompleteJavaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 	}
 
 	/**
-	 * LambdaTypeManagerInternal encapsulates the knowledge about known lambda types.
+	 * CompleteLambdaTypeManager encapsulates the knowledge about known lambda types.
 	 *
 	 * @since 7.0
 	 */
-	public static class LambdaTypeManagerInternal extends AbstractLambdaTypeManager
+	public static class CompleteLambdaTypeManager extends AbstractLambdaTypeManager
 	{
-		public LambdaTypeManagerInternal(@NonNull CompleteStandardLibrary standardLibrary) {
+		public CompleteLambdaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
@@ -411,13 +411,13 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * MapTypeManagerInternal encapsulates the knowledge about known map types.
+	 * CompleteMapTypeManager encapsulates the knowledge about known map types.
 	 *
 	 * @since 7.0
 	 */
-	public static class MapTypeManagerInternal extends AbstractMapTypeManager
+	public static class CompleteMapTypeManager extends AbstractMapTypeManager
 	{
-		public MapTypeManagerInternal(@NonNull CompleteStandardLibrary standardLibrary) {
+		public CompleteMapTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
@@ -450,13 +450,13 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * JavaTypeManagerInternal encapsulates the knowledge about known java types.
+	 * CompleteSpecializedTypeManager encapsulates the knowledge about known specialized types.
 	 *
 	 * @since 7.0
 	 */
-	public static class SpecializedTypeManagerInternal extends AbstractSpecializedTypeManager
+	public static class CompleteSpecializedTypeManager extends AbstractSpecializedTypeManager
 	{
-		public SpecializedTypeManagerInternal(@NonNull CompleteStandardLibrary standardLibrary) {
+		public CompleteSpecializedTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
@@ -501,12 +501,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * TupleTypeManagerInternal encapsulates the knowledge about known tuple types.
+	 * CompleteTupleTypeManager encapsulates the knowledge about known tuple types.
 	 * @since 7.0
 	 */
-	public static class TupleTypeManagerInternal extends AbstractTupleTypeManager
+	public static class CompleteTupleTypeManager extends AbstractTupleTypeManager
 	{
-		public TupleTypeManagerInternal(@NonNull CompleteStandardLibrary standardLibrary) {
+		public CompleteTupleTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 
@@ -702,7 +702,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
-		return new CollectionTypeManagerInternal(this);
+		return new CompleteCollectionTypeManager(this);
 	}
 
 	@Override
@@ -712,27 +712,27 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	protected @NonNull JavaTypeManager createJavaTypeManager() {
-		return new JavaTypeManagerInternal(this);
+		return new CompleteJavaTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull LambdaTypeManager createLambdaTypeManager() {
-		return new LambdaTypeManagerInternal(this);
+		return new CompleteLambdaTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull MapTypeManager createMapTypeManager() {
-		return new MapTypeManagerInternal(this);
+		return new CompleteMapTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull SpecializedTypeManager createSpecializedTypeManager() {
-		return new SpecializedTypeManagerInternal(this);
+		return new CompleteSpecializedTypeManager(this);
 	}
 
 	@Override
 	protected @NonNull TupleTypeManager createTupleTypeManager() {
-		return new TupleTypeManagerInternal(this);
+		return new CompleteTupleTypeManager(this);
 	}
 
 	@Override
