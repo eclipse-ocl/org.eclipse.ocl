@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -29,6 +28,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -404,8 +404,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		Type leftPrimaryType = getPrimaryType(leftType);
 		Type rightPrimaryType = getPrimaryType(rightType);
-		CompleteInheritance leftInheritance = leftPrimaryType.getInheritance(this);
-		CompleteInheritance rightInheritance = rightPrimaryType.getInheritance(this);
+		FlatClass leftInheritance = leftPrimaryType.getInheritance(this);
+		FlatClass rightInheritance = rightPrimaryType.getInheritance(this);
 		return leftInheritance.isSubInheritanceOf(rightInheritance);
 	}
 
@@ -528,9 +528,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		else if (leftType instanceof DataType) {
 		//	if (rightType instanceof DataType) {			// XXX Avoid getBehavioralClass problem with conformsTo
-				CompleteInheritance leftInheritance = leftType.getInheritance(this);
-				CompleteInheritance rightInheritance = rightType.getInheritance(this);
-				CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
+				FlatClass leftInheritance = leftType.getInheritance(this);
+				FlatClass rightInheritance = rightType.getInheritance(this);
+				FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
 				return getPrimaryType(commonInheritance.getPivotClass());
 		//	}
 		//	return getOclAnyType();
@@ -541,9 +541,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions, false)) {
 			return leftType;
 		} */
-		CompleteInheritance leftInheritance = leftType.getInheritance(this);
-		CompleteInheritance rightInheritance = rightType.getInheritance(this);
-		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
+		FlatClass leftInheritance = leftType.getInheritance(this);
+		FlatClass rightInheritance = rightType.getInheritance(this);
+		FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
 		return getPrimaryType(commonInheritance.getPivotClass());
 	}
 

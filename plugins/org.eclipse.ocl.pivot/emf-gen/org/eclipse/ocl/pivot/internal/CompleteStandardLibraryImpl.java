@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
@@ -64,6 +63,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -839,7 +839,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	@NonNull
-	public CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
+	public FlatClass getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
 		assert environmentFactory != null;
 		return environmentFactory.getMetamodelManager().getInheritance(type);
 	}

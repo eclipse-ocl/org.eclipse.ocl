@@ -12,8 +12,8 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 
 /**
  * @since 7.0
@@ -22,7 +22,7 @@ public class ExecutorReflectiveFragment extends ReflectiveFragment
 {
 //	protected final EClassifier eClassifier;
 
-	public ExecutorReflectiveFragment(@NonNull ExecutorReflectiveType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	public ExecutorReflectiveFragment(@NonNull ExecutorReflectiveType derivedInheritance, @NonNull FlatClass baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 //		this.eClassifier = derivedInheritance.getEClassifier();
 	}

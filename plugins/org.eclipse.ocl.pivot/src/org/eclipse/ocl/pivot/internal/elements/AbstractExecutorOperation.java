@@ -17,7 +17,6 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -29,6 +28,7 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -185,7 +185,7 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 
 	@Override
 	@Nullable
-	public CompleteInheritance getInheritance(
+	public FlatClass getInheritance(
 			@NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
 	}

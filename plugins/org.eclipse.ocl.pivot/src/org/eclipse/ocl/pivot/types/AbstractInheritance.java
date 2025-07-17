@@ -12,11 +12,11 @@ package org.eclipse.ocl.pivot.types;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorNamedElement;
@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
-public abstract class AbstractInheritance extends AbstractExecutorNamedElement implements CompleteInheritance
+public abstract class AbstractInheritance extends AbstractExecutorNamedElement implements FlatClass
 {
 	public static class FragmentIterable implements IndexableIterable<@NonNull InheritanceFragment>
 	{
@@ -117,7 +117,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance thatInheritance) {
+	public @NonNull FlatClass getCommonInheritance(@NonNull FlatClass thatInheritance) {
 		if (this == thatInheritance) {
 			return this;
 		}
@@ -141,12 +141,12 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		for ( ; staticDepth > 0; --staticDepth) {
 			int iMax = getIndex(staticDepth+1);
 			int jMax = thatInheritance.getIndex(staticDepth+1);
-			CompleteInheritance commonInheritance = null;
+			FlatClass commonInheritance = null;
 			int commonInheritances = 0;
 			for (int i = getIndex(staticDepth); i < iMax; i++) {
-				CompleteInheritance thisBaseInheritance = getFragment(i).getBaseInheritance();
+				FlatClass thisBaseInheritance = getFragment(i).getBaseInheritance();
 				for (int j = thatInheritance.getIndex(staticDepth); j < jMax; j++) {
-					CompleteInheritance thatBaseInheritance = thatInheritance.getFragment(j).getBaseInheritance();
+					FlatClass thatBaseInheritance = thatInheritance.getFragment(j).getBaseInheritance();
 					if (thisBaseInheritance == thatBaseInheritance) {
 						commonInheritances++;
 						commonInheritance = thisBaseInheritance;
@@ -166,7 +166,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public @Nullable InheritanceFragment getFragment(@NonNull CompleteInheritance thatInheritance) {
+	public @Nullable InheritanceFragment getFragment(@NonNull FlatClass thatInheritance) {
 		int staticDepth = thatInheritance.getDepth();
 		if (staticDepth <= getDepth()) {
 			int iMax = getIndex(staticDepth+1);
@@ -190,7 +190,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public boolean isSubInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
+	public boolean isSubInheritanceOf(@NonNull FlatClass thatInheritance) {
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = ((AbstractInheritance)thatInheritance).flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
@@ -202,7 +202,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public boolean isSuperInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
+	public boolean isSuperInheritanceOf(@NonNull FlatClass thatInheritance) {
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = ((AbstractInheritance)thatInheritance).flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
@@ -221,7 +221,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
-		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
+		FlatClass apparentInheritance = apparentOperation.getInheritance(standardLibrary);
 		int apparentDepth = ClassUtil.requireNonNull(apparentInheritance).getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
@@ -239,7 +239,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
-		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
+		FlatClass apparentInheritance = apparentOperation.getInheritance(standardLibrary);
 		int apparentDepth = ClassUtil.requireNonNull(apparentInheritance).getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
@@ -258,7 +258,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, CompleteInheritance... argumentTypes) {
+	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, FlatClass... argumentTypes) {
 		for (Operation localOperation : getPivotClass().getOwnedOperations()) {
 			if (localOperation.getName().equals(operationName)) {
 				ParametersId firstParametersId = localOperation.getParametersId();

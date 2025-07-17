@@ -17,9 +17,9 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -193,9 +193,9 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		CollectionType rightGenericType = PivotUtil.getUnspecializedTemplateableElement(rightCollectionType);
 		Type leftElementType = PivotUtil.getElementType(leftCollectionType);
 		Type rightElementType = PivotUtil.getElementType(rightCollectionType);
-		CompleteInheritance leftInheritance = leftGenericType.getInheritance(standardLibrary);				// XXX promote
-		CompleteInheritance rightInheritance = rightGenericType.getInheritance(standardLibrary);
-		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
+		FlatClass leftInheritance = leftGenericType.getInheritance(standardLibrary);				// XXX promote
+		FlatClass rightInheritance = rightGenericType.getInheritance(standardLibrary);
+		FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
 		CollectionType commonGenericType = (CollectionType) commonInheritance.getPivotClass();
 		Type commonElementType = standardLibrary.getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
 		boolean commonIsNullFree = standardLibrary.getCommonIsRequired(leftCollectionType.isIsNullFree(), rightCollectionType.isIsNullFree());

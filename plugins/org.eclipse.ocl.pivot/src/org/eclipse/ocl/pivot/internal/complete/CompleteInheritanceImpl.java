@@ -16,9 +16,9 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
@@ -32,7 +32,7 @@ import com.google.common.base.Function;
 /**
  * An AbstractTypeServer provides the co-ordinated operation, property and superclass lookup caches for one or more merged types.
  */
-public class CompleteInheritanceImpl extends ReflectiveInheritance implements CompleteInheritance
+public class CompleteInheritanceImpl extends ReflectiveInheritance implements FlatClass
 {
 	public static final @NonNull List<@NonNull CompleteInheritanceImpl> EMPTY_LIST = Collections.<@NonNull CompleteInheritanceImpl>emptyList();
 
@@ -56,7 +56,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	}
 
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
+	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
 		return new PivotReflectiveFragment(this, baseInheritance);
 	}
 
@@ -65,7 +65,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
+	public @NonNull Iterable<@NonNull ? extends FlatClass> getInitialSuperInheritances() {
 		return isOclAny() ? EMPTY_LIST : completeClass.getPartialClasses().getInitialSuperInheritances();
 	}
 

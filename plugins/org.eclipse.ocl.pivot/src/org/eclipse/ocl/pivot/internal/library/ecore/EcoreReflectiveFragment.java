@@ -19,9 +19,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
@@ -29,7 +29,10 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 {
 	protected final @NonNull EClassifier eClassifier;
 
-	public EcoreReflectiveFragment(@NonNull EcoreReflectiveType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	/**
+	 * @since 7.0
+	 */
+	public EcoreReflectiveFragment(@NonNull EcoreReflectiveType derivedInheritance, @NonNull FlatClass baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 		this.eClassifier = derivedInheritance.getEClassifier();
 	}

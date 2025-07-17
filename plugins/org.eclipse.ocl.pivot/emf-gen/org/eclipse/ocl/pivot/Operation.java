@@ -16,6 +16,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -369,7 +370,7 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	/**
 	 * Return the Inheritance dispatch table for the owning type, or null for am orphan property owned by an Annotation.
 	 */
-	@Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
+	@Nullable FlatClass getInheritance(@NonNull StandardLibrary standardLibrary);
 
 	@NonNull OperationId getOperationId();
 
