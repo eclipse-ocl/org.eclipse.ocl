@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
@@ -108,6 +109,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -219,6 +225,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getLibraryClass(@NonNull String className);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LambdaTypeManager getLambdaManager();
 
 	/**
 	 * @since 7.0

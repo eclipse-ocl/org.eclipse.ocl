@@ -18,6 +18,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -43,6 +44,68 @@ public abstract class AbstractJavaTypeManager implements JavaTypeManager
 	@Override
 	public void dispose() {
 		key2class.clear();
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull Class<?> javaClass) {
+		if (javaClass == boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (javaClass == byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == char.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == int.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == BigDecimal.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == BigInteger.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (javaClass == Byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Character.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == Float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (javaClass == Integer.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == Short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (javaClass == String.class) {
+			return standardLibrary.getStringType();
+		}
+		return null;
 	}
 
 	@Override

@@ -146,7 +146,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 * Shared cache of the lazily created lazily deleted representations of each type as a Java type.
 	 * @since 7.0
 	 */
-	protected @Nullable LambdaTypeManager lambdaTypeManager = null;
+	protected /*@NonNull*/ LambdaTypeManager lambdaTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
@@ -371,9 +371,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 			else if (leftType instanceof LambdaType) {
 				if (rightType instanceof LambdaType) {
-					if (lambdaTypeManager != null) {
-						return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftSubstitutions, (LambdaType)rightType, rightSubstitutions, enforceNullity);
-					}
+					assert lambdaTypeManager != null;
+					return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftSubstitutions, (LambdaType)rightType, rightSubstitutions, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
@@ -428,7 +427,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @Nullable LambdaTypeManager createLambdaTypeManager();
+	protected abstract @NonNull LambdaTypeManager createLambdaTypeManager();
 
 	/**
 	 * @since 7.0
@@ -448,6 +447,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getBagType(), elementType, isNullFree, lower, upper);
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(java.lang.@NonNull Class<?> javaClass) {
+		assert javaTypeManager != null;
+		return javaTypeManager.getBehavioralClass(javaClass);
 	}
 
 	/**
