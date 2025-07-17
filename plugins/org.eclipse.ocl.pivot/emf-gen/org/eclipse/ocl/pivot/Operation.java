@@ -363,14 +363,15 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	boolean validateUniquePostconditionName(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
+	 * Return the Inheritance dispatch table for the owning type, or null for am orphan property owned by an Annotation.
+	 * @since 7.0
+	 */
+	@Nullable FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
+
+	/**
 	 * Return the index of this operation in the operation dispatch table.
 	 */
 	int getIndex();
-
-	/**
-	 * Return the Inheritance dispatch table for the owning type, or null for am orphan property owned by an Annotation.
-	 */
-	@Nullable FlatClass getInheritance(@NonNull StandardLibrary standardLibrary);
 
 	@NonNull OperationId getOperationId();
 

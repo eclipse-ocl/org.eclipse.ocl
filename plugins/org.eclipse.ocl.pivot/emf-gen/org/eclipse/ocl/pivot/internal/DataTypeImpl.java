@@ -591,9 +591,9 @@ implements DataType {
 	}
 
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
-		return standardLibrary.getInheritance(behavioralType != null ? behavioralType : this);
+		return standardLibrary.getFlatClass(behavioralType != null ? behavioralType : this);
 	}
 
 	/**

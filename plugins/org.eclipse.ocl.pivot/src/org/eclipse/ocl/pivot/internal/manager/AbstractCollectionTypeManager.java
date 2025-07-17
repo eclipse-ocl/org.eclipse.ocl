@@ -193,8 +193,8 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		CollectionType rightGenericType = PivotUtil.getUnspecializedTemplateableElement(rightCollectionType);
 		Type leftElementType = PivotUtil.getElementType(leftCollectionType);
 		Type rightElementType = PivotUtil.getElementType(rightCollectionType);
-		FlatClass leftInheritance = leftGenericType.getInheritance(standardLibrary);				// XXX promote
-		FlatClass rightInheritance = rightGenericType.getInheritance(standardLibrary);
+		FlatClass leftInheritance = leftGenericType.getFlatClass(standardLibrary);				// XXX promote
+		FlatClass rightInheritance = rightGenericType.getFlatClass(standardLibrary);
 		FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
 		CollectionType commonGenericType = (CollectionType) commonInheritance.getPivotClass();
 		Type commonElementType = standardLibrary.getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);

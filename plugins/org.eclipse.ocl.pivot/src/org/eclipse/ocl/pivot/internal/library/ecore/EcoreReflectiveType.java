@@ -112,13 +112,13 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 							if (!iterator.hasNext()) {
 								StandardLibrary standardLibrary = evaluationPackage.getStandardLibrary();
 								org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
-								return standardLibrary.getInheritance(oclAnyType);
+								return standardLibrary.getFlatClass(oclAnyType);
 							}
 						}
 						EClass next = iterator.next();
 						assert next != null;
 						IdResolver idResolver = evaluationPackage.getIdResolver();
-						return idResolver.getInheritance(next);
+						return idResolver.getFlatClass(next);
 					}
 
 					@Override

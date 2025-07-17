@@ -130,8 +130,8 @@ public class SortedByIteration extends AbstractIteration
 	@Override
 	public SortedByIteration.@NonNull SortingValue createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
-		FlatClass comparableType = standardLibrary.getOclComparableType().getInheritance(standardLibrary);
-		FlatClass selfType = standardLibrary.getOclSelfType().getInheritance(standardLibrary);
+		FlatClass comparableType = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
+		FlatClass selfType = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
 		Operation staticOperation = comparableType.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfType);
 		if (staticOperation != null) {
 			org.eclipse.ocl.pivot.Class bodyType = executor.getIdResolver().getClass(bodyTypeId, null);

@@ -71,7 +71,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public synchronized @NonNull FlatClass getInheritance(@NonNull EClassifier eClassifier) {
+	public synchronized @NonNull FlatClass getFlatClass(@NonNull EClassifier eClassifier) {
 		FlatClass type = weakGet(typeMap, eClassifier);
 		if (type == null) {
 			EPackage ePackage = eClassifier.getEPackage();
@@ -87,7 +87,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			if (execPackage != null) {
 				org.eclipse.ocl.pivot.Class asType = execPackage.getOwnedClass(eClassifier.getName());
 				if (asType != null) {
-					type = standardLibrary.getInheritance(asType);
+					type = standardLibrary.getFlatClass(asType);
 					typeMap.put(eClassifier, new WeakReference<>(type));
 				}
 			}
@@ -147,7 +147,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull EClassifier eClassifier) {
-		return getInheritance(eClassifier).getPivotClass();
+		return getFlatClass(eClassifier).getPivotClass();
 	}
 
 	@Override

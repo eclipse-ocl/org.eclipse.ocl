@@ -185,7 +185,7 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 
 	@Override
 	@Nullable
-	public FlatClass getInheritance(
+	public FlatClass getFlatClass(
 			@NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
 	}

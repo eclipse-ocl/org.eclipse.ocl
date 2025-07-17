@@ -1196,9 +1196,12 @@ implements org.eclipse.ocl.pivot.Class {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return standardLibrary.getInheritance(this);
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return standardLibrary.getFlatClass(this);
 	}
 
 	@Override
@@ -1427,13 +1430,13 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		FlatClass inheritance = getInheritance(standardLibrary);
+		FlatClass inheritance = getFlatClass(standardLibrary);
 		return inheritance.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		FlatClass inheritance = getInheritance(standardLibrary);
+		FlatClass inheritance = getFlatClass(standardLibrary);
 		return inheritance.lookupImplementation(standardLibrary, apparentOperation);
 	}
 

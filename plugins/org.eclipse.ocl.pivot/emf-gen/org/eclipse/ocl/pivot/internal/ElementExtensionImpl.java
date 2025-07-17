@@ -706,7 +706,7 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	}
 
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return stereotype.getInheritance(standardLibrary);
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return stereotype.getFlatClass(standardLibrary);
 	}
 } //ElementExtensionImpl

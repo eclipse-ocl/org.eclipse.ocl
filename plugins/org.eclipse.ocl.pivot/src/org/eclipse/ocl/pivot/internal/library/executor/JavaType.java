@@ -32,12 +32,12 @@ public class JavaType extends AbstractExecutorClass
 	}
 
 	@Override
-	public @NonNull FlatClass getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		if (Comparable.class.isAssignableFrom(javaClass)) {
-			return standardLibrary.getOclComparableType().getInheritance(standardLibrary);
+			return standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
 		}
 		else {
-			return standardLibrary.getOclAnyType().getInheritance(standardLibrary);
+			return standardLibrary.getOclAnyType().getFlatClass(standardLibrary);
 		}
 	}
 
@@ -50,14 +50,14 @@ public class JavaType extends AbstractExecutorClass
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		FlatClass inheritance = getInheritance(standardLibrary);
+		FlatClass inheritance = getFlatClass(standardLibrary);
 		return inheritance.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
 	@Override
 	@NonNull
 	public LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		FlatClass inheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
+		FlatClass inheritance = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 		return inheritance.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
