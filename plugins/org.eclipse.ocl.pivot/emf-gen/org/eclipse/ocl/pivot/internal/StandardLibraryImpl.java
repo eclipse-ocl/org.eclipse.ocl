@@ -530,7 +530,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		//	if (rightType instanceof DataType) {			// XXX Avoid getBehavioralClass problem with conformsTo
 				FlatClass leftInheritance = leftType.getFlatClass(this);
 				FlatClass rightInheritance = rightType.getFlatClass(this);
-				FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
+				FlatClass commonInheritance = leftInheritance.getCommonFlatClass(rightInheritance);
 				return getPrimaryType(commonInheritance.getPivotClass());
 		//	}
 		//	return getOclAnyType();
@@ -543,7 +543,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		} */
 		FlatClass leftInheritance = leftType.getFlatClass(this);
 		FlatClass rightInheritance = rightType.getFlatClass(this);
-		FlatClass commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
+		FlatClass commonInheritance = leftInheritance.getCommonFlatClass(rightInheritance);
 		return getPrimaryType(commonInheritance.getPivotClass());
 	}
 
