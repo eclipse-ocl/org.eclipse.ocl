@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -67,8 +66,8 @@ public class AbstractFlatClass extends ReflectiveInheritance implements FlatClas
 	}
 
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
-		return new PivotReflectiveFragment(this, baseInheritance);
+	protected @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
+		return new PivotReflectiveFragment(this, baseFlatClass);
 	}
 
 	public @NonNull CompleteClassInternal getCompleteClass() {
