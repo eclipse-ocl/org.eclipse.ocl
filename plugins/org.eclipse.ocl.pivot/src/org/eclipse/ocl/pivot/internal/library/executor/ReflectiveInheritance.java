@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -91,7 +90,10 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		knownSubInheritances.add(subInheritance);
 	}
 
-	protected abstract @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance);
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull FlatFragment createFragment(@NonNull FlatClass baseInheritance);
 
 	@Override
 	public @NonNull EObject createInstance() {
@@ -130,6 +132,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		return gotOne;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public final @NonNull FragmentIterable getAllProperSuperFragments() {
 		if (fragments == null) {
@@ -139,6 +144,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public final @NonNull FragmentIterable getAllSuperFragments() {
 		if (fragments == null) {
@@ -157,6 +165,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		return indexes2.length-2;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public FlatFragment getFragment(int fragmentNumber) {
 		if ((fragments == null) && isOclAny()) {
@@ -166,6 +177,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		return fragments[fragmentNumber];
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FragmentIterable getFragments() {
 		@NonNull FlatFragment[] fragments2 = fragments;
@@ -196,6 +210,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	 */
 	protected abstract @NonNull Iterable<@NonNull ? extends FlatClass> getInitialSuperInheritances();
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FlatFragment getSelfFragment() {
 		if (indexes == null) {
@@ -210,6 +227,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		return fragment;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
 		int @Nullable [] indexes2 = indexes;
