@@ -83,9 +83,9 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorLambdaParameter;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
@@ -1212,7 +1212,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 
 		s.append("	public static final ");
-		s.appendClassReference(true, ExecutorStandardLibrary.class);
+		s.appendClassReference(true, PartialStandardLibraryImpl.ReadOnly.class);
 		s.append(" LIBRARY = ");
 		if (hasSharedLibrary()) {
 			s.appendClassReference(null, getSharedLibrary());
@@ -1220,7 +1220,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		else {
 			s.append("new ");
-			s.appendClassReference(null, ExecutorStandardLibrary.class);
+			s.appendClassReference(null, PartialStandardLibraryImpl.ReadOnly.class);
 			s.append("()");
 		}
 		s.append(";\n");

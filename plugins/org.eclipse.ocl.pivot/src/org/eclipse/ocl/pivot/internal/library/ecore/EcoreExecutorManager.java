@@ -29,8 +29,9 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
@@ -62,16 +63,18 @@ public class EcoreExecutorManager extends ExecutorManager
 	 *
 	 * @param contextObject a user object from which the user objects and their meta-models will be deduced
 	 * @param standardLibrary the OCL facilities
+	 *
+	 * @since 7.0
 	 */
-	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull ExecutorStandardLibrary standardLibrary) {
-		super(new ExecutorStandardLibrary(standardLibrary));
+	public EcoreExecutorManager(@Nullable Object contextObject, PartialStandardLibraryImpl.@NonNull ReadOnly standardLibrary) {
+		super(new PartialStandardLibraryImpl.Mutable(standardLibrary));
 		assert !standardLibrary.isMutable();
 		this.contextObject = contextObject;
 		ThreadLocalExecutor.setExecutor(this);
 	}
 
 	protected @NonNull IdResolver createIdResolver() {
-		ExecutorStandardLibrary standardLibrary2 = getStandardLibrary();
+		PartialStandardLibrary standardLibrary2 = getStandardLibrary();
 		if (!(contextObject instanceof EObject)) {
 			@NonNull List<EObject> emptyList = Collections.<EObject>emptyList();
 			return new EcoreIdResolver(emptyList, standardLibrary2);
@@ -191,13 +194,16 @@ public class EcoreExecutorManager extends ExecutorManager
 
 	@Override
 	public int getSeverity(@Nullable Object validationKey) {
-		StatusCodes.Severity severity = getStandardLibrary().getSeverity(validationKey);
+		StatusCodes.Severity severity = ((PartialStandardLibraryImpl)standardLibrary).getSeverity(validationKey);
 		return severity != null ? severity.getStatusCode() : StatusCodes.WARNING;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull ExecutorStandardLibrary getStandardLibrary() {
-		return (ExecutorStandardLibrary)standardLibrary;
+	public @NonNull PartialStandardLibrary getStandardLibrary() {
+		return (PartialStandardLibrary)standardLibrary;
 	}
 
 	/**

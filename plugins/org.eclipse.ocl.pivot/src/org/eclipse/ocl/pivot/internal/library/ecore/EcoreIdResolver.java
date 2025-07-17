@@ -29,7 +29,8 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -44,7 +45,10 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 {
 	private @NonNull Map<EClassifier, WeakReference<CompleteInheritance>> typeMap = new WeakHashMap<>();
 
-	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull ExecutorStandardLibrary standardLibrary) {
+	/**
+	 * @since 7.0
+	 */
+	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull PartialStandardLibrary standardLibrary) {
 		super(standardLibrary);
 		for (@SuppressWarnings("null")@NonNull EObject root : roots) {
 			addRoot(root);
@@ -132,8 +136,8 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull ExecutorStandardLibrary getStandardLibrary() {
-		return (ExecutorStandardLibrary)standardLibrary;
+	public @NonNull PartialStandardLibraryImpl getStandardLibrary() {
+		return (PartialStandardLibraryImpl)standardLibrary;
 	}
 
 	@Override
