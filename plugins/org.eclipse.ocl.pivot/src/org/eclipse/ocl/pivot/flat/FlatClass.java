@@ -12,28 +12,96 @@ package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
- * An Inheritance provides access to the transitive inheritance relationships of a class
- * with respect to a particular type regime, noting that the complexities of CompleteOCL allow
- * for different inheritance for different applications.
- *
- * The allSuperInheritances relationship is computed lazily and invalidated whenever a superclass changes.
- * KnownSubInheritances are also notified of invalidation avoiding the need for an adapting Inheritance
- * to adapt more than its own target class.
- *
+ * A FlatClass caches the diverse vertical (supertype) and, for CompleteFlatClass, horizontal (partial) classes
+ * to provide a single fast lookup for features.
  * @since 7.0
  */
 public interface FlatClass extends Nameable
 {
+	public static class FragmentIterable implements IndexableIterable<@NonNull FlatFragment>
+	{
+		protected class Iterator implements java.util.Iterator<@NonNull FlatFragment>
+		{
+			private int index = firstIndex;
+
+			@Override
+			public boolean hasNext() {
+				return index < lastIndex;
+			}
+
+			@Override
+			public @NonNull FlatFragment next() {
+				return array[index++];
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		}
+
+		private final @NonNull FlatFragment @NonNull [] array;
+		private final int firstIndex;
+		private final int lastIndex;
+
+		public FragmentIterable(@NonNull FlatFragment @NonNull [] array) {
+			this.array = array;
+			this.firstIndex = 0;
+			this.lastIndex = array.length;
+		}
+
+		public FragmentIterable(@NonNull FlatFragment @NonNull [] array, int firstIndex, int lastIndex) {
+			this.array = array;
+			this.firstIndex = firstIndex;
+			this.lastIndex = lastIndex;
+		}
+
+		@Override
+		public @NonNull FlatFragment get(int index) {
+			return ClassUtil.requireNonNull(array[firstIndex + index]);
+		}
+
+		@Override
+		public java.util.@NonNull Iterator<@NonNull FlatFragment> iterator() {
+			return new Iterator();
+		}
+
+		@Override
+		public int size() {
+			return lastIndex - firstIndex;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = null;
+			for (int i = firstIndex; i < lastIndex; i++) {
+				if (s == null) {
+					s = new StringBuilder();
+					s.append("[");
+				}
+				else {
+					s.append(", ");
+				}
+				s.append(array[i]);
+			}
+			if (s == null) {
+				return "";
+			}
+			s.append("]");
+			return s.toString();
+		}
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -67,12 +135,12 @@ public interface FlatClass extends Nameable
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
-	@NonNull Iterable<@NonNull InheritanceFragment> getAllProperSuperFragments();
+	@NonNull FragmentIterable getAllProperSuperFragments();
 
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters including this one.
 	 */
-	@NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments();
+	@NonNull FragmentIterable getAllSuperFragments();
 
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass inheritance);
 
@@ -84,24 +152,24 @@ public interface FlatClass extends Nameable
 	/**
 	 * Return the InheritanceFragment of this inheritance whose baseInheritance is thatInheritance. Return null if no InheritanceFragment corresponds.
 	 */
-	@Nullable InheritanceFragment getFragment(@NonNull FlatClass thatInheritance);
-	@NonNull Iterable<@NonNull InheritanceFragment> getFragments();
-	/*@Nullable*/ InheritanceFragment getFragment(int fragmentNumber);
+	@Nullable FlatFragment getFragment(@NonNull FlatClass thatInheritance);
+	@NonNull FragmentIterable getFragments();
+	/*@Nullable*/ FlatFragment getFragment(int fragmentNumber);
 	int getIndex(int fragmentNumber);
 	int getIndexes();
 
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
-	@NonNull InheritanceFragment getSelfFragment();
+	@NonNull FlatFragment getSelfFragment();
 
 	/**
 	 * Return an Iterable of all the super-inheritances at a specified depth, between 0 and getDepth() inclusive.
 	 */
-	@NonNull IndexableIterable<@NonNull InheritanceFragment> getSuperFragments(int depth);
+	@NonNull FragmentIterable getSuperFragments(int depth);
 
 	boolean isOclAny();
-	boolean isSubInheritanceOf(@NonNull FlatClass inheritance);
-	boolean isSuperInheritanceOf(@NonNull FlatClass inheritance);
+	boolean isSubFlatClassOf(@NonNull FlatClass that);
+	boolean isSuperFlatClassOf(@NonNull FlatClass that);
 	boolean isUndefined();
 
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
