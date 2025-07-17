@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * JavaTypeManager encapsulates the knowledge about known java type creation and access.
@@ -21,8 +22,7 @@ public interface JavaTypeManager
 {
 	void dispose();
 
-	/**
-	 * @since 7.0
-	 */
+	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull Class<?> javaClass);
+
 	org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object);
 }

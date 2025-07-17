@@ -104,7 +104,22 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		}
 	}
 
-	protected abstract @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass);
+	protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
+		Type keyType = typeArguments.getKeyType();
+		boolean keysAreNullFree = typeArguments.isKeysAreNullFree();
+		Type valueType = typeArguments.getValueType();
+		boolean valuesAreNullFree = typeArguments.isValuesAreNullFree();
+		MapType genericMapType = standardLibrary.getMapType();
+		MapType mapType;
+		if (entryClass == null) {
+			mapType = PivotUtil.createMapType(genericMapType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		}
+		else {
+			MapType specializedMapType = getMapType(typeArguments);
+			mapType = PivotUtil.createMapEntryType(specializedMapType, entryClass);
+		}
+		return mapType;
+	}
 
 	@Override
 	public void dispose() {
@@ -210,5 +225,7 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		return true;
 	}
 
-	protected abstract boolean isValid(@Nullable Type type);
+	protected boolean isValid(@Nullable Type type) {
+		return type != null;
+	}
 }

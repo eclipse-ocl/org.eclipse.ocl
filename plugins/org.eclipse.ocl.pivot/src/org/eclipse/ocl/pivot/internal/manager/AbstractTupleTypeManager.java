@@ -51,6 +51,11 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 			setType(type);
 			setIsRequired(isRequired);
 		}
+
+		@Override
+		public String toString() {
+			return name + ":" + type + (isIsRequired() ? "[1]" : "[?]");
+		}
 	}
 
 	protected final @NonNull StandardLibrary standardLibrary;
