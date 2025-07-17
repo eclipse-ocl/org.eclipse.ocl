@@ -57,6 +57,16 @@ public class AbstractFlatClass extends ReflectiveInheritance implements FlatClas
 	}
 
 	@Override
+	public @Nullable Operation basicGetOperation(@NonNull OperationId operationId) {
+		return completeClass.getOperation(operationId);
+	}
+
+	@Override
+	public @Nullable Property basicGetProperty(@NonNull String propertyName) {
+		return completeClass.getProperty(propertyName);
+	}
+
+	@Override
 	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
 		return new PivotReflectiveFragment(this, baseInheritance);
 	}
@@ -76,16 +86,6 @@ public class AbstractFlatClass extends ReflectiveInheritance implements FlatClas
 
 	public @NonNull List<? extends Property> getLocalProperties() {
 		return ClassUtil.requireNonNull(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
-	}
-
-	@Override
-	public @Nullable Operation getMemberOperation(@NonNull OperationId operationId) {
-		return completeClass.getOperation(operationId);
-	}
-
-	@Override
-	public @Nullable Property getMemberProperty(@NonNull String propertyName) {
-		return completeClass.getProperty(propertyName);
 	}
 
 	/**

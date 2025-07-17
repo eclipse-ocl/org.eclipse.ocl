@@ -117,7 +117,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public @NonNull FlatClass getCommonInheritance(@NonNull FlatClass thatInheritance) {
+	public @NonNull FlatClass getCommonFlatClass(@NonNull FlatClass thatInheritance) {
 		if (this == thatInheritance) {
 			return this;
 		}

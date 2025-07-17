@@ -61,6 +61,9 @@ public interface FlatClass extends Nameable
 
 	public static @NonNull FlatClass @NonNull [] EMPTY_ARRAY = new @NonNull FlatClass[0];
 
+	@Nullable Operation basicGetOperation(@NonNull OperationId id);
+	@Nullable Property basicGetProperty(@NonNull String name);
+
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
@@ -71,7 +74,7 @@ public interface FlatClass extends Nameable
 	 */
 	@NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments();
 
-	@NonNull FlatClass getCommonInheritance(@NonNull FlatClass inheritance);
+	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass inheritance);
 
 	/**
 	 * Return the inheritance depth of the target type: OclAny is at depth 0.
@@ -86,8 +89,6 @@ public interface FlatClass extends Nameable
 	/*@Nullable*/ InheritanceFragment getFragment(int fragmentNumber);
 	int getIndex(int fragmentNumber);
 	int getIndexes();
-	@Nullable Operation getMemberOperation(@NonNull OperationId id);
-	@Nullable Property getMemberProperty(@NonNull String name);
 
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
