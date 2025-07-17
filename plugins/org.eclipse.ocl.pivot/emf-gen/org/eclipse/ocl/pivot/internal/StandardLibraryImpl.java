@@ -406,7 +406,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		Type rightPrimaryType = getPrimaryType(rightType);
 		FlatClass leftInheritance = leftPrimaryType.getFlatClass(this);
 		FlatClass rightInheritance = rightPrimaryType.getFlatClass(this);
-		return leftInheritance.isSubInheritanceOf(rightInheritance);
+		return leftInheritance.isSubFlatClassOf(rightInheritance);
 	}
 
 	/**

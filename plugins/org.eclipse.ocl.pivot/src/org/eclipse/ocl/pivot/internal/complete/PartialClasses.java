@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -39,6 +38,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -552,10 +552,10 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
 		FlatClass inheritance = getCompleteClass().getFlatClass();
-		return Iterables.transform(inheritance.getAllSuperFragments(), new Function<InheritanceFragment, @NonNull CompleteClass>()
+		return Iterables.transform(inheritance.getAllSuperFragments(), new Function<FlatFragment, @NonNull CompleteClass>()
 		{
 			@Override
-			public @NonNull CompleteClass apply(InheritanceFragment input) {
+			public @NonNull CompleteClass apply(FlatFragment input) {
 				return ((AbstractFlatClass)input.getBaseInheritance()).getCompleteClass();
 			}
 		});

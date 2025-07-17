@@ -19,13 +19,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeArgument;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
-import org.eclipse.ocl.pivot.utilities.ArrayIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -129,12 +128,18 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 		return this;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public final @NonNull FragmentIterable getAllProperSuperFragments() {
-		@NonNull InheritanceFragment @NonNull [] fragments2 = ClassUtil.requireNonNull(fragments);
+		@NonNull FlatFragment @NonNull [] fragments2 = ClassUtil.requireNonNull(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FragmentIterable getAllSuperFragments() {
 		return new FragmentIterable(ClassUtil.requireNonNull(fragments));
@@ -154,9 +159,12 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 		return eClassifier;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
-		return new ArrayIterable<@NonNull InheritanceFragment>(fragments);
+	public @NonNull FragmentIterable getFragments() {
+		return new FragmentIterable(fragments != null ? fragments : new @NonNull FlatFragment[0]);
 	}
 
 	@Override
@@ -179,11 +187,17 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 		return this;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @Nullable Operation basicGetOperation(@NonNull OperationId operationId) {
 		throw new UnsupportedOperationException();					// FIXME
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @Nullable Property basicGetProperty(@NonNull String name) {
 		ExecutorProperties allProperties2 = allProperties;
@@ -247,6 +261,9 @@ public class EcoreExecutorType extends AbstractExecutorClass implements Executor
 		return getSelfFragment().getSuperClasses();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
 		return new FragmentIterable(ClassUtil.requireNonNull(fragments), indexes[depth], indexes[depth+1]);

@@ -12,96 +12,21 @@ package org.eclipse.ocl.pivot.types;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorNamedElement;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractInheritance extends AbstractExecutorNamedElement implements FlatClass
 {
-	public static class FragmentIterable implements IndexableIterable<@NonNull InheritanceFragment>
-	{
-		protected class Iterator implements java.util.Iterator<@NonNull InheritanceFragment>
-		{
-			private int index = firstIndex;
-
-			@Override
-			public boolean hasNext() {
-				return index < lastIndex;
-			}
-
-			@Override
-			public @NonNull InheritanceFragment next() {
-				return array[index++];
-			}
-
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		}
-
-		private final @NonNull InheritanceFragment @NonNull [] array;
-		private final int firstIndex;
-		private final int lastIndex;
-
-		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array) {
-			this.array = array;
-			this.firstIndex = 0;
-			this.lastIndex = array.length;
-		}
-
-		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array, int firstIndex, int lastIndex) {
-			this.array = array;
-			this.firstIndex = firstIndex;
-			this.lastIndex = lastIndex;
-		}
-
-		@Override
-		public @NonNull InheritanceFragment get(int index) {
-			return ClassUtil.requireNonNull(array[firstIndex + index]);
-		}
-
-		@Override
-		public java.util.@NonNull Iterator<@NonNull InheritanceFragment> iterator() {
-			return new Iterator();
-		}
-
-		@Override
-		public int size() {
-			return lastIndex - firstIndex;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = null;
-			for (int i = firstIndex; i < lastIndex; i++) {
-				if (s == null) {
-					s = new StringBuilder();
-					s.append("[");
-				}
-				else {
-					s.append(", ");
-				}
-				s.append(array[i]);
-			}
-			if (s == null) {
-				return "";
-			}
-			s.append("]");
-			return s.toString();
-		}
-	}
-
 	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
@@ -166,12 +91,12 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public @Nullable InheritanceFragment getFragment(@NonNull FlatClass thatInheritance) {
+	public @Nullable FlatFragment getFragment(@NonNull FlatClass thatInheritance) {
 		int staticDepth = thatInheritance.getDepth();
 		if (staticDepth <= getDepth()) {
 			int iMax = getIndex(staticDepth+1);
 			for (int i = getIndex(staticDepth); i < iMax; i++) {
-				InheritanceFragment fragment = getFragment(i);
+				FlatFragment fragment = getFragment(i);
 				if (fragment.getBaseInheritance() == thatInheritance) {
 					return fragment;
 				}
@@ -190,7 +115,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public boolean isSubInheritanceOf(@NonNull FlatClass thatInheritance) {
+	public boolean isSubFlatClassOf(@NonNull FlatClass thatInheritance) {
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = ((AbstractInheritance)thatInheritance).flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
@@ -202,7 +127,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
-	public boolean isSuperInheritanceOf(@NonNull FlatClass thatInheritance) {
+	public boolean isSuperFlatClassOf(@NonNull FlatClass thatInheritance) {
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
 		int thoseFlags = ((AbstractInheritance)thatInheritance).flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
@@ -226,7 +151,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {
-				InheritanceFragment fragment = getFragment(i);
+				FlatFragment fragment = getFragment(i);
 				if (fragment.getBaseInheritance() == apparentInheritance) {
 					Operation actualOperation = fragment.getActualOperation(apparentOperation);
 					return actualOperation;
@@ -244,7 +169,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {
-				InheritanceFragment fragment = getFragment(i);
+				FlatFragment fragment = getFragment(i);
 				if (fragment.getBaseInheritance() == apparentInheritance) {
 					return fragment.getImplementation(apparentOperation);
 				}

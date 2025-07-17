@@ -13,18 +13,17 @@ package org.eclipse.ocl.pivot.internal.elements;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
-import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
 public abstract class AbstractExecutorType extends AbstractInheritance implements ExecutorType
@@ -39,12 +38,12 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getAllProperSuperFragments() {
+	public @NonNull FragmentIterable getAllProperSuperFragments() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments() {
+	public @NonNull FragmentIterable getAllSuperFragments() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -60,12 +59,12 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
+	public @NonNull FragmentIterable getFragments() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public InheritanceFragment getFragment(int fragmentNumber) {
+	public FlatFragment getFragment(int fragmentNumber) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -95,12 +94,12 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 	@Override
-	public @NonNull InheritanceFragment getSelfFragment() {
+	public @NonNull FlatFragment getSelfFragment() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public @NonNull IndexableIterable<@NonNull InheritanceFragment> getSuperFragments(int depth) {
+	public @NonNull FragmentIterable getSuperFragments(int depth) {
 		throw new UnsupportedOperationException();
 	}
 

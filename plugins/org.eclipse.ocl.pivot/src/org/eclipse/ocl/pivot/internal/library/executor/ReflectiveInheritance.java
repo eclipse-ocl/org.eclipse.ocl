@@ -21,8 +21,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
@@ -64,7 +64,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	/**
 	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
 	 */
-	private @NonNull InheritanceFragment @Nullable [] fragments = null;
+	private @NonNull FlatFragment @Nullable [] fragments = null;
 
 	/**
 	 * The index in fragments at which inheritance fragments at a given depth start.
@@ -135,7 +135,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		if (fragments == null) {
 			initialize();
 		}
-		@NonNull InheritanceFragment[] fragments2 = ClassUtil.requireNonNull(fragments);
+		@NonNull FlatFragment[] fragments2 = ClassUtil.requireNonNull(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
 
@@ -158,7 +158,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	@Override
-	public InheritanceFragment getFragment(int fragmentNumber) {
+	public FlatFragment getFragment(int fragmentNumber) {
 		if ((fragments == null) && isOclAny()) {
 			installOclAny();
 		}
@@ -167,8 +167,8 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
-		@NonNull InheritanceFragment[] fragments2 = fragments;
+	public @NonNull FragmentIterable getFragments() {
+		@NonNull FlatFragment[] fragments2 = fragments;
 		if (fragments2 == null) {
 			initialize();
 			fragments2 = fragments;
@@ -197,13 +197,13 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	protected abstract @NonNull Iterable<@NonNull ? extends FlatClass> getInitialSuperInheritances();
 
 	@Override
-	public @NonNull InheritanceFragment getSelfFragment() {
+	public @NonNull FlatFragment getSelfFragment() {
 		if (indexes == null) {
 			initialize();
 		}
-		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
+		@NonNull FlatFragment @Nullable [] fragments2 = fragments;
 		assert fragments2 != null;
-		InheritanceFragment fragment = getFragment(fragments2.length-1);
+		FlatFragment fragment = getFragment(fragments2.length-1);
 		if (fragment == null) {
 			throw new IllegalStateException("No self fragment"); //$NON-NLS-1$
 		}
@@ -297,7 +297,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 					}
 					int jMax = superInheritance.getIndex(i+1);
 					for (; j < jMax; j++) {
-						InheritanceFragment fragment = superInheritance.getFragment(j);
+						FlatFragment fragment = superInheritance.getFragment(j);
 						FlatClass baseInheritance = fragment.getBaseInheritance();
 						if (!some.contains(baseInheritance)) {
 							some.add(baseInheritance);
@@ -314,7 +314,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 				superInheritances += some.size();
 			}
 			assert superDepths > 0;
-			@NonNull InheritanceFragment @NonNull [] fragments2 = fragments = new @NonNull InheritanceFragment[superInheritances+1];	// +1 for OclSelf
+			@NonNull FlatFragment @NonNull [] fragments2 = fragments = new @NonNull FlatFragment[superInheritances+1];	// +1 for OclSelf
 			int @NonNull [] indexes2 = indexes = new int[superDepths+2];		// +1 for OclSelf, +1 for tail pointer
 			int j = 0;
 			indexes2[0] = 0;
@@ -336,7 +336,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	 */
 	protected final void installOclAny() {
 		assert fragments == null;
-		fragments = new @NonNull InheritanceFragment[] { createFragment(this) };
+		fragments = new @NonNull FlatFragment[] { createFragment(this) };
 		indexes = new int[] { 0, 1 };
 	}
 
@@ -377,11 +377,11 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	public void uninstall() {
-		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
+		@NonNull FlatFragment @Nullable [] fragments2 = fragments;
 		boolean isNonNull = fragments2 != null;		// FIXME needed for JDT 4.5, not needed for JDT 4.6M4
 		if (isNonNull && (fragments2 != null)) {
 			//			System.out.println("Uninstall " + this);
-			for (InheritanceFragment fragment : fragments2) {
+			for (FlatFragment fragment : fragments2) {
 				FlatClass baseInheritance = fragment.getBaseInheritance();
 				if (baseInheritance instanceof ReflectiveInheritance) {
 					((ReflectiveInheritance)baseInheritance).removeSubInheritance(this);
