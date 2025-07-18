@@ -1542,7 +1542,7 @@ public abstract class AbstractIdResolver implements IdResolver
 			throw new UnsupportedOperationException();
 		}
 		FlatClass inheritance = standardLibrary.getFlatClass(domainType);
-		Operation memberOperation = inheritance.basicGetOperation(id);
+		Operation memberOperation = inheritance.getOperation(id);
 		if (memberOperation == null) {
 			throw new UnsupportedOperationException();
 		}
