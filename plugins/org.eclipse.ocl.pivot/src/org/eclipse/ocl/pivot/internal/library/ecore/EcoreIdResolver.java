@@ -76,7 +76,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		if (type == null) {
 			EPackage ePackage = eClassifier.getEPackage();
 			assert ePackage != null;
-			ExecutorPackage execPackage = getStandardLibrary().getPackage(ePackage);
+			org.eclipse.ocl.pivot.Package execPackage = getStandardLibrary().getPackage(ePackage);
 			if (execPackage == null) {
 				PackageId packageId = IdManager.getPackageId(ePackage);
 				Element asPackage = packageId.accept(this);

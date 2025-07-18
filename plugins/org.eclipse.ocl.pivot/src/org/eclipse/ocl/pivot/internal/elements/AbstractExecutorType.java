@@ -108,6 +108,14 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class isClass() {
 		throw new UnsupportedOperationException();

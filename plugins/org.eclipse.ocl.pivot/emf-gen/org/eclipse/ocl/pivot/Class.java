@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -333,6 +334,11 @@ extends Type, Namespace, TemplateableElement {
 	 * @since 7.0
 	 */
 	@NonNull TemplateParameters getTemplateParameters();
+
+	/**
+	 * @since 7.0
+	 */
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull[] depthCounts);
 
 	/**
 	 * Return true if this type is a Collection type and has ordered elements.

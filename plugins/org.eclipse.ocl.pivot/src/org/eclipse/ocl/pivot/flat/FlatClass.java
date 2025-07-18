@@ -167,6 +167,11 @@ public interface FlatClass extends Nameable
 	 */
 	@NonNull FragmentIterable getSuperFragments(int depth);
 
+	/**
+	 * Initialize the super-fragment hierarchy from the compile-time analysis.
+	 */
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts);
+
 	boolean isOclAny();
 	boolean isSubFlatClassOf(@NonNull FlatClass that);
 	boolean isSuperFlatClassOf(@NonNull FlatClass that);
