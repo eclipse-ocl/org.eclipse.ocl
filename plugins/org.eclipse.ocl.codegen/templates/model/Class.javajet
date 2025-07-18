@@ -108,7 +108,7 @@ package <%=genPackage.getClassPackageName()%>;
 <%}%>
 public<%if (genClass.isAbstract()) {%> abstract<%}%> class <%=genClass.getClassName()%><%=genClass.getTypeParameters().trim()%><%=genClass.getClassExtends()%><%=genClass.getClassImplements()%>
 <%} else {%>
-public interface <%=genClass.getInterfaceName()%><%=genClass.getTypeParameters().trim()%><%=genClass.getInterfaceExtends()%>
+public interface <%=genClass.getInterfaceName()%><%=genClass.getTypeParameters().trim()%><%=OCLGenModelUtil.filterExtends(genClass.getInterfaceExtends())%>
 <%}%>
 {
 <%if (genModel.hasCopyrightField()) {%>

@@ -878,7 +878,7 @@ public class Class
     stringBuffer.append(TEXT_34);
     stringBuffer.append(genClass.getInterfaceName());
     stringBuffer.append(genClass.getTypeParameters().trim());
-    stringBuffer.append(genClass.getInterfaceExtends());
+    stringBuffer.append(OCLGenModelUtil.filterExtends(genClass.getInterfaceExtends()));
     }
     stringBuffer.append(TEXT_35);
     if (genModel.hasCopyrightField()) {
