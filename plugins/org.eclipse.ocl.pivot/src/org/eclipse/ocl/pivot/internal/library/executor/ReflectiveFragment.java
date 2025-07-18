@@ -60,7 +60,7 @@ public abstract class ReflectiveFragment extends FlatFragment
 			}
 			Operation localOperation = getLocalOperation(apparentOperation);
 			if (localOperation == null) {
-				if (derivedInheritance == baseInheritance) {
+				if (getDerivedFlatClass() == getBaseFlatClass()) {
 					localOperation = apparentOperation;
 				}
 			}
@@ -71,12 +71,12 @@ public abstract class ReflectiveFragment extends FlatFragment
 				Operation bestOverload = null;
 				FlatClass bestInheritance = null;
 				int bestDepth = -1;
-				int minDepth = baseInheritance.getDepth();
-				for (int depth = derivedInheritance.getDepth()-1; depth >= minDepth; depth--) {
-					Iterable<FlatFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
+				int minDepth = getBaseFlatClass().getDepth();
+				for (int depth = getDerivedFlatClass().getDepth()-1; depth >= minDepth; depth--) {
+					Iterable<FlatFragment> derivedSuperFragments = getDerivedFlatClass().getSuperFragments(depth);
 					for (FlatFragment derivedSuperFragment : derivedSuperFragments) {
-						FlatClass superInheritance = derivedSuperFragment.getBaseInheritance();
-						FlatFragment superFragment = superInheritance.getFragment(baseInheritance);
+						FlatClass superInheritance = derivedSuperFragment.getBaseFlatClass();
+						FlatFragment superFragment = superInheritance.getFragment(getBaseFlatClass());
 						if (superFragment != null) {
 							Operation overload = superFragment.getLocalOperation(apparentOperation);
 							if (overload != null) {

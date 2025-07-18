@@ -19,13 +19,22 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
- * An InheritanceFragment identifies the capabilities introduced by a particular inheritance.
+ * A FlatFragment provides the description of the properties and operations defined by some class when accessed by the same
+ * or another class. The descriptions are normally built by direct static construction from auto-generated code, with instnaces defined
+ * in isolation during construction then cross-references defined later by calls to init().
  * @since 7.0
  */
 public /*final*/ class FlatFragment
 {
-	protected final @NonNull FlatClass derivedInheritance;
-	protected final @NonNull FlatClass baseInheritance;
+	/**
+	 * The derived FlatClass to which this FlatFragment contributes features.
+	 */
+	public final @NonNull FlatClass derivedFlatClass;
+
+	/**
+	 * The base FlatClass from which this FlatFragment contributes features.
+	 */
+	public final @NonNull FlatClass baseFlatClass;
 
 	/**
 	 * The operations defined by the baseFlatClass of this fragment. Initially null, non null once initialized.
@@ -39,58 +48,67 @@ public /*final*/ class FlatFragment
 	 */
 	private @NonNull Property @Nullable [] properties = null;
 
-	public FlatFragment(@NonNull FlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
-		this.derivedInheritance = derivedInheritance;
-		this.baseInheritance = baseInheritance;
+	public FlatFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
+		this.derivedFlatClass = derivedFlatClass;
+		this.baseFlatClass = baseFlatClass;
+	}
+
+	public @NonNull Operation @Nullable [] basicGetOperations() {
+		return operations;
+	}
+
+	public @NonNull Property @Nullable [] basicGetProperties() {
+		return properties;
 	}
 
 	/**
 	 * Return the unoverloaded fragment, which is getBaseInheritance().getSelfFragment().
 	 */
 	public final @NonNull FlatFragment getBaseFragment() {
-		return baseInheritance.getSelfFragment();
+		return baseFlatClass.getSelfFragment();
 	}
 
 	/**
-	 * Return the inheritance that introduces the operations and properties in this fragment.
+	 * Return the FlatClass that introduces the operations and properties in this fragment.
 	 */
-	public final @NonNull FlatClass getBaseInheritance() {
-		return baseInheritance;
+	public final @NonNull FlatClass getBaseFlatClass() {
+		return baseFlatClass;
 	}
 
 	/**
-	 * Return the inheritance that overloads the operations and properties in this fragment.
+	 * Return the FlatClass that overloads the operations and properties in this fragment.
 	 */
-	public final @NonNull FlatClass getDerivedInheritance() {
-		return derivedInheritance;
+	public final @NonNull FlatClass getDerivedFlatClass() {
+		return derivedFlatClass;
 	}
 
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.
 	 */
+	@Deprecated
 	public @NonNull Operation getActualOperation(@NonNull Operation apparentOperation) {
 		Operation localOperation = getLocalOperation(apparentOperation);
 		if (localOperation == null) {
-			if (derivedInheritance == baseInheritance) {
+			if (derivedFlatClass == baseFlatClass) {
 				localOperation = apparentOperation;
 			}
 		}
 		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
 			Operation bestOverload = null;
-			FlatClass bestInheritance = null;
+			FlatClass bestFlatClass = null;
 			int bestDepth = -1;
-			int minDepth = baseInheritance.getDepth();
-			for (int depth = derivedInheritance.getDepth()-1; depth >= minDepth; depth--) {
-				Iterable<FlatFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
+			int minDepth = baseFlatClass.getDepth();
+			for (int depth = derivedFlatClass.getDepth()-1; depth >= minDepth; depth--) {
+				Iterable<FlatFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
 				for (FlatFragment derivedSuperFragment : derivedSuperFragments) {
-					FlatClass superInheritance = derivedSuperFragment.getBaseInheritance();
-					FlatFragment superFragment = superInheritance.getFragment(baseInheritance);
+					FlatClass superFlatClass = derivedSuperFragment.getBaseFlatClass();
+					FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass);
 					if (superFragment != null) {
 						Operation overload = superFragment.getLocalOperation(apparentOperation);
 						if (overload != null) {
-							if (bestInheritance == null) {				// First candidate
+							if (bestFlatClass == null) {				// First candidate
 								bestDepth = depth;
-								bestInheritance = superInheritance;
+								bestFlatClass = superFlatClass;
 								bestOverload = overload;
 							}
 							else if (depth == bestDepth) {				// Sibling candidate
@@ -98,7 +116,7 @@ public /*final*/ class FlatFragment
 								depth = -1;
 								break;
 							}
-							else if (!bestInheritance.isSubFlatClassOf(superInheritance)) {	// Non-occluded child candidate
+							else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
 								bestOverload = null;
 								depth = -1;
 								break;
@@ -110,11 +128,11 @@ public /*final*/ class FlatFragment
 			if (bestOverload != null) {
 				localOperation = bestOverload;
 			}
-			else if (bestInheritance == null) {
+			else if (bestFlatClass == null) {
 				localOperation = apparentOperation;		// FIXME Missing operation
 			}
 			else {
-				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedInheritance);
+				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedFlatClass);
 			}
 		}
 		//		if (localOperation == null) {
@@ -160,6 +178,23 @@ public /*final*/ class FlatFragment
 		throw new UnsupportedOperationException();
 	}
 
+	public @NonNull Operation @NonNull [] getOperations() {
+		@NonNull Operation [] operations2 = this.operations;
+		if (operations2 == null) {
+			this.operations = operations2 = ((AbstractFlatClass)baseFlatClass).computeDirectOperations();
+		}
+		return operations2;
+	}
+
+	public @NonNull Property @NonNull [] getProperties() {
+		@NonNull Property [] properties2 = this.properties;
+		if (properties2 == null) {
+			this.properties = properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
+		//	System.out.println("getProperties " + this + " " + NameUtil.debugSimpleName(properties2) + " " + properties2.length);
+		}
+		return properties2;
+	}
+
 	public void initOperations(@NonNull Operation @NonNull [] operations) {
 		assert this.operations == null;
 		this.operations = operations;
@@ -174,9 +209,9 @@ public /*final*/ class FlatFragment
 	 * Return true if anOperation overloads an existing operation.
 	 *
 	protected boolean isOverload(DomainOperation anOperation) {
-		int depth = derivedInheritance.getDepth();
+		int depth = derivedFlatClass.getDepth();
 		for (int i = 0; i <= depth-1; i++) {
-			for (DomainInheritance superInheritance : derivedInheritance.getSuperInheritances(depth)) {
+			for (DomainInheritance superInheritance : derivedFlatClass.getSuperInheritances(depth)) {
 				DomainFragment baseFragment = superInheritance.getSelfFragment();
 				for (DomainOperation baseOperation : baseFragment.getOperations()) {
 					if (isOverload(anOperation, baseOperation)) {
@@ -227,6 +262,6 @@ public /*final*/ class FlatFragment
 
 	@Override
 	public @NonNull String toString() {
-		return derivedInheritance.toString() + "__" + baseInheritance.toString(); //$NON-NLS-1$
+		return derivedFlatClass.toString() + "__" + baseFlatClass.toString(); //$NON-NLS-1$
 	}
 }

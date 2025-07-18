@@ -19,6 +19,8 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
+import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -159,9 +161,24 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		AbstractFlatClass completeFlatClass = name2flatClass.remove(partialClass.getName());
 		//		System.out.println("PartialPackage.didRemoveClass " + partialClass);
 		getCompletePackage().didRemoveClass(partialClass);
-		if (completeFlatClass != null) {
-			completeFlatClass.uninstall();
+//XXX		if (completeFlatClass != null) {
+//XXX			completeFlatClass.uninstall();
+//XXX		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass) {
+		String name = completeClass.getName();
+		AbstractFlatClass completeFlatClass = name2flatClass.get(name);
+		if (completeFlatClass == null) {
+			CompleteFlatModel flatModel = (CompleteFlatModel) getCompleteModel().getStandardLibrary().getFlatModel();
+			completeFlatClass = new CompleteFlatClass(flatModel , completeClass);
+			//			System.out.println("PartialPackage.add " + completeClass);
+			name2flatClass.put(name, completeFlatClass);
 		}
+		return completeFlatClass;
 	}
 
 	public @NonNull CompleteModelInternal getCompleteModel() {
@@ -173,21 +190,6 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		return (CompletePackageImpl) owner;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass) {
-		String name = completeClass.getName();
-		assert name != null;
-		AbstractFlatClass completeFlatClass = name2flatClass.get(name);
-		if (completeFlatClass == null) {
-			completeFlatClass = new AbstractFlatClass(completeClass);
-			//			System.out.println("PartialPackage.add " + completeClass);
-			name2flatClass.put(name, completeFlatClass);
-		}
-		return completeFlatClass;
-	}
-
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.Package> getNestedPartialPackages() {
 		PartialPackages partialPackages = getCompletePackage().getPartialPackages();
 		Iterable<Iterable<org.eclipse.ocl.pivot.Package>> roots_packages = Iterables.transform(partialPackages, package2PackageOwnedPackages);
@@ -197,9 +199,9 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 
 	public void uninstalled(@NonNull CompleteClassInternal completeClass) {
 		//		System.out.println("PartialPackages.uninstalled " + completeClass + " " + NameUtil.debugFullName(completeClass));
-		AbstractFlatClass inheritance = name2flatClass.remove(completeClass.getName());
-		if (inheritance != null) {
-			inheritance.uninstall();
-		}
+		AbstractFlatClass flatClass = name2flatClass.remove(completeClass.getName());
+//XXX		if (flatClass != null) {
+//XXX			flatClass.uninstall();
+//XXX		}
 	}
 }

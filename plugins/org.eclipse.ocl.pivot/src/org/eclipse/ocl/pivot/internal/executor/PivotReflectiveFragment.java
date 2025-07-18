@@ -29,7 +29,7 @@ public class PivotReflectiveFragment extends ReflectiveFragment
 
 	@Override
 	public @Nullable Operation getLocalOperation(@NonNull Operation baseOperation) {
-		AbstractFlatClass completeInheritance = (AbstractFlatClass) derivedInheritance;
+		AbstractFlatClass completeInheritance = (AbstractFlatClass) getDerivedFlatClass();
 		String baseOperationName = baseOperation.getName();
 		ParametersId baseParametersId = baseOperation.getParametersId();
 		Operation bestOperation = null;
