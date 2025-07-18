@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -141,26 +142,29 @@ public interface FlatClass extends Nameable
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters including this one.
 	 */
 	@NonNull FragmentIterable getAllSuperFragments();
-
+	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass inheritance);
+
+	@Deprecated // XXX eliminate unsound inheritance
+	@NonNull CompleteClass getCompleteClass();
 
 	/**
 	 * Return the inheritance depth of the target type: OclAny is at depth 0.
 	 */
 	int getDepth();
-
-	/**
-	 * Return the InheritanceFragment of this inheritance whose baseInheritance is thatInheritance. Return null if no InheritanceFragment corresponds.
-	 */
-	@Nullable FlatFragment getFragment(@NonNull FlatClass thatInheritance);
-	@NonNull FragmentIterable getFragments();
-	/*@Nullable*/ FlatFragment getFragment(int fragmentNumber);
+	@Deprecated
+	@Nullable FlatFragment getFragment(@NonNull /*Abstract*/FlatClass that);
+	@Deprecated
+	@NonNull FlatFragment getFragment(int fragmentNumber);
+	@Deprecated
 	int getIndex(int fragmentNumber);
+	@Deprecated
 	int getIndexes();
 
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
 	@NonNull FlatFragment getSelfFragment();
+	@NonNull StandardLibrary getStandardLibrary();
 
 	/**
 	 * Return an Iterable of all the super-inheritances at a specified depth, between 0 and getDepth() inclusive.
@@ -172,10 +176,14 @@ public interface FlatClass extends Nameable
 	 */
 	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts);
 
+	boolean isAbstract();
+	boolean isInvalid();
+	boolean isOrdered();
 	boolean isOclAny();
 	boolean isSubFlatClassOf(@NonNull FlatClass that);
 	boolean isSuperFlatClassOf(@NonNull FlatClass that);
 	boolean isUndefined();
+	boolean isUnique();
 
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
 	/**
@@ -183,5 +191,10 @@ public interface FlatClass extends Nameable
 	 * by the given Standard Library.
 	 */
 	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
-	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, FlatClass... argumentTypes);
+	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);
+
+	/**
+	 * Reset the sub-fragment hierarchy following a class mutation.
+	 */
+	void resetFragments();
 }

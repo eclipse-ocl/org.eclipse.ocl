@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.flat;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -25,14 +25,14 @@ public class CompleteFlatModel extends AbstractFlatModel
 {
 	protected final @NonNull CompleteModel completeModel;
 
-	public CompleteFlatModel(@NonNull StandardLibrary standardLibrary, @NonNull CompleteModel completeModel) {
+	public CompleteFlatModel(@NonNull CompleteStandardLibrary standardLibrary, @NonNull CompleteModel completeModel) {
 		super(standardLibrary, NameUtil.getSafeName(completeModel));
 		this.completeModel = completeModel;
 	}
 
-//	public @NonNull CompleteFlatClass createFlatClass(@NonNull CompleteClass completeClass) {
-//		return new CompleteFlatClass(this, completeClass);
-//	}
+	public @NonNull CompleteFlatClass createFlatClass(@NonNull CompleteClass completeClass) {
+		return new CompleteFlatClass(this, completeClass);
+	}
 
 	@Override
 	public @NonNull CompleteModel getCompleteModel() {

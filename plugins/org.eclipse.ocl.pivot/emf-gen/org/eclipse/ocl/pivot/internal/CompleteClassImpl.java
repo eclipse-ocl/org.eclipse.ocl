@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialClasses;
@@ -361,6 +362,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 */
 	protected final @NonNull PartialClasses partialClasses;
 
+	private @Nullable ClassListeners<ClassListeners.@NonNull IClassListener> classListeners = null;
+
 	protected CompleteClassImpl()
 	{
 		super();
@@ -375,6 +378,17 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		partialClasses.add(partialClass);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.@NonNull IClassListener> classListeners2 = classListeners;
+		if (classListeners2 == null) {
+			classListeners2 = classListeners = new ClassListeners<>();
+		}
+		classListeners2.addListener(classListener);
 	}
 
 	@Override
@@ -458,7 +472,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public final @NonNull AbstractFlatClass getFlatClass() {
-		return partialClasses.getCompleteInheritance();
+		return partialClasses.getFlatClass();
 	}
 
 	public @NonNull Iterable<Operation> getMemberOperations() {
@@ -527,7 +541,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
-				return input.getBaseInheritance().getPivotClass();
+				return input.getBaseFlatClass().getPivotClass();
 			}
 		});
 	}
@@ -539,7 +553,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		{
 			@Override
 			public @NonNull CompleteClass apply(@NonNull FlatFragment input) {
-				return ((AbstractFlatClass)input.getBaseInheritance()).getCompleteClass();		// FIXME cast
+				return ((AbstractFlatClass)input.getBaseFlatClass()).getCompleteClass();		// FIXME cast
 			}
 		});
 	}
@@ -596,6 +610,16 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public boolean isElementType(@NonNull StandardLibrary standardLibrary, @NonNull Type elementType, @NonNull VoidType oclVoidType) {
 		return conformsTo(standardLibrary, elementType) && !conformsTo(standardLibrary, oclVoidType);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.@NonNull IClassListener> classListeners2 = classListeners;
+		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
+			classListeners = null;
+		}
 	}
 
 	@Override
