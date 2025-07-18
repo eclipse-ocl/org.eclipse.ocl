@@ -144,6 +144,20 @@ public abstract class OCLGenModelUtil
 		return resolveImports(genModel, s.toString());
 	}
 
+	/**
+	 * OclAny has java.lang.Object and so when appended as an auxiliary interface gives a redundant and bad inheritance.
+	 * This filter just trims the spurious inheritance.
+	 */
+	public static String filterExtends(String extendsText)
+	{
+		if (extendsText.endsWith(", Object")) {
+			return extendsText.substring(0, extendsText.length()-8);
+		}
+		else {
+			return extendsText;
+		}
+	}
+
 	public static String getFeatureCountValue(GenClass genClass)
 	{
 		GenClass base = genClass.getBaseGenClass();
