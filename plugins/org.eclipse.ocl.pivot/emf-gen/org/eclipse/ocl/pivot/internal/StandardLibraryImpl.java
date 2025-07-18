@@ -563,6 +563,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return leftIsRequired && rightIsRequired;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FlatModel getFlatModel() {
 		FlatModel flatModel2 = flatModel;
