@@ -206,7 +206,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			String propertyName = pivotProperty.getName();
 			PartialProperties partials = name2partialProperties2.get(propertyName);
 			if (partials == null) {
-				partials = new PartialProperties(getEnvironmentFactory());
+				partials = new PartialProperties(getStandardLibrary());
 				name2partialProperties2.put(propertyName, partials);
 			}
 			partials.didAddProperty(pivotProperty);
@@ -215,9 +215,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 
 	@Override
 	public void didAddSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		if (completeInheritance != null) {
-			completeInheritance.uninstall();
-		}
+//XXX		if (completeInheritance != null) {
+//XXX			((AbstractInheritance)completeInheritance).uninstall();
+//XXX		}
 	}
 
 	@Override
@@ -250,9 +250,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 
 	@Override
 	public void didRemoveSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		if (completeInheritance != null) {
-			completeInheritance.uninstall();
-		}
+//XXX		if (completeInheritance != null) {
+//XXX			completeInheritance.uninstall();
+//XXX		}
 	}
 
 	public void dispose() {
@@ -317,7 +317,18 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		return (CompleteClassImpl) owner;
 	}
 
-	public final @NonNull AbstractFlatClass getCompleteInheritance() {
+	public @NonNull CompleteModelInternal getCompleteModel() {
+		return getCompleteClass().getCompleteModel();
+	}
+
+	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return getCompleteClass().getEnvironmentFactory();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public final @NonNull AbstractFlatClass getFlatClass() {
 		AbstractFlatClass completeInheritance2 = completeInheritance;
 		if (completeInheritance2 == null) {
 			CompleteClassInternal completeClass = getCompleteClass();
@@ -326,14 +337,6 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			completeInheritance = completeInheritance2;
 		}
 		return completeInheritance2;
-	}
-
-	public @NonNull CompleteModelInternal getCompleteModel() {
-		return getCompleteClass().getCompleteModel();
-	}
-
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return getCompleteClass().getEnvironmentFactory();
 	}
 
 	public @NonNull Iterable<@NonNull ? extends FlatClass> getInitialSuperInheritances() {
@@ -556,7 +559,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		{
 			@Override
 			public @NonNull CompleteClass apply(FlatFragment input) {
-				return ((AbstractFlatClass)input.getBaseInheritance()).getCompleteClass();
+				return ((AbstractFlatClass)input.getBaseFlatClass()).getCompleteClass();
 			}
 		});
 	}
@@ -739,7 +742,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		Map<String, DomainInheritance> name2superclasses2 = name2superclasses = new HashMap<>();
 		name2qualifiedNames = null;
 		for (DomainFragment fragment : ((AbstractTypeServer)getTypeServer()).getFragments()) {
-			DomainInheritance baseInheritance = fragment.getBaseInheritance();
+			DomainInheritance baseInheritance = fragment.getBaseFlatClass();
 			String name = baseInheritance.getName();
 			DomainInheritance oldInheritance = name2superclasses2.put(name, baseInheritance);
 			if (oldInheritance != null) {
@@ -754,7 +757,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 /*	protected Map<String, List<String>> initSuperClassesWithAmbiguousNames(Map<String, DomainInheritance> name2superclasses2, Map<String, List<String>> name2qualifiedNames2) {
 		int counter = 0;
 		for (DomainFragment fragment : getCompleteClass().getCompleteInheritance().getFragments()) {
-			DomainInheritance baseInheritance = fragment.getBaseInheritance();
+			DomainInheritance baseInheritance = fragment.getBaseFlatClass();
 			String name = baseInheritance.getName();
 			String qualifiedName = Integer.toString(counter++);
 			name2superclasses2.put(qualifiedName, baseInheritance);

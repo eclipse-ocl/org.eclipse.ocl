@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.elements;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -58,23 +59,8 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+//	@Override
 	public @NonNull FragmentIterable getFragments() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public FlatFragment getFragment(int fragmentNumber) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int getIndex(int fragmentNumber) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int getIndexes() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -148,6 +134,85 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 
 	@Override
 	public Type specializeIn(CallExp expr, Type selfType) {
+		throw new UnsupportedOperationException();
+	}
+
+
+
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull CompleteClass getCompleteClass() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable FlatFragment getFragment(@NonNull FlatClass that) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull FlatFragment getFragment(int fragmentNumber) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int getIndex(int fragmentNumber) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int getIndexes() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull StandardLibrary getStandardLibrary() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public boolean isAbstract() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public boolean isOrdered() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public boolean isUnique() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void resetFragments() {
 		throw new UnsupportedOperationException();
 	}
 }

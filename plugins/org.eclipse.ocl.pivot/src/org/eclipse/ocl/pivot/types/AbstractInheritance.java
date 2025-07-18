@@ -69,9 +69,9 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			FlatClass commonInheritance = null;
 			int commonInheritances = 0;
 			for (int i = getIndex(staticDepth); i < iMax; i++) {
-				FlatClass thisBaseInheritance = getFragment(i).getBaseInheritance();
+				FlatClass thisBaseInheritance = getFragment(i).getBaseFlatClass();
 				for (int j = thatInheritance.getIndex(staticDepth); j < jMax; j++) {
-					FlatClass thatBaseInheritance = thatInheritance.getFragment(j).getBaseInheritance();
+					FlatClass thatBaseInheritance = thatInheritance.getFragment(j).getBaseFlatClass();
 					if (thisBaseInheritance == thatBaseInheritance) {
 						commonInheritances++;
 						commonInheritance = thisBaseInheritance;
@@ -87,24 +87,15 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 				return commonInheritance;
 			}
 		}
-		return getFragment(0).getBaseInheritance();	// Always OclAny at index 0
+		return getFragment(0).getBaseFlatClass();	// Always OclAny at index 0
 	}
 
 	@Override
-	public @Nullable FlatFragment getFragment(@NonNull FlatClass thatInheritance) {
-		int staticDepth = thatInheritance.getDepth();
-		if (staticDepth <= getDepth()) {
-			int iMax = getIndex(staticDepth+1);
-			for (int i = getIndex(staticDepth); i < iMax; i++) {
-				FlatFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == thatInheritance) {
-					return fragment;
-				}
-			}
-		}
-		return null;
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
+		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public final boolean isInvalid() {
 		return (flags & OCL_INVALID) != 0;
 	}
@@ -152,7 +143,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {
 				FlatFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == apparentInheritance) {
+				if (fragment.getBaseFlatClass() == apparentInheritance) {
 					Operation actualOperation = fragment.getActualOperation(apparentOperation);
 					return actualOperation;
 				}
@@ -170,7 +161,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {
 				FlatFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == apparentInheritance) {
+				if (fragment.getBaseFlatClass() == apparentInheritance) {
 					return fragment.getImplementation(apparentOperation);
 				}
 			}

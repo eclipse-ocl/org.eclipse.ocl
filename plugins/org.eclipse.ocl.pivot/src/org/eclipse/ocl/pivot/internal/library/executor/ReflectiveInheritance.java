@@ -169,7 +169,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	 * @since 7.0
 	 */
 	@Override
-	public FlatFragment getFragment(int fragmentNumber) {
+	public @NonNull FlatFragment getFragment(int fragmentNumber) {
 		if ((fragments == null) && isOclAny()) {
 			installOclAny();
 		}
@@ -318,7 +318,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 					int jMax = superInheritance.getIndex(i+1);
 					for (; j < jMax; j++) {
 						FlatFragment fragment = superInheritance.getFragment(j);
-						FlatClass baseInheritance = fragment.getBaseInheritance();
+						FlatClass baseInheritance = fragment.getBaseFlatClass();
 						if (!some.contains(baseInheritance)) {
 							some.add(baseInheritance);
 							if (baseInheritance instanceof ReflectiveInheritance) {
@@ -402,7 +402,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		if (isNonNull && (fragments2 != null)) {
 			//			System.out.println("Uninstall " + this);
 			for (FlatFragment fragment : fragments2) {
-				FlatClass baseInheritance = fragment.getBaseInheritance();
+				FlatClass baseInheritance = fragment.getBaseFlatClass();
 				if (baseInheritance instanceof ReflectiveInheritance) {
 					((ReflectiveInheritance)baseInheritance).removeSubInheritance(this);
 				}
