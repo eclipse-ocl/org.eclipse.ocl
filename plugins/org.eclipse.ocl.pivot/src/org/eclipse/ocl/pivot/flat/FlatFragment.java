@@ -22,10 +22,22 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * An InheritanceFragment identifies the capabilities introduced by a particular inheritance.
  * @since 7.0
  */
-public abstract class FlatFragment
+public /*final*/ class FlatFragment
 {
 	protected final @NonNull FlatClass derivedInheritance;
 	protected final @NonNull FlatClass baseInheritance;
+
+	/**
+	 * The operations defined by the baseFlatClass of this fragment. Initially null, non null once initialized.
+	 * FIXME legacy static initialization has some super operations too.
+	 */
+	private @NonNull Operation @Nullable [] operations = null;
+
+	/**
+	 * The properties defined by the baseFlatClass of this fragment. Initially null, non null once initialized.
+	 * FIXME legacy static initialization has some super properties too.
+	 */
+	private @NonNull Property @Nullable [] properties = null;
 
 	public FlatFragment(@NonNull FlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
 		this.derivedInheritance = derivedInheritance;
@@ -119,22 +131,45 @@ public abstract class FlatFragment
 	 * If there is no local overload, returns an inherited operation if unambiguous or OclAnyUnsupportedOperation.AMBIGUOUS
 	 * if ambiguous.
 	 */
-	public abstract @NonNull LibraryFeature getImplementation(@NonNull Operation apparentOperation);
+	@Deprecated
+	public @NonNull LibraryFeature getImplementation(@NonNull Operation apparentOperation) {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Return the operation within this fragment that has the same signature as apparentOperation. Returns null if none.
 	 */
-	public abstract @Nullable Operation getLocalOperation(@NonNull Operation apparentOperation);
+	@Deprecated
+	public @Nullable Operation getLocalOperation(@NonNull Operation apparentOperation) {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Return the operations within this fragment in operation index order.
 	 */
-	public abstract @NonNull Iterable<@NonNull ? extends Operation> getLocalOperations();
+	@Deprecated
+	public @NonNull Iterable<@NonNull ? extends Operation> getLocalOperations() {
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Return the properties within this fragment in property index order.
 	 */
-	public abstract @NonNull Iterable<@NonNull ? extends Property> getLocalProperties();
+	@Deprecated
+	public  @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
+		throw new UnsupportedOperationException();
+	}
+
+	public void initOperations(@NonNull Operation @NonNull [] operations) {
+		assert this.operations == null;
+		this.operations = operations;
+	}
+
+	public void initProperties(@NonNull Property @NonNull [] properties) {
+		assert this.properties == null;
+		this.properties = properties;
+	}
+
 	/**
 	 * Return true if anOperation overloads an existing operation.
 	 *

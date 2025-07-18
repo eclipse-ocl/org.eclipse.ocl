@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -1134,6 +1135,7 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	private TypeId typeId = null;
+	private @Nullable FlatClass flatClass = null;
 	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
 	@Override
@@ -1147,6 +1149,13 @@ implements org.eclipse.ocl.pivot.Class {
 			classListeners2 = classListeners = new ClassListeners<ClassListeners.IClassListener>();
 		}
 		classListeners2.addListener(classListener);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable FlatClass basicGetFlatClass() {
+		return flatClass;
 	}
 
 	public @NonNull TypeId computeId() {
@@ -1194,6 +1203,14 @@ implements org.eclipse.ocl.pivot.Class {
 			return eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
 		}
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull FlatClass getFlatClass() {
+		assert flatClass != null;
+		return flatClass;
 	}
 
 	/**
@@ -1409,6 +1426,11 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	@Override
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
+		getFlatClass().initFragments(fragments, depthCounts);;
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class isClass() {
 		return this;
 	}
@@ -1448,6 +1470,14 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public void setFlatClass(@NonNull FlatClass flatClass) {
+		assert this.flatClass == null;
+		this.flatClass = flatClass;
+	}
+
+	/**
 	 * @since 1.22
 	 */
 	@Override
@@ -1461,6 +1491,14 @@ implements org.eclipse.ocl.pivot.Class {
 		if ((owningPackage instanceof PackageImpl) && (newName != null) && !newName.equals(oldName)) {
 			((PackageImpl)owningPackage).didAddClass(this);
 		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void setTypeId(@NonNull TypeId typeId) {
+		assert this.typeId == null;
+		this.typeId = typeId;
 	}
 
 	@Override

@@ -64,10 +64,10 @@ public class EcoreExecutorPackage extends ExecutorPackage
 			synchronized (this) {
 				packages2 = packages;
 				if (packages2 == null) {
-					packages2 = packages = new ArrayList<org.eclipse.ocl.pivot.Package>();
+					packages2 = packages = new ArrayList<>();
 					for (EPackage eSubPackage : ePackage.getESubpackages()) {
 						assert eSubPackage != null;
-						EcoreExecutorPackage subPackage = ((PartialStandardLibraryImpl)standardLibrary).getPackage(eSubPackage);
+						org.eclipse.ocl.pivot.Package subPackage = ((PartialStandardLibraryImpl)standardLibrary).getPackage(eSubPackage);
 						if (subPackage != null) {
 							packages2.add(subPackage);
 						}

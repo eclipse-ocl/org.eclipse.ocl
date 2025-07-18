@@ -19,7 +19,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -28,10 +33,14 @@ import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -39,6 +48,8 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -46,12 +57,25 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ClassImpl;
+import org.eclipse.ocl.pivot.internal.EnumerationImpl;
+import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
+import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
+import org.eclipse.ocl.pivot.internal.OperationImpl;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.ParameterImpl;
+import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorBagType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorOrderedSetType;
@@ -65,6 +89,8 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -74,7 +100,9 @@ import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -202,15 +230,15 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 */
 	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
-	private @NonNull Map<@NonNull String, @NonNull WeakReference<@NonNull EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();		// Keys are interned
+	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned
 	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull ExecutorReflectivePackage>> asPackageMap = null;
-	private /*@LazyNonNull*/ Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions = null;
+	private /*@LazyNonNull*/ Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
 	private final boolean mutable;			//XXX split into two classes
 
 	protected PartialStandardLibraryImpl(EcoreExecutorPackage... execPackages) {
-		OCLstdlibTables.PACKAGE.getClass();
+	//	OCLstdlibTables.PACKAGE.getClass();
 		this.mutable = false;
 		for (EcoreExecutorPackage execPackage : execPackages) {
 			assert execPackage != null;
@@ -221,16 +249,16 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	protected PartialStandardLibraryImpl(@NonNull PartialStandardLibraryImpl immutableStandardLibrary) {
 		assert !immutableStandardLibrary.mutable;
 		this.mutable = true;
-		for (WeakReference<@NonNull EcoreExecutorPackage> execPackageRef : immutableStandardLibrary.ePackageMap.values()) {
+		for (WeakReference<org.eclipse.ocl.pivot.@NonNull Package> execPackageRef : immutableStandardLibrary.ePackageMap.values()) {
 			assert execPackageRef != null;
-			EcoreExecutorPackage execPackage = execPackageRef.get();
+			org.eclipse.ocl.pivot.Package execPackage = execPackageRef.get();
 			if (execPackage != null) {
 				addPackage(execPackage, null);
 			}
 		}
-		for (Map.Entry<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> entry : immutableStandardLibrary.extensions.entrySet()) {
-			EcoreExecutorPackage basePackage = entry.getKey();
-			for (@NonNull EcoreExecutorPackage extensionPackage : entry.getValue()) {
+		for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> entry : immutableStandardLibrary.extensions.entrySet()) {
+			org.eclipse.ocl.pivot.@NonNull Package basePackage = entry.getKey();
+			for (org.eclipse.ocl.pivot.@NonNull Package extensionPackage : entry.getValue()) {
 				addExtension(basePackage, extensionPackage);
 			}
 		}
@@ -241,12 +269,15 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 //		throw new UnsupportedOperationException();
 //	}
 
-	public void addExtension(@NonNull EcoreExecutorPackage basePackage, @NonNull EcoreExecutorPackage extensionPackage) {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+	/**
+	 * @since 7.0
+	 */
+	public void addExtension(org.eclipse.ocl.pivot.@NonNull Package basePackage, org.eclipse.ocl.pivot.@NonNull Package extensionPackage) {
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
 			extensions = extensions2 = new HashMap<>();
 		}
-		List<@NonNull EcoreExecutorPackage> list = extensions2.get(basePackage);
+		List<org.eclipse.ocl.pivot.@NonNull Package> list = extensions2.get(basePackage);
 		if (list == null) {
 			list = new ArrayList<>();
 			extensions2.put(basePackage, list);
@@ -254,12 +285,15 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		list.add(extensionPackage);
 	}
 
-	public synchronized void addPackage(@NonNull EcoreExecutorPackage execPackage, @Nullable EcoreExecutorPackage extendedPackage) {
+	/**
+	 * @since 7.0
+	 */
+	public synchronized void addPackage(org.eclipse.ocl.pivot.@NonNull Package execPackage, org.eclipse.ocl.pivot.@Nullable Package extendedPackage) {
 		String uri = execPackage.getURI();
 		assert uri != null;
 		String internedURI = uri.intern();
 		@SuppressWarnings("unused")
-		WeakReference<@NonNull EcoreExecutorPackage> oldExecPackage = ePackageMap.put(internedURI, new WeakReference<>(execPackage));
+		WeakReference<org.eclipse.ocl.pivot.@NonNull Package> oldExecPackage = ePackageMap.put(internedURI, new WeakReference<>(execPackage));
 		//		if ((oldExecPackage != null) && (oldExecPackage != execPackage)) {
 		//			Iterable<ExecutorType> newTypes = execPackage.getOwnedType();
 		//			for (DomainType oldType : oldExecPackage.getOwnedType()) {
@@ -278,10 +312,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className) {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 != null) {
-			for (@NonNull List<@NonNull EcoreExecutorPackage> packages : extensions2.values()) {
-				for (@NonNull EcoreExecutorPackage extensionPackage : packages) {
+			for (@NonNull List<org.eclipse.ocl.pivot.@NonNull Package> packages : extensions2.values()) {
+				for (org.eclipse.ocl.pivot.@NonNull Package extensionPackage : packages) {
 					org.eclipse.ocl.pivot.Class executorType = extensionPackage.getOwnedClass(className);
 					if (executorType != null) {
 						return executorType;
@@ -292,14 +326,56 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
+		assert eMetaClass != null;
+		assert eClassifier != null;
+		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.create(eMetaClass);
+		initClass(asClass, eClassifier, typeId, flags, typeParameters);
+		return asClass;
+	}
+
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
 		return new PartialCollectionTypeManager(this);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		assert eEnum != null;
+		EnumerationImpl asClass = (EnumerationImpl)PivotFactory.eINSTANCE.createEnumeration();
+		initClass(asClass, eEnum, null, 0);
+		return asClass;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull EnumerationLiteral createEnumerationLiteral(/*@NonNull*/ EEnumLiteral eEnumLiteral, @NonNull Enumeration asEnumeration, int ordinal) {
+		assert eEnumLiteral != null;
+		EnumerationLiteralImpl asEnumerationLiteral = (EnumerationLiteralImpl)PivotFactory.eINSTANCE.createEnumerationLiteral();
+		asEnumerationLiteral.setName(eEnumLiteral.getName());
+		asEnumerationLiteral.setESObject(eEnumLiteral);
+	//	asEnumerationLiteral.setOrdinal(ordinal);
+	//	asEnumeration.getOwnedLiterals().add(asEnumerationLiteral);
+		return asEnumerationLiteral;
+	}
+
 	@Override
 	protected @NonNull EcoreFlatModel createFlatModel() {
 		return new EcoreFlatModel(this);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull FlatFragment createFragment(org.eclipse.ocl.pivot.@NonNull Class cses, org.eclipse.ocl.pivot.@NonNull Class cses2) {
+		return new FlatFragment(cses.getFlatClass(this), cses2.getFlatClass(this));
 	}
 
 	@Override
@@ -314,6 +390,13 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return new PartialJavaTypeManager(this);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull TypedElement createLambdaParameter(String name, @NonNull Type type, boolean isRequired) {
+		return LambdaTypeManager.createCandidateLambdaParameter(name, type, isRequired);
+	}
+
 	@Override
 	protected @NonNull LambdaTypeManager createLambdaTypeManager() {
 		return new PartialLambdaTypeManager(this);
@@ -324,9 +407,118 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return new PartialMapTypeManager(this);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
+			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
+		asOperation.setName(name);
+	//	asOperation.setESObject(eOperation);
+	//	asOperation.setIndex(index);
+		asOperation.setImplementation(implementation);
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			@NonNull Type parameterType = parameterTypes.get(i);
+			ParameterImpl asParameter = (ParameterImpl)PivotFactory.eINSTANCE.createParameter();
+			asParameter.setName("_" + i);
+			asParameter.setType(parameterType);
+			asOperation.getOwnedParameters().add(asParameter);
+		}
+		if (typeParameters.parametersSize() > 0) {
+			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
+			for (int i = 0; i < typeParameters.parametersSize(); i++) {
+				Type type = typeParameters.get(i);		// XXX
+				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
+				asTemplateParameter.setName("_" + i);
+			//	asTemplateParameter.setType(type);
+			//	asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
+				asTemplateParameters.add(asTemplateParameter);
+			}
+			asOperation.setOwnedSignature(templateSignature);
+		}
+		asClass.getOwnedOperations().add(asOperation);
+		return asOperation;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Property createOppositeProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, /*@NonNull*/ EStructuralFeature eFeature) {
+		assert eFeature != null;
+	//	EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
+	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setName(eFeature.getName());
+		asProperty.setESObject(eFeature);
+	//	asProperty.setIndex(propertyIndex);
+	//	asProperty.setImplementation(implementation);
+		asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable PackageId packageId) {
+		assert ePackage != null;
+		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
+		asPackage.setName(ePackage.getName());
+		asPackage.setNsPrefix(ePackage.getNsPrefix());
+		asPackage.setURI(ePackage.getNsURI());
+		asPackage.setPackageId(packageId != null ? packageId : IdManager.getPackageId(ePackage));
+		asPackage.setESObject(ePackage);
+		return asPackage;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Property createProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, @NonNull LibraryProperty implementation) {
+	//	return new ExecutorPropertyWithImplementation(name, asClass, propertyIndex, implementation);
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setName(name);
+	//	asProperty.setIndex(propertyIndex);
+		asProperty.setImplementation(implementation);
+		asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex) {
+		assert eFeature != null;
+	//	return new EcoreExecutorProperty(eFeature, asClass, propertyIndex);
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setESObject(eFeature);
+		asProperty.setName(eFeature.getName());
+	//	asProperty.setIndex(propertyIndex);
+	//	asProperty.setImplementation(implementation);
+		asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
+	}
+
 	@Override
 	protected @Nullable SpecializedTypeManager createSpecializedTypeManager() {
 		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull TemplateParameter createTemplateParameter(int index, @NonNull String name) {
+	//	ExecutorTypeParameter executorTypeParameter = new ExecutorTypeParameter(index, name);
+		NormalizedTemplateParameterImpl asTemplateParameter = (NormalizedTemplateParameterImpl)PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
+		asTemplateParameter.setName(name);
+	//	asTemplateParameter.setIndex(index);
+//XXX		asTemplateParameter.setTemplateParameterId(IdManager.getTemplateParameterId(index));
+	//	asTemplateParameter.setIndex(index);
+	//	EcoreFlatModel flatModel = getFlatModel();
+	//	FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
+	//	executorTypeParameter.setFlatClass(flatClass);
+		return asTemplateParameter;
 	}
 
 	@Override
@@ -345,17 +537,17 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull BagType getBagType() {
-		return OCLstdlibTables.Types._Bag;
+		return (BagType) OCLstdlibTables.Types._Bag;
 	}
 
 	@Override
 	public @NonNull BooleanType getBooleanType() {
-		return OCLstdlibTables.Types._Boolean;
+		return (BooleanType) OCLstdlibTables.Types._Boolean;
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getClassType() {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
 			throw new IllegalStateException("No extension package registered to define Class type"); //$NON-NLS-1$
 		}
@@ -369,9 +561,19 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		throw new IllegalStateException("No extension package defines Class type"); //$NON-NLS-1$
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull CollectionType getCollectionType() {
-		return OCLstdlibTables.Types._Collection;
+		return (CollectionType) OCLstdlibTables.Types._Collection;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
+		return getCollectionType((CollectionType)genericType, elementType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 
 	@Override
@@ -469,7 +671,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
 			throw new IllegalStateException("No extension package registered to define Enumeration type"); //$NON-NLS-1$
 		}
@@ -484,73 +686,13 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if (asClass instanceof FlatClass) {
-			return (FlatClass) asClass;
-		}
-		/*		if (type instanceof DomainMetaclass) {
-			DomainType instanceType = ClassUtil.nonNullPivot(((DomainMetaclass)type).getInstanceType());
-			org.eclipse.ocl.pivot.Class metaclass = getMetaclass(instanceType);
-			DomainType containerType = metaclass;//.getContainerType();
-			return containerType.getInheritance(this);
-		} */
-		if (asClass instanceof CollectionType) {
-			Type containerType = ((CollectionType)asClass).getContainerType();
-			if (containerType != asClass) {
-				return containerType.getFlatClass(this);
-			}
-		}
-		if (asClass instanceof MapType) {
-			Type containerType = ((MapType)asClass).getContainerType();
-			if (containerType != asClass) {
-				return containerType.getFlatClass(this);
-			}
-		}
-		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull ExecutorReflectivePackage>> asPackageMap2;
-		synchronized (this) {
-			String nsURI = asPackage.getURI();
-			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
-			if (ecoreExecutorPackage != null) {
-				String name = asClass.getName();
-				FlatClass executorType = ecoreExecutorPackage.getOwnedClass(name);
-				if (executorType != null) {
-					return executorType;
-				}
-				Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
-				if (extensions2 != null) {
-					List<@NonNull EcoreExecutorPackage> packages = extensions2.get(ecoreExecutorPackage);
-					if (packages != null) {
-						for (@NonNull EcoreExecutorPackage extensionPackage : packages) {
-							executorType = extensionPackage.getOwnedClass(name);
-							if (executorType != null) {
-								break;
-							}
-						}
-					}
-				}
-				if (executorType != null) {
-					return executorType;
-				}
-			}
-			asPackageMap2 = asPackageMap;
-			if (asPackageMap2 == null) {
-				asPackageMap2 = asPackageMap = new WeakHashMap<>();
-			}
-		}
-		synchronized (asPackageMap2) {
-			ExecutorReflectivePackage executorPackage = weakGet(asPackageMap2, asPackage);
-			if (executorPackage == null) {
-				executorPackage = new ExecutorReflectivePackage(this, asPackage);
-				asPackageMap2.put(asPackage, new WeakReference<>(executorPackage));
-			}
-			return executorPackage.getFlatClass(asClass);
-		}
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return ((ClassImpl)type).getFlatClass();
 	}
 
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
-		return OCLstdlibTables.Types._Integer;
+		return (PrimitiveType) OCLstdlibTables.Types._Integer;
 	}
 
 	@Override
@@ -569,7 +711,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull MapType getMapType() {
-		return OCLstdlibTables.Types._Map;
+		return (MapType) OCLstdlibTables.Types._Map;
+	}
+
+	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
+		return getMapType(keyType, PivotConstants.DEFAULT_IS_NULL_FREE, valueType, PivotConstants.DEFAULT_IS_NULL_FREE);
 	}
 
 /*	@Override
@@ -584,7 +730,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI) {
-		WeakReference<EcoreExecutorPackage> weakReference = ePackageMap.get(nsURI.intern());
+		WeakReference<org.eclipse.ocl.pivot.@NonNull Package> weakReference = ePackageMap.get(nsURI.intern());
 		if (weakReference == null) {
 			return null;
 		}
@@ -601,7 +747,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull AnyType getOclAnyType() {
-		return OCLstdlibTables.Types._OclAny;
+		return (AnyType) OCLstdlibTables.Types._OclAny;
 	}
 
 	@Override
@@ -637,7 +783,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull InvalidType getOclInvalidType() {
-		return OCLstdlibTables.Types._OclInvalid;
+		return (InvalidType) OCLstdlibTables.Types._OclInvalid;
 	}
 
 	@Override
@@ -680,17 +826,17 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull VoidType getOclVoidType() {
-		return OCLstdlibTables.Types._OclVoid;
+		return (VoidType) OCLstdlibTables.Types._OclVoid;
 	}
 
 	@Override
 	public @NonNull CollectionType getOrderedCollectionType() {
-		return OCLstdlibTables.Types._OrderedCollection;
+		return (CollectionType) OCLstdlibTables.Types._OrderedCollection;
 	}
 
 	@Override
 	public @NonNull OrderedSetType getOrderedSetType() {
-		return OCLstdlibTables.Types._OrderedSet;
+		return (OrderedSetType) OCLstdlibTables.Types._OrderedSet;
 	}
 
 	@Override
@@ -699,7 +845,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	public synchronized @Nullable EcoreExecutorPackage getPackage(@NonNull EPackage ePackage) {
+	public synchronized org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EPackage ePackage) {
 		String nsURI = ePackage.getNsURI();
 		return nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
 	}
@@ -711,17 +857,17 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull PrimitiveType getRealType() {
-		return OCLstdlibTables.Types._Real;
+		return (PrimitiveType) OCLstdlibTables.Types._Real;
 	}
 
 	@Override
 	public @NonNull SequenceType getSequenceType() {
-		return OCLstdlibTables.Types._Sequence;
+		return (SequenceType) OCLstdlibTables.Types._Sequence;
 	}
 
 	@Override
 	public @NonNull SetType getSetType() {
-		return OCLstdlibTables.Types._Set;
+		return (SetType) OCLstdlibTables.Types._Set;
 	}
 
 	public StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationKey) {
@@ -739,17 +885,72 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull PrimitiveType getStringType() {
-		return OCLstdlibTables.Types._String;
+		return (PrimitiveType) OCLstdlibTables.Types._String;
 	}
 
 	@Override
 	public @NonNull CollectionType getUniqueCollectionType() {
-		return OCLstdlibTables.Types._UniqueCollection;
+		return (CollectionType) OCLstdlibTables.Types._UniqueCollection;
 	}
 
 	@Override
 	public @NonNull PrimitiveType getUnlimitedNaturalType() {
-		return OCLstdlibTables.Types._UnlimitedNatural;
+		return (PrimitiveType) OCLstdlibTables.Types._UnlimitedNatural;
+	}
+
+	private void initClass(@NonNull ClassImpl asClass, @NonNull EClassifier eClassifier, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable... typeParameters) {
+		asClass.setESObject(eClassifier);
+		asClass.setName(eClassifier.getName());
+		if (typeId != null) {
+			asClass.setTypeId(typeId);
+//XXX			asClass.setNormalizedTypeId(typeId);
+		}
+		asClass.setIsAbstract((flags & FlatClass.ABSTRACT) != 0);
+		initTemplateParameters(asClass, typeParameters);
+		/*Ecore*/FlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel./*Ecore*/getFlatClass(asClass);
+		asClass.setFlatClass(flatClass);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void initLiterals(@NonNull Enumeration asEnumeration, @NonNull EnumerationLiteral @NonNull [] asEnumerationLiterals) {
+		List<EnumerationLiteral> asLiterals = asEnumeration.getOwnedLiterals();
+		for (@NonNull EnumerationLiteral asEnumerationLiteral : asEnumerationLiterals) {
+			asLiterals.add(asEnumerationLiteral);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+		Object eContainer = asPackage.eContainer();
+		assert eContainer == null;
+		Model asModel = PivotFactory.eINSTANCE.createModel();
+		asModel.setExternalURI(asPackage.getURI());
+		asModel.getOwnedPackages().add(asPackage);
+	//	EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
+		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+			ownedClasses.add(asClass);
+		}
+		addPackage(asPackage, null);
+	}
+
+	private <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter @Nullable... templateParameters) {
+		if ((templateParameters != null) && (templateParameters.length > 0)) {
+			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
+			for (@NonNull TemplateParameter templateParameter : templateParameters) {
+				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
+				asTemplateParameter.setName(templateParameter.getName());
+// XXX				asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
+				asTemplateParameters.add(asTemplateParameter);
+			}
+			pivotType.setOwnedSignature(templateSignature);
+		}
 	}
 
 	public boolean isMutable() {
