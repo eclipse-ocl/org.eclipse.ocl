@@ -161,6 +161,7 @@ public interface FlatClass extends Nameable
 	@Deprecated
 	int getIndexes();
 
+	@Nullable Operation getOperation(@NonNull OperationId id);
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
 	@NonNull FlatFragment getSelfFragment();

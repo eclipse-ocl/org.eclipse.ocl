@@ -236,7 +236,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 	}
 
-/*	@Override
+	@Override
 	protected void initOperationsInternal() {
 		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
 			for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
@@ -256,7 +256,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 				}
 			}
 		}
-	} */
+	}
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();

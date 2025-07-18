@@ -136,6 +136,21 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags) + " in " + NameUtil.debugSimpleName(flatModel));
 	}
 
+	protected void addOperation(@NonNull Operation pivotOperation) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 != null) {
+			String operationName = pivotOperation.getName();
+			if (operationName != null) {
+				PartialOperations partialOperations = name2partialOperations2.get(operationName);
+				if (partialOperations == null) {
+					partialOperations = new PartialOperations(getStandardLibrary(), operationName);
+					name2partialOperations2.put(operationName, partialOperations);
+				}
+				partialOperations.didAddOperation(pivotOperation);
+			}
+		}
+	}
+
 	protected void addProperty(@NonNull Property property) {
 		String name = PivotUtil.getName(property);
 		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
@@ -549,6 +564,20 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name;
 	}
 
+	@Override
+	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		String operationName = operationId.getName();
+		PartialOperations partialOperations = name2partialOperations2.get(operationName);
+		if (partialOperations == null) {
+			return null;
+		}
+		return partialOperations.getOperation(operationId.getParametersId(), null);
+	}
+
 //	@Override
 //	public @NonNull List<Property> getOwnedProperties() {
 //		return ClassUtil.requireNonNull(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
@@ -747,6 +776,25 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.indexes = indexes;
 		installClassListeners();
 	}
+
+	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
+//			Set<CompleteClass> allSuperCompleteClasses = new HashSet<CompleteClass>();
+//			allSuperCompleteClasses.add(completeClass);
+//			for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+//				allSuperCompleteClasses.add(superCompleteClass);
+//			}
+			initOperationsInternal();
+		//	for (PartialOperations partialOperations : name2partialOperations2.values()) {
+		//		partialOperations.initMemberOperationsPostProcess();
+		//	}
+		}
+		return name2partialOperations2;
+	}
+
+	protected abstract void initOperationsInternal();
 
 	private synchronized void initProperties() {
 		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;

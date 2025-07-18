@@ -191,7 +191,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			if (operationName != null) {
 				PartialOperations partialOperations = name2partialOperations2.get(operationName);
 				if (partialOperations == null) {
-					partialOperations = new PartialOperations(getCompleteClass(), operationName);
+					partialOperations = new PartialOperations(getStandardLibrary(), operationName);
 					name2partialOperations2.put(operationName, partialOperations);
 				}
 				partialOperations.didAddOperation(pivotOperation);
