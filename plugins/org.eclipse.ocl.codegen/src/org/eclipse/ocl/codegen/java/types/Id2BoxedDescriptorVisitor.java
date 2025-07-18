@@ -147,7 +147,8 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		} */
 		//		if (type instanceof org.eclipse.ocl.pivot.Class) {
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
-		if (asPackage != null) {
+		// XXX FIXME Orphanage evolved to not-contain its Packages but Native Packages are evolving to a Native Model
+		if ((asPackage != null) && ((asPackage.eContainer() instanceof Orphanage) || (asPackage.eContainer() == null))) {
 			Orphanage orphanage = metamodelManager.getEnvironmentFactory().getOrphanage();
 			boolean isOrphan = orphanage.isOrphanPackage(asPackage);
 			if (isOrphan) {

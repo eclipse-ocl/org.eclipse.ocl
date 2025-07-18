@@ -307,8 +307,15 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitTemplateParameterId(@NonNull TemplateParameterId id) {
-		js.appendClassReference(null, IdManager.class);
-		js.append(".getTemplateParameterId(" + id.getIndex() + ")");
+		int index = id.getIndex();
+		if (index <= 2) {
+			js.appendClassReference(null, TypeId.class);
+			js.append(".T_" + (index+1));
+		}
+		else {
+			js.appendClassReference(null, IdManager.class);
+			js.append(".getTemplateParameterId(" + index + ")");
+		}
 		return null;
 	}
 
