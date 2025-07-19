@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -459,6 +460,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return getOclAnyType();
 		}
 		return thisType;				// XXX missing code
+	}
+
+	@Override
+	public @NonNull CompleteModel getCompleteModel() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

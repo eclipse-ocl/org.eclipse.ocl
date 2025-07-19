@@ -185,6 +185,9 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getCommonType(org.eclipse.ocl.pivot.@NonNull Class thisType, org.eclipse.ocl.pivot.@NonNull Class thatType);
 
+	@Deprecated
+	@NonNull CompleteModel getCompleteModel();
+
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
 	 * <tt>Enumeration</tt>.
@@ -194,7 +197,7 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getEnumerationType();
 
 	/**
-	 * Return the Inheritance dispatch table for a given type.
+	 * Return the FlatClass for a given type.
 	 * @since 7.0
 	 */
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
