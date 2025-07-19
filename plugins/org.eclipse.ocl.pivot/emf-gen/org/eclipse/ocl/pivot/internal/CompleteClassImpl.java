@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.PartialClasses;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -355,6 +354,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return eDynamicIsSet(featureID);
 	}
 
+	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
+
 	/**
 	 * The cached value of the '{@link #getPartialClasses() <em>Partial Classes</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -503,8 +504,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @Nullable Operation getOperation(@NonNull Operation operationId) {
-		return getFlatClass().getOperation(operationId);
+	public @Nullable Operation getOperation(@NonNull Operation operation) {
+		return getFlatClass().getOperation(operation);
 	}
 
 	@Override

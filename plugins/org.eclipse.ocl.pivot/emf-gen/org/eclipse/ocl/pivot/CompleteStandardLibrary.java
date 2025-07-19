@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -91,6 +92,9 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 * @since 7.0
 	 */
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+
+	@Override
+	@NonNull CompleteFlatModel getFlatModel();
 
 	/**
 	 * @since 7.0
