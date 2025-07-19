@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -156,7 +157,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return factory;
 	}
 
-	public static String toString(@NonNull Element asElement) {
+	public static @NonNull String toString(@NonNull Element asElement) {
 		if (asElement.eIsProxy()) {
 			return "«" + EcoreUtil.getURI(asElement) +"»";
 		}
@@ -376,10 +377,22 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		}
 		else {
 			EObject container = object.eContainer();
-			if ((container != null) && (!(container instanceof Model) && (container instanceof NamedElement) &&
-					(!(container.eContainer() instanceof Model) || !PivotConstants.OCL_NAME.equals(((NamedElement)container).getName())))) {
-				appendQualifiedName((NamedElement) container);
-				append("::"); //$NON-NLS-1$
+			if (container instanceof org.eclipse.ocl.pivot.Package) {
+				boolean needsQualification = true;
+				EObject eContainer = ((org.eclipse.ocl.pivot.Package)container).getESObject();
+				if (eContainer instanceof EPackage) {
+					for (EAnnotation eAnnotation : ((EPackage)eContainer).getEAnnotations()) {
+						String source = eAnnotation.getSource();
+						if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source) || PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+							needsQualification = false;
+							break;
+						}
+					}
+				}
+				if (needsQualification) {
+					appendQualifiedName((NamedElement) container);
+					append("::"); //$NON-NLS-1$
+				}
 			}
 			appendName(object);
 			if (object instanceof TemplateableElement) {
