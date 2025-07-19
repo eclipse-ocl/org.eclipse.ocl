@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -300,6 +301,11 @@ extends Type, Namespace, TemplateableElement {
 	@NonNull List<Property> getOwnedProperties();
 
 	/**
+	 * @since 7.0
+	 */
+	void addClassListener(@NonNull IClassListener partialFlatClass);
+
+	/**
 	 * Return all instances of this class or an empty set if the number of instances is not finite.
 	 *
 	 * @since 1.18
@@ -356,5 +362,10 @@ extends Type, Namespace, TemplateableElement {
 	 */
 	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
+
+	/**
+	 * @since 7.0
+	 */
+	void removeClassListener(@NonNull IClassListener partialFlatClass);
 
 } // Class

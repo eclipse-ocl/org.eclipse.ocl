@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
- * All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2023 Willink Transformations and others.
+ * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
@@ -152,6 +152,7 @@ public interface FlatClass extends Nameable
 	 * Return the inheritance depth of the target type: OclAny is at depth 0.
 	 */
 	int getDepth();
+	@NonNull FlatModel getFlatModel();
 	@Deprecated
 	@Nullable FlatFragment getFragment(@NonNull /*Abstract*/FlatClass that);
 	@Deprecated

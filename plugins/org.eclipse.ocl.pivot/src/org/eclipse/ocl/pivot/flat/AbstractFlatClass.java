@@ -47,7 +47,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 /**
- * An AbstractTypeServer provides the co-ordinated operation, property and superclass lookup caches for one or more merged types.
+ * AbstractFlatClass provides the basic implementation of a FlatClass with name-to-property and name-to-operation
+ * lookup caches resulting from aggregation of the fragments for each contributing class.
  * @since 7.0
  */
 public abstract class AbstractFlatClass implements FlatClass, IClassListener
@@ -222,7 +223,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 */
 	protected abstract @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses();
 
-	protected /* final */@NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
+	protected /*final*/ @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
 		return new FlatFragment(this, baseFlatClass);
 	}
 
@@ -454,6 +455,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
 		return indexes2.length-2;
+	}
+
+	@Override
+	public @NonNull FlatModel getFlatModel() {
+		return flatModel;
 	}
 
 	/*private*/ @Override

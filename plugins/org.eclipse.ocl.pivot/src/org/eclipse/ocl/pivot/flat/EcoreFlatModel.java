@@ -10,16 +10,29 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * @since 7.0
  */
 public class EcoreFlatModel extends PartialFlatModel
 {
-//	private final @NonNull Map<@NonNull EClassifier, @NonNull EcoreFlatClass> eClassifier2flatClass =  new HashMap<>();
+	private final @NonNull Map<@NonNull EClassifier, @NonNull EcoreFlatClass> eClassifier2flatClass =  new HashMap<>();
 
 	@Deprecated
 	public EcoreFlatModel(@NonNull PartialStandardLibrary standardLibrary) {
@@ -30,7 +43,7 @@ public class EcoreFlatModel extends PartialFlatModel
 		super(model, standardLibrary);
 	}
 
-/*	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
+	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
 		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
 		if (flatClass == null) {
 			EPackage ePackage = eClassifier.getEPackage();
@@ -52,7 +65,7 @@ public class EcoreFlatModel extends PartialFlatModel
 			}
 		}
 		return ClassUtil.requireNonNull(flatClass);
-	} */
+	}
 
 /*	public @NonNull EcoreFlatClass getEcoreFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		EClassifier eClassifier = (EClassifier)asClass.getESObject();
@@ -60,7 +73,7 @@ public class EcoreFlatModel extends PartialFlatModel
 		return getEcoreFlatClass(eClassifier, asClass);
 	} */
 
-/*	private @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	private @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
 		if (flatClass == null) {
 			int flags = 0;
@@ -86,14 +99,14 @@ public class EcoreFlatModel extends PartialFlatModel
 			eClassifier2flatClass.put(eClassifier, flatClass);
 		}
 		return flatClass;
-	} */
+	}
 
-/*	@Override
+	@Override
 	public @NonNull PartialFlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		EObject esObject = PivotUtil.getUnspecializedTemplateableElement(asClass).getESObject();
 		if (esObject instanceof EClassifier) {
 			return getEcoreFlatClass((EClassifier)esObject, asClass);
 		}
 		return super.getFlatClass(asClass);
-	} */
+	}
 }
