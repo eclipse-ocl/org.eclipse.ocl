@@ -2443,15 +2443,8 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 1.3
 	 */
-	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation operation) {
-		return ClassUtil.requireNonNull(operation.getOwningClass());
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
-		return ClassUtil.requireNonNull(property.getOwningClass());
+	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Feature feature) {
+		return ClassUtil.requireNonNull(feature.getOwningClass());
 	}
 
 	/**
