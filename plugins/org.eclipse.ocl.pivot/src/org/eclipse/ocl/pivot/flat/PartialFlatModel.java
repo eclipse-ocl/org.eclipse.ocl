@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Model;
@@ -42,7 +45,7 @@ public class PartialFlatModel extends AbstractFlatModel
 	}
 
 	@Override
-	public @NonNull /*Partial*/FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull PartialFlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		throw new UnsupportedOperationException();			// XXX
 	/*	PartialFlatClass flatClass = asClass2flatClass.get(asClass);		// Used by Ecore specializations
 		if (flatClass == null) {

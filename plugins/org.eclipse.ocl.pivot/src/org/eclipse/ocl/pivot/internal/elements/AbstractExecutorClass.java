@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -259,6 +260,16 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public boolean validateUniqueInvariantName(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void addClassListener(@NonNull IClassListener partialFlatClass) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void removeClassListener(@NonNull IClassListener partialFlatClass) {
 		throw new UnsupportedOperationException();
 	}
 }
