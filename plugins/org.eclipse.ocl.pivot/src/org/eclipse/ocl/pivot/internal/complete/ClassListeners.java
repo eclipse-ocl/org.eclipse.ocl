@@ -22,9 +22,17 @@ public class ClassListeners<L extends ClassListeners.IClassListener> extends Abs
 	public static interface IClassListener extends AbstractListeners.IAbstractListener
 	{
 		void didAddOperation(@NonNull Operation partialOperation);
+		/**
+		 * @since 7.0
+		 */
+		void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass);
 		void didAddProperty(@NonNull Property partialProperty);
 		void didAddSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 		void didRemoveOperation(@NonNull Operation partialOperation);
+		/**
+		 * @since 7.0
+		 */
+		void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass);
 		void didRemoveProperty(@NonNull Property partialProperty);
 		void didRemoveSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	}
@@ -42,6 +50,22 @@ public class ClassListeners<L extends ClassListeners.IClassListener> extends Abs
 		}
 		if (doFlush) {
 			doFlush();
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public synchronized void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive addition
+			@NonNull WeakReference<L> ref = listeners.get(i);
+			@Nullable L listener = ref.get();
+			if (listener != null) {
+				listener.didAddPartialClass(index, partialClass);
+			}
+			else {
+				listeners.remove(i);
+			}
 		}
 	}
 
@@ -90,6 +114,22 @@ public class ClassListeners<L extends ClassListeners.IClassListener> extends Abs
 		}
 		if (doFlush) {
 			doFlush();
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public synchronized void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive removal
+			@NonNull WeakReference<L> ref = listeners.get(i);
+			@Nullable L listener = ref.get();
+			if (listener != null) {
+				listener.didRemovePartialClass(index, partialClass);
+			}
+			else {
+				listeners.remove(i);
+			}
 		}
 	}
 

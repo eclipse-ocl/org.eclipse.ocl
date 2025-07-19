@@ -69,7 +69,6 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -890,8 +889,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
 		org.eclipse.ocl.pivot.Class unspecializedType = (org.eclipse.ocl.pivot.Class) type1.getUnspecializedElement();
 		org.eclipse.ocl.pivot.Class theType = unspecializedType != null ? unspecializedType : type1;
-		AbstractFlatClass completeInheritance = getCompleteClass(theType).getFlatClass();
-		return completeInheritance;
+		return getCompleteClass(theType).getFlatClass();
 	}
 
 	/**

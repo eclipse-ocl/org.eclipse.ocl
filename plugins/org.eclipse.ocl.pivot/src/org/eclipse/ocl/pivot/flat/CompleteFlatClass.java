@@ -121,15 +121,15 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		return superFlatClasses;
 	}
 
-//	@Override
-//	public void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-//		resetFragments();
-//	}
+	@Override
+	public void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		resetFragments();
+	}
 
-//	@Override
-//	public void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-//		resetFragments();
-//	}
+	@Override
+	public void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		resetFragments();
+	}
 
 	protected @Nullable Set<@NonNull Stereotype> gatherExtendingStereotypes(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable Set<@NonNull Stereotype> extendingStereotypes) {
 		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;		// FIXME This is much than PartialClasses.initMemberProperties

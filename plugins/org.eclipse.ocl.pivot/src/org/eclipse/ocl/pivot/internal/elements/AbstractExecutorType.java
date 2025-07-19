@@ -180,6 +180,14 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	 * @since 7.0
 	 */
 	@Override
+	public @Nullable Operation getOperation(@NonNull OperationId id) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
 	public @NonNull StandardLibrary getStandardLibrary() {
 		throw new UnsupportedOperationException();
 	}
