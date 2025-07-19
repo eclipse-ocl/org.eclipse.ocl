@@ -63,7 +63,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -568,7 +568,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	private /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	private /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
-	private /*final*/ /*@NonNull*/ IdResolver idResolver;
+//	private /*final*/ /*@NonNull*/ IdResolver idResolver;
 
 	@Override
 	protected @Nullable Type basicGetBehavioralType(@NonNull Type type) {
@@ -681,6 +681,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
 		return new CompleteCollectionTypeManager(this);
+	}
+
+	@Override
+	protected @NonNull CompleteFlatModel createFlatModel() {
+		assert completeModel != null;
+		return new CompleteFlatModel(this, completeModel);
 	}
 
 	@Override
@@ -851,6 +857,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			integerType2 = integerType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.INTEGER_NAME);
 		}
 		return integerType2;
+	}
+
+	@Override
+	public @NonNull CompleteFlatModel getFlatModel() {
+		return (CompleteFlatModel)super.getFlatModel();
 	}
 
 	@Override
@@ -1265,7 +1276,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	public @NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeModel = environmentFactory.getCompleteModel();
-		this.idResolver = environmentFactory.getIdResolver();
+//		this.idResolver = environmentFactory.getIdResolver();
 		return this;
 	}
 
@@ -1474,8 +1485,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 							superTemplateArgumentList.add(actual);
 						}
 					}
-					AbstractFlatClass superCompleteInheritance = superCompleteClass.getFlatClass();
-					org.eclipse.ocl.pivot.Class genericSuperType = superCompleteInheritance.getCompleteClass().getPrimaryClass();
+					FlatClass superFlatClass = superCompleteClass.getFlatClass();
+					org.eclipse.ocl.pivot.Class genericSuperType = superFlatClass.getPivotClass(); //getCompleteClass().getPrimaryClass();
 					org.eclipse.ocl.pivot.Class specializedSuperType = environmentFactory.getStandardLibrary().getSpecializedType(genericSuperType, superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);
 				}

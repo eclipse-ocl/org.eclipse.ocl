@@ -322,7 +322,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (completeInheritance2 == null) {
 			CompleteClassInternal completeClass = getCompleteClass();
 			CompletePackageInternal completePackage = completeClass.getOwningCompletePackage();
-			completeInheritance2 = completePackage.getCompleteInheritance(completeClass);
+			completeInheritance2 = completePackage.getFlatClass(completeClass);
 			completeInheritance = completeInheritance2;
 		}
 		return completeInheritance2;

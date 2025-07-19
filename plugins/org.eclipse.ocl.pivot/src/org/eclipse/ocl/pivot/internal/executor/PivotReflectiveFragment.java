@@ -20,6 +20,9 @@ import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
 
 public class PivotReflectiveFragment extends ReflectiveFragment
 {
+	/**
+	 * @since 7.0
+	 */
 	public PivotReflectiveFragment(@NonNull AbstractFlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 	}

@@ -45,12 +45,12 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	/**
 	 * Map of (nested) package-name to package server.
 	 */
-	private Map<String, CompletePackage> name2nestedCompletePackage = null;
+	private Map<@NonNull String, @NonNull CompletePackage> name2nestedCompletePackage = null;
 
 	/**
 	 * Lazily created map of nested class-name to its inheritance.
 	 */
-	protected final @NonNull Map<String, AbstractFlatClass> name2inheritance = new HashMap<String, AbstractFlatClass>();
+	protected final @NonNull Map<@NonNull String, @NonNull AbstractFlatClass> name2flatClass = new HashMap<>();
 
 	public PartialPackages(@NonNull CompletePackageImpl owner) {
 		super(org.eclipse.ocl.pivot.Package.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES.getFeatureID());
@@ -156,23 +156,12 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 
 	@Override
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		AbstractFlatClass completeInheritance = name2inheritance.remove(partialClass.getName());
+		AbstractFlatClass completeFlatClass = name2flatClass.remove(partialClass.getName());
 		//		System.out.println("PartialPackage.didRemoveClass " + partialClass);
 		getCompletePackage().didRemoveClass(partialClass);
-		if (completeInheritance != null) {
-			completeInheritance.uninstall();
+		if (completeFlatClass != null) {
+			completeFlatClass.uninstall();
 		}
-	}
-
-	public @NonNull AbstractFlatClass getCompleteInheritance(@NonNull CompleteClassInternal completeClass) {
-		String name = completeClass.getName();
-		AbstractFlatClass completeInheritance = name2inheritance.get(name);
-		if (completeInheritance == null) {
-			completeInheritance = new AbstractFlatClass(completeClass);
-			//			System.out.println("PartialPackage.add " + completeClass);
-			name2inheritance.put(name, completeInheritance);
-		}
-		return completeInheritance;
 	}
 
 	public @NonNull CompleteModelInternal getCompleteModel() {
@@ -184,6 +173,21 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		return (CompletePackageImpl) owner;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass) {
+		String name = completeClass.getName();
+		assert name != null;
+		AbstractFlatClass completeFlatClass = name2flatClass.get(name);
+		if (completeFlatClass == null) {
+			completeFlatClass = new AbstractFlatClass(completeClass);
+			//			System.out.println("PartialPackage.add " + completeClass);
+			name2flatClass.put(name, completeFlatClass);
+		}
+		return completeFlatClass;
+	}
+
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.Package> getNestedPartialPackages() {
 		PartialPackages partialPackages = getCompletePackage().getPartialPackages();
 		Iterable<Iterable<org.eclipse.ocl.pivot.Package>> roots_packages = Iterables.transform(partialPackages, package2PackageOwnedPackages);
@@ -193,7 +197,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 
 	public void uninstalled(@NonNull CompleteClassInternal completeClass) {
 		//		System.out.println("PartialPackages.uninstalled " + completeClass + " " + NameUtil.debugFullName(completeClass));
-		AbstractFlatClass inheritance = name2inheritance.remove(completeClass.getName());
+		AbstractFlatClass inheritance = name2flatClass.remove(completeClass.getName());
 		if (inheritance != null) {
 			inheritance.uninstall();
 		}
