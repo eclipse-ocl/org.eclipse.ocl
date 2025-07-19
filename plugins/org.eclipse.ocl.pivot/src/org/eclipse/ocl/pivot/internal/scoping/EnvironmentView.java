@@ -169,7 +169,7 @@ public class EnvironmentView
 			if (p2 == null) {
 				return MATCHES_INDEPENDENT;
 			}
-			CompleteModel completeModel = standardLibrary.getCompleteModel();
+			CompleteModel completeModel = standardLibrary.getFlatModel().getCompleteModel();
 		//	CompletePackage completePackage1 = completeModel.getCompletePackage(p1);
 		//	CompletePackage completePackage2 = completeModel.getCompletePackage(p2);
 		//	if (completePackage1 != completePackage2) {
@@ -228,7 +228,7 @@ public class EnvironmentView
 	{
 		@Override
 		public int compare(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Package match1, org.eclipse.ocl.pivot.@NonNull Package match2) {
-			CompleteModel completeModel = standardLibrary.getCompleteModel();
+			CompleteModel completeModel = standardLibrary.getFlatModel().getCompleteModel();
 			CompletePackage completePackage1 = completeModel.getCompletePackage(match1);
 			CompletePackage completePackage2 = completeModel.getCompletePackage(match2);
 			if (completePackage1 == completePackage2) {

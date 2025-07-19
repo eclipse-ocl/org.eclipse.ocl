@@ -157,7 +157,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	}
 
 	@Override
-	public @NonNull AbstractFlatClass getCompleteInheritance(@NonNull CompleteClassInternal completeClass) {
+	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass) {
 		return new AbstractFlatClass(completeClass);
 	}
 

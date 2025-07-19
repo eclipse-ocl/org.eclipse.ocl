@@ -33,6 +33,9 @@ public abstract class ReflectiveFragment extends FlatFragment
 	protected Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
 	protected Map<@NonNull Property, @NonNull LibraryFeature> propertyMap = null;
 
+	/**
+	 * @since 7.0
+	 */
 	public ReflectiveFragment(@NonNull FlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 	}
