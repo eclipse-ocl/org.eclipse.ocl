@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
@@ -153,6 +154,14 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	 */
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull FlatModel getFlatModel() {
 		throw new UnsupportedOperationException();
 	}
 
