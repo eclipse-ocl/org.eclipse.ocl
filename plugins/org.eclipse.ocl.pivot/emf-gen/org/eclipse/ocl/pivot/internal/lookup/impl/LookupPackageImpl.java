@@ -312,10 +312,10 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 	protected void createEcoreAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation
-		(this,
-			source,
-			new String[] {
-		});
+		  (this,
+		   source,
+		   new String[] {
+		   });
 	}
 
 	/**
@@ -328,17 +328,17 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 	protected void createPivotAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"; //$NON-NLS-1$
 		addAnnotation
-		(getLookupEnvironment__AddElements__Collection(),
-			source,
-			new String[] {
-				"body", "LookupEnvironment{\n\t\t\t\t\t\tnamedElements = namedElements->includingAll(elements) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\t\n\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+		  (getLookupEnvironment__AddElements__Collection(),
+		   source,
+		   new String[] {
+			   "body", "LookupEnvironment{\n\t\t\t\t\t\tnamedElements = namedElements->includingAll(elements) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\t\n\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
 		addAnnotation
-		(getLookupEnvironment__AddElement__NamedElement(),
-			source,
-			new String[] {
-				"body", "LookupEnvironment {\n\t\t\t\t\t\tnamedElements = namedElements->including(element) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\n\t\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+		  (getLookupEnvironment__AddElement__NamedElement(),
+		   source,
+		   new String[] {
+			   "body", "LookupEnvironment {\n\t\t\t\t\t\tnamedElements = namedElements->including(element) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\n\t\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
 	}
 
 } //LookupPackageImpl
