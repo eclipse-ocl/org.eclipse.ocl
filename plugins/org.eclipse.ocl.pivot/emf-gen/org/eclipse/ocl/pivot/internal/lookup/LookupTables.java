@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2022 Willink Transformations Ltd., University of York and others.
+ * Copyright (c) 2014, 2017 Willink Transformations Ltd., University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -20,8 +20,14 @@
 package org.eclipse.ocl.pivot.internal.lookup;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -29,20 +35,13 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
+// import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
+// import org.eclipse.ocl.pivot.internal.lookup.LookupTables;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
+import org.eclipse.ocl.pivot.utilities.AbstractTables;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * LookupTables provides the dispatch tables for the lookup for use by the OCL dispatcher.
@@ -50,33 +49,34 @@ import org.eclipse.ocl.pivot.types.TemplateParameters;
  * In order to ensure correct static initialization, a top level class element must be accessed
  * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.
  */
-public class LookupTables
+public class LookupTables extends AbstractTables
 {
 	static {
 		Init.initStart();
 	}
 
 	/**
-	 *	The package descriptor for the package.
-	 */
-	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(LookupPackage.eINSTANCE);
-
-	/**
 	 *	The library of all packages and types.
 	 */
-	public static final @NonNull PartialStandardLibraryImpl LIBRARY = OCLstdlibTables.LIBRARY;
+	public static final PartialStandardLibraryImpl.@NonNull ReadOnly LIBRARY = OCLstdlibTables.LIBRARY;
+
+	/**
+	 *	The package descriptor for the package.
+	 */
+	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(LookupPackage.eINSTANCE, null);
 
 	/**
 	 *	Constants used by auto-generated code.
 	 */
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL_TMPLid_ = TypeId.COLLECTION.getSpecializedId(IdManager.getTemplateParameterId(0));
 	public static final /*@NonInvalid*/ @NonNull RootPackageId PACKid_$metamodel$ = IdManager.getRootPackageId("$metamodel$");
 	public static final /*@NonInvalid*/ @NonNull NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup = IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/2015/Lookup", null, LookupPackage.eINSTANCE);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Class = LookupTables.PACKid_$metamodel$.getClassId("Class", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Executor = LookupTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup.getClassId("Executor", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_LookupEnvironment = LookupTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_2015_s_Lookup.getClassId("LookupEnvironment", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_NamedElement = LookupTables.PACKid_$metamodel$.getClassId("NamedElement", 0);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_LookupEnvironment = TypeId.BAG.getSpecializedId(LookupTables.CLSSid_LookupEnvironment);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_NamedElement = TypeId.ORDERED_SET.getSpecializedId(LookupTables.CLSSid_NamedElement);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL_TMPLid_ = TypeId.COLLECTION.getSpecializedId(TypeId.T_1, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_LookupEnvironment = TypeId.BAG.getSpecializedId(LookupTables.CLSSid_LookupEnvironment, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_NamedElement = TypeId.ORDERED_SET.getSpecializedId(LookupTables.CLSSid_NamedElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull PropertyId PROPid_namedElements = LookupTables.CLSSid_LookupEnvironment.getPropertyId("namedElements");
 
 	/**
@@ -87,7 +87,8 @@ public class LookupTables
 			Init.initStart();
 			LookupTables.init();
 		}
-		public static final @NonNull ExecutorTypeParameter __LookupEnvironment__addElements_NE = new ExecutorTypeParameter(TypeId.T_1, "NE");
+
+		public static final @NonNull TemplateParameter $$0 = LIBRARY.createTemplateParameter(0, "$$0");
 
 		static {
 			Init.initEnd();
@@ -108,10 +109,10 @@ public class LookupTables
 			TypeParameters.init();
 		}
 
-		public static final @NonNull EcoreExecutorType _Executor = new EcoreExecutorType(LookupPackage.Literals.EXECUTOR, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _LookupEnvironment = new EcoreExecutorType(LookupPackage.Literals.LOOKUP_ENVIRONMENT, PACKAGE, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Executor = LIBRARY.createClass(PivotPackage.Literals.CLASS, LookupPackage.Literals.EXECUTOR, PACKAGE, null, 0 | FlatClass.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _LookupEnvironment = LIBRARY.createClass(PivotPackage.Literals.CLASS, LookupPackage.Literals.LOOKUP_ENVIRONMENT, PACKAGE, null, 0);
 
-		private static final @NonNull EcoreExecutorType @NonNull [] types = {
+		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
 			_Executor,
 			_LookupEnvironment
 		};
@@ -120,7 +121,7 @@ public class LookupTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			PACKAGE.init(LIBRARY, types);
+			LIBRARY.initPackage(PACKAGE, types);
 			Init.initEnd();
 		}
 
@@ -139,13 +140,13 @@ public class LookupTables
 			Types.init();
 		}
 
-		private static final @NonNull ExecutorFragment _Executor__Executor = new ExecutorFragment(Types._Executor, LookupTables.Types._Executor);
-		private static final @NonNull ExecutorFragment _Executor__OclAny = new ExecutorFragment(Types._Executor, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull ExecutorFragment _Executor__OclElement = new ExecutorFragment(Types._Executor, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull FlatFragment _Executor__Executor = LIBRARY.createFragment(Types._Executor, LookupTables.Types._Executor);
+		private static final @NonNull FlatFragment _Executor__OclAny = LIBRARY.createFragment(Types._Executor, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _Executor__OclElement = LIBRARY.createFragment(Types._Executor, OCLstdlibTables.Types._OclElement);
 
-		private static final @NonNull ExecutorFragment _LookupEnvironment__LookupEnvironment = new ExecutorFragment(Types._LookupEnvironment, LookupTables.Types._LookupEnvironment);
-		private static final @NonNull ExecutorFragment _LookupEnvironment__OclAny = new ExecutorFragment(Types._LookupEnvironment, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull ExecutorFragment _LookupEnvironment__OclElement = new ExecutorFragment(Types._LookupEnvironment, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull FlatFragment _LookupEnvironment__LookupEnvironment = LIBRARY.createFragment(Types._LookupEnvironment, LookupTables.Types._LookupEnvironment);
+		private static final @NonNull FlatFragment _LookupEnvironment__OclAny = LIBRARY.createFragment(Types._LookupEnvironment, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _LookupEnvironment__OclElement = LIBRARY.createFragment(Types._LookupEnvironment, OCLstdlibTables.Types._OclElement);
 
 		static {
 			Init.initEnd();
@@ -170,7 +171,7 @@ public class LookupTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _Collection__LookupEnvironment_addElements_NE__ = new ParameterTypes(new ExecutorSpecializedType("Collection", LookupTables.TypeParameters.__LookupEnvironment__addElements_NE));
+		public static final @NonNull ParameterTypes _Collection__NE__ = new ParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters.$$0));
 		public static final @NonNull ParameterTypes _NamedElement = new ParameterTypes(PivotTables.Types._NamedElement);
 
 		static {
@@ -196,13 +197,13 @@ public class LookupTables
 			Parameters.init();
 		}
 
-		public static final @NonNull ExecutorOperation _LookupEnvironment__addElement = new ExecutorOperation("addElement", Parameters._NamedElement, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__addElement = LIBRARY.createOperation("addElement", Parameters._NamedElement, Types._LookupEnvironment,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _LookupEnvironment__addElements = new ExecutorOperation("addElements", Parameters._Collection__LookupEnvironment_addElements_NE__, Types._LookupEnvironment,
-			1, new TemplateParameters(TypeParameters.__LookupEnvironment__addElements_NE), null);
-		public static final @NonNull ExecutorOperation _LookupEnvironment__getExecutor = new ExecutorOperation("getExecutor", ParameterTypes.EMPTY_LIST, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation("addElements", Parameters._Collection__NE__, Types._LookupEnvironment,
+			1, new TemplateParameters(TypeParameters.$$0), null);
+		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation("getExecutor", ParameterTypes.EMPTY_LIST, Types._LookupEnvironment,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _LookupEnvironment__hasFinalResult = new ExecutorOperation("hasFinalResult", ParameterTypes.EMPTY_LIST, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation("hasFinalResult", ParameterTypes.EMPTY_LIST, Types._LookupEnvironment,
 			3, TemplateParameters.EMPTY_LIST, null);
 
 		static {
@@ -229,9 +230,9 @@ public class LookupTables
 		}
 
 
-		public static final @NonNull ExecutorProperty _LookupEnvironment__namedElements = new EcoreExecutorProperty(LookupPackage.Literals.LOOKUP_ENVIRONMENT__NAMED_ELEMENTS, Types._LookupEnvironment, 0);
-		public static final @NonNull ExecutorProperty _LookupEnvironment__parentEnv = new EcoreExecutorProperty(LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV, Types._LookupEnvironment, 1);
-		public static final @NonNull ExecutorProperty _LookupEnvironment__LookupEnvironment__parentEnv = new ExecutorPropertyWithImplementation("LookupEnvironment", Types._LookupEnvironment, 2, new EcoreLibraryOppositeProperty(LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV));
+		public static final @NonNull Property _LookupEnvironment__namedElements = LIBRARY.createProperty(LookupPackage.Literals.LOOKUP_ENVIRONMENT__NAMED_ELEMENTS, Types._LookupEnvironment, 0);
+		public static final @NonNull Property _LookupEnvironment__parentEnv = LIBRARY.createProperty(LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV, Types._LookupEnvironment, 1);
+		public static final @NonNull Property _LookupEnvironment__LookupEnvironment__parentEnv = LIBRARY.createOppositeProperty("LookupEnvironment", Types._LookupEnvironment, 2, LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV);
 		static {
 			Init.initEnd();
 		}
@@ -251,7 +252,7 @@ public class LookupTables
 			Properties.init();
 		}
 
-		private static final @NonNull ExecutorFragment @NonNull [] _Executor =
+		private static final @NonNull FlatFragment @NonNull [] _Executor =
 			{
 				Fragments._Executor__OclAny /* 0 */,
 				Fragments._Executor__OclElement /* 1 */,
@@ -259,7 +260,7 @@ public class LookupTables
 			};
 		private static final int @NonNull [] __Executor = { 1,1,1 };
 
-		private static final @NonNull ExecutorFragment @NonNull [] _LookupEnvironment =
+		private static final @NonNull FlatFragment @NonNull [] _LookupEnvironment =
 			{
 				Fragments._LookupEnvironment__OclAny /* 0 */,
 				Fragments._LookupEnvironment__OclElement /* 1 */,
@@ -292,8 +293,8 @@ public class LookupTables
 			TypeFragments.init();
 		}
 
-		private static final @NonNull ExecutorOperation @NonNull [] _Executor__Executor = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _Executor__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Executor__Executor = {};
+		private static final @NonNull Operation @NonNull [] _Executor__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -305,27 +306,32 @@ public class LookupTables
 			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull ExecutorOperation @NonNull [] _Executor__OclElement = {
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[?]) */,
+		private static final @NonNull Operation @NonNull [] _Executor__OclElement = {
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
 			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull ExecutorOperation @NonNull [] _LookupEnvironment__LookupEnvironment = {
+		private static final @NonNull Operation @NonNull [] _LookupEnvironment__LookupEnvironment = {
 			LookupTables.Operations._LookupEnvironment__addElement /* addElement(NamedElement[?]) */,
 			LookupTables.Operations._LookupEnvironment__addElements /* addElements(NE)(Collection(NE)) */,
 			LookupTables.Operations._LookupEnvironment__getExecutor /* getExecutor() */,
 			LookupTables.Operations._LookupEnvironment__hasFinalResult /* hasFinalResult() */
 		};
-		private static final @NonNull ExecutorOperation @NonNull [] _LookupEnvironment__OclAny = {
+		private static final @NonNull Operation @NonNull [] _LookupEnvironment__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -337,16 +343,21 @@ public class LookupTables
 			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull ExecutorOperation @NonNull [] _LookupEnvironment__OclElement = {
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[?]) */,
+		private static final @NonNull Operation @NonNull [] _LookupEnvironment__OclElement = {
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
 			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
@@ -381,10 +392,15 @@ public class LookupTables
 			FragmentOperations.init();
 		}
 
-		private static final @NonNull ExecutorProperty @NonNull [] _Executor = {};
+		private static final @NonNull Property @NonNull [] _Executor = {
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents
+		};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _LookupEnvironment = {
+		private static final @NonNull Property @NonNull [] _LookupEnvironment = {
 			LookupTables.Properties._LookupEnvironment__namedElements,
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents,
 			LookupTables.Properties._LookupEnvironment__parentEnv
 		};
 
@@ -442,7 +458,7 @@ public class LookupTables
 		private static int initCount = 0;
 
 		/**
-		 * Invoked at the start of a static construction to defer residual cobstruction until primary constructions complete.
+		 * Invoked at the start of a static construction to defer residual construction until primary constructions complete.
 		 */
 		private static void initStart() {
 			if (initCount >= 0) {
@@ -451,7 +467,7 @@ public class LookupTables
 		}
 
 		/**
-		 * Invoked at the end of a static construction to activate residual cobstruction once primary constructions complete.
+		 * Invoked at the end of a static construction to activate residual construction once primary constructions complete.
 		 */
 		private static void initEnd() {
 			if (initCount > 0) {
@@ -470,5 +486,11 @@ public class LookupTables
 	/*
 	 * Force initialization of outer fields. Inner fields are lazily initialized.
 	 */
-	public static void init() {}
+	public static void init() {
+		new LookupTables();
+	}
+
+	private LookupTables() {
+		super(LookupPackage.eNS_URI);
+	}
 }
