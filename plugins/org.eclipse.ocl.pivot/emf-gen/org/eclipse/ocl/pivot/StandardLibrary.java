@@ -18,6 +18,7 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -185,9 +186,6 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getCommonType(org.eclipse.ocl.pivot.@NonNull Class thisType, org.eclipse.ocl.pivot.@NonNull Class thatType);
 
-	@Deprecated
-	@NonNull CompleteModel getCompleteModel();
-
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
 	 * <tt>Enumeration</tt>.
@@ -201,6 +199,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlatModel getFlatModel();
 
 	/**
 	 * @since 7.0

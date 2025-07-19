@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -45,6 +44,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -298,6 +298,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
+	protected @NonNull EcoreFlatModel createFlatModel() {
+		return new EcoreFlatModel(this);
+	}
+
+	@Override
 	protected @NonNull IdResolver createIdResolver() {
 		Executor executor = ThreadLocalExecutor.basicGetExecutor();
 		assert executor != null;
@@ -460,11 +465,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return getOclAnyType();
 		}
 		return thisType;				// XXX missing code
-	}
-
-	@Override
-	public @NonNull CompleteModel getCompleteModel() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
