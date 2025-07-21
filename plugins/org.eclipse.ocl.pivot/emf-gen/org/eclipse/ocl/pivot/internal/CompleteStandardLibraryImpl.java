@@ -568,7 +568,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	private /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	private /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
-//	private /*final*/ /*@NonNull*/ IdResolver idResolver;
 
 	@Override
 	protected @Nullable Type basicGetBehavioralType(@NonNull Type type) {
@@ -1276,7 +1275,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	public @NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeModel = environmentFactory.getCompleteModel();
-//		this.idResolver = environmentFactory.getIdResolver();
 		return this;
 	}
 
