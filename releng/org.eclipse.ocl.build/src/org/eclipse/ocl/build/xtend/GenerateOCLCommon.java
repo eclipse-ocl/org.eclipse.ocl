@@ -231,7 +231,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			for (NamedElement asElement : context.external2name.keySet()) {
 				if (asElement instanceof org.eclipse.ocl.pivot.Class) {
 					CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
-					for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
+					for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
 						externalClasses.add(asPartialClass);
 					}
 				}
