@@ -70,14 +70,14 @@ public abstract class AbstractContents extends PivotUtil
 	 */
 	public static abstract class AbstractMetamodelContents extends AbstractContents
 	{
-		protected final @NonNull Package standardLibrary;
+		protected final @NonNull Package standardLibraryPackage;
 		private final @NonNull Class booleanType;
 		private final @NonNull Class stringType;
 
-		protected AbstractMetamodelContents(@NonNull Package standardLibrary) {
-			this.standardLibrary = standardLibrary;
-			this.booleanType = ClassUtil.requireNonNull(standardLibrary.getOwnedClass("Boolean"));
-			this.stringType = ClassUtil.requireNonNull(standardLibrary.getOwnedClass("String"));
+		protected AbstractMetamodelContents(@NonNull Package standardLibraryPackage) {
+			this.standardLibraryPackage = standardLibraryPackage;
+			this.booleanType = ClassUtil.requireNonNull(standardLibraryPackage.getOwnedClass("Boolean"));
+			this.stringType = ClassUtil.requireNonNull(standardLibraryPackage.getOwnedClass("String"));
 		}
 
 		protected @NonNull Constraint createInvariant(/*@NonNull*/ EOperation esObject, @NonNull String name, @NonNull String body) {
