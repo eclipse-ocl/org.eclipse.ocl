@@ -17,8 +17,16 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 
+/**
+ * ClassListeners maintains the weak references to IClassListener instances that monitor mutation of a Class,
+ * thereby avoiding a Class needing to be aware of what CompleteClass or CompleteFlatClass it is contributing to.
+ */
 public class ClassListeners<L extends ClassListeners.IClassListener> extends AbstractListeners<L>
 {
+	/**
+	 * An IClassListener instances monitor mutation of a Class so that for instance a CompleteFlatClass
+	 * can reset its caches in accordance to mutations.
+	 */
 	public static interface IClassListener extends AbstractListeners.IAbstractListener
 	{
 		void didAddOperation(@NonNull Operation partialOperation);
