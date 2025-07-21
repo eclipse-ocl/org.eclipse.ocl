@@ -1136,7 +1136,8 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 		ocl.assertQueryResults(null, "Bag{'a', 'b'}", "Bag{'a', 'b', 'a'}->intersection(Bag{'a', 'b'})");
 		ocl.assertQueryResults(null, "Bag{'a', 'b'}", "Bag{'a', 'b'}->intersection(Bag{'a', 'b', 'a'})");
-		ocl.assertQueryResults(null, "Bag{'a', 'b', 'b'}", "Bag{'a', 'b', 'a', 'b'}->intersection(Bag{'a', 'b', 'b'})");
+		ocl.assertQueryResults(null, "Bag{'a', 'b', 'b'}", "Bag{'a', 'b', 'a', 'b'}->intersection(Bag{'a', 'b', 'b', 'd'})");
+		ocl.assertQueryResults(null, "Bag{'a', 'b', 'b'}", "Bag{'a', 'b', 'b', 'd'}->intersection(Bag{'a', 'b', 'a', 'b'})");
 		ocl.assertQueryResults(null, "Bag{'a', 'b'}", "Bag{'a', 'b', 'a'}->intersection(Bag{'a', 'b', 'c'})");
 
 		ocl.assertQueryResults(null, "Bag{'a'}", "Bag{'a', 'a', 'a', 'a'}->intersection(Bag{'a', 'b', 'b'})");
