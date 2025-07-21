@@ -42,11 +42,9 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -1722,17 +1720,6 @@ implements Property {
 			redefinedProperties = new EObjectResolvingEList<Property>(Property.class, this, 27);
 		}
 		return redefinedProperties;
-	}
-
-	@Override
-	public @Nullable FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
-		if (owningType != null) {
-			return standardLibrary.getFlatClass(owningType);
-		}
-		else {
-			return null;
-		}
 	}
 
 	private PropertyId propertyId = null;
