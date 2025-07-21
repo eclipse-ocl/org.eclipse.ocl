@@ -342,7 +342,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Create model
 		//
 		OCL ocl = OCL.newInstance(getProjectMap());
-		URI ecoreURI = getTestModelURI("models/ecore//Bug543173.ecore");
+		URI ecoreURI = getTestModelURI("models/ecore/Bug543173.ecore");
 		Resource ecoreResource = ocl.getResourceSet().getResource(ecoreURI, true);
 		assert ecoreResource != null;
 		//
