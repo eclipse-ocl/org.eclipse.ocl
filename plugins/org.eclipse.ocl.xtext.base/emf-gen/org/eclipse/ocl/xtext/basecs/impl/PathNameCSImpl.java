@@ -360,12 +360,14 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 			return null;
 		}
 		for (int i = 0; i < iMax-1; i++) {
-			Element element = ownedPathElements.get(i).getReferredElement();
+			PathElementCS csPathElement = ownedPathElements.get(i);
+			Element element = csPathElement.getReferredElement();
 			if ((element == null) || element.eIsProxy()) {
 				return null;
 			}
 		}
-		Element element = ownedPathElements.get(iMax-1).getReferredElement();
+		PathElementCS csPathElement = ownedPathElements.get(iMax-1);
+		Element element = csPathElement.getReferredElement();
 		if ((element == null) || element.eIsProxy()) {
 			return null;
 		}
