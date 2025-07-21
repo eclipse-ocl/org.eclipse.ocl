@@ -420,6 +420,22 @@ public class ModelImpl extends NamespaceImpl implements Model
 		return eDynamicIsSet(featureID);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public @NonNull List<Import> getOwnedImports()
+	{
+		if (ownedImports == null)
+		{
+			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, 7);
+		}
+		return ownedImports;
+	}
+
 	private @Nullable ModelListeners<ModelListeners.IModelListener> rootListeners = null;
 
 	@Override
@@ -450,6 +466,22 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public @Nullable EObject getESObject() {
 		throw new IllegalStateException("Model has an External Syntax Resource URI rather than EObject");
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull Element getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		throw new IllegalStateException("Model has a URI but no EObject");
+	}
+
+	/**
+	 * @since 1.23
+	 */
+	@Override
+	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		return URI.createURI(externalURI);
 	}
 
 	public synchronized void removeRootListener(ModelListeners.@NonNull IModelListener rootListener) {
@@ -483,38 +515,6 @@ public class ModelImpl extends NamespaceImpl implements Model
 			newName = null;
 		}
 		super.setName(newName);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("null")
-	@Override
-	public @NonNull List<Import> getOwnedImports()
-	{
-		if (ownedImports == null)
-		{
-			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, 7);
-		}
-		return ownedImports;
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		return URI.createURI(externalURI);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @NonNull Element getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		throw new IllegalStateException("Model has a URI but no EObject");
 	}
 
 	@Override

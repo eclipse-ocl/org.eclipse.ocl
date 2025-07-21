@@ -121,5 +121,4 @@ public interface Model extends Namespace
 	 * @generated
 	 */
 	@NonNull List<Import> getOwnedImports();
-
 } // Root
