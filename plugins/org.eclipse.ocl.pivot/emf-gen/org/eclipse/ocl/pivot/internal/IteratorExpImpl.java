@@ -210,14 +210,14 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		try {
 			org.eclipse.ocl.pivot.Class oclComparableType = standardLibrary.getOclComparableType();
-			FlatClass comparableInheritance = oclComparableType.getFlatClass(standardLibrary);
-			FlatClass selfType = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
-			Operation staticOperation = comparableInheritance.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfType);
+			FlatClass comparableFlatClass = oclComparableType.getFlatClass(standardLibrary);
+			FlatClass selfFlatClass = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
+			Operation staticOperation = comparableFlatClass.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfFlatClass);
 			if (staticOperation == null) {
 				if (diagnostics == null) {
 					return false;
 				}
-				diagnostic = new ValidationWarning(PivotMessagesInternal.UnresolvedOperation_ERROR_, String.valueOf(comparableInheritance), LibraryConstants.COMPARE_TO);
+				diagnostic = new ValidationWarning(PivotMessagesInternal.UnresolvedOperation_ERROR_, String.valueOf(comparableFlatClass), LibraryConstants.COMPARE_TO);
 			}
 			else {
 				OCLExpression source2 = this.getOwnedSource();

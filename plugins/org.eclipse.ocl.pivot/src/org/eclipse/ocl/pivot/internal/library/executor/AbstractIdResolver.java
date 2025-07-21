@@ -517,7 +517,6 @@ public abstract class AbstractIdResolver implements IdResolver
 	protected org.eclipse.ocl.pivot.@NonNull Class computeDynamicClassOf(@NonNull Object value) {
 		EClass eClass = ((EObject)value).eClass();
 		assert eClass != null;
-		Object key = eClass;
 		Type type = getFlatClass(eClass).getPivotClass();
 		assert type != null;
 		org.eclipse.ocl.pivot.@NonNull Class dynamicClass = PivotUtil.getClass(type, standardLibrary);
@@ -1541,8 +1540,8 @@ public abstract class AbstractIdResolver implements IdResolver
 		if (domainType == null) {
 			throw new UnsupportedOperationException();
 		}
-		FlatClass inheritance = standardLibrary.getFlatClass(domainType);
-		Operation memberOperation = inheritance.getOperation(id);
+		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
+		Operation memberOperation = flatClass.getOperation(id);
 		if (memberOperation == null) {
 			throw new UnsupportedOperationException();
 		}

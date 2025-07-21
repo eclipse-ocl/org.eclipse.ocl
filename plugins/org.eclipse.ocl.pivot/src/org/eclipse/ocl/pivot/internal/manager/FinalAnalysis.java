@@ -133,10 +133,10 @@ public class FinalAnalysis
 		}
 		List<@NonNull Operation> results = new ArrayList<>();
 		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
-		FlatClass requiredInheritance = completeClass.getFlatClass();
+		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
-			FlatClass overrideInheritance = override.getFlatClass(standardLibrary);
-			if ((overrideInheritance != null) && requiredInheritance.isSuperFlatClassOf(overrideInheritance)) {
+			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
+			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
 				results.add(override);
 			}
 		}
@@ -175,10 +175,10 @@ public class FinalAnalysis
 		}
 		Operation candidate = null;
 		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
-		FlatClass requiredInheritance = completeClass.getFlatClass();
+		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
-			FlatClass overrideInheritance = override.getFlatClass(standardLibrary);
-			if ((overrideInheritance != null) && requiredInheritance.isSuperFlatClassOf(overrideInheritance)) {
+			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
+			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
 				if (candidate != null) {
 					return null;
 				}
