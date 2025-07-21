@@ -29,6 +29,7 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.codegen.oclinecore.OCLinEcoreTablesUtils;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -37,7 +38,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -122,7 +122,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	@Override
 	protected String getExternalReference(@NonNull Element element) {
 		if ((element instanceof Library) && (element.eResource() instanceof OCLstdlib)) {
-			return "standardLibrary";
+			return "standardLibraryPackage";
 		}
 		return super.getExternalReference(element);
 	}
