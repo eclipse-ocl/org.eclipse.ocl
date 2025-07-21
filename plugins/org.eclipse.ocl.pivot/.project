@@ -18,7 +18,8 @@
 				</dictionary>
 				<dictionary>
 					<key>enabledExtensions</key>
-					<value>ecore,ocl,oclinecore,oclstdlib,uml</value>
+					<value>ecore,ocl,oclinecore</value>
+					<!--value>ecore,ocl,oclinecore,oclstdlib,uml</value-->
 				</dictionary>
 				<dictionary>
 					<key>enabledPaths</key>
