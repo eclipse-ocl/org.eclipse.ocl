@@ -344,6 +344,12 @@ extends Type, Namespace, TemplateableElement {
 	/**
 	 * @since 7.0
 	 */
+	@Override
+	org.eclipse.ocl.pivot.Class getUnspecializedElement();
+
+	/**
+	 * @since 7.0
+	 */
 	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull[] depthCounts);
 
 	/**

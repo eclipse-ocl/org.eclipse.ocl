@@ -391,4 +391,10 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	 * @since 7.0
 	 */
 	@NonNull TemplateParameters getTemplateParameters();
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	Operation getUnspecializedElement();
 } // Operation
