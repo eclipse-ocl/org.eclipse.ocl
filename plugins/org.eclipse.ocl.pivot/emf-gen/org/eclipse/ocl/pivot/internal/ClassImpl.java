@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1211,7 +1210,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	public @NonNull FlatClass getFlatClass() {
-		System.out.println("getFlatClass " + NameUtil.debugSimpleName(this) + " " + this);		// XXX
 		assert flatClass != null;
 		return flatClass;
 	}
@@ -1485,10 +1483,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	public void setFlatClass(@NonNull FlatClass flatClass) {
-		System.out.println("setFlatClass " + NameUtil.debugSimpleName(this) + " " + this + " " + NameUtil.debugSimpleName(flatClass));		// XXX
-		if ("OclElement".equals(name)) {
-			getClass();		// XXX
-		}
 		assert this.flatClass == null;
 		this.flatClass = flatClass;
 	}
@@ -1498,10 +1492,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
-		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + this + " " + newName);		// XXX
-		if ("OclElement".equals(newName)) {
-			getClass();		// XXX
-		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {
