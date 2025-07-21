@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.complete;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 
 public interface CompletePackageInternal extends CompletePackage
 {
@@ -22,10 +21,6 @@ public interface CompletePackageInternal extends CompletePackage
 	@NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType);
 	@Override
 	@NonNull CompleteModelInternal getCompleteModel();
-	/**
-	 * @since 7.0
-	 */
-	@NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass);
 	@Override
 	CompleteClassInternal getOwnedCompleteClass(String name);
 	@Override

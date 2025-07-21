@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -154,12 +153,6 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		completeClass.getPartialClasses().add(orphanClass);
 		class2orphanCompleteClass.put(orphanClass, new WeakReference<>(completeClass));
 		return completeClass;
-	}
-
-	@Override
-	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass) {
-		throw new UnsupportedOperationException();
-//		return new AbstractFlatClass(completeClass);
 	}
 
 	@Override
