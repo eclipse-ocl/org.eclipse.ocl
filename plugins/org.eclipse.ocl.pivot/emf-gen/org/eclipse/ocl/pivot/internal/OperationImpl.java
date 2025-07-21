@@ -501,7 +501,7 @@ implements Operation {
 	 * @generated NOT
 	 */
 	@Override
-	public TemplateableElement getUnspecializedElement()
+	public Operation getUnspecializedElement()
 	{
 		//		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
 		return null;

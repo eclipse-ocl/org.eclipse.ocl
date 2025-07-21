@@ -140,7 +140,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-	public TemplateableElement getUnspecializedElement() {
+	public org.eclipse.ocl.pivot.Class getUnspecializedElement() {
 		throw new UnsupportedOperationException();
 	}
 

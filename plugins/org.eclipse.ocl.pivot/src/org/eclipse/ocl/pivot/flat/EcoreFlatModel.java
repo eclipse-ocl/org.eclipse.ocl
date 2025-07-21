@@ -67,11 +67,11 @@ public class EcoreFlatModel extends PartialFlatModel
 		return ClassUtil.requireNonNull(flatClass);
 	}
 
-/*	public @NonNull EcoreFlatClass getEcoreFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull EcoreFlatClass getEcoreFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		EClassifier eClassifier = (EClassifier)asClass.getESObject();
 		assert eClassifier != null;
 		return getEcoreFlatClass(eClassifier, asClass);
-	} */
+	}
 
 	private @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);

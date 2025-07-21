@@ -70,6 +70,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1143,6 +1144,7 @@ implements org.eclipse.ocl.pivot.Class {
 		return visitor.visitClass(this);
 	}
 
+	@Override
 	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if (classListeners2 == null) {
@@ -1209,6 +1211,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	public @NonNull FlatClass getFlatClass() {
+		System.out.println("getFlatClass " + NameUtil.debugSimpleName(this) + " " + this);		// XXX
 		assert flatClass != null;
 		return flatClass;
 	}
@@ -1218,7 +1221,12 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
-		return standardLibrary.getFlatClass(this);
+		org.eclipse.ocl.pivot.Class flattenableClass = this;
+		org.eclipse.ocl.pivot.Class unspecializedClass = getUnspecializedElement();
+		if (unspecializedClass != null) {
+			flattenableClass = unspecializedClass;
+		}
+		return standardLibrary.getFlatClass(flattenableClass);
 	}
 
 	@Override
@@ -1408,8 +1416,11 @@ implements org.eclipse.ocl.pivot.Class {
 		return TemplateSignatureImpl.getTemplateParameters(getOwnedSignature());
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public TemplateableElement getUnspecializedElement()
+	public org.eclipse.ocl.pivot.Class getUnspecializedElement()
 	{
 		if (unspecializedElement == null) {
 			for (TemplateBinding templateBinding : getOwnedBindings()) {
@@ -1422,7 +1433,7 @@ implements org.eclipse.ocl.pivot.Class {
 				}
 			}
 		}
-		return unspecializedElement;
+		return (org.eclipse.ocl.pivot.Class)unspecializedElement;
 	}
 
 	@Override
@@ -1462,6 +1473,7 @@ implements org.eclipse.ocl.pivot.Class {
 		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
+	@Override
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
@@ -1473,6 +1485,10 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	public void setFlatClass(@NonNull FlatClass flatClass) {
+		System.out.println("setFlatClass " + NameUtil.debugSimpleName(this) + " " + this + " " + NameUtil.debugSimpleName(flatClass));		// XXX
+		if ("OclElement".equals(name)) {
+			getClass();		// XXX
+		}
 		assert this.flatClass == null;
 		this.flatClass = flatClass;
 	}
@@ -1482,6 +1498,10 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
+		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + this + " " + newName);		// XXX
+		if ("OclElement".equals(newName)) {
+			getClass();		// XXX
+		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {
