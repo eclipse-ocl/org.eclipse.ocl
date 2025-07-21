@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
@@ -91,7 +90,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 			EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
 			CompletePackage completePackage = environmentFactory.getCompleteModel().getCompletePackageByURI(name);
 			if (completePackage != null) {
-				Package pivotPackage = completePackage.getPrimaryPackage();
+				org.eclipse.ocl.pivot.Package pivotPackage = completePackage.getPrimaryPackage();
 				if (pivotPackage != importedElement) {
 					importedElement = pivotPackage;
 					throwable = null;
