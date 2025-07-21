@@ -15,7 +15,6 @@ import java.util.Collection
 import java.util.Collections
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ocl.pivot.AnyType
-import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.CollectionType
 import org.eclipse.ocl.pivot.Comment
 import org.eclipse.ocl.pivot.EnumerationLiteral
@@ -23,7 +22,6 @@ import org.eclipse.ocl.pivot.LambdaType
 import org.eclipse.ocl.pivot.MapType
 import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.Operation
-import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.Parameter
 import org.eclipse.ocl.pivot.Precedence
 import org.eclipse.ocl.pivot.PrimitiveType
@@ -283,7 +281,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			«FOR name : externals»«var element = ClassUtil.requireNonNull(name2external.get(name))»
-			«IF element instanceof Package»
+			«IF element instanceof org.eclipse.ocl.pivot.Package»
 			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof PrimitiveType»
 			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
@@ -298,7 +296,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2constraints = root.getSortedInvariants();
 		if (pkge2constraints.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2constraints.keySet());
-		var Class oldType  = null;
+		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
 			«FOR pkge : sortedPackages»
@@ -327,7 +325,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2iterations = root.getSortedIterations();
 		if (pkge2iterations.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2iterations.keySet());
-		var Class oldType  = null;
+		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
 			«FOR pkge : sortedPackages»
@@ -457,7 +455,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2operations = root.getSortedOperations();
 		if (pkge2operations.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2operations.keySet());
-		var Class oldType  = null;
+		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
 			«FOR pkge : sortedPackages»
@@ -516,7 +514,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String definePackages(/*@NonNull*/ Model root) {
 		var allPackages = root.getSortedPackages();
 		var import2alias = root.getSortedImports();
-		var importKeys = new ArrayList<Package>(import2alias.keySet());
+		var importKeys = new ArrayList<org.eclipse.ocl.pivot.Package>(import2alias.keySet());
 		Collections.sort(importKeys, NameUtil.NAMEABLE_COMPARATOR);
 		if (allPackages.isEmpty()) return "";
 		'''
@@ -597,7 +595,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2properties = root.getSortedProperties();
 		if (pkge2properties.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2properties.keySet());
-		var Class oldType  = null;
+		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
 			«FOR pkge : sortedPackages»
@@ -727,7 +725,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		return "createProperty(" + property.name + ", " + property.type.getSymbolName() + ")";
 	}
 
-	protected def String emitPackage(Package pkg) {
+	protected def String emitPackage(org.eclipse.ocl.pivot.Package pkg) {
 		'''
 			«FOR nestedPackage : pkg.getSortedPackages()»
 				«IF nestedPackage.getOwnedPackages().size() > 0»
@@ -749,7 +747,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String emitSuperClasses(Class type, String typeName) {
+	protected def String emitSuperClasses(org.eclipse.ocl.pivot.Class type, String typeName) {
 		var superClasses = type.getSuperclassesInPackage();
 		'''
 			«IF superClasses.size() > 0»
@@ -878,8 +876,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			MapType case element.keyType === null: return element.javaName()
 			MapType case element.valueType === null: return element.javaName()
 			MapType: return element.javaName()
-			Class case element.ownedBindings.size() > 0: return '''«element.javaName()»«FOR TemplateParameterSubstitution tps : element.getTemplateParameterSubstitutions()»_«tps.actual.simpleName()»«ENDFOR»'''
-			Class: return element.javaName()
+			org.eclipse.ocl.pivot.Class case element.ownedBindings.size() > 0: return '''«element.javaName()»«FOR TemplateParameterSubstitution tps : element.getTemplateParameterSubstitutions()»_«tps.actual.simpleName()»«ENDFOR»'''
+			org.eclipse.ocl.pivot.Class: return element.javaName()
 			Comment case element.body === null: return "null"
 			Comment: return element.javaName(element.body.substring(0, Math.min(11, element.body.length() - 1)))
 			EnumerationLiteral case element.owningEnumeration === null: return "null"
@@ -887,7 +885,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			LambdaParameter: return element.javaName()
 			Operation case element.owningClass === null: return "null_" + element.javaName()
 			Operation: return element.owningClass.partialName() + "_" + element.javaName()
-			Package: return element.javaName()
+			org.eclipse.ocl.pivot.Package: return element.javaName()
 			Parameter case element.eContainer() === null: return "null_" + element.javaName()
 			Parameter: return element.eContainer().partialName() + "_" + element.javaName()
 			Precedence: return element.javaName()
@@ -914,7 +912,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			TemplateParameterSubstitution case element.owningBinding === null: return "null"
 			TemplateParameterSubstitution case element.owningBinding.owningElement === null: return "null"
 			TemplateParameterSubstitution: return element.owningBinding.owningElement.simpleName()
-			Class: return element.javaName()
+			org.eclipse.ocl.pivot.Class: return element.javaName()
 			Operation case element.owningClass === null: return "null_" + element.javaName()
 			Operation: return element.owningClass.simpleName() + "_" + element.javaName()
 			default: return "xyzzy" + element.eClass().name
