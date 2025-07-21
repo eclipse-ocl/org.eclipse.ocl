@@ -11,7 +11,6 @@
 package org.eclipse.ocl.build.xtend
 
 import org.eclipse.ocl.pivot.Model
-import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
@@ -21,7 +20,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
-		var Package pkg = root.ownedPackages.findPackage();
+		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
 		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
 		'''
 		«FOR pkge : sortedPackages»
@@ -59,7 +58,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 
 	protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var Model root = thisModel;
-		var Package pkg = root.ownedPackages.findPackage();
+		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
 		if (pkg === null) {
 			return null;
 		}
@@ -323,8 +322,8 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 
-					protected Contents(@NonNull Package standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-						super(standardLibrary);
+					protected Contents(@NonNull Package standardLibraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+						super(standardLibraryPackage);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
