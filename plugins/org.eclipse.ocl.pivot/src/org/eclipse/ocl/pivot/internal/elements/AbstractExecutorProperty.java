@@ -20,9 +20,7 @@ import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -52,10 +50,10 @@ public abstract class AbstractExecutorProperty extends AbstractExecutorFeature i
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
-		return type.getFlatClass(standardLibrary);
-	}
+//	@Override
+//	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+//		return type.getFlatClass(standardLibrary);
+//	}
 
 	@Override
 	public @NonNull List<Property> getKeys() {
