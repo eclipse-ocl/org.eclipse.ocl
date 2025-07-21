@@ -395,25 +395,23 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass rightCompleteClass) {
-		CompleteClass leftCompleteClass = this;
-		FlatClass leftInheritance = leftCompleteClass.getFlatClass();
-		FlatClass rightInheritance = rightCompleteClass.getFlatClass();
-		if (leftInheritance == rightInheritance) {
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass thatCompleteClass) {
+		FlatClass thisFlatClass = getFlatClass();
+		FlatClass thatFlatClass = thatCompleteClass.getFlatClass();
+		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return rightInheritance.isSuperFlatClassOf(leftInheritance);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type rightType) {
-		CompleteClass leftCompleteClass = this;
-		FlatClass leftInheritance = leftCompleteClass.getFlatClass();
-		FlatClass rightInheritance = rightType.getFlatClass(standardLibrary);
-		if (leftInheritance == rightInheritance) {
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType) {
+		FlatClass thisFlatClass = getFlatClass();
+		FlatClass thatFlatClass = thatType.getFlatClass(standardLibrary);
+		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return rightInheritance.isSuperFlatClassOf(leftInheritance);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	/**
@@ -443,8 +441,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass() {
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses2 = ClassUtil.nullFree(partialClasses);
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(this);
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			if (partialClass instanceof DataType) {
 				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)partialClass).getBehavioralClass();
 				if (behavioralClass != null) {
@@ -452,7 +450,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				}
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			return partialClass;
 		}
 		return null;
