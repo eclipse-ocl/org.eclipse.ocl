@@ -1452,14 +1452,14 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		FlatClass inheritance = getFlatClass(standardLibrary);
-		return inheritance.lookupActualOperation(standardLibrary, apparentOperation);
+		FlatClass flatClass = getFlatClass(standardLibrary);
+		return flatClass.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		FlatClass inheritance = getFlatClass(standardLibrary);
-		return inheritance.lookupImplementation(standardLibrary, apparentOperation);
+		FlatClass flatClass = getFlatClass(standardLibrary);
+		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
