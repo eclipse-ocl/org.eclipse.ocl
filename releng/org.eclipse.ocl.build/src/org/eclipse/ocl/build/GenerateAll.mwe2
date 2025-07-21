@@ -29,4 +29,5 @@ Workflow {
   component = @GenerateTestModels {}
   component = @GenerateOCLstdlibModel {}
   component = @GenerateCGLibraryModel {}
+  component = @GenerateLookupModel {}
 }
