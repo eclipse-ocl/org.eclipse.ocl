@@ -408,6 +408,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (leftType == rightType) {		// XXX specializations
 			return true;
 		}
+		if ("OclElement".equals(leftType.getName()) && "OclAny".equals(rightType.getName())) {
+			getClass();		// XXX
+		}
+
 		Type leftPrimaryType = getPrimaryType(leftType);
 		Type rightPrimaryType = getPrimaryType(rightType);
 		FlatClass leftFlatClass = leftPrimaryType.getFlatClass(this);

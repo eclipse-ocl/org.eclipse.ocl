@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
@@ -127,6 +128,44 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	{
 		public Mutable(@NonNull ReadOnly readonlyStandardLibrary) {
 			super(readonlyStandardLibrary);
+		}
+
+		@Override
+		public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+			ClassImpl asClass = (ClassImpl)type;
+			FlatClass flatClass = asClass.basicGetFlatClass();
+			if (flatClass == null) {
+//				flatClass = type.getFlatClass(this);
+				String name = asClass.getName();
+				org.eclipse.ocl.pivot.Class asImmutableClass = NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), name);
+				if (asImmutableClass == null) {
+					asImmutableClass = NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), name);			// XXX generalize / promote / use extensions
+				}
+				assert asImmutableClass != null;
+				asClass.setESObject(asImmutableClass.getESObject());
+			//	asClass.setTypeId(asImmutableClass.getTypeId());
+			//	asClass.setIsAbstract(asImmutableClass.isIsAbstract());
+			//	initTemplateParameters(asClass, typeParameters);
+				EcoreFlatModel flatModel = getFlatModel();
+				flatClass = flatModel.getEcoreFlatClass(asClass);
+				asClass.setFlatClass(flatClass);
+			}
+			else if (flatClass.getStandardLibrary() != this) {		// e.g populating mutable partial library wrt immutable
+//				flatClass = type.getFlatClass(this);
+				String name = asClass.getName();
+				org.eclipse.ocl.pivot.Class asImmutableClass = NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), name);
+				if (asImmutableClass == null) {
+					asImmutableClass = NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), name);
+				}
+				assert asImmutableClass != null;
+				asClass.setESObject(asImmutableClass.getESObject());
+			//	asClass.setTypeId(asImmutableClass.getTypeId());
+			//	asClass.setIsAbstract(asImmutableClass.isIsAbstract());
+			//	initTemplateParameters(asClass, typeParameters);
+				EcoreFlatModel flatModel = getFlatModel();
+				flatClass = flatModel.getEcoreFlatClass(asClass);
+			}
+			return flatClass;
 		}
 	}
 
@@ -688,6 +727,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		return ((ClassImpl)type).getFlatClass();
+	}
+
+	@Override
+	public @NonNull EcoreFlatModel getFlatModel() {
+		return (EcoreFlatModel)super.getFlatModel();
 	}
 
 	@Override

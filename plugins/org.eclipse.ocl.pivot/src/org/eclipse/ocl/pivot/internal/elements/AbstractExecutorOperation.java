@@ -64,7 +64,7 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 	}
 
 	@Override
-	public TemplateableElement getUnspecializedElement() {
+	public Operation getUnspecializedElement() {
 		throw new UnsupportedOperationException();
 	}
 
