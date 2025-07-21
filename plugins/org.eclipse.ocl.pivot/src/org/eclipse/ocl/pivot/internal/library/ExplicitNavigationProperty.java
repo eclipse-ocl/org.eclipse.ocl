@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -55,8 +54,8 @@ public class ExplicitNavigationProperty extends AbstractProperty
 			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(property));
 			// For UML, the OMG and UML2 models complement and the UML2 one has an EStructuralFeature
 			Iterable<@NonNull Property> properties = completeClass.getProperties(property);
-			if (properties instanceof PartialProperties) {
-				Iterable<@NonNull Property> partials = ((PartialProperties)properties).getPartials();
+		//	if (properties instanceof PartialProperties) {
+				Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
 				if (partials != null) {
 					for (Property partialProperty : partials) {
 						EObject esObject = partialProperty.getESObject();
@@ -66,7 +65,7 @@ public class ExplicitNavigationProperty extends AbstractProperty
 						}
 					}
 				}
-			}
+		//	}
 			if (eFeature2 == null) {
 				return null;
 			}
