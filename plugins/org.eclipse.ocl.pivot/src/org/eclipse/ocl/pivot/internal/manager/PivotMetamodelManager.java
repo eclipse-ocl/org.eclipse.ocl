@@ -642,11 +642,19 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	public @NonNull Iterable<? extends Property> getAllProperties(@NonNull Property pivotProperty) {
-		FlatClass pivotClass = pivotProperty.getFlatClass(standardLibrary);
+//		FlatClass pivotClass = pivotProperty.getFlatClass(standardLibrary);
+		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();
+/*		if (owningType != null) {
+			return standardLibrary.getInheritance(owningType);
+		}
+		else {
+			return null;
+		}
+		CompleteInheritance owningInheritance = pivotProperty.getInheritance(standardLibrary); */
 		if (pivotClass == null) {
 			throw new IllegalStateException("Missing owning type");
 		}
-		CompleteClass completeClass = completeModel.getCompleteClass(pivotClass.getPivotClass());
+		CompleteClass completeClass = completeModel.getCompleteClass(pivotClass/*.getPivotClass()*/);
 		Iterable<? extends Property> memberProperties = completeClass.getProperties(pivotProperty);
 		if (memberProperties != null) {
 			return memberProperties;
@@ -1247,12 +1255,13 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				return PivotUtil.getOpposite(getPrimaryProperty(opposite));
 			}
 		}
-		FlatClass owningInheritance = pivotProperty.getFlatClass(standardLibrary);
-		if (owningInheritance == null) {
+//		FlatClass owningInheritance = pivotProperty.getFlatClass(standardLibrary);
+		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();
+		if (pivotClass == null) {
 			return pivotProperty;
 		}
 		String name = PivotUtil.getName(pivotProperty);
-		CompleteClass completeClass = completeModel.getCompleteClass(owningInheritance.getPivotClass());
+		CompleteClass completeClass = completeModel.getCompleteClass(pivotClass/*owningInheritance.getPivotClass()*/);
 		Iterable<@NonNull Property> memberProperties = completeClass.getProperties(pivotProperty.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC, name);
 		if (Iterables.size(memberProperties) <= 1) {					// No ambiguity
 			return memberProperties.iterator().next();					// use merged unambiguous result (not necessarily pivotProperty)
