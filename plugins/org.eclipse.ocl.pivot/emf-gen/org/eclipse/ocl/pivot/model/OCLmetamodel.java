@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -53,11 +52,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -238,8 +233,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Package pivot;
 		private final @NonNull Package orphanPackage;
 
-		protected Contents(@NonNull Package standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-			super(standardLibrary);
+		protected Contents(@NonNull Package standardLibraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+			super(standardLibraryPackage);
 			root = createModel("http://www.eclipse.org/ocl/2015/Pivot");
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL, PivotPackage.eINSTANCE);
 			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
@@ -258,7 +253,7 @@ public class OCLmetamodel extends ASResourceImpl
 			return root;
 		}
 
-		private final @NonNull Package _ocl = standardLibrary;
+		private final @NonNull Package _ocl = standardLibraryPackage;
 		private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
 		private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
 		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
