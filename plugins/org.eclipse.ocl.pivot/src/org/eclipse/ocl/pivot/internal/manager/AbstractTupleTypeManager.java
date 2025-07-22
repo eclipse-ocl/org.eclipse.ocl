@@ -19,15 +19,18 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.TypedElementImpl;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -100,7 +103,24 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 		return true;
 	}
 
-	protected abstract @NonNull TupleType createTupleType(@NonNull TupleTypeId typeId);
+	protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
+		IdResolver idResolver = standardLibrary.getIdResolver();
+		TupleType tupleType = new TupleTypeImpl(tupleTypeId);
+		tupleType.setName(TypeId.TUPLE_NAME);
+		@NonNull PartId[] partIds = tupleTypeId.getPartIds();
+		List<Property> ownedAttributes = tupleType.getOwnedProperties();
+		for (@NonNull PartId partId : partIds) {
+			Type partType = idResolver.getType(partId.getTypeId());
+			Type partType2 = standardLibrary.getPrimaryType(partType);
+			Property property = PivotFactory.eINSTANCE.createProperty();
+			property.setName(NameUtil.getSafeName(partId));
+			property.setIsRequired(partId.isRequired());
+			ownedAttributes.add(property);
+			property.setType(partType2);			// After container to satisfy Property.setType assertIsNormalizedType
+		}
+		tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
+		return tupleType;
+	}
 
 	@Override
 	public void dispose() {
