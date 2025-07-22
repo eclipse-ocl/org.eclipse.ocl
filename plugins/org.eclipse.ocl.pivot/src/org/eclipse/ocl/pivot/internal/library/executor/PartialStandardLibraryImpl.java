@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -64,8 +63,6 @@ import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.PartId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
@@ -77,13 +74,11 @@ import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
-import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -96,10 +91,8 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -169,9 +162,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 	}
 
-	/**
-	 * @since 7.0
-	 */
 	public static class PartialJavaTypeManager extends AbstractJavaTypeManager
 	{
 		public PartialJavaTypeManager(@NonNull StandardLibrary standardLibrary) {
@@ -181,8 +171,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	/**
 	 * PartialLambdaTypeManager encapsulates the knowledge about known lambda types.
-	 *
-	 * @since 7.0
 	 */
 	public static class PartialLambdaTypeManager extends AbstractLambdaTypeManager
 	{
@@ -191,9 +179,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 	}
 
-	/**
-	 * @since 7.0
-	 */
 	public static class PartialMapTypeManager extends AbstractMapTypeManager
 	{
 		public PartialMapTypeManager(@NonNull StandardLibrary standardLibrary) {
@@ -205,30 +190,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	{
 		public PartialTupleTypeManager(@NonNull StandardLibrary standardLibrary) {
 			super(standardLibrary);
-		}
-
-		@Override
-		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
-			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
-			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			TupleType tupleType = new TupleTypeImpl(tupleTypeId);
-			tupleType.setName(TypeId.TUPLE_NAME);
-			@NonNull PartId[] partIds = tupleTypeId.getPartIds();
-			List<Property> ownedAttributes = tupleType.getOwnedProperties();
-			for (@NonNull PartId partId : partIds) {
-				Type partType = idResolver.getType(partId.getTypeId());
-				Type partType2 = metamodelManager.getPrimaryType(partType);
-				Property property = PivotFactory.eINSTANCE.createProperty();
-				property.setName(NameUtil.getSafeName(partId));
-				property.setIsRequired(partId.isRequired());
-				ownedAttributes.add(property);
-				property.setType(partType2);			// After container to satisfy Property.setType assertIsNormalizedType
-			}
-			tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
-			environmentFactory.addOrphanClass(tupleType);
-			return tupleType;
 		}
 	}
 
