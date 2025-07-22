@@ -20,12 +20,12 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
@@ -95,6 +95,9 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 						asEnumeration.getOwnedLiterals().add(asEnumerationLiteral);
 					}
 					asClass = asEnumeration;
+				}
+				else if (eClassifier instanceof EDataType) {
+					asClass = (ClassImpl) PivotFactory.eINSTANCE.createDataType();
 				}
 				else {
 					asClass = (ClassImpl) PivotFactory.eINSTANCE.createClass();
