@@ -18,9 +18,9 @@ package	org.eclipse.ocl.pivot.internal.library.executor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorTypedElement;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 
@@ -29,7 +29,12 @@ import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
  */
 public abstract class AbstractEvaluationOperation extends AbstractOperation
 {
-	protected static final @NonNull TypedElement caller = new AbstractExecutorTypedElement("name", OCLstdlibTables.Types._OclVoid);
+//	protected static final @NonNull TypedElement caller = new AbstractExecutorTypedElement("name", OCLstdlibTables.Types._OclVoid);
+	protected static final @NonNull TypedElement caller = PivotFactory.eINSTANCE.createProperty();
+	static {
+		caller.setName("name");
+		caller.setType(OCLstdlibTables.Types._OclVoid);
+	}
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -60,7 +61,6 @@ import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.flat.FlatModel;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -77,19 +77,13 @@ import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorBagType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorOrderedSetType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorSequenceType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorSetType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
+import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -102,13 +96,12 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
-import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Lists;
 
@@ -119,7 +112,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 {
 	public static class ReadOnly extends PartialStandardLibraryImpl
 	{
-		public ReadOnly(EcoreExecutorPackage... execPackages) {
+		public ReadOnly(org.eclipse.ocl.pivot.@NonNull Package... execPackages) {
 			super(execPackages);
 		}
 	}
@@ -174,35 +167,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		public PartialCollectionTypeManager(@NonNull StandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
-
-		@Override
-		protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
-			CollectionTypeId collectionTypeId = typeArguments.getCollectionTypeId();
-			Type elementType = typeArguments.getElementType();
-			boolean isNullFree = typeArguments.isNullFree();
-			IntegerValue lower = typeArguments.getLower();
-			UnlimitedNaturalValue upper = typeArguments.getUpper();
-			if (collectionTypeId == TypeId.BAG) {
-				return new ExecutorBagType(TypeId.BAG_NAME, standardLibrary.getBagType(), elementType, isNullFree, lower, upper);
-			}
-			else if (collectionTypeId == TypeId.ORDERED_SET) {
-				return new ExecutorOrderedSetType(TypeId.ORDERED_SET_NAME, standardLibrary.getOrderedSetType(), elementType, isNullFree, lower, upper);
-			}
-			else if (collectionTypeId == TypeId.SEQUENCE) {
-				return new ExecutorSequenceType(TypeId.SEQUENCE_NAME, standardLibrary.getSequenceType(), elementType, isNullFree, lower, upper);
-			}
-			else if (collectionTypeId == TypeId.SET) {
-				return new ExecutorSetType(TypeId.SET_NAME, standardLibrary.getSetType(), elementType, isNullFree, lower, upper);
-			}
-			else {
-				return new ExecutorCollectionType(TypeId.COLLECTION_NAME, standardLibrary.getCollectionType(), elementType, isNullFree, lower, upper);
-			}
-		}
-
-		@Override
-		protected boolean isValid(@Nullable Type type) {
-			return type != null;
-		}
 	}
 
 	/**
@@ -245,18 +209,26 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 		@Override
 		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
-			IdResolver idResolver = standardLibrary.getIdResolver();
+			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
+			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+			IdResolver idResolver = environmentFactory.getIdResolver();
+			TupleType tupleType = new TupleTypeImpl(tupleTypeId);
+			tupleType.setName(TypeId.TUPLE_NAME);
 			@NonNull PartId[] partIds = tupleTypeId.getPartIds();
-			List<@NonNull Property> parts = new ArrayList<>(partIds.length);
+			List<Property> ownedAttributes = tupleType.getOwnedProperties();
 			for (@NonNull PartId partId : partIds) {
 				Type partType = idResolver.getType(partId.getTypeId());
+				Type partType2 = metamodelManager.getPrimaryType(partType);
 				Property property = PivotFactory.eINSTANCE.createProperty();
 				property.setName(NameUtil.getSafeName(partId));
 				property.setIsRequired(partId.isRequired());
-				property.setType(partType);
-				parts.add(property);
+				ownedAttributes.add(property);
+				property.setType(partType2);			// After container to satisfy Property.setType assertIsNormalizedType
 			}
-			return new ExecutorTupleType(tupleTypeId, parts);
+			tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
+			environmentFactory.addOrphanClass(tupleType);
+			return tupleType;
 		}
 	}
 
@@ -270,16 +242,16 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
 	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned
-	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull ExecutorReflectivePackage>> asPackageMap = null;
+	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
 	private final boolean mutable;			//XXX split into two classes
 
-	protected PartialStandardLibraryImpl(EcoreExecutorPackage... execPackages) {
+	protected PartialStandardLibraryImpl(org.eclipse.ocl.pivot.@NonNull Package ... execPackages) {
 	//	OCLstdlibTables.PACKAGE.getClass();
 		this.mutable = false;
-		for (EcoreExecutorPackage execPackage : execPackages) {
+		for (org.eclipse.ocl.pivot.@NonNull Package execPackage : execPackages) {
 			assert execPackage != null;
 			addPackage(execPackage, null);
 		}
@@ -613,92 +585,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 */
 	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
 		return getCollectionType((CollectionType)genericType, elementType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
-	}
-
-	@Override
-	public @NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-				@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
-		if (leftType == rightType) {
-			return getPrimaryType(leftType);
-		}
-		if (leftType instanceof EcoreReflectiveType) {
-			FlatClass firstInheritance = leftType.getFlatClass(this);
-			FlatClass secondInheritance = rightType.getFlatClass(this);
-			FlatClass commonInheritance = firstInheritance.getCommonFlatClass(secondInheritance);
-			return commonInheritance.getPivotClass();
-		}
-		if (leftType instanceof ExecutorSpecializedType) {
-			throw new UnsupportedOperationException();			// WIP fixme
-		}
-
-		if (leftType instanceof JavaType) {
-			return getCommonJavaType((JavaType)leftType, rightType);
-		}
-		else if (leftType instanceof TemplateParameter) {
-			throw new UnsupportedOperationException();			// WIP fixme
-		}
-		return super.getCommonType(leftType, leftSubstitutions, rightType, rightSubstitutions);
-	}
-
-	protected org.eclipse.ocl.pivot.@NonNull Class getCommonJavaType(@NonNull JavaType thisType, @NonNull Type thatType) {
-		if (thisType == thatType) {
-			return thisType;
-		}
-		if (!(thatType instanceof JavaType)) {
-			return getOclAnyType();
-		}
-		JavaType thisJavaType = thisType;
-		JavaType thatJavaType = (JavaType)thatType;
-		java.lang.Class<?> commonClass = getCommonClass1(thisJavaType.javaClass, thatJavaType.javaClass);
-		if (commonClass != null) {
-			return getJavaType(commonClass);
-		}
-		else {
-			return getOclAnyType();
-		}
-	}
-	private static java.lang.@Nullable Class<?> getCommonClass1(java.lang.@NonNull Class<?> thisClass, java.lang.@NonNull Class<?> thatClass) {
-		java.lang.Class<?> commonClass = getCommonClass2(thisClass, thatClass);
-		if (commonClass != null) {
-			return commonClass;
-		}
-		java.lang.Class<?> superclass = thisClass.getSuperclass();
-		if (superclass != null) {
-			commonClass = getCommonClass1(superclass, thatClass);
-			if (commonClass != null) {
-				return commonClass;
-			}
-		}
-		for (java.lang.Class<?> superInterface : thisClass.getInterfaces()) {
-			if (superInterface != null) {
-				commonClass = getCommonClass1(superInterface, thatClass);
-				if (commonClass != null) {
-					return commonClass;
-				}
-			}
-		}
-		return null;
-	}
-	private static java.lang.@Nullable Class<?> getCommonClass2(java.lang.@NonNull Class<?> thisClass, java.lang.@NonNull Class<?> thatClass) {
-		if (thisClass == thatClass) {
-			return thisClass;
-		}
-		java.lang.Class<?> superclass = thatClass.getSuperclass();
-		if (superclass != null) {
-			java.lang.Class<?> commonClass = getCommonClass2(thisClass, superclass);
-			if (commonClass != null) {
-				return commonClass;
-			}
-		}
-		for (java.lang.Class<?> superInterface : thatClass.getInterfaces()) {
-			if (superInterface != null) {
-				java.lang.Class<?> commonClass = getCommonClass2(thisClass, superInterface);
-				if (commonClass != null) {
-					return commonClass;
-				}
-			}
-		}
-		return null;
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class getCommonTupleType(@NonNull TupleType thisType, @NonNull Type thatType) {

@@ -592,8 +592,16 @@ implements DataType {
 
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		org.eclipse.ocl.pivot.Class flattenableClass = this;
 		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
-		return standardLibrary.getFlatClass(behavioralType != null ? behavioralType : this);
+		if (behavioralType != null) {
+			flattenableClass = behavioralType;
+		}
+		org.eclipse.ocl.pivot.Class unspecializedClass = flattenableClass.getUnspecializedElement();
+		if (unspecializedClass != null) {
+			flattenableClass = unspecializedClass;
+		}
+		return standardLibrary.getFlatClass(flattenableClass);
 	}
 
 	/**

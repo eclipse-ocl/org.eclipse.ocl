@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -110,17 +109,7 @@ public abstract class AbstractJavaTypeManager implements JavaTypeManager
 
 	@Override
 	public final synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object) {
-		if (object instanceof ExecutorType) {					// XXX going obsolete  ?? use getTypeId()
-			ExecutorType type = (ExecutorType)object;
-			org.eclipse.ocl.pivot.Class asClass = key2class.get(type);
-			if (asClass == null) {
-				String metaclassName = type.getTypeId().getMetaclassName();
-				asClass = standardLibrary.getLibraryClass(metaclassName);
-				key2class.put(type, asClass);
-			}
-			return asClass;
-		}
-		else if (object instanceof TypeId) {
+		if (object instanceof TypeId) {
 			TypeId typeId = (TypeId)object;
 			org.eclipse.ocl.pivot.Class asClass;
 			asClass = key2class.get(typeId);

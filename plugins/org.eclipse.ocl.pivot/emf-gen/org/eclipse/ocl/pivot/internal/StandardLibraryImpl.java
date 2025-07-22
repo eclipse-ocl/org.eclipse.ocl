@@ -36,9 +36,6 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
-import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
-import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
@@ -408,10 +405,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (leftType == rightType) {		// XXX specializations
 			return true;
 		}
-		if ("OclElement".equals(leftType.getName()) && "OclAny".equals(rightType.getName())) {
-			getClass();		// XXX
-		}
-
 		Type leftPrimaryType = getPrimaryType(leftType);
 		Type rightPrimaryType = getPrimaryType(rightType);
 		FlatClass leftFlatClass = leftPrimaryType.getFlatClass(this);
@@ -646,18 +639,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 //	@Override
 	private org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull Type type) {
-		if (type instanceof ReflectiveInheritance) {
-			return ((ReflectiveInheritance)type).getPivotClass();
+		try {
+			return type.getFlatClass(this).getPivotClass();
 		}
-		else if (type instanceof EcoreExecutorType) {
-			return (EcoreExecutorType)type;
-		}
-		else {
-			try {
-				return type.getFlatClass(this).getPivotClass();
-			}
-			catch (Throwable e) {}
-		}
+		catch (Throwable e) {}
 		return getOclAnyType();			// FIXME should never happen;
 	}
 
@@ -770,10 +755,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 				return tupleTypeManager.isEqualToTupleType((TupleType)leftType, (TupleType)rightType);
 			}
 			return false;
-		}
-		else if (leftType instanceof AbstractReflectiveInheritanceType) {
-			AbstractReflectiveInheritanceType leftReflectiveType = (AbstractReflectiveInheritanceType)leftType;
-			return leftReflectiveType.getPivotClass() == rightType;
 		}
 		Type thisType = getNormalizedType(leftType);
 		Type thatType = getNormalizedType(rightType);

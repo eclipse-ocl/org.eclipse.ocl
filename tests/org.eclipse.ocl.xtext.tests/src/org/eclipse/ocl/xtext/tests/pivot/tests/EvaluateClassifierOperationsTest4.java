@@ -116,6 +116,8 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		try {
 			org.eclipse.ocl.pivot.Class classType = metamodelManager.getStandardLibrary().getClassType();
 			//
+			ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).allInstances()");
+//XXX
 			ocl.assertQueryResults(null, "Set{true,false}", "Boolean.allInstances()");
 			ocl.assertQueryResults(null, "Set{true,false}", "true.oclType().allInstances()");
 			ocl.assertSemanticErrorQuery(null, "true.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Boolean", "allInstances", "");
