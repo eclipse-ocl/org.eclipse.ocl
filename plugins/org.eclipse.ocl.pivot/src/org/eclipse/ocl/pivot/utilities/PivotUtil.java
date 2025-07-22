@@ -2441,7 +2441,7 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.3
+	 * @since 7.0
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Feature feature) {
 		return ClassUtil.requireNonNull(feature.getOwningClass());
