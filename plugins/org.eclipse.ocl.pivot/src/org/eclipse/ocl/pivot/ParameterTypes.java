@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.ParametersId;
-import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorParameter;
 
 /**
  * ParameterTypes provides a hashable list of operation
@@ -78,7 +77,14 @@ public class ParameterTypes
 			parameters = parameters2 = new ArrayList<>(parameterTypes.length);
 			for (int i = 0; i < parameterTypes.length; i++) {
 				Type type = parameterTypes[i];
-				parameters2.add(new AbstractExecutorParameter("_" + i, type, false));
+//				parameters2.add(new AbstractExecutorParameter("_" + i, type, false));
+				String name = "_" + i;
+			//	AbstractExecutorParameter asParameter = new AbstractExecutorParameter(name, type, false);
+				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
+				asParameter.setName(name);
+				asParameter.setType(type);
+				asParameter.setIsTypeof(false);
+				parameters2.add(asParameter);
 			}
 		}
 		return parameters2;
