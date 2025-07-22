@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -490,24 +489,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 		@Override
 		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
+			TupleType tupleType = super.createTupleType(tupleTypeId);
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
 			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
-			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			TupleType tupleType = new TupleTypeImpl(tupleTypeId);
-			tupleType.setName(TypeId.TUPLE_NAME);
-			@NonNull PartId[] partIds = tupleTypeId.getPartIds();
-			List<Property> ownedAttributes = tupleType.getOwnedProperties();
-			for (@NonNull PartId partId : partIds) {
-				Type partType = idResolver.getType(partId.getTypeId());
-				Type partType2 = metamodelManager.getPrimaryType(partType);
-				Property property = PivotFactory.eINSTANCE.createProperty();
-				property.setName(NameUtil.getSafeName(partId));
-				property.setIsRequired(partId.isRequired());
-				ownedAttributes.add(property);
-				property.setType(partType2);			// After container to satisfy Property.setType assertIsNormalizedType
-			}
-			tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
 			environmentFactory.addOrphanClass(tupleType);
 			return tupleType;
 		}
