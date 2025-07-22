@@ -76,6 +76,8 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
 
+import com.google.common.collect.ImmutableList;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Class</b></em>'.
@@ -1235,6 +1237,9 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull List<Operation> getOwnedOperations()
 	{
+		if (unspecializedElement != null) {
+			return ImmutableList.copyOf(((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedOperations());
+		}
 		EList<Operation> ownedOperations2 = ownedOperations;
 		if (ownedOperations2 == null)
 		{
@@ -1267,6 +1272,9 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull List<Property> getOwnedProperties()
 	{
+		if (unspecializedElement != null) {
+			return ImmutableList.copyOf(((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedProperties());
+		}
 		EList<Property> ownedProperties2 = ownedProperties;
 		if (ownedProperties2 == null)
 		{
@@ -1492,6 +1500,9 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
+		if ("EDate".equals(newName)) {
+			getClass();		// XXX
+		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {
