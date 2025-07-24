@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEList.UnmodifiableEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -75,8 +76,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * <!-- begin-user-doc -->
@@ -1237,34 +1236,38 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull List<Operation> getOwnedOperations()
 	{
-		if (unspecializedElement != null) {
-			return ImmutableList.copyOf(((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedOperations());
-		}
 		EList<Operation> ownedOperations2 = ownedOperations;
 		if (ownedOperations2 == null)
 		{
-			ownedOperations2 = ownedOperations = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS.getFeatureID(), PivotPackage.Literals.OPERATION__OWNING_CLASS.getFeatureID())
-			{
-				private static final long serialVersionUID = 1L;
+			if (unspecializedElement != null) {
+				InternalEList<Operation> unspecializedOperations = (InternalEList<Operation>) ((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedOperations();
+				ownedOperations2 = new UnmodifiableEList<Operation>(this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS, unspecializedOperations.size(), unspecializedOperations.basicToArray());
+			}
+			else {
+				ownedOperations2 = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS.getFeatureID(), PivotPackage.Literals.OPERATION__OWNING_CLASS.getFeatureID())
+				{
+					private static final long serialVersionUID = 1L;
 
-				@Override
-				protected void didRemove(int index, Operation partialOperation) {
-					assert partialOperation != null;
-					if (classListeners != null) {
-						classListeners.didRemoveOperation(partialOperation);
+					@Override
+					protected void didRemove(int index, Operation partialOperation) {
+						assert partialOperation != null;
+						if (classListeners != null) {
+							classListeners.didRemoveOperation(partialOperation);
+						}
 					}
-				}
 
-				@Override
-				public NotificationChain inverseAdd(Operation partialOperation, NotificationChain notifications) {
-					assert partialOperation != null;
-					NotificationChain inverseAdd = super.inverseAdd(partialOperation, notifications);
-					if (classListeners != null) {
-						classListeners.didAddOperation(partialOperation);		// inverseAdd rather than didAdd so that eContainer is defined
+					@Override
+					public NotificationChain inverseAdd(Operation partialOperation, NotificationChain notifications) {
+						assert partialOperation != null;
+						NotificationChain inverseAdd = super.inverseAdd(partialOperation, notifications);
+						if (classListeners != null) {
+							classListeners.didAddOperation(partialOperation);		// inverseAdd rather than didAdd so that eContainer is defined
+						}
+						return inverseAdd;
 					}
-					return inverseAdd;
-				}
-			};
+				};
+			}
+			ownedOperations = ownedOperations2;
 		}
 		return ownedOperations2;
 	}
@@ -1272,34 +1275,38 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull List<Property> getOwnedProperties()
 	{
-		if (unspecializedElement != null) {
-			return ImmutableList.copyOf(((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedProperties());
-		}
 		EList<Property> ownedProperties2 = ownedProperties;
 		if (ownedProperties2 == null)
 		{
-			ownedProperties2 = ownedProperties = new EObjectContainmentWithInverseEList<Property>(Property.class, this, PivotPackage.Literals.CLASS__OWNED_PROPERTIES.getFeatureID(), PivotPackage.Literals.PROPERTY__OWNING_CLASS.getFeatureID())
-			{
-				private static final long serialVersionUID = 1L;
+			if (unspecializedElement != null) {
+				InternalEList<Property> unspecializedProperties = (InternalEList<Property>) ((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedProperties();
+				ownedProperties2 = new UnmodifiableEList<Property>(this, PivotPackage.Literals.CLASS__OWNED_PROPERTIES, unspecializedProperties.size(), unspecializedProperties.basicToArray());
+			}
+			else {
+				ownedProperties2 = new EObjectContainmentWithInverseEList<Property>(Property.class, this, PivotPackage.Literals.CLASS__OWNED_PROPERTIES.getFeatureID(), PivotPackage.Literals.PROPERTY__OWNING_CLASS.getFeatureID())
+				{
+					private static final long serialVersionUID = 1L;
 
-				@Override
-				protected void didRemove(int index, Property partialProperty) {
-					assert partialProperty != null;
-					if (classListeners != null) {
-						classListeners.didRemoveProperty(partialProperty);
+					@Override
+					protected void didRemove(int index, Property partialProperty) {
+						assert partialProperty != null;
+						if (classListeners != null) {
+							classListeners.didRemoveProperty(partialProperty);
+						}
 					}
-				}
 
-				@Override
-				public NotificationChain inverseAdd(Property partialProperty, NotificationChain notifications) {
-					assert partialProperty != null;
-					NotificationChain inverseAdd = super.inverseAdd(partialProperty, notifications);
-					if (classListeners != null) {
-						classListeners.didAddProperty(partialProperty);		// inverseAdd rather than didAdd so that eContainer is defined
+					@Override
+					public NotificationChain inverseAdd(Property partialProperty, NotificationChain notifications) {
+						assert partialProperty != null;
+						NotificationChain inverseAdd = super.inverseAdd(partialProperty, notifications);
+						if (classListeners != null) {
+							classListeners.didAddProperty(partialProperty);		// inverseAdd rather than didAdd so that eContainer is defined
+						}
+						return inverseAdd;
 					}
-					return inverseAdd;
-				}
-			};
+				};
+			}
+			ownedProperties = ownedProperties2;
 		}
 		return ownedProperties2;
 	}
@@ -1500,9 +1507,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
-		if ("EDate".equals(newName)) {
-			getClass();		// XXX
-		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {
