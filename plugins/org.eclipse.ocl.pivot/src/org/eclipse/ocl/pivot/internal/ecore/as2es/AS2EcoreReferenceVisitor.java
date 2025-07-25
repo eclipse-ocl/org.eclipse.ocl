@@ -308,7 +308,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			EList<EClass> eTypes = eClass.getESuperTypes();
 			eTypes.clear();
 			eGenericTypes.clear();
-			if ("AnyType".equals(pivotClass.getName())) {
+			if ("ExpressionInOCL".equals(pivotClass.getName())) {
 				getClass();		// XXX
 			}
 			for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {

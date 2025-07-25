@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1516,6 +1517,10 @@ implements org.eclipse.ocl.pivot.Class {
 		if ((owningPackage instanceof PackageImpl) && (newName != null) && !newName.equals(oldName)) {
 			((PackageImpl)owningPackage).didAddClass(this);
 		}
+		if ("ExpressionInOCL".equals(newName)) {
+			System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + newName);
+			getClass();	// XXX
+		}
 	}
 
 	/**
@@ -1546,5 +1551,14 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public void setESObject(@NonNull EObject newTarget) {
+		if ("ExpressionInOCL".equals(name)) {
+			System.out.println("setESObject " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newTarget));
+			getClass();	// XXX
+		}
+		super.setESObject(newTarget);
 	}
 } //ClassImpl
