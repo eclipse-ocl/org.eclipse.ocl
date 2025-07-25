@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
@@ -895,7 +896,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
-		org.eclipse.ocl.pivot.Class unspecializedType = (org.eclipse.ocl.pivot.Class) type1.getUnspecializedElement();
+		org.eclipse.ocl.pivot.Class unspecializedType = type1.getUnspecializedElement();
 		org.eclipse.ocl.pivot.Class theType = unspecializedType != null ? unspecializedType : type1;
 		return getCompleteClass(theType).getFlatClass();
 	}
@@ -1472,6 +1473,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if ((thatClass == null) || (thatClass instanceof DataType)) {
 			return;
 		}
+		thatClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)thatClass);
 		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
 		if (thisClass == null) {								// e.g. an EAnnotation
 			return;
