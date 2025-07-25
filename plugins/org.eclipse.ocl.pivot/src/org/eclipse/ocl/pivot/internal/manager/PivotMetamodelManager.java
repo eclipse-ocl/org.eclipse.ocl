@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
@@ -1460,6 +1459,9 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (thatType == null) {
 			return;
 		}
+		if ("specification".equals(thisProperty.getName())) {
+			getClass();		// XXX
+		}
 		org.eclipse.ocl.pivot.Class thatClass = thatType.isClass();
 		if (thatClass == null) {
 			TemplateParameter thatTemplateParameter = thatType.isTemplateParameter();
@@ -1473,7 +1475,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if ((thatClass == null) || (thatClass instanceof DataType)) {
 			return;
 		}
-		thatClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)thatClass);
+	//	org.eclipse.ocl.pivot.Class thatUnspecializedClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)thatClass);
 		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
 		if (thisClass == null) {								// e.g. an EAnnotation
 			return;
@@ -1482,7 +1484,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (name == null) {
 			return;
 		}
-		thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
+		assert thisClass == PivotUtil.getUnspecializedTemplateableElement(thisClass); //	thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
 		// If there is no implicit property with the implicit name, create one
 		//   result a pair of mutual opposites
 		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
