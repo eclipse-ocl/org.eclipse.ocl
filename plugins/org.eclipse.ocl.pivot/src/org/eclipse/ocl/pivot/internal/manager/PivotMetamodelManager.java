@@ -1459,9 +1459,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (thatType == null) {
 			return;
 		}
-		if ("specification".equals(thisProperty.getName())) {
-			getClass();		// XXX
-		}
 		org.eclipse.ocl.pivot.Class thatClass = thatType.isClass();
 		if (thatClass == null) {
 			TemplateParameter thatTemplateParameter = thatType.isTemplateParameter();
