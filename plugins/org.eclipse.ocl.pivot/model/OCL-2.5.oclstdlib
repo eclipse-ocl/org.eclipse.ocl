@@ -90,6 +90,7 @@ annotation 'http://www.omg.org/ocl'(
 	ClassGroup_Collection='This sub clause defines the collection types and their operations. As defined in this sub clause, each collection type is actually a template type with one parameter. ‘T’ denotes the parameter. A concrete collection type is created by substituting a type for the T. So Set (Integer) and Bag (Person) are collection types.',
 	ClassGroup_PrimitiveTypes='The primitive types defined in the OCL standard library are UnlimitedNatural, Integer, Real, String, and Boolean. They are all instances of the metaclass Primitive from the UML core package.'
 );
+annotation 'http://www.eclipse.org/OCL/ASLibrary';
 
 /*
 A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.

@@ -13,6 +13,7 @@
         <values>The primitive types defined in the OCL standard library are UnlimitedNatural, Integer, Real, String, and Boolean. They are all instances of the metaclass Primitive from the UML core package.</values>
       </ownedDetails>
     </ownedAnnotations>
+    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASLibrary"/>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="yEcHF" instanceClassName="org.eclipse.ocl.pivot.values.Bag" name="Bag" superClasses="#ViIGS">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
