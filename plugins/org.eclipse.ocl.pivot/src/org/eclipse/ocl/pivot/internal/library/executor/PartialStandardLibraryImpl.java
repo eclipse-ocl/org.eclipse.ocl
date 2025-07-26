@@ -23,16 +23,19 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -93,6 +96,7 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -106,19 +110,37 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	public static class ReadOnly extends PartialStandardLibraryImpl
 	{
 		public ReadOnly(org.eclipse.ocl.pivot.@NonNull Package... execPackages) {
-			super(execPackages);
+			//	OCLstdlibTables.PACKAGE.getClass();
+			for (org.eclipse.ocl.pivot.@NonNull Package execPackage : execPackages) {
+				assert execPackage != null;
+				addPackage(execPackage, null);
+			}
+		//	System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
 		}
 
 		@Override
-		public boolean isMutable() {
-			return false;
+		public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+			return ((ClassImpl)type).getFlatClass();
 		}
 	}
 
 	public static class Mutable extends PartialStandardLibraryImpl
 	{
 		public Mutable(@NonNull ReadOnly readonlyStandardLibrary) {
-			super(readonlyStandardLibrary);
+			for (WeakReference<org.eclipse.ocl.pivot.@NonNull Package> execPackageRef : ((PartialStandardLibraryImpl)readonlyStandardLibrary).ePackageMap.values()) {
+				assert execPackageRef != null;
+				org.eclipse.ocl.pivot.Package execPackage = execPackageRef.get();
+				if (execPackage != null) {
+					addPackage(execPackage, null);
+				}
+			}
+			for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> entry : ((PartialStandardLibraryImpl)readonlyStandardLibrary).extensions.entrySet()) {
+				org.eclipse.ocl.pivot.@NonNull Package basePackage = entry.getKey();
+				for (org.eclipse.ocl.pivot.@NonNull Package extensionPackage : entry.getValue()) {
+					addExtension(basePackage, extensionPackage);
+				}
+			}
+		//	System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
 		}
 
 		@Override
@@ -127,34 +149,36 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			FlatClass flatClass = asClass.basicGetFlatClass();
 			if (flatClass == null) {
 //				flatClass = type.getFlatClass(this);
-				String name = asClass.getName();
-				org.eclipse.ocl.pivot.Class asImmutableClass = NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), name);
-				if (asImmutableClass == null) {
-					asImmutableClass = NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), name);			// XXX generalize / promote / use extensions
-				}
-			//	assert asImmutableClass != null;
-				if (asImmutableClass != null) {
-					assert false;			// XXX
-					asClass.setESObject(asImmutableClass.getESObject());
+				if (asClass.getESObject() == null) {
+					//
+					//	If loading from oclas, there are no EObjects, infer from built-in models.
+					//		e.g.	testValidate_OCL_2_5_oclas
+					//
+					org.eclipse.ocl.pivot.Class asImmutableClass = getImmutableClass(asClass);
+					if (asImmutableClass != null) {
+						EObject esObject = asImmutableClass.getESObject();
+						assert esObject != null;
+						asClass.setESObject(esObject);
+					}
 				}
 			//	asClass.setTypeId(asImmutableClass.getTypeId());
 			//	asClass.setIsAbstract(asImmutableClass.isIsAbstract());
 			//	initTemplateParameters(asClass, typeParameters);
 				EcoreFlatModel flatModel = getFlatModel();
 				flatClass = flatModel.getEcoreFlatClass(asClass);
-				if (!isMutable()) {
-					asClass.setFlatClass(flatClass);
-				}
 			}
-			else if (flatClass.getStandardLibrary() != this) {		// e.g populating mutable partial library wrt immutable
+			else {
+				assert flatClass.getStandardLibrary() != this;		// e.g populating mutable partial library wrt immutable
+				org.eclipse.ocl.pivot.Class asImmutableClass = getImmutableClass(asClass);
+				assert asImmutableClass == null;
 //				flatClass = type.getFlatClass(this);
-				String name = asClass.getName();
-				org.eclipse.ocl.pivot.Class asImmutableClass = NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), name);
-				if (asImmutableClass == null) {
-					asImmutableClass = NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), name);
-				}
-				assert asImmutableClass != null;
-				asClass.setESObject(asImmutableClass.getESObject());
+			//	String name = asClass.getName();
+			//	org.eclipse.ocl.pivot.Class asImmutableClass = NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), name);
+			//	if (asImmutableClass == null) {
+			//		asImmutableClass = NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), name);
+			//	}
+			//	assert asImmutableClass != null;
+			//	asClass.setESObject(asImmutableClass.getESObject());
 			//	asClass.setTypeId(asImmutableClass.getTypeId());
 			//	asClass.setIsAbstract(asImmutableClass.isIsAbstract());
 			//	initTemplateParameters(asClass, typeParameters);
@@ -164,9 +188,21 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return flatClass;
 		}
 
-		@Override
-		public boolean isMutable() {
-			return true;
+		private org.eclipse.ocl.pivot.@Nullable Class getImmutableClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
+			for (@NonNull Element asAnnotation : PivotUtil.getOwnedAnnotations(asPackage)) {
+				if (asAnnotation instanceof Annotation) {
+					String className = asClass.getName();
+					String source = ((Annotation)asAnnotation).getName();
+					if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
+						return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
+					}
+					else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+						return NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), className);
+					}
+				}
+			}
+			return null;
 		}
 	}
 
@@ -218,36 +254,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
 	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned // XXX Unify with CompleteModel
-	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> asPackageMap = null;
+	// private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
-
-	protected PartialStandardLibraryImpl(org.eclipse.ocl.pivot.@NonNull Package ... execPackages) {
-	//	OCLstdlibTables.PACKAGE.getClass();
-		for (org.eclipse.ocl.pivot.@NonNull Package execPackage : execPackages) {
-			assert execPackage != null;
-			addPackage(execPackage, null);
-		}
-	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
-	}
-
-	protected PartialStandardLibraryImpl(PartialStandardLibraryImpl.@NonNull ReadOnly immutableStandardLibrary) {
-		for (WeakReference<org.eclipse.ocl.pivot.@NonNull Package> execPackageRef : ((PartialStandardLibraryImpl)immutableStandardLibrary).ePackageMap.values()) {
-			assert execPackageRef != null;
-			org.eclipse.ocl.pivot.Package execPackage = execPackageRef.get();
-			if (execPackage != null) {
-				addPackage(execPackage, null);
-			}
-		}
-		for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> entry : ((PartialStandardLibraryImpl)immutableStandardLibrary).extensions.entrySet()) {
-			org.eclipse.ocl.pivot.@NonNull Package basePackage = entry.getKey();
-			for (org.eclipse.ocl.pivot.@NonNull Package extensionPackage : entry.getValue()) {
-				addExtension(basePackage, extensionPackage);
-			}
-		}
-	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
-	}
 
 //	@Override
 //	public <R> R accept(@NonNull Visitor<R> visitor) {
@@ -378,7 +388,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull TypedElement createLambdaParameter(String name, @NonNull Type type, boolean isRequired) {
+	public @NonNull TypedElement createLambdaParameter(@NonNull String name, @NonNull Type type, boolean isRequired) {
 		return LambdaTypeManager.createCandidateLambdaParameter(name, type, isRequired);
 	}
 
@@ -414,7 +424,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
 			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
 			for (int i = 0; i < typeParameters.parametersSize(); i++) {
-				Type type = typeParameters.get(i);		// XXX
+			//	Type type = typeParameters.get(i);		// XXX
 				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
 				asTemplateParameter.setName("_" + i);
 			//	asTemplateParameter.setType(type);
@@ -582,11 +592,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return enumerationType;
 		}
 		throw new IllegalStateException("No extension package defines Enumeration type"); //$NON-NLS-1$
-	}
-
-	@Override
-	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		return ((ClassImpl)type).getFlatClass();
 	}
 
 	@Override
@@ -856,8 +861,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			pivotType.setOwnedSignature(templateSignature);
 		}
 	}
-
-	public abstract boolean isMutable();
 
 	public void resetSeverities() {
 		validationKey2severity = null;

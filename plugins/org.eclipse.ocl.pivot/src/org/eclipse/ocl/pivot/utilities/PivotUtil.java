@@ -1954,6 +1954,13 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Iterable<@NonNull Element> getOwnedAnnotations(org.eclipse.ocl.pivot.@NonNull Package asPackage) {	// XXX Why Element ??
+		return ClassUtil.nullFree(asPackage.getOwnedAnnotations());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedArgument(@NonNull OperationCallExp object, int index) {
