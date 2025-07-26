@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -1136,6 +1137,9 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	private TypeId typeId = null;
+	/**
+	 * The FlatClass of this class associated with the ReadOnly PartialStandardLibrary.
+	 */
 	private @Nullable FlatClass flatClass = null;
 	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
@@ -1157,6 +1161,12 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	public @Nullable FlatClass basicGetFlatClass() {
+		if (flatClass != null) {
+		//	Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		//	assert executor != null;
+			assert flatClass != null;
+			assert flatClass.getStandardLibrary() == OCLstdlibTables.LIBRARY;			// XXX
+		}
 		return flatClass;
 	}
 
@@ -1211,6 +1221,11 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	public @NonNull FlatClass getFlatClass() {
+		assert flatClass != null;
+	//	Executor executor = ThreadLocalExecutor.basicGetExecutor();
+	//	assert executor != null;
+		assert flatClass != null;
+		assert flatClass.getStandardLibrary() == OCLstdlibTables.LIBRARY;			// XXX
 		assert flatClass != null;
 		return flatClass;
 	}
@@ -1500,6 +1515,7 @@ implements org.eclipse.ocl.pivot.Class {
 	public void setFlatClass(@NonNull FlatClass flatClass) {
 		assert this.flatClass == null;
 		this.flatClass = flatClass;
+		assert flatClass.getStandardLibrary() == OCLstdlibTables.LIBRARY;			// XXX
 	}
 
 	/**

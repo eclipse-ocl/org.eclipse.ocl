@@ -108,6 +108,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		public ReadOnly(org.eclipse.ocl.pivot.@NonNull Package... execPackages) {
 			super(execPackages);
 		}
+
+		@Override
+		public boolean isMutable() {
+			return false;
+		}
 	}
 
 	public static class Mutable extends PartialStandardLibraryImpl
@@ -134,7 +139,9 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			//	initTemplateParameters(asClass, typeParameters);
 				EcoreFlatModel flatModel = getFlatModel();
 				flatClass = flatModel.getEcoreFlatClass(asClass);
-				asClass.setFlatClass(flatClass);
+				if (!isMutable()) {
+					asClass.setFlatClass(flatClass);
+				}
 			}
 			else if (flatClass.getStandardLibrary() != this) {		// e.g populating mutable partial library wrt immutable
 //				flatClass = type.getFlatClass(this);
@@ -152,6 +159,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 				flatClass = flatModel.getEcoreFlatClass(asClass);
 			}
 			return flatClass;
+		}
+
+		@Override
+		public boolean isMutable() {
+			return true;
 		}
 	}
 
@@ -202,38 +214,36 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 */
 	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
-	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned
+	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned // XXX Unify with CompleteModel
 	private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
-	private final boolean mutable;			//XXX split into two classes
 
 	protected PartialStandardLibraryImpl(org.eclipse.ocl.pivot.@NonNull Package ... execPackages) {
 	//	OCLstdlibTables.PACKAGE.getClass();
-		this.mutable = false;
 		for (org.eclipse.ocl.pivot.@NonNull Package execPackage : execPackages) {
 			assert execPackage != null;
 			addPackage(execPackage, null);
 		}
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
 	}
 
-	protected PartialStandardLibraryImpl(@NonNull PartialStandardLibraryImpl immutableStandardLibrary) {
-		assert !immutableStandardLibrary.mutable;
-		this.mutable = true;
-		for (WeakReference<org.eclipse.ocl.pivot.@NonNull Package> execPackageRef : immutableStandardLibrary.ePackageMap.values()) {
+	protected PartialStandardLibraryImpl(PartialStandardLibraryImpl.@NonNull ReadOnly immutableStandardLibrary) {
+		for (WeakReference<org.eclipse.ocl.pivot.@NonNull Package> execPackageRef : ((PartialStandardLibraryImpl)immutableStandardLibrary).ePackageMap.values()) {
 			assert execPackageRef != null;
 			org.eclipse.ocl.pivot.Package execPackage = execPackageRef.get();
 			if (execPackage != null) {
 				addPackage(execPackage, null);
 			}
 		}
-		for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> entry : immutableStandardLibrary.extensions.entrySet()) {
+		for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> entry : ((PartialStandardLibraryImpl)immutableStandardLibrary).extensions.entrySet()) {
 			org.eclipse.ocl.pivot.@NonNull Package basePackage = entry.getKey();
 			for (org.eclipse.ocl.pivot.@NonNull Package extensionPackage : entry.getValue()) {
 				addExtension(basePackage, extensionPackage);
 			}
 		}
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
 	}
 
 //	@Override
@@ -844,9 +854,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 	}
 
-	public boolean isMutable() {
-		return mutable;
-	}
+	public abstract boolean isMutable();
 
 	public void resetSeverities() {
 		validationKey2severity = null;
