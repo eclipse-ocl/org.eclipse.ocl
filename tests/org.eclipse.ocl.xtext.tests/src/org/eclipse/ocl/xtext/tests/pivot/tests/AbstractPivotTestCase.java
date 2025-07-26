@@ -917,6 +917,7 @@ public class AbstractPivotTestCase extends TestCase
 			SETUP_TEST_NAME = null;
 			TestCaseAppender.INSTANCE.assertNotInstalled();
 			super.tearDown();
+			assert ThreadLocalExecutor.basicGetExecutor() == null;
 		}
 		finally {
 			assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : getName() + " failed to detach EnvironmentFactory.";

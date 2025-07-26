@@ -104,14 +104,14 @@ public class EcoreExecutorManager extends ExecutorManager
 			List<EObject> roots = null;
 			if (resource != null) {
 				ResourceSet resourceSet = resource.getResourceSet();
+				roots = new ArrayList<>();
 				if (resourceSet != null) {
-					roots = new ArrayList<EObject>();
 					for (Resource r : resourceSet.getResources()) {
 						roots.addAll(r.getContents());
 					}
 				}
 				else {
-					roots = resource.getContents();
+					roots.addAll(resource.getContents());
 				}
 			}
 			org.eclipse.ocl.pivot.Package root = standardLibrary2.getPackage();
