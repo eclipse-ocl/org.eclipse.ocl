@@ -67,7 +67,6 @@ public class EcoreExecutorManager extends ExecutorManager
 	 */
 	public EcoreExecutorManager(@Nullable Object contextObject, PartialStandardLibraryImpl.@NonNull ReadOnly standardLibrary) {
 		super(new PartialStandardLibraryImpl.Mutable(standardLibrary));
-		assert !standardLibrary.isMutable();
 		this.contextObject = contextObject;
 		ThreadLocalExecutor.setExecutor(this);
 	}
