@@ -16,20 +16,20 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
- * The OCL_ASMetamodel_EAnnotationConverter supports the addition EPackage isASMetamodel field.
+ * The OCL_ASLibrary_EAnnotationConverter supports the addition EPackage isASLibrary field.
  *
  * @since 7.0
  */
-public class OCL_ASMetamodel_EAnnotationConverter extends AbstractEAnnotationConverter
+public class OCL_ASLibrary_EAnnotationConverter extends AbstractEAnnotationConverter
 {
-	public static final @NonNull OCL_ASMetamodel_EAnnotationConverter INSTANCE = new OCL_ASMetamodel_EAnnotationConverter();
+	public static final @NonNull OCL_ASLibrary_EAnnotationConverter INSTANCE = new OCL_ASLibrary_EAnnotationConverter();
 
-	public static @NonNull OCL_ASMetamodel_EAnnotationConverter getInstance() {
+	public static @NonNull OCL_ASLibrary_EAnnotationConverter getInstance() {
 		return INSTANCE;
 	}
 
-	private OCL_ASMetamodel_EAnnotationConverter() {
-		super(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
+	private OCL_ASLibrary_EAnnotationConverter() {
+		super(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
 	}
 
 	@Override

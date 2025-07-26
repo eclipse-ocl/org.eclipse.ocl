@@ -153,6 +153,7 @@ public abstract class AbstractEAnnotationConverter implements EAnnotationConvert
 		MOF_XML_EAnnotationConverter.getInstance();
 		OCL_Collection_EAnnotationConverter.getInstance();
 		OCL_Import_EAnnotationConverter.getInstance();
+		OCL_ASLibrary_EAnnotationConverter.getInstance();
 		OCL_ASMetamodel_EAnnotationConverter.getInstance();
 		OCL_Pivot_Operation_EAnnotationConverter.getInstance();
 		UML_EAnnotationConverter.getInstance();					// validateXXX has XXX as an originalName
