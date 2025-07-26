@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
-import org.eclipse.ocl.pivot.utilities.PivotObject;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
@@ -114,16 +113,17 @@ public class EcoreExecutorManager extends ExecutorManager
 					roots.addAll(resource.getContents());
 				}
 			}
-			org.eclipse.ocl.pivot.Package root = standardLibrary2.getPackage();
-			if (root instanceof PivotObject) {
-				if (roots == null) {
-					roots = new ArrayList<EObject>();
-				}
-				roots.add(root);
-			}
 			if (roots == null) {
-				roots = Collections.singletonList(rootContainer);
+				roots = new ArrayList<>();
+				roots.add(rootContainer);
 			}
+			org.eclipse.ocl.pivot.Package root = standardLibrary2.getPackage();
+		//	if (root instanceof PivotObject) {
+		//		if (roots == null) {
+		//			roots = new ArrayList<>();
+		//		}
+				roots.add(root);
+		//	}
 			assert roots != null;
 			EcoreIdResolver adapter = new EcoreIdResolver(roots, standardLibrary2);
 			eAdapters.add(adapter);
