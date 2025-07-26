@@ -132,8 +132,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 				if (asImmutableClass == null) {
 					asImmutableClass = NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), name);			// XXX generalize / promote / use extensions
 				}
-				assert asImmutableClass != null;
-				asClass.setESObject(asImmutableClass.getESObject());
+			//	assert asImmutableClass != null;
+				if (asImmutableClass != null) {
+					assert false;			// XXX
+					asClass.setESObject(asImmutableClass.getESObject());
+				}
 			//	asClass.setTypeId(asImmutableClass.getTypeId());
 			//	asClass.setIsAbstract(asImmutableClass.isIsAbstract());
 			//	initTemplateParameters(asClass, typeParameters);
@@ -226,7 +229,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			assert execPackage != null;
 			addPackage(execPackage, null);
 		}
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
 	}
 
 	protected PartialStandardLibraryImpl(PartialStandardLibraryImpl.@NonNull ReadOnly immutableStandardLibrary) {
@@ -243,7 +246,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 				addExtension(basePackage, extensionPackage);
 			}
 		}
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
 	}
 
 //	@Override
