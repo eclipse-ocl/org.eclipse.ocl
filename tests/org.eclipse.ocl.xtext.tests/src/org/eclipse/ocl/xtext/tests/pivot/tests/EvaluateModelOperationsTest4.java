@@ -456,7 +456,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_maps() throws Exception {
 		TestOCL ocl = createOCLWithProjectMap();
-		URI uri = URI.createPlatformResourceURI("org.eclipse.emf.ecore/model/Ecore.ecore", true);	// Java bariant has precedence
+		URI uri = URI.createPlatformResourceURI("org.eclipse.emf.ecore/model/Ecore.ecore", true);	// Java variant has precedence
 		EObject ePackage = ocl.getResourceSet().getEObject(uri.appendFragment("/"), true);
 		//
 		String expectedResultExpression = OCLGenModelUtil.INSTANCE.hasConstraintEAnnotations() ? "Set{'baseType','constraints','name'}" :  "Set{'baseType','name'}";
@@ -517,8 +517,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	@Test
-	public void test_ecore_collection_equality() throws Exception {
+	@Test public void test_ecore_collection_equality() throws Exception {
 		TestOCL ocl = createOCL();
 		//
 		EList<EStructuralFeature> eStructuralFeatures = EcorePackage.Literals.ECLASS.getEStructuralFeatures();
@@ -560,8 +559,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	@Test
-	public void test_ecore_number_equality() throws Exception {
+	@Test public void test_ecore_number_equality() throws Exception {
 		TestOCL ocl = createOCL();
 		//
 		ocl.assertQueryOCLEquals(null, Byte.valueOf((byte)255), "-1");
