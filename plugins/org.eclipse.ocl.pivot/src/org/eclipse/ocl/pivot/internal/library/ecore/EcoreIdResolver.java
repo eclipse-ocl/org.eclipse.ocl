@@ -106,7 +106,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 				asClass.setESObject(eClassifier);
 				EcoreFlatModel flatModel = getStandardLibrary().getFlatModel();
 				EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
-				asClass.setFlatClass(flatClass);
+		//		asClass.setFlatClass(flatClass);
 				asClasses.add(asClass);
 			}
 		}
