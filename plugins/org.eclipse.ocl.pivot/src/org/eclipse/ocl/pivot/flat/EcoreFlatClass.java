@@ -140,9 +140,9 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		}
 		if (superFlatClasses == null) {
 			StandardLibrary standardLibrary = getStandardLibrary();
-			org.eclipse.ocl.pivot.@NonNull Class oclAnyClass = standardLibrary.getOclAnyType();
-			FlatClass oclAnyFlatClass = oclAnyClass.getFlatClass(standardLibrary);
-			superFlatClasses = Collections.singletonList(oclAnyFlatClass);
+			org.eclipse.ocl.pivot.@NonNull Class oclElementClass = standardLibrary.getOclElementType();
+			FlatClass oclElementFlatClass = oclElementClass.getFlatClass(standardLibrary);
+			superFlatClasses = Collections.singletonList(oclElementFlatClass);
 		}
 		return superFlatClasses;
 	}

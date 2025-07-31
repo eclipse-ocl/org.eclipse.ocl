@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.flat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,11 +37,13 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 import com.google.common.base.Predicate;
@@ -53,6 +56,11 @@ import com.google.common.collect.Iterables;
  */
 public abstract class AbstractFlatClass implements FlatClass, IClassListener
 {
+	public static final @NonNull TracingOption DYNAMIC_FRAGMENTS = new TracingOption(PivotPlugin.PLUGIN_ID, "flat/dynamic/fragments");
+	public static final @NonNull TracingOption OPERATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "flat/operations");
+	public static final @NonNull TracingOption PROPERTIES = new TracingOption(PivotPlugin.PLUGIN_ID, "flat/properties");
+	public static final @NonNull TracingOption STATIC_FRAGMENTS = new TracingOption(PivotPlugin.PLUGIN_ID, "flat/static/fragments");
+
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
@@ -788,6 +796,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				throw new IllegalStateException(s.toString());
 			}
 		}
+		if (DYNAMIC_FRAGMENTS.isActive()) {
+			StringBuilder s = new StringBuilder();
+			s.append(NameUtil.debugSimpleName(getStandardLibrary()) + " " + NameUtil.debugSimpleName(this) + " : " + this + " " + Arrays.toString(indexes) + " " + Arrays.toString(fragments));
+			DYNAMIC_FRAGMENTS.println(s.toString());
+		}
 	//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " indexes: " + Arrays.toString(indexes) + " : " + Arrays.toString(fragments));
 		assert mutable == Boolean.TRUE;
 	}
@@ -805,6 +818,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.fragments = fragments;
 		this.indexes = indexes;
 		this.mutable = Boolean.FALSE;
+		if (STATIC_FRAGMENTS.isActive()) {
+			StringBuilder s = new StringBuilder();
+			s.append(NameUtil.debugSimpleName(getStandardLibrary()) + " " + NameUtil.debugSimpleName(this) + " : " + this + " " + Arrays.toString(indexes) + " " + Arrays.toString(fragments));
+			STATIC_FRAGMENTS.println(s.toString());
+		}
 	}
 
 	/**

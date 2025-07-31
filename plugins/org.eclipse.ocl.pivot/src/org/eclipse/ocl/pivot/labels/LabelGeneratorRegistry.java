@@ -122,7 +122,7 @@ public class LabelGeneratorRegistry implements ILabelGenerator.Registry
 		return new LabelGeneratorRegistry.Global();
 	}
 
-	public static void initialize(ILabelGenerator.@NonNull Registry registry) {
+	public static void initialize(ILabelGenerator.@NonNull Registry registry) {				// XXX Refactor to share instances
 		BooleanLabelGenerator.initialize(registry);
 		ClassLabelGenerator.initialize(registry);
 		DynamicEObjectImplLabelGenerator.initialize(registry);
