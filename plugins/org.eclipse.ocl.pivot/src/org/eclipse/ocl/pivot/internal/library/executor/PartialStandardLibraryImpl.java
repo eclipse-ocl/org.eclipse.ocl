@@ -146,8 +146,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		@Override
 		public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 			ClassImpl asClass = (ClassImpl)type;
-			FlatClass flatClass = asClass.basicGetFlatClass();
-			if (flatClass == null) {
+			FlatClass flatClass = null;//asClass.basicGetFlatClass();
+//			if (flatClass == null) {
 //				flatClass = type.getFlatClass(this);
 				if (asClass.getESObject() == null) {
 					//
@@ -166,7 +166,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			//	initTemplateParameters(asClass, typeParameters);
 				EcoreFlatModel flatModel = getFlatModel();
 				flatClass = flatModel.getEcoreFlatClass(asClass);
-			}
+		/*	}
 			else {
 				assert flatClass.getStandardLibrary() != this;		// e.g populating mutable partial library wrt immutable
 				org.eclipse.ocl.pivot.Class asImmutableClass = getImmutableClass(asClass);
@@ -184,7 +184,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			//	initTemplateParameters(asClass, typeParameters);
 				EcoreFlatModel flatModel = getFlatModel();
 				flatClass = flatModel.getEcoreFlatClass(asClass);
-			}
+			} */
 			return flatClass;
 		}
 
@@ -194,6 +194,9 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 				if (asAnnotation instanceof Annotation) {
 					String className = asClass.getName();
 					String source = ((Annotation)asAnnotation).getName();
+					//
+					//	XXX Revamp as a single semantic annotation with an/some equivalent built-in URI
+					//
 					if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
 						return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
 					}
@@ -816,7 +819,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 		asClass.setIsAbstract((flags & FlatClass.ABSTRACT) != 0);
 		initTemplateParameters(asClass, typeParameters);
-		/*Ecore*/FlatModel flatModel = getFlatModel();
+		/*Ecore*/FlatModel flatModel = getFlatModel();					// XXX Migrate to initFragments
 		FlatClass flatClass = flatModel./*Ecore*/getFlatClass(asClass);
 		asClass.setFlatClass(flatClass);
 	}
