@@ -328,12 +328,21 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 * @since 7.0
 	 */
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
-			org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
+			@Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
 		assert eMetaClass != null;
 		assert eClassifier != null;
 		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.create(eMetaClass);
 		initClass(asClass, eClassifier, typeId, flags, typeParameters);
 		return asClass;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
+		return createClass(eMetaClass, eClassifier, typeId, flags, typeParameters);
 	}
 
 	@Override
@@ -344,11 +353,19 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum) {
 		assert eEnum != null;
 		EnumerationImpl asClass = (EnumerationImpl)PivotFactory.eINSTANCE.createEnumeration();
 		initClass(asClass, eEnum, null, 0);
 		return asClass;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return createEnumeration(eEnum);
 	}
 
 	/**
@@ -815,7 +832,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		asClass.setName(eClassifier.getName());
 		if (typeId != null) {
 			asClass.setTypeId(typeId);
-//XXX			asClass.setNormalizedTypeId(typeId);
 		}
 		asClass.setIsAbstract((flags & FlatClass.ABSTRACT) != 0);
 		initTemplateParameters(asClass, typeParameters);
