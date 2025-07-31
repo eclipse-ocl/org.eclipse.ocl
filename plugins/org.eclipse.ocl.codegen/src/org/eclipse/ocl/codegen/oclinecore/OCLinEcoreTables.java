@@ -942,10 +942,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		else { */
 			s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
 	//	}
-		s.append(", PACKAGE");
-		if (asClass instanceof Enumeration) {
-		}
-		else {
+		if (!(asClass instanceof Enumeration)) {
 			s.append(", ");
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);

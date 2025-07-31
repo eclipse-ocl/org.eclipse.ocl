@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -175,8 +174,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_safe_object_navigation() {
-		AbstractFlatClass.DYNAMIC_FRAGMENTS.setState(true);
-		AbstractFlatClass.STATIC_FRAGMENTS.setState(true);
+	//	AbstractFlatClass.DYNAMIC_FRAGMENTS.setState(true);
+	//	AbstractFlatClass.STATIC_FRAGMENTS.setState(true);
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertValidationErrorQuery(ocl.getContextType(standardLibrary.getPackage()), "let parent : OclElement[1] = oclContainer()?.oclAsType(OclElement) in parent", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleNullityForInitializer", "parent : OclElement[1] = self.oclContainer()?.oclAsType(OclElement)");

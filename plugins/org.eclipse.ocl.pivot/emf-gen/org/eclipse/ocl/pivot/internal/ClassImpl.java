@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
-import org.eclipse.emf.ecore.util.EcoreEList.UnmodifiableEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -1254,11 +1253,11 @@ implements org.eclipse.ocl.pivot.Class {
 		EList<Operation> ownedOperations2 = ownedOperations;
 		if (ownedOperations2 == null)
 		{
-			if (unspecializedElement != null) {
-				InternalEList<Operation> unspecializedOperations = (InternalEList<Operation>) ((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedOperations();
-				ownedOperations2 = new UnmodifiableEList<Operation>(this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS, unspecializedOperations.size(), unspecializedOperations.basicToArray());
-			}
-			else {
+		//	if (unspecializedElement != null) {
+		//		InternalEList<Operation> unspecializedOperations = (InternalEList<Operation>) ((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedOperations();
+		//		ownedOperations2 = new UnmodifiableEList<Operation>(this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS, unspecializedOperations.size(), unspecializedOperations.basicToArray());
+		//	}
+		//	else {
 				ownedOperations2 = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS.getFeatureID(), PivotPackage.Literals.OPERATION__OWNING_CLASS.getFeatureID())
 				{
 					private static final long serialVersionUID = 1L;
@@ -1281,7 +1280,7 @@ implements org.eclipse.ocl.pivot.Class {
 						return inverseAdd;
 					}
 				};
-			}
+		//	}
 			ownedOperations = ownedOperations2;
 		}
 		return ownedOperations2;
@@ -1293,11 +1292,11 @@ implements org.eclipse.ocl.pivot.Class {
 		EList<Property> ownedProperties2 = ownedProperties;
 		if (ownedProperties2 == null)
 		{
-			if (unspecializedElement != null) {
-				InternalEList<Property> unspecializedProperties = (InternalEList<Property>) ((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedProperties();
-				ownedProperties2 = new UnmodifiableEList<Property>(this, PivotPackage.Literals.CLASS__OWNED_PROPERTIES, unspecializedProperties.size(), unspecializedProperties.basicToArray());
-			}
-			else {
+		//	if (unspecializedElement != null) {
+		//		InternalEList<Property> unspecializedProperties = (InternalEList<Property>) ((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedProperties();
+		//		ownedProperties2 = new UnmodifiableEList<Property>(this, PivotPackage.Literals.CLASS__OWNED_PROPERTIES, unspecializedProperties.size(), unspecializedProperties.basicToArray());
+		//	}
+		//	else {
 				ownedProperties2 = new EObjectContainmentWithInverseEList<Property>(Property.class, this, PivotPackage.Literals.CLASS__OWNED_PROPERTIES.getFeatureID(), PivotPackage.Literals.PROPERTY__OWNING_CLASS.getFeatureID())
 				{
 					private static final long serialVersionUID = 1L;
@@ -1320,7 +1319,7 @@ implements org.eclipse.ocl.pivot.Class {
 						return inverseAdd;
 					}
 				};
-			}
+		//	}
 			ownedProperties = ownedProperties2;
 		}
 		return ownedProperties2;
