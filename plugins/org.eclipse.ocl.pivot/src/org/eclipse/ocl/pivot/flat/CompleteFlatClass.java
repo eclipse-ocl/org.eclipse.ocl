@@ -309,6 +309,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	@Override
 	public @NonNull String toString() {
 //		return NameUtil.qualifiedNameFor(completeClass);
-		return completeClass.getPrimaryClass().toString();
+//		return completeClass.getPrimaryClass().toString();
+		return completeClass.getOwningCompletePackage().getName() + "::" + name;
 	}
 }

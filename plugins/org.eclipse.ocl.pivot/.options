@@ -56,6 +56,18 @@ org.eclipse.ocl.pivot/evaluations=false
 # Trace maintenance of FinalAnalysis 
 org.eclipse.ocl.pivot/finalAnaysis=false
 
+# Trace dynamic creation of FlatClass fragments 
+org.eclipse.ocl.pivot/flat/dynamic/fragments=false
+
+# Trace built-in initialization of FlatClass fragments 
+org.eclipse.ocl.pivot/flat/static/fragments=false
+
+# Trace maintenance of FlatClass operations 
+org.eclipse.ocl.pivot/flat/operations=false
+
+# Trace maintenance of FlatClass properties 
+org.eclipse.ocl.pivot/flat/properties=false
+
 # Trace maintenance of Model installation in a PivotMetamodelManager
 org.eclipse.ocl.pivot/install/model=false
 

@@ -174,7 +174,7 @@ public interface FlatClass extends Nameable
 	@NonNull FragmentIterable getSuperFragments(int depth);
 
 	/**
-	 * Initialize the super-fragment hierarchy from the compile-time analysis.
+	 * Initialize the super-fragment hierarchy by direct assignment from the YYYTables pre-analysis.
 	 */
 	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts);
 
