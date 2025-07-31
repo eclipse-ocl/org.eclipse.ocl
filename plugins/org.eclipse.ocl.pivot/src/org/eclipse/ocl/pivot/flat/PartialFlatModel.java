@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Model;

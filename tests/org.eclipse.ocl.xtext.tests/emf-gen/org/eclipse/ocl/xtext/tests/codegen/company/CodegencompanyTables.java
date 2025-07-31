@@ -159,10 +159,10 @@ public class CodegencompanyTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Bug418716 = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.BUG418716, PACKAGE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Company = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.COMPANY, PACKAGE, null, 0);
-		public static final @NonNull Enumeration _CompanySizeKind = LIBRARY.createEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND, PACKAGE);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Employee = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.EMPLOYEE, PACKAGE, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Bug418716 = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.BUG418716, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Company = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.COMPANY, null, 0);
+		public static final @NonNull Enumeration _CompanySizeKind = LIBRARY.createEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Employee = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.EMPLOYEE, null, 0);
 
 		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
 			_Bug418716,
