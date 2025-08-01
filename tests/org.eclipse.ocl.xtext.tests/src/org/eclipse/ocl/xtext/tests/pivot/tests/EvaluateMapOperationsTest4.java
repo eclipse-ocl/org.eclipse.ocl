@@ -92,6 +92,85 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
+	/**
+	 * Tests the collectBy() iterator.
+	 *			XXX #2380
+	@Test public void testMapCollectBy() {
+		TestOCL ocl = createOCL();
+		IdResolver idResolver = ocl.getIdResolver();
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
+		Map<Object,Object> map = new HashMap<>();
+		for (int i = 1; i <= 5; i++) {
+			map.put(i,  i*i);
+		}
+		MapTypeId mapTypeId = TypeId.MAP.getSpecializedId(TypeId.INTEGER, TypeId.INTEGER, true, true);
+		MapValue expected1 = idResolver.createMapOfAll(mapTypeId, map);
+		CollectionValue expected1k = idResolver.createSetOfAll(typeId, map.keySet());
+		CollectionValue expected1v = idResolver.createBagOfAll(typeId, map.values());
+// XXX
+		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectBy(i : Integer | i*i)");
+// XXX FIXME bad warning/ global duplicate
+		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectBy(i with j | i*j)");
+// XXX
+		// complete form
+		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectBy(i : Integer | i*i)");
+		ocl.assertQueryEquals(null, expected1k, "Sequence{1..5}->collectBy(i : Integer | i*i)->keys()");
+		ocl.assertQueryEquals(null, expected1v, "Sequence{1..5}->collectBy(i : Integer | i*i)->values()");
+
+		// shorter form
+		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectBy(i | i*i)");
+
+		// yet shorter form
+		ocl.assertQueryResults(null, "Map{9 <- Sequence{1, 4, 9, 16, 25, 16, 16}, 10 <- Sequence{1, 4, 9, 16, 25, 16, 16}}", "Sequence{9,10,9}->collectBy(Sequence{1, 4, 9, 16, 25, 16, 16})");
+
+		// shortest form
+		ocl.assertQueryResults(null, "Map{1 <- '1', 2 <- '2', 3 <- '3', 4 <- '4', 5 <- '5', 99 <- '99' }", "Sequence{1..5,99}->collectBy(toString())");
+
+		// flattening of nested collections
+		//		CollectionValue expected2 = idResolver.createBagOfEach(typeId, ocl.jim, ocl.pkg4, ocl.pkg5);
+		// ownedPackages is Set<Package>
+		// ownedPackages->collectNested(ownedPackages) is Bag<Set<Package>>
+		// ownedPackages->collectNested(ownedPackages)->flatten() is Bag<Package>
+		//		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?.ownedPackages");
+		//		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->collect(oclAsType(String)).size()"); * /
+		ocl.dispose();
+	} */
+
+	/**
+	 * Tests the collectNestedBy() iterator.
+	 *
+	@Test public void testMapCollectNestedBy() {
+		TestOCL ocl = createOCL();
+		IdResolver idResolver = ocl.getIdResolver();
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
+		Map<Object,Object> map1 = new HashMap<>();
+		for (int i = 1; i <= 5; i++) {
+			map1.put(i,  i*i);
+		}
+		MapValue expected1 = idResolver.createMapOfAll(TypeId.INTEGER, TypeId.INTEGER, map1);
+		CollectionValue expected1k = idResolver.createSetOfAll(typeId, map1.keySet());
+		CollectionValue expected1v = idResolver.createBagOfAll(typeId, map1.values());
+
+		// complete form
+		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectNestedBy(i : Integer | i*i)");
+		ocl.assertQueryEquals(null, expected1k, "Sequence{1..5}->collectNestedBy(i : Integer | i*i)->keys()");
+		ocl.assertQueryEquals(null, expected1v, "Sequence{1..5}->collectNestedBy(i : Integer | i*i)->values()");
+		ocl.assertQueryEquals(null, expected1v, "let m = Sequence{1..5}->collectNestedBy(i : Integer | i*i) in m->collectNestedBy(j : Integer | m->at(j) + 1)");
+
+		// shorter form
+		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectNestedBy(i | i*i)");
+
+		// yet shorter form, no flattening
+		Map<Object,Object> map2 = new HashMap<>();
+		for (int i = 9; i <= 10; i++) {
+			map2.put(i, Lists.newArrayList(1, 4, 4));
+		}
+		MapValue expected2 = idResolver.createMapOfAll(TypeId.INTEGER, TypeId.INTEGER, map2);
+		ocl.assertQueryEquals(null, expected2, "Sequence{9..10}->collectNestedBy(Sequence{1, 4, 4})");
+
+		ocl.dispose();
+	} */
+
 	@Test public void testMapEqual() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "Map{} = Bag{}");
