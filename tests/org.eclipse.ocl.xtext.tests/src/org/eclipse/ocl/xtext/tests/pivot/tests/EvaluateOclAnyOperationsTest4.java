@@ -785,7 +785,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_Collection() {
 		MyOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryEquals(null, 1, "Set{1}->oclType().ownedOperations?->select(name = 'flatten')->size()");
+		ocl.assertQueryEquals(null, 0, "Set{1}->oclType().ownedOperations->select(name = 'flatten')->size()");
+		ocl.assertQueryEquals(null, 1, "Set{1}->oclType().unspecializedElement.oclAsType(Class).ownedOperations->select(name = 'flatten')->size()");
 		ocl.assertQueryEquals(null, standardLibrary.getSetType(standardLibrary.getOclVoidType(), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_ZERO_VALUE), "Set{}->oclType()");
 		ocl.assertQueryEquals(null, standardLibrary.getSetType(standardLibrary.getIntegerType(), true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE), "Set{1}->oclType()");
 		ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
