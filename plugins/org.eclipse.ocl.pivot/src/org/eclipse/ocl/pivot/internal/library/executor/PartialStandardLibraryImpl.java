@@ -28,14 +28,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -190,19 +188,14 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 		private org.eclipse.ocl.pivot.@Nullable Class getImmutableClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
-			for (@NonNull Element asAnnotation : PivotUtil.getOwnedAnnotations(asPackage)) {
-				if (asAnnotation instanceof Annotation) {
-					String className = asClass.getName();
-					String source = ((Annotation)asAnnotation).getName();
-					//
-					//	XXX Revamp as a single semantic annotation with an/some equivalent built-in URI
-					//
-					if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
-						return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
-					}
-					else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-						return NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), className);
-					}
+			String semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+			if (semantics != null) {
+				String className = asClass.getName();
+				if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(semantics)) {
+					return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
+				}
+				else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(semantics)) {
+					return NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), className);
 				}
 			}
 			return null;

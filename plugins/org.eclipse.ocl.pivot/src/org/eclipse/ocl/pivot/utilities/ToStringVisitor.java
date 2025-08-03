@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -380,14 +379,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			if (container instanceof org.eclipse.ocl.pivot.Package) {
 				boolean needsQualification = true;
 				EObject eContainer = ((org.eclipse.ocl.pivot.Package)container).getESObject();
-				if (eContainer instanceof EPackage) {
-					for (EAnnotation eAnnotation : ((EPackage)eContainer).getEAnnotations()) {
-						String source = eAnnotation.getSource();
-						if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source) || PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-							needsQualification = false;
-							break;
-						}
-					}
+				if ((eContainer instanceof EPackage) && (PivotUtil.basicGetEPackageSemantics((EPackage)eContainer) != null)) {
+					needsQualification = false;
 				}
 				if (needsQualification) {
 					appendQualifiedName((NamedElement) container);

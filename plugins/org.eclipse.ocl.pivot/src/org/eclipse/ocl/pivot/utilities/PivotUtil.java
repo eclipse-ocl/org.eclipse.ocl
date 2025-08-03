@@ -27,6 +27,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -45,6 +46,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
@@ -290,6 +292,20 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
+	 * @since 7.0
+	 */
+	public static @Nullable String basicGetEPackageSemantics(@NonNull EPackage ePackage) {
+		for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
+			String source = eAnnotation.getSource();
+			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source) || PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+				return source;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Object object) {
@@ -311,6 +327,22 @@ public class PivotUtil implements PivotConstants
 				return pivotType;
 			}
 			templateParameter = (TemplateParameter) pivotType;
+		}
+		return null;
+	}
+
+	/**
+	 * Return the semantics of Package as defined by an Annotation, null if none defined.
+	 * @since 7.0
+	 */
+	public static @Nullable String basicGetPackageSemantics(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		for (Element asAnnotation : asPackage.getOwnedAnnotations()) {
+			if (asAnnotation instanceof Annotation) {
+				String source = ((Annotation)asAnnotation).getName();
+				if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source) || PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+					return source;
+				}
+			}
 		}
 		return null;
 	}
