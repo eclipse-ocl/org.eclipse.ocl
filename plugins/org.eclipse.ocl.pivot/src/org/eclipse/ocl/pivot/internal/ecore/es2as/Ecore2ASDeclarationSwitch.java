@@ -81,7 +81,8 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl;
@@ -442,10 +443,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		pivotElement.setName(newName);
 		if (ePackage.eIsSet(EcorePackage.Literals.EPACKAGE__NS_URI)) {
-			RootPackageId metamodel = technology.getMetamodelId(environmentFactory, ePackage);
-			if (metamodel != null) {
-				((PackageImpl)pivotElement).setPackageId(metamodel);
-			}
+		//	RootPackageId metamodel = technology.getMetamodelId(environmentFactory, ePackage);
+			PackageId packageId = IdManager.getPackageId(ePackage);
+		//	if (metamodel != null) {
+				((PackageImpl)pivotElement).setPackageId(packageId);
+		//	}
 		//	else {		// Seems like this should be better, but interacts with perhaps inconsistently shared $uml$ metamodel name
 		//		((PackageImpl)pivotElement).setPackageId(IdManager.getPackageId(ePackage));
 		//	}

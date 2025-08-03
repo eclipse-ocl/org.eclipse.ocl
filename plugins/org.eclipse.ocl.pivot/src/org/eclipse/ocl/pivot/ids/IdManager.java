@@ -429,9 +429,9 @@ public final class IdManager
 	 * Return the typeId for ePackage.
 	 */
 	public static @NonNull PackageId getPackageId(@NonNull EPackage ePackage) {
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-			return METAMODEL;
-		}
+	//	if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
+	//		return METAMODEL;
+	//	}
 		String nsURI = ePackage.getNsURI();
 		if (nsURI != null) {
 			if (metamodelURI2name != null) {
