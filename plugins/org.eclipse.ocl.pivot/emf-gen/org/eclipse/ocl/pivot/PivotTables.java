@@ -69,7 +69,7 @@ public class PivotTables extends AbstractTables
 	/**
 	 *	The package descriptor for the package.
 	 */
-	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(PivotPackage.eINSTANCE, IdManager.METAMODEL);
+	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(PivotPackage.eINSTANCE, null);
 
 	/**
 	 *	Constants used by auto-generated code.
