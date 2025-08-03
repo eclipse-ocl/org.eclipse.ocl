@@ -297,7 +297,7 @@ public class OCLstdlib extends ASResourceImpl
 		protected final @NonNull NormalizedTemplateParameter $$3;
 
 		protected AbstractLibraryContents() {
-			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL, OCLstdlibPackage.eINSTANCE);
+			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", null, OCLstdlibPackage.eINSTANCE);
 			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
 			$$0 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 0);
 			$$1 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 1);

@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -817,7 +816,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull String getGeneratedPackageId(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		PackageId basicPackageId = ((PackageImpl)pkge).basicGetPackageId();
-		return basicPackageId == IdManager.METAMODEL ? "IdManager.METAMODEL" : "null";
+		return /*basicPackageId == IdManager.METAMODEL ? "IdManager.METAMODEL" :*/ "null";
 	}
 
 	protected @NonNull String getNameLiteral(@NonNull Constraint constraint) {

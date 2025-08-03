@@ -62,7 +62,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl.ReadOnly;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -1212,13 +1211,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.appendClassReference(true, org.eclipse.ocl.pivot.Package.class);
 		s.append(" PACKAGE = LIBRARY.createPackage(" + getGenPackagePrefix() + "Package.eINSTANCE");
 		s.append(", ");
-		if (asPackage.getPackageId() == IdManager.METAMODEL) {
-			s.appendClassReference(null, IdManager.class);
-			s.append(".METAMODEL");
-		}
-		else {
+	//	if (asPackage.getPackageId() == IdManager.METAMODEL) {
+	//		s.appendClassReference(null, IdManager.class);
+	//		s.append(".METAMODEL");
+	//	}
+	//	else {
 			s.append("null");
-		}
+	//	}
 		s.append(");\n");
 
 		if (constants != null) {
