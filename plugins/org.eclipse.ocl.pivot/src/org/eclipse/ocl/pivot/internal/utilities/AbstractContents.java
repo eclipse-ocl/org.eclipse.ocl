@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
@@ -212,17 +213,23 @@ public abstract class AbstractContents extends PivotUtil
 	 * @since 1.17
 	 */
 	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
-		Library pivotLibrary = PivotFactory.eINSTANCE.createLibrary();
-		pivotLibrary.setName(name);
-		pivotLibrary.setNsPrefix(nsPrefix);
+		LibraryImpl asLibrary = (LibraryImpl)PivotFactory.eINSTANCE.createLibrary();
+		asLibrary.setName(name);
+		asLibrary.setNsPrefix(nsPrefix);
 		if (packageId != null) {
-			((LibraryImpl)pivotLibrary).setPackageId(packageId);  // FIXME Add to API
+			asLibrary.setPackageId(packageId);  // FIXME Add to API
 		}
-		pivotLibrary.setURI(nsURI);
 		if (ePackage != null) {
-			((PivotObjectImpl)pivotLibrary).setESObject(ePackage);
+			asLibrary.setESObject(ePackage);
+			String semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
+			if (semantics != null) {
+				Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
+				asAnnotation.setName(semantics);
+				asLibrary.getOwnedAnnotations().add(asAnnotation);
+			}
 		}
-		return pivotLibrary;
+		asLibrary.setURI(nsURI);				// last since a non-trivial setXXX
+		return asLibrary;
 	}
 
 	/**

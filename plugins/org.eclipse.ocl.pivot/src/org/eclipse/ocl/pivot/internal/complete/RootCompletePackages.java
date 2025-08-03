@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class RootCompletePackages extends AbstractCompletePackages
 {
@@ -37,20 +38,26 @@ public class RootCompletePackages extends AbstractCompletePackages
 		return completePackage;
 	}
 
-	protected @NonNull CompletePackageInternal createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		if (Orphanage.isOrphanage(pivotPackage)) {
+	protected @NonNull CompletePackageInternal createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		if (Orphanage.isOrphanage(asPackage)) {
 			return getCompleteModel().getOrphanCompletePackage();
 		}
 		else {
-			String name = pivotPackage.getName();
-			String nonNullName = name;
-			if (nonNullName == null) {
-				nonNullName = "$anon_" + Integer.toHexString(System.identityHashCode(pivotPackage));
+			String name;
+			String semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+			if (semantics != null) {
+				name = "ocl";
 			}
-			String nsPrefix = pivotPackage.getNsPrefix();
-			String completeURI = getCompleteModel().getCompleteURIs().getCompleteURI(pivotPackage.getURI());
+			else {
+				name = asPackage.getName();
+				if (name == null) {
+					name = "$anon_" + Integer.toHexString(System.identityHashCode(asPackage));
+				}
+			}
+			String nsPrefix = asPackage.getNsPrefix();
+			String completeURI = getCompleteModel().getCompleteURIs().getCompleteURI(asPackage.getURI());
 			CompletePackageInternal rootCompletePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
-			rootCompletePackage.init(nonNullName, nsPrefix, completeURI);
+			rootCompletePackage.init(name, nsPrefix, completeURI);
 			add(rootCompletePackage);
 			return rootCompletePackage;
 		}
