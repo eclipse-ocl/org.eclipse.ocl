@@ -36,6 +36,9 @@ public class GeneralizedClassIdImpl extends GeneralizedNestedTypeIdImpl implemen
 			this.packageId = packageId;
 			this.name = name;
 			this.templateParameters = templateParameters;
+			if ("Transformation".equals(name)) {
+				getClass();			// XXX
+			}
 		}
 
 		@Override

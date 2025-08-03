@@ -281,7 +281,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		}
 		CSResource csResource = (CSResource)eResource();
 		String fragment = eProxyURI.fragment();
-		if ((fragment != null) && !fragment.startsWith("|")) {
+		if ((fragment != null) && !fragment.startsWith("|")) {			// i.e. not Xtext parsing intermediate
 			for (EObject eObject : csResource.getContents()) {
 				if (eObject instanceof Pivotable) {
 					Pivotable csElement = (Pivotable)eObject;
@@ -302,7 +302,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		}
 		ResourceSet resourceSet = csResource.getResourceSet();
 		URI resourceURI = eProxyURI.trimFragment();
-		if (PivotUtil.isASURI(resourceURI)) {				// XXX review
+		if (PivotUtil.isASURI(resourceURI)) {				// XXX review wrt earlier Xtext test
 			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				try {
