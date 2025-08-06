@@ -213,13 +213,13 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.17
 	 */
-	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
+	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId zzpackageId, @Nullable EPackage ePackage) {
 		LibraryImpl asLibrary = (LibraryImpl)PivotFactory.eINSTANCE.createLibrary();
 		asLibrary.setName(name);
 		asLibrary.setNsPrefix(nsPrefix);
-		if (packageId != null) {
-			asLibrary.setPackageId(packageId);  // FIXME Add to API
-		}
+	//	if (packageId != null) {
+	//		asLibrary.setPackageId(packageId);  // FIXME Add to API
+	//	}
 		if (ePackage != null) {
 			asLibrary.setESObject(ePackage);
 			URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
@@ -289,16 +289,14 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.17
 	 */
-	protected org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
+	protected org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI, @Nullable PackageId zzpackageId, @Nullable EPackage ePackage) {
 		PackageImpl pivotPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
 		pivotPackage.setName(name);
 		pivotPackage.setNsPrefix(nsPrefix);
-		if (packageId != null) {
-			pivotPackage.setPackageId(packageId);  // FIXME Add to API
-		}
-		pivotPackage.setURI(nsURI);
+	//	if (packageId != null) {
+	//		pivotPackage.setPackageId(packageId);  // FIXME Add to API
+	//	}
 		if (ePackage != null) {
-			pivotPackage.setESObject(ePackage);
 			pivotPackage.setESObject(ePackage);
 			URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
 			if (semantics != null) {
@@ -306,6 +304,7 @@ public abstract class AbstractContents extends PivotUtil
 				pivotPackage.getOwnedAnnotations().add(asAnnotation);
 			}
 		}
+		pivotPackage.setURI(nsURI);
 		return pivotPackage;
 	}
 
