@@ -12,6 +12,7 @@ package	org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -221,10 +222,9 @@ public abstract class AbstractContents extends PivotUtil
 		}
 		if (ePackage != null) {
 			asLibrary.setESObject(ePackage);
-			String semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
+			URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
 			if (semantics != null) {
-				Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
-				asAnnotation.setName(semantics);
+				Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
 				asLibrary.getOwnedAnnotations().add(asAnnotation);
 			}
 		}
@@ -290,15 +290,21 @@ public abstract class AbstractContents extends PivotUtil
 	 * @since 1.17
 	 */
 	protected org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
-		org.eclipse.ocl.pivot.Package pivotPackage = PivotFactory.eINSTANCE.createPackage();
+		PackageImpl pivotPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
 		pivotPackage.setName(name);
 		pivotPackage.setNsPrefix(nsPrefix);
 		if (packageId != null) {
-			((PackageImpl)pivotPackage).setPackageId(packageId);  // FIXME Add to API
+			pivotPackage.setPackageId(packageId);  // FIXME Add to API
 		}
 		pivotPackage.setURI(nsURI);
 		if (ePackage != null) {
-			((PivotObjectImpl)pivotPackage).setESObject(ePackage);
+			pivotPackage.setESObject(ePackage);
+			pivotPackage.setESObject(ePackage);
+			URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
+			if (semantics != null) {
+				Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
+				pivotPackage.getOwnedAnnotations().add(asAnnotation);
+			}
 		}
 		return pivotPackage;
 	}

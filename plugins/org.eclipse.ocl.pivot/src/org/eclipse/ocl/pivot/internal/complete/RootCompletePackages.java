@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -19,6 +20,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class RootCompletePackages extends AbstractCompletePackages
@@ -44,9 +46,9 @@ public class RootCompletePackages extends AbstractCompletePackages
 		}
 		else {
 			String name;
-			String semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 			if (semantics != null) {
-				name = "ocl";
+				name = PivotConstants.OCL_NAME;
 			}
 			else {
 				name = asPackage.getName();
@@ -55,7 +57,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 				}
 			}
 			String nsPrefix = asPackage.getNsPrefix();
-			String completeURI = getCompleteModel().getCompleteURIs().getCompleteURI(asPackage.getURI());
+			String completeURI = getCompleteModel().getCompleteURIs().getCompleteURI(semantics != null ? semantics.trimFragment().toString() : asPackage.getURI());
 			CompletePackageInternal rootCompletePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
 			rootCompletePackage.init(name, nsPrefix, completeURI);
 			add(rootCompletePackage);

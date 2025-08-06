@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -51,16 +52,19 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
+import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
+import org.eclipse.ocl.xtext.basecs.PackageCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
@@ -125,6 +129,23 @@ public class ElementUtil
 			}
 		}
         return null;
+	}
+
+	/**
+	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
+	 * @since 7.0
+	 */
+	public static @Nullable URI basicGetPackageSemantics(@NonNull PackageCS csElement) {
+		for (AnnotationElementCS csAnnotation : csElement.getOwnedAnnotations()) {
+			String source = csAnnotation.getName();
+			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
+				return PivotConstants.AS_LIBRARY_SEMANTICS;
+			}
+			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+				return PivotConstants.AS_METAMODEL_SEMANTICS;
+			}
+		}
+		return null;
 	}
 
 	public static @Nullable ParserContext basicGetParserContext(@NonNull EObject csElement) {

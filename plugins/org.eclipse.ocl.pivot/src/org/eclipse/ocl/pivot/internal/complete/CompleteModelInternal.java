@@ -13,8 +13,8 @@ package org.eclipse.ocl.pivot.internal.complete;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
@@ -58,7 +58,7 @@ public interface CompleteModelInternal extends CompleteModel
 
 	void dispose();
 	void didAddPartialModel(@NonNull Model partialModel);
-	void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
+	void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemovePartialModel(@NonNull Model partialModel);
 	@Nullable String getCompleteURI(@Nullable String nsURI);

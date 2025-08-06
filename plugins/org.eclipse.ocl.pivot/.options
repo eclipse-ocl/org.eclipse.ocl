@@ -31,7 +31,10 @@ org.eclipse.ocl.pivot/projectMap/resolve=false
 org.eclipse.ocl.pivot/completeClasses=false
 
 # Trace maintenance of CompletePackages 
-org.eclipse.ocl.pivot/completePackages=false
+org.eclipse.ocl.pivot/complete/packages=false
+
+# Trace maintenance of CompletePackge to PartialPackage URI mappings 
+org.eclipse.ocl.pivot/complete/uris=false
 
 # Turn on assertion failures fore debugged deprecations.
 org.eclipse.ocl.pivot/debug/deprecation=false

@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
@@ -188,13 +189,13 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 		private org.eclipse.ocl.pivot.@Nullable Class getImmutableClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
-			String semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 			if (semantics != null) {
 				String className = asClass.getName();
-				if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(semantics)) {
+				if (PivotConstants.AS_LIBRARY_SEMANTICS.equals(semantics)) {
 					return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
 				}
-				else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(semantics)) {
+				else if (PivotConstants.AS_METAMODEL_SEMANTICS.equals(semantics)) {
 					return NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), className);
 				}
 			}

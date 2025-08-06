@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -22,10 +23,17 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalMetamodelException;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class CompleteURIs
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull TracingOption COMPLETE_URIS = new TracingOption(PivotPlugin.PLUGIN_ID, "complete/uris");
+
 	protected final @NonNull CompleteModelInternal completeModel;
 	/**
 	 * Map of Complete URI to Package URIs
@@ -44,6 +52,7 @@ public class CompleteURIs
 
 	public CompleteURIs(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
+		COMPLETE_URIS.setState(true);			// XXX
 	}
 
 	public void didAddCompletePackage(@NonNull CompletePackageInternal completePackage) {
@@ -52,23 +61,38 @@ public class CompleteURIs
 		if (completeURI != null) {
 			CompletePackage oldCompletePackage = completeURI2completePackage.put(completeURI, completePackage);
 			assert oldCompletePackage == null;
+			if (COMPLETE_URIS.isActive()) {
+				traceURImapping(completeURI);
+			}
 		}
 		//		}
 	}
 
-	public void didAddPartialModel(@NonNull Model partialModel) {
-		for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
+	/**
+	 * @since 7.0
+	 */
+	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	//	for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
 			String packageURI = asPackage.getURI();
-			String completeURI = getCompleteURI(packageURI);
-			if (completeURI == packageURI) {
+			String completeURI;
+			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+			if (semantics != null) {
+				completeURI = semantics.trimFragment().toString();
+			}
+			else {
+				completeURI = getCompleteURI(packageURI);
+			}
+			addPackageURI2completeURI(packageURI, completeURI);
+		/*	if (completeURI == packageURI) {
 				PackageId packageId = asPackage.getPackageId();
+				assert packageId != IdManager.METAMODEL;
 				if (packageId == IdManager.METAMODEL) {
 					if (packageURI != null) {
 						addPackageURI2completeURI(packageURI, PivotConstants.METAMODEL_NAME);
 					}
 				}
-			}
-		}
+			} */
+	//	}
 	}
 
 	public void didRemoveCompletePackage(@NonNull CompletePackageInternal completePackage) {
@@ -76,11 +100,14 @@ public class CompleteURIs
 		String completeURI = completePackage.getURI();
 		if (completeURI != null) {
 			removeCompletePackage(completeURI);
-			Set<String> packageURIs = completeURI2packageURIs.remove(completeURI);
+			Set<@NonNull String> packageURIs = completeURI2packageURIs.remove(completeURI);
 			if (packageURIs != null) {
 				for (String packageURI : packageURIs) {
 					packageURI2completeURI.remove(packageURI);
 				}
+			}
+			if (COMPLETE_URIS.isActive()) {
+				traceURImapping(completeURI);
 			}
 		}
 		//		}
@@ -92,6 +119,7 @@ public class CompleteURIs
 			String completeURI = getCompleteURI(packageURI);
 			if (completeURI == packageURI) {
 				PackageId packageId = asPackage.getPackageId();
+				assert packageId != IdManager.METAMODEL;
 				if (packageId == IdManager.METAMODEL) {
 					if (packageURI != null) {
 						//FIXME						removePackageURI2completeURI(packageURI, DomainConstants.METAMODEL_NAME);
@@ -130,12 +158,15 @@ public class CompleteURIs
 			throw new IllegalMetamodelException(packageURI, oldCompleteURI);	// FIXME Better name
 		}
 		packageURI2completeURI.put(packageURI, newCompleteURI);
-		Set<String> packageURIs = completeURI2packageURIs.get(newCompleteURI);
+		Set<@NonNull String> packageURIs = completeURI2packageURIs.get(newCompleteURI);
 		if (packageURIs == null) {
 			packageURIs = new HashSet<>();
 			completeURI2packageURIs.put(newCompleteURI, packageURIs);
 		}
 		packageURIs.add(packageURI);
+		if (COMPLETE_URIS.isActive()) {
+			traceURImapping(newCompleteURI);
+		}
 	}
 
 	public @Nullable CompletePackageInternal getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
@@ -143,7 +174,14 @@ public class CompleteURIs
 		if (packageURI == null) {
 			return null;
 		}
-		String completeURI = getCompleteURI(packageURI);
+		URI semantics = PivotUtil.basicGetPackageSemantics(pivotPackage);
+		String completeURI;
+		if (semantics != null) {
+			completeURI = semantics.trimFragment().toString();
+		}
+		else {
+			completeURI = getCompleteURI(packageURI);
+		}
 		return completeURI != null ? completeURI2completePackage.get(completeURI) : null;
 	}
 
@@ -171,7 +209,25 @@ public class CompleteURIs
 		}
 	}
 
-	public void removeCompletePackage(String completeURI) {
+	public void removeCompletePackage(@NonNull String completeURI) {
 		completeURI2completePackage.remove(completeURI);
+		if (COMPLETE_URIS.isActive()) {
+			traceURImapping(completeURI);
+		}
+	}
+
+	private void traceURImapping(@NonNull String completeURI) {
+		StringBuilder s = new StringBuilder();
+		s.append(completeURI);
+		s.append(" <=>");
+		Set<@NonNull String> packageURIs = completeURI2packageURIs.get(completeURI);
+		if (packageURIs != null) {
+			for (@NonNull String pURI : packageURIs) {
+				s.append(" ");
+				s.append(pURI);
+			}
+		}
+		COMPLETE_URIS.println(s.toString());
+		getClass();
 	}
 }

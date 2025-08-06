@@ -1592,6 +1592,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package visitRootPackageId(@NonNull RootPackageId id) {
 		if (id == IdManager.METAMODEL) {
+			assert false;			// XXX
 			return ClassUtil.requireNonNull(getStandardLibrary().getPackage());
 		}
 		String internedName = id.getName().intern();
