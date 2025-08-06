@@ -65,8 +65,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 			completePackage = (CompletePackageInternal)pivotPackage;
 		}
 		else {
-			CompleteURIs completeURIs = getCompleteModel().getCompleteURIs();
-			completePackage = completeURIs.getCompletePackage(pivotPackage);
+			completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
 			if (completePackage == null) {
 				org.eclipse.ocl.pivot.Package pivotPackageParent = pivotPackage.getOwningPackage();
 				if (pivotPackageParent == null) {
@@ -100,12 +99,15 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		getCompleteModel().didAddCompletePackage(completePackageInternal);
 	}
 
-	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompletePackage didAddPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		CompletePackage completePackage = null;
 		String name = pivotPackage.getName();
 		String packageURI = pivotPackage.getURI();
 		if (packageURI != null) {										// Explicit packageURI for explicit package (merge)
-			completePackage = getCompleteModel().getCompleteURIs().getCompletePackage(packageURI);
+			completePackage = getCompleteModel().getCompletePackage3(packageURI);
 		}
 		else if (name != null) {										// Null packageURI can merge into same named package
 			completePackage = getOwnedCompletePackage(name);
@@ -121,6 +123,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 //				addPackage(completePackage, nestedPackage);
 //			}
 //		}
+		return completePackage;
 	}
 
 	@Override
@@ -137,7 +140,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		List<Package> partialPackages = completePackage.getPartialPackages();
 		partialPackages.remove(partialPackage);
 		if (partialPackages.size() <= 0) {
-			getCompleteModel().getCompleteURIs().removeCompletePackage(completePackage.getURI());
+			getCompleteModel().removeCompletePackage(completePackage.getURI());
 //			name2completePackage.remove(completePackage.getName());
 			remove(completePackage);
 		}
@@ -160,8 +163,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 			completePackage = (CompletePackageInternal)pivotPackage;
 		}
 		else {
-			CompleteURIs completeURIs = getCompleteModel().getCompleteURIs();
-			completePackage = completeURIs.getCompletePackage(pivotPackage);
+			completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
 			if (completePackage == null) {
 				org.eclipse.ocl.pivot.Package pivotPackageParent = pivotPackage.getOwningPackage();
 				if (pivotPackageParent == null) {
