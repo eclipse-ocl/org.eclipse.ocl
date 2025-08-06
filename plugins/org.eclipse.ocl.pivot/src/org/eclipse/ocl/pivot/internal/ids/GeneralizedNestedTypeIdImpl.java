@@ -62,7 +62,6 @@ public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<
 
 	@Override
 	public String toString() {
-		assert parent != IdManager.METAMODEL;
 		if (parent != IdManager.METAMODEL) {
 			return parent + "::" + name;
 		}

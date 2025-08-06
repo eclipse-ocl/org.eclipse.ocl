@@ -1,5 +1,6 @@
 library lib : lib = 'http://minimal.oclstdlib'
 {
+	annotation 'http://www.eclipse.org/OCL/ASLibrary';
 	type Bag(T) : BagType conformsTo Collection(T) {}
 	type Boolean : BooleanType conformsTo OclAny {}
 	type Class conformsTo OclAny {}	

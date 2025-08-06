@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -408,15 +409,26 @@ public final class IdManager
 	/**
 	 * Return the typeId for aPackage.
 	 */
-	public static @NonNull PackageId getPackageId(org.eclipse.ocl.pivot.@NonNull Package aPackage) {
-		String nsURI = aPackage.getURI();
-		if (nsURI != null) {
-			return getNsURIPackageId(nsURI, aPackage.getNsPrefix(), aPackage.getEPackage());
+	public static @NonNull PackageId getPackageId(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		String nsURI;
+		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+		if (semantics != null) {
+			URI trimFragment = semantics.trimFragment();
+			if (trimFragment == PivotConstants.AS_SEMANTICS) {
+				return IdManager.METAMODEL;
+			}
+			nsURI = trimFragment.toString();
 		}
-		String name = aPackage.getName();
+		else {
+			nsURI = asPackage.getURI();
+		}
+		if (nsURI != null) {
+			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), asPackage.getEPackage());
+		}
+		String name = asPackage.getName();
 		//		assert name != null;
 		if (name == null) name = "";
-		org.eclipse.ocl.pivot.Package parentPackage = aPackage.getOwningPackage();
+		org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 		if (parentPackage != null) {
 			return parentPackage.getPackageId().getNestedPackageId(name);
 		}

@@ -152,7 +152,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		asPackage.setName(ClassUtil.requireNonNull(ePackage.getName()));
 		asPackage.setNsPrefix(ePackage.getNsPrefix());
 		asPackage.setURI(ePackage.getNsURI());
-		asPackage.setPackageId(packageId);
+	//	asPackage.setPackageId(packageId);
 		asPackage.setESObject(ePackage);
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : computeClasses(asPackage, ePackage)) {
 			asPackage.getOwnedClasses().add(asClass);

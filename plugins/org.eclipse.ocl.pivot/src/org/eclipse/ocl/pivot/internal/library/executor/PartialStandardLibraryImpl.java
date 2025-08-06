@@ -62,7 +62,6 @@ import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.flat.FlatModel;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -470,13 +469,13 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable PackageId packageId) {
+	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable PackageId zzpackageId) {
 		assert ePackage != null;
 		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
 		asPackage.setName(ePackage.getName());
 		asPackage.setNsPrefix(ePackage.getNsPrefix());
 		asPackage.setURI(ePackage.getNsURI());
-		asPackage.setPackageId(packageId != null ? packageId : IdManager.getPackageId(ePackage));
+	//	asPackage.setPackageId(packageId != null ? packageId : IdManager.getPackageId(ePackage));
 		asPackage.setESObject(ePackage);
 		return asPackage;
 	}
