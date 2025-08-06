@@ -795,7 +795,8 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	public void setPackageId(@NonNull PackageId packageId) {
-		this.packageId = packageId;
+		assert packageId == getPackageId();			// XXX
+	//	this.packageId = packageId;
 	}
 
 	@Override
@@ -811,9 +812,9 @@ implements org.eclipse.ocl.pivot.Package {
 			}
 		}
 		setURIGen(newURI);
-		if ((packageId == null) && (newURI != null)) {
-			setPackageId(IdManager.getPackageId(this));
-		}
+	//	if ((packageId == null) && (newURI != null)) {
+	//		setPackageId(IdManager.getPackageId(this));
+	//	}
 		if ((newURI != null) && !newURI.equals(oldURI)) {
 			if (eContainer instanceof ModelImpl) {
 				((ModelImpl)eContainer).didAddPackage(this);

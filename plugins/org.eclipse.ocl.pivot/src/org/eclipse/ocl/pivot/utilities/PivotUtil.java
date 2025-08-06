@@ -134,7 +134,6 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
@@ -888,13 +887,13 @@ public class PivotUtil implements PivotConstants
 		return pivotPackage;
 	}
 
-	public static org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId) {
+	public static org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI, @Nullable PackageId zzpackageId) {
 		org.eclipse.ocl.pivot.Package pivotPackage = PivotFactory.eINSTANCE.createPackage();
 		pivotPackage.setName(name);
 		pivotPackage.setNsPrefix(nsPrefix);
-		if (packageId != null) {
-			((PackageImpl)pivotPackage).setPackageId(packageId);  // FIXME Add to API
-		}
+	//	if (packageId != null) {
+	//		((PackageImpl)pivotPackage).setPackageId(packageId);  // FIXME Add to API
+	//	}
 		pivotPackage.setURI(nsURI);
 		return pivotPackage;
 	}
@@ -908,13 +907,13 @@ public class PivotUtil implements PivotConstants
 	 * @since 1.14
 	 */
 	public static @NonNull <T extends org.eclipse.ocl.pivot.Package> T createPackage(@NonNull Class<T> pivotClass,
-			@NonNull EClass pivotEClass, @NonNull String name, @Nullable String nsURI, @Nullable String nsPrefix, @Nullable PackageId packageId) {
+			@NonNull EClass pivotEClass, @NonNull String name, @Nullable String nsURI, @Nullable String nsPrefix, @Nullable PackageId zzpackageId) {
 		@SuppressWarnings("unchecked")
 		T asPackage = (T) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
 		asPackage.setName(name);
-		if (packageId != null) {
-			((PackageImpl)asPackage).setPackageId(packageId);
-		}
+	//	if (packageId != null) {
+	//		((PackageImpl)asPackage).setPackageId(packageId);
+	//	}
 		asPackage.setNsPrefix(nsPrefix);		// Before setURI accesses it.
 		asPackage.setURI(nsURI);
 		return asPackage;
