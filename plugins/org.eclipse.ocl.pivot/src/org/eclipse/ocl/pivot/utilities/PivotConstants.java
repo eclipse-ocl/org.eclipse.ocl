@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.utilities;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.Constraint;
@@ -30,13 +31,46 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public interface PivotConstants
 {
 	/**
-	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Metamodel.
+	 * URI used to identify that a Package contributes to the OCL AS.
+	 * Fragments may be appended tio identify a particular aspect of the AS.
+	 * @since 7.0
+	 */
+	static final @NonNull URI AS_SEMANTICS = URI.createURI("http://www.eclipse.org/OCL/AS");
+
+	/**
+	 * Sub URI used to identify that a Package contributes to the OCL AS Standard Library.
+	 * @since 7.0
+	 */
+	static final @NonNull URI AS_LIBRARY_SEMANTICS = AS_SEMANTICS.appendFragment("Library");
+
+	/**
+	 * Sub URI used to identify that a Package contributes to the OCL AS Metamodel.
+	 * @since 7.0
+	 */
+	static final @NonNull URI AS_METAMODEL_SEMANTICS = AS_SEMANTICS.appendFragment("Metamodel");
+
+	/**
+	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
+	 * No details are defined for this EAnnotation.
+	 * <p>
+	 * This annotation is used by /org.eclipse.ocl.pivot/model/oclstdlib.ecore. It is not
+	 * intended to be used by client code.
+	 */
+	static final @NonNull String AS_LIBRARY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASLibrary";
+
+	/**
+	 * EPackage annotation indicating that the EPackage is an Ecore serialization of an OCL AS Metamodel.
 	 * No details are defined for this EAnnotation.
 	 * <p>
 	 * This annotation is used by /org.eclipse.ocl.pivot/model/Pivot.ecore. It is not
 	 * intended to be used by client code.
 	 */
 	static final @NonNull String AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASMetamodel";
+
+	/**
+	 * EPackage/EClass annotation identifying sub-sectikons groupings in the OCL Standard Library documentation.
+	 */
+	static final @NonNull String OMG_OCL_ANNOTATION_SOURCE = "http://www.omg.org/ocl";
 
 	/**
 	 * The annotated class is an implicit entry class for Ecore serialization of an OCL Map as an EMap.
@@ -168,17 +202,6 @@ public interface PivotConstants
 	 * @since 7.0
 	 */
 	static final @NonNull UnlimitedNaturalValue DEFAULT_UPPER_BOUND = ValueUtil.UNLIMITED_VALUE;
-
-	/**
-	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
-	 * No details are defined for this EAnnotation.
-	 * <p>
-	 * This annotation is used by /org.eclipse.ocl.pivot/model/oclstdlib.ecore. It is not
-	 * intended to be used by client code.
-	 */
-	static final @NonNull String AS_LIBRARY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASLibrary";
-
-	static final @NonNull String OMG_OCL_ANNOTATION_SOURCE = "http://www.omg.org/ocl";
 
 	static final @NonNull String AGGREGATE_NAVIGATION_OPERATOR = "->";
 	static final @NonNull String SAFE_AGGREGATE_NAVIGATION_OPERATOR = "?->";

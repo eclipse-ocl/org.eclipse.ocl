@@ -63,17 +63,12 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		}
 		CompleteModelInternal completeModel = getCompleteModel();
 		completeModel.didAddPartialModel(partialModel);
-		for (org.eclipse.ocl.pivot.Package pivotPackage : partialModel.getOwnedPackages()) {
-			if (pivotPackage != null) {
-				completeModel.didAddNestedPackage(pivotPackage);
-			}
-		}
 		((ModelImpl)partialModel).addRootListener(this);
 	}
 
 	@Override
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		getCompleteModel().didAddNestedPackage(partialPackage);
+		getCompleteModel().didAddPackage(partialPackage);
 	}
 
 	@Override

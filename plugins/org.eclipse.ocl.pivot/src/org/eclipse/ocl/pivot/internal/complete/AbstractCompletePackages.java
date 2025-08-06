@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public abstract class AbstractCompletePackages extends EObjectContainmentWithInverseEList<CompletePackage>
 {
-	public static final @NonNull TracingOption COMPLETE_PACKAGES = new TracingOption(PivotPlugin.PLUGIN_ID, "completePackages");
+	public static final @NonNull TracingOption COMPLETE_PACKAGES = new TracingOption(PivotPlugin.PLUGIN_ID, "complete/packages");
 //	static { COMPLETE_PACKAGES.setState(true); }
 	private static final long serialVersionUID = 1L;
 

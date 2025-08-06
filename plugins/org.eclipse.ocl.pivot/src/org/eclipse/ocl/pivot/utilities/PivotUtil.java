@@ -295,11 +295,14 @@ public class PivotUtil implements PivotConstants
 	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
 	 * @since 7.0
 	 */
-	public static @Nullable String basicGetEPackageSemantics(@NonNull EPackage ePackage) {
+	public static @Nullable URI basicGetEPackageSemantics(@NonNull EPackage ePackage) {
 		for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
 			String source = eAnnotation.getSource();
-			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source) || PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-				return source;
+			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
+				return PivotConstants.AS_LIBRARY_SEMANTICS;
+			}
+			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+				return PivotConstants.AS_METAMODEL_SEMANTICS;
 			}
 		}
 		return null;
@@ -335,12 +338,15 @@ public class PivotUtil implements PivotConstants
 	 * Return the semantics of Package as defined by an Annotation, null if none defined.
 	 * @since 7.0
 	 */
-	public static @Nullable String basicGetPackageSemantics(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	public static @Nullable URI basicGetPackageSemantics(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		for (Element asAnnotation : asPackage.getOwnedAnnotations()) {
 			if (asAnnotation instanceof Annotation) {
 				String source = ((Annotation)asAnnotation).getName();
-				if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source) || PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-					return source;
+				if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
+					return PivotConstants.AS_LIBRARY_SEMANTICS;
+				}
+				else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
+					return PivotConstants.AS_METAMODEL_SEMANTICS;
 				}
 			}
 		}
@@ -1039,6 +1045,23 @@ public class PivotUtil implements PivotConstants
 		pivotType.setName(eClass.getName());
 		((PivotObjectImpl)pivotType).setESObject(eClass);
 		return pivotType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Annotation createSemanticsAnnotation(@NonNull URI semantics) {
+		Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
+		if (PivotConstants.AS_LIBRARY_SEMANTICS.equals(semantics)) {
+			asAnnotation.setName(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
+		}
+		else if (PivotConstants.AS_METAMODEL_SEMANTICS.equals(semantics)) {
+			asAnnotation.setName(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
+		}
+		else {
+			asAnnotation.setName(semantics.toString());
+		}
+		return asAnnotation;
 	}
 
 	/**
