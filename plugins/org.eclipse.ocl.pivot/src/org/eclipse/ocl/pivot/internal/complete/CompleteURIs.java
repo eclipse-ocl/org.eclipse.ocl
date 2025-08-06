@@ -82,7 +82,9 @@ public class CompleteURIs
 			else {
 				completeURI = getCompleteURI(packageURI);
 			}
-			addPackageURI2completeURI(packageURI, completeURI);
+			if (completeURI != null) {
+				addPackageURI2completeURI(packageURI, completeURI);
+			}
 		/*	if (completeURI == packageURI) {
 				PackageId packageId = asPackage.getPackageId();
 				assert packageId != IdManager.METAMODEL;

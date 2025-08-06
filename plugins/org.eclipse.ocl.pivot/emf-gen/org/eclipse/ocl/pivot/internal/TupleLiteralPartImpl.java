@@ -208,7 +208,7 @@ implements TupleLiteralPart {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
 							try {
 								if (ownedInit == null) {
-									throw new InvalidValueException("Null source for \'TypedElement::type\'");
+									throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/2015/Pivot\'::TypedElement::type\'");
 								}
 								final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
 								final /*@Thrown*/ boolean ne_0 = type != null;
@@ -241,7 +241,7 @@ implements TupleLiteralPart {
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
 							if (ownedInit_1 == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+								throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/2015/Pivot\'::TypedElement::type\'");
 							}
 							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_1.getType();
 							if (type_0 == null) {
