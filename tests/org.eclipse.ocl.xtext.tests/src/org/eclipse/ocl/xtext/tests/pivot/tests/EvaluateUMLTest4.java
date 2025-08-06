@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.uml.PivotUMLConstants;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -221,7 +222,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Package contextPackage = contextType.getOwningPackage();
 		//		assertEquals(XMI2UMLResource.UML_METAMODEL_NS_URI, contextPackage.getNsURI());
 		//		assertEquals(IdManager.METAMODEL, contextPackage.getPackageId());
-		assertEquals(PivotConstants.UML_METAMODEL_NAME, contextPackage.getPackageId().getDisplayName());
+		assertEquals(PivotUMLConstants.UML_METAMODEL_NAME, contextPackage.getPackageId().getDisplayName());
 		ocl.assertValidQuery(contextType, "self.extension_vStereotype1");
 		ocl.assertSemanticErrorQuery(contextType, "self.extension_Stereotype1", PivotMessagesInternal.UnresolvedProperty_ERROR_, "UML::Property", "extension_Stereotype1");
 		ocl.assertValidQuery(contextType, "self.extension_vStereotype1.base_NamedElement");

@@ -28,5 +28,5 @@ public interface CompletePackageInternal extends CompletePackage
 	@Override
 	@NonNull PartialPackages getPartialPackages();
 	@NonNull CompletePackageInternal getRootCompletePackage();
-	void init(String name, @Nullable String nsPrefix, @Nullable String nsURI);
+	void init(String name, @Nullable String nsPrefix, @Nullable String completeURI);
 }

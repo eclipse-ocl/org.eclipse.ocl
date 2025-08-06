@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.complete;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
@@ -43,7 +44,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull CompletePackageInternal getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
 	@Override
 	@Nullable CompletePackageInternal getCompletePackageByURI(@NonNull String packageURI);
-	@NonNull CompleteURIs getCompleteURIs();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	/**
 	 * @since 7.0
@@ -58,6 +58,9 @@ public interface CompleteModelInternal extends CompleteModel
 
 	void dispose();
 	void didAddPartialModel(@NonNull Model partialModel);
+	/**
+	 * @since 7.0
+	 */
 	void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemovePartialModel(@NonNull Model partialModel);
@@ -72,4 +75,22 @@ public interface CompleteModelInternal extends CompleteModel
 	 * @since 7.0
 	 */
 	@NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	@Nullable CompletePackageInternal getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	@Nullable CompletePackage getCompletePackage3(@NonNull String packageURI);
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	void removeCompletePackage(@NonNull String completeURI);
 }

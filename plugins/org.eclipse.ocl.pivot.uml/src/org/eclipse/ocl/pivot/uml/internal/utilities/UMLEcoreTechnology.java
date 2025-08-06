@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.uml.PivotUMLConstants;
 import org.eclipse.ocl.pivot.uml.internal.library.InstanceSlotNavigationProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLBaseProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLExtensionProperty;
@@ -50,7 +51,6 @@ import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -142,17 +142,17 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		}
 		else if (eObject2 instanceof UMLPackage) {
 			@NonNull String nsUri = UMLPackage.eNS_URI;
-			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.UML_METAMODEL_NAME);
-			metamodel = IdManager.getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
+			environmentFactory.getCompleteModel().addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
+			metamodel = PivotUMLConstants.UML_METAMODEL;
 		}
 		else if (eObject2 instanceof TypesPackage) {
 			@NonNull String nsUri = TypesPackage.eNS_URI;
-			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.TYPES_METAMODEL_NAME);
-			metamodel = IdManager.getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
+			environmentFactory.getCompleteModel().addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
+			metamodel = PivotUMLConstants.TYPES_METAMODEL;
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
-			String sharedNsURI = environmentFactory.getMetamodelManager().getCompleteModel().getCompleteURI(nsURI);
+			String sharedNsURI = environmentFactory.getCompleteModel().getCompleteURI(nsURI);
 			if ((sharedNsURI != null) && !sharedNsURI.equals(nsURI)) {
 				metamodel = IdManager.getRootPackageId(sharedNsURI);
 			}
@@ -169,10 +169,10 @@ public class UMLEcoreTechnology extends AbstractTechnology
 				if (eClass != null) {
 					EPackage ePackage = eClass.getEPackage();
 					if (ePackage instanceof UMLPackage) {
-						return IdManager.getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
+						return PivotUMLConstants.UML_METAMODEL;
 					}
 					else if (ePackage instanceof TypesPackage) {
-						return IdManager.getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
+						return PivotUMLConstants.TYPES_METAMODEL;
 					}
 				}
 			}

@@ -57,7 +57,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 				}
 			}
 			String nsPrefix = asPackage.getNsPrefix();
-			String completeURI = getCompleteModel().getCompleteURIs().getCompleteURI(semantics != null ? semantics.trimFragment().toString() : asPackage.getURI());
+			String completeURI = getCompleteModel().getCompleteURI(semantics != null ? semantics.trimFragment().toString() : asPackage.getURI());
 			CompletePackageInternal rootCompletePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
 			rootCompletePackage.init(name, nsPrefix, completeURI);
 			add(rootCompletePackage);
@@ -93,7 +93,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 		//
 		//	Try to find package by packageURI
 		//
-		CompletePackageInternal completePackage = getCompleteModel().getCompleteURIs().getCompletePackage(pivotPackage);
+		CompletePackageInternal completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
 		if (completePackage != null) {
 			return completePackage;
 		}

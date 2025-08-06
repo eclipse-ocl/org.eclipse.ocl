@@ -133,7 +133,7 @@ public final class IdManager
 	public static final @NonNull RootPackageId METAMODEL = getRootPackageId(PivotConstants.AS_SEMANTICS.toString());
 
 	/**
-	 * Define a metamodelNsURI as a contributor to the metamodelName. THis facility is used to enable
+	 * Define a metamodelNsURI as a contributor to the metamodelName. This facility is used to enable
 	 * UML2's duplicate Eclipse/OMG models to be treated as merged rather than conflicting.
 	 */
 	public static void addMetamodelEPackage(@NonNull String metamodelNsURI, @NonNull String metamodelName) {
