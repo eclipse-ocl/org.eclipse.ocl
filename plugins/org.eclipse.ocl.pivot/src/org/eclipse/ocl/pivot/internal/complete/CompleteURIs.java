@@ -61,9 +61,9 @@ public class CompleteURIs
 		if (completeURI != null) {
 			CompletePackage oldCompletePackage = completeURI2completePackage.put(completeURI, completePackage);
 			assert oldCompletePackage == null;
-			if (COMPLETE_URIS.isActive()) {
-				traceURImapping(completeURI);
-			}
+		//	if (COMPLETE_URIS.isActive()) {
+		//		traceURImapping(completeURI);
+		//	}
 		}
 		//		}
 	}

@@ -570,7 +570,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			append("null::");
 			appendName(cls);
 		}
-		else if (!(pkg.eContainer() instanceof Model) && (PivotUtil.basicGetPackageSemantics(pkg) == null)) {
+		else if (!(pkg.eContainer() instanceof Model) || (PivotUtil.basicGetPackageSemantics(pkg) == null)) {
 			appendQualifiedName(pkg, "::", cls);
 		}
 		else {

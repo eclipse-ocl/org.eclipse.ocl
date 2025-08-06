@@ -248,12 +248,13 @@ public class EssentialOCLScoping
 					}
 					if (sourceType != null) {
 					//	sourceType = PivotUtil.getBehavioralType(sourceType);
+						String sourceTypeString = sourceType.toString();
 						OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
 						if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(csParent.getName())) {
-							typeText = "Set(" + sourceType.toString() + ")";
+							typeText = "Set(" + sourceTypeString + ")";
 						}
 						else {
-							typeText = sourceType.toString();
+							typeText = sourceTypeString;
 						}
 					}
 				}
