@@ -32,6 +32,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.ConnectionPointReference;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -59,7 +60,6 @@ import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -73,8 +73,8 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2ASDeclarationSwitch;
+import org.eclipse.ocl.pivot.uml.PivotUMLConstants;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.uml2.common.util.UML2Util;
@@ -280,7 +280,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			if (umlMetapackage != null) {
 				String nsURI = umlMetapackage.getURI();
 				if (nsURI != null) {
-					metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI, PivotConstants.UML_METAMODEL_NAME);
+					metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI, PivotUMLConstants.UML_METAMODEL_NAME);
 				}
 				converter.addImportedPackage(umlMetapackage);
 			}
@@ -715,7 +715,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				if ("UML".equals(packageName)) {		// OMG's
 					for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
 						if ((umlType instanceof org.eclipse.uml2.uml.Class) && "Class".equals(umlType.getName())) {
-							metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI2, PivotConstants.UML_METAMODEL_NAME);
+							metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI2, PivotUMLConstants.UML_METAMODEL_NAME);
 							((PackageImpl)pivotElement).setIgnoreInvariants(true);			// FIXME Change to a multi-invariant filter
 							break;
 						}
@@ -724,7 +724,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				else if ("PrimitiveTypes".equals(packageName)) {
 					for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
 						if ((umlType instanceof org.eclipse.uml2.uml.PrimitiveType) && "Boolean".equals(umlType.getName())) {
-							metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI2, PivotConstants.TYPES_METAMODEL_NAME);
+							metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI2, PivotUMLConstants.TYPES_METAMODEL_NAME);
 							break;
 						}
 					}

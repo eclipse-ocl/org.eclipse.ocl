@@ -2559,6 +2559,13 @@ public class PivotUtil implements PivotConstants
 		return ClassUtil.nullFree(completePackage.getPartialPackages());
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackagesList(@NonNull CompletePackage completePackage) {
+		return ClassUtil.nullFree(completePackage.getPartialPackages());
+	}
+
 	public static @Nullable <T extends Element> T getPivot(@NonNull Class<T> pivotClass, @Nullable Pivotable pivotableElement) {
 		if (pivotableElement == null) {
 			return null;
