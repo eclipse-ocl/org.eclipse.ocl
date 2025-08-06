@@ -722,7 +722,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing()) {
+		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing()) {					// XXX Migrate to completeModel.getCompletePackage(asPackage)
 			getASmetamodel();
 		}
 		return completeModel.getCompletePackage(asPackage);
@@ -1917,8 +1917,9 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public void setASmetamodel(org.eclipse.ocl.pivot.Package asPackage) {
 		asMetamodel = asPackage;
 		String uri = asMetamodel.getURI();
-		if (uri != null) {
-			completeModel.addPackageURI2completeURI(uri, PivotConstants.METAMODEL_NAME);
+		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+		if ((uri != null) && (semantics != null)) {
+			completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
 		}
 	}
 

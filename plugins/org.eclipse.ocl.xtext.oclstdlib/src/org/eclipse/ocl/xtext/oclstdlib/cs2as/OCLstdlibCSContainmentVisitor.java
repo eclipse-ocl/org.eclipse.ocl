@@ -31,9 +31,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -69,9 +67,9 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 
 	@Override
 	protected PackageId getPackageId(@NonNull PackageCS csElement) {
-		if ((csElement instanceof LibPackageCS) && (OCLstdlib.STDLIB_URI.equals(csElement.getNsURI()) || PivotPackage.eNS_URI.equals(csElement.getNsURI()))){
-			return IdManager.METAMODEL;
-		}
+//		if ((csElement instanceof LibPackageCS) && (OCLstdlib.STDLIB_URI.equals(csElement.getNsURI()) || PivotPackage.eNS_URI.equals(csElement.getNsURI()))){
+//			return IdManager.METAMODEL;
+//		}
 		return super.getPackageId(csElement);
 	}
 

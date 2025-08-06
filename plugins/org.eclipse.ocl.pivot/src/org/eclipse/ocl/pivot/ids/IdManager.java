@@ -129,7 +129,7 @@ public final class IdManager
 
 	private static @Nullable WildcardId wildcardId = null;
 
-	public static final @NonNull RootPackageId METAMODEL = getRootPackageId(PivotConstants.METAMODEL_NAME);
+	public static final @NonNull RootPackageId METAMODEL = getRootPackageId(PivotConstants.AS_SEMANTICS.toString());
 
 	/**
 	 * Define a metamodelNsURI as a contributor to the metamodelName. THis facility is used to enable

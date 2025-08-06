@@ -456,13 +456,16 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
+	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		ownedCompletePackages.didAddPackage(pivotPackage);
+		completeURIs.didAddPackage(pivotPackage);
 	}
 
 	@Override
 	public void didAddPartialModel(@NonNull Model partialModel) {
-		completeURIs.didAddPartialModel(partialModel);
+		for (org.eclipse.ocl.pivot.Package pivotPackage : PivotUtil.getOwnedPackages(partialModel)) {
+			didAddPackage(pivotPackage);
+		}
 	}
 
 	@Override
@@ -635,7 +638,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
 			orphanage2.addPackageListener(partialPackages);
 			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
-				didAddNestedPackage(asPackage);
+				didAddPackage(asPackage);
 			}
 		}
 		return orphanage2;

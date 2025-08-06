@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class CompleteClasses extends EObjectContainmentWithInverseEList<CompleteClass>
 {
-	public static final @NonNull TracingOption COMPLETE_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "completeClasses");
+	public static final @NonNull TracingOption COMPLETE_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "complete/classes");
 	//	static { COMPLETE_CLASSES.setState(true); }
 	private static final long serialVersionUID = 1L;
 

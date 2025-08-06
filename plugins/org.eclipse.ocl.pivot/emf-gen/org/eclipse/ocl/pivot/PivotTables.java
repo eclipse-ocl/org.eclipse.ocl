@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.Enumeration;
 // import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -46,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImp
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 
@@ -74,7 +74,7 @@ public class PivotTables extends AbstractTables
 	/**
 	 *	Constants used by auto-generated code.
 	 */
-	public static final /*@NonInvalid*/ @NonNull RootPackageId PACKid_$metamodel$ = IdManager.getRootPackageId("$metamodel$");
+	public static final /*@NonInvalid*/ @NonNull RootPackageId PACKid_$metamodel$ = IdManager.getRootPackageId(PivotConstants.AS_SEMANTICS.toString());
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Annotation = PivotTables.PACKid_$metamodel$.getClassId("Annotation", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_AssociationClass = PivotTables.PACKid_$metamodel$.getClassId("AssociationClass", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_AssociationClassCallExp = PivotTables.PACKid_$metamodel$.getClassId("AssociationClassCallExp", 0);

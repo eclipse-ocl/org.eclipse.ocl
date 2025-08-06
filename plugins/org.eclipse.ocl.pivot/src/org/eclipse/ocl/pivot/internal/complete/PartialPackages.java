@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -77,11 +78,11 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 			PARTIAL_PACKAGES.println("Do-didAdd " + this + " " + partialPackage);
 		}
 		((PackageImpl)partialPackage).addPackageListener(this);
-		getCompletePackage().didAddPartialPackage(partialPackage);
-		for (org.eclipse.ocl.pivot.Package nestedPackage : partialPackage.getOwnedPackages()) {
-			if (nestedPackage != null) {
-				getCompletePackage().didAddNestedPackage(nestedPackage);
-			}
+		CompletePackageImpl completePackage = getCompletePackage();                                    completePackage.didAddPartialPackage(partialPackage);
+		for (org.eclipse.ocl.pivot.Package nestedPackage : PivotUtil.getOwnedPackages(partialPackage)) {
+		//	if (nestedPackage != null) {
+				completePackage.didAddNestedPackage(nestedPackage);
+		//	}
 		}
 	}
 
@@ -173,7 +174,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		String name = completeClass.getName();
 		AbstractFlatClass completeFlatClass = name2flatClass.get(name);
 		if (completeFlatClass == null) {
-			CompleteFlatModel flatModel = (CompleteFlatModel) getCompleteModel().getStandardLibrary().getFlatModel();
+			CompleteFlatModel flatModel = getCompleteModel().getStandardLibrary().getFlatModel();
 			completeFlatClass = new CompleteFlatClass(flatModel , completeClass);
 			//			System.out.println("PartialPackage.add " + completeClass);
 			name2flatClass.put(name, completeFlatClass);

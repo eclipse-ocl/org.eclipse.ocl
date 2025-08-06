@@ -428,7 +428,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			}
 			else {
 				CompleteModelInternal completeModel = getCompleteModel();
-				assert (serverBasedNsURI == null) || (completeModel.getCompletePackageByURI(typeBasedNsURI) == completeModel.getCompletePackageByURI(serverBasedNsURI));
+//				assert (serverBasedNsURI == null) || (completeModel.getCompletePackageByURI(typeBasedNsURI) == completeModel.getCompletePackageByURI(serverBasedNsURI));
 			}
 		}
 		else {
