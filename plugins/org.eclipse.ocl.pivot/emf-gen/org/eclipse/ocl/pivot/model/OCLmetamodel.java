@@ -44,14 +44,20 @@ import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -564,7 +570,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_StateMachine_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_StateMachine_T = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_StereotypeExtender_T = createCollectionType(_Collection);
-		private final @NonNull CollectionType _Collection_String_T_L1 = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_TemplateBinding_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_TemplateBinding_T = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_TemplateParameter_F = createCollectionType(_Collection);
@@ -585,6 +590,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_VariableExp_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_Vertex_T = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_WildcardType_F = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_String_T_L1 = createCollectionType(_Collection);
 		private final @NonNull CollectionType _OrderedCollection_CollectionLiteralPart_T = createCollectionType(_OrderedCollection);
 		private final @NonNull CollectionType _OrderedCollection_Detail_T = createCollectionType(_OrderedCollection);
 		private final @NonNull CollectionType _OrderedCollection_Element_T = createCollectionType(_OrderedCollection);
@@ -646,13 +652,13 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull SetType _Set_State_T = createSetType(_Set);
 		private final @NonNull SetType _Set_StateMachine_T = createSetType(_Set);
 		private final @NonNull SetType _Set_StereotypeExtender_T = createSetType(_Set);
-		private final @NonNull SetType _Set_String_T_L1 = createSetType(_Set);
 		private final @NonNull SetType _Set_TemplateBinding_T = createSetType(_Set);
 		private final @NonNull SetType _Set_TemplateParameterSubstitution_T_L1 = createSetType(_Set);
 		private final @NonNull SetType _Set_Transition_T = createSetType(_Set);
 		private final @NonNull SetType _Set_Trigger_T = createSetType(_Set);
 		private final @NonNull SetType _Set_Type_T = createSetType(_Set);
 		private final @NonNull SetType _Set_Vertex_T = createSetType(_Set);
+		private final @NonNull SetType _Set_String_T_L1 = createSetType(_Set);
 		private final @NonNull CollectionType _UniqueCollection_Behavior_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_Class_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_CollectionLiteralPart_T = createCollectionType(_UniqueCollection);
@@ -688,7 +694,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_State_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_StateMachine_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_StereotypeExtender_T = createCollectionType(_UniqueCollection);
-		private final @NonNull CollectionType _UniqueCollection_String_T_L1 = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_TemplateBinding_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_TemplateParameter_T_L1 = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_TemplateParameterSubstitution_T_L1 = createCollectionType(_UniqueCollection);
@@ -699,6 +704,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_ValueSpecification_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_Variable_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_Vertex_T = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_String_T_L1 = createCollectionType(_UniqueCollection);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -1867,12 +1873,6 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
-			type = _Collection_String_T_L1;
-			type.setLower(1);
-			type.setIsNullFree(true);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type);
 			type = _Collection_TemplateBinding_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
@@ -1962,6 +1962,12 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 			type = _Collection_WildcardType_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
+			type = _Collection_String_T_L1;
+			type.setLower(1);
+			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -2292,12 +2298,6 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_StereotypeExtender_T);
 			ownedClasses.add(type);
-			type = _Set_String_T_L1;
-			type.setLower(1);
-			type.setIsNullFree(true);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_UniqueCollection_String_T_L1);
-			ownedClasses.add(type);
 			type = _Set_TemplateBinding_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -2328,6 +2328,12 @@ public class OCLmetamodel extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_Vertex_T);
+			ownedClasses.add(type);
+			type = _Set_String_T_L1;
+			type.setLower(1);
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_UniqueCollection_String_T_L1);
 			ownedClasses.add(type);
 			type = _UniqueCollection_Behavior_T;
 			type.setIsNullFree(true);
@@ -2505,12 +2511,6 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_StereotypeExtender_T);
 			ownedClasses.add(type);
-			type = _UniqueCollection_String_T_L1;
-			type.setLower(1);
-			type.setIsNullFree(true);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_String_T_L1);
-			ownedClasses.add(type);
 			type = _UniqueCollection_TemplateBinding_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -2562,6 +2562,12 @@ public class OCLmetamodel extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Vertex_T);
+			ownedClasses.add(type);
+			type = _UniqueCollection_String_T_L1;
+			type.setLower(1);
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_String_T_L1);
 			ownedClasses.add(type);
 		}
 
