@@ -189,7 +189,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
 							if (ownedInit == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+								throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/2015/Pivot\'::TypedElement::type\'");
 							}
 							final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;

@@ -101,7 +101,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -571,7 +570,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			append("null::");
 			appendName(cls);
 		}
-		else if (!(pkg.eContainer() instanceof Model) || !IdManager.METAMODEL.equals(pkg.getPackageId())) {
+		else if (!(pkg.eContainer() instanceof Model) && (PivotUtil.basicGetPackageSemantics(pkg) == null)) {
 			appendQualifiedName(pkg, "::", cls);
 		}
 		else {

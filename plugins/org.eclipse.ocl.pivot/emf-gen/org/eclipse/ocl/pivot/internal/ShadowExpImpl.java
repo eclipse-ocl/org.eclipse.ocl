@@ -259,9 +259,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				try {
 					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotTables.CLSSid_DataType, null);
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_pivot_c_c_DataType = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 						final /*@NonInvalid*/ @Nullable Type type = this.getType();
-						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType).booleanValue();
+						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_pivot_c_c_DataType).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
 					catch (Exception e) {
@@ -418,9 +418,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType_0 = idResolver.getClass(PivotTables.CLSSid_DataType, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_pivot_c_c_DataType_0 = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
-					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType_0).booleanValue();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_pivot_c_c_DataType_0).booleanValue();
 					/*@Thrown*/ @NonNull Object result;
 					if (oclIsKindOf) {
 						result = ValueUtil.TRUE_VALUE;
@@ -447,9 +447,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator.add(referredProperty);
 						}
 						final /*@NonInvalid*/ @NonNull SetValue partProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect);
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_pivot_c_c_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
 						@SuppressWarnings("null")
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_pivot_c_c_Class_0);
 						final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class_0, oclAsType);
 						final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticClassOf(oclAsSet);
 						final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
@@ -466,7 +466,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ @Nullable Object _1_0) {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class CAST_null = (org.eclipse.ocl.pivot.Class)_1_0;
 								if (CAST_null == null) {
-									throw new InvalidValueException("Null source for \'Class::superClasses\'");
+									throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/2015/Pivot\'::Class::superClasses\'");
 								}
 								final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = CAST_null.getSuperClasses();
 								final /*@Thrown*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
@@ -697,9 +697,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							/**
 							 * type.oclIsKindOf(CollectionType)
 							 */
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_pivot_c_c_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							final /*@NonInvalid*/ @Nullable Type type_1 = _1_6.getType();
-							final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_1, TYP_CollectionType_0).booleanValue();
+							final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_1, TYP_pivot_c_c_CollectionType_0).booleanValue();
 							//
 							if (oclIsKindOf_0 == ValueUtil.FALSE_VALUE) {
 								accumulator_5.add(_1_6);
@@ -728,7 +728,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								/*@Caught*/ @NonNull Object CAUGHT_isComposite;
 								try {
 									if (opposite == null) {
-										throw new InvalidValueException("Null source for \'Property::isComposite\'");
+										throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/2015/Pivot\'::Property::isComposite\'");
 									}
 									final /*@Thrown*/ boolean isComposite = opposite.isIsComposite();
 									CAUGHT_isComposite = isComposite;
@@ -777,7 +777,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object extraProperties, final /*@NonInvalid*/ @Nullable Object _1_8) {
 									final /*@NonInvalid*/ @Nullable NamedElement CAST_null_0 = (NamedElement)_1_8;
 									if (CAST_null_0 == null) {
-										throw new InvalidValueException("Null source for \'NamedElement::name\'");
+										throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/2015/Pivot\'::NamedElement::name\'");
 									}
 									final /*@Thrown*/ @Nullable String name_0 = CAST_null_0.getName();
 									return name_0;
@@ -827,7 +827,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object missingProperties, final /*@NonInvalid*/ @Nullable Object _1_9) {
 										final /*@NonInvalid*/ @Nullable NamedElement CAST_null_1 = (NamedElement)_1_9;
 										if (CAST_null_1 == null) {
-											throw new InvalidValueException("Null source for \'NamedElement::name\'");
+											throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/2015/Pivot\'::NamedElement::name\'");
 										}
 										final /*@Thrown*/ @Nullable String name_2 = CAST_null_1.getName();
 										return name_2;
