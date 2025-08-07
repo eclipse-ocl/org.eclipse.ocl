@@ -682,7 +682,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		List<org.eclipse.ocl.pivot.@NonNull  Package> partialPackages = PivotUtil.getPartialPackagesList(completePackage);
 		append(partialPackages.size());
 		append(" : ");
-		append(completePackage.getURI());
+		append(PivotUtil.getURI(completePackage));
 		append(" <=>");
 		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
 			append(" ");

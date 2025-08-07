@@ -27,14 +27,23 @@ public interface CompleteModelInternal extends CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	default @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) { return null; }
+	@Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable CompletePackage basicGetCompletePackage(@NonNull String packageURI);
+
 	/**
 	 * @since 7.0
 	 */
 	@Nullable CompleteClassInternal basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	void didAddCompletePackage(@NonNull CompletePackageInternal completePackage);
-	void didRemoveCompletePackage(@NonNull CompletePackageInternal completePackage);
+	/**
+	 * @since 7.0
+	 */
+	void didRemoveCompletePackage(@NonNull CompletePackage completePackage);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	@Override
 	@NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages();
@@ -81,16 +90,4 @@ public interface CompleteModelInternal extends CompleteModel
 	 */
 	@Deprecated
 	@Nullable CompletePackageInternal getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	@Nullable CompletePackage getCompletePackage3(@NonNull String packageURI);
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	void removeCompletePackage(@NonNull String completeURI);
 }

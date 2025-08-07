@@ -101,10 +101,11 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		return (CompleteModelInternal)owner;
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.Package> getNestedPartialPackages() {
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getNestedPartialPackages() {
 		PartialModels partialModels = getCompleteModel().getPartialModels();
-		Iterable<Iterable<org.eclipse.ocl.pivot.Package>> roots_packages = Iterables.transform(partialModels, model2RootOwnedPackages);
-		@NonNull Iterable<Package> allPackages = Iterables.concat(roots_packages);
+		Iterable<Iterable<org.eclipse.ocl.pivot.@NonNull Package>> roots_packages = Iterables.transform(partialModels, model2RootOwnedPackages);
+		@SuppressWarnings("null")
+		@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> allPackages = Iterables.concat(roots_packages);
 		return allPackages;
 	}
 }

@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -127,11 +128,11 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	@Nullable CompletePackage getOwnedCompletePackage(String name);
+	@Nullable CompletePackage getOwnedCompletePackage(@NonNull String newCompleteURI);
 
-	void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI);
+	void addPackageURI2completeURI(@NonNull CompletePackage completePackage, @NonNull String packageURI);
 	/**
 	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
 	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constraint> rather than just a Constraint.
@@ -151,4 +152,9 @@ public interface CompleteModel extends NamedElement
 	 */
 	@NonNull Orphanage getOrphanage();
 	org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
+
+	/**
+	 * @since 7.0
+	 */
+	void registerCompletePackageContribution(@NonNull URI completePackageURI, @NonNull String packageURI);
 } // CompleteModel

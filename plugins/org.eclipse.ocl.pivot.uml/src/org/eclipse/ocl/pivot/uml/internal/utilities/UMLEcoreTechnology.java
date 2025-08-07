@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology;
@@ -136,23 +137,26 @@ public class UMLEcoreTechnology extends AbstractTechnology
 
 	@Override
 	public RootPackageId getMetamodelId(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage eObject2) {
+		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		RootPackageId metamodel = null;
 		if (ClassUtil.basicGetMetamodelAnnotation(eObject2) != null) {
 			metamodel = IdManager.METAMODEL;
 		}
 		else if (eObject2 instanceof UMLPackage) {
-			@NonNull String nsUri = UMLPackage.eNS_URI;
-			environmentFactory.getCompleteModel().addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
+			@NonNull String nsURI = UMLPackage.eNS_URI;
+//			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
+			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, nsURI);
 			metamodel = PivotUMLConstants.UML_METAMODEL;
 		}
 		else if (eObject2 instanceof TypesPackage) {
 			@NonNull String nsUri = TypesPackage.eNS_URI;
-			environmentFactory.getCompleteModel().addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
+//			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
+			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, nsUri);
 			metamodel = PivotUMLConstants.TYPES_METAMODEL;
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
-			String sharedNsURI = environmentFactory.getCompleteModel().getCompleteURI(nsURI);
+			String sharedNsURI = completeModel.getCompleteURI(nsURI);
 			if ((sharedNsURI != null) && !sharedNsURI.equals(nsURI)) {
 				metamodel = IdManager.getRootPackageId(sharedNsURI);
 			}
