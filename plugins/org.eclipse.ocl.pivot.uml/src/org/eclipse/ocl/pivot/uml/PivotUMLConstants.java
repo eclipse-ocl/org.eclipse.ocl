@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.uml;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -32,4 +33,23 @@ public interface PivotUMLConstants extends PivotConstants
 
 	static final @NonNull RootPackageId UML_METAMODEL = IdManager.getRootPackageId(PivotUMLConstants.UML_METAMODEL_NAME);
 	static final @NonNull RootPackageId TYPES_METAMODEL = IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);
+
+	/**
+	 * URI used to identify that a Package contributes to the OCL AS.
+	 * Fragments may be appended tio identify a particular aspect of the AS.
+	 * @since 7.0
+	 */
+	static final @NonNull URI UML_SEMANTICS = URI.createURI("http://www.eclipse.org/OCL/AS");			// XXX
+
+	/**
+	 * Sub URI used to identify that a Package contributes to the OCL AS Standard Library.
+	 * @since 7.0
+	 */
+	static final @NonNull URI UML_TYPES_SEMANTICS = UML_SEMANTICS.appendFragment("Types");			// XXX
+
+	/**
+	 * Sub URI used to identify that a Package contributes to the OCL AS Metamodel.
+	 * @since 7.0
+	 */
+	static final @NonNull URI UML_METAMODEL_SEMANTICS = UML_SEMANTICS.appendFragment("Metamodel");			// XXX
 }

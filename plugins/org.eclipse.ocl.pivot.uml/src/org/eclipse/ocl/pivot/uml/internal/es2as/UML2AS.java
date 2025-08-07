@@ -1090,8 +1090,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		environmentFactory.addExternal2AS(this);
 		//		metamodelManager.addListener(this);
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotUMLConstants.UML_METAMODEL_NAME);
-		completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotUMLConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
+	//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotUMLConstants.UML_METAMODEL_NAME);
+		completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, ClassUtil.requireNonNull(UMLPackage.eNS_URI));
+	//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotUMLConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
+		completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, ClassUtil.requireNonNull(TypesPackage.eNS_URI));
 		// FIXME All known synonyms
 	}
 

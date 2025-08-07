@@ -31,11 +31,26 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public interface PivotConstants
 {
 	/**
+	 * The Package name of the shared metamodel.
+	 */
+	static final @NonNull String METAMODEL_NAME = "$metamodel$";
+
+	/**
+	 * The Package name of the shared types metamodel.
+	 */
+//	static final @NonNull String TYPES_METAMODEL_NAME = "$types$";	// FIXME Use extension point
+
+	/**
+	 * The Package name of the shared uml metamodel.
+	 */
+//	static final @NonNull String UML_METAMODEL_NAME = "$uml$";	// FIXME Use extension point
+
+	/**
 	 * URI used to identify that a Package contributes to the OCL AS.
 	 * Fragments may be appended tio identify a particular aspect of the AS.
 	 * @since 7.0
 	 */
-	static final @NonNull URI AS_SEMANTICS = URI.createURI("http://www.eclipse.org/OCL/AS");
+	static final @NonNull URI AS_SEMANTICS = URI.createURI("http://www.eclipse.org/OCL/AS");			// XXX
 
 	/**
 	 * Sub URI used to identify that a Package contributes to the OCL AS Standard Library.
@@ -77,21 +92,6 @@ public interface PivotConstants
 	 * @since 1.7
 	 */
 	static final @NonNull String ENTRY_CLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/EntryClass";
-
-	/**
-	 * The Package name of the shared metamodel.
-	 */
-	static final @NonNull String METAMODEL_NAME = "$metamodel$";
-
-	/**
-	 * The Package name of the shared types metamodel.
-	 */
-//	static final @NonNull String TYPES_METAMODEL_NAME = "$types$";	// FIXME Use extension point
-
-	/**
-	 * The Package name of the shared uml metamodel.
-	 */
-//	static final @NonNull String UML_METAMODEL_NAME = "$uml$";	// FIXME Use extension point
 
 	/**
 	 * @since 1.3

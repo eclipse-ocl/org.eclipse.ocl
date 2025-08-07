@@ -1916,10 +1916,13 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	public void setASmetamodel(org.eclipse.ocl.pivot.Package asPackage) {
 		asMetamodel = asPackage;
-		String uri = asMetamodel.getURI();
-		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
-		if ((uri != null) && (semantics != null)) {
-			completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
+		String packageURI = asMetamodel.getURI();
+		if (packageURI != null) {
+			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+			if (semantics != null) {
+			//	completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
+				completeModel.registerCompletePackageContribution(semantics.trimFragment(), packageURI);
+			}
 		}
 	}
 
@@ -1942,7 +1945,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			getASmetamodel();
 		}
 		else if (!metaNsURI.equals(asMetamodel.getURI())) {
-			completeModel.addPackageURI2completeURI(metaNsURI, PivotConstants.METAMODEL_NAME);
+		//	completeModel.addPackageURI2completeURI(metaNsURI, PivotConstants.METAMODEL_NAME);
+			completeModel.registerCompletePackageContribution(PivotConstants.AS_SEMANTICS, metaNsURI);
 			//			throw new IllegalMetamodelException(asMetamodel.getNsURI(), metaNsURI);
 		}
 	}

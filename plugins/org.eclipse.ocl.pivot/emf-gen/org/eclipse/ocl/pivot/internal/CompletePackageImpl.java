@@ -11,7 +11,9 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -42,8 +44,10 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -69,6 +73,10 @@ import com.google.common.collect.Iterables;
 @SuppressWarnings("unused")
 public class CompletePackageImpl extends NamedElementImpl implements CompletePackage, org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull TracingOption COMPLETE_URIS = new TracingOption(PivotPlugin.PLUGIN_ID, "complete/uris");
 
 	/**
 	 * The number of structural features of the '<em>Complete Package</em>' class.
@@ -396,6 +404,8 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	protected final @NonNull PartialPackages partialPackages;
 
+	private @NonNull List<@NonNull String> packageURIs = new ArrayList<>();
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -403,6 +413,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	protected CompletePackageImpl()
 	{
+		COMPLETE_URIS.setState(true);			// XXX
 		partialPackages = new PartialPackages(this);
 	}
 
@@ -431,7 +442,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		else {
 			String typeBasedNsURI = pivotPackage.getURI();
 			String serverBasedNsURI = getURI();
-			assert (typeBasedNsURI == serverBasedNsURI) || typeBasedNsURI.equals(serverBasedNsURI);
+//			assert (typeBasedNsURI == serverBasedNsURI) || typeBasedNsURI.equals(serverBasedNsURI);
 		}
 	}
 
@@ -469,6 +480,16 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
 		getOwnedCompletePackages().didAddPackage(nestedPackage);
+	}
+
+	@Override
+	public void didAddPackageURI(@NonNull String packageURI) {
+		if (!packageURIs.contains(packageURI)) {
+			packageURIs.add(packageURI);
+			if (COMPLETE_URIS.isActive()) {
+				traceURImapping();
+			}
+		}
 	}
 
 	public void didAddPartialPackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
@@ -563,7 +584,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	@Override
 	public CompletePackageInternal getOwnedCompletePackage(@Nullable String name) {
-		return getOwnedCompletePackages().getOwnedCompletePackage(name);
+		return getOwnedCompletePackages().basicGetOwnedCompletePackage(name);
 	}
 
 	/**
@@ -729,8 +750,8 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
-	public String getURI() {
-		return nsURI;
+	public @NonNull String getURI() {
+		return nsURI != null ? nsURI : "«null»";
 	}
 
 	@Override
@@ -738,5 +759,17 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		setName(name);
 		this.nsPrefix = nsPrefix;
 		this.nsURI = completeURI;
+	}
+
+	private void traceURImapping() {
+		StringBuilder s = new StringBuilder();
+		s.append(nsURI);
+		s.append(" <=>");
+		for (@NonNull String pURI : packageURIs) {
+			s.append(" ");
+			s.append(pURI);
+		}
+		COMPLETE_URIS.println(s.toString());
+		getClass();
 	}
 } //CompletePackageImpl

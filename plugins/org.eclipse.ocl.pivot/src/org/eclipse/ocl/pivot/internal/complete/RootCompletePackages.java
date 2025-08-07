@@ -57,7 +57,16 @@ public class RootCompletePackages extends AbstractCompletePackages
 				}
 			}
 			String nsPrefix = asPackage.getNsPrefix();
-			String completeURI = getCompleteModel().getCompleteURI(semantics != null ? semantics.trimFragment().toString() : asPackage.getURI());
+			String completeURI;
+			if (semantics != null) {
+				completeURI = semantics.trimFragment().toString();
+			}
+			else {
+				completeURI = asPackage.getURI();
+				if (completeURI == null) {
+					completeURI = name;
+				}
+			}
 			CompletePackageInternal rootCompletePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
 			rootCompletePackage.init(name, nsPrefix, completeURI);
 			add(rootCompletePackage);
@@ -122,10 +131,10 @@ public class RootCompletePackages extends AbstractCompletePackages
 		//
 		//	Try to find package by name, provided there is no packageURI conflict
 		//
-		CompletePackageInternal rootCompletePackage = getOwnedCompletePackage(name);
+		CompletePackageInternal rootCompletePackage = basicGetOwnedCompletePackage(name);
 		if (rootCompletePackage != null) {
-			String completeURI2 = rootCompletePackage.getURI();
-			if ((packageURI == null) || (completeURI2 == null) || packageURI.equals(completeURI2)) {
+			String completeURI2 = PivotUtil.getURI(rootCompletePackage);
+			if ((packageURI == null) || packageURI.equals(completeURI2)) {
 				return rootCompletePackage;
 			}
 		}
@@ -134,7 +143,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 	}
 
 	@Override
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.Package> getPartialPackages() {
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages() {
 		return getCompleteModel().getPartialModels().getNestedPartialPackages();
 	}
 }
