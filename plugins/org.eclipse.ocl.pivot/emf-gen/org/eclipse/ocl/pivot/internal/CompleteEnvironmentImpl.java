@@ -27,18 +27,17 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -402,8 +401,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			if (pivotPackage == null) {
 				throw new IllegalStateException("type has no package");
 			}
-			CompletePackageInternal completePackage = ownedCompleteModel.getCompletePackage(pivotPackage);
-			return completePackage.getCompleteClass(asClass);
+			CompletePackage completePackage = ownedCompleteModel.getCompletePackage(pivotPackage);
+			return (CompleteClassInternal)completePackage.getCompleteClass(asClass);
 		}
 		else {
 			throw new UnsupportedOperationException("TemplateType");

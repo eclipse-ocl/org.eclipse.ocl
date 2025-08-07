@@ -436,13 +436,13 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			}
 			else {
 				CompleteModelInternal completeModel = getCompleteModel();
-//				assert (serverBasedNsURI == null) || (completeModel.getCompletePackageByURI(typeBasedNsURI) == completeModel.getCompletePackageByURI(serverBasedNsURI));
+// XXX				assert (serverBasedNsURI == null) || (completeModel.getCompletePackageByURI(typeBasedNsURI) == completeModel.getCompletePackageByURI(serverBasedNsURI));
 			}
 		}
 		else {
 			String typeBasedNsURI = pivotPackage.getURI();
 			String serverBasedNsURI = getURI();
-//			assert (typeBasedNsURI == serverBasedNsURI) || typeBasedNsURI.equals(serverBasedNsURI);
+// XXX			assert (typeBasedNsURI == serverBasedNsURI) || typeBasedNsURI.equals(serverBasedNsURI);
 		}
 	}
 
@@ -712,6 +712,11 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwningCompletePackage, newOwningCompletePackage));
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull String> getPackageURIs() {
+		return packageURIs;
 	}
 
 	@Override

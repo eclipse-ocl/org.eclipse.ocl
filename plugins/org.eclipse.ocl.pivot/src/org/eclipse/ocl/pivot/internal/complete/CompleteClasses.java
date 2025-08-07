@@ -21,10 +21,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class CompleteClasses extends EObjectContainmentWithInverseEList<CompleteClass>
@@ -126,10 +126,21 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		CompleteModelInternal completeModel = getCompleteModel();
 		String name = partialClass.getName();
 		if (name != null) {
-			CompleteClassInternal completeClass = completeModel.basicGetSharedCompleteClass(partialClass);
-			if ((completeClass == null) && PivotConstants.METAMODEL_NAME.equals(PivotUtil.getURI(getCompletePackage()))) {
+			CompleteClassInternal completeClass = null;
+			if (partialClass instanceof PrimitiveType) {										// Regular declaration
+				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
+				completeClass = primitiveCompletePackage.getCompleteClass(partialClass);
+			}
+	//		else if ((partialClass instanceof MapType) && (partialClass.getUnspecializedElement() != null)) {
+	//			CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
+	//			completeClass = orphanCompletePackage.getCompleteClass(partialClass);
+	//		}
+			else if (PivotConstants.AS_SEMANTICS.toString().equals(getCompletePackage().getURI())) {		// Imported ocl/pivot overlay	// XXX toString
 				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 				completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
+			}
+			else {
+				completeClass = completeModel.basicGetSharedCompleteClass(partialClass);
 			}
 			if (completeClass == null) {
 				completeClass = name2completeClass2.get(name);

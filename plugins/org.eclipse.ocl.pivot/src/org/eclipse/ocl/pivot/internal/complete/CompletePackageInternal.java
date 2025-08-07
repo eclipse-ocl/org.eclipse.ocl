@@ -23,10 +23,10 @@ public interface CompletePackageInternal extends CompletePackage
 	@NonNull CompleteModelInternal getCompleteModel();
 	@Override
 	CompleteClassInternal getOwnedCompleteClass(String name);
-	@Override
-	@Nullable CompletePackageInternal getOwnedCompletePackage(@Nullable String name);
+//	@Override
+//	@Nullable CompletePackageInternal getOwnedCompletePackage(@Nullable String name);
 	@Override
 	@NonNull PartialPackages getPartialPackages();
-	@NonNull CompletePackageInternal getRootCompletePackage();
+//	@NonNull CompletePackageInternal getRootCompletePackage();
 	void init(String name, @Nullable String nsPrefix, @Nullable String completeURI);
 }

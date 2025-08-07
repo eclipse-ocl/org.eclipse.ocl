@@ -27,12 +27,17 @@ public interface CompleteModelInternal extends CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	@Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
+	@Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
 
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	@Nullable CompletePackage basicGetCompletePackage(@NonNull String packageURI);
+	/**
+	 * @since 7.0
+	 */
+	@Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI);
 
 	/**
 	 * @since 7.0
@@ -46,13 +51,13 @@ public interface CompleteModelInternal extends CompleteModel
 	void didRemoveCompletePackage(@NonNull CompletePackage completePackage);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	@Override
-	@NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages();
+	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages();
 	@Override
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type partialClass);
 	@Override
-	@NonNull CompletePackageInternal getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
+	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
 	@Override
-	@Nullable CompletePackageInternal getCompletePackageByURI(@NonNull String packageURI);
+	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	/**
 	 * @since 7.0
@@ -88,6 +93,5 @@ public interface CompleteModelInternal extends CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	@Deprecated
-	@Nullable CompletePackageInternal getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
+	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 }

@@ -66,10 +66,10 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	/**
 	 * @since 7.0
 	 */
-	public @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		CompletePackageInternal completePackage = null;
-		if (pivotPackage instanceof CompletePackageInternal) {
-			completePackage = (CompletePackageInternal)pivotPackage;
+	public @Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
+		CompletePackage completePackage = null;
+		if (pivotPackage instanceof CompletePackage) {
+			completePackage = (CompletePackage)pivotPackage;
 		}
 		else {
 			completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
@@ -78,7 +78,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 				if (pivotPackageParent == null) {
 					return null;
 				}
-				CompletePackageInternal completeParentPackage = basicGetCompletePackage(pivotPackageParent);
+				CompletePackage completeParentPackage = basicGetCompletePackage(pivotPackageParent);
 				if (completeParentPackage == null) {
 					return null;
 				}
@@ -114,16 +114,17 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		String name = pivotPackage.getName();
 		String packageURI = pivotPackage.getURI();
 		if (packageURI != null) {										// Explicit packageURI for explicit package (merge)
-			completePackage = getCompleteModel().basicGetCompletePackage(packageURI);
+			completePackage = getCompleteModel().basicGetCompletePackageForPackageURI(packageURI);
 		}
 		else if (name != null) {										// Null packageURI can merge into same named package
 			completePackage = basicGetOwnedCompletePackage(name);
 		}
 		if (completePackage == null) {
 			completePackage = getOwnedCompletePackage(pivotPackage);
-			completePackage.assertSamePackage(pivotPackage);
+			completePackage.assertSamePackage(pivotPackage);		// XXX obsolete / rewrite
 		}
 		completePackage.getPartialPackages().add(pivotPackage);
+		completePackage.didAddPackageURI(packageURI);
 //		completePackage.addTrackedPackage(pivotPackage);
 //		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotPackage.getOwnedPackages()) {
 //			if (nestedPackage != null) {
@@ -142,7 +143,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		getCompleteModel().didRemoveCompletePackage(completePackageInternal);
 	}
 
-	public void didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+	public @NonNull CompletePackage didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		CompletePackage completePackage = getCompletePackage(partialPackage);
 		List<Package> partialPackages = completePackage.getPartialPackages();
 		partialPackages.remove(partialPackage);
@@ -151,6 +152,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 //			name2completePackage.remove(completePackage.getName());
 			remove(completePackage);
 		}
+		return completePackage;
 	}
 
 	public synchronized void dispose() {
@@ -163,8 +165,11 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 
 	protected abstract CompleteModelInternal getCompleteModel();
 
-	public @NonNull CompletePackageInternal getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		CompletePackageInternal completePackage = null;
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
+		CompletePackage completePackage = null;
 		if (pivotPackage instanceof CompletePackageInternal) {
 			((CompletePackageInternal)pivotPackage).assertSamePackage(pivotPackage);
 			completePackage = (CompletePackageInternal)pivotPackage;
@@ -180,8 +185,8 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 					completePackage.assertSamePackage(pivotPackage);
 				}
 				else {
-					CompletePackageInternal completeParentPackage = getCompletePackage(pivotPackageParent);
-					CompletePackageInternal completeChildPackage = completeParentPackage.getOwnedCompletePackage(pivotPackage.getName());
+					CompletePackage completeParentPackage = getCompletePackage(pivotPackageParent);
+					CompletePackage completeChildPackage = completeParentPackage.getOwnedCompletePackage(pivotPackage.getName());
 					assert completeChildPackage != null;
 					return completeChildPackage;
 //					CompletePackageParent completePackageParent;
@@ -198,7 +203,10 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		return completePackage;
 	}
 
-	protected abstract @NonNull CompletePackageInternal getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 
 	protected abstract @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages();
 
