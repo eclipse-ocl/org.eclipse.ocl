@@ -133,6 +133,11 @@ public interface CompletePackage extends NamedElement
 
 	org.eclipse.ocl.pivot.Package getPrimaryPackage();
 
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompletePackage getRootCompletePackage();
+
 	@NonNull String getURI();
 
 	String getNsPrefix();
@@ -153,6 +158,11 @@ public interface CompletePackage extends NamedElement
 	@Nullable CompletePackage getOwningCompletePackage();
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull String> getPackageURIs();
+
+	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompletePackage#getOwningCompletePackage <em>Owning Complete Package</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -161,4 +171,5 @@ public interface CompletePackage extends NamedElement
 	 * @generated
 	 */
 	void setOwningCompletePackage(CompletePackage value);
+
 }

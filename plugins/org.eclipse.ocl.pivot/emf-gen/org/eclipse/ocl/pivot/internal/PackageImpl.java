@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -37,7 +38,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.PackageListeners;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -744,7 +744,7 @@ implements org.eclipse.ocl.pivot.Package {
 	 */
 	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		CompletePackageInternal completePackage = environmentFactory.getCompleteModel().basicGetCompletePackage(this);
+		CompletePackage completePackage = environmentFactory.getCompleteModel().basicGetCompletePackage(this);
 		if (completePackage != null) {
 			for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {
 				EObject esObject = asPackage.getESObject();
