@@ -132,7 +132,6 @@ public interface CompleteModel extends NamedElement
 	 */
 	@Nullable CompletePackage getOwnedCompletePackage(@NonNull String newCompleteURI);
 
-	void addPackageURI2completeURI(@NonNull CompletePackage completePackage, @NonNull String packageURI);
 	/**
 	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
 	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constraint> rather than just a Constraint.
@@ -141,7 +140,7 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	default @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return null; }
-	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
+	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages();
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
 	@NonNull CompleteEnvironment getCompleteEnvironment();
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);

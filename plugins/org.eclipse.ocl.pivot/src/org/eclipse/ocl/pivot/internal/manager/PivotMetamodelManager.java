@@ -78,7 +78,6 @@ import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
@@ -584,7 +583,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages() {
+	public @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages() {
 		if (!libraryLoadInProgress && (asMetamodel == null) && !environmentFactory.isDisposing())  {
 			getASmetamodel();
 		}
@@ -1692,7 +1691,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			installResource(asLibraryResource2);
 			if (!asLibraries.isEmpty()) {
 				for (@NonNull Library asLibrary : asLibraries) {
-					installLibraryContents(asLibrary);
+					installLibraryContents(asLibrary);					// XXX repeats installResource
 				}
 			}
 			return asLibraryResource2;

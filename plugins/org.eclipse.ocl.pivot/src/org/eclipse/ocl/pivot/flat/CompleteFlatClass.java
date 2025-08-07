@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -155,7 +154,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	 * @param asProperties
 	 */
 	protected @Nullable List<@NonNull Property> gatherMetaExtensions(@Nullable List<@NonNull Property> asProperties) {
-		CompletePackageInternal rootCompletePackage = completeClass.getOwningCompletePackage().getRootCompletePackage();
+		CompletePackage rootCompletePackage = completeClass.getOwningCompletePackage().getRootCompletePackage();
 		org.eclipse.ocl.pivot.Package pivotPackage = rootCompletePackage.getPrimaryPackage();
 		if (pivotPackage != null) {
 			org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();

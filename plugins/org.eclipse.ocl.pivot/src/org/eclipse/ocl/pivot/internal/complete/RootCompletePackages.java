@@ -97,12 +97,15 @@ public class RootCompletePackages extends AbstractCompletePackages
 		return (CompleteModelInternal)owner;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull CompletePackageInternal getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
+	public @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		//
 		//	Try to find package by packageURI
 		//
-		CompletePackageInternal completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
+		CompletePackage completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
 		if (completePackage != null) {
 			return completePackage;
 		}
