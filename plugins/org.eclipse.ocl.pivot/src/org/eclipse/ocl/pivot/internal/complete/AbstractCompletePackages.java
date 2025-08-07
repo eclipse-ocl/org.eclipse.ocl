@@ -59,6 +59,13 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	/**
 	 * @since 7.0
 	 */
+	public @Nullable CompletePackageInternal basicGetOwnedCompletePackage(@Nullable String name) {
+		return name2completePackage.get(name);
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		CompletePackageInternal completePackage = null;
 		if (pivotPackage instanceof CompletePackageInternal) {
@@ -107,10 +114,10 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		String name = pivotPackage.getName();
 		String packageURI = pivotPackage.getURI();
 		if (packageURI != null) {										// Explicit packageURI for explicit package (merge)
-			completePackage = getCompleteModel().getCompletePackage3(packageURI);
+			completePackage = getCompleteModel().basicGetCompletePackage(packageURI);
 		}
 		else if (name != null) {										// Null packageURI can merge into same named package
-			completePackage = getOwnedCompletePackage(name);
+			completePackage = basicGetOwnedCompletePackage(name);
 		}
 		if (completePackage == null) {
 			completePackage = getOwnedCompletePackage(pivotPackage);
@@ -140,7 +147,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		List<Package> partialPackages = completePackage.getPartialPackages();
 		partialPackages.remove(partialPackage);
 		if (partialPackages.size() <= 0) {
-			getCompleteModel().removeCompletePackage(completePackage.getURI());
+			getCompleteModel().didRemoveCompletePackage(completePackage);
 //			name2completePackage.remove(completePackage.getName());
 			remove(completePackage);
 		}
@@ -191,13 +198,9 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		return completePackage;
 	}
 
-	public @Nullable CompletePackageInternal getOwnedCompletePackage(@Nullable String name) {
-		return name2completePackage.get(name);
-	}
-
 	protected abstract @NonNull CompletePackageInternal getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 
-	protected abstract @NonNull Iterable<org.eclipse.ocl.pivot.Package> getPartialPackages();
+	protected abstract @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages();
 
 	@Override
 	public String toString() {

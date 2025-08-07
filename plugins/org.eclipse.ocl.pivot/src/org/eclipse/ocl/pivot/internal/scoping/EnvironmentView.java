@@ -857,16 +857,12 @@ public class EnvironmentView
 			}
 		}
 		else {
-			for (CompletePackage rootCompletePackage : completeModel.getOwnedCompletePackages()) {
-				if (rootCompletePackage != null) {
-					addNamedElement(rootCompletePackage);
-				}
+			for (CompletePackage rootCompletePackage : PivotUtil.getOwnedCompletePackages(completeModel)) {
+				addNamedElement(rootCompletePackage);
 			}
 			for (@NonNull CompletePackage completePackage : completeModel.getAllCompletePackagesWithUris()) {
-				String nsURI = completePackage.getURI();
-				if (nsURI != null) {
-					addElement(nsURI, completePackage);
-				}
+				String nsURI = PivotUtil.getURI(completePackage);
+				addElement(nsURI, completePackage);
 			}
 		}
 	}

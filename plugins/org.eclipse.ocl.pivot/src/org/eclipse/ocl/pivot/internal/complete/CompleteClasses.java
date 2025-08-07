@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class CompleteClasses extends EObjectContainmentWithInverseEList<CompleteClass>
@@ -126,7 +127,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		String name = partialClass.getName();
 		if (name != null) {
 			CompleteClassInternal completeClass = completeModel.basicGetSharedCompleteClass(partialClass);
-			if ((completeClass == null) && PivotConstants.METAMODEL_NAME.equals(getCompletePackage().getURI())) {
+			if ((completeClass == null) && PivotConstants.METAMODEL_NAME.equals(PivotUtil.getURI(getCompletePackage()))) {
 				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 				completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
 			}

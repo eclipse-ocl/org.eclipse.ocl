@@ -16,10 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -64,12 +62,10 @@ import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalMetamodelException;
-import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.collect.Lists;
 
@@ -93,11 +89,6 @@ import com.google.common.collect.Lists;
  */
 public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal
 {
-	/**
-	 * @since 7.0
-	 */
-	public static final @NonNull TracingOption COMPLETE_URIS = new TracingOption(PivotPlugin.PLUGIN_ID, "complete/uris");
-
 	/**
 	 * @since 7.0
 	 */
@@ -426,7 +417,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	protected CompleteModelImpl()
 	{
 		super();
-		COMPLETE_URIS.setState(true);			// XXX
 	}
 
 	/**
@@ -437,12 +427,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * Map from Complete URI to Complete Package.
 	 */
-	private final @NonNull Map<@NonNull String, @NonNull CompletePackageInternal> completeURI2completePackage = new HashMap<>();
+	private final @NonNull Map<@Nullable String, @NonNull CompletePackageInternal> completeURI2completePackage = new HashMap<>();
 
 	/**
 	 * Map of Complete URI to Package URIs
 	 */
-	private final @NonNull Map<@NonNull String, @NonNull Set<@NonNull String>> completeURI2packageURIs = new HashMap<>();
+//	private final @NonNull Map<@NonNull String, @NonNull Set<@NonNull String>> completeURI2packageURIs = new HashMap<>();
 
 	/**
 	 * Map of Package URI to Complete URI.
@@ -464,27 +454,24 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * complete URI for all contributions merged as the overall OCL metamodel.
 	 */
 	@Override
-	public void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI) {
+	public void addPackageURI2completeURI(@NonNull CompletePackage completePackage, @NonNull String packageURI) {
+
+		String completeURI = PivotUtil.getURI(completePackage);
+
+
 		String oldCompleteURI = packageURI2completeURI.get(packageURI);
-		if (newCompleteURI.equals(oldCompleteURI)) {
+		if (completePackage.equals(oldCompleteURI)) {
 			return;
 		}
 		if (oldCompleteURI != null) {
-			throw new IllegalMetamodelException(newCompleteURI, oldCompleteURI);	// FIXME Better name
+			throw new IllegalMetamodelException(completeURI, oldCompleteURI);	// FIXME Better name
 		}
-		if (completeURI2packageURIs.containsKey(packageURI)) {
-			throw new IllegalMetamodelException(packageURI, oldCompleteURI);	// FIXME Better name
-		}
-		packageURI2completeURI.put(packageURI, newCompleteURI);
-		Set<@NonNull String> packageURIs = completeURI2packageURIs.get(newCompleteURI);
-		if (packageURIs == null) {
-			packageURIs = new HashSet<>();
-			completeURI2packageURIs.put(newCompleteURI, packageURIs);
-		}
-		packageURIs.add(packageURI);
-		if (COMPLETE_URIS.isActive()) {
-			traceURImapping(newCompleteURI);
-		}
+	//	if (completeURI2packageURIs.containsKey(packageURI)) {
+	//		throw new IllegalMetamodelException(packageURI, oldCompleteURI);	// FIXME Better name
+	//	}
+		packageURI2completeURI.put(packageURI, completeURI);
+
+		completePackage.didAddPackageURI(packageURI);
 	}
 
 	@Override
@@ -496,14 +483,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public void didAddCompletePackage(@NonNull CompletePackageInternal completePackage) {
 		//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
 		String completeURI = completePackage.getURI();
-		if (completeURI != null) {
-			CompletePackage oldCompletePackage = completeURI2completePackage.put(completeURI, completePackage);
-			assert oldCompletePackage == null;
+		CompletePackage oldCompletePackage = completeURI2completePackage.put(completeURI, completePackage);
+		assert oldCompletePackage == null;
 		//	if (COMPLETE_URIS.isActive()) {
 		//		traceURImapping(completeURI);
 		//	}
-		}
-		//		}
 	}
 
 	@Override
@@ -511,8 +495,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompletePackage completePackage = ownedCompletePackages.didAddPackage(asPackage);
 		String packageURI = asPackage.getURI();
 		if (packageURI != null) {
-			String completeURI = ClassUtil.requireNonNull(completePackage.getURI());
-			addPackageURI2completeURI(packageURI, completeURI);
+			completePackage.didAddPackageURI(packageURI);
+		//	addPackageURI2completeURI(packageURI, completePackage);
 		}
 	}
 
@@ -529,28 +513,21 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public void didRemoveCompletePackage(@NonNull CompletePackageInternal completePackage) {
+	public void didRemoveCompletePackage(@NonNull CompletePackage completePackage) {
 		if (completePackage == primitiveCompletePackage) {
 			primitiveCompletePackage = null;
 		}
-		String completeURI = completePackage.getURI();
-		if (completeURI != null) {
-			removeCompletePackage(completeURI);
-			Set<@NonNull String> packageURIs = completeURI2packageURIs.remove(completeURI);
-			if (packageURIs != null) {
-				for (String packageURI : packageURIs) {
-					packageURI2completeURI.remove(packageURI);
-				}
-			}
-			if (COMPLETE_URIS.isActive()) {
-				traceURImapping(completeURI);
+		completeURI2completePackage.remove(PivotUtil.getURI(completePackage));
+	/*	String completeURI = PivotUtil.getURI(completePackage);
+		Set<@NonNull String> packageURIs = completeURI2packageURIs.remove(completeURI);
+		if (packageURIs != null) {
+			for (String packageURI : packageURIs) {
+				packageURI2completeURI.remove(packageURI);
 			}
 		}
-	}
-
-	@Override
-	public void removeCompletePackage(@NonNull String completeURI) {
-		completeURI2completePackage.remove(completeURI);
+		if (COMPLETE_URIS.isActive()) {
+			traceURImapping(completeURI);
+		} */
 	}
 
 	@Override
@@ -688,14 +665,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completeURI != null ? completeURI2completePackage.get(completeURI) : null;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @Nullable CompletePackageInternal getCompletePackage3(@Nullable String completeURI) {
-		return completeURI != null ? completeURI2completePackage.get(completeURI) : null;
-	}
-
 	@Override
 	public @Nullable CompletePackageInternal getCompletePackageByURI(@NonNull String packageURI) {
 		int lastIndex = packageURI.lastIndexOf("#/");
@@ -719,7 +688,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	public @Nullable CompletePackage getMemberPackage(@NonNull String memberPackageName) {
-		return ownedCompletePackages.getOwnedCompletePackage(memberPackageName);
+		return ownedCompletePackages.basicGetOwnedCompletePackage(memberPackageName);
 	}
 
 	public @NonNull Iterable<? extends CompletePackage> getMemberPackages() {
@@ -789,6 +758,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @Nullable CompletePackageInternal basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		return ownedCompletePackages.basicGetCompletePackage(asPackage);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable CompletePackageInternal basicGetCompletePackage(@NonNull String completeURI) {
+		return completeURI2completePackage.get(completeURI);
 	}
 
 	/**
@@ -880,17 +857,17 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @generated NOT
 	 */
 	@Override
-	public @Nullable CompletePackage getOwnedCompletePackage(@Nullable String completeURIorName) {
-		CompletePackage completePackage = getCompletePackage3(completeURIorName);
+	public @Nullable CompletePackage getOwnedCompletePackage(@NonNull String completeURIorName) {
+		CompletePackage completePackage = basicGetCompletePackage(completeURIorName);
 		if (completePackage != null) {
 			return completePackage;
 		}
-		return ownedCompletePackages.getOwnedCompletePackage(completeURIorName);
+		return ownedCompletePackages.basicGetOwnedCompletePackage(completeURIorName);
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName) {
-		CompletePackage completePackage = getCompletePackage3(completeURIorName);
+		CompletePackage completePackage = basicGetCompletePackage(completeURIorName);
 		if (completePackage != null) {
 			return completePackage.getPrimaryPackage();
 		}
@@ -912,25 +889,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return this;
 	}
 
+	@Override
+	public void registerCompletePackageContribution(@NonNull URI completePackageURI, @NonNull String packageURI) {
+		CompletePackageInternal completePackage = getCompletePackageByURI(completePackageURI.toString());
+	}
+
 	/*	public void removedType(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		CompleteClass completeClass = class2completeClass.get(pivotType);
 		if (completeClass != null) {
 //			completeClass.dispose();
 		}
 	} */
-
-	private void traceURImapping(@NonNull String completeURI) {
-		StringBuilder s = new StringBuilder();
-		s.append(completeURI);
-		s.append(" <=>");
-		Set<@NonNull String> packageURIs = completeURI2packageURIs.get(completeURI);
-		if (packageURIs != null) {
-			for (@NonNull String pURI : packageURIs) {
-				s.append(" ");
-				s.append(pURI);
-			}
-		}
-		COMPLETE_URIS.println(s.toString());
-		getClass();
-	}
 } //CompleteModelImpl

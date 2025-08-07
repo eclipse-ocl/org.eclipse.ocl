@@ -122,14 +122,18 @@ public interface CompletePackage extends NamedElement
 	 */
 	CompleteClass getOwnedCompleteClass(String name);
 
+	/**
+	 * @since 7.0
+	 */
+	void didAddPackageURI(@NonNull String packageURI);
+
 	@NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType);
-
-
-	org.eclipse.ocl.pivot.Package getPrimaryPackage();
 
 	org.eclipse.ocl.pivot.Class getMemberType(String name);
 
-	String getURI();
+	org.eclipse.ocl.pivot.Package getPrimaryPackage();
+
+	@NonNull String getURI();
 
 	String getNsPrefix();
 

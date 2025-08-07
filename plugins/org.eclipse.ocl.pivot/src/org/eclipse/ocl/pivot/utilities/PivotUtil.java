@@ -2120,6 +2120,13 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Iterable<@NonNull CompletePackage> getOwnedCompletePackages(@NonNull CompleteModel completeModel) {
+		return ClassUtil.nullFree(completeModel.getOwnedCompletePackages());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Comment> getOwnedComments(@NonNull Element asElement) {
@@ -2814,6 +2821,13 @@ public class PivotUtil implements PivotConstants
 			}
 		}
 		return type;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull String getURI(@NonNull CompletePackage completePackage) {
+		return completePackage.getURI();
 	}
 
 	public static @NonNull <T extends TemplateableElement> T getUnspecializedTemplateableElement(@NonNull T templateableElement) {
