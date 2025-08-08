@@ -209,7 +209,7 @@ implements TypedElement {
 			safe_conformsTo_source = conformsTo_0;
 		}
 		if (safe_conformsTo_source == null) {
-			throw new InvalidValueException("Null body for \'TypedElement::CompatibleBody(pivot::ValueSpecification[1]) : Boolean[1]\'");
+			throw new InvalidValueException("Null body for \'TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
 		}
 		return safe_conformsTo_source;
 	}
