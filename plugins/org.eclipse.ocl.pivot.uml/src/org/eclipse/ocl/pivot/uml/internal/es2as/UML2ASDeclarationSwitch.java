@@ -282,7 +282,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				String nsURI = umlMetapackage.getURI();
 				if (nsURI != null) {
 //					metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI, PivotUMLConstants.UML_METAMODEL_NAME);
-					metamodelManager.getCompleteModel().registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, nsURI);
+					metamodelManager.getCompleteModel().registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, nsURI);
 				}
 				converter.addImportedPackage(umlMetapackage);
 			}
@@ -719,7 +719,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 					for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
 						if ((umlType instanceof org.eclipse.uml2.uml.Class) && "Class".equals(umlType.getName())) {
 //							completeModel.addPackageURI2completeURI(nsURI2, PivotUMLConstants.UML_METAMODEL_NAME);
-							completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, nsURI2);
+							completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, nsURI2);
 						((PackageImpl)pivotElement).setIgnoreInvariants(true);			// FIXME Change to a multi-invariant filter
 							break;
 						}
@@ -729,7 +729,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 					for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
 						if ((umlType instanceof org.eclipse.uml2.uml.PrimitiveType) && "Boolean".equals(umlType.getName())) {
 //							completeModel.addPackageURI2completeURI(nsURI2, PivotUMLConstants.TYPES_METAMODEL_NAME);
-							completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, nsURI2);
+							completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, nsURI2);
 							break;
 						}
 					}

@@ -298,10 +298,10 @@ public class PivotUtil implements PivotConstants
 		for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
 			String source = eAnnotation.getSource();
 			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.AS_LIBRARY_SEMANTICS;
+				return PivotConstants.METAMODEL_LIBRARY_URI;
 			}
 			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.AS_METAMODEL_SEMANTICS;
+				return PivotConstants.METAMODEL_METAMODEL_URI;
 			}
 		}
 		return null;
@@ -342,10 +342,10 @@ public class PivotUtil implements PivotConstants
 			if (asAnnotation instanceof Annotation) {
 				String source = ((Annotation)asAnnotation).getName();
 				if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
-					return PivotConstants.AS_LIBRARY_SEMANTICS;
+					return PivotConstants.METAMODEL_LIBRARY_URI;
 				}
 				else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-					return PivotConstants.AS_METAMODEL_SEMANTICS;
+					return PivotConstants.METAMODEL_METAMODEL_URI;
 				}
 			}
 		}
@@ -1051,10 +1051,10 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull Annotation createSemanticsAnnotation(@NonNull URI semantics) {
 		Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
-		if (PivotConstants.AS_LIBRARY_SEMANTICS.equals(semantics)) {
+		if (PivotConstants.METAMODEL_LIBRARY_URI.equals(semantics)) {
 			asAnnotation.setName(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
 		}
-		else if (PivotConstants.AS_METAMODEL_SEMANTICS.equals(semantics)) {
+		else if (PivotConstants.METAMODEL_METAMODEL_URI.equals(semantics)) {
 			asAnnotation.setName(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
 		}
 		else {
