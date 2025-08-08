@@ -39,7 +39,7 @@ public interface PivotUMLConstants extends PivotConstants
 	 * Fragments may be appended tio identify a particular aspect of the AS.
 	 * @since 7.0
 	 */
-	static final @NonNull URI UML_SEMANTICS = URI.createURI("http://www.eclipse.org/OCL/AS");			// XXX
+	static final @NonNull URI UML_SEMANTICS = URI.createURI(UML_METAMODEL_NAME/*"http://www.eclipse.org/OCL/AS"*/);			// XXX
 
 	/**
 	 * Sub URI used to identify that a Package contributes to the OCL AS Standard Library.

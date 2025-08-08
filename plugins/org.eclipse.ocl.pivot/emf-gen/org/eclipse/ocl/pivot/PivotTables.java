@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.Enumeration;
 // import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -74,7 +73,7 @@ public class PivotTables extends AbstractTables
 	/**
 	 *	Constants used by auto-generated code.
 	 */
-	public static final /*@NonInvalid*/ @NonNull RootPackageId PACKid_http_c_s_s_www_eclipse_org_s_OCL_s_AS = IdManager.getRootPackageId("http://www.eclipse.org/OCL/AS");
+	public static final /*@NonInvalid*/ @NonNull RootPackageId PACKid_http_c_s_s_www_eclipse_org_s_OCL_s_AS = IdManager.getRootPackageId("$metamodel$");
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Annotation = PivotTables.PACKid_http_c_s_s_www_eclipse_org_s_OCL_s_AS.getClassId("Annotation", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_AssociationClass = PivotTables.PACKid_http_c_s_s_www_eclipse_org_s_OCL_s_AS.getClassId("AssociationClass", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_AssociationClassCallExp = PivotTables.PACKid_http_c_s_s_www_eclipse_org_s_OCL_s_AS.getClassId("AssociationClassCallExp", 0);
