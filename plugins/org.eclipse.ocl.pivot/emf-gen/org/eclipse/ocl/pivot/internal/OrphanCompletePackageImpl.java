@@ -101,7 +101,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	protected OrphanCompletePackageImpl()
 	{
 		super();
-		init("$orphans$", "orph", PivotConstants.ORPHANAGE_URI);
+		init(PivotConstants.ORPHANS_NAME, "orph", PivotConstants.ORPHANS_NAME);
 	}
 
 	@Override

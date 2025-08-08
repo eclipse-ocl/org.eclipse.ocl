@@ -191,10 +191,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 			if (semantics != null) {
 				String className = asClass.getName();
-				if (PivotConstants.AS_LIBRARY_SEMANTICS.equals(semantics)) {
+				if (PivotConstants.METAMODEL_LIBRARY_URI.equals(semantics)) {
 					return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
 				}
-				else if (PivotConstants.AS_METAMODEL_SEMANTICS.equals(semantics)) {
+				else if (PivotConstants.METAMODEL_METAMODEL_URI.equals(semantics)) {
 					return NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), className);
 				}
 			}

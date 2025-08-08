@@ -42,7 +42,7 @@ public class EcoreTechnology extends AbstractTechnology
 		// assert !"http://www.eclipse.org/uml2/5.0.0/Types".equals(ePackage.getNsURI());
 		RootPackageId metamodel = null;
 		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-			metamodel = IdManager.METAMODEL;
+			metamodel = IdManager.METAMODEL_ID;
 		}
 		else {
 			String nsURI = ePackage.getNsURI();
@@ -67,7 +67,7 @@ public class EcoreTechnology extends AbstractTechnology
 				}
 			}
 		}
-		return IdManager.METAMODEL;
+		return IdManager.METAMODEL_ID;
 	}
 
 	@Override

@@ -135,7 +135,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	//			CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
 	//			completeClass = orphanCompletePackage.getCompleteClass(partialClass);
 	//		}
-			else if (PivotConstants.AS_SEMANTICS.toString().equals(getCompletePackage().getURI())) {		// Imported ocl/pivot overlay	// XXX toString
+			else if (PivotConstants.METAMODEL_URI.toString().equals(getCompletePackage().getURI())) {		// Imported ocl/pivot overlay	// XXX toString
 				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 				completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
 			}

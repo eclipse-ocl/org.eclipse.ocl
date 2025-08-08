@@ -130,7 +130,10 @@ public final class IdManager
 
 	private static @Nullable WildcardId wildcardId = null;
 
-	public static final @NonNull RootPackageId METAMODEL = getRootPackageId(PivotConstants.AS_SEMANTICS.toString());
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull RootPackageId METAMODEL_ID = getRootPackageId(PivotConstants.METAMODEL_NAME);
 
 	/**
 	 * Define a metamodelNsURI as a contributor to the metamodelName. This facility is used to enable
@@ -414,8 +417,8 @@ public final class IdManager
 		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 		if (semantics != null) {
 			URI trimFragment = semantics.trimFragment();
-			if (trimFragment == PivotConstants.AS_SEMANTICS) {
-				return IdManager.METAMODEL;
+			if (trimFragment == PivotConstants.METAMODEL_URI) {
+				return IdManager.METAMODEL_ID;
 			}
 			nsURI = trimFragment.toString();
 		}

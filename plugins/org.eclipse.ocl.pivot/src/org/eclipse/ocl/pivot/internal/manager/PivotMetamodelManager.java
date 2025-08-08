@@ -1945,7 +1945,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		else if (!metaNsURI.equals(asMetamodel.getURI())) {
 		//	completeModel.addPackageURI2completeURI(metaNsURI, PivotConstants.METAMODEL_NAME);
-			completeModel.registerCompletePackageContribution(PivotConstants.AS_SEMANTICS, metaNsURI);
+			completeModel.registerCompletePackageContribution(PivotConstants.METAMODEL_URI, metaNsURI);
 			//			throw new IllegalMetamodelException(asMetamodel.getNsURI(), metaNsURI);
 		}
 	}

@@ -558,8 +558,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			String completeURI = getCompleteURI(packageURI);
 			if (completeURI == packageURI) {
 				PackageId packageId = asPackage.getPackageId();
-				assert packageId != IdManager.METAMODEL;
-				if (packageId == IdManager.METAMODEL) {
+				assert packageId != IdManager.METAMODEL_ID;
+				if (packageId == IdManager.METAMODEL_ID) {
 					if (packageURI != null) {
 						//FIXME						removePackageURI2completeURI(packageURI, DomainConstants.METAMODEL_NAME);
 					}

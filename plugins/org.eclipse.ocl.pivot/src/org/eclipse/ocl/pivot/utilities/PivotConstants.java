@@ -36,6 +36,12 @@ public interface PivotConstants
 	static final @NonNull String METAMODEL_NAME = "$metamodel$";
 
 	/**
+	 * The Package name of the orphanage.
+	 * @since 7.0
+	 */
+	static final @NonNull String ORPHANS_NAME = "$orphans$";
+
+	/**
 	 * The Package name of the shared types metamodel.
 	 */
 //	static final @NonNull String TYPES_METAMODEL_NAME = "$types$";	// FIXME Use extension point
@@ -50,19 +56,19 @@ public interface PivotConstants
 	 * Fragments may be appended tio identify a particular aspect of the AS.
 	 * @since 7.0
 	 */
-	static final @NonNull URI AS_SEMANTICS = URI.createURI(METAMODEL_NAME/*"http://www.eclipse.org/OCL/AS"*/);			// XXX
+	static final @NonNull URI METAMODEL_URI = URI.createURI(METAMODEL_NAME);
 
 	/**
 	 * Sub URI used to identify that a Package contributes to the OCL AS Standard Library.
 	 * @since 7.0
 	 */
-	static final @NonNull URI AS_LIBRARY_SEMANTICS = AS_SEMANTICS.appendFragment("Library");
+	static final @NonNull URI METAMODEL_LIBRARY_URI = METAMODEL_URI.appendFragment("Library");
 
 	/**
 	 * Sub URI used to identify that a Package contributes to the OCL AS Metamodel.
 	 * @since 7.0
 	 */
-	static final @NonNull URI AS_METAMODEL_SEMANTICS = AS_SEMANTICS.appendFragment("Metamodel");
+	static final @NonNull URI METAMODEL_METAMODEL_URI = METAMODEL_URI.appendFragment("Metamodel");
 
 	/**
 	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.

@@ -139,10 +139,10 @@ public class ElementUtil
 		for (AnnotationElementCS csAnnotation : csElement.getOwnedAnnotations()) {
 			String source = csAnnotation.getName();
 			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.AS_LIBRARY_SEMANTICS;
+				return PivotConstants.METAMODEL_LIBRARY_URI;
 			}
 			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.AS_METAMODEL_SEMANTICS;
+				return PivotConstants.METAMODEL_METAMODEL_URI;
 			}
 		}
 		return null;
