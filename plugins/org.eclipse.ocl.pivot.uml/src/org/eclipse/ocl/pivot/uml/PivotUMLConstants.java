@@ -31,25 +31,25 @@ public interface PivotUMLConstants extends PivotConstants
 	 */
 	static final @NonNull String UML_METAMODEL_NAME = "$uml$";	// FIXME Use extension point
 
-	static final @NonNull RootPackageId UML_METAMODEL = IdManager.getRootPackageId(PivotUMLConstants.UML_METAMODEL_NAME);
-	static final @NonNull RootPackageId TYPES_METAMODEL = IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);
+	static final @NonNull RootPackageId UML_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.UML_METAMODEL_NAME);
+	static final @NonNull RootPackageId TYPES_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);
 
 	/**
 	 * URI used to identify that a Package contributes to the OCL AS.
 	 * Fragments may be appended tio identify a particular aspect of the AS.
 	 * @since 7.0
 	 */
-	static final @NonNull URI UML_SEMANTICS = URI.createURI(UML_METAMODEL_NAME/*"http://www.eclipse.org/OCL/AS"*/);			// XXX
+	static final @NonNull URI UML_METAMODEL_URI = URI.createURI(UML_METAMODEL_NAME);			// XXX
 
 	/**
 	 * Sub URI used to identify that a Package contributes to the OCL AS Standard Library.
 	 * @since 7.0
 	 */
-	static final @NonNull URI UML_TYPES_SEMANTICS = UML_SEMANTICS.appendFragment("Types");			// XXX
+	static final @NonNull URI UML_METAMODEL_TYPES_URI = UML_METAMODEL_URI.appendFragment("Types");			// XXX
 
 	/**
 	 * Sub URI used to identify that a Package contributes to the OCL AS Metamodel.
 	 * @since 7.0
 	 */
-	static final @NonNull URI UML_METAMODEL_SEMANTICS = UML_SEMANTICS.appendFragment("Metamodel");			// XXX
+	static final @NonNull URI UML_METAMODEL_METAMODEL_URI = UML_METAMODEL_URI.appendFragment("Metamodel");			// XXX
 }

@@ -140,19 +140,19 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		RootPackageId metamodel = null;
 		if (ClassUtil.basicGetMetamodelAnnotation(eObject2) != null) {
-			metamodel = IdManager.METAMODEL;
+			metamodel = IdManager.METAMODEL_ID;
 		}
 		else if (eObject2 instanceof UMLPackage) {
 			@NonNull String nsURI = UMLPackage.eNS_URI;
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
-			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, nsURI);
-			metamodel = PivotUMLConstants.UML_METAMODEL;
+			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, nsURI);
+			metamodel = PivotUMLConstants.UML_METAMODEL_ID;
 		}
 		else if (eObject2 instanceof TypesPackage) {
 			@NonNull String nsUri = TypesPackage.eNS_URI;
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
-			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_SEMANTICS, nsUri);
-			metamodel = PivotUMLConstants.TYPES_METAMODEL;
+			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, nsUri);
+			metamodel = PivotUMLConstants.TYPES_METAMODEL_ID;
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
@@ -173,15 +173,15 @@ public class UMLEcoreTechnology extends AbstractTechnology
 				if (eClass != null) {
 					EPackage ePackage = eClass.getEPackage();
 					if (ePackage instanceof UMLPackage) {
-						return PivotUMLConstants.UML_METAMODEL;
+						return PivotUMLConstants.UML_METAMODEL_ID;
 					}
 					else if (ePackage instanceof TypesPackage) {
-						return PivotUMLConstants.TYPES_METAMODEL;
+						return PivotUMLConstants.TYPES_METAMODEL_ID;
 					}
 				}
 			}
 		}
-		return IdManager.METAMODEL;
+		return IdManager.METAMODEL_ID;
 	}
 
 	@Override

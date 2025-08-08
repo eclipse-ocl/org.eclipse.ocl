@@ -154,12 +154,12 @@ public interface TypeId extends ElementId
 	/**
 	 * @since 1.18
 	 */
-	public static final @NonNull ClassId OCL_STEREOTYPE = IdManager.METAMODEL.getClassId(OCL_STEREOTYPE_NAME, 0);
+	public static final @NonNull ClassId OCL_STEREOTYPE = IdManager.METAMODEL_ID.getClassId(OCL_STEREOTYPE_NAME, 0);
 	public static final @NonNull PrimitiveTypeId OCL_SUMMABLE = IdManager.getPrimitiveTypeId(OCL_SUMMABLE_NAME);
 	/**
 	 * @since 1.18
 	 */
-	public static final @NonNull ClassId OCL_TYPE = IdManager.METAMODEL.getClassId(OCL_TYPE_NAME, 0);
+	public static final @NonNull ClassId OCL_TYPE = IdManager.METAMODEL_ID.getClassId(OCL_TYPE_NAME, 0);
 
 	/**
 	 * OclVoid has a distinct Id that captures its conformance to everything (except invalid).
