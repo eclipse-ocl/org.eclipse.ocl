@@ -405,6 +405,8 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	private @NonNull List<@NonNull String> packageURIs = new ArrayList<>();
 
+	private @Nullable CompleteModelInternal completeModel = null;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -483,7 +485,8 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
 //		getOwnedCompletePackages().didAddPackage(nestedPackage);
-		throw new UnsupportedOperationException();
+//		throw new UnsupportedOperationException();
+		getCompleteModel().didAddPackage(nestedPackage);
 	}
 
 	@Override
@@ -528,6 +531,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
+	public NotificationChain eBasicRemoveFromContainer(NotificationChain msgs) {
+		completeModel = null;
+		return super.eBasicRemoveFromContainer(msgs);
+	}
+
+	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllClasses() {
 		return Iterables.transform(ClassUtil.<CompleteClass>nullFree(getOwnedCompleteClasses()), new Function<@NonNull CompleteClass, org.eclipse.ocl.pivot.@NonNull Class>()
 		{
@@ -545,10 +554,18 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	@Override
 	public @NonNull CompleteModelInternal getCompleteModel() {
-		for (EObject eContainer = eContainer(); eContainer != null; eContainer = eContainer.eContainer()) {
-			if (eContainer instanceof CompleteModelInternal) {
-				return (CompleteModelInternal) eContainer;
-			}
+		CompleteModelInternal completeModel2 = completeModel;
+		if (completeModel2 != null) {
+			return completeModel2;
+		}
+		EObject eContainer = eContainer();
+		if (eContainer instanceof CompleteModelInternal) {
+			completeModel2 = completeModel = (CompleteModelInternal) eContainer;
+			return completeModel2;
+		}
+		else if (eContainer instanceof CompletePackageImpl) {
+			completeModel2 = completeModel = ((CompletePackageImpl)eContainer).getCompleteModel();
+			return completeModel2;
 		}
 		throw new IllegalStateException();
 	}
@@ -796,6 +813,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			s.append(count);
 			s.append("*");
 			s.append(pURI);
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
+			if (partialPackage.getURI() == null) {
+				s.append(" ");
+				s.append(partialPackage.getName());
+			}
 		}
 	}
 } //CompletePackageImpl

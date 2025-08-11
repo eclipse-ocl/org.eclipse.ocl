@@ -12,10 +12,8 @@ package org.eclipse.ocl.pivot.internal.complete;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
@@ -100,8 +98,9 @@ public class RootCompletePackages extends AbstractCompletePackages
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		//
+	public @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return getCompleteModel().getCompletePackage3(asPackage);
+	/*	//
 		//	Try to find package by packageURI
 		//
 		CompletePackage completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
@@ -141,7 +140,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 			}
 		}
 		rootCompletePackage = createRootCompletePackage(pivotPackage);
-		return rootCompletePackage;
+		return rootCompletePackage; */
 	}
 
 	@Override
