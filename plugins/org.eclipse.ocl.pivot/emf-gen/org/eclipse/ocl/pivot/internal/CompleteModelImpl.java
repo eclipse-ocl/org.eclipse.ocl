@@ -500,6 +500,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	//	CompletePackage completePackage = getCompletePackage(PivotUtil.getName(asPackage), asPackage.getNsPrefix(), packageURI);
 		CompletePackage completePackage = getCompletePackage3(asPackage);
 		assert completePackage != null;
+		assert (completePackage instanceof PrimitiveCompletePackage) || completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
 	//	CompletePackage completePackage = ownedCompletePackages.didAddPackage(asPackage);
 		CompletePackage old1 = package2completePackage.put(asPackage, completePackage);
 		assert (old1 == null) || (old1 == completePackage);
@@ -513,9 +514,13 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			assert (old2 == null) || (old2 == completePackage);
 		//	packageURI2completePackage.put(packageURI, completePackage);
 		}
-		assert package2completePackage.get(asPackage) == completePackage;
-		if (packageURI != null) {
-			assert packageURI2completePackage.get(packageURI) == completePackage;
+		assert completePackageName2completePackage.get(completePackage.getName()) == completePackage;
+		if (!(completePackage instanceof PrimitiveCompletePackage)) {
+			assert completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
+			assert package2completePackage.get(asPackage) == completePackage;
+			if (packageURI != null) {
+				assert packageURI2completePackage.get(packageURI) == completePackage;
+			}
 		}
 	}
 
@@ -741,15 +746,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				}
 				if (completePackageName == null) {
 					completePackageName = PivotUtil.getName(asPackage);
-					CompletePackage parentCompletePackage = null;
+				//	 parentCompletePackage = null;
 				//	AbstractCompletePackages parentCompletePackages2 = ownedCompletePackages;
-					org.eclipse.ocl.pivot.@NonNull Package parentPackage = asPackage.getOwningPackage();
+					org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 					if (parentPackage != null) {
-						parentCompletePackage = getCompletePackage3(parentPackage);
-						if (parentCompletePackage != null) {
+						CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
+					//	if (parentCompletePackage != null) {
 						//	parentCompletePackages2 = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
 							completePackageName = parentCompletePackage.getName() + "#" + completePackageName;
-						}
+					//	}
 					}
 				}
 				completePackage = completePackageName2completePackage.get(completePackageName);
@@ -771,12 +776,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						completePackage = PivotFactory.eINSTANCE.createCompletePackage();
 						((CompletePackageImpl)completePackage).init(completePackageName, asPackage.getNsPrefix(), packageURI);
 					}
+					package2completePackage.put(asPackage, completePackage);
 					//		completePackageName2completePackage.put(completePackageName, completePackage);
 					parentCompletePackages.add(completePackage);		//didAddCompletePackage
 				//	didAddPackage(asPackage);
 					assert completePackageName2completePackage.get(completePackageName) == completePackage;
 					//	CompletePackage old1 = package2completePackage.put(asPackage, completePackage);
 					//	CompletePackage old2 = completePackageName2completePackage.put(completePackageName, completePackage);
+					assert package2completePackage.get(asPackage) == completePackage;
 					completePackage.getPartialPackages().add(asPackage);
 					packageAdded = true;
 				//	}
@@ -809,9 +816,23 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 //		}
 	//	completePackage.getPartialPackages().add(asPackage);
 		if (!packageAdded) {								// Maybe folding an additional package into a CompletePackage found by name/URI.
-			completePackage.getPartialPackages().add(asPackage);
+			if (completePackage.getPartialPackages().add(asPackage)) {
+				CompletePackage old = package2completePackage.put(asPackage, completePackage);
+				assert old == null;
+			}
+			assert package2completePackage.get(asPackage) == completePackage;
 		}
-		assert (completePackage instanceof PrimitiveCompletePackage) || completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
+		if (!(completePackage instanceof PrimitiveCompletePackage)) {
+			assert completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
+			assert package2completePackage.get(asPackage) == completePackage;
+		//	if (packageURI != null) {
+		//		assert packageURI2completePackage.get(packageURI) == completePackage;
+		//	}
+		}
+
+
+	//	assert (asPackage.getURI() == null) || (packageURI2completePackage.get(asPackage.getURI()) == completePackage);		in didAddPackage caller
+		assert completePackageName2completePackage.get(completePackage.getName()) == completePackage;
 		return completePackage;
 	}
 

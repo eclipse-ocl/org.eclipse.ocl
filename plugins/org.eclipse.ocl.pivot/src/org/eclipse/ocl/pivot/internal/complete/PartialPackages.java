@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -62,15 +63,15 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	@Override
 	public void addUnique(org.eclipse.ocl.pivot.Package partialPackage) {
 		assert partialPackage != null;
-		didAdd(partialPackage);
 		super.addUnique(partialPackage);
+		didAdd(partialPackage);
 	}
 
 	@Override
 	public void addUnique(int index, org.eclipse.ocl.pivot.Package partialPackage) {
 		assert partialPackage != null;
-		didAdd(partialPackage);
 		super.addUnique(index, partialPackage);
+		didAdd(partialPackage);
 	}
 
 	protected void didAdd(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
@@ -80,8 +81,10 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		((PackageImpl)partialPackage).addPackageListener(this);
 		CompletePackageImpl completePackage = getCompletePackage();
 		completePackage.didAddPartialPackage(partialPackage);
-		for (org.eclipse.ocl.pivot.Package nestedPackage : PivotUtil.getOwnedPackages(partialPackage)) {
-			completePackage.didAddNestedPackage(nestedPackage);
+		for (org.eclipse.ocl.pivot.@NonNull Package nestedPackage : PivotUtil.getOwnedPackages(partialPackage)) {				// XXX doRefreshPackages
+		//	completePackage.didAddNestedPackage(nestedPackage);
+			CompletePackage nestedCompletePackage = ((CompleteModelImpl)getCompleteModel()).getCompletePackage3(nestedPackage);
+		//	nestedCompletePackage.didAddPackage(nestedPackage);
 		}
 	}
 
