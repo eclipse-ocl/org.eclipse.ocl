@@ -51,8 +51,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.AbstractCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
@@ -571,8 +569,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public void didRemovePartialModel(@NonNull Model partialModel) {
-		for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
+	public void didRemovePartialModel(@NonNull Model partialModel) {		// UPdates occur fia didRemovePackage etc
+	/*	for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
 			String packageURI = asPackage.getURI();
 			String completeURI = getCompleteURI(packageURI);
 			if (completeURI == packageURI) {
@@ -584,7 +582,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					}
 				}
 			}
-		}
+		} */
 	}
 
 	@Override
