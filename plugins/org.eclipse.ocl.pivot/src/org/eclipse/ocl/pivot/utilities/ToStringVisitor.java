@@ -102,6 +102,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -677,17 +678,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public @Nullable String visitCompletePackage(@NonNull CompletePackage completePackage) {
-		appendName(completePackage);
-		append("*");
-		List<org.eclipse.ocl.pivot.@NonNull  Package> partialPackages = PivotUtil.getPartialPackagesList(completePackage);
-		append(partialPackages.size());
-		append(" : ");
-		append(PivotUtil.getURI(completePackage));
-		append(" <=>");
-		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
-			append(" ");
-			append(partialPackage.getURI());
-		}
+		((CompletePackageImpl)completePackage).toString(context);
 		return null;
 	}
 

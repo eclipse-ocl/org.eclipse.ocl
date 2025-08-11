@@ -28,7 +28,7 @@ public interface CompleteClassInternal extends CompleteClass
 	 * @since 7.0
 	 */
 	@NonNull MetamodelManager getMetamodelManager();
-	@Override
-	CompletePackageInternal getOwningCompletePackage();
+//	@Override
+//	CompletePackageInternal getOwningCompletePackage();
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();
 } // CompleteClass

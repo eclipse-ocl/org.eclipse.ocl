@@ -603,7 +603,7 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	private PackageId packageId = null;
-	private @Nullable PackageListeners<PackageListeners.IPackageListener> packageListeners = null;
+	private @Nullable PackageListeners<PackageListeners.@NonNull IPackageListener> packageListeners = null;
 	private boolean ignoreInvariants = false;		// FIXME Model this (used to suppress bad OMG UML 2.5 invariants) / Change to a multi-invariant filter
 
 	@Override
@@ -612,9 +612,9 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	public synchronized void addPackageListener(PackageListeners.@NonNull IPackageListener packageListener) {
-		PackageListeners<PackageListeners.IPackageListener> packageListeners2 = packageListeners;
+		PackageListeners<PackageListeners.@NonNull IPackageListener> packageListeners2 = packageListeners;
 		if (packageListeners2 == null) {
-			packageListeners2 = packageListeners = new PackageListeners<PackageListeners.IPackageListener>();
+			packageListeners2 = packageListeners = new PackageListeners<>();
 		}
 		packageListeners2.addListener(packageListener);
 	}
@@ -761,7 +761,7 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	public synchronized void removePackageListener(PackageListeners.@NonNull IPackageListener packageListener) {
-		PackageListeners<PackageListeners.IPackageListener> packageListeners2 = packageListeners;
+		PackageListeners<PackageListeners.@NonNull IPackageListener> packageListeners2 = packageListeners;
 		if ((packageListeners2 != null) && packageListeners2.removeListener(packageListener)) {
 			packageListeners = null;
 		}

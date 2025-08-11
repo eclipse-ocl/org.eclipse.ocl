@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DynamicElement;
 import org.eclipse.ocl.pivot.Element;
@@ -143,16 +144,12 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			metamodel = IdManager.METAMODEL_ID;
 		}
 		else if (eObject2 instanceof UMLPackage) {
-			@NonNull String nsURI = UMLPackage.eNS_URI;
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
-			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, nsURI);
-			metamodel = PivotUMLConstants.UML_METAMODEL_ID;
+			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_NAME, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
 		}
 		else if (eObject2 instanceof TypesPackage) {
-			@NonNull String nsUri = TypesPackage.eNS_URI;
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
-			completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, nsUri);
-			metamodel = PivotUMLConstants.TYPES_METAMODEL_ID;
+			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_NAME, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
@@ -256,5 +253,15 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			}
 		}
 		return true;
+	}
+
+	private @NonNull RootPackageId registerCompletePackageContribution(@NonNull CompleteModelInternal completeModel, @NonNull String completePackageName, /*@NonNull*/ EPackage ePackage) {
+		assert ePackage != null;
+		String packageURI = ePackage.getNsURI();
+		assert packageURI != null;
+		CompletePackage completePackage = completeModel.getCompletePackage(completePackageName, ePackage.getNsPrefix(), packageURI);
+	//	completePackage.didAddPackageURI(packageURI);
+		completeModel.registerCompletePackageContribution(completePackage, packageURI);
+		return IdManager.getRootPackageId(completePackageName);
 	}
 }

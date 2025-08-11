@@ -60,7 +60,7 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 					Package contextPackage = ((org.eclipse.ocl.pivot.Class)userType).getOwningPackage();
 					if (contextPackage != null) {
 						if (targetExpression.eContainer() == null) {			// If this a root ExpressionInOCL; an embedded expression being independently parsed
-							Model model = PivotUtil.getContainingModel(type);
+							Model model = PivotUtil.basicGetContainingModel(type);
 							if (model != null) {
 								for (Import asImport : model.getOwnedImports()) {
 									String alias = asImport.getName();

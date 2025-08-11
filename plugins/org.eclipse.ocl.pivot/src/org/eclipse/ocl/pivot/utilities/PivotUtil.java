@@ -269,6 +269,18 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static @Nullable Model basicGetContainingModel(@NonNull EObject element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Model) {
+				return (Model)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static @Nullable Namespace basicGetContainingNamespace(@NonNull EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Namespace) {
@@ -1619,13 +1631,11 @@ public class PivotUtil implements PivotConstants
 		return null;
 	}
 
-	public static @Nullable Model getContainingModel(@Nullable EObject element) {
-		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof Model) {
-				return (Model)eObject;
-			}
-		}
-		return null;
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Model getContainingModel(@NonNull EObject element) {
+		return ClassUtil.requireNonNull(basicGetContainingModel(element));
 	}
 
 	public static @NonNull Namespace getContainingNamespace(@NonNull EObject element) {
