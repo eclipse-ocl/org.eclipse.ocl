@@ -32,11 +32,11 @@ import com.google.common.collect.Iterables;
 
 public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl.pivot.Package> implements PackageListeners.IPackageListener
 {
-	private static class Package2PackageOwnedPackages implements Function<org.eclipse.ocl.pivot.Package, Iterable<org.eclipse.ocl.pivot.Package>>
+	private static class Package2PackageOwnedPackages implements Function<org.eclipse.ocl.pivot.@NonNull Package, Iterable<org.eclipse.ocl.pivot.@NonNull Package>>
 	{
 		@Override
-		public Iterable<org.eclipse.ocl.pivot.Package> apply(org.eclipse.ocl.pivot.Package partialPackage) {
-			return partialPackage.getOwnedPackages();
+		public Iterable<org.eclipse.ocl.pivot.@NonNull Package> apply(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+			return PivotUtil.getOwnedPackages(partialPackage);
 		}
 	}
 

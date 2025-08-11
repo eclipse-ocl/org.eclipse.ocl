@@ -393,7 +393,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)pivotType;
-			completeClass = ownedCompleteModel.basicGetSharedCompleteClass(asClass);
+			completeClass = (CompleteClassInternal) ownedCompleteModel.basicGetSharedCompleteClass(asClass);
 			if (completeClass != null) {
 				return completeClass;
 			}

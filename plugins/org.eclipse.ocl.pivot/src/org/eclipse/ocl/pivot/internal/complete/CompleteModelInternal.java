@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.complete;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -27,24 +28,13 @@ public interface CompleteModelInternal extends CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	@Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	@Nullable CompletePackage basicGetCompletePackage(@NonNull String packageURI);
-	/**
-	 * @since 7.0
-	 */
 	@Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI);
 
 	/**
 	 * @since 7.0
 	 */
-	@Nullable CompleteClassInternal basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
+	@Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
-	void didAddCompletePackage(@NonNull CompletePackageInternal completePackage);
 	/**
 	 * @since 7.0
 	 */
@@ -56,8 +46,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type partialClass);
 	@Override
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
-	@Override
-	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	/**
 	 * @since 7.0
@@ -89,9 +77,4 @@ public interface CompleteModelInternal extends CompleteModel
 	 * @since 7.0
 	 */
 	@NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 }

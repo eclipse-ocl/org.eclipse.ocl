@@ -436,7 +436,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 		return ownedImports;
 	}
 
-	private @Nullable ModelListeners<ModelListeners.IModelListener> rootListeners = null;
+	private @Nullable ModelListeners<ModelListeners.@NonNull IModelListener> rootListeners = null;
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
@@ -444,9 +444,9 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	public synchronized void addRootListener(ModelListeners.@NonNull IModelListener rootListener) {
-		ModelListeners<ModelListeners.IModelListener> rootListeners2 = rootListeners;
+		ModelListeners<ModelListeners.@NonNull IModelListener> rootListeners2 = rootListeners;
 		if (rootListeners2 == null) {
-			rootListeners2 = rootListeners = new ModelListeners<ModelListeners.IModelListener>();
+			rootListeners2 = rootListeners = new ModelListeners<ModelListeners.@NonNull IModelListener>();
 		}
 		rootListeners2.addListener(rootListener);
 	}
@@ -485,7 +485,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	public synchronized void removeRootListener(ModelListeners.@NonNull IModelListener rootListener) {
-		ModelListeners<ModelListeners.IModelListener> rootListeners2 = rootListeners;
+		ModelListeners<ModelListeners.@NonNull IModelListener> rootListeners2 = rootListeners;
 		if ((rootListeners2 != null) && rootListeners2.removeListener(rootListener)) {
 			rootListeners = null;
 		}

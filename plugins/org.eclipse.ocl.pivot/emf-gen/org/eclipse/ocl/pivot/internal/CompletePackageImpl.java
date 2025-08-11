@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -43,7 +41,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -73,7 +70,7 @@ import com.google.common.collect.Iterables;
  * @generated
  */
 @SuppressWarnings("unused")
-public class CompletePackageImpl extends NamedElementImpl implements CompletePackage, org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal
+public class CompletePackageImpl extends NamedElementImpl implements CompletePackage
 {
 	/**
 	 * @since 7.0
@@ -419,6 +416,14 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		partialPackages = new PartialPackages(this);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public CompletePackageImpl(@NonNull String completePackageName, @Nullable String prefix, @Nullable String uri) {
+		this();
+		init(completePackageName, prefix, uri);
+	}
+
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitCompletePackage(this);
@@ -463,9 +468,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			completePackage.assertSamePackage(pivotPackage);
 		} */
 		getPartialPackages().add(pivotPackage);
-		if (ownedCompleteClasses != null) {
-			ownedCompleteClasses.didAddPackage(pivotPackage);
-		}
+		getOwnedCompleteClasses().didAddPackage(pivotPackage);
 		//		completePackage.addTrackedPackage(pivotPackage);
 		//		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotPackage.getOwnedPackages()) {
 		//			if (nestedPackage != null) {
@@ -475,17 +478,17 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		if (ownedCompleteClasses != null) {
-			ownedCompleteClasses.didAddClass(partialClass);
-		}
+		getOwnedCompleteClasses().didAddClass(partialClass);
 	}
 
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
-		getOwnedCompletePackages().didAddPackage(nestedPackage);
+//		getOwnedCompletePackages().didAddPackage(nestedPackage);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void didAddPackageURI(@NonNull String packageURI) {
+		assert packageURI != null;				// XXX
 		if (!packageURIs.contains(packageURI)) {
 			packageURIs.add(packageURI);
 			if (COMPLETE_URIS.isActive()) {
@@ -495,9 +498,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	public void didAddPartialPackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		if (ownedCompleteClasses != null) {
-			ownedCompleteClasses.didAddPackage(partialPackage);
-		}
+		getOwnedCompleteClasses().didAddPackage(partialPackage);
 	}
 
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
@@ -585,8 +586,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
-	public CompletePackageInternal getOwnedCompletePackage(@Nullable String name) {
-		return getOwnedCompletePackages().basicGetOwnedCompletePackage(name);
+	public CompletePackage getOwnedCompletePackage(@Nullable String name) {
+		assert name != null;
+		return ownedCompletePackages != null ? ownedCompletePackages.getCompletePackage(name) : null;
 	}
 
 	/**
@@ -740,11 +742,11 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
-	public @NonNull CompletePackageInternal getRootCompletePackage() {
-		for (EObject eContainer = eContainer(); eContainer instanceof CompletePackageInternal; eContainer = eContainer.eContainer()) {
-			CompletePackageInternal completePackageInternal = (CompletePackageInternal)eContainer;
-			if (completePackageInternal.getOwningCompletePackage() == null) {
-				return (CompletePackageInternal)eContainer;
+	public @NonNull CompletePackage getRootCompletePackage() {
+		for (EObject eContainer = eContainer(); eContainer instanceof CompletePackage; eContainer = eContainer.eContainer()) {
+			CompletePackage completePackage = (CompletePackage)eContainer;
+			if (completePackage.getOwningCompletePackage() == null) {
+				return (CompletePackage)eContainer;
 			}
 		}
 		return this;
@@ -761,22 +763,39 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		return nsURI != null ? nsURI : "«null»";
 	}
 
-	@Override
-	public void init(String name, @Nullable String nsPrefix, @Nullable String completeURI) {
-		setName(name);
-		this.nsPrefix = nsPrefix;
-		this.nsURI = completeURI;
+	public void init(@NonNull String completePackageName, @Nullable String prefix, @Nullable String uri) {
+		setName(completePackageName);
+		this.nsPrefix = prefix;
+		this.nsURI = uri;
+		traceURImapping();
 	}
 
 	private void traceURImapping() {
 		StringBuilder s = new StringBuilder();
+		toString(s);
+		COMPLETE_URIS.println(s.toString());
+		getClass();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void toString(@NonNull StringBuilder s) {
+		s.append(name);
+		s.append(" : ");
 		s.append(nsURI);
 		s.append(" <=>");
 		for (@NonNull String pURI : packageURIs) {
 			s.append(" ");
+			int count = 0;
+			for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
+				if (pURI.equals(partialPackage.getURI())) {
+					count++;
+				}
+			}
+			s.append(count);
+			s.append("*");
 			s.append(pURI);
 		}
-		COMPLETE_URIS.println(s.toString());
-		getClass();
 	}
 } //CompletePackageImpl

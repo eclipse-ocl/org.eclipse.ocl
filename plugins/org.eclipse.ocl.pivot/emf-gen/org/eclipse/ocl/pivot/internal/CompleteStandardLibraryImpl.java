@@ -892,7 +892,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI) {
-		CompletePackage completePackage = completeModel.getCompletePackageByURI(nsURI);
+		CompletePackage completePackage = completeModel.basicGetCompletePackageForURI(nsURI);
 		return completePackage != null ? completePackage.getPrimaryPackage() : null;
 	}
 
