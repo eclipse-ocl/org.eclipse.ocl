@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -90,7 +90,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		}
 
 		@Override
-		public @NonNull CompletePackageInternal getOwningCompletePackage() {
+		public @NonNull CompletePackage getOwningCompletePackage() {
 			return OrphanCompletePackageImpl.this;
 		}
 	}
@@ -101,7 +101,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	protected OrphanCompletePackageImpl()
 	{
 		super();
-		init(PivotConstants.ORPHANS_NAME, "orph", PivotConstants.ORPHANS_NAME);
+		init(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
 	}
 
 	@Override

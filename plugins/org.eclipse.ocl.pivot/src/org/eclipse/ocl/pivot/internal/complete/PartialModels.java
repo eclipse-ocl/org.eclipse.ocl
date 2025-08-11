@@ -61,7 +61,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		if (PARTIAL_MODELS.isActive()) {
 			PARTIAL_MODELS.println("Do-didAdd Model" + this + " " + partialModel);
 		}
-		CompleteModelInternal completeModel = getCompleteModel();
+		CompleteModelImpl completeModel = getCompleteModel();
 		completeModel.didAddPartialModel(partialModel);
 		((ModelImpl)partialModel).addRootListener(this);
 	}
@@ -96,9 +96,9 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		getCompleteModel().didRemoveNestedPackage(partialPackage);
 	}
 
-	@SuppressWarnings("null")
-	protected @NonNull CompleteModelInternal getCompleteModel() {
-		return (CompleteModelInternal)owner;
+	protected @NonNull CompleteModelImpl getCompleteModel() {
+		assert owner != null;
+		return (CompleteModelImpl)owner;
 	}
 
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getNestedPartialPackages() {

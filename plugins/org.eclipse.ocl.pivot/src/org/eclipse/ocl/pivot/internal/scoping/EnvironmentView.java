@@ -851,7 +851,7 @@ public class EnvironmentView
 			if (rootCompletePackage != null) {
 				addNamedElement(rootCompletePackage);
 			}
-			CompletePackage completePackage = completeModel.getCompletePackageByURI(name2);
+			CompletePackage completePackage = completeModel.basicGetCompletePackageForURI(name2);
 			if (completePackage != null) {
 				addElement(name2, completePackage);
 			}

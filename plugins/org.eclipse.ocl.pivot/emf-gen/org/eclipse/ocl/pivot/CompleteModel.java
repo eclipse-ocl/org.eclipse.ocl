@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -130,7 +129,22 @@ public interface CompleteModel extends NamedElement
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	@Nullable CompletePackage getOwnedCompletePackage(@NonNull String newCompleteURI);
+	@Nullable CompletePackage getOwnedCompletePackage(@NonNull String completePackageName);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable CompletePackage basicGetCompletePackage(@NonNull String completePackageName);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable CompletePackage basicGetCompletePackageForURI(@NonNull String packageURI);
 
 	/**
 	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
@@ -143,9 +157,18 @@ public interface CompleteModel extends NamedElement
 	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages();
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
 	@NonNull CompleteEnvironment getCompleteEnvironment();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompletePackage getCompletePackage(@NonNull String completePackageName, @Nullable String prefix, @NonNull String uri);
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
-	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
-	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackagesWithUris();
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage);
+	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackagesWithUris();
 	/**
 	 * @since 7.0
 	 */
@@ -155,5 +178,5 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
-	void registerCompletePackageContribution(@NonNull URI completePackageURI, @NonNull String packageURI);
+	void registerCompletePackageContribution(@NonNull CompletePackage completePackage, @NonNull String packageURI);
 } // CompleteModel

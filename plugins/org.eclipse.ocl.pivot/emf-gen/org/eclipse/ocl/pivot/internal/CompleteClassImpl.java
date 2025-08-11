@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -109,15 +108,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CompletePackage getOwningCompletePackageGen()
+	@Override
+	public CompletePackage getOwningCompletePackage()
 	{
 		if (eContainerFeatureID() != (5)) return null;
 		return (CompletePackage)eInternalContainer();
-	}
-	@Override
-	public CompletePackageInternal getOwningCompletePackage()
-	{
-		return (CompletePackageInternal)getOwningCompletePackageGen();
 	}
 
 	/**
@@ -432,9 +427,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void dispose() {
-		CompletePackageInternal owningCompletePackage = getOwningCompletePackage();
+		CompletePackage owningCompletePackage = getOwningCompletePackage();
 		if (owningCompletePackage != null) {
-			owningCompletePackage.getPartialPackages().uninstalled(this);
+			((CompletePackageImpl)owningCompletePackage).getPartialPackages().uninstalled(this);
 		}
 	}
 
@@ -457,7 +452,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull CompleteModelInternal getCompleteModel() {
-		return getOwningCompletePackage().getCompleteModel();
+		return (CompleteModelInternal) getOwningCompletePackage().getCompleteModel();
 	}
 
 	/**

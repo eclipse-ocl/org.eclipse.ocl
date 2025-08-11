@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -128,19 +129,19 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		if (name != null) {
 			CompleteClassInternal completeClass = null;
 			if (partialClass instanceof PrimitiveType) {										// Regular declaration
-				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
-				completeClass = primitiveCompletePackage.getCompleteClass(partialClass);
+				CompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
+				completeClass = (CompleteClassInternal) primitiveCompletePackage.getCompleteClass(partialClass);
 			}
 	//		else if ((partialClass instanceof MapType) && (partialClass.getUnspecializedElement() != null)) {
 	//			CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
 	//			completeClass = orphanCompletePackage.getCompleteClass(partialClass);
 	//		}
 			else if (PivotConstants.METAMODEL_URI.toString().equals(getCompletePackage().getURI())) {		// Imported ocl/pivot overlay	// XXX toString
-				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
-				completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
+				CompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
+				completeClass = (CompleteClassInternal) primitiveCompletePackage.getOwnedCompleteClass(name);						assert completeClass == null;			// XXX
 			}
 			else {
-				completeClass = completeModel.basicGetSharedCompleteClass(partialClass);
+				completeClass = (CompleteClassInternal) completeModel.basicGetSharedCompleteClass(partialClass);
 			}
 			if (completeClass == null) {
 				completeClass = name2completeClass2.get(name);
@@ -176,16 +177,19 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	}
 
 	public @NonNull CompleteModelInternal getCompleteModel() {
-		return getCompletePackage().getCompleteModel();
+		return (CompleteModelInternal) getCompletePackage().getCompleteModel();
 	}
 
-	@SuppressWarnings("null")
-	public @NonNull CompletePackageInternal getCompletePackage() {
-		return (@NonNull CompletePackageInternal) owner;
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompletePackage getCompletePackage() {
+		assert owner != null;
+		return (CompletePackage)owner;
 	}
 
 	public @Nullable CompleteClassInternal getOwnedCompleteClass(String name) {
-		Map<String, CompleteClassInternal> name2completeClass2 = name2completeClass;
+		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
 		if (name2completeClass2 == null) {
 			name2completeClass2 = doRefreshPartialClasses();
 		}

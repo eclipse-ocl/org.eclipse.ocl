@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -377,7 +378,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 //			localType = standardLibrary.getOclInvalidType();
 		}
 		Model thisModel = PivotUtil.getContainingModel(localType);
-		assert thisModel != null;
 		org.eclipse.ocl.pivot.Class remoteType = (org.eclipse.ocl.pivot.Class)asProperty.getType();	// FIXME cast
 		while (remoteType instanceof CollectionType) {
 			remoteType = (org.eclipse.ocl.pivot.Class)((CollectionType)remoteType).getElementType();	// FIXME cast
@@ -834,7 +834,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
 		CompleteClass completeClass = completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
-		Model thatModel = PivotUtil.getContainingModel(thatClass);
+		Model thatModel = PivotUtil.basicGetContainingModel(thatClass);
 		if (thisModel == thatModel) {
 			return thatClass;
 		}
@@ -859,7 +859,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	 */
 	private org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
 		completeModel.getCompletePackage(thatPackage);					// Ensure thatPackage has a complete representation
-		Model thatModel = PivotUtil.getContainingModel(thatPackage);
+		Model thatModel = PivotUtil.basicGetContainingModel(thatPackage);
 		if (thisModel == thatModel) {
 			return thatPackage;
 		}
@@ -1207,7 +1207,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull String nsURI, String... subPackagePath) {
-		CompletePackage completePackage = completeModel.getCompletePackageByURI(nsURI);
+		CompletePackage completePackage = completeModel.basicGetCompletePackageForURI(nsURI);
 		if (completePackage == null) {
 			return null;
 		}
@@ -1322,7 +1322,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getPrimaryType(@NonNull String nsURI, @NonNull String path, String... extraPath) {
-		CompletePackage completePackage = completeModel.getCompletePackageByURI(nsURI);
+		CompletePackage completePackage = completeModel.basicGetCompletePackageForURI(nsURI);
 		if (completePackage == null) {
 			return null;
 		}
@@ -1497,7 +1497,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			newOpposite.setIsRequired(true);
 		}
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
-		assert thisModel != null;
 		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
 		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
 		thisOppositeClass.getOwnedProperties().add(newOpposite);
@@ -1539,7 +1538,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		for (Import asImport : ownedImports) {
 			Namespace asNamespace = asImport.getImportedNamespace();
 			if (asNamespace != null) {
-				Model asModel = PivotUtil.getContainingModel(asNamespace);
+				Model asModel = PivotUtil.basicGetContainingModel(asNamespace);
 				if ((asModel != null) && !completeModel.getPartialModels().contains(asModel)) {
 					installRoot(asModel);
 				}
@@ -1913,14 +1912,15 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		oclExpression2flowAnalysis = null;
 	}
 
-	public void setASmetamodel(org.eclipse.ocl.pivot.Package asPackage) {
+	public void setASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		asMetamodel = asPackage;
 		String packageURI = asMetamodel.getURI();
 		if (packageURI != null) {
 			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 			if (semantics != null) {
+				CompletePackage completePackage = ((CompleteModelImpl)completeModel).getCompletePackage3(asPackage);
 			//	completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
-				completeModel.registerCompletePackageContribution(semantics.trimFragment(), packageURI);
+				completeModel.registerCompletePackageContribution(completePackage, packageURI);			// XXX completePackage.add
 			}
 		}
 	}
@@ -1945,7 +1945,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		else if (!metaNsURI.equals(asMetamodel.getURI())) {
 		//	completeModel.addPackageURI2completeURI(metaNsURI, PivotConstants.METAMODEL_NAME);
-			completeModel.registerCompletePackageContribution(PivotConstants.METAMODEL_URI, metaNsURI);
+			completeModel.getCompletePackage(PivotConstants.METAMODEL_NAME, asMetamodel.getNsPrefix(), metaNsURI);
 			//			throw new IllegalMetamodelException(asMetamodel.getNsURI(), metaNsURI);
 		}
 	}

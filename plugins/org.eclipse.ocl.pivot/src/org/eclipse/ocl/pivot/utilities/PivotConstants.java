@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -39,7 +40,23 @@ public interface PivotConstants
 	 * The Package name of the orphanage.
 	 * @since 7.0
 	 */
-	static final @NonNull String ORPHANS_NAME = "$orphans$";
+	static final @NonNull String ORPHANAGE_NAME = "$$"; //"$orphanage$";
+
+	static final @Nullable String ORPHANAGE_PREFIX = null;
+
+	static final @NonNull String ORPHANAGE_URI = "http://www.eclipse.org/ocl/2015/Orphanage";
+
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String PRIMITIVES_NAME = "$primitives$";
+
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String PRIMITIVES_PREFIX = "prim";
+
+	static final @NonNull String PRIMITIVES_URI = "http://www.eclipse.org/ocl/2015/Primitives";
 
 	/**
 	 * The Package name of the shared types metamodel.
@@ -217,11 +234,6 @@ public interface PivotConstants
 	static final @NonNull String GREATER_THAN_OR_EQUAL_OPERATOR = ">=";
 	static final @NonNull String LESS_THAN_OPERATOR = "<";
 	static final @NonNull String LESS_THAN_OR_EQUAL_OPERATOR = "<=";
-
-	static final @NonNull String ORPHANAGE_NAME = "$$";
-	static final @NonNull String ORPHANAGE_PREFIX = "orphanage";
-	static final @NonNull String ORPHANAGE_URI = "http://www.eclipse.org/ocl/2015/Orphanage";
-	static final @NonNull String PRIMITIVES_URI = "http://www.eclipse.org/ocl/2015/Primitives";
 	/**
 	 * @since 1.18
 	 */

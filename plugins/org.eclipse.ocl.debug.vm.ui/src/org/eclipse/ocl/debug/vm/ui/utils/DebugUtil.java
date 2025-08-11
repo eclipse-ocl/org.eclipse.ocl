@@ -52,11 +52,11 @@ public class DebugUtil
 		Writer s = new OutputStreamWriter(documentStream);
 		URI externalURI = null;
 		if (contextPackage != null) {
-			Model containingRoot = PivotUtil.getContainingModel(contextPackage);
+			Model containingRoot = PivotUtil.basicGetContainingModel(contextPackage);
 			if (containingRoot == null) {
 				externalURI = URI.createURI(contextPackage.getURI());
 			}
-			else if (containingRoot != PivotUtil.getContainingModel(environmentFactory.getStandardLibrary().getOclAnyType())) {
+			else if (containingRoot != PivotUtil.basicGetContainingModel(environmentFactory.getStandardLibrary().getOclAnyType())) {
 				externalURI = URI.createURI(containingRoot.getExternalURI());
 				externalURI = URIUtil.getNonASURI(externalURI);
 			}

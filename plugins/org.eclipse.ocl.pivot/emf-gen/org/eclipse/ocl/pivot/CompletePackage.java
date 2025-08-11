@@ -127,6 +127,11 @@ public interface CompletePackage extends NamedElement
 	 */
 	void didAddPackageURI(@NonNull String packageURI);
 
+	/**
+	 * @since 7.0
+	 */
+	void dispose();
+
 	@NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType);
 
 	org.eclipse.ocl.pivot.Class getMemberType(String name);

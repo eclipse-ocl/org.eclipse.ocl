@@ -11,9 +11,10 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 
 public class NestedCompletePackages extends AbstractCompletePackages
@@ -27,14 +28,14 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	}
 
 	@Override
-	public @NonNull CompletePackageInternal createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		CompletePackageInternal completePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
-		String completeURI = partialPackage.getURI();
-		if (completeURI == null) {
-			completeURI = ((CompletePackage)owner).getURI() + "#" + partialPackage.getName();
-		}
-		completePackage.init(partialPackage.getName(), partialPackage.getNsPrefix(), completeURI);
-		return completePackage;
+	public @NonNull CompletePackage createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+	//	CompletePackageInternal completePackage2 = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
+	//	String completeURI = partialPackage.getURI();
+	//	if (completeURI == null) {
+	//		completeURI = ((CompletePackage)owner).getURI() + "#" + partialPackage.getName();
+	//	}
+		String nestedCompletePackageName = ((CompletePackage)owner).getName() + "#" + partialPackage.getName();
+		return createCompletePackage(nestedCompletePackageName, partialPackage.getNsPrefix(), partialPackage.getURI());
 	}
 
 	protected void doRefreshNestedPackages() {
@@ -48,21 +49,24 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal getCompleteModel() {
-		return getCompletePackage().getCompleteModel();
+	public @NonNull CompleteModelImpl getCompleteModel() {
+		return (CompleteModelImpl)getCompletePackage().getCompleteModel();
 	}
 
-	@SuppressWarnings("null")
-	public @NonNull CompletePackageInternal getCompletePackage() {
-		return (CompletePackageInternal)owner;
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompletePackage getCompletePackage() {
+		assert owner!= null;
+		return (CompletePackage)owner;
 	}
 
 	@Override
 	public @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		CompletePackage completePackage = null;
-		String uri = partialPackage.getURI();
-		if (uri != null) {
-			completePackage = getCompleteModel().getCompletePackageByURI(uri);
+		String packageURI = partialPackage.getURI();
+		if (packageURI != null) {
+			completePackage = getCompleteModel().basicGetCompletePackageForURI(packageURI);
 		}
 		if (completePackage == null) {
 			String name = partialPackage.getName();
@@ -78,6 +82,13 @@ public class NestedCompletePackages extends AbstractCompletePackages
 
 	@Override
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages() {
-		return getCompletePackage().getPartialPackages().getNestedPartialPackages();
+		return ((CompletePackageImpl)getCompletePackage()).getPartialPackages().getNestedPartialPackages();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public CompletePackage getCompletePackage(@Nullable String name) {
+		throw new UnsupportedOperationException();			// XXX
 	}
 }

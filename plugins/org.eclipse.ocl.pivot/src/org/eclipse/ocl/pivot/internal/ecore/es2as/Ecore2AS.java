@@ -388,7 +388,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * All imported EPackages identified by AS_METAMODEL_ANNOTATION_SOURCE annotations.
 	 */
-	private Set<EPackage> asMetamodels = null;
+	private Set<@NonNull EPackage> eMetamodels = null;
 
 	/**
 	 * All imported EObjects identified as IMPORT_ANNOTATION_SOURCE annotations.
@@ -635,8 +635,7 @@ public class Ecore2AS extends AbstractExternal2AS
 						addCreated(eClassifier, asType);
 					}
 				}
-				Model containingRoot = PivotUtil.getContainingModel(asLibrary);
-				return ClassUtil.requireNonNull(containingRoot);
+				return PivotUtil.getContainingModel(asLibrary);
 			}
 		}
 		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
@@ -865,8 +864,8 @@ public class Ecore2AS extends AbstractExternal2AS
 				loadImports((EPackage)eContent, baseURI);
 			}
 		}
-		if ((asMetamodels != null) && (metamodelManager.getLibraryResource() == null)) {
-			String nsURI = asMetamodels.iterator().next().getNsURI();
+		if ((eMetamodels != null) && (metamodelManager.getLibraryResource() == null)) {
+			String nsURI = eMetamodels.iterator().next().getNsURI();
 			if (nsURI != null) {
 				OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
 				metamodelManager.installResource(library);
@@ -875,10 +874,10 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 	protected void loadImports(@NonNull EPackage ePackage, @Nullable URI baseURI) {
 		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-			if (asMetamodels == null) {
-				asMetamodels = new HashSet<>();
+			if (eMetamodels == null) {
+				eMetamodels = new HashSet<>();
 			}
-			asMetamodels.add(ePackage);
+			eMetamodels.add(ePackage);
 		}
 		EAnnotation importAnnotation = ePackage.getEAnnotation(PivotConstants.IMPORT_ANNOTATION_SOURCE);
 		if (importAnnotation != null) {

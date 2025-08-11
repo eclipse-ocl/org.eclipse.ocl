@@ -88,7 +88,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 				return;
 			}
 			EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
-			CompletePackage completePackage = environmentFactory.getCompleteModel().getCompletePackageByURI(name);
+			CompletePackage completePackage = environmentFactory.getCompleteModel().basicGetCompletePackageForURI(name);
 			if (completePackage != null) {
 				org.eclipse.ocl.pivot.Package pivotPackage = completePackage.getPrimaryPackage();
 				if (pivotPackage != importedElement) {

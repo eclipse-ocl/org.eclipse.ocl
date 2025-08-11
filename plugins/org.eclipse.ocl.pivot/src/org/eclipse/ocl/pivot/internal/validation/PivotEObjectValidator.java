@@ -122,7 +122,7 @@ public class PivotEObjectValidator implements EValidator
 						constraint = invariants.get(0);
 					}
 					if (complementingModels != null) {
-						Model containingModel = PivotUtil.getContainingModel(constraint);
+						Model containingModel = PivotUtil.basicGetContainingModel(constraint);
 						if (!complementingModels.contains(containingModel)) {
 							continue;
 						}

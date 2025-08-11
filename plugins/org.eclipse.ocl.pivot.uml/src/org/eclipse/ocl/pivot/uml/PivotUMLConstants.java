@@ -35,8 +35,8 @@ public interface PivotUMLConstants extends PivotConstants
 	static final @NonNull RootPackageId TYPES_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);
 
 	/**
-	 * URI used to identify that a Package contributes to the OCL AS.
-	 * Fragments may be appended tio identify a particular aspect of the AS.
+	 * URI used to identify that a Package contributes to the OCL's AS for UML.
+	 * Fragments may be appended to identify a particular aspect of the AS.
 	 * @since 7.0
 	 */
 	static final @NonNull URI UML_METAMODEL_URI = URI.createURI(UML_METAMODEL_NAME);			// XXX

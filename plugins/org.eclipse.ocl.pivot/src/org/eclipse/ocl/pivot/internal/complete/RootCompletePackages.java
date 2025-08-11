@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
+import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -34,21 +34,19 @@ public class RootCompletePackages extends AbstractCompletePackages
 	}
 
 	@Override
-	public @NonNull CompletePackageInternal createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		CompletePackageInternal completePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
-		completePackage.init(partialPackage.getName(), partialPackage.getNsPrefix(), partialPackage.getURI());
-		return completePackage;
+	public @NonNull CompletePackage createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+		return new CompletePackageImpl(partialPackage.getName(), partialPackage.getNsPrefix(), partialPackage.getURI());
 	}
 
-	protected @NonNull CompletePackageInternal createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	protected @NonNull CompletePackage createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		if (Orphanage.isOrphanage(asPackage)) {
 			return getCompleteModel().getOrphanCompletePackage();
 		}
 		else {
 			String name;
 			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
-			if (semantics != null) {
-				name = PivotConstants.OCL_NAME;
+			if (semantics != null) {				// XXX just OCL AS semantics
+				name = PivotConstants.METAMODEL_NAME; //   OCL_NAME;
 			}
 			else {
 				name = asPackage.getName();
@@ -56,19 +54,20 @@ public class RootCompletePackages extends AbstractCompletePackages
 					name = "$anon_" + Integer.toHexString(System.identityHashCode(asPackage));
 				}
 			}
-			String nsPrefix = asPackage.getNsPrefix();
-			String completeURI;
+			assert name != null;
+			String prefix = asPackage.getNsPrefix();
+			String uri;
 			if (semantics != null) {
-				completeURI = semantics.trimFragment().toString();
+				URI trimmedSemantics = semantics.trimFragment();
+				uri = trimmedSemantics.toString();
 			}
 			else {
-				completeURI = asPackage.getURI();
-				if (completeURI == null) {
-					completeURI = name;
+				uri = asPackage.getURI();
+				if (uri == null) {
+					uri = name;
 				}
 			}
-			CompletePackageInternal rootCompletePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
-			rootCompletePackage.init(name, nsPrefix, completeURI);
+			CompletePackage rootCompletePackage = createCompletePackage(name, prefix, uri);
 			add(rootCompletePackage);
 			return rootCompletePackage;
 		}
@@ -93,8 +92,8 @@ public class RootCompletePackages extends AbstractCompletePackages
 
 	@Override
 	@SuppressWarnings("null")
-	public @NonNull CompleteModelInternal getCompleteModel() {
-		return (CompleteModelInternal)owner;
+	public @NonNull CompleteModelImpl getCompleteModel() {
+		return (CompleteModelImpl)owner;
 	}
 
 	/**
@@ -134,7 +133,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 		//
 		//	Try to find package by name, provided there is no packageURI conflict
 		//
-		CompletePackageInternal rootCompletePackage = basicGetOwnedCompletePackage(name);
+		CompletePackage rootCompletePackage = basicGetOwnedCompletePackage(name);
 		if (rootCompletePackage != null) {
 			String completeURI2 = PivotUtil.getURI(rootCompletePackage);
 			if ((packageURI == null) || packageURI.equals(completeURI2)) {

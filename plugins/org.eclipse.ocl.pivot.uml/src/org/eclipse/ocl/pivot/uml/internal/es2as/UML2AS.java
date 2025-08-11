@@ -42,6 +42,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
@@ -188,8 +189,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static void initialize() {
-		IdManager.addMetamodelEPackage(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotUMLConstants.UML_METAMODEL_NAME);
-		IdManager.addMetamodelEPackage(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotUMLConstants.TYPES_METAMODEL_NAME);
+		IdManager.addMetamodelEPackage(PivotUMLConstants.UML_METAMODEL_NAME, UMLPackage.eINSTANCE);
+		IdManager.addMetamodelEPackage(PivotUMLConstants.TYPES_METAMODEL_NAME, TypesPackage.eINSTANCE);
 	}
 
 	/**
@@ -488,6 +489,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 		protected Outer(@NonNull Resource umlResource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 			super(umlResource, environmentFactory);
+			CompleteModel completeModel = environmentFactory.getCompleteModel();
+			CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_NAME, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
+		//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotUMLConstants.UML_METAMODEL_NAME);
+			completeModel.registerCompletePackageContribution(umlCompletePackage, UMLPackage.eINSTANCE.getNsURI());
+			CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_NAME, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
+		//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotUMLConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
+			completeModel.registerCompletePackageContribution(typesCompletePackage, TypesPackage.eINSTANCE.getNsURI());
+			// FIXME All known synonyms
 		}
 
 		@Override
@@ -1089,12 +1098,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 		//		umlResource.eAdapters().add(this);
 		environmentFactory.addExternal2AS(this);
 		//		metamodelManager.addListener(this);
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
-	//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotUMLConstants.UML_METAMODEL_NAME);
-		completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, ClassUtil.requireNonNull(UMLPackage.eNS_URI));
-	//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotUMLConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
-		completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_URI, ClassUtil.requireNonNull(TypesPackage.eNS_URI));
-		// FIXME All known synonyms
 	}
 
 	/*public*/ void addAssociationClassProperties(@NonNull AssociationClass asAssociationClass, @NonNull AssociationClassProperties asProperties) {

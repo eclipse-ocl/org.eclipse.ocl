@@ -59,7 +59,7 @@ public class PrimitiveCompletePackageImpl extends CompletePackageImpl implements
 	protected PrimitiveCompletePackageImpl()
 	{
 		super();
-		init("$primitives$", "prim", PivotConstants.PRIMITIVES_URI);
+		init(PivotConstants.PRIMITIVES_NAME, PivotConstants.PRIMITIVES_PREFIX, PivotConstants.PRIMITIVES_URI);
 	}
 
 	@Override

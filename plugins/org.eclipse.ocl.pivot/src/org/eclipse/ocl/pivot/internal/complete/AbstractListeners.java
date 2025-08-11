@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public abstract class AbstractListeners<L extends AbstractListeners.IAbstractListener>
 {
 	public static interface IAbstractListener {}
-	
+
 	protected final @NonNull List<@NonNull WeakReference<L>> listeners = new ArrayList<@NonNull WeakReference<L>>();
 
 	public synchronized void addListener(@NonNull L aListener) {
@@ -33,7 +33,7 @@ public abstract class AbstractListeners<L extends AbstractListeners.IAbstractLis
 		listeners.add(new WeakReference<L>(aListener));
 	}
 
-	protected void doFlush() {				// FIXME automate as part of custom lister-list
+	protected void doFlush() {				// FIXME automate as part of custom listener-list
 		for (int i = listeners.size(); --i >= 0; ) {
 			@Nullable L completeListener = listeners.get(i).get();
 			if (completeListener == null) {
@@ -43,7 +43,7 @@ public abstract class AbstractListeners<L extends AbstractListeners.IAbstractLis
 	}
 
 	/**
-	 * Remove a listener and return trie if there are no listeners left.
+	 * Remove a listener and return true if there are no listeners left.
 	 */
 	public synchronized boolean removeListener(@NonNull L aListener) {
 		for (@NonNull WeakReference<L> ref : listeners) {

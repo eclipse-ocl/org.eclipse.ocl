@@ -545,7 +545,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				sortedProperties.add(asProperty);
 				Property asOpposite = asProperty.getOpposite();
 				if (asOpposite != null) {
-					if (PivotUtil.getContainingModel(asOpposite) == PivotUtil.getContainingModel(asProperty)) {
+					if (PivotUtil.basicGetContainingModel(asOpposite) == PivotUtil.basicGetContainingModel(asProperty)) {
 						allReferences.add(asOpposite);
 					}
 					allReferences.add(asOpposite.getType());
@@ -650,7 +650,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if (reference == null) {
 			return;
 		}
-		Model containingModel = PivotUtil.getContainingModel(reference);
+		Model containingModel = PivotUtil.basicGetContainingModel(reference);
 		if ((containingModel == root) || external2name.containsKey(reference) || Orphanage.isOrphanage(containingModel)) {
 			return;
 		}
@@ -1175,7 +1175,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if (name != null) {
 			return name;
 		}
-		Model thatModel = PivotUtil.getContainingModel(primaryElement);
+		Model thatModel = PivotUtil.basicGetContainingModel(primaryElement);
 		if (getThisModel() == thatModel) {
 			return nameQueries.getSymbolName(primaryElement);
 		}
@@ -1188,7 +1188,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if (name != null) {
 			return name;
 		}
-		Model thatModel = PivotUtil.getContainingModel(elem);
+		Model thatModel = PivotUtil.basicGetContainingModel(elem);
 		if (getThisModel() == thatModel) {
 			return nameQueries.getSymbolNameWithoutNormalization(elem);
 		}

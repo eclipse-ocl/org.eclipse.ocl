@@ -126,7 +126,7 @@ public final class IdManager
 	 */
 	private static final @NonNull PrimitiveTypeIdSingletonScope primitiveTypes = new PrimitiveTypeIdSingletonScope();
 
-	private static @Nullable Map<@NonNull String, @NonNull String> metamodelURI2name = null;
+	private static @Nullable Map<@NonNull String, @NonNull String> ePackageURI2completeName = null;
 
 	private static @Nullable WildcardId wildcardId = null;
 
@@ -138,13 +138,17 @@ public final class IdManager
 	/**
 	 * Define a metamodelNsURI as a contributor to the metamodelName. This facility is used to enable
 	 * UML2's duplicate Eclipse/OMG models to be treated as merged rather than conflicting.
+	 * @since 7.0
 	 */
-	public static void addMetamodelEPackage(@NonNull String metamodelNsURI, @NonNull String metamodelName) {
-		Map<@NonNull String, @NonNull String> metamodelURI2name2 = metamodelURI2name;
-		if (metamodelURI2name2 == null) {
-			metamodelURI2name = metamodelURI2name2 = new HashMap<>();
+	public static void addMetamodelEPackage(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage) {
+		assert ePackage != null;
+		Map<@NonNull String, @NonNull String> ePackageURI2completeName2 = ePackageURI2completeName;
+		if (ePackageURI2completeName2 == null) {
+			ePackageURI2completeName = ePackageURI2completeName2 = new HashMap<>();
 		}
-		metamodelURI2name2.put(metamodelNsURI, metamodelName);
+		String ePackageURI = ePackage.getNsURI();
+		assert ePackageURI != null;
+		ePackageURI2completeName2.put(ePackageURI, metamodelName);
 	}
 
 	/**
@@ -447,10 +451,10 @@ public final class IdManager
 	//	if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
 	//		return METAMODEL;
 	//	}
-		String nsURI = ePackage.getNsURI();
-		if (nsURI != null) {
-			if (metamodelURI2name != null) {
-				String metamodelName = metamodelURI2name.get(nsURI);
+		String ePackageURI = ePackage.getNsURI();
+		if (ePackageURI != null) {
+			if (ePackageURI2completeName != null) {										// XXX review
+				String metamodelName = ePackageURI2completeName.get(ePackageURI);
 				if (metamodelName != null) {
 					return getRootPackageId(metamodelName);
 				}
@@ -488,7 +492,7 @@ public final class IdManager
 				}
 			//	System.out.println("Looks like a UML Profile has not been used in place of its EPackage for " + nsURI);
 			}
-			return getNsURIPackageId(nsURI, ePackage.getNsPrefix(), ePackage);
+			return getNsURIPackageId(ePackageURI, ePackage.getNsPrefix(), ePackage);
 		}
 		String name = ePackage.getName();
 		assert name != null;
