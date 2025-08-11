@@ -168,7 +168,7 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage);
-	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackagesWithUris();
+//	@Deprecated @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackagesWithUris();
 	/**
 	 * @since 7.0
 	 */

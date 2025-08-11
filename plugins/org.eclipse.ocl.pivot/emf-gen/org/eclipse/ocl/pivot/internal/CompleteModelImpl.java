@@ -667,10 +667,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackageName2completePackage.values();
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackagesWithUris() {
-		return packageURI2completePackage.values();
-	}
+//	@Override
+//	public @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackagesWithUris() {
+//		return packageURI2completePackage.values();
+//	}
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {

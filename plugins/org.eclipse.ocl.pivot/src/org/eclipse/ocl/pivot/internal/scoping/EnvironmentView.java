@@ -847,23 +847,40 @@ public class EnvironmentView
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		String name2 = name;
 		if (name2 != null) {
-			CompletePackage rootCompletePackage = completeModel.getOwnedCompletePackage(name2);
-			if (rootCompletePackage != null) {
-				addNamedElement(rootCompletePackage);
+			for (CompletePackage rootCompletePackage : PivotUtil.getOwnedCompletePackages(completeModel)) {
+				for (org.eclipse.ocl.pivot.Package rootPackage : rootCompletePackage.getPartialPackages()) {
+					if (name2.equals(rootPackage.getName())) {
+						addElement(name2, rootCompletePackage);
+					}
+					else if (name2.equals(rootPackage.getURI())) {
+						addElement(name2, rootCompletePackage);
+					}
+				}
+			//	addNamedElement(rootCompletePackage);
 			}
-			CompletePackage completePackage = completeModel.basicGetCompletePackageForURI(name2);
-			if (completePackage != null) {
-				addElement(name2, completePackage);
-			}
+		//	CompletePackage rootCompletePackage = completeModel.getOwnedCompletePackages();   zzgetOwnedCompletePackage(name2);
+		//	if (rootCompletePackage != null) {
+		//		addNamedElement(rootCompletePackage);
+		//	}
+		//	CompletePackage completePackage = completeModel.basicGetCompletePackageForURI(name2);
+		//	if (completePackage != null) {
+		//		addElement(name2, completePackage);
+		//	}
 		}
 		else {
 			for (CompletePackage rootCompletePackage : PivotUtil.getOwnedCompletePackages(completeModel)) {
-				addNamedElement(rootCompletePackage);
+				for (org.eclipse.ocl.pivot.Package rootPackage : rootCompletePackage.getPartialPackages()) {
+					addElement(rootPackage.getName(), rootCompletePackage);
+					String packageURI = rootPackage.getURI();
+					if (packageURI != null) {
+						addElement(packageURI, rootCompletePackage);
+					}
+				}
 			}
-			for (@NonNull CompletePackage completePackage : completeModel.getAllCompletePackagesWithUris()) {
-				String nsURI = PivotUtil.getURI(completePackage);
-				addElement(nsURI, completePackage);
-			}
+		//	for (@NonNull CompletePackage completePackage : completeModel.getAllCompletePackagesWithUris()) {
+		//		String nsURI = PivotUtil.getURI(completePackage);
+		//		addElement(nsURI, completePackage);
+		//	}
 		}
 	}
 
