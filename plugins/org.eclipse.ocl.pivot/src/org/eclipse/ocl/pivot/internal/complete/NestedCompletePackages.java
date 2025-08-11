@@ -24,7 +24,7 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	public NestedCompletePackages(@NonNull CompletePackageImpl owner) {
 		super(CompletePackage.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES.getFeatureID(),
 			PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE.getFeatureID());
-		doRefreshNestedPackages();
+	//	doRefreshNestedPackages();
 	}
 
 	@Override
@@ -39,11 +39,11 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	}
 
 	protected void doRefreshNestedPackages() {
-		for (org.eclipse.ocl.pivot.Package partialPackage : getPartialPackages()) {
+		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : getPartialPackages()) {
 //			for (org.eclipse.ocl.pivot.Package partialChildPackage : partialParentPackage.getOwnedPackages()) {
-				if (partialPackage != null) {
+//				if (partialPackage != null) {
 					getOwnedCompletePackage(partialPackage);
-				}
+//				}
 //			}
 		}
 	}
