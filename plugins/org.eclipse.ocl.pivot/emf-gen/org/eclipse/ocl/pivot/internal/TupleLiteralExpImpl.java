@@ -286,4 +286,10 @@ public class TupleLiteralExpImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTupleLiteralExp(this);
 	}
+
+	@Override
+	public void setType(Type newType) {
+		// TODO Auto-generated method stub
+		super.setType(newType);
+	}
 } //TupleLiteralExpImpl

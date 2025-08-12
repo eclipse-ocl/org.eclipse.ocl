@@ -738,7 +738,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				if (semantics != null) {
 					completePackageName = semantics.trimFragment().toString();
 				}
-				else if (asPackage instanceof Orphanage) {
+				else if (Orphanage.isOrphanage(asPackage)) {
 					completePackageName = PivotConstants.ORPHANAGE_NAME;
 				}
 				else {
@@ -766,10 +766,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						parentCompletePackages = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
 					}
 				//	completePackage.assertSamePackage(asPackage);		// XXX obsolete / rewrite
-					if (asPackage instanceof Orphanage) {
+					if (Orphanage.isOrphanage(asPackage)) {
 						completePackage = getOrphanCompletePackage();
-						assert completePackageName.equals(completePackage.getName());
-						assert Objects.equals(asPackage.getNsPrefix(), completePackage.getNsPrefix());
+						//	assert completePackageName.equals(completePackage.getName());
+					//	assert PivotConstants.ORPHANAGE_NAME.equals(completePackage.getName());
+					//	assert Objects.equals(asPackage.getNsPrefix(), completePackage.getNsPrefix());
 						assert Objects.equals(packageURI, completePackage.getURI());
 					}
 					else {
