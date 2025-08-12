@@ -773,6 +773,9 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
+		if ("http://www.eclipse.org/ocl/2015/Orphanage".equals(newName)) {
+			getClass();		// XXX
+		}
 		String oldName = name;
 		EObject eContainer = eContainer();
 		if ((oldName != null) && !oldName.equals(newName)) {
