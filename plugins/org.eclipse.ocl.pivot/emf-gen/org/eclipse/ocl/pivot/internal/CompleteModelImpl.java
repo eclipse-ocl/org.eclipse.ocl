@@ -1056,20 +1056,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	@Override
 	public @Nullable CompletePackage getOwnedCompletePackage(@NonNull String packageName) {
-		CompletePackage theCompletePackage = null;
-		for (CompletePackage completePackage : PivotUtil.getOwnedCompletePackages(this)) {
-			for (org.eclipse.ocl.pivot.@NonNull Package pkge : PivotUtil.getPartialPackages(completePackage)) {
-				if (packageName.equals(pkge.getName())) {
-					if (theCompletePackage == null) {
-						theCompletePackage = completePackage;
-					}
-					else if (theCompletePackage != completePackage) {
-						throw new IllegalStateException("Ambiguous " + theCompletePackage + " and " + completePackage + " for package '" + packageName + "'");
-					}
-				}
-			}
-		}
-		return theCompletePackage;
+		assert ownedCompletePackages != null;
+		return ownedCompletePackages.basicGetOwnedCompletePackage(packageName);
 	}
 
 	@Override
