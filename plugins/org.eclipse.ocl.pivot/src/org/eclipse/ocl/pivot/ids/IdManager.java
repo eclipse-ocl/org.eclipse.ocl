@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl.BindingsIdSingletonScope;
+import org.eclipse.ocl.pivot.internal.ids.CompletePackageIdImpl.CompletePackageIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl.CollectionTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl.LambdaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedMapTypeIdImpl.MapTypeIdSingletonScope;
@@ -85,6 +87,11 @@ public final class IdManager
 	 * Map from a Collection type name to the corresponding CollectionTypeId.
 	 */
 	private static final @NonNull CollectionTypeIdSingletonScope collectionNames = new CollectionTypeIdSingletonScope();
+
+	/**
+	 * Map from a name to the corresponding CompletePackageId.
+	 */
+	private static final @NonNull CompletePackageIdSingletonScope completePackages = new CompletePackageIdSingletonScope();
 
 	/**
 	 * Map from a Map type name to the corresponding MapTypeId.
@@ -285,6 +292,23 @@ public final class IdManager
 				return TypeId.BAG;
 			}
 		}
+	}
+
+	/**
+	 * Return the CompletePackageId for the root package name.
+	 * @since 7.0
+	 */
+	public static @NonNull CompletePackageId getCompletePackageId(@NonNull String packageName) {
+		return completePackages.getSingleton(PRIVATE_INSTANCE, packageName);
+	}
+
+	/**
+	 * Return the CompletePackageId for the nested package name.
+	 * @since 7.0
+	 */
+	public static @NonNull CompletePackageId getCompletePackageId(@NonNull CompletePackage parentCompletePackage, String packageName) {
+		String completePackageName = parentCompletePackage.getName() + "#" + packageName;
+		return getCompletePackageId(completePackageName);
 	}
 
 	/**

@@ -19,6 +19,10 @@ public interface IdVisitor<R>
 {
 	R visitClassId(@NonNull ClassId id);
 	R visitCollectionTypeId(@NonNull CollectionTypeId id);
+	/**
+	 * @since 7.0
+	 */
+	R visitCompletePackageId(@NonNull CompletePackageId id);
 	R visitDataTypeId(@NonNull DataTypeId id);
 	R visitEnumerationId(@NonNull EnumerationId id);
 	R visitEnumerationLiteralId(@NonNull EnumerationLiteralId id);

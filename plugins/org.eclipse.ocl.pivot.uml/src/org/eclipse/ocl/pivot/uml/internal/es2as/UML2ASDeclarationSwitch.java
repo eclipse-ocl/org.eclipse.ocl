@@ -1071,6 +1071,6 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 	 */
 	protected void registerCompletePackageContribution(@NonNull String umlMetamodelName, org.eclipse.uml2.uml.@NonNull Package umlPackage) {
 		CompleteModelInternal completeModel = metamodelManager.getCompleteModel();
-		completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_NAME, "uml", umlPackage.getURI());		// XXX NsPrefix
+		completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID2, "uml", umlPackage.getURI());		// XXX NsPrefix
 	}
 }

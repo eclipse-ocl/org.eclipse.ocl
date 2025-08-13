@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 
 /**
@@ -129,12 +130,12 @@ public interface CompleteModel extends NamedElement
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	@Nullable CompletePackage getOwnedCompletePackage(@NonNull String completePackageName);
+	@Nullable CompletePackage getOwnedCompletePackage(@NonNull String packageName);
 
 	/**
 	 * @since 7.0
 	 */
-	@Nullable CompletePackage basicGetCompletePackage(@NonNull String completePackageName);
+	@Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId);
 
 	/**
 	 * @since 7.0
@@ -161,18 +162,19 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
-	@NonNull CompletePackage getCompletePackage(@NonNull String completePackageName, @Nullable String prefix, @NonNull String uri);
+	@NonNull CompletePackage getCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @NonNull String uri);
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
 	 * @since 7.0
 	 */
 	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage);
-//	@Deprecated @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackagesWithUris();
+
 	/**
 	 * @since 7.0
 	 */
 	@NonNull Orphanage getOrphanage();
+
 	@Deprecated org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
 
 	/**

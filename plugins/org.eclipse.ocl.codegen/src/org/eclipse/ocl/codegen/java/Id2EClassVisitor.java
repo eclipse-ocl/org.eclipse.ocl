@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
@@ -56,6 +57,11 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 
 	@Override
 	public @Nullable EClass visitCollectionTypeId(@NonNull CollectionTypeId id) {
+		return null;
+	}
+
+	@Override
+	public @Nullable EClass visitCompletePackageId(@NonNull CompletePackageId id) {
 		return null;
 	}
 

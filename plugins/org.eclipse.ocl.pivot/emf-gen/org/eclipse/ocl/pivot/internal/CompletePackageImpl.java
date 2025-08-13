@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -371,6 +372,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		return eDynamicInvoke(operationID, arguments);
 	}
 
+	private /*final*/ /*@NonNull*/ CompletePackageId completePackageId;
 	private /*final*/ /*@NonNull*/ String nsPrefix;
 	private /*final*/ /*@NonNull*/ String nsURI;
 	/**
@@ -421,9 +423,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	/**
 	 * @since 7.0
 	 */
-	public CompletePackageImpl(@NonNull String completePackageName, @Nullable String prefix, @Nullable String uri) {
+	public CompletePackageImpl(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
 		this();
-		init(completePackageName, prefix, uri);
+		init(completePackageId, prefix, uri);
 	}
 
 	@Override
@@ -568,6 +570,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			return completeModel2;
 		}
 		throw new IllegalStateException();
+	}
+
+	@Override
+	public @NonNull CompletePackageId getCompletePackageId() {
+		assert completePackageId != null;
+		return completePackageId;
 	}
 
 	@Override
@@ -780,10 +788,14 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		return nsURI != null ? nsURI : "«null»";
 	}
 
-	public void init(@NonNull String completePackageName, @Nullable String prefix, @Nullable String uri) {
-		setName(completePackageName);
+	/**
+	 * @since 7.0
+	 */
+	public void init(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
+		this.completePackageId = completePackageId;
 		this.nsPrefix = prefix;
 		this.nsURI = uri;
+		setName(completePackageId.getName());
 		traceURImapping();
 	}
 
@@ -798,7 +810,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 * @since 7.0
 	 */
 	public void toString(@NonNull StringBuilder s) {
-		s.append(name);
+		s.append(completePackageId);
 		s.append(" : ");
 		s.append(nsURI);
 		s.append(" <=>");
