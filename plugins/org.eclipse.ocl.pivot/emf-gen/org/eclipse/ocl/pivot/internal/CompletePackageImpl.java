@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -503,6 +504,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	public void didAddPartialPackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+		System.out.println("didAddPartialPackage " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialPackage) + " " + partialPackage.getName());
 		getOwnedCompleteClasses().didAddPackage(partialPackage);
 	}
 
