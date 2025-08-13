@@ -11,15 +11,10 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
-import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class RootCompletePackages extends AbstractCompletePackages
 {
@@ -31,12 +26,12 @@ public class RootCompletePackages extends AbstractCompletePackages
 		super(CompletePackage.class, owner, PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES.getFeatureID(), PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL.getFeatureID());
 	}
 
-	@Override
-	public @NonNull CompletePackage createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		return new CompletePackageImpl(partialPackage.getName(), partialPackage.getNsPrefix(), partialPackage.getURI());
-	}
+//	@Override
+//	public @NonNull CompletePackage createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+//		return new CompletePackageImpl(partialPackage.getName(), partialPackage.getNsPrefix(), partialPackage.getURI());
+//	}
 
-	protected @NonNull CompletePackage createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+/*	protected @NonNull CompletePackage createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		if (Orphanage.isOrphanage(asPackage)) {
 			return getCompleteModel().getOrphanCompletePackage();
 		}
@@ -69,7 +64,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 			add(rootCompletePackage);
 			return rootCompletePackage;
 		}
-	}
+	} */
 
 	@Override
 	protected void didAdd(@NonNull CompletePackage rootCompletePackage) {

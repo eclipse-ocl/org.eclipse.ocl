@@ -490,10 +490,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		protected Outer(@NonNull Resource umlResource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 			super(umlResource, environmentFactory);
 			CompleteModel completeModel = environmentFactory.getCompleteModel();
-			CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_NAME, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
+			CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
 		//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotUMLConstants.UML_METAMODEL_NAME);
 			completeModel.registerCompletePackageContribution(umlCompletePackage, UMLPackage.eINSTANCE.getNsURI());
-			CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_NAME, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
+			CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
 		//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(TypesPackage.eNS_URI), PivotUMLConstants.TYPES_METAMODEL_NAME);		// FIXME All known synonyms
 			completeModel.registerCompletePackageContribution(typesCompletePackage, TypesPackage.eINSTANCE.getNsURI());
 			// FIXME All known synonyms

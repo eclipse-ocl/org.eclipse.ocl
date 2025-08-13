@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.uml;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -27,9 +28,19 @@ public interface PivotUMLConstants extends PivotConstants
 	static final @NonNull String TYPES_METAMODEL_NAME = "$types$";	// FIXME Use extension point
 
 	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull CompletePackageId TYPES_METAMODEL_ID2 = IdManager.getCompletePackageId(TYPES_METAMODEL_NAME);
+
+	/**
 	 * The Package name of the shared uml metamodel.
 	 */
 	static final @NonNull String UML_METAMODEL_NAME = "$uml$";	// FIXME Use extension point
+
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull CompletePackageId UML_METAMODEL_ID2 = IdManager.getCompletePackageId(UML_METAMODEL_NAME);
 
 	static final @NonNull RootPackageId UML_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.UML_METAMODEL_NAME);
 	static final @NonNull RootPackageId TYPES_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);

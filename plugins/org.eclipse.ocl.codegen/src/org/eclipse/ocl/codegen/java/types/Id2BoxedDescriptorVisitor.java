@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -24,6 +25,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
@@ -213,6 +215,11 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			boxedClass = CollectionValue.class;
 		}
 		return new BoxedValuesDescriptor(id, boxedClass);
+	}
+
+	@Override
+	public @Nullable BoxedDescriptor visitCompletePackageId(@NonNull CompletePackageId id) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

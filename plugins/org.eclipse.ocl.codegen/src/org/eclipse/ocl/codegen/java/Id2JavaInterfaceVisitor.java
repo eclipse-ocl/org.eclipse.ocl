@@ -13,6 +13,7 @@ package org.eclipse.ocl.codegen.java;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
@@ -49,6 +50,11 @@ public class Id2JavaInterfaceVisitor implements IdVisitor<@NonNull Class<? exten
 	@Override
 	public @NonNull Class<? extends ElementId> visitCollectionTypeId(@NonNull CollectionTypeId id) {
 		return CollectionTypeId.class;
+	}
+
+	@Override
+	public @NonNull Class<? extends ElementId> visitCompletePackageId(@NonNull CompletePackageId id) {
+		return CompletePackageId.class;
 	}
 
 	@Override

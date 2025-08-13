@@ -69,6 +69,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
@@ -243,6 +244,11 @@ public class NameManager
 			else {
 				return idPrefix + id.getElementTypeId().accept(this);
 			}
+		}
+
+		@Override
+		public @NonNull String visitCompletePackageId(@NonNull CompletePackageId id) {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override

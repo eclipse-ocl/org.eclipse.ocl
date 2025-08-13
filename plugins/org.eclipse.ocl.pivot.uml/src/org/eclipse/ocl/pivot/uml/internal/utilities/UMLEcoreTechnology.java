@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -145,11 +146,11 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		}
 		else if (eObject2 instanceof UMLPackage) {
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
-			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_NAME, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
 		}
 		else if (eObject2 instanceof TypesPackage) {
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
-			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_NAME, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
@@ -255,13 +256,13 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		return true;
 	}
 
-	private @NonNull RootPackageId registerCompletePackageContribution(@NonNull CompleteModelInternal completeModel, @NonNull String completePackageName, /*@NonNull*/ EPackage ePackage) {
+	private @NonNull RootPackageId registerCompletePackageContribution(@NonNull CompleteModelInternal completeModel, @NonNull CompletePackageId completePackageId, /*@NonNull*/ EPackage ePackage) {
 		assert ePackage != null;
 		String packageURI = ePackage.getNsURI();
 		assert packageURI != null;
-		CompletePackage completePackage = completeModel.getCompletePackage(completePackageName, ePackage.getNsPrefix(), packageURI);
+		CompletePackage completePackage = completeModel.getCompletePackage(completePackageId, ePackage.getNsPrefix(), packageURI);
 	//	completePackage.didAddPackageURI(packageURI);
 		completeModel.registerCompletePackageContribution(completePackage, packageURI);
-		return IdManager.getRootPackageId(completePackageName);
+		return IdManager.getRootPackageId(completePackageId.getName());		// XXX
 	}
 }

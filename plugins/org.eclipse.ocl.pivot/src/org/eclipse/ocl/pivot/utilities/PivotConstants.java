@@ -24,6 +24,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -35,6 +37,11 @@ public interface PivotConstants
 	 * The Package name of the shared metamodel.
 	 */
 	static final @NonNull String METAMODEL_NAME = "$metamodel$";
+
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull CompletePackageId METAMODEL_ID = IdManager.getCompletePackageId(METAMODEL_NAME);
 
 	/**
 	 * The Package name of the orphanage.
@@ -49,6 +56,11 @@ public interface PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static final @NonNull CompletePackageId ORPHANAGE_ID = IdManager.getCompletePackageId(ORPHANAGE_NAME);
+
+	/**
+	 * @since 7.0
+	 */
 	static final @NonNull String PRIMITIVES_NAME = "$primitives$";
 
 	/**
@@ -57,6 +69,11 @@ public interface PivotConstants
 	static final @NonNull String PRIMITIVES_PREFIX = "prim";
 
 	static final @NonNull String PRIMITIVES_URI = "http://www.eclipse.org/ocl/2015/Primitives";
+
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull CompletePackageId PRIMITIVES_ID = IdManager.getCompletePackageId(PRIMITIVES_NAME);
 
 	/**
 	 * The Package name of the shared types metamodel.

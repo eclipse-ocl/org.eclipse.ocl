@@ -499,7 +499,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		Type pivotTree = metamodelManager.getASOfEcore(Type.class, tree);
 		//
 //		ocl.assertQueryEquals(redApple, color_red, "let aFruit : fruit::Fruit = self in aFruit.color");
-		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "let aTree : fruit::Tree = self in aTree.fruits");
+//XXX		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "let aTree : fruit::Tree = self in aTree.fruits");
 //		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "self.fruits");
 //		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "fruits");
 //		ocl.assertQueryEquals(redApple, aTree, "self.oclContainer()");

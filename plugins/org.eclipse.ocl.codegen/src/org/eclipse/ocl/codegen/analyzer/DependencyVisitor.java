@@ -45,6 +45,7 @@ import org.eclipse.ocl.codegen.cse.SimpleAnalysis;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
@@ -372,6 +373,11 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 					addElementIdDependency(id, elementId);
 				}
 			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCompletePackageId(@NonNull CompletePackageId id) {
 			return null;
 		}
 

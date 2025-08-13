@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
@@ -33,7 +34,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public class PivotIdResolver extends AbstractIdResolver
@@ -226,15 +226,19 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package visitRootPackageId(@NonNull RootPackageId id) {
-		String completeURIorName = id.getName();
-		org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().getRootPackage(completeURIorName);
-		if (rootPackage == null) {
-			Orphanage orphanage = environmentFactory.getOrphanage();
-			rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);
-			if (rootPackage == null) {
-				return null;
-			}
+		CompletePackageId completePackageId = IdManager.getCompletePackageId(id.getName());
+		CompletePackage completePackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
+		if (completePackage != null) {
+			return completePackage.getPartialPackages().get(0);
 		}
-		return rootPackage;
+	//	org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
+		else {
+			throw new UnsupportedOperationException();
+		//	Orphanage orphanage = environmentFactory.getOrphanage();
+		//	rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);
+		//	if (rootPackage == null) {
+		//		return null;
+		//	}
+		}
 	}
 }
