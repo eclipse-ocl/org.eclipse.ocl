@@ -217,7 +217,7 @@ public class PivotTests extends XtextTestCase
 		return xtextResource;
 	}
 
-	protected void doPivotTestOCLstdlib(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
+	protected @NonNull URI doPivotTestOCLstdlib(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
 		URI pivotURI = getTestFileURI(ClassUtil.requireNonNull(inputURI.trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION).lastSegment()));
 		BaseCSResource csResource = doLoadOCLstdlib(ocl, inputURI);
 		//
@@ -258,8 +258,7 @@ public class PivotTests extends XtextTestCase
 		//		damager.update();
 		//		damager.assertSameContents();
 		//
-		ocl.dispose();
-		assertPivotIsValid(pivotURI);
+		return pivotURI;
 	}
 
 	@SuppressWarnings("null")
@@ -360,8 +359,22 @@ public class PivotTests extends XtextTestCase
 //		BaseLinkingService.DEBUG_RETRY.setState(true);
 		getTestFileURI("oclstdlib.oclas", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclas"));
 		URI testFileURI = getTestFileURI("oclstdlib.oclstdlib", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
-		doPivotTestOCLstdlib(ocl, testFileURI);
+		URI pivotURI = doPivotTestOCLstdlib(ocl, testFileURI);
 		ocl.dispose();
+		ocl = null;
+		assertPivotIsValid(pivotURI);
+	}
+
+
+	public void testPivot_oclstdlib_oclas() throws IOException, InterruptedException {
+		OCL ocl = OCL.newInstance(getProjectMap());
+//		BaseLinkingService.DEBUG_RETRY.setState(true);
+		URI pivotURI = getTestFileURI("oclstdlib.oclas", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclas"));
+	//	URI testFileURI = getTestFileURI("oclstdlib.oclstdlib", ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
+	//	URI pivotURI = doPivotTestOCLstdlib(ocl, testFileURI);
+		ocl.dispose();
+		ocl = null;
+		assertPivotIsValid(pivotURI);
 	}
 
 	//	public void testPivot_temp_oclstdlib() throws IOException, InterruptedException {
