@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 
 /**
  * <!-- begin-user-doc -->
@@ -150,6 +151,7 @@ public interface CompletePackage extends NamedElement
 	int getIndex(org.eclipse.ocl.pivot.Package p1);
 
 	void assertSamePackage(org.eclipse.ocl.pivot.Package pivotPackage);
+	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllClasses();
 
 	@Nullable EPackage getEPackage();
 
@@ -159,7 +161,11 @@ public interface CompletePackage extends NamedElement
 
 	@NonNull CompleteModel getCompleteModel();
 
-	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllClasses();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompletePackageId getCompletePackageId();
+
 	@Nullable CompletePackage getOwningCompletePackage();
 
 	/**

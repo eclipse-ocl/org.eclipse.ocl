@@ -87,20 +87,21 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	 * @since 7.0
 	 */
 	protected @NonNull CompletePackage createCompletePackage(@NonNull EPackage ePackage) {
-		return createCompletePackage(ePackage.getName(), ePackage.getNsPrefix(), ePackage.getNsURI());		// XXX nested hierarchy
+		throw new UnsupportedOperationException();
+	//	return createCompletePackage(ePackage.getName(), ePackage.getNsPrefix(), ePackage.getNsURI());		// XXX nested hierarchy
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public abstract @NonNull CompletePackage createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
+//	public abstract @NonNull CompletePackage createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
 
 	/**
 	 * @since 7.0
 	 */
-	public final @NonNull CompletePackage createCompletePackage(@NonNull String name, @Nullable String prefix, @Nullable String uri) {
-		throw new UnsupportedOperationException();		// XXX
-	}
+//	public final @NonNull CompletePackage createCompletePackage(@NonNull String name, @Nullable String prefix, @Nullable String uri) {
+//		throw new UnsupportedOperationException();		// XXX
+//	}
 
 	protected void didAdd(@NonNull CompletePackage completePackage) {
 	//	CompletePackageInternal completePackageInternal = (CompletePackageInternal)completePackage;

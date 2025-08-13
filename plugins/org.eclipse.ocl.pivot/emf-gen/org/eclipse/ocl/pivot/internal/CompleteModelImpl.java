@@ -51,6 +51,8 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.AbstractCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
@@ -424,10 +426,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	private /*final @NonNull*/ CompleteEnvironmentInternal completeEnvironment;
 
 	/**
-	 * Map of (hierarchical) complete package name to CompletePackage.
-	 * (Each CompletePackage has a distinct (hierarchical) complete package name.)
+	 * Map of (hierarchical) complete package id to CompletePackage.
+	 * (Each CompletePackage has a distinct (hierarchical) complete package id.)
 	 */
-	private final @NonNull Map<@NonNull String, @NonNull CompletePackage> completePackageName2completePackage = new HashMap<>();
+	private final @NonNull Map<@NonNull CompletePackageId, @NonNull CompletePackage> completePackageId2completePackage = new HashMap<>();
 
 	/**
 	 * Map of Package to CompletePackage.
@@ -487,8 +489,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	public void didAddCompletePackage(@NonNull CompletePackage completePackage) {
 		//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
-		String completePackageName = PivotUtil.getName(completePackage);
-		CompletePackage oldCompletePackage = completePackageName2completePackage.put(completePackageName, completePackage);
+		CompletePackageId completePackageId = completePackage.getCompletePackageId();
+		CompletePackage oldCompletePackage = completePackageId2completePackage.put(completePackageId, completePackage);
 		assert oldCompletePackage == null;
 		//	if (COMPLETE_URIS.isActive()) {
 		//		traceURImapping(completeURI);
@@ -514,7 +516,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			assert (old2 == null) || (old2 == completePackage);
 		//	packageURI2completePackage.put(packageURI, completePackage);
 		}
-		assert completePackageName2completePackage.get(completePackage.getName()) == completePackage;
+		assert completePackageId2completePackage.get(completePackage.getCompletePackageId()) == completePackage;
 		if (!(completePackage instanceof PrimitiveCompletePackage)) {
 			assert completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
 			assert package2completePackage.get(asPackage) == completePackage;
@@ -545,7 +547,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			primitiveCompletePackage = null;
 		}
 		String completePackageName = PivotUtil.getName(completePackage);
-		completePackageName2completePackage.remove(completePackageName);
+		completePackageId2completePackage.remove(completePackageName);
 		for (@NonNull String packageURI : completePackage.getPackageURIs()) {
 			packageURI2completePackage.remove(packageURI);
 		}
@@ -594,7 +596,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public synchronized void dispose() {
 		completeEnvironment.dispose();
 		ownedCompletePackages.dispose();
-		completePackageName2completePackage.clear();
+		completePackageId2completePackage.clear();
 		package2completePackage.clear();
 		packageURI2completePackage.clear();
 		Orphanage orphanage2 = orphanage;
@@ -664,7 +666,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages() {
-		return completePackageName2completePackage.values();
+		return completePackageId2completePackage.values();
 	}
 
 //	@Override
@@ -689,11 +691,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull CompletePackage getCompletePackage(@NonNull String completePackageName, @Nullable String prefix, @Nullable String uri) {
-		CompletePackage completePackage = completePackageName2completePackage.get(completePackageName);
+	public @NonNull CompletePackage getCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
+		throw new UnsupportedOperationException();
+	/*	CompletePackage completePackage = completePackageId2completePackage.get(completePackageId);
 		if (completePackage == null) {
-			completePackage = ownedCompletePackages.createCompletePackage(completePackageName, prefix, uri);
-	//		completePackageName2completePackage.put(completePackageName, completePackage);
+			completePackage = ownedCompletePackages.createCompletePackage(completePackageId, prefix, uri);
+	//		completePackageId2completePackage.put(completePackageName, completePackage);
 			getOwnedCompletePackages().add(completePackage);
 		}
 		assert completePackage != null;		// XXX
@@ -701,7 +704,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	//	completePackage.didAddPackageURI(packageURI);
 	//	CompletePackage old = packageURI2completePackage.put(uri, completePackage);			// XXX remove
 	//	assert (old == null) || (old == completePackage);
-		return completePackage;
+		return completePackage; */
 	}
 
 	@Override
@@ -718,7 +721,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		else {
 			completePackageName = getCompleteURI(packageURI);
 		}
-		return completePackageName != null ? completePackageName2completePackage.get(completePackageName) : null;
+		return completePackageName != null ? completePackageId2completePackage.get(completePackageName) : null;
 	}
 
 	/**
@@ -734,18 +737,21 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			}
 			if (completePackage == null) {
 				URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
-				String completePackageName;
+				CompletePackageId completePackageId;
 				if (semantics != null) {
-					completePackageName = semantics.trimFragment().toString();
+					completePackageId = IdManager.getCompletePackageId(semantics.trimFragment().toString());
 				}
 				else if (Orphanage.isOrphanage(asPackage)) {
-					completePackageName = PivotConstants.ORPHANAGE_NAME;
+					completePackageId = PivotConstants.ORPHANAGE_ID;
+				}
+				else if (packageURI != null) {
+					completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
+				}
+				else if (packageURI != null) {
+					completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
 				}
 				else {
-					completePackageName = packageURI; // getCompleteURI(packageURI);
-				}
-				if (completePackageName == null) {
-					completePackageName = PivotUtil.getName(asPackage);
+					String packageName = PivotUtil.getName(asPackage);
 				//	 parentCompletePackage = null;
 				//	AbstractCompletePackages parentCompletePackages2 = ownedCompletePackages;
 					org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
@@ -753,11 +759,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
 					//	if (parentCompletePackage != null) {
 						//	parentCompletePackages2 = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
-							completePackageName = parentCompletePackage.getName() + "#" + completePackageName;
+						completePackageId = IdManager.getCompletePackageId(parentCompletePackage, packageName);
 					//	}
 					}
+					else {
+						completePackageId = IdManager.getCompletePackageId(packageName);
+					}
 				}
-				completePackage = completePackageName2completePackage.get(completePackageName);
+				completePackage = completePackageId2completePackage.get(completePackageId);
 				if (completePackage == null) {
 					AbstractCompletePackages parentCompletePackages = ownedCompletePackages;
 					org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
@@ -775,15 +784,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					}
 					else {
 						completePackage = PivotFactory.eINSTANCE.createCompletePackage();
-						((CompletePackageImpl)completePackage).init(completePackageName, asPackage.getNsPrefix(), packageURI);
+						((CompletePackageImpl)completePackage).init(completePackageId, asPackage.getNsPrefix(), packageURI);
 					}
 					package2completePackage.put(asPackage, completePackage);
-					//		completePackageName2completePackage.put(completePackageName, completePackage);
+					//		completePackageId2completePackage.put(completePackageName, completePackage);
 					parentCompletePackages.add(completePackage);		//didAddCompletePackage
 				//	didAddPackage(asPackage);
-					assert completePackageName2completePackage.get(completePackageName) == completePackage;
+					assert completePackageId2completePackage.get(completePackageId) == completePackage;
 					//	CompletePackage old1 = package2completePackage.put(asPackage, completePackage);
-					//	CompletePackage old2 = completePackageName2completePackage.put(completePackageName, completePackage);
+					//	CompletePackage old2 = completePackageId2completePackage.put(completePackageName, completePackage);
 					assert package2completePackage.get(asPackage) == completePackage;
 					completePackage.getPartialPackages().add(asPackage);
 					packageAdded = true;
@@ -833,7 +842,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 
 	//	assert (asPackage.getURI() == null) || (packageURI2completePackage.get(asPackage.getURI()) == completePackage);		in didAddPackage caller
-		assert completePackageName2completePackage.get(completePackage.getName()) == completePackage;
+		assert completePackageId2completePackage.get(completePackage.getCompletePackageId()) == completePackage;
 		return completePackage;
 	}
 
@@ -932,8 +941,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 7.0
 	 */
 	@Override
-	public @Nullable CompletePackage basicGetCompletePackage(@NonNull String completePackageName) {
-		return completePackageName2completePackage.get(completePackageName);
+	public @Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId) {
+		return completePackageId2completePackage.get(completePackageId);
 	}
 
 	@Override
@@ -945,7 +954,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		return packageURI2completePackage.get(packageURI);
 		/*String completePackageName = getCompleteURI(packageURI);
-		return completePackageName2completePackage.get(completePackageName); */
+		return completePackageId2completePackage.get(completePackageName); */
 	}
 
 	@Override
@@ -1043,21 +1052,31 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @generated NOT
 	 */
 	@Override
-	public @Nullable CompletePackage getOwnedCompletePackage(@NonNull String completePackageName) {
-		CompletePackage completePackage = basicGetCompletePackage(completePackageName);
-		if ((completePackage != null) && (completePackage.eContainer() == this)) {
-			return completePackage;
+	public @Nullable CompletePackage getOwnedCompletePackage(@NonNull String packageName) {
+		CompletePackage theCompletePackage = null;
+		for (CompletePackage completePackage : PivotUtil.getOwnedCompletePackages(this)) {
+			for (org.eclipse.ocl.pivot.@NonNull Package pkge : PivotUtil.getPartialPackages(completePackage)) {
+				if (packageName.equals(pkge.getName())) {
+					if (theCompletePackage == null) {
+						theCompletePackage = completePackage;
+					}
+					else if (theCompletePackage != completePackage) {
+						throw new IllegalStateException("Ambiguous " + theCompletePackage + " and " + completePackage + " for package '" + packageName + "'");
+					}
+				}
+			}
 		}
-		return null;//ownedCompletePackages.basicGetOwnedCompletePackage(completePackageName);
+		return theCompletePackage;
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completePackageName) {
-		CompletePackage completePackage = basicGetCompletePackage(completePackageName);
+		throw new UnsupportedOperationException();
+/*		CompletePackage completePackage = basicGetCompletePackage(completePackageId);
 		if ((completePackage != null) && (completePackage.eContainer() == this)) {
 			return completePackage.getPrimaryPackage();
 		}
-		return null;/*completePackage = getOwnedCompletePackage(completeURIorName);
+		return null;*//*completePackage = getOwnedCompletePackage(completeURIorName);
 		return completePackage != null ? completePackage.getPrimaryPackage() : null;*/
 	}
 

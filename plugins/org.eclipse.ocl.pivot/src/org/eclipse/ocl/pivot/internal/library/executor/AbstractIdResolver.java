@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
@@ -131,6 +132,11 @@ public abstract class AbstractIdResolver implements IdResolver
 
 		@Override
 		public @Nullable Object visitCollectionTypeId(@NonNull CollectionTypeId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @Nullable Object visitCompletePackageId(@NonNull CompletePackageId id) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -1414,6 +1420,14 @@ public abstract class AbstractIdResolver implements IdResolver
 		else {
 			return standardLibrary.getCollectionType(generalizedId);
 		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable Element visitCompletePackageId(@NonNull CompletePackageId id) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

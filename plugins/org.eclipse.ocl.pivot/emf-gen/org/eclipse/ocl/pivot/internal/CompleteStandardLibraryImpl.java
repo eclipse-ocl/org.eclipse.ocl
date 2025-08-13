@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -66,6 +65,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -96,7 +96,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -558,6 +557,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		CompleteClass completeClass = completeModel.getCompleteClass(type);
 		Type behavioralType = completeClass.getBehavioralClass();
 		return behavioralType;
+	}
+
+	@Override
+	public @Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId) {
+		return completeModel.basicGetCompletePackage(completePackageId);
 	}
 
 	@Override
@@ -1117,7 +1121,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName) {
-		Package rootPackage = completeModel.getRootPackage(completeURIorName);
+		throw new UnsupportedOperationException();
+/*		Package rootPackage = completeModel.getRootPackage(completeURIorName);
 		if (rootPackage == null) {
 			if (PivotConstants.METAMODEL_NAME.equals(completeURIorName)) {
 				assert environmentFactory != null;
@@ -1125,7 +1130,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				rootPackage = completeModel.getRootPackage(completeURIorName);
 			}
 		}
-		return rootPackage;
+		return rootPackage; */
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	//	doRefreshNestedPackages();
 	}
 
-	@Override
+/*	@Override
 	public @NonNull CompletePackage createCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 	//	CompletePackageInternal completePackage2 = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
 	//	String completeURI = partialPackage.getURI();
@@ -36,7 +36,7 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	//	}
 		String nestedCompletePackageName = ((CompletePackage)owner).getName() + "#" + partialPackage.getName();
 		return createCompletePackage(nestedCompletePackageName, partialPackage.getNsPrefix(), partialPackage.getURI());
-	}
+	} */
 
 	protected void doRefreshNestedPackages() {
 		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : getPartialPackages()) {
@@ -63,7 +63,8 @@ public class NestedCompletePackages extends AbstractCompletePackages
 
 	@Override
 	public @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		CompletePackage completePackage = null;
+		throw new UnsupportedOperationException();
+	/*	CompletePackage completePackage = null;
 		String packageURI = partialPackage.getURI();
 		if (packageURI != null) {
 			completePackage = getCompleteModel().basicGetCompletePackageForURI(packageURI);
@@ -77,7 +78,7 @@ public class NestedCompletePackages extends AbstractCompletePackages
 			add(completePackage);
 		}
 		completePackage.getPartialPackages().add(partialPackage);
-		return completePackage;
+		return completePackage; */
 	}
 
 	@Override
