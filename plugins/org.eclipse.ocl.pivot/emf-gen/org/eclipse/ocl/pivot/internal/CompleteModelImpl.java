@@ -64,7 +64,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -496,7 +495,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		//	if (COMPLETE_URIS.isActive()) {
 		//		traceURImapping(completeURI);
 		//	}
-		System.out.println("didAddCompletePackage " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(completePackage));
+//		System.out.println("didAddCompletePackage " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(completePackage));
 	}
 
 	@Override
@@ -690,7 +689,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CompletePackage aT = package2completePackage.get(asPackage);
-		System.out.println(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(asPackage) + " " + NameUtil.debugSimpleName(aT));
+	//	System.out.println(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(asPackage) + " " + NameUtil.debugSimpleName(aT));
 		return ClassUtil.requireNonNull(aT);
 	}
 
@@ -751,9 +750,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				else if (packageURI != null) {
 					completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
 				}
-				else if (packageURI != null) {
-					completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
-				}
+			//	else if (packageURI != null) {
+			//		completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
+			//	}
 				else {
 					String packageName = PivotUtil.getName(asPackage);
 				//	 parentCompletePackage = null;

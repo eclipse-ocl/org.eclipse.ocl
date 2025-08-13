@@ -191,27 +191,17 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 			}
 		}
 		else if (notifier instanceof Resource) {
+			Resource resource = (Resource)notifier;
 			int featureID = notification.getFeatureID(Resource.class);
-			if (featureID == Resource.RESOURCE__CONTENTS)
-			{
-				if (eventType == Notification.ADD)
-				{
-					Object newValue = notification.getNewValue();
+			if (featureID == Resource.RESOURCE__IS_LOADED) {
+				for (Object newValue : resource.getContents()) {
 					if (newValue instanceof Model) {
 						add((Model)newValue);
 					}
 				}
-				else if (eventType == Notification.ADD_MANY)
-				{
-					Object newValues =  notification.getNewValue();
-					if (newValues instanceof Iterable<?>) {
-						for (Object newValue : (Iterable<?>)newValues){
-							if (newValue instanceof Model) {
-								add((Model)newValue);
-							}
-						}
-					}
-				}
+			}
+			else if (featureID == Resource.RESOURCE__CONTENTS)
+			{
 				if (eventType == Notification.REMOVE)
 				{
 					Object newValue = notification.getNewValue();
@@ -221,8 +211,30 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 				{
 					Object newValues =  notification.getNewValue();
 					if (newValues instanceof Iterable<?>) {
-						for (Object newValue : (Iterable<?>)newValues){
+						for (Object newValue : (Iterable<?>)newValues) {
 							remove(newValue);
+						}
+					}
+				}
+				else {
+					if (resource.isLoaded() /*&& !((ResourceImpl)resource).isLoading()*/) {
+						if (eventType == Notification.ADD)
+						{
+							Object newValue = notification.getNewValue();
+							if (newValue instanceof Model) {
+								add((Model)newValue);
+							}
+						}
+						else if (eventType == Notification.ADD_MANY)
+						{
+							Object newValues =  notification.getNewValue();
+							if (newValues instanceof Iterable<?>) {
+								for (Object newValue : (Iterable<?>)newValues) {
+									if (newValue instanceof Model) {
+										add((Model)newValue);
+									}
+								}
+							}
 						}
 					}
 				}
