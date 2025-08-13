@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.complete;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Model;
@@ -23,7 +29,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 
-public class PartialModels extends EObjectResolvingEList<Model> implements ModelListeners.IModelListener
+public class PartialModels extends EObjectResolvingEList<Model> implements ModelListeners.IModelListener, Adapter
 {
 	public static final @NonNull TracingOption PARTIAL_MODELS = new TracingOption(PivotPlugin.PLUGIN_ID, "partialModels");
 //	static { PARTIAL_ROOTS.setState(true); }
@@ -38,9 +44,11 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	}
 	private static final @NonNull Model2RootOwnedPackages model2RootOwnedPackages = new Model2RootOwnedPackages();
 
-
 	public PartialModels(@NonNull CompleteModelImpl owner) {
 		super(Model.class, owner, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS.getFeatureID());
+		ResourceSet asResourceSet = owner.getEnvironmentFactory().getASResourceSet();
+		assert asResourceSet.getResources().isEmpty();
+		asResourceSet.eAdapters().add(this);
 	}
 
 	@Override
@@ -71,6 +79,15 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		getCompleteModel().didAddPackage(partialPackage);
 	}
 
+	private void didAddResource(@NonNull Resource resource) {
+		for (EObject eObject : resource.getContents()) {
+			if (eObject instanceof Model) {
+				getCompleteModel().getPartialModels().add((Model)eObject);
+			}
+		}
+		resource.eAdapters().add(this);
+	}
+
 	@Override
 	protected void didRemove(int index, Model partialModel) {
 		assert partialModel != null;
@@ -96,6 +113,13 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		getCompleteModel().didRemoveNestedPackage(partialPackage);
 	}
 
+	private void didRemoveResource(@NonNull Resource resource) {
+		resource.eAdapters().remove(this);
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	protected @NonNull CompleteModelImpl getCompleteModel() {
 		assert owner != null;
 		return (CompleteModelImpl)owner;
@@ -108,4 +132,109 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> allPackages = Iterables.concat(roots_packages);
 		return allPackages;
 	}
+
+	@Override
+	public Notifier getTarget() {
+		return getCompleteModel().getEnvironmentFactory().getASResourceSet();
+	}
+
+	@Override
+	public boolean isAdapterForType(Object type) {
+		return type == PartialModels.class;
+	}
+
+	@Override
+	public void notifyChanged(Notification notification) {
+		assert notification != null;
+		Object notifier = notification.getNotifier();
+		int eventType = notification.getEventType();
+		if (notifier instanceof ResourceSet) {
+			int featureID = notification.getFeatureID(ResourceSet.class);
+			if (featureID == ResourceSet.RESOURCE_SET__RESOURCES)
+			{
+				if (eventType == Notification.ADD)
+				{
+					Object newValue = notification.getNewValue();
+					if (newValue instanceof Resource) {
+						didAddResource((Resource)newValue);
+					}
+				}
+				else if (eventType == Notification.ADD_MANY)
+				{
+					Object newValues =  notification.getNewValue();
+					if (newValues instanceof Iterable<?>) {
+						for (Object newValue : (Iterable<?>)newValues){
+							if (newValue instanceof Resource) {
+								didAddResource((Resource)newValue);
+							}
+						}
+					}
+				}
+				if (eventType == Notification.REMOVE)
+				{
+					Object newValue = notification.getNewValue();
+					if (newValue instanceof Resource) {
+						didRemoveResource((Resource)newValue);
+					}
+				}
+				else if (eventType == Notification.REMOVE_MANY)
+				{
+					Object newValues =  notification.getNewValue();
+					if (newValues instanceof Iterable<?>) {
+						for (Object newValue : (Iterable<?>)newValues){
+							if (newValue instanceof Resource) {
+								didRemoveResource((Resource)newValue);
+							}
+						}
+					}
+				}
+			}
+		}
+		else if (notifier instanceof Resource) {
+			int featureID = notification.getFeatureID(Resource.class);
+			if (featureID == Resource.RESOURCE__CONTENTS)
+			{
+				if (eventType == Notification.ADD)
+				{
+					Object newValue = notification.getNewValue();
+					if (newValue instanceof Model) {
+						add((Model)newValue);
+					}
+				}
+				else if (eventType == Notification.ADD_MANY)
+				{
+					Object newValues =  notification.getNewValue();
+					if (newValues instanceof Iterable<?>) {
+						for (Object newValue : (Iterable<?>)newValues){
+							if (newValue instanceof Model) {
+								add((Model)newValue);
+							}
+						}
+					}
+				}
+				if (eventType == Notification.REMOVE)
+				{
+					Object newValue = notification.getNewValue();
+					remove(newValue);
+				}
+				else if (eventType == Notification.REMOVE_MANY)
+				{
+					Object newValues =  notification.getNewValue();
+					if (newValues instanceof Iterable<?>) {
+						for (Object newValue : (Iterable<?>)newValues){
+							remove(newValue);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void setTarget(Notifier newTarget) {}
+
+//	@Override
+//	public void unsetTarget(Notifier oldTarget) {
+//		assert owner == oldTarget;
+//	}
 }
