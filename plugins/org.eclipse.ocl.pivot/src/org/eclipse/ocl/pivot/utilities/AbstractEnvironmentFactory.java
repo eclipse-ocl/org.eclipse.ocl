@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
@@ -421,7 +422,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @since 7.0
 	 */
 	protected @NonNull CompleteModelInternal createCompleteModel() {
-		return (CompleteModelInternal)PivotFactory.eINSTANCE.createCompleteModel();
+		CompleteModelImpl completeModel = (CompleteModelImpl)PivotFactory.eINSTANCE.createCompleteModel();
+		return completeModel;
 	}
 
 	@Override
@@ -822,20 +824,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 					}
 					resource.getErrors().clear();
 					resource.getWarnings().clear();
-					/*				    if (idToEObjectMap != null)
-				    {
-				      idToEObjectMap.clear();
-				    }
+					/*					if (idToEObjectMap != null)
+					{
+					  idToEObjectMap.clear();
+					}
 
-				    if (eObjectToIDMap != null)
-				    {
-				      eObjectToIDMap.clear();
-				    }
+					if (eObjectToIDMap != null)
+					{
+					  eObjectToIDMap.clear();
+					}
 
-				    if (eObjectToExtensionMap != null)
-				    {
-				      eObjectToExtensionMap.clear();
-				    } */
+					if (eObjectToExtensionMap != null)
+					{
+					  eObjectToExtensionMap.clear();
+					} */
 
 				}
 				else {
@@ -940,7 +942,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 *
 	 * @param context a context object or classifier
 	 * @return the user model's classifier for this context object, or the
-	 *     context itself if it is a classifier
+	 *	 context itself if it is a classifier
 	 */
 	protected org.eclipse.ocl.pivot.@NonNull Class getClassifier(@NonNull Object context) {
 		MetamodelManager metamodelManager = getMetamodelManager();
