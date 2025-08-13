@@ -496,6 +496,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		//	if (COMPLETE_URIS.isActive()) {
 		//		traceURImapping(completeURI);
 		//	}
+		System.out.println("didAddCompletePackage " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(completePackage));
 	}
 
 	@Override
