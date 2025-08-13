@@ -429,7 +429,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
-		CompletePackage memberPackage = completePackage.getOwnedCompletePackage(name);
+		CompletePackage memberPackage = completePackage.basicGetOwnedCompletePackage(name);
 		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
 	}
 

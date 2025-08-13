@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Model;
@@ -217,7 +218,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 					}
 				}
 				else {
-					if (resource.isLoaded() /*&& !((ResourceImpl)resource).isLoading()*/) {
+					if (resource.isLoaded() && !((ResourceImpl)resource).isLoading()) {
 						if (eventType == Notification.ADD)
 						{
 							Object newValue = notification.getNewValue();

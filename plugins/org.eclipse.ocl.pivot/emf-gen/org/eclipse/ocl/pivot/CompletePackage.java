@@ -126,6 +126,11 @@ public interface CompletePackage extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@Nullable CompletePackage basicGetOwnedCompletePackage(@NonNull String packageName);
+
+	/**
+	 * @since 7.0
+	 */
 	void didAddPackageURI(@NonNull String packageURI);
 
 	/**
@@ -156,8 +161,6 @@ public interface CompletePackage extends NamedElement
 	@Nullable EPackage getEPackage();
 
 	Type getType(String metatypeName);
-
-	@Nullable CompletePackage getOwnedCompletePackage(@Nullable String name);
 
 	@NonNull CompleteModel getCompleteModel();
 

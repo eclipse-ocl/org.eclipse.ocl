@@ -429,17 +429,11 @@ public class EnvironmentView
 	 */
 	public void addAllPackages(org.eclipse.ocl.pivot.@NonNull CompletePackage parentCompletePackage) {
 		if (accepts(PivotPackage.Literals.PACKAGE)) {
-			String name2 = name;
-			if (name2 != null) {
-				CompletePackage completePackage = parentCompletePackage.getOwnedCompletePackage(name2);
-				if (completePackage != null) {
-					addElement(name2, completePackage);
-				}
-			}
-			else {
-				for (CompletePackage completePackage : parentCompletePackage.getOwnedCompletePackages()) {
-					if (completePackage != null) {
-						addNamedElement(completePackage);
+			for (@NonNull CompletePackage completePackage : PivotUtil.getOwnedCompletePackages(parentCompletePackage)) {
+				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getPartialPackages(completePackage)) {
+					String packageName = PivotUtil.getName(asPackage);
+					if ((name == null) || packageName.equals(name)) {
+						addElement(name, asPackage);
 					}
 				}
 			}
@@ -449,7 +443,8 @@ public class EnvironmentView
 	public void addAllPackages(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		if (accepts(PivotPackage.Literals.PACKAGE)) {
 			CompletePackage parentCompletePackage = environmentFactory.getMetamodelManager().getCompletePackage(pkge);
-			String name2 = name;
+			addAllPackages(parentCompletePackage);
+		/*	String name2 = name;
 			if (name2 != null) {
 				CompletePackage completePackage = parentCompletePackage.getOwnedCompletePackage(name2);
 				if (completePackage != null) {
@@ -462,7 +457,7 @@ public class EnvironmentView
 						addNamedElement(completePackage);
 					}
 				}
-			}
+			} */
 		}
 	}
 

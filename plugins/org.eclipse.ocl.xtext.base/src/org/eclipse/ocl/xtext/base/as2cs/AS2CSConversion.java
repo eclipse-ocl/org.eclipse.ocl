@@ -506,7 +506,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 						NamedElement intermediateScopeElement = scopePath.get(i);
 						if (intermediateScopeElement instanceof org.eclipse.ocl.pivot.Package) {
 							CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)intermediateScopeElement);
-							CompletePackage memberPackage = completePackage.getOwnedCompletePackage(targetName);
+							CompletePackage memberPackage = completePackage.basicGetOwnedCompletePackage(targetName);
 							if (memberPackage != null) {
 								noAlternatives = false;
 								break;

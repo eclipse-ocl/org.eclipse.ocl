@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
@@ -84,12 +83,5 @@ public class NestedCompletePackages extends AbstractCompletePackages
 	@Override
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages() {
 		return ((CompletePackageImpl)getCompletePackage()).getPartialPackages().getNestedPartialPackages();
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public CompletePackage getCompletePackage(@Nullable String name) {
-		throw new UnsupportedOperationException();			// XXX
 	}
 }
