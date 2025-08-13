@@ -489,6 +489,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 //		getOwnedCompletePackages().didAddPackage(nestedPackage);
 //		throw new UnsupportedOperationException();
 		getCompleteModel().didAddPackage(nestedPackage);
+		if (COMPLETE_URIS.isActive()) {
+			traceURImapping();
+		}
 	}
 
 	@Override
@@ -505,6 +508,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	public void didAddPartialPackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 //		System.out.println("didAddPartialPackage " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialPackage) + " " + partialPackage.getName());
 		getOwnedCompleteClasses().didAddPackage(partialPackage);
+		if (COMPLETE_URIS.isActive()) {
+			traceURImapping();
+		}
 	}
 
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
@@ -612,9 +618,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
-	public CompletePackage getOwnedCompletePackage(@Nullable String name) {
+	public @Nullable CompletePackage basicGetOwnedCompletePackage(@NonNull String packageName) {
 		assert name != null;
-		return ownedCompletePackages != null ? ownedCompletePackages.getCompletePackage(name) : null;
+		return ownedCompletePackages != null ? ownedCompletePackages.basicGetOwnedCompletePackage(packageName) : null;
 	}
 
 	/**
@@ -828,9 +834,14 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			s.append(pURI);
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
-			if (partialPackage.getURI() == null) {
+			String packageURI = partialPackage.getURI();
+			if (packageURI == null) {
 				s.append(" ");
 				s.append(partialPackage.getName());
+			}
+			else if (!packageURIs.contains(packageURI)) {
+				s.append(" ");
+				s.append(packageURI);
 			}
 		}
 	}

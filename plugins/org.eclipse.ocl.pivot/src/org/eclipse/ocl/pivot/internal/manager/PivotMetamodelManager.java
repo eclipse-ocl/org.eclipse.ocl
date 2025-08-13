@@ -1216,7 +1216,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				if (subPackageName == null) {
 					return null;
 				}
-				completePackage = completePackage.getOwnedCompletePackage(subPackageName);
+				completePackage = completePackage.basicGetOwnedCompletePackage(subPackageName);
 				if (completePackage == null) {
 					return null;
 				}
@@ -1330,7 +1330,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			return completePackage.getMemberType(path);
 		}
 		else {
-			completePackage = completePackage.getOwnedCompletePackage(path);
+			completePackage = completePackage.basicGetOwnedCompletePackage(path);
 			if (completePackage == null) {
 				return null;
 			}
@@ -1340,7 +1340,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				if (subPackageName == null) {
 					return null;
 				}
-				completePackage = completePackage.getOwnedCompletePackage(subPackageName);
+				completePackage = completePackage.basicGetOwnedCompletePackage(subPackageName);
 				if (completePackage == null) {
 					return null;
 				}

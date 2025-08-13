@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.NamedElementImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public abstract class AbstractCompletePackages extends EObjectContainmentWithInverseEList<CompletePackage>
@@ -76,11 +77,31 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 				if (completeParentPackage == null) {
 					return null;
 				}
-				return completeParentPackage.getOwnedCompletePackage(pivotPackage.getName());
+				return completeParentPackage.basicGetOwnedCompletePackage(pivotPackage.getName());
 			}
 		}
 		completePackage.assertSamePackage(pivotPackage);
 		return completePackage;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable CompletePackage basicGetOwnedCompletePackage(@NonNull String packageName) {
+		CompletePackage theCompletePackage = null;
+		for (CompletePackage completePackage : this) {
+			for (org.eclipse.ocl.pivot.@NonNull Package pkge : PivotUtil.getPartialPackages(completePackage)) {
+				if (packageName.equals(pkge.getName())) {
+					if (theCompletePackage == null) {
+						theCompletePackage = completePackage;
+					}
+					else if (theCompletePackage != completePackage) {
+						throw new IllegalStateException("Ambiguous " + theCompletePackage + " and " + completePackage + " for package '" + packageName + "'");
+					}
+				}
+			}
+		}
+		return theCompletePackage;
 	}
 
 	/**
@@ -148,13 +169,6 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		return completePackage;
 	} */
 
-	/**
-	 * @since 7.0
-	 */
-	public CompletePackage basicGetOwnedCompletePackage(String name) {
-		throw new UnsupportedOperationException();			// XXX
-	}
-
 	@Override
 	protected void didRemove(int index, CompletePackage completePackage) {
 		assert completePackage != null;
@@ -212,7 +226,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 				}
 				else {
 					CompletePackage completeParentPackage = getCompletePackage(pivotPackageParent);
-					CompletePackage completeChildPackage = completeParentPackage.getOwnedCompletePackage(pivotPackage.getName());
+					CompletePackage completeChildPackage = completeParentPackage.basicGetOwnedCompletePackage(pivotPackage.getName());
 					assert completeChildPackage != null;
 					return completeChildPackage;
 //					CompletePackageParent completePackageParent;
