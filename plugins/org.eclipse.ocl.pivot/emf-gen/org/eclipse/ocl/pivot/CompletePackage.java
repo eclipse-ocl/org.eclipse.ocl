@@ -174,6 +174,11 @@ public interface CompletePackage extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	String getPackageName();
+
+	/**
+	 * @since 7.0
+	 */
 	@NonNull Iterable<@NonNull String> getPackageURIs();
 
 	/**

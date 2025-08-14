@@ -751,6 +751,17 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
+	public String getPackageName() {
+		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
+			String packageName = partialPackage.getName();
+			if (packageName != null) {
+				return packageName;
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public @NonNull Iterable<@NonNull String> getPackageURIs() {
 		return packageURIs;
 	}
