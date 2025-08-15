@@ -391,6 +391,53 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment, NotificationChain msgs)
+	{
+		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, 7, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CompleteEnvironment getOwningCompleteEnvironment()
+	{
+		if (eContainerFeatureID() != (7)) return null;
+		return (CompleteEnvironment)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment)
+	{
+		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningCompleteEnvironment != null))
+		{
+			if (EcoreUtil.isAncestor(this, newOwningCompleteEnvironment))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newOwningCompleteEnvironment != null)
+				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, 4, CompleteEnvironment.class, msgs);
+			msgs = basicSetOwningCompleteEnvironment(newOwningCompleteEnvironment, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
+	}
+
+	/**
 	 * The cached value of the '{@link #getOwnedCompletePackages() <em>Owned Complete Packages</em>}' containment reference list.
 	 */
 	protected /*final @NonNull*/ RootCompletePackages ownedCompletePackages;
@@ -478,6 +525,63 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 		completePackage.didAddPackageURI(packageURI); * /
 	} */
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return package2completePackage.get(asPackage);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId) {
+		return completePackageId2completePackage.get(completePackageId);
+	}
+
+	@Override
+	public @Nullable CompletePackage basicGetCompletePackageForURI(@NonNull String packageURI) {
+		int lastIndex = packageURI.lastIndexOf("#/");
+		if (lastIndex > 0) {
+			@NonNull String substring = packageURI.substring(0, lastIndex);
+			packageURI = substring;
+		}
+		return packageURI2completePackage.get(packageURI);
+		/*String completePackageName = getCompleteURI(packageURI);
+		return completePackageId2completePackage.get(completePackageName); */
+	}
+
+	@Override
+	public @Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI) {
+		return packageURI2completePackage.get(packageURI);
+	}
+
+	@Override
+	public @Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass instanceof PrimitiveType) {
+			CompletePackage primitiveCompletePackage = getPrimitiveCompletePackage();
+			return primitiveCompletePackage.getCompleteClass(asClass);
+		}
+		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
+			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
+			return orphanCompletePackage.getCompleteClass(asClass);
+		}
+		else if ((asClass instanceof LambdaType) && (((LambdaType)asClass).getContextType() != null)) {
+			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
+			return orphanCompletePackage.getCompleteClass(asClass);
+		}
+		return null;
+	}
+
+	protected @NonNull CompletePackage createCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
+		assert !completePackageId2completePackage.containsKey(completePackageId);
+		CompletePackageImpl completePackage = (CompletePackageImpl)PivotFactory.eINSTANCE.createCompletePackage();
+		completePackage.init(completePackageId, prefix, uri);
+		return completePackage;
+	}
 
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
@@ -695,19 +799,19 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
-		throw new UnsupportedOperationException();
-	/*	CompletePackage completePackage = completePackageId2completePackage.get(completePackageId);
+		CompletePackage completePackage = completePackageId2completePackage.get(completePackageId);
 		if (completePackage == null) {
-			completePackage = ownedCompletePackages.createCompletePackage(completePackageId, prefix, uri);
+			completePackage = createCompletePackage(completePackageId, prefix, uri);
 	//		completePackageId2completePackage.put(completePackageName, completePackage);
 			getOwnedCompletePackages().add(completePackage);
 		}
-		assert completePackage != null;		// XXX
-		assert Objects.equals(uri, completePackage.getURI());
+		assert completePackage == completePackageId2completePackage.get(completePackageId);
+	//	assert Objects.equals(prefix, completePackage.getNsPrefix());
+	//	assert Objects.equals(uri, completePackage.getURI());
 	//	completePackage.didAddPackageURI(packageURI);
 	//	CompletePackage old = packageURI2completePackage.put(uri, completePackage);			// XXX remove
 	//	assert (old == null) || (old == completePackage);
-		return completePackage; */
+		return completePackage;
 	}
 
 	@Override
@@ -786,8 +890,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						assert Objects.equals(packageURI, completePackage.getURI());
 					}
 					else {
-						completePackage = PivotFactory.eINSTANCE.createCompletePackage();
-						((CompletePackageImpl)completePackage).init(completePackageId, asPackage.getNsPrefix(), packageURI);
+						completePackage = createCompletePackage(completePackageId, asPackage.getNsPrefix(), packageURI);
 					}
 					package2completePackage.put(asPackage, completePackage);
 					//		completePackageId2completePackage.put(completePackageName, completePackage);
@@ -849,7 +952,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackage;
 	}
 
-	@Deprecated
+	@Deprecated	// fold packageURI2completePackage.get() inline
 	@Override
 	public @Nullable String getCompleteURI(@Nullable String packageURI) {
 		CompletePackage completePackage = packageURI2completePackage.get(packageURI);
@@ -859,6 +962,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		else {
 			return packageURI;
 		}
+	}
+
+	@Override
+	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return ClassUtil.requireNonNull(environmentFactory);
 	}
 
 //	public @Nullable CompletePackage getMemberPackage(@NonNull String memberPackageName) {
@@ -915,111 +1023,20 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @generated NOT
 	 */
 	@Override
+	public @Nullable CompletePackage getOwnedCompletePackage(@NonNull String packageName) {
+		assert ownedCompletePackages != null;
+		return ownedCompletePackages.basicGetOwnedCompletePackage(packageName);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
 	public @NonNull List<CompletePackage> getOwnedCompletePackages() {
 		assert ownedCompletePackages != null;
 		return ownedCompletePackages;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public CompleteEnvironment getOwningCompleteEnvironment()
-	{
-		if (eContainerFeatureID() != (7)) return null;
-		return (CompleteEnvironment)eInternalContainer();
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		return package2completePackage.get(asPackage);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId) {
-		return completePackageId2completePackage.get(completePackageId);
-	}
-
-	@Override
-	public @Nullable CompletePackage basicGetCompletePackageForURI(@NonNull String packageURI) {
-		int lastIndex = packageURI.lastIndexOf("#/");
-		if (lastIndex > 0) {
-			@NonNull String substring = packageURI.substring(0, lastIndex);
-			packageURI = substring;
-		}
-		return packageURI2completePackage.get(packageURI);
-		/*String completePackageName = getCompleteURI(packageURI);
-		return completePackageId2completePackage.get(completePackageName); */
-	}
-
-	@Override
-	public @Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI) {
-		return packageURI2completePackage.get(packageURI);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment, NotificationChain msgs)
-	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, 7, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment)
-	{
-		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningCompleteEnvironment != null))
-		{
-			if (EcoreUtil.isAncestor(this, newOwningCompleteEnvironment))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newOwningCompleteEnvironment != null)
-				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, 4, CompleteEnvironment.class, msgs);
-			msgs = basicSetOwningCompleteEnvironment(newOwningCompleteEnvironment, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
-	}
-
-	@Override
-	public @Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if (asClass instanceof PrimitiveType) {
-			CompletePackage primitiveCompletePackage = getPrimitiveCompletePackage();
-			return primitiveCompletePackage.getCompleteClass(asClass);
-		}
-		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		else if ((asClass instanceof LambdaType) && (((LambdaType)asClass).getContextType() != null)) {
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		return null;
-	}
-
-	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return ClassUtil.requireNonNull(environmentFactory);
 	}
 
 	/**
@@ -1049,17 +1066,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return (PrimitiveCompletePackageImpl) primitiveCompletePackage2;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public @Nullable CompletePackage getOwnedCompletePackage(@NonNull String packageName) {
-		assert ownedCompletePackages != null;
-		return ownedCompletePackages.basicGetOwnedCompletePackage(packageName);
-	}
-
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completePackageName) {
 		throw new UnsupportedOperationException();
@@ -1087,7 +1093,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void registerCompletePackageContribution(@NonNull CompletePackage completePackage, @NonNull String packageURI) {
-		completePackage.didAddPackageURI(packageURI);
+		completePackage.didAddPackageURI(packageURI);										// not "did"
 		CompletePackage old = packageURI2completePackage.put(packageURI, completePackage);
 		assert (old == null) || (old == completePackage);
 	}

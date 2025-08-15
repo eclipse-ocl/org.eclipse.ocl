@@ -133,7 +133,11 @@ public final class IdManager
 	 */
 	private static final @NonNull PrimitiveTypeIdSingletonScope primitiveTypes = new PrimitiveTypeIdSingletonScope();
 
-	private static @Nullable Map<@NonNull String, @NonNull String> ePackageURI2completeName = null;
+	/**
+	 * Map from precisely known Package URI to its CompletePackageId. This acts as a fallback for use
+	 * when there is no semantics EAnnotation on the EPackage.
+	 */
+	private static @Nullable Map<@NonNull String, @NonNull CompletePackageId> packageURI2completePackageId = null;
 
 	private static @Nullable WildcardId wildcardId = null;
 
@@ -143,19 +147,17 @@ public final class IdManager
 	public static final @NonNull RootPackageId METAMODEL_ID = getRootPackageId(PivotConstants.METAMODEL_NAME);
 
 	/**
-	 * Define a metamodelNsURI as a contributor to the metamodelName. This facility is used to enable
+	 * Define packageURI as a known contributor to the completePackageId. This facility is used to enable
 	 * UML2's duplicate Eclipse/OMG models to be treated as merged rather than conflicting.
 	 * @since 7.0
 	 */
-	public static void addMetamodelEPackage(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage) {
-		assert ePackage != null;
-		Map<@NonNull String, @NonNull String> ePackageURI2completeName2 = ePackageURI2completeName;
-		if (ePackageURI2completeName2 == null) {
-			ePackageURI2completeName = ePackageURI2completeName2 = new HashMap<>();
+	public static void addCompletePackageURI(@NonNull CompletePackageId completePackageId, /*@NonNull*/ String packageURI) {
+		assert packageURI != null;
+		Map<@NonNull String, @NonNull CompletePackageId> packageURI2completePackageId2 = packageURI2completePackageId;
+		if (packageURI2completePackageId2 == null) {
+			packageURI2completePackageId = packageURI2completePackageId2 = new HashMap<>();
 		}
-		String ePackageURI = ePackage.getNsURI();
-		assert ePackageURI != null;
-		ePackageURI2completeName2.put(ePackageURI, metamodelName);
+		packageURI2completePackageId2.put(packageURI, completePackageId);
 	}
 
 	/**
@@ -477,10 +479,10 @@ public final class IdManager
 	//	}
 		String ePackageURI = ePackage.getNsURI();
 		if (ePackageURI != null) {
-			if (ePackageURI2completeName != null) {										// XXX review
-				String metamodelName = ePackageURI2completeName.get(ePackageURI);
-				if (metamodelName != null) {
-					return getRootPackageId(metamodelName);
+			if (packageURI2completePackageId != null) {										// XXX review
+				CompletePackageId completePackageId = packageURI2completePackageId.get(ePackageURI);
+				if (completePackageId != null) {
+					return getRootPackageId(completePackageId.toString());
 				}
 			}
 			//			if (nsURI.equals(UMLPackage.eNS_URI)) {		// FIXME use extension point
