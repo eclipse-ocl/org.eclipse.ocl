@@ -401,7 +401,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			if (pivotPackage == null) {
 				throw new IllegalStateException("type has no package");
 			}
-			CompletePackage completePackage = ownedCompleteModel.getCompletePackage(pivotPackage);
+			CompletePackage completePackage = ((CompleteModelImpl)ownedCompleteModel).getCompletePackage3(pivotPackage);
 			return (CompleteClassInternal)completePackage.getCompleteClass(asClass);
 		}
 		else {
