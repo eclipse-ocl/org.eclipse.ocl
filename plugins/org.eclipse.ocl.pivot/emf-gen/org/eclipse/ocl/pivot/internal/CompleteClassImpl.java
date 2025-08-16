@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
@@ -49,10 +50,12 @@ import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -74,6 +77,10 @@ import com.google.common.collect.Iterables;
  */
 public class CompleteClassImpl extends NamedElementImpl implements CompleteClass, org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull TracingOption PARTIAL_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses");
 
 	/**
 	 * The number of structural features of the '<em>Complete Class</em>' class.
@@ -413,6 +420,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 */
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		if (PARTIAL_CLASSES.isActive()) {
+			PARTIAL_CLASSES.println("Do-didAddClass " + this + " " + partialClass);
+		}
 		partialClasses.add(partialClass);
 	}
 
@@ -421,6 +431,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 */
 	@Override
 	public boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		if (PARTIAL_CLASSES.isActive()) {
+			PARTIAL_CLASSES.println("Do-didRemoveClass " + this + " " + partialClass);
+		}
 		partialClasses.remove(partialClass);
 		return partialClasses.size() <= 0;		// FIXME Need to invalidate all derived inheritances
 	}
@@ -534,6 +547,13 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				@Override
 				protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
+					if (PARTIAL_CLASSES.isActive()) {
+						PARTIAL_CLASSES.println("Do-didAdd " + this + " " + partialClass);
+					}
+					if (partialClass instanceof TupleType) {
+						System.out.println("Do-didAdd " + this + " " + partialClass);
+						getClass();
+					}
 					if (classListeners != null) {
 						classListeners.didAddPartialClass(index, partialClass);
 					}
@@ -545,6 +565,13 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				@Override
 				protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
+					if (PARTIAL_CLASSES.isActive()) {
+						PARTIAL_CLASSES.println("Do-didRemove " + this + " " + partialClass);
+					}
+					if (partialClass instanceof TupleType) {
+						System.out.println("Do-didRemove " + this + " " + partialClass);
+						getClass();
+					}
 					if (classListeners != null) {
 						classListeners.didRemovePartialClass(index, partialClass);
 					}

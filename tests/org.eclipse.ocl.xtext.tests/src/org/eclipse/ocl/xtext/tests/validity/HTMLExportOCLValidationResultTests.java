@@ -65,6 +65,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	@Override
 	@Before
 	public void setUp() throws Exception {
+	//	CompleteClassImpl.PARTIAL_CLASSES.setState(true);			// XXX
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		super.setUp();
 		exportedFileName = getProjectFileName(getTestName() + ".html");
