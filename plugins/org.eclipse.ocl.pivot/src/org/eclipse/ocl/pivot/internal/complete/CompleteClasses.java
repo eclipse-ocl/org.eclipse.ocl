@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -122,6 +123,9 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	}
 
 	protected void doRefreshPartialClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		if (partialClass instanceof TupleType) {
+			getClass();
+		}
 		Map<String, CompleteClassInternal> name2completeClass2 = name2completeClass;
 		assert name2completeClass2 != null;
 		CompleteModelInternal completeModel = getCompleteModel();

@@ -565,6 +565,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			CompletePackage primitiveCompletePackage = getPrimitiveCompletePackage();
 			return primitiveCompletePackage.getCompleteClass(asClass);
 		}
+		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
+			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
+			return orphanCompletePackage.getCompleteClass(asClass);
+		}
 		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
 			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
 			return orphanCompletePackage.getCompleteClass(asClass);
@@ -576,6 +580,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected @NonNull CompletePackage createCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
 		assert !completePackageId2completePackage.containsKey(completePackageId);
 		CompletePackageImpl completePackage = (CompletePackageImpl)PivotFactory.eINSTANCE.createCompletePackage();
