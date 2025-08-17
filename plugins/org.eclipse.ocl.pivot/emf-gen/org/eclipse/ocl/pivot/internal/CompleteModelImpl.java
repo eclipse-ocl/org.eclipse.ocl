@@ -609,6 +609,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 //		System.out.println("didAddCompletePackage " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(completePackage));
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public void didAddPackage(@NonNull CompletePackage completePackage, org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+		CompletePackage old = package2completePackage.put(partialPackage, completePackage);
+		assert (old == null) || (old == completePackage);
+	}
+
 	@Override
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 	//	CompletePackage completePackage = getCompletePackage(PivotUtil.getName(asPackage), asPackage.getNsPrefix(), packageURI);
@@ -939,10 +947,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 //		}
 	//	completePackage.getPartialPackages().add(asPackage);
 		if (!packageAdded) {								// Maybe folding an additional package into a CompletePackage found by name/URI.
-			if (completePackage.getPartialPackages().add(asPackage)) {
-				CompletePackage old = package2completePackage.put(asPackage, completePackage);
-				assert old == null;
-			}
+			completePackage.getPartialPackages().add(asPackage);						// UML 2.5 recurses for nested packages mapping to a parent
 			assert package2completePackage.get(asPackage) == completePackage;
 		}
 		if (!(completePackage instanceof PrimitiveCompletePackage)) {
