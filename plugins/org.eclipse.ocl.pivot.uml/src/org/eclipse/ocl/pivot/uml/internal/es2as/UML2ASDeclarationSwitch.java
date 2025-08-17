@@ -725,21 +725,21 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			if (!(umlPackage instanceof org.eclipse.uml2.uml.Profile) && nsURI2.startsWith("http://www.omg.org/spec/")) {
 				String packageName = umlPackage.getName();
 				if ("UML".equals(packageName)) {		// OMG's
-					for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
-						if ((umlType instanceof org.eclipse.uml2.uml.Class) && "Class".equals(umlType.getName())) {
+				//	for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {			// XXX may be nested
+				//		if ((umlType instanceof org.eclipse.uml2.uml.Class) && "Class".equals(umlType.getName())) {
 							registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE.getNsPrefix(), nsURI2);
 							((PackageImpl)pivotElement).setIgnoreInvariants(true);			// FIXME Change to a multi-invariant filter
-							break;
-						}
-					}
+				//			break;
+				//		}
+				//	}
 				}
 				else if ("PrimitiveTypes".equals(packageName)) {
-					for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
-						if ((umlType instanceof org.eclipse.uml2.uml.PrimitiveType) && "Boolean".equals(umlType.getName())) {
+				//	for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
+				//		if ((umlType instanceof org.eclipse.uml2.uml.PrimitiveType) && "Boolean".equals(umlType.getName())) {
 							registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE.getNsPrefix(), nsURI2);
-							break;
-						}
-					}
+				//			break;
+				//		}
+				//	}
 				}
 			}
 		//	CompleteModelInternal completeModel = metamodelManager.getCompleteModel();
