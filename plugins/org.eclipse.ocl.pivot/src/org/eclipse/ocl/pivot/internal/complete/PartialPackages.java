@@ -78,12 +78,14 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		if (PARTIAL_PACKAGES.isActive()) {
 			PARTIAL_PACKAGES.println("Do-didAdd " + this + " " + partialPackage);
 		}
+		CompleteModelImpl completeModel = (CompleteModelImpl)getCompleteModel();
 		((PackageImpl)partialPackage).addPackageListener(this);
 		CompletePackageImpl completePackage = getCompletePackage();
+		completeModel.didAddPackage(completePackage, partialPackage);
 		completePackage.didAddPartialPackage(partialPackage);
 		for (org.eclipse.ocl.pivot.@NonNull Package nestedPackage : PivotUtil.getOwnedPackages(partialPackage)) {				// XXX doRefreshPackages
 		//	completePackage.didAddNestedPackage(nestedPackage);
-			CompletePackage nestedCompletePackage = ((CompleteModelImpl)getCompleteModel()).getCompletePackage3(nestedPackage);
+			CompletePackage nestedCompletePackage = completeModel.getCompletePackage3(nestedPackage);
 		//	nestedCompletePackage.didAddPackage(nestedPackage);
 		}
 	}
