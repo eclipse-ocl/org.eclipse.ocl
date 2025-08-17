@@ -709,25 +709,33 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		//		EAnnotation eAnnotation = umlPackage.getEAnnotation(EcorePackage.eNS_URI);
 		//		List<EAnnotation> exclusions = eAnnotation == null ? Collections.<EAnnotation>emptyList() : Collections.singletonList(eAnnotation);
 		copyNamespace(pivotElement, umlPackage);
+		String nsURI = umlPackage.getURI();
 		Object nsPrefix = null;
-		Object nsURI = umlPackage.getURI();
-		org.eclipse.uml2.uml.Stereotype ecoreStereotype = getEcoreStereotype(umlPackage, UMLUtil.STEREOTYPE__E_PACKAGE);
-		if ((ecoreStereotype != null) && umlPackage.isStereotypeApplied(ecoreStereotype)) {
-			nsPrefix = umlPackage.getValue(ecoreStereotype, UMLUtil.TAG_DEFINITION__NS_PREFIX);
-			if (nsURI == null) {
-				nsURI = umlPackage.getValue(ecoreStereotype, UMLUtil.TAG_DEFINITION__NS_URI);
+		Object asURI = null;
+		String packageName = umlPackage.getName();
+		for (org.eclipse.uml2.uml.Package uriPackage = umlPackage; uriPackage != null; uriPackage = uriPackage.getNestingPackage()) {
+			asURI = uriPackage.getURI();
+			org.eclipse.uml2.uml.Stereotype ecoreStereotype = getEcoreStereotype(uriPackage, UMLUtil.STEREOTYPE__E_PACKAGE);
+			if ((ecoreStereotype != null) && uriPackage.isStereotypeApplied(ecoreStereotype)) {
+				nsPrefix = uriPackage.getValue(ecoreStereotype, UMLUtil.TAG_DEFINITION__NS_PREFIX);
+				if (asURI == null) {
+					asURI = uriPackage.getValue(ecoreStereotype, UMLUtil.TAG_DEFINITION__NS_URI);
+				}
+			}
+			if (asURI != null) {
+				packageName = uriPackage.getName();
+				break;
 			}
 		}
 		pivotElement.setNsPrefix(nsPrefix != null ? nsPrefix.toString() : null);
-		if (nsURI instanceof String) {
-			String nsURI2 = (String)nsURI;
+		if (asURI instanceof String) {
+			String asURI2 = (String)asURI;
 			CompleteModel completeModel = metamodelManager.getCompleteModel();
-			if (!(umlPackage instanceof org.eclipse.uml2.uml.Profile) && nsURI2.startsWith("http://www.omg.org/spec/")) {
-				String packageName = umlPackage.getName();
+			if (!(umlPackage instanceof org.eclipse.uml2.uml.Profile) && asURI2.startsWith("http://www.omg.org/spec/")) {
 				if ("UML".equals(packageName)) {		// OMG's
 				//	for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {			// XXX may be nested
 				//		if ((umlType instanceof org.eclipse.uml2.uml.Class) && "Class".equals(umlType.getName())) {
-							registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE.getNsPrefix(), nsURI2);
+							registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE.getNsPrefix(), asURI2);
 							((PackageImpl)pivotElement).setIgnoreInvariants(true);			// FIXME Change to a multi-invariant filter
 				//			break;
 				//		}
@@ -736,16 +744,16 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				else if ("PrimitiveTypes".equals(packageName)) {
 				//	for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
 				//		if ((umlType instanceof org.eclipse.uml2.uml.PrimitiveType) && "Boolean".equals(umlType.getName())) {
-							registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE.getNsPrefix(), nsURI2);
+							registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE.getNsPrefix(), asURI2);
 				//			break;
 				//		}
 				//	}
 				}
 			}
 		//	CompleteModelInternal completeModel = metamodelManager.getCompleteModel();
-			String sharedURI = ((CompleteModelInternal)completeModel).getCompleteURI(nsURI2);
+			String sharedURI = ((CompleteModelInternal)completeModel).getCompleteURI(asURI2);
 			if (sharedURI != null) {
-				if (!sharedURI.equals(nsURI)) {
+				if (!sharedURI.equals(asURI2)) {
 //					((PackageImpl)pivotElement).setPackageId(IdManager.getRootPackageId(sharedURI));
 				}
 				//				else {
