@@ -323,7 +323,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		if (lockingObject != null) {
 			allPivotResources.add(lockingObject);						// Locked elements are not dead
 		}
-		allPivotResources.addAll(metamodelManager.getLibraries());			// Library elements are not dead
+		allPivotResources.addAll(standardLibrary.getLibraries());			// Library elements are not dead
 		allPivotResources.addAll(cs2asResourceMap.keySet());				// Incoming elements are not dead
 		allPivotResources.remove(metamodelManager.getCompleteModel().getOrphanage().eResource());			// FIXME redundant ??
 		@SuppressWarnings("serial")

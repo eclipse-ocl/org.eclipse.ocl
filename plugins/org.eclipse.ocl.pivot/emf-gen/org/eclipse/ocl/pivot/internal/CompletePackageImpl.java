@@ -416,7 +416,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	protected CompletePackageImpl()
 	{
-		COMPLETE_URIS.setState(true);			// XXX
+//		COMPLETE_URIS.setState(true);			// XXX
 		partialPackages = new PartialPackages(this);
 	}
 

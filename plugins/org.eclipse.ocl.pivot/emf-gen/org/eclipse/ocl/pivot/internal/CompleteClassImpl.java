@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
@@ -550,10 +549,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 					if (PARTIAL_CLASSES.isActive()) {
 						PARTIAL_CLASSES.println("Do-didAdd " + this + " " + partialClass);
 					}
-					if (partialClass instanceof TupleType) {
-						System.out.println("Do-didAdd " + this + " " + partialClass);
-						getClass();
-					}
+				//	if (partialClass instanceof TupleType) {
+				//		System.out.println("Do-didAdd " + this + " " + partialClass);
+				//		getClass();
+				//	}
 					if (classListeners != null) {
 						classListeners.didAddPartialClass(index, partialClass);
 					}
@@ -568,10 +567,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 					if (PARTIAL_CLASSES.isActive()) {
 						PARTIAL_CLASSES.println("Do-didRemove " + this + " " + partialClass);
 					}
-					if (partialClass instanceof TupleType) {
-						System.out.println("Do-didRemove " + this + " " + partialClass);
-						getClass();
-					}
+				//	if (partialClass instanceof TupleType) {
+				//		System.out.println("Do-didRemove " + this + " " + partialClass);
+				//		getClass();
+				//	}
 					if (classListeners != null) {
 						classListeners.didRemovePartialClass(index, partialClass);
 					}
