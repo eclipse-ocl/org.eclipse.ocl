@@ -62,6 +62,8 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 * @generated
 	 */
 	void setOwningCompleteEnvironment(CompleteEnvironment value);
+
+	org.eclipse.ocl.pivot.@Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId);
 	/**
 	 * @since 1.17
 	 */
@@ -84,6 +86,7 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 */
 	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
+	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 	@Override
 	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 	@NonNull CompleteModelInternal getCompleteModel();
@@ -102,11 +105,14 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 */
 	@NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
+	@Nullable Resource getLibraryResource();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull List<@NonNull Library> getLibraries();
 	@Override
 	@NonNull Property getOclInvalidProperty();
-	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
-
-	org.eclipse.ocl.pivot.@Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId);
 	@Deprecated
 	org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name);
 	/**
@@ -115,9 +121,11 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
 	@NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactoryInternal environmentFactory);
-	boolean isExplicitDefaultStandardLibraryURI();
-	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
+	void installLibrary();
+	void installLibrary(@NonNull Library asLibrary);
+	boolean isLibraryLoadInProgress();
+	@Nullable Resource loadLibraryResource(@NonNull String uri);
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
-
+	void setLibraryLoadInProgress(boolean b);
 } // CompleteStandardLibrary

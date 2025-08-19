@@ -148,7 +148,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 					//			if ((csElement != null) && (csElement.eResource() == xtextResource)) {
 					//				continue;		// Don't import defined packages
 					//			}
-					if (metamodelManager.getLibraries().contains(pivotPackage)) {
+					if (standardLibrary.getLibraries().contains(pivotPackage)) {
 						continue;
 					}
 				}

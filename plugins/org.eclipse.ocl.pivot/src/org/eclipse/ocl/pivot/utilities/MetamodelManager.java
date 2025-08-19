@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +29,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -240,16 +238,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull List<@NonNull Library> getLibraries();
-
-	/**
-	 * @since 7.0
-	 */
-	@Nullable Resource getLibraryResource();
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull Iterable<Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
@@ -359,11 +347,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
-
-	/**
-	 * @since 7.0
-	 */
 	@Nullable Element loadResource(@NonNull URI uri, String alias, @Nullable ResourceSet resourceSet) throws ParserException;
 
 	/**
@@ -395,9 +378,4 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void setAutoLoadASmetamodel(boolean autoLoadASmetamodel);
-
-	/**
-	 * @since 7.0
-	 */
-	void setLibraryLoadInProgress(boolean libraryLoadInProgress);
 }

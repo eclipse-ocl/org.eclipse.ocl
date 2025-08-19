@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -619,6 +620,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		if (asPackage instanceof Library) {
+			getStandardLibrary().installLibrary((Library)asPackage);
+		}
 	//	CompletePackage completePackage = getCompletePackage(PivotUtil.getName(asPackage), asPackage.getNsPrefix(), packageURI);
 		CompletePackage completePackage = getCompletePackage3(asPackage);
 		assert completePackage != null;

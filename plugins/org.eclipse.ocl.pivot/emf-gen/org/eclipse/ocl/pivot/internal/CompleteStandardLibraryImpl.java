@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
@@ -72,6 +73,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
@@ -79,6 +81,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractSpecializedTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -549,6 +552,21 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	private @Nullable Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap = null;
 
+	/**
+	 * The resource of the Standard Library defined by loadDefaultLibrary. If the URI corresponds to a
+	 * registered library, the registered library is loaded, else the first library in asLibraries with a matching
+	 * URI is installed. Once asLibraryResource is determined all types libraries in asLibraries and all future
+	 * asLibraries are automatically merged into the Standard Library.
+	 */
+	protected @Nullable Resource asLibraryResource = null;
+
+	/**
+	 * All Library packages imported into the current type managed domain.
+	 */
+	protected final @NonNull List<@NonNull Library> asLibraries = new ArrayList<>();
+
+	private boolean libraryLoadInProgress = false;
+
 	private /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	private /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
 
@@ -704,6 +722,25 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	protected @NonNull TupleTypeManager createTupleTypeManager() {
 		return new CompleteTupleTypeManager(this);
+	}
+
+	/**
+	 * Merge all types in asLibrary into the overall Standard Library.
+	 */
+	private void defineLibraryTypes(@NonNull Library asLibrary) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = null;
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asLibrary)) {
+			Type asPrimaryType = getPrimaryType(asClass);
+			if ((asClass == asPrimaryType) && !PivotUtil.isOrphanType(asClass)) {
+				if (asClasses == null) {
+					asClasses = new ArrayList<>();
+				}
+				asClasses.add(asClass);
+			}
+		}
+		if (asClasses != null) {
+			defineLibraryTypes(asClasses);
+		}
 	}
 
 	@Override
@@ -862,6 +899,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			@Nullable TemplateParameterSubstitutions bindings) {
 		return getLambdaManager().getLambdaType(contextType, parameterTypes, resultType, bindings);
 	}
+
+	@Override
+	public @Nullable Resource getLibraryResource() { return asLibraryResource; }
+
+	@Override
+	public @NonNull List<@NonNull Library> getLibraries() { return asLibraries; }
 
 	/**
 	 * @since 7.0
@@ -1268,8 +1311,43 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public boolean isExplicitDefaultStandardLibraryURI() {
-		return explicitDefaultStandardLibraryURI;
+	public void installLibrary() {
+		if (!libraryLoadInProgress && (asLibraryResource == null) && (asLibraries.size() > 0)) {
+			getOclAnyType();
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void installLibrary(@NonNull Library asLibrary) {
+		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getCompleteModel().getMetamodelManager();
+		if (!asLibraries.contains(asLibrary)) {
+			String uri = asLibrary.getURI();
+			if (asLibraries.isEmpty()) {
+				if (uri == null) {
+					throw new IllegalLibraryException(PivotMessagesInternal.MissingLibraryURI_ERROR_);
+				}
+				if (!explicitDefaultStandardLibraryURI) {
+					for (org.eclipse.ocl.pivot.Class asClass : asLibrary.getOwnedClasses()) {
+						if (TypeId.OCL_ANY_NAME.equals(asClass.getName())) {
+							setDefaultStandardLibraryURI(uri);
+							break;
+						}
+					}
+				}
+			}
+			asLibraries.add(asLibrary);
+			if (asLibraryResource != null) {
+				defineLibraryTypes(asLibrary);
+			}
+		}
+	}
+
+	@Override
+	public boolean isLibraryLoadInProgress() {
+		return libraryLoadInProgress;
 	}
 
 	public boolean isOrdered(Type sourceType) {
@@ -1322,10 +1400,71 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return false;
 	}
 
+	/**
+	 * Load the Standard Library for a given uri. If the uri corresponds to a registered library, that library
+	 * is installed, otherwise the already loaded asLibraries are examined and the first library with a matching
+	 * URI is used. Return the resource of the library, and merges all types of all libraries into the overall
+	 * standard library.
+	 */
+	private @Nullable Resource loadDefaultLibrary(@Nullable String uri) {
+		if (uri == null) {
+			return null;
+		}
+		Resource asLibraryResource2 = asLibraryResource;
+		if (asLibraryResource2 != null) {
+			return asLibraryResource2;
+		}
+		boolean savedLibraryLoadInProgress = libraryLoadInProgress;
+		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getCompleteModel().getMetamodelManager();
+		libraryLoadInProgress = true;
+		try {
+			StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uri);
+			if (contribution != null) {
+				asLibraryResource2 = contribution.getResource();
+			}
+			else {
+				for (@NonNull Library asLibrary : asLibraries) {
+					if (uri.equals(asLibrary.getURI())) {
+						asLibraryResource2 = asLibrary.eResource();
+						break;
+					}
+				}
+				if (asLibraryResource2 == null) {
+					return null;
+				}
+			}
+			asLibraryResource = asLibraryResource2;
+			int size = asLibraries.size();
+			metamodelManager.installResource(asLibraryResource2);
+			for (int i = 0; i < size; i++) {
+				defineLibraryTypes(asLibraries.get(i));
+			}
+			return asLibraryResource2;
+		}
+		finally {
+			libraryLoadInProgress = savedLibraryLoadInProgress;
+		}
+	}
+
 	@Override
-	public @Nullable Resource loadDefaultLibrary(@Nullable String uri) {
-		assert environmentFactory != null;
-		return environmentFactory.getMetamodelManager().loadDefaultLibrary(uri);
+	public @Nullable Resource loadLibraryResource(@NonNull String uri) {
+		if (uri.equals(getDefaultStandardLibraryURI())) {
+			if (asLibraryResource != null) {
+				return asLibraryResource;
+			}
+			else {
+				return loadDefaultLibrary(uri);
+			}
+		}
+		else {
+			StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uri);
+			if (contribution != null) {
+				return contribution.getResource();
+			}
+			else {
+				return null;
+			}
+		}
 	}
 
 	@Override
@@ -1360,6 +1499,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		uniqueCollectionType = null;
 		unlimitedNaturalType = null;
 		nameToLibraryTypeMap = null;
+		asLibraryResource = null;
+		asLibraries.clear();
 		super.resetLibrary();
 	}
 
@@ -1400,11 +1541,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		List<@NonNull TemplateBinding> specializedTemplateBindings = PivotUtil.getOwnedBindingsList(specializedClass);
 		for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(unspecializedClass)) {
-			List<TemplateBinding> superTemplateBindings = superClass.getOwnedBindings();
+			List<@NonNull TemplateBinding> superTemplateBindings = PivotUtil.getOwnedBindingsList(superClass);
 			if (superTemplateBindings.size() > 0) {
 				List<@NonNull TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<>();
-				for (TemplateBinding superTemplateBinding : superTemplateBindings) {
-					for (TemplateParameterSubstitution superParameterSubstitution : PivotUtil.getOwnedSubstitutions(superTemplateBinding)) {
+				for (@NonNull TemplateBinding superTemplateBinding : superTemplateBindings) {
+					for (@NonNull TemplateParameterSubstitution superParameterSubstitution : PivotUtil.getOwnedSubstitutions(superTemplateBinding)) {
 						TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution = null;
 						Type superActual = PivotUtil.getActual(superParameterSubstitution);
 						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
@@ -1489,5 +1630,10 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		assert !PivotUtil.isASURI(URI.createURI(defaultStandardLibraryURI));
 		this.defaultStandardLibraryURI = defaultStandardLibraryURI;
 		this.explicitDefaultStandardLibraryURI = true;
+	}
+
+	@Override
+	public void setLibraryLoadInProgress(boolean libraryLoadInProgress) {
+		this.libraryLoadInProgress = libraryLoadInProgress;
 	}
 } //CompleteStandardLibraryImpl

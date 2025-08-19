@@ -28,13 +28,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -261,7 +261,7 @@ public class OCLstdlibTests extends XtextTestCase
 		MetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResource.getResourceSet());
 		AnyType oclAnyType = metamodelManager.getStandardLibrary().getOclAnyType();
 		Iterable<Operation> ownedOperations = metamodelManager.getAllOperations(oclAnyType, FeatureFilter.SELECT_NON_STATIC);
-		assertEquals(2, Iterables.size(ownedOperations));		// one from OclAny::=
+		assertEquals(2, Iterables.size(ownedOperations));		// one from OclAny::=, one from OclAny::a, none from built-in OCLstdlib
 		ocl.dispose();
 	}
 

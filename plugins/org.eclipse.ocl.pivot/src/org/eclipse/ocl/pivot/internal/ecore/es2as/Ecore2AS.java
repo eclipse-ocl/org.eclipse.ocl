@@ -641,7 +641,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
 		asResource.setSaveable(false);
 		//		try {
-		if (metamodelManager.getLibraryResource() == null) {
+		if (standardLibrary.getLibraryResource() == null) {
 			if (libraryEPackage != null) {
 				metamodelManager.installResource(asResource);
 			}
@@ -760,13 +760,13 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		if (needsLibrary && (asClasses != null)) {
-			Set<String> installName= new HashSet<>();
+			Set<@NonNull String> installNames = new HashSet<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
-				installName.add(asClass.getName());
+				installNames.add(PivotUtil.getName(asClass));
 			}
 			for (org.eclipse.ocl.pivot.Class asClass : OCLstdlib.getDefaultPackage().getOwnedClasses()) {		// FIXME use contribution
 				assert asClass != null;
-				if (!installName.contains(asClass.getName())) {
+				if (!installNames.contains(asClass.getName())) {
 					asClasses.add(asClass);
 				}
 			}
@@ -864,7 +864,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				loadImports((EPackage)eContent, baseURI);
 			}
 		}
-		if ((eMetamodels != null) && (metamodelManager.getLibraryResource() == null)) {
+		if ((eMetamodels != null) && (standardLibrary.getLibraryResource() == null)) {
 			String nsURI = eMetamodels.iterator().next().getNsURI();
 			if (nsURI != null) {
 				OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
