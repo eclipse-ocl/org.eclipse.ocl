@@ -92,7 +92,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 		if (genOCLstdlib) {
 		//	final EnvironmentFactoryAdapter adapter = EnvironmentFactoryAdapter.find(resourceSet);
 		//	if (adapter != null) {
-			metamodelManager.setLibraryLoadInProgress(true);
+			ocl.getStandardLibrary().setLibraryLoadInProgress(true);
 		//	}
 		}
 		log.info("Loading Gen Model '" + genModelURI);

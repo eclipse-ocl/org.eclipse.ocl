@@ -63,7 +63,7 @@ public class CompleteOCLDocumentCSAttribution extends AbstractRootCSAttribution
 		}
 		if (!environmentView.hasFinalResult()) {
 			environmentFactory.getStandardLibrary().getOclAnyType();
-			for (Library library : environmentFactory.getMetamodelManager().getLibraries()) {
+			for (Library library : environmentFactory.getStandardLibrary().getLibraries()) {
 				assert library != null;
 				environmentView.addNamedElement(library);
 			}
