@@ -68,7 +68,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 
 	protected void didAdd(@NonNull Model partialModel) {
 		if (PARTIAL_MODELS.isActive()) {
-			PARTIAL_MODELS.println("Do-didAdd Model" + this + " " + partialModel);
+			PARTIAL_MODELS.println("Do-didAdd " + partialModel + " => " + this);
 		}
 		CompleteModelImpl completeModel = getCompleteModel();
 		completeModel.didAddPartialModel(partialModel);
@@ -93,7 +93,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	protected void didRemove(int index, Model partialModel) {
 		assert partialModel != null;
 		if (PARTIAL_MODELS.isActive()) {
-			PARTIAL_MODELS.println("Do-didRemove Model " + this + " " + partialModel);
+			PARTIAL_MODELS.println("Do-didRemove " + partialModel + " => " + this);
 		}
 		didRemove(partialModel);
 	}

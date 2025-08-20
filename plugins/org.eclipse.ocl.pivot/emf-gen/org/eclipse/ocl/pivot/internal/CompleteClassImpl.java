@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -76,6 +77,47 @@ import com.google.common.collect.Iterables;
  */
 public class CompleteClassImpl extends NamedElementImpl implements CompleteClass, org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal
 {
+	private static class PartialClasses extends EObjectResolvingEList<Class>
+	{
+		private static final long serialVersionUID = 1L;
+
+		protected PartialClasses(java.lang.Class<?> dataClass, CompleteClassImpl owner, int featureID) {
+			super(dataClass, owner, featureID);
+		}
+
+		@Override
+		protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
+			assert partialClass != null;
+			CompleteClassImpl owner = (CompleteClassImpl)this.owner;
+			if (PARTIAL_CLASSES.isActive()) {
+				PARTIAL_CLASSES.println("Do-didAdd " + partialClass + " => " + this);
+			}
+			if (owner.classListeners != null) {
+				owner.classListeners.didAddPartialClass(index, partialClass);
+			}
+			if (partialClass.getUnspecializedElement() == null) {
+				owner.getCompleteModel().didAddClass(partialClass, owner);
+			}
+		}
+
+		@Override
+		protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
+			assert partialClass != null;
+			CompleteClassImpl owner = (CompleteClassImpl)this.owner;
+			if (PARTIAL_CLASSES.isActive()) {
+				PARTIAL_CLASSES.println("Do-didRemove " + partialClass + " => " + this);
+			}
+		//	if (partialClass instanceof TupleType) {
+		//		System.out.println("Do-didRemove " + partialClass + " => " + this);
+		//		getClass();
+		//	}
+			if (owner.classListeners != null) {
+				owner.classListeners.didRemovePartialClass(index, partialClass);
+			}
+			// XXX ?? getCompleteModel().didRemove...
+		}
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -420,7 +462,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		if (PARTIAL_CLASSES.isActive()) {
-			PARTIAL_CLASSES.println("Do-didAddClass " + this + " " + partialClass);
+			PARTIAL_CLASSES.println("Do-didAddClass " + partialClass + " => " + this);
 		}
 		partialClasses.add(partialClass);
 	}
@@ -539,44 +581,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		EList<org.eclipse.ocl.pivot.Class> partialClasses2 = partialClasses;
 		if (partialClasses2 == null)
 		{
-			partialClasses2 = partialClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES.getFeatureID()) // 6
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
-					assert partialClass != null;
-					if (PARTIAL_CLASSES.isActive()) {
-						PARTIAL_CLASSES.println("Do-didAdd " + this + " " + partialClass);
-					}
-				//	if (partialClass instanceof TupleType) {
-				//		System.out.println("Do-didAdd " + this + " " + partialClass);
-				//		getClass();
-				//	}
-					if (classListeners != null) {
-						classListeners.didAddPartialClass(index, partialClass);
-					}
-					if (partialClass.getUnspecializedElement() == null) {
-						getCompleteModel().didAddClass(partialClass, CompleteClassImpl.this);
-					}
-				}
-
-				@Override
-				protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
-					assert partialClass != null;
-					if (PARTIAL_CLASSES.isActive()) {
-						PARTIAL_CLASSES.println("Do-didRemove " + this + " " + partialClass);
-					}
-				//	if (partialClass instanceof TupleType) {
-				//		System.out.println("Do-didRemove " + this + " " + partialClass);
-				//		getClass();
-				//	}
-					if (classListeners != null) {
-						classListeners.didRemovePartialClass(index, partialClass);
-					}
-					// XXX ?? getCompleteModel().didRemove...
-				}
-			};
+			partialClasses2 = partialClasses = new PartialClasses(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES.getFeatureID());
 		}
 		return partialClasses2;
 	}

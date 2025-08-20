@@ -894,7 +894,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="associativity" eType="#//AssociativityKind"
         defaultValueLiteral="left"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveCompletePackage" eSuperTypes="#//CompletePackage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveCompletePackage" eSuperTypes="#//CompletePackage">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The PrimitiveCompletePackage comprises each Primitive CompleteClass.&#xA;It is a root CompletePackage and so has no distinctive parent.&#xA;All explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.&#xA;Classes that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrimitiveLiteralExp" abstract="true"
       eSuperTypes="#//LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="PrimitiveType" eSuperTypes="#//DataType">

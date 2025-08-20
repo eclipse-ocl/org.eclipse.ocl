@@ -76,7 +76,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 
 	protected void didAdd(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		if (PARTIAL_PACKAGES.isActive()) {
-			PARTIAL_PACKAGES.println("Do-didAdd " + this + " " + partialPackage);
+			PARTIAL_PACKAGES.println("Do-didAdd " + partialPackage + " => " + this);
 		}
 		CompleteModelImpl completeModel = (CompleteModelImpl)getCompleteModel();
 		((PackageImpl)partialPackage).addPackageListener(this);
@@ -144,7 +144,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	protected void didRemove(int index, org.eclipse.ocl.pivot.Package partialPackage) {
 		assert partialPackage != null;
 		if (PARTIAL_PACKAGES.isActive()) {
-			PARTIAL_PACKAGES.println("Do-didRemove " + this + " " + partialPackage);
+			PARTIAL_PACKAGES.println("Do-didRemove " + partialPackage + " => " + this);
 		}
 		super.didRemove(index, partialPackage);
 		((PackageImpl)partialPackage).removePackageListener(this);
