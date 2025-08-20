@@ -128,34 +128,30 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		}
 		Map<String, CompleteClassInternal> name2completeClass2 = name2completeClass;
 		assert name2completeClass2 != null;
-		CompleteModelInternal completeModel = getCompleteModel();
 		String name = partialClass.getName();
 		if (name != null) {
-			CompleteClassInternal completeClass = null;
-			if (partialClass instanceof PrimitiveType) {										// Regular declaration
+			CompleteModelInternal completeModel = getCompleteModel();
+			CompleteClass completeClass;
+			if (partialClass instanceof PrimitiveType) {													// Primary OCLstdlib declaration		
 				CompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
-				completeClass = (CompleteClassInternal) primitiveCompletePackage.getCompleteClass(partialClass);
+				completeClass = primitiveCompletePackage.getCompleteClass(partialClass);
 			}
-	//		else if ((partialClass instanceof MapType) && (partialClass.getUnspecializedElement() != null)) {
-	//			CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
-	//			completeClass = orphanCompletePackage.getCompleteClass(partialClass);
-	//		}
-			else if (PivotConstants.METAMODEL_URI.toString().equals(getCompletePackage().getURI())) {		// Imported ocl/pivot overlay	// XXX toString
+			else if (PivotConstants.METAMODEL_ID == getCompletePackage().getCompletePackageId()) {			// Secondary Complete OCL overlay
 				CompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
-				completeClass = (CompleteClassInternal) primitiveCompletePackage.getOwnedCompleteClass(name);						assert completeClass == null;			// XXX
+				completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
 			}
 			else {
-				completeClass = (CompleteClassInternal) completeModel.basicGetSharedCompleteClass(partialClass);
+				completeClass = completeModel.basicGetSharedCompleteClass(partialClass);
 			}
 			if (completeClass == null) {
 				completeClass = name2completeClass2.get(name);
 				if (completeClass == null) {
-					completeClass = (CompleteClassInternal) PivotFactory.eINSTANCE.createCompleteClass();
+					completeClass = PivotFactory.eINSTANCE.createCompleteClass();
 					completeClass.setName(name);
 					add(completeClass);
 				}
 			}
-			completeClass.addClass(partialClass);
+			((CompleteClassInternal)completeClass).addClass(partialClass);
 		}
 	}
 
