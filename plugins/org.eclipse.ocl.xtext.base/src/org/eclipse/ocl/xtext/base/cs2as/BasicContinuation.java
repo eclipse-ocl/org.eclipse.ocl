@@ -33,8 +33,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  */
 public abstract class BasicContinuation<T> implements Continuation<T>
 {
-	private static final @NonNull Dependency @NonNull [] EMPTY_DEPENDENCIES = new @NonNull Dependency[0];
-
 	static final Logger logger = Logger.getLogger(BasicContinuation.class);
 
 	protected static @NonNull Dependency @NonNull [] createDependencies(@Nullable PivotableElementCS csElement) {
@@ -71,8 +69,9 @@ public abstract class BasicContinuation<T> implements Continuation<T>
 	}
 
 	@Override
-	public void addTo(@NonNull List<BasicContinuation<?>> simpleContinuations) {
+	public boolean addTo(@NonNull List<@NonNull BasicContinuation<?>> simpleContinuations) {
 		simpleContinuations.add(this);
+		return true;
 	}
 
 	public boolean canExecute() {
@@ -86,6 +85,7 @@ public abstract class BasicContinuation<T> implements Continuation<T>
 
 	public abstract BasicContinuation<?> execute();
 
+	@Override
 	public @NonNull Dependency @NonNull [] getDependencies() {
 		return dependencies;
 	}

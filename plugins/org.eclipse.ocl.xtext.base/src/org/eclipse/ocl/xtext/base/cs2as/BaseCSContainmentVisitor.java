@@ -416,11 +416,14 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 			context.addError(csElement, "An all-package import cannot have an associated alias name");
 		}
 		Namespace namespace = csElement.getReferredNamespace();
-		if ((namespace != null) && !namespace.eIsProxy()) {
+		if ((namespace != null) && !namespace.eIsProxy()) {									// XXX null after IO failure
 			Namespace oldNamespace = pivotElement.getImportedNamespace();
 			if (namespace != oldNamespace) {
 				pivotElement.setImportedNamespace(namespace);
 			}
+		}
+		else {
+			return Continuation.DISCONTINUATION;
 		}
 		pivotElement.setXmiidVersion(PivotConstants.XMIIDS_CURRENT);
 		return null;								// FIXME: CS2AS.computeRootContainmentFeatures may allow the above now

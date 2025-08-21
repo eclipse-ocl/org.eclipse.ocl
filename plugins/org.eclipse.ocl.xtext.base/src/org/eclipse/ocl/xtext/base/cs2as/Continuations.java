@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 public class Continuations implements Continuation<ModelElementCS>
 {
 	public static Continuation<?> combine(Continuation<?>... inputContinuations) {
-		List<BasicContinuation<?>> continuations = null;
+		List<@NonNull BasicContinuation<?>> continuations = null;
 		Continuation<?> continuation = null;
 		for (Continuation<?> inputContinuation : inputContinuations) {
 			if (inputContinuation != null) {
@@ -28,7 +28,7 @@ public class Continuations implements Continuation<ModelElementCS>
 				}
 				else {
 					if (continuations == null) {
-						continuations = new ArrayList<BasicContinuation<?>>();
+						continuations = new ArrayList<>();
 						continuation.addTo(continuations);
 					}
 					inputContinuation.addTo(continuations);
@@ -38,13 +38,13 @@ public class Continuations implements Continuation<ModelElementCS>
 		return continuations != null ? new Continuations(continuations) : continuation;
 	}
 
-	private final @NonNull List<BasicContinuation<?>> continuations;
+	private final @NonNull List<@NonNull BasicContinuation<?>> continuations;
 
 	public Continuations() {
-		this.continuations = new ArrayList<BasicContinuation<?>>();
+		this.continuations = new ArrayList<>();
 	}
 
-	public Continuations(@NonNull List<BasicContinuation<?>> continuations) {
+	public Continuations(@NonNull List<@NonNull BasicContinuation<?>> continuations) {
 		this.continuations = continuations;
 	}
 
@@ -53,10 +53,11 @@ public class Continuations implements Continuation<ModelElementCS>
 	}
 
 	@Override
-	public void addTo(@NonNull List<BasicContinuation<?>> simpleContinuations) {
-		for (BasicContinuation<?> continuation : continuations) {
+	public boolean addTo(@NonNull List<@NonNull BasicContinuation<?>> simpleContinuations) {
+		for (@NonNull BasicContinuation<?> continuation : continuations) {
 			continuation.addTo(simpleContinuations);
 		}
+		return true;
 	}
 
 	public Continuation<?> getContinuation() {

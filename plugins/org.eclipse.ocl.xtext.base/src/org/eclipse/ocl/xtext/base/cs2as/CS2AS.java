@@ -730,28 +730,29 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		if (asResource != null) {
 			asResource.setUpdating(true);			// XXX colocate with setUpdating(false)
 		}
-		conversion.update(csResource);
-		//		System.out.println("---------------------------------------------------------------------------");
-		//		Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
-		//		for (Entry<? extends Resource, ? extends Resource> entry : cs2asResourceMap.entrySet()) {
-		//			Resource csResource = entry.getKey();
-		//			Resource asResource = entry.getValue();
-		//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " => " + asResource.getClass().getName() + "@" + asResource.hashCode());
-		//		}
-		/*		Set<String> deadCSIs = new HashSet<>(oldCSI2AS.keySet());
-		deadCSIs.removeAll(newCSIs);
-		for (String deadCSI : deadCSIs) {
-			Element deadPivot = oldCSI2AS.get(deadCSI);	// WIP
-//			metamodelManager.kill(deadPivot);
-		} */
-		Map<CSResource, ASResource> cs2asResourceMap = new HashMap<>();
-		asResource = csi2asMapping.getASResource(csResource);
-		assert asResource != null;
-		cs2asResourceMap.put(csResource, asResource);
-		conversion.garbageCollect(cs2asResourceMap);
-		csi2asMapping.update();
-		//		printDiagnostic("CS2AS.update end", false, 0);
-		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
+		if (conversion.update(csResource)) {
+			//		System.out.println("---------------------------------------------------------------------------");
+			//		Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
+			//		for (Entry<? extends Resource, ? extends Resource> entry : cs2asResourceMap.entrySet()) {
+			//			Resource csResource = entry.getKey();
+			//			Resource asResource = entry.getValue();
+			//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " => " + asResource.getClass().getName() + "@" + asResource.hashCode());
+			//		}
+			/*		Set<String> deadCSIs = new HashSet<>(oldCSI2AS.keySet());
+			deadCSIs.removeAll(newCSIs);
+			for (String deadCSI : deadCSIs) {
+				Element deadPivot = oldCSI2AS.get(deadCSI);	// WIP
+	//			metamodelManager.kill(deadPivot);
+			} */
+			Map<CSResource, ASResource> cs2asResourceMap = new HashMap<>();
+			asResource = csi2asMapping.getASResource(csResource);
+			assert asResource != null;
+			cs2asResourceMap.put(csResource, asResource);
+			conversion.garbageCollect(cs2asResourceMap);
+			csi2asMapping.update();
+			//		printDiagnostic("CS2AS.update end", false, 0);
+			assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
+		}
 		isUpdating  = false;
 	}
 }
