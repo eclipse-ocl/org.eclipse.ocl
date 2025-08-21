@@ -810,10 +810,11 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	/**
-	 * Register the temporary use of EPackage by the test, ensuring correct installation and de-instalation for
+	 * Register the temporary use of EPackage and its transitive subpackages by the test, ensuring correct installation and de-installation for
 	 * repeated usage and defeating the missing registration check in restoreMemento.
 	 */
 	protected void registerEPackage(EPackage ePackage) {
+		assert ePackage != null;
 		String nsURI = ePackage.getNsURI();
 	//	if (EPackageRegistryImpl.INSTANCE.containsKey(nsURI)) {
 	//		System.err.println("registerEPackage invoked when '" + nsURI + "' already registered\n" +
@@ -829,6 +830,9 @@ public class AbstractPivotTestCase extends TestCase
 			Object old = EPackageRegistryImpl.INSTANCE.put(nsURI, ePackage);
 			assert (old == null) || (old == ePackage) || (old instanceof EPackage.Descriptor);
 	//	}
+			for (EPackage eSubPackage : ePackage.getESubpackages()) {
+				registerEPackage(eSubPackage);
+			}
 	}
 
 	private static @Nullable String SETUP_TEST_NAME = null;		// Debug flag to detect enforcement of init before memento

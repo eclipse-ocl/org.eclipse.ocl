@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.complete.PartialModels;
+import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
@@ -522,8 +524,10 @@ public class ImportTests extends XtextTestCase
 	public void testImport_CompleteOCL_NestedPackage_477283() throws Exception {
 		registerEPackage(Bug477283APackage.eINSTANCE);
 		registerEPackage(Bug477283BPackage.eINSTANCE);
-		EPackage.Registry.INSTANCE.put(Bug477283APackage.eNS_URI, Bug477283APackage.eINSTANCE);
-		EPackage.Registry.INSTANCE.put(Bug477283BPackage.eNS_URI, Bug477283BPackage.eINSTANCE);
+		assert EPackage.Registry.INSTANCE.get(Bug477283APackage.eNS_URI) == Bug477283APackage.eINSTANCE;
+		assert EPackage.Registry.INSTANCE.get(Bug477283BPackage.eNS_URI) == Bug477283BPackage.eINSTANCE;
+		assert EPackage.Registry.INSTANCE.get(Bug477283subPackage.eNS_URI) == Bug477283subPackage.eINSTANCE;
+		assert EPackage.Registry.INSTANCE.get(Bug477283AsubsubPackage.eNS_URI) == Bug477283AsubsubPackage.eINSTANCE;
 		TestOCL ocl = createOCL();
 		String testFile =
 				"import 'http://www.eclipse.org/ocl/Bug477283b'\n" +
@@ -537,8 +541,6 @@ public class ImportTests extends XtextTestCase
 	public void testImport_CompleteOCL_DisposeNoISE() throws Exception {
 		registerEPackage(Bug477283APackage.eINSTANCE);
 		registerEPackage(Bug477283BPackage.eINSTANCE);
-		registerEPackage(Bug477283subPackage.eINSTANCE);
-		registerEPackage(Bug477283AsubsubPackage.eINSTANCE);
 		/*
 		 * Defining an operation with a parameter of type is asub::ASub has
 		 * the same effect as calling completeModel.getCompleteClass(thatClass)
@@ -549,8 +551,10 @@ public class ImportTests extends XtextTestCase
 		 * 		 depends on the iteration order of es2ases.values() in
 		 * 		 PivotMetamodelManager.dispose()).
 		 */
-		EPackage.Registry.INSTANCE.put(Bug477283APackage.eNS_URI, Bug477283APackage.eINSTANCE);
-		EPackage.Registry.INSTANCE.put(Bug477283BPackage.eNS_URI, Bug477283BPackage.eINSTANCE);
+		assert EPackage.Registry.INSTANCE.get(Bug477283APackage.eNS_URI) == Bug477283APackage.eINSTANCE;
+		assert EPackage.Registry.INSTANCE.get(Bug477283BPackage.eNS_URI) == Bug477283BPackage.eINSTANCE;
+		assert EPackage.Registry.INSTANCE.get(Bug477283subPackage.eNS_URI) == Bug477283subPackage.eINSTANCE;
+		assert EPackage.Registry.INSTANCE.get(Bug477283AsubsubPackage.eNS_URI) == Bug477283AsubsubPackage.eINSTANCE;
 		TestOCL ocl = createOCL();
 		String testFile =
 				"import 'http://www.eclipse.org/ocl/Bug477283b'\n" +
