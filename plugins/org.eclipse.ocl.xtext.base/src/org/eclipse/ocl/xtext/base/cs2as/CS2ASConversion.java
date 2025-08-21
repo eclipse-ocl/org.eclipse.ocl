@@ -88,6 +88,7 @@ import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
+import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
@@ -215,16 +216,16 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public boolean checkForNoErrors(@NonNull CSResource csResource) {
-		@NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
+		@NonNull List<Resource.@NonNull Diagnostic> errors = csResource.getErrors();
 		if (ElementUtil.hasSyntaxError(errors)) {
 			return false;
 		}
 		return true;
 	}
 
-	protected void diagnoseContinuationFailure(@NonNull List<BasicContinuation<?>> continuations) {
+	protected void diagnoseContinuationFailure(@NonNull List<@NonNull BasicContinuation<?>> continuations) {
 		if (CONTINUATION.isActive()) {
-			for (BasicContinuation<?> continuation : continuations) {
+			for (@NonNull BasicContinuation<?> continuation : continuations) {
 				CONTINUATION.println(ClassUtil.requireNonNull(continuation.toString()));
 				for (Dependency dependency : continuation.getDependencies()) {
 					boolean canExecute = dependency.canExecute();
@@ -234,7 +235,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		StringBuilder s = new StringBuilder();
 		int i = 0;
-		for (BasicContinuation<?> continuation : continuations) {
+		for (@NonNull BasicContinuation<?> continuation : continuations) {
 			s.append("\n  ");
 			s.append(continuation);
 			for (Dependency dependency : continuation.getDependencies()) {
@@ -912,15 +913,15 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * @param continuations
 	 * @return continuations still to perform, null if stuck.
 	 */
-	protected @Nullable List<BasicContinuation<?>> progressContinuations(@NonNull List<BasicContinuation<?>> continuations) {
-		List<BasicContinuation<?>> moreContinuations = new ArrayList<>();
+	protected @Nullable List<@NonNull BasicContinuation<?>> progressContinuations(@NonNull List<@NonNull BasicContinuation<?>> continuations) {
+		List<@NonNull BasicContinuation<?>> moreContinuations = new ArrayList<>();
 		boolean madeProgress = false;
 		boolean tracingOn = CONTINUATION.isActive();
 		if (tracingOn) {
 			CONTINUATION.println("------------------------------------------------ " + continuations.size());
 			CONTINUATION.println(ClassUtil.requireNonNull(typesHaveSignatures.toString()));
 		}
-		for (BasicContinuation<?> continuation : continuations) {
+		for (@NonNull BasicContinuation<?> continuation : continuations) {
 			boolean canExecute = continuation.canExecute();
 			if (tracingOn) {
 				CONTINUATION.println((canExecute ? "+ " : "- ") + continuation);
@@ -1388,7 +1389,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				}
 			}
 		}
-		List<BasicContinuation<?>> continuations = new ArrayList<>();
+		List<@NonNull BasicContinuation<?>> continuations = new ArrayList<>();
 		//
 		//	Perform the post-order containment traversal to:
 		//
@@ -1401,7 +1402,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		for (EObject eObject : csResource.getContents()) {
 			if (eObject instanceof ElementCS) {
-				visitContainment((ElementCS)eObject, continuations);
+				if (!visitContainment((ElementCS)eObject, continuations)) {
+					return false;
+				}
 			}
 		}
 		//
@@ -1412,7 +1415,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//
 		while (continuations.size() > 0) {
-			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
+			List<@NonNull BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
 			if (moreContinuations == null) {
 				boolean hasNoErrors = checkForNoErrors(csResource);
 				if (!hasNoErrors) {
@@ -1436,7 +1439,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//		Collections.reverse(continuations);
 		while (continuations.size() > 0) {
-			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
+			List<@NonNull BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
 			if (moreContinuations == null) {
 				boolean hasNoErrors = checkForNoErrors(csResource);
 				if (!hasNoErrors) {
@@ -1446,6 +1449,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				break;
 			}
 			continuations = moreContinuations;
+		}
+		boolean hasNoErrors = checkForNoErrors(csResource);
+		if (!hasNoErrors) {
+			return false;
 		}
 		//
 		//	Load the library.
@@ -1460,7 +1467,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				visitInPostOrder((ElementCS)eObject, continuations);
 			}
 		}
-		boolean hasNoErrors = checkForNoErrors(csResource);
+		hasNoErrors = checkForNoErrors(csResource);
 		if (!hasNoErrors) {
 			return false;
 		}
@@ -1468,7 +1475,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//	Perform post-order continuations to establish complex dependencies.
 		//
 		while (continuations.size() > 0) {
-			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
+			List<@NonNull BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
 			if (moreContinuations == null) {
 				diagnoseContinuationFailure(continuations);
 				break;
@@ -1519,17 +1526,30 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return true;
 	}
 
-	protected void visitContainment(@NonNull ElementCS csElement, @NonNull List<BasicContinuation<?>> continuations) {
+	protected boolean visitContainment(@NonNull ElementCS csElement, @NonNull List<@NonNull BasicContinuation<?>> continuations) {
+		boolean discontinue = false;
 		for (EObject eContent : csElement.eContents()) {
 			if (eContent instanceof ElementCS) {
-				visitContainment((ElementCS) eContent, continuations);
+				if (!visitContainment((ElementCS) eContent, continuations)) {
+					discontinue = true;
+					if (!(eContent instanceof ImportCS)) {		// Keep going to get errors from all imports before discontinuing
+						break;
+					}
+				}
 			}
+		}
+		if (discontinue) {
+			return false;
 		}
 		try {
 			Continuation<?> continuation = csElement.accept(containmentVisitor);
 			if (continuation != null) {
+				if (continuation == Continuation.DISCONTINUATION) {
+					return false;
+				}
 				continuation.addTo(continuations);
 			}
+			return true;
 		} catch (IllegalLibraryException e) {
 			@SuppressWarnings("null")@NonNull String message = e.getMessage();
 			addError(csElement, message);
@@ -1546,9 +1566,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				addError(csElement, message);
 			}
 		}
+		return false;
 	}
 
-	protected void visitInPostOrder(@NonNull ElementCS csElement, @NonNull List<BasicContinuation<?>> continuations) {
+	protected void visitInPostOrder(@NonNull ElementCS csElement, @NonNull List<@NonNull BasicContinuation<?>> continuations) {
 		for (EObject eContent : csElement.eContents()) {
 			if (eContent instanceof ElementCS) {
 				visitInPostOrder((ElementCS) eContent, continuations);
@@ -1565,7 +1586,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
-	protected void visitInPreOrder(@NonNull ElementCS csElement, @NonNull List<BasicContinuation<?>> continuations) {
+	protected void visitInPreOrder(@NonNull ElementCS csElement, @NonNull List<@NonNull BasicContinuation<?>> continuations) {
 		try {
 			Continuation<?> continuation = csElement.accept(preOrderVisitor);
 			if (continuation != null) {

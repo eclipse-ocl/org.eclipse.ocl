@@ -12,12 +12,24 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 
 
 public interface Continuation<T>
 {
-	void addTo(@NonNull List<BasicContinuation<?>> simpleContinuations);
-//	boolean canExecute();
-//	BasicContinuation<?> execute();
+	static @NonNull Dependency @NonNull [] EMPTY_DEPENDENCIES = new @NonNull Dependency[0];
+	static @NonNull Continuation<?> DISCONTINUATION = new Continuation<EObject>()
+	{
+		@Override
+		public boolean addTo(@NonNull List<@NonNull BasicContinuation<?>> simpleContinuations) {
+			return false;
+		}
+	};
+
+	boolean addTo(@NonNull List<@NonNull BasicContinuation<?>> simpleContinuations);
+
+	default @NonNull Dependency @NonNull [] getDependencies() {
+		return EMPTY_DEPENDENCIES;
+	}
 }
