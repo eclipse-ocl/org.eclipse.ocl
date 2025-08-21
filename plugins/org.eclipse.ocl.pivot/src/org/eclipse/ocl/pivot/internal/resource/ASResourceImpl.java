@@ -697,12 +697,16 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	protected void unloaded(InternalEObject internalEObject) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if ((environmentFactory == null) || environmentFactory.isDisposed() || environmentFactory.isDisposing()) {
+			return;
+		}
 		if ((internalEObject instanceof ModelImpl)) {
 			ModelImpl asModel = (ModelImpl)internalEObject;
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory != null) {
+		//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		//	if (environmentFactory != null) {
 				environmentFactory.getCompleteModel().getPartialModels().remove(asModel);
-			}
+		//	}
 		}
 		Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = asElement2reloadableURI;
 		if (asElement2reloadableURI2 != null) {
