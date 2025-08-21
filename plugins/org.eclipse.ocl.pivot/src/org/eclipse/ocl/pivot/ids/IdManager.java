@@ -459,6 +459,12 @@ public final class IdManager
 		}
 		String  nsURI = asPackage.getURI();
 		if (nsURI != null) {
+			if (packageURI2completePackageId != null) {
+				CompletePackageId completePackageId = packageURI2completePackageId.get(nsURI);
+				if (completePackageId != null) {
+					return getRootPackageId(completePackageId.toString());
+				}
+			}
 			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), null);
 		}
 		String name = asPackage.getName();
