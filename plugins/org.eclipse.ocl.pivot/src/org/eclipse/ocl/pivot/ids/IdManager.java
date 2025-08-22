@@ -443,20 +443,23 @@ public final class IdManager
 	 * Return the typeId for aPackage.
 	 */
 	public static @NonNull PackageId getPackageId(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		String nsURI;
 		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 		if (semantics != null) {
 			URI trimFragment = semantics.trimFragment();
 			if (trimFragment == PivotConstants.METAMODEL_URI) {
 				return IdManager.METAMODEL_ID;
 			}
-			nsURI = trimFragment.toString();
+			String nsURI = trimFragment.toString();
+			assert nsURI != null;
+			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), null);
 		}
-		else {
-			nsURI = asPackage.getURI();
+		EPackage ePackage = asPackage.getEPackage();
+		if (ePackage != null) {
+			return getPackageId(ePackage);
 		}
+		String  nsURI = asPackage.getURI();
 		if (nsURI != null) {
-			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), asPackage.getEPackage());
+			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), null);
 		}
 		String name = asPackage.getName();
 		//		assert name != null;

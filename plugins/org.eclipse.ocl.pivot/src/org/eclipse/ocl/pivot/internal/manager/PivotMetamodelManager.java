@@ -1328,6 +1328,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			} else if (!(asResourceFactory instanceof ASResourceFactory)) {
 				throw new IllegalStateException("Non ASResourceFactory registration for content type '" + contentType + "'");
 			}
+			// XXX upgrade EnvironmentFactory to UMLEcoreTechnology, UMLIdResolver
 			asResource = ((ASResourceFactory)asResourceFactory).createResource(uri);
 			assert asResource != null;
 			asResourceSet.getResources().add(asResource);

@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
@@ -56,4 +57,9 @@ public interface Technology
 	boolean isStereotype(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass);
 
 	boolean isValidatable(@NonNull EClass eClass);
+
+	/**
+	 * @since 7.0
+	 */
+	void registerMetaPackages(@NonNull EnvironmentFactory environmentFactory);
 }
