@@ -208,7 +208,7 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		if (templateableId != null) {
 			return templateableId.getDisplayName() + "::" + getDisplayName();
 		}

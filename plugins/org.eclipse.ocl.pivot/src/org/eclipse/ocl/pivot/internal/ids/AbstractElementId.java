@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ids;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.SingletonScope;
@@ -34,7 +35,7 @@ public abstract class AbstractElementId implements ElementId
 	public abstract int hashCode();
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return getDisplayName();
 	}
 }

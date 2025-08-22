@@ -133,7 +133,7 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return parent + "::" + name;
 	}
 }
