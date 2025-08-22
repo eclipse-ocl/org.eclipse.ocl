@@ -103,7 +103,7 @@ public class NestedPackageIdImpl extends AbstractPackageIdImpl implements Nested
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return parent + "::" + name;
 	}
 }
