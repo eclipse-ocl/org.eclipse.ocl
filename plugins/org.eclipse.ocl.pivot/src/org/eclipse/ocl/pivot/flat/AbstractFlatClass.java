@@ -923,6 +923,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	private synchronized void initProperties() {
 		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
 		if (name2propertyOrProperties2 == null) {
+			PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);
 			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
 			assert fragments != null;
 			for (@NonNull FlatFragment fragment : fragments) {

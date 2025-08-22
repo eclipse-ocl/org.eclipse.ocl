@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
@@ -76,5 +77,11 @@ public abstract class AbstractTechnology implements Technology
 	@Override
 	public boolean isValidatable(@NonNull EClass eClass) {
 		return true;
+	}
+
+	@Override
+	public void registerMetaPackages(@NonNull EnvironmentFactory environmentFactory) {
+		// XXX CompletePackage asCompletePackage = completeModel.getCompletePackage(PivotConstants.METAMODEL_ID, PivotPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
+		// XXX completeModel.registerCompletePackageContribution(asCompletePackage, PivotPackage.eINSTANCE.getNsURI());
 	}
 }

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DynamicElement;
@@ -52,6 +53,7 @@ import org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty
 import org.eclipse.ocl.pivot.uml.internal.library.UMLStereotypeProperty;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -264,5 +266,18 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	//	completePackage.didAddPackageURI(packageURI);
 		completeModel.registerCompletePackageContribution(completePackage, packageURI);
 		return IdManager.getRootPackageId(completePackageId.getName());		// XXX
+	}
+
+	@Override
+	public void registerMetaPackages(@NonNull EnvironmentFactory environmentFactory) {
+		super.registerMetaPackages(environmentFactory);
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
+		//
+		CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
+		completeModel.registerCompletePackageContribution(umlCompletePackage, UMLPackage.eINSTANCE.getNsURI());
+		//
+		CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
+		completeModel.registerCompletePackageContribution(typesCompletePackage, TypesPackage.eINSTANCE.getNsURI());
+		// FIXME All known synonyms
 	}
 }

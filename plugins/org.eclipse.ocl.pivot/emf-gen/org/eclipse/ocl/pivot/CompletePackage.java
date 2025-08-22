@@ -131,6 +131,11 @@ public interface CompletePackage extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	org.eclipse.ocl.pivot.@Nullable Package basicGetPrimaryPackage();
+
+	/**
+	 * @since 7.0
+	 */
 	void didAddPackageURI(@NonNull String packageURI);
 
 	/**
@@ -142,7 +147,7 @@ public interface CompletePackage extends NamedElement
 
 	org.eclipse.ocl.pivot.Class getMemberType(String name);
 
-	org.eclipse.ocl.pivot.Package getPrimaryPackage();
+	org.eclipse.ocl.pivot.@NonNull Package getPrimaryPackage();
 
 	/**
 	 * @since 7.0
