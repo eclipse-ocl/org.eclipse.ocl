@@ -200,7 +200,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.10
 	 */
-	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet, final @Nullable ResourceSet zzASResourceSet) {
+	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet, final @Nullable ResourceSet zzASResourceSet) {		// XXX
 		assert zzASResourceSet == null;
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
@@ -227,6 +227,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel.init(this);
 		this.standardLibrary.init(this);
 
+		technology.registerMetaPackages(this);
 
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 		ThreadLocalExecutor.attachEnvironmentFactory(this);

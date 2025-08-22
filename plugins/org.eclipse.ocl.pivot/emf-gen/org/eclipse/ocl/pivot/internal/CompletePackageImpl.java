@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -750,6 +749,19 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwningCompletePackage, newOwningCompletePackage));
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public final org.eclipse.ocl.pivot.@Nullable Package basicGetPrimaryPackage() {
+		for (org.eclipse.ocl.pivot.Package partialPackage : getPartialPackages()) {
+			if (partialPackage != null) {
+				return partialPackage;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String getPackageName() {
 		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
@@ -773,14 +785,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	@Override
 	public final org.eclipse.ocl.pivot.@NonNull Package getPrimaryPackage() {
-		for (org.eclipse.ocl.pivot.Package partialPackage : getPartialPackages()) {
-			if (partialPackage != null) {
-				return partialPackage;
-			}
+		org.eclipse.ocl.pivot.Package partialPackage = basicGetPrimaryPackage();
+		if (partialPackage != null) {
+			return partialPackage;
 		}
-		//		assert false;
 		// If there are no pivot packages (e.g. for an orphan) return the metamodel to avoid an NPE constructing a CompleteInheritance
-		Package partialPackage = getCompleteModel().getStandardLibrary().getOclAnyType().getOwningPackage();
+		partialPackage = getCompleteModel().getStandardLibrary().getOclAnyType().getOwningPackage();
 		return ClassUtil.requireNonNull(partialPackage);
 	}
 
@@ -855,5 +865,16 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				s.append(packageURI);
 			}
 		}
+	}
+
+	@Override
+	public void setName(String newName) {
+		if ("$uml$".equals(newName)) {
+			getClass();		// XXX
+		}
+		if ("http://www.eclipse.org/uml2/5.0.0/UML".equals(newName)) {
+			getClass();		// XXX
+		}
+		super.setName(newName);
 	}
 } //CompletePackageImpl
