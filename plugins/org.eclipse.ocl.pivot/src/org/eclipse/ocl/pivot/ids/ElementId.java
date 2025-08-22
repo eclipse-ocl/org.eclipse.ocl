@@ -56,4 +56,9 @@ public interface ElementId
 	 * Return a simple name for diagnostics.
 	 */
 	@NonNull String getDisplayName();
+
+	/**
+	 * @since 7.0
+	 */
+	@Override @NonNull String toString();
 }

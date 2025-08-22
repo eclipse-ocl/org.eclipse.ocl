@@ -152,7 +152,7 @@ public class PartIdImpl implements PartId
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return String.valueOf(name) + "@" + index + " : " + String.valueOf(typeId) + (isRequired ? "[1]" : "[?])");
 	}
 }
