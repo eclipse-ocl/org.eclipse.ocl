@@ -40,6 +40,10 @@ public final class PivotPlugin extends EMFPlugin
 	public static final @NonNull String COMPLETE_OCL_REGISTRY_PID = "complete_ocl_registry";
 	public static final @NonNull String COMPLETE_OCL_REGISTRY_QPID = PLUGIN_ID + "." + COMPLETE_OCL_REGISTRY_PID;
 	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull String COMPLETE_PACKAGE_ID_PID = "complete_package_id";
+	/**
 	 * @since 1.15
 	 */
 	public static final @NonNull String THREAD_LOCAL_PID = "thread_local";

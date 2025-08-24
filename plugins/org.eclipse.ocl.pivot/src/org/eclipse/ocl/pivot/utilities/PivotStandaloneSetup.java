@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.scoping.PivotScoping;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
@@ -69,6 +70,8 @@ public class PivotStandaloneSetup //implements ISetup
 		init(PivotPackage.eINSTANCE);
 		EValidator.Registry.INSTANCE.put(PivotPackage.eINSTANCE, PivotValidator.INSTANCE);
 		LabelGeneratorRegistry.initialize(ILabelGenerator.Registry.INSTANCE);
+		new CompletePackageIdRegistryReader().readRegistry();
+
 	}
 
 	/**

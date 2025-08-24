@@ -24,6 +24,7 @@
    <extension-point id="label_generator" name="%_UI_LabelGenerator_extensionpoint" schema="schema/label_generator.exsd"/>
    <extension-point id="standard_library" name="OCL Standard Library" schema="schema/standard_library.exsd"/>
    <extension-point id="thread_local" name="OCL Thread Local manager" schema="schema/thread_local.exsd"/>
+   <extension-point id="complete_package_id" name="Complete Package ID" schema="schema/complete_package_id.exsd"/>
 
    <extension point="org.eclipse.core.runtime.preferences">
       <initializer class="org.eclipse.ocl.pivot.options.OCLinEcorePreferenceInitializer"/>
@@ -219,5 +220,10 @@
             class="org.eclipse.ocl.pivot.queries.QueriesPackage"
             genModel="model/Queries.genmodel"/>
    </extension>
+
+  <extension point="org.eclipse.ocl.pivot.complete_package_id">
+     <mapping completePackageId="$metamodel$" packageURI="http://www.eclipse.org/ocl/2015/Library"/>
+     <mapping completePackageId="$metamodel$" packageURI="http://www.eclipse.org/ocl/2015/Pivot"/>
+  </extension>
 
 </plugin>
