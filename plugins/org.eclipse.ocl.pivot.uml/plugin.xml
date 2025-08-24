@@ -62,6 +62,11 @@
      	resourceClass="org.eclipse.uml2.uml.resource.UMLResource"/>
   </extension>
 
+  <extension point="org.eclipse.ocl.pivot.complete_package_id">
+     <mapping completePackageId="$uml$" packageURI="http://www.omg.org/spec/UML/*"/>
+     <mapping completePackageId="$uml$" packageURI="http://www.omg.org/spec/PrimitiveTypes/*"/>
+  </extension>
+
    <extension point="org.eclipse.ocl.pivot.label_generator">
       <generator for="org.eclipse.uml2.uml.Comment"
       	class="org.eclipse.ocl.pivot.uml.internal.labels.CommentLabelGenerator"/>

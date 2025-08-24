@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -137,6 +138,7 @@ public final class IdManager
 	 * Map from precisely known Package URI to its CompletePackageId. This acts as a fallback for use
 	 * when there is no semantics EAnnotation on the EPackage.
 	 */
+	@Deprecated
 	private static @Nullable Map<@NonNull String, @NonNull CompletePackageId> packageURI2completePackageId = null;
 
 	private static @Nullable WildcardId wildcardId = null;
@@ -151,6 +153,7 @@ public final class IdManager
 	 * UML2's duplicate Eclipse/OMG models to be treated as merged rather than conflicting.
 	 * @since 7.0
 	 */
+	@Deprecated
 	public static void addCompletePackageURI(@NonNull CompletePackageId completePackageId, /*@NonNull*/ String packageURI) {
 		assert packageURI != null;
 		Map<@NonNull String, @NonNull CompletePackageId> packageURI2completePackageId2 = packageURI2completePackageId;
@@ -443,28 +446,29 @@ public final class IdManager
 	 * Return the typeId for aPackage.
 	 */
 	public static @NonNull PackageId getPackageId(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		String nsURI = asPackage.getURI();
+		CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(nsURI);
+	//	if (packageURI2completePackageId != null) {										// XXX review
+	//		CompletePackageId completePackageId = packageURI2completePackageId.get(ePackageURI);
+			if (completePackageId != null) {
+				return getRootPackageId(completePackageId.toString());
+	//		}
+		}
 		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 		if (semantics != null) {
 			URI trimFragment = semantics.trimFragment();
 			if (trimFragment == PivotConstants.METAMODEL_URI) {
 				return IdManager.METAMODEL_ID;
 			}
-			String nsURI = trimFragment.toString();
-			assert nsURI != null;
-			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), null);
+			String nsURI2 = trimFragment.toString();
+			assert nsURI2 != null;
+			return getNsURIPackageId(nsURI2, asPackage.getNsPrefix(), null);
 		}
 		EPackage ePackage = asPackage.getEPackage();
 		if (ePackage != null) {
 			return getPackageId(ePackage);
 		}
-		String  nsURI = asPackage.getURI();
-		if ((nsURI != null) && (nsURI.length() > 0)) {
-			if (packageURI2completePackageId != null) {
-				CompletePackageId completePackageId = packageURI2completePackageId.get(nsURI);
-				if (completePackageId != null) {
-					return getRootPackageId(completePackageId.toString());
-				}
-			}
+		if (nsURI != null) {
 			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), null);
 		}
 		String name = asPackage.getName();
@@ -488,12 +492,13 @@ public final class IdManager
 	//	}
 		String ePackageURI = ePackage.getNsURI();
 		if (ePackageURI != null) {
-			if (packageURI2completePackageId != null) {										// XXX review
-				CompletePackageId completePackageId = packageURI2completePackageId.get(ePackageURI);
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(ePackageURI);
+		//	if (packageURI2completePackageId != null) {										// XXX review
+		//		CompletePackageId completePackageId = packageURI2completePackageId.get(ePackageURI);
 				if (completePackageId != null) {
 					return getRootPackageId(completePackageId.toString());
 				}
-			}
+		//	}
 			//			if (nsURI.equals(UMLPackage.eNS_URI)) {		// FIXME use extension point
 			//				return getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
 			//			}
