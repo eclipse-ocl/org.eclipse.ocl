@@ -28,15 +28,15 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.WeakHashMap;
 import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -1893,136 +1894,118 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	/**
-	 * PluginReader provides the SAX callbacks to support reading the
-	 * org.eclipse.emf.ecore.generated_package extension point in a plugin.xml
-	 * file and activating the GenModelReader to process the
+	 * GeneratedPackageReader provides the parser to read the
+	 * org.eclipse.emf.ecore.generated_package extension point unhelpfully parsed by
+	 * the GeneratedPackageRegistryReader. GenModelReader is activated to process the
 	 * ecorePackage locations.
+	 *
+	 * @since 7.0
 	 */
-	protected static class PluginReader extends DefaultHandler
+	protected class GeneratedPackageReader extends RegistryReader
 	{
-		public static final @NonNull String pluginTag = "plugin";
-		public static final @NonNull String extensionTag = "extension";
-		public static final @NonNull String pointTag = "point";
-		public static final @NonNull String packageTag = "package";
-		public static final @NonNull String extensionPointAttribute = "org.eclipse.emf.ecore.generated_package";
-		public static final @NonNull String uriAttribute = "uri";
-		public static final @NonNull String classAttribute = "class";
-		public static final @NonNull String genModelAttribute = "genModel";
+		private static final String TAG_PACKAGE = "package";
+		private static final String ATT_URI = "uri";
+		private static final String ATT_CLASS = "class";
+		private static final String ATT_GEN_MODEL = "genModel";
 
-		protected final JarFile jarFile;
-		protected final IProjectDescriptor projectDescriptor;
-		private int pluginCount = 0;
-		private int extensionCount = 0;
-		private boolean inPoint = false;
-		private int packageCount = 0;
-		private @NonNull Map<@NonNull String, @NonNull GenModelReader> genModelReaders = new HashMap<>();
-		private @Nullable Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = null;
+		private @NonNull Map<@NonNull IProjectDescriptor, @NonNull Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>>> projectDescriptor2genModelURI2nsURI2className = new HashMap<>();
 
-		private PluginReader(@Nullable IProjectDescriptor projectDescriptor) {
-			this.jarFile = null;
-			this.projectDescriptor = projectDescriptor;
-		}
-
-		public PluginReader(@NonNull JarFile jarFile, @NonNull IProjectDescriptor projectDescriptor) {
-			this.jarFile = jarFile;
-			this.projectDescriptor = projectDescriptor;
+		public GeneratedPackageReader() {
+			super(Platform.getExtensionRegistry(), EcorePlugin.INSTANCE.getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID);
 		}
 
 		@Override
-		public void endDocument() throws SAXException {
-			super.endDocument();
-			Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
-			if (genModelURI2nsURI2className2 != null) {
-				for (@NonNull String genModel : genModelURI2nsURI2className2.keySet()) {
-					Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
-					assert nsURI2className != null;
-					IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModel, nsURI2className);
-					GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
-					genModelReaders.put(genModel, genModelReader);
-				}
+		protected boolean readElement(IConfigurationElement element, boolean add) {
+			String tagName = element.getName();
+			if (!TAG_PACKAGE.equals(tagName)) {
+				return false;
 			}
+			final String nsURI = element.getAttribute(ATT_URI);
+			final String className = element.getAttribute(ATT_CLASS);
+			final String genModel = element.getAttribute(ATT_GEN_MODEL);
+			if (nsURI == null) {
+				logMissingAttribute(element, ATT_URI);
+				return false;
+			}
+			if (className == null) {
+				logMissingAttribute(element, ATT_CLASS);
+				return false;
+			}
+			if (genModel == null) {
+		//		logMissingAttribute(element, ATT_GEN_MODEL);
+				return true;
+			}
+			String projectName = element.getContributor().getName();
+			assert projectName != null;
+			IProjectDescriptor projectDescriptor = getProjectDescriptor(projectName);
+			assert projectDescriptor != null;
+			Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = projectDescriptor2genModelURI2nsURI2className.get(projectDescriptor);
+			if (genModelURI2nsURI2className == null) {
+				genModelURI2nsURI2className = new HashMap<>();
+				projectDescriptor2genModelURI2nsURI2className.put(projectDescriptor, genModelURI2nsURI2className);
+			}
+			Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className.get(genModel);
+			if (nsURI2className == null) {
+				nsURI2className = new HashMap<>();
+				genModelURI2nsURI2className.put(genModel, nsURI2className);
+			}
+			nsURI2className.put(URI.createURI(nsURI), className);
+			return true;
 		}
 
-		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException {
-			if (pluginCount == 1) {
-				if (pluginTag.equals(qName)) {
-					pluginCount--;
-				}
-				if (extensionCount == 1) {
-					if (extensionTag.equals(qName)) {
-						extensionCount--;
-					}
-					if (packageCount == 1) {
-						if (packageTag.equals(qName)) {
-							packageCount--;
-						}
-					}
-				}
-			}
-		}
-
-		public void scanContents(SAXParser saxParser) {
-			for (@NonNull String genModel : genModelReaders.keySet()) {
-				GenModelReader genModelReader = genModelReaders.get(genModel);
+		public void readGenModels(@NonNull SAXParser saxParser) {
+			for (Map.@NonNull Entry<@NonNull IProjectDescriptor, @NonNull Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>>> entry1 : projectDescriptor2genModelURI2nsURI2className.entrySet()) {
+				IProjectDescriptor projectDescriptor = entry1.getKey();
 				URI locationURI = projectDescriptor.getLocationURI();
-				URI genModelURI = URI.createURI(genModel).resolve(locationURI);
-				InputStream inputStream = null;
+			//	File file = null;
 				try {
-					if (jarFile != null) {
-						ZipEntry entry = jarFile.getEntry(genModel);
-						if (entry != null) {
-							inputStream = jarFile.getInputStream(entry);
-						}
-					} else {
-						inputStream = new FileInputStream(genModelURI.isFile() ? genModelURI.toFileString() : genModelURI.toString());
+					JarFile jarFile = null;			// XXX
+					if (locationURI.isArchive()) {
+						String authority = locationURI.authority();
+						String opaquePart = locationURI.opaquePart();
+						String path = locationURI.path();
+						assert authority != null;
+						File file = new File(authority.substring(5, authority.length()-1));
+						jarFile = new JarFile(file);
 					}
-					if (inputStream != null) {
-						saxParser.parse(inputStream, genModelReader);
+					else {
+			//			file = new File(locationURI.toFileString());
+					}
+					Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = entry1.getValue();
+					for (Map.@NonNull Entry<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> entry2 : genModelURI2nsURI2className.entrySet()) {
+						String genModelURI = entry2.getKey();
+						Map<@NonNull URI, @NonNull String> nsURI2className = entry2.getValue();
+						IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelURI, nsURI2className);
+						GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
+						URI resolvedGenModelURI = URI.createURI(genModelURI).resolve(locationURI);
+						InputStream inputStream = null;
+						try {
+							if (jarFile != null) {
+								ZipEntry entry = jarFile.getEntry(genModelURI);
+								if (entry != null) {
+									inputStream = jarFile.getInputStream(entry);
+								}
+							} else {
+								inputStream = new FileInputStream(resolvedGenModelURI.isFile() ? resolvedGenModelURI.toFileString() : genModelURI.toString());
+							}
+							if (inputStream != null) {
+								saxParser.parse(inputStream, genModelReader);
+							}
+						} catch (Exception e) {
+							System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
+							//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
+						} finally {
+							try {
+								if (inputStream != null) {
+									inputStream.close();
+								}
+							} catch (IOException e) {
+							}
+						}
 					}
 				} catch (Exception e) {
-					System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
+					System.err.println("Failed to read '" + locationURI + "'" + e);
 					//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
-				} finally {
-					try {
-						if (inputStream != null) {
-							inputStream.close();
-						}
-					} catch (IOException e) {
-					}
-				}
-			}
-		}
-
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) {
-			if (pluginCount == 0) {
-				if (pluginTag.equals(qName)) {
-					pluginCount++;
-				}
-			} else if (pluginCount == 1) {
-				if ((extensionCount == 0) && extensionTag.equals(qName)) {
-					extensionCount++;
-					inPoint = extensionPointAttribute.equals(attributes.getValue(pointTag));
-				} else if ((extensionCount == 1) && inPoint) {
-					if ((packageCount == 0) && packageTag.equals(qName)) {
-						packageCount++;
-						String className = attributes.getValue(classAttribute);
-						@NonNull URI nsURI = URI.createURI(attributes.getValue(uriAttribute));
-						String genModel = attributes.getValue(genModelAttribute);
-						if ((genModel != null) && (className != null)) {
-							Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
-							if (genModelURI2nsURI2className2 == null) {
-								genModelURI2nsURI2className = genModelURI2nsURI2className2 = new HashMap<>();
-							}
-							Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
-							if (nsURI2className == null) {
-								nsURI2className = new HashMap<>();
-								genModelURI2nsURI2className2.put(genModel, nsURI2className);
-							}
-							nsURI2className.put(nsURI, className);
-						}
-					}
 				}
 			}
 		}
@@ -2451,7 +2434,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public static void initStatics() {
 		GenModelReader.initStatics();
-		new PluginReader(null);
+	//	new PluginReader(null);
 	}
 
 	/**
@@ -2703,11 +2686,31 @@ public class StandaloneProjectMap implements ProjectManager
 		Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor2 = project2descriptor;
 		if (project2descriptor2 == null) {
 			project2descriptor = project2descriptor2 = new HashMap<>();
+
+			Map<URI, URI> platformURIMap = EcorePlugin.computePlatformURIMap(false);
+			for (Map.@NonNull Entry<URI, URI> entry : platformURIMap.entrySet()) {
+				URI fromURI = entry.getKey();
+				String projectName = fromURI.segment(1);
+				IProjectDescriptor projectDescriptor = project2descriptor.get(projectName);
+				if (projectDescriptor == null) {
+					URI toURI = entry.getValue();
+					for (URI toURI2; (toURI2 = platformURIMap.get(toURI)) != null; ) {
+						toURI = toURI2;
+					}
+					projectDescriptor = createProjectDescriptor(projectName, toURI);
+					project2descriptor.put(projectName, projectDescriptor);
+				}
+			}
+
+
+			GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
+			generatedPackageReader.readRegistry();
+
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			try {
 				SAXParser saxParser = factory.newSAXParser();
 				if (saxParser != null) {
-					scanClassPath(project2descriptor2, saxParser);
+					generatedPackageReader.readGenModels(saxParser);
 				}
 			} catch (Exception e) {
 				logException("Failed to  create SAXParser", e);
@@ -2975,7 +2978,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
-	protected @Nullable IProjectDescriptor registerBundle(@NonNull File file, @NonNull SAXParser saxParser) {
+/*	protected @Nullable IProjectDescriptor registerBundle(@NonNull File file, @NonNull SAXParser saxParser) {
 		JarFile jarFile = null;
 		try {
 			jarFile = new JarFile(file);
@@ -3022,7 +3025,7 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 		}
 		return null;
-	}
+	} */
 
 	protected @Nullable IProjectDescriptor registerProject(@NonNull File file) {
 		FileInputStream inputStream = null;
@@ -3086,7 +3089,7 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
-		@NonNull String[] entries = getClassPathEntries();
+	/*	@NonNull String[] entries = getClassPathEntries();
 		for (@NonNull String entry : entries) {
 			File fileEntry = new File(entry);
 			try {
@@ -3114,10 +3117,11 @@ public class StandaloneProjectMap implements ProjectManager
 			} catch (Exception e) {
 				logException("Failed to read '" + fileEntry + "'", e);
 			}
-		}
+		} */
+		new GeneratedPackageReader().readRegistry();
 	}
 
-	protected boolean scanFolder(@NonNull File f, @NonNull SAXParser saxParser, @NonNull Set<String> alreadyVisited, int depth) {
+/*	protected boolean scanFolder(@NonNull File f, @NonNull SAXParser saxParser, @NonNull Set<String> alreadyVisited, int depth) {
 		try {
 			if (!alreadyVisited.add(f.getCanonicalPath()))
 				return true;
@@ -3142,7 +3146,7 @@ public class StandaloneProjectMap implements ProjectManager
 		if (!containsProject && dotProject != null)
 			registerProject(dotProject);
 		return containsProject || dotProject != null;
-	}
+	} */
 
 	@Override
 	public void setTarget(Notifier newTarget) {}
