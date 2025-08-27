@@ -28,7 +28,9 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.WeakHashMap;
 import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
@@ -2613,6 +2615,29 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	/**
+	 * Return the mapping of problem files to exceptions, or null if not yet
+	 * computed or if no exceptions thrown.
+	 */
+	public @Nullable Map<@NonNull String, @NonNull Exception> getExceptionMap() {
+		return exceptionMap;
+	}
+
+	/**
+	 * Return the resolveable URI for a given project or bundle name.
+	 */
+	public @Nullable URI getLocation(@NonNull String projectName) {
+		Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors = getProjectDescriptors();
+		if (projectDescriptors == null) {
+			return null;
+		}
+		IProjectDescriptor projectDescriptor = projectDescriptors.get(projectName);
+		if (projectDescriptor == null) {
+			return null;
+		}
+		return projectDescriptor.getLocationURI();
+	}
+
+	/**
 	 * Return the IPackageDescriptor for a given nsURI.
 	 */
 	@Override
@@ -2644,29 +2669,6 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	/**
-	 * Return the mapping of problem files to exceptions, or null if not yet
-	 * computed or if no exceptions thrown.
-	 */
-	public @Nullable Map<@NonNull String, @NonNull Exception> getExceptionMap() {
-		return exceptionMap;
-	}
-
-	/**
-	 * Return the resolveable URI for a given project or bundle name.
-	 */
-	public @Nullable URI getLocation(@NonNull String projectName) {
-		Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors = getProjectDescriptors();
-		if (projectDescriptors == null) {
-			return null;
-		}
-		IProjectDescriptor projectDescriptor = projectDescriptors.get(projectName);
-		if (projectDescriptor == null) {
-			return null;
-		}
-		return projectDescriptor.getLocationURI();
-	}
-
-	/**
 	 * Return the mapping of project name or bundle name, as defined in a
 	 * manifest file to the location of that project as determined by scanning
 	 * the classpath.
@@ -2686,8 +2688,15 @@ public class StandaloneProjectMap implements ProjectManager
 		Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor2 = project2descriptor;
 		if (project2descriptor2 == null) {
 			project2descriptor = project2descriptor2 = new HashMap<>();
-
-			Map<URI, URI> platformURIMap = EcorePlugin.computePlatformURIMap(false);
+			SAXParser saxParser = null;
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			try {
+				saxParser = factory.newSAXParser();
+			} catch (Exception e) {
+				logException("Failed to  create SAXParser", e);
+				return null;
+			}
+		/*	Map<URI, URI> platformURIMap = EcorePlugin.computePlatformURIMap(false);
 			for (Map.@NonNull Entry<URI, URI> entry : platformURIMap.entrySet()) {
 				URI fromURI = entry.getKey();
 				String projectName = fromURI.segment(1);
@@ -2700,13 +2709,17 @@ public class StandaloneProjectMap implements ProjectManager
 					projectDescriptor = createProjectDescriptor(projectName, toURI);
 					project2descriptor.put(projectName, projectDescriptor);
 				}
+			} */
+
+			if (saxParser != null) {
+				scanClassPath(project2descriptor2, saxParser);
+				GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
+				generatedPackageReader.readRegistry();
+				generatedPackageReader.readGenModels(saxParser);
 			}
 
 
-			GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
-			generatedPackageReader.readRegistry();
-
-			SAXParserFactory factory = SAXParserFactory.newInstance();
+		/*	SAXParserFactory factory = SAXParserFactory.newInstance();
 			try {
 				SAXParser saxParser = factory.newSAXParser();
 				if (saxParser != null) {
@@ -2715,7 +2728,7 @@ public class StandaloneProjectMap implements ProjectManager
 			} catch (Exception e) {
 				logException("Failed to  create SAXParser", e);
 				return null;
-			}
+			} */
 		}
 		return project2descriptor2;
 	}
@@ -2781,6 +2794,9 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public synchronized void initializePackageRegistry(@Nullable ResourceSet resourceSet) {
 		getProjectDescriptors();
+
+		GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
+		generatedPackageReader.readRegistry();
 
 		if (resourceSet != null) {
 			Set<@NonNull EPackage> ePackages = new HashSet<>();
@@ -2978,7 +2994,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
-/*	protected @Nullable IProjectDescriptor registerBundle(@NonNull File file, @NonNull SAXParser saxParser) {
+	protected @Nullable IProjectDescriptor registerBundle(@NonNull File file, @NonNull SAXParser saxParser) {
 		JarFile jarFile = null;
 		try {
 			jarFile = new JarFile(file);
@@ -3000,7 +3016,7 @@ public class StandaloneProjectMap implements ProjectManager
 				assert project != null;
 				projectDescriptor = createProjectDescriptor(project, locationURI);
 				project2descriptor.put(project, projectDescriptor);
-				ZipEntry entry = jarFile.getEntry("plugin.xml");
+			/*	ZipEntry entry = jarFile.getEntry("plugin.xml");
 				if (entry != null) {
 					InputStream inputStream = jarFile.getInputStream(entry);
 					try {
@@ -3010,7 +3026,7 @@ public class StandaloneProjectMap implements ProjectManager
 					} finally {
 						inputStream.close();
 					}
-				}
+				} */
 				return projectDescriptor;
 			}
 		} catch (ZipException e) {
@@ -3025,7 +3041,7 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 		}
 		return null;
-	} */
+	}
 
 	protected @Nullable IProjectDescriptor registerProject(@NonNull File file) {
 		FileInputStream inputStream = null;
@@ -3089,7 +3105,7 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
-	/*	@NonNull String[] entries = getClassPathEntries();
+		@NonNull String[] entries = getClassPathEntries();
 		for (@NonNull String entry : entries) {
 			File fileEntry = new File(entry);
 			try {
@@ -3102,14 +3118,14 @@ public class StandaloneProjectMap implements ProjectManager
 						File dotProject = new File(f, ".project");
 						if (dotProject.exists()) {
 							IProjectDescriptor projectDescriptor = registerProject(dotProject);
-							if (projectDescriptor != null) {
+						/*	if (projectDescriptor != null) {
 								File plugIn = new File(f, "plugin.xml");
 								if (plugIn.exists()) {
 									PluginReader pluginReader = new PluginReader(projectDescriptor);
 									saxParser.parse(plugIn, pluginReader);
 									pluginReader.scanContents(saxParser);
 								}
-							}
+							} */
 							break;
 						}
 					}
@@ -3117,11 +3133,11 @@ public class StandaloneProjectMap implements ProjectManager
 			} catch (Exception e) {
 				logException("Failed to read '" + fileEntry + "'", e);
 			}
-		} */
-		new GeneratedPackageReader().readRegistry();
+		}
+	//	new GeneratedPackageReader().readRegistry();
 	}
 
-/*	protected boolean scanFolder(@NonNull File f, @NonNull SAXParser saxParser, @NonNull Set<String> alreadyVisited, int depth) {
+	protected boolean scanFolder(@NonNull File f, @NonNull SAXParser saxParser, @NonNull Set<String> alreadyVisited, int depth) {
 		try {
 			if (!alreadyVisited.add(f.getCanonicalPath()))
 				return true;
@@ -3146,7 +3162,7 @@ public class StandaloneProjectMap implements ProjectManager
 		if (!containsProject && dotProject != null)
 			registerProject(dotProject);
 		return containsProject || dotProject != null;
-	} */
+	}
 
 	@Override
 	public void setTarget(Notifier newTarget) {}
