@@ -39,12 +39,13 @@ Require-Bundle: org.junit;visibility:=reexport,
  org.eclipse.emf.mwe.core,
  org.eclipse.uml2.uml.ecore.importer;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.emf.importer;bundle-version="[2.5.0,3.0.0)",
- org.eclipse.sirius;bundle-version="[3.1.0,8.0.0]",
  org.eclipse.equinox.p2.ui.sdk.scheduler,
  org.eclipse.ocl.xtext.idioms.ui,
  org.eclipse.ocl.emf.validation.validity.ui,
- org.eclipse.sirius.ecore.extender;bundle-version="7.4.4",
- org.eclipse.sirius.ext.base;bundle-version="7.4.4"
+ org.eclipse.sirius;bundle-version="[3.1.0,8.0.0]",
+ org.eclipse.sirius.common;bundle-version="[3.1.0,8.0.0]",
+ org.eclipse.sirius.ecore.extender;bundle-version="[3.1.0,8.0.0]",
+ org.eclipse.sirius.ext.base;bundle-version="[3.1.0,8.0.0]"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %providerName
