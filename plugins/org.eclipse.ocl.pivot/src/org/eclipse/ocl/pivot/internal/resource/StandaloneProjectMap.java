@@ -2443,7 +2443,6 @@ public class StandaloneProjectMap extends AbstractProjectManager
 	 */
 	public static void initStatics() {
 		GenModelReader.initStatics();
-	//	new PluginReader(null);
 	}
 
 	/**
@@ -2703,39 +2702,12 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				logException("Failed to  create SAXParser", e);
 				return null;
 			}
-		/*	Map<URI, URI> platformURIMap = EcorePlugin.computePlatformURIMap(false);
-			for (Map.@NonNull Entry<URI, URI> entry : platformURIMap.entrySet()) {
-				URI fromURI = entry.getKey();
-				String projectName = fromURI.segment(1);
-				IProjectDescriptor projectDescriptor = project2descriptor.get(projectName);
-				if (projectDescriptor == null) {
-					URI toURI = entry.getValue();
-					for (URI toURI2; (toURI2 = platformURIMap.get(toURI)) != null; ) {
-						toURI = toURI2;
-					}
-					projectDescriptor = createProjectDescriptor(projectName, toURI);
-					project2descriptor.put(projectName, projectDescriptor);
-				}
-			} */
-
 			if (saxParser != null) {
 				scanClassPath(project2descriptor2, saxParser);
 				GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
 				generatedPackageReader.readRegistry();
 				generatedPackageReader.readGenModels(saxParser);
 			}
-
-
-		/*	SAXParserFactory factory = SAXParserFactory.newInstance();
-			try {
-				SAXParser saxParser = factory.newSAXParser();
-				if (saxParser != null) {
-					generatedPackageReader.readGenModels(saxParser);
-				}
-			} catch (Exception e) {
-				logException("Failed to  create SAXParser", e);
-				return null;
-			} */
 		}
 		return project2descriptor2;
 	}
@@ -2803,10 +2775,8 @@ public class StandaloneProjectMap extends AbstractProjectManager
 	 */
 	public synchronized void initializePackageRegistry(@Nullable ResourceSet resourceSet) {
 		getProjectDescriptors();
-
 		GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
 		generatedPackageReader.readRegistry();
-
 		if (resourceSet != null) {
 			Set<@NonNull EPackage> ePackages = new HashSet<>();
 			for (@NonNull Resource resource : resourceSet.getResources()) {
@@ -2820,25 +2790,9 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				String nsURI = ePackage.getNsURI();
 				Resource eResource = ePackage.eResource();
 				@SuppressWarnings("unused") URI uri = eResource.getURI();
-
 				resourceSet.getPackageRegistry().put(nsURI, ePackage);
-
-			/*	IPackageDescriptor packageDescriptor = getPackageDescriptor(URI.createURI(nsURI));
-				if (packageDescriptor != null) {
-					IResourceDescriptor resourceDescriptor = packageDescriptor.getResourceDescriptor();
-					IResourceLoadStatus resourceLoadStatus = resourceDescriptor.getResourceLoadStatus(resourceSet);
-					IPackageLoadStatus packageLoadStatus = resourceLoadStatus.getPackageLoadStatus(packageDescriptor);
-					if (packageLoadStatus != null) {
-						packageLoadStatus.setEPackage(ePackage);
-					}
-				//	packageDescriptor.configure(resourceSet, LoadDynamicResourceStrategy.INSTANCE, MapToFirstConflictHandler.INSTANCE);
-				} */
-
 			}
 		}
-
-
-
 		for (IProjectDescriptor projectDescriptor : project2descriptor.values()) {
 			Collection<IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
 			if (resourceDescriptors != null) {
@@ -3025,17 +2979,6 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				assert project != null;
 				projectDescriptor = createProjectDescriptor(project, locationURI);
 				project2descriptor.put(project, projectDescriptor);
-			/*	ZipEntry entry = jarFile.getEntry("plugin.xml");
-				if (entry != null) {
-					InputStream inputStream = jarFile.getInputStream(entry);
-					try {
-						PluginReader pluginReader = new PluginReader(jarFile, projectDescriptor);
-						saxParser.parse(inputStream, pluginReader);
-						pluginReader.scanContents(saxParser);
-					} finally {
-						inputStream.close();
-					}
-				} */
 				return projectDescriptor;
 			}
 		} catch (ZipException e) {
@@ -3127,15 +3070,8 @@ public class StandaloneProjectMap extends AbstractProjectManager
 					while((f = f.getParentFile()) != null) {
 						File dotProject = new File(f, ".project");
 						if (dotProject.exists()) {
+							@SuppressWarnings("unused")
 							IProjectDescriptor projectDescriptor = registerProject(dotProject);
-						/*	if (projectDescriptor != null) {
-								File plugIn = new File(f, "plugin.xml");
-								if (plugIn.exists()) {
-									PluginReader pluginReader = new PluginReader(projectDescriptor);
-									saxParser.parse(plugIn, pluginReader);
-									pluginReader.scanContents(saxParser);
-								}
-							} */
 							break;
 						}
 					}
