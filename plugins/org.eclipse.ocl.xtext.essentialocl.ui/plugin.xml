@@ -20,7 +20,7 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-              class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+              class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.XtextEditor"
               contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
               default="true"
               extensions="essentialocl"
@@ -33,7 +33,7 @@
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
@@ -42,7 +42,7 @@
             </activeWhen>
         </handler>
         <handler
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
             commandId="org.eclipse.ocl.xtext.essentialocl.EssentialOCL.validate">
          <activeWhen>
             <reference
@@ -67,21 +67,21 @@
             point="org.eclipse.ui.preferencePages">
         <!--page
             category="org.eclipse.ocl.common.ui.preferences.ProjectPreferencePage"
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="org.eclipse.ocl.xtext.essentialocl.EssentialOCL"
             name="%MF_EssentialOCL">
             <keywordReference id="org.eclipse.ocl.xtext.essentialocl.ui.keyword_EssentialOCL"/>
         </page-->
         <page
             category="org.eclipse.ocl.common.ui.preferences.SyntaxColoringPreferencePage"
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
             id="org.eclipse.ocl.xtext.essentialocl.EssentialOCL.coloring"
             name="%MF_EssentialOCL">
             <keywordReference id="org.eclipse.ocl.xtext.essentialocl.ui.keyword_EssentialOCL"/>
         </page>
         <page
             category="org.eclipse.ocl.common.ui.preferences.TemplatePreferencePage"
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
             id="org.eclipse.ocl.xtext.essentialocl.EssentialOCL.templates"
             name="%MF_EssentialOCL">
             <keywordReference id="org.eclipse.ocl.xtext.essentialocl.ui.keyword_EssentialOCL"/>
@@ -131,7 +131,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
@@ -146,13 +146,13 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.resource.IResourceFactory"
 			type="essentialocl">
 		</parser>
 	</extension>
 	<!--extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="essentialocl">
         </resourceServiceProvider>
     </extension-->
@@ -186,7 +186,7 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
@@ -219,7 +219,7 @@
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
             markerType="org.eclipse.ocl.xtext.essentialocl.ui.essentialocl.check.fast">
             <attribute
                 name="FIXABLE_KEY"
@@ -227,7 +227,7 @@
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
             markerType="org.eclipse.ocl.xtext.essentialocl.ui.essentialocl.check.normal">
             <attribute
                 name="FIXABLE_KEY"
@@ -235,7 +235,7 @@
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
             markerType="org.eclipse.ocl.xtext.essentialocl.ui.essentialocl.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
