@@ -12,17 +12,25 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.ui;
 
-import com.google.inject.Injector;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import com.google.inject.Injector;
 
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass.
  */
 public class EssentialOCLExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
+
+	@Override
+	public Object create() throws CoreException {
+		// XXX TODO Auto-generated method stub
+		return super.create();
+	}
 
 	@Override
 	protected Bundle getBundle() {

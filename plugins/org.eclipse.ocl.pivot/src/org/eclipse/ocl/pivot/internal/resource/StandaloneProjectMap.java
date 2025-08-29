@@ -2865,6 +2865,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 	 */
 	@Override
 	public void initializeResourceSet(@Nullable ResourceSet resourceSet) {
+// XXX		EcorePlugin.ExtensionProcessor.process(null);		// XXX causes class load failure
 		initializeURIResourceMap(resourceSet);
 		initializePlatformResourceMap(false);
 		initializeURIMap(resourceSet);
