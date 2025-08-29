@@ -1680,6 +1680,47 @@ public class StandaloneProjectMap implements ProjectManager
 			return hasEcoreModel;
 		}
 
+		public void readGenModel() {
+			String genModelURI = this.genModelURI.toString();
+			URI locationURI = projectDescriptor.getLocationURI();
+			InputStream inputStream = null;
+			try {
+				JarFile jarFile = null;			// XXX
+				if (locationURI.isArchive()) {
+					String authority = locationURI.authority();
+					assert authority != null;
+					File file = new File(authority.substring(5, authority.length()-1));
+					jarFile = new JarFile(file);
+					ZipEntry entry = jarFile.getEntry(genModelURI);
+					if (entry != null) {
+						inputStream = jarFile.getInputStream(entry);
+					}
+				} else {
+					URI resolvedGenModelURI = URI.createURI(genModelURI).resolve(locationURI);
+					String fileName = resolvedGenModelURI.isFile() ? resolvedGenModelURI.toFileString() : genModelURI.toString();
+					inputStream = new FileInputStream(fileName);
+				}
+				if (inputStream != null) {
+					SAXParser saxParser = ((StandaloneProjectMap)projectDescriptor.getProjectManager()).createSAXParser();
+					if (saxParser == null) {
+						return;
+					}
+					GenModelReader genModelReader = new GenModelReader(this);
+					saxParser.parse(inputStream, genModelReader);
+				}
+			} catch (Exception e) {
+				System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
+				//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
+			} finally {
+				try {
+					if (inputStream != null) {
+						inputStream.close();
+					}
+				} catch (IOException e) {
+				}
+			}
+		}
+
 		@Override
 		public void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
 			int size = genModelRelativeEcorePackageUris.size();
@@ -1959,51 +2000,13 @@ public class StandaloneProjectMap implements ProjectManager
 			for (Map.@NonNull Entry<@NonNull IProjectDescriptor, @NonNull Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>>> entry1 : projectDescriptor2genModelURI2nsURI2className.entrySet()) {
 				IProjectDescriptor projectDescriptor = entry1.getKey();
 				URI locationURI = projectDescriptor.getLocationURI();
-			//	File file = null;
 				try {
-					JarFile jarFile = null;			// XXX
-					if (locationURI.isArchive()) {
-						String authority = locationURI.authority();
-						String opaquePart = locationURI.opaquePart();
-						String path = locationURI.path();
-						assert authority != null;
-						File file = new File(authority.substring(5, authority.length()-1));
-						jarFile = new JarFile(file);
-					}
-					else {
-			//			file = new File(locationURI.toFileString());
-					}
 					Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = entry1.getValue();
 					for (Map.@NonNull Entry<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> entry2 : genModelURI2nsURI2className.entrySet()) {
 						String genModelURI = entry2.getKey();
 						Map<@NonNull URI, @NonNull String> nsURI2className = entry2.getValue();
 						IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelURI, nsURI2className);
-						GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
-						URI resolvedGenModelURI = URI.createURI(genModelURI).resolve(locationURI);
-						InputStream inputStream = null;
-						try {
-							if (jarFile != null) {
-								ZipEntry entry = jarFile.getEntry(genModelURI);
-								if (entry != null) {
-									inputStream = jarFile.getInputStream(entry);
-								}
-							} else {
-								inputStream = new FileInputStream(resolvedGenModelURI.isFile() ? resolvedGenModelURI.toFileString() : genModelURI.toString());
-							}
-							if (inputStream != null) {
-								saxParser.parse(inputStream, genModelReader);
-							}
-						} catch (Exception e) {
-							System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
-							//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
-						} finally {
-							try {
-								if (inputStream != null) {
-									inputStream.close();
-								}
-							} catch (IOException e) {
-							}
-						}
+						((AbstractResourceDescriptor)resourceDescriptor).readGenModel();
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to read '" + locationURI + "'" + e);
@@ -2580,6 +2583,19 @@ public class StandaloneProjectMap implements ProjectManager
 		return new ProjectDescriptor(this, projectName, locationURI);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable SAXParser createSAXParser() {
+		try {
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			return factory.newSAXParser();
+		} catch (Exception e) {
+			logException("Failed to  create SAXParser", e);
+			return null;
+		}
+	}
+
 	@Override
 	protected void finalize() throws Throwable {
 		WeakHashMap<@NonNull StandaloneProjectMap, @Nullable Object> liveStandaloneProjectMaps2 = liveStandaloneProjectMaps;
@@ -2687,14 +2703,7 @@ public class StandaloneProjectMap implements ProjectManager
 		Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor2 = project2descriptor;
 		if (project2descriptor2 == null) {
 			project2descriptor = project2descriptor2 = new HashMap<>();
-			SAXParser saxParser = null;
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			try {
-				saxParser = factory.newSAXParser();
-			} catch (Exception e) {
-				logException("Failed to  create SAXParser", e);
-				return null;
-			}
+			SAXParser saxParser = createSAXParser();
 			if (saxParser != null) {
 				scanClassPath(project2descriptor2, saxParser);
 				GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
@@ -2766,8 +2775,6 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public synchronized void initializePackageRegistry(@Nullable ResourceSet resourceSet) {
 		getProjectDescriptors();
-		GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
-		generatedPackageReader.readRegistry();
 		if (resourceSet != null) {
 			Set<@NonNull EPackage> ePackages = new HashSet<>();
 			for (@NonNull Resource resource : resourceSet.getResources()) {
@@ -3070,7 +3077,6 @@ public class StandaloneProjectMap implements ProjectManager
 				logException("Failed to read '" + fileEntry + "'", e);
 			}
 		}
-	//	new GeneratedPackageReader().readRegistry();
 	}
 
 	protected boolean scanFolder(@NonNull File f, @NonNull SAXParser saxParser, @NonNull Set<String> alreadyVisited, int depth) {
