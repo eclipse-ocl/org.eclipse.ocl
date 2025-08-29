@@ -1398,6 +1398,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug571407.profile.uml model can be generated and compiled.
 	 */
 	public void testBug571407_uml() throws Throwable {
+		EcorePlugin.ExtensionProcessor.process(null);		// XXX causes class load failure
 		setupUMLusage();
 		doTestRunnable(new TestRunnable() {
 			@Override
