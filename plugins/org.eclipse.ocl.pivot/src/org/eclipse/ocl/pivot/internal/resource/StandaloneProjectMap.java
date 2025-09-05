@@ -1593,6 +1593,11 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
+		public @Nullable Boolean basicHasEcoreModel() {
+			return hasEcoreModel;
+		}
+
+		@Override
 		public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
 			if (hasEcoreModel()) {
 				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
@@ -1688,7 +1693,7 @@ public class StandaloneProjectMap implements ProjectManager
 			return hasEcoreModel == Boolean.TRUE;
 		}
 
-		public boolean readGenModel() {
+		private boolean readGenModel() {
 			String genModelURI = this.genModelURI.toString();
 			URI locationURI = projectDescriptor.getLocationURI();
 			InputStream inputStream = null;
@@ -1759,8 +1764,12 @@ public class StandaloneProjectMap implements ProjectManager
 				platformPluginURI = relativeEcoreModelURI.resolve(pluginURI);
 				locationURI = relativeEcoreModelURI.resolve(projectLocationURI);
 				projectDescriptor.getProjectManager().addResourceDescriptor(this);
+
+// XXX				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
+// XXX				resourceLoadStatus.setConflictHandler(MapToFirstConflictHandlerWithLog.INSTANCE);
+
 			}
-			hasEcoreModel = true;
+		//	hasEcoreModel = true;
 		}
 
 		@Override
@@ -2814,11 +2823,10 @@ public class StandaloneProjectMap implements ProjectManager
 				resourceSet.getPackageRegistry().put(nsURI, ePackage);
 			}
 		}
-		for (IProjectDescriptor projectDescriptor : project2descriptor.values()) {
-			Collection<IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
+		for (@NonNull IProjectDescriptor projectDescriptor : project2descriptor.values()) {
+			Collection<@NonNull IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
 			if (resourceDescriptors != null) {
-				for (IResourceDescriptor resourceDescriptor : resourceDescriptors) {
-					assert resourceDescriptor != null;
+				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 					if (resourceDescriptor.hasEcoreModel()) {
 						IResourceLoadStatus resourceLoadStatus = resourceDescriptor.getResourceLoadStatus(resourceSet);
 						resourceLoadStatus.setConflictHandler(MapToFirstConflictHandlerWithLog.INSTANCE);
