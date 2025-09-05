@@ -1524,12 +1524,17 @@ public class StandaloneProjectMap implements ProjectManager
 		 */
 		protected final @NonNull List<@NonNull IPackageDescriptor> packageDescriptors = new ArrayList<>();
 
-		private boolean hasEcoreModel = false;
+		/**
+		 * Lazy indication of an Ecore model. true if model exists, false if not, null if not yet determined.
+		 */
+		private @Nullable Boolean hasEcoreModel = null;
 
 		/**
 		 * The IResourceLoadStatus for each ResourceSet (null is the global 'ResourceSet' 'containing' all Java'd packages).
 		 */
 		private final @NonNull WeakHashMap<@Nullable ResourceSet, @NonNull IResourceLoadStatus> resourceSet2resourceLoadStatus = new WeakHashMap<>();
+
+		private static int genModelReads = 0;
 
 		protected AbstractResourceDescriptor(@NonNull IProjectDescriptor projectDescriptor, @NonNull URI genModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			this.projectDescriptor = projectDescriptor;
@@ -1589,7 +1594,7 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
-			if (hasEcoreModel) {
+			if (hasEcoreModel()) {
 				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
 				resourceLoadStrategy.configure(resourceLoadStatus, conflictHandler);
 			}
@@ -1661,7 +1666,7 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public @NonNull IResourceLoadStatus getResourceLoadStatus(@Nullable ResourceSet resourceSet) {
-			assert hasEcoreModel;
+			assert hasEcoreModel();
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
 			if (resourceLoadStatus == null) {
 				synchronized (resourceSet2resourceLoadStatus) {
@@ -1677,7 +1682,10 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public boolean hasEcoreModel() {
-			return hasEcoreModel;
+			if (hasEcoreModel == null) {
+				hasEcoreModel = readGenModel();
+			}
+			return hasEcoreModel == Boolean.TRUE;
 		}
 
 		public boolean readGenModel() {
@@ -1706,6 +1714,7 @@ public class StandaloneProjectMap implements ProjectManager
 						return false;
 					}
 					GenModelReader genModelReader = new GenModelReader(this);
+					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
 					saxParser.parse(inputStream, genModelReader);
 					try {
 						setEcoreModel(genModelReader.getEcorePackages(), genModelReader.getNsURI2packageDescriptor());
@@ -1729,8 +1738,11 @@ public class StandaloneProjectMap implements ProjectManager
 			return false;
 		}
 
-		@Override
-		public void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
+		/**
+		 * Set the Ecore Model context of the resource from a list of URIs of the Ecore Packages relative to the
+		 * genModelURI, and a map of the package namespace URI to package descriptor.
+		 */
+		private void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
 			int size = genModelRelativeEcorePackageUris.size();
 			if (size > 0) {
 				@NonNull String firstGenModelRelativeEcorePackageUri = genModelRelativeEcorePackageUris.get(0);
@@ -2014,7 +2026,7 @@ public class StandaloneProjectMap implements ProjectManager
 						String genModelURI = entry2.getKey();
 						Map<@NonNull URI, @NonNull String> nsURI2className = entry2.getValue();
 						IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelURI, nsURI2className);
-						((AbstractResourceDescriptor)resourceDescriptor).readGenModel();
+//						((AbstractResourceDescriptor)resourceDescriptor).readGenModel();
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to read '" + locationURI + "'" + e);
