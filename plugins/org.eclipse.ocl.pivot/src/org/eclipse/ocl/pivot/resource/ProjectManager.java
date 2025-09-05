@@ -14,7 +14,6 @@ package org.eclipse.ocl.pivot.resource;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -328,7 +327,7 @@ public interface ProjectManager extends Adapter
 		 * Set the Ecore Model context of the resource from a list of URIs of the Ecore Packages relative to the
 		 * genModelURI, and a map of the package namespace URI to package descriptor.
 		 */
-		void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor);
+//		void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor);
 
 		/**
 		 * Unload the package registry to force a reload.
