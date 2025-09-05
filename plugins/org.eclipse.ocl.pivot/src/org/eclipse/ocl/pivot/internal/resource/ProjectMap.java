@@ -309,7 +309,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 				InputStream inputStream = null;
 				try {
 					inputStream = uriConverter.createInputStream(genModelURI);
-					saxParser.parse(inputStream, genModelReader);
+					saxParser.parse(inputStream, genModelReader);			// XXX inherited lazy
 				} catch (Exception e) {
 					logException("Failed to parse '" + genModelURI + "'", e);
 				} finally {
