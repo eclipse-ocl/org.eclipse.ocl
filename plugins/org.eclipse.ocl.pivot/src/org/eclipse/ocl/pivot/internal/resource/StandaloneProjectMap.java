@@ -821,7 +821,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		public void configureEPackageRegistry(@NonNull Resource resource) {
 			ResourceSet resourceSet2 = resourceSet;
 			if (resourceSet2 != null) {
-				for (IPackageLoadStatus packageLoadStatus : nsURI2packageLoadStatus.values()) {
+				for (@NonNull IPackageLoadStatus packageLoadStatus : nsURI2packageLoadStatus.values()) {
 					EPackage ePackage = packageLoadStatus.getEPackage();
 					if (ePackage != null) {
 						packageLoadStatus.configureEPackageRegistry(resourceSet2);
@@ -832,19 +832,24 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public void configureDelegatingResource() {
-			ResourceSet resourceSet2 = resourceSet;
-			if (resourceSet2 != null) {
-				Collection<PackageLoadStatus> packageLoadStatuses = nsURI2packageLoadStatus.values();
-				@NonNull URI uri = resourceDescriptor.getGenModelURI().appendFileExtension("ecore");
-				Resource resource;
-				if (packageLoadStatuses.size() == 1) {
-					@SuppressWarnings("null")@NonNull PackageLoadStatus packageLoadStatus = packageLoadStatuses.iterator().next();
-					resource = new DelegatedSinglePackageResource(uri, packageLoadStatus);
+			if (resourceDescriptor.basicHasEcoreModel() == Boolean.TRUE) {
+				ResourceSet resourceSet2 = resourceSet;
+				if (resourceSet2 != null) {
+					Collection<@NonNull PackageLoadStatus> packageLoadStatuses = nsURI2packageLoadStatus.values();
+					@NonNull URI uri = resourceDescriptor.getGenModelURI().appendFileExtension("ecore");
+					Resource resource;
+					if (packageLoadStatuses.size() == 1) {
+						PackageLoadStatus packageLoadStatus = packageLoadStatuses.iterator().next();
+						resource = new DelegatedSinglePackageResource(uri, packageLoadStatus);
+					}
+					else {
+						resource = new DelegatedMultiplePackageResource(uri, this, packageLoadStatuses);
+					}
+					resourceDescriptor.configureResourceSetURIResourceMap(resourceSet2, resource);
 				}
 				else {
-					resource = new DelegatedMultiplePackageResource(uri, this, packageLoadStatuses);
+					getClass();		// XXX
 				}
-				resourceDescriptor.configureResourceSetURIResourceMap(resourceSet2, resource);
 			}
 		}
 
@@ -1648,6 +1653,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public @NonNull URI getPlatformPluginURI() {
+			assert hasEcoreModel();
 			return ClassUtil.requireNonNull(platformPluginURI);
 		}
 
@@ -1672,7 +1678,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public @NonNull IResourceLoadStatus getResourceLoadStatus(@Nullable ResourceSet resourceSet) {
-			assert hasEcoreModel();
+		//	assert hasEcoreModel();
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
 			if (resourceLoadStatus == null) {
 				synchronized (resourceSet2resourceLoadStatus) {
@@ -1689,12 +1695,12 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		@Override
 		public boolean hasEcoreModel() {
 			if (hasEcoreModel == null) {
-				hasEcoreModel = readGenModel();
+				readGenModel();
 			}
 			return hasEcoreModel == Boolean.TRUE;
 		}
 
-		private boolean readGenModel() {
+		private void readGenModel() {
 			String genModelURI = this.genModelURI.toString();
 			URI locationURI = projectDescriptor.getLocationURI();
 			InputStream inputStream = null;
@@ -1717,14 +1723,15 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				if (inputStream != null) {
 					SAXParser saxParser = ((StandaloneProjectMap)projectDescriptor.getProjectManager()).createSAXParser();
 					if (saxParser == null) {
-						return false;
+						return;
 					}
 					GenModelReader genModelReader = new GenModelReader(this);
 					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
 					saxParser.parse(inputStream, genModelReader);
 					try {
 						setEcoreModel(genModelReader.getEcorePackages(), genModelReader.getNsURI2packageDescriptor());
-						return true;
+						assert hasEcoreModel == Boolean.TRUE;
+						return;
 					}
 					catch (Exception e) {
 						logger.warn("Failed to read " + genModelURI, e);
@@ -1741,7 +1748,8 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				} catch (IOException e) {
 				}
 			}
-			return false;
+			assert hasEcoreModel == null;
+			hasEcoreModel = Boolean.FALSE;
 		}
 
 		/**
@@ -1764,18 +1772,18 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				platformResourceURI = relativeEcoreModelURI.resolve(resourceURI);
 				platformPluginURI = relativeEcoreModelURI.resolve(pluginURI);
 				locationURI = relativeEcoreModelURI.resolve(projectLocationURI);
+				hasEcoreModel = true;					// Lockout recursion from following lines
 				projectDescriptor.getProjectManager().addResourceDescriptor(this);
 
 // XXX				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
 // XXX				resourceLoadStatus.setConflictHandler(MapToFirstConflictHandlerWithLog.INSTANCE);
 
 			}
-		//	hasEcoreModel = true;
 		}
 
 		@Override
 		public void unload(@NonNull ResourceSet resourceSet) {
-			if (hasEcoreModel()) {
+			if (hasEcoreModel == Boolean.TRUE) {
 				synchronized (resourceSet2resourceLoadStatus) {
 					IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.remove(resourceSet);
 					if (resourceLoadStatus != null) {
@@ -2836,10 +2844,10 @@ public class StandaloneProjectMap extends AbstractProjectManager
 			Collection<@NonNull IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
 			if (resourceDescriptors != null) {
 				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
-					if (resourceDescriptor.hasEcoreModel()) {
+				//	if (resourceDescriptor.hasEcoreModel()) {
 						IResourceLoadStatus resourceLoadStatus = resourceDescriptor.getResourceLoadStatus(resourceSet);
 						resourceLoadStatus.setConflictHandler(MapToFirstConflictHandlerWithLog.INSTANCE);
-					}
+				//	}
 				}
 			}
 		}
