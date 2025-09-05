@@ -1604,10 +1604,10 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
-			if (hasEcoreModel()) {
+		//	if (hasEcoreModel()) {
 				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
 				resourceLoadStrategy.configure(resourceLoadStatus, conflictHandler);
-			}
+		//	}
 		}
 
 		@Override
@@ -1642,6 +1642,8 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public @NonNull URI getLocationURI() {
+			hasEcoreModel();
+			assert hasEcoreModel == Boolean.TRUE;
 			return ClassUtil.requireNonNull(locationURI);
 		}
 
@@ -1652,12 +1654,15 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public @NonNull URI getPlatformPluginURI() {
-			assert hasEcoreModel();
+			hasEcoreModel();
+			assert hasEcoreModel == Boolean.TRUE;
 			return ClassUtil.requireNonNull(platformPluginURI);
 		}
 
 		@Override
 		public @NonNull URI getPlatformResourceURI() {
+			hasEcoreModel();
+			assert hasEcoreModel == Boolean.TRUE;
 			return ClassUtil.requireNonNull(platformResourceURI);
 		}
 
