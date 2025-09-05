@@ -1680,7 +1680,7 @@ public class StandaloneProjectMap implements ProjectManager
 			return hasEcoreModel;
 		}
 
-		public void readGenModel() {
+		public boolean readGenModel() {
 			String genModelURI = this.genModelURI.toString();
 			URI locationURI = projectDescriptor.getLocationURI();
 			InputStream inputStream = null;
@@ -1703,10 +1703,17 @@ public class StandaloneProjectMap implements ProjectManager
 				if (inputStream != null) {
 					SAXParser saxParser = ((StandaloneProjectMap)projectDescriptor.getProjectManager()).createSAXParser();
 					if (saxParser == null) {
-						return;
+						return false;
 					}
 					GenModelReader genModelReader = new GenModelReader(this);
 					saxParser.parse(inputStream, genModelReader);
+					try {
+						setEcoreModel(genModelReader.getEcorePackages(), genModelReader.getNsURI2packageDescriptor());
+						return true;
+					}
+					catch (Exception e) {
+						logger.warn("Failed to read " + genModelURI, e);
+					}
 				}
 			} catch (Exception e) {
 				System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
@@ -1719,6 +1726,7 @@ public class StandaloneProjectMap implements ProjectManager
 				} catch (IOException e) {
 				}
 			}
+			return false;
 		}
 
 		@Override
@@ -2057,19 +2065,22 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public void endDocument() throws SAXException {
-			super.endDocument();
-			try {
-				resourceDescriptor.setEcoreModel(ecorePackages, nsURI2packageDescriptor);
-			}
-			catch (Exception e) {
-				logger.warn("Failed to read " + genModelURI, e);
-			}
-		}
-
-		@Override
 		public void endElement(String uri, String localName, String qName) throws SAXException {
 			elements.pop();
+		}
+
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull List<@NonNull String> getEcorePackages() {
+			return ecorePackages;
+		}
+
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> getNsURI2packageDescriptor() {
+			return nsURI2packageDescriptor;
 		}
 
 		@Override
