@@ -274,12 +274,6 @@ public interface ProjectManager extends Adapter
 
 		void addedGeneratedPackage(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage);
 
-		/**
-		 * Return null if GenModel analysis is pending, true if setEcoreModel has defined the Ecore Model context, false if not.
-		 * @since 7.0
-		 */
-		@Nullable Boolean basicHasEcoreModel();
-
 		void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler);
 
 		void configureResourceSetURIResourceMap(@NonNull ResourceSet resourceSet, @NonNull Resource resource);
@@ -328,12 +322,6 @@ public interface ProjectManager extends Adapter
 		 * Return true if setEcoreModel has defined the Ecore Model context.
 		 */
 		boolean hasEcoreModel();
-
-		/**
-		 * Set the Ecore Model context of the resource from a list of URIs of the Ecore Packages relative to the
-		 * genModelURI, and a map of the package namespace URI to package descriptor.
-		 */
-//		void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor);
 
 		/**
 		 * Unload the package registry to force a reload.
