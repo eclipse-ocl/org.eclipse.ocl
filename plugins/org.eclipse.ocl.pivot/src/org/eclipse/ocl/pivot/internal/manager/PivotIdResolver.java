@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -229,7 +231,8 @@ public class PivotIdResolver extends AbstractIdResolver
 		CompletePackageId completePackageId = IdManager.getCompletePackageId(id.getName());
 		CompletePackage completePackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
 		if (completePackage != null) {
-			return completePackage.getPartialPackages().get(0);
+			List<org.eclipse.ocl.pivot.Package> partialPackages = completePackage.getPartialPackages();
+			return partialPackages.size() > 0 ? partialPackages.get(0) : null;
 		}
 	//	org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
 		else {
