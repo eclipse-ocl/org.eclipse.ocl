@@ -834,7 +834,8 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void configureDelegatingResource() {
-			if (resourceDescriptor.basicHasEcoreModel() == Boolean.TRUE) {
+			Boolean basicHasEcoreModel = resourceDescriptor.basicHasEcoreModel();
+			if (basicHasEcoreModel == Boolean.TRUE) {
 				ResourceSet resourceSet2 = resourceSet;
 				if (resourceSet2 != null) {
 					Collection<@NonNull PackageLoadStatus> packageLoadStatuses = nsURI2packageLoadStatus.values();
@@ -849,10 +850,10 @@ public class StandaloneProjectMap implements ProjectManager
 					}
 					resourceDescriptor.configureResourceSetURIResourceMap(resourceSet2, resource);
 				}
-				else {
-					hasDeferredConfigureDelegatingResource = true;
-					getClass();		// XXX queue a deferred configure
-				}
+			}
+			else {
+				hasDeferredConfigureDelegatingResource = true;
+				getClass();		// XXX queue a deferred configure
 			}
 		}
 
