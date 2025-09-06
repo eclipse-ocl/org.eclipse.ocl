@@ -401,6 +401,7 @@ public class StandaloneProjectMap implements ProjectManager
 				ePackage = packageLoadStatus.getEPackageInstance();
 			}
 			if (configureURImap) {
+				resourceLoadStatus.getResourceDescriptor().hasEcoreModel();				// Force genmodel read
 				resourceLoadStatus.configureDelegatingResource();//ResourceSetURIResourceMap(ePackage.eResource());
 			}
 			return returnEPackage(packageLoadStatus, ePackage);
@@ -807,6 +808,8 @@ public class StandaloneProjectMap implements ProjectManager
 		 */
 		protected boolean recursiveLoadInProgress = false;
 
+		private boolean hasDeferredConfigureDelegatingResource = false;			// XXX Use me
+
 		protected AbstractResourceLoadStatus(@NonNull IResourceDescriptor resourceDescriptor, @Nullable ResourceSet resourceSet) {
 			this.resourceDescriptor = resourceDescriptor;
 			this.resourceSet = resourceSet;
@@ -847,7 +850,8 @@ public class StandaloneProjectMap implements ProjectManager
 					resourceDescriptor.configureResourceSetURIResourceMap(resourceSet2, resource);
 				}
 				else {
-					getClass();		// XXX
+					hasDeferredConfigureDelegatingResource = true;
+					getClass();		// XXX queue a deferred configure
 				}
 			}
 		}
