@@ -1609,6 +1609,7 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
 		//	if (hasEcoreModel()) {
+			hasEcoreModel();
 				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
 				resourceLoadStrategy.configure(resourceLoadStatus, conflictHandler);
 		//	}
