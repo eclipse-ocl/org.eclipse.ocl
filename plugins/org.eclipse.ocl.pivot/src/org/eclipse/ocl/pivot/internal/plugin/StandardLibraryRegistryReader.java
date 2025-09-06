@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.plugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.plugin.RegistryReader;
@@ -19,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -35,7 +35,7 @@ public class StandardLibraryRegistryReader extends RegistryReader
 	static final @NonNull String ATT_CLASS = "class";
 
 	public StandardLibraryRegistryReader() {
-		super(Platform.getExtensionRegistry(), PivotPlugin.getPlugin()
+		super(ClassUtil.getExtensionRegistry(), PivotPlugin.getPlugin()
 			.getBundle().getSymbolicName(), PivotPlugin.STANDARD_LIBRARY_PPID);
 	}
 

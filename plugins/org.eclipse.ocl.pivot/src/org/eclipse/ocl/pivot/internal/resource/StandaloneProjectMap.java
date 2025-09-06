@@ -38,7 +38,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -2002,7 +2001,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		private @NonNull Map<@NonNull IProjectDescriptor, @NonNull Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>>> projectDescriptor2genModelURI2nsURI2className = new HashMap<>();
 
 		public GeneratedPackageReader() {
-			super(Platform.getExtensionRegistry(), EcorePlugin.INSTANCE.getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID);
+			super(ClassUtil.getExtensionRegistry(), EcorePlugin.INSTANCE.getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID);
 		}
 
 		@Override
@@ -2894,7 +2893,6 @@ public class StandaloneProjectMap extends AbstractProjectManager
 	 */
 	@Override
 	public void initializeResourceSet(@Nullable ResourceSet resourceSet) {
-		EcorePlugin.ExtensionProcessor.process(null);
 		initializeURIResourceMap(resourceSet);
 		initializePlatformResourceMap(false);
 		initializeURIMap(resourceSet);
