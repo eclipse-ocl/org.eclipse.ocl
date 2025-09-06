@@ -178,7 +178,7 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 				Profile umlProfile = umlModel.getAppliedProfile("j2ee");
 				assertNotNull("No UML Profile for leak test", umlProfile);
 
-				// Validate the model
+				// Validate the model, which has an unresolved "name" symbol wrt getBaseElement() that returns Element.
 				Diagnostician diagnostician = new MyDiagnostician();
 				diagnostician.validate(umlModel);
 
