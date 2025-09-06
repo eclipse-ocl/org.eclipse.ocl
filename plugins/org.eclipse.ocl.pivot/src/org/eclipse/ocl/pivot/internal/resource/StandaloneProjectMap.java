@@ -869,6 +869,7 @@ public class StandaloneProjectMap implements ProjectManager
 			for (@NonNull PackageLoadStatus packageLoadStatus : nsURI2packageLoadStatus.values()) {
 				packageLoadStatus.unloadedResource();
 			}
+			nsURI2packageLoadStatus.clear();
 		}
 
 		@Override
@@ -1778,12 +1779,10 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void unload(@NonNull ResourceSet resourceSet) {
-			if (hasEcoreModel == Boolean.TRUE) {
-				synchronized (resourceSet2resourceLoadStatus) {
-					IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.remove(resourceSet);
-					if (resourceLoadStatus != null) {
-						resourceLoadStatus.dispose();
-					}
+			synchronized (resourceSet2resourceLoadStatus) {
+				IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.remove(resourceSet);
+				if (resourceLoadStatus != null) {
+					resourceLoadStatus.dispose();
 				}
 			}
 		}
