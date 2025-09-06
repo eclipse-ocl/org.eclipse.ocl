@@ -400,8 +400,7 @@ public class StandaloneProjectMap implements ProjectManager
 				ePackage = packageLoadStatus.getEPackageInstance();
 			}
 			if (configureURImap) {
-				resourceLoadStatus.getResourceDescriptor().hasEcoreModel();				// Force genmodel read
-				resourceLoadStatus.configureDelegatingResource();//ResourceSetURIResourceMap(ePackage.eResource());
+				resourceLoadStatus.configureDelegatingResource();
 			}
 			return returnEPackage(packageLoadStatus, ePackage);
 		}
@@ -833,8 +832,8 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void configureDelegatingResource() {
-			Boolean basicHasEcoreModel = resourceDescriptor.basicHasEcoreModel();
-			if (basicHasEcoreModel == Boolean.TRUE) {
+			boolean hasEcoreModel = resourceDescriptor.hasEcoreModel();
+			if (hasEcoreModel) {
 				ResourceSet resourceSet2 = resourceSet;
 				if (resourceSet2 != null) {
 					Collection<@NonNull PackageLoadStatus> packageLoadStatuses = nsURI2packageLoadStatus.values();
@@ -849,10 +848,6 @@ public class StandaloneProjectMap implements ProjectManager
 					}
 					resourceDescriptor.configureResourceSetURIResourceMap(resourceSet2, resource);
 				}
-			}
-			else {
-				hasDeferredConfigureDelegatingResource = true;
-				getClass();		// XXX queue a deferred configure
 			}
 		}
 
@@ -1602,17 +1597,9 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public @Nullable Boolean basicHasEcoreModel() {
-			return hasEcoreModel;
-		}
-
-		@Override
 		public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
-		//	if (hasEcoreModel()) {
-			hasEcoreModel();
-				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
-				resourceLoadStrategy.configure(resourceLoadStatus, conflictHandler);
-		//	}
+			IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
+			resourceLoadStrategy.configure(resourceLoadStatus, conflictHandler);
 		}
 
 		@Override
@@ -1687,7 +1674,6 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public @NonNull IResourceLoadStatus getResourceLoadStatus(@Nullable ResourceSet resourceSet) {
-		//	assert hasEcoreModel();
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
 			if (resourceLoadStatus == null) {
 				synchronized (resourceSet2resourceLoadStatus) {
@@ -2845,10 +2831,8 @@ public class StandaloneProjectMap implements ProjectManager
 			Collection<@NonNull IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
 			if (resourceDescriptors != null) {
 				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
-				//	if (resourceDescriptor.hasEcoreModel()) {
-						IResourceLoadStatus resourceLoadStatus = resourceDescriptor.getResourceLoadStatus(resourceSet);
-						resourceLoadStatus.setConflictHandler(MapToFirstConflictHandlerWithLog.INSTANCE);
-				//	}
+					IResourceLoadStatus resourceLoadStatus = resourceDescriptor.getResourceLoadStatus(resourceSet);
+					resourceLoadStatus.setConflictHandler(MapToFirstConflictHandlerWithLog.INSTANCE);
 				}
 			}
 		}
