@@ -38,6 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -47,7 +48,6 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -85,14 +85,13 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
-	private final @NonNull Property oclInvalidProperty;
+	private /*@LazyNonNull*/ Property oclInvalidProperty = null;
 
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
 		this.metamodelManager = converter.getMetamodelManager();
 		this.standardLibrary = (CompleteStandardLibrary)environmentFactory.getStandardLibrary();
-		this.oclInvalidProperty = standardLibrary.getOclInvalidProperty();
 	}
 
 	@Override
@@ -380,7 +379,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		assert eTypedElement != null;
 		TypedElement pivotElement = converter.getCreated(TypedElement.class, eTypedElement);
 		if (pivotElement == null) {
-			return oclInvalidProperty;
+			return getOclInvalidProperty();
 		}
 		boolean isRequired;
 		Type pivotType;
@@ -439,10 +438,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						Property keyProperty2 = ClassUtil.requireNonNull(keyProperty1);
 						Property valueProperty2 = ClassUtil.requireNonNull(valueProperty1);
 						if (keyProperty2.getType() == null) {
-							return oclInvalidProperty;			// Retry later once type defined
+							return getOclInvalidProperty();			// Retry later once type defined
 						}
 						if (valueProperty2.getType() == null) {
-							return oclInvalidProperty;			// Retry later once type defined
+							return getOclInvalidProperty();			// Retry later once type defined
 						}
 						pivotType = standardLibrary.getMapEntryType((org.eclipse.ocl.pivot.Class)pivotType);
 					}
@@ -577,5 +576,13 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			}
 		}
 		return null;
+	}
+
+	private @NonNull TypedElement getOclInvalidProperty() {
+		Property oclInvalidProperty2 = this.oclInvalidProperty;
+		if (oclInvalidProperty2 == null) {
+			this.oclInvalidProperty = oclInvalidProperty2 = standardLibrary.getOclInvalidProperty();
+		}
+		return oclInvalidProperty2;
 	}
 }
