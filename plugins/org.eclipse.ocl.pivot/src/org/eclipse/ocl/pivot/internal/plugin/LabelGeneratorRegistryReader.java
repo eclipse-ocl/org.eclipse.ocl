@@ -4,20 +4,20 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.plugin;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * A plugin extension reader that populates the
@@ -53,11 +53,11 @@ public class LabelGeneratorRegistryReader extends RegistryReader
 	static final @NonNull String TAG_GENERATOR = "generator";
 	static final @NonNull String ATT_FOR = "for";
 	static final @NonNull String ATT_CLASS = "class";
-	
+
 	protected final ILabelGenerator.@NonNull Registry registry;
 
 	public LabelGeneratorRegistryReader(ILabelGenerator.@NonNull Registry registry) {
-		super(Platform.getExtensionRegistry(), PivotPlugin.getPlugin().getBundle().getSymbolicName(),
+		super(ClassUtil.getExtensionRegistry(), PivotPlugin.getPlugin().getBundle().getSymbolicName(),
 				PivotPlugin.LABEL_GENERATOR_PPID);
 		this.registry = registry;
 	}

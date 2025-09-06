@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  */
 package org.eclipse.ocl.pivot.internal.plugin;
 
@@ -14,16 +14,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * A plugin extension reader that populates the Complete OCL resource registry.
- * 
+ *
  * @author <a href="mailto:marwa.rostren@obeo.fr">Marwa Rostren</a>
  */
 public class CompleteOCLRegistryReader extends RegistryReader
@@ -32,11 +32,11 @@ public class CompleteOCLRegistryReader extends RegistryReader
 	private static final @NonNull String TAG_FOR = "for";
 	private static final @NonNull String ATTRIBUTE_RESOURCE = "resource";
 	private static final @NonNull String ATTRIBUTE_URI = "uri";
-	
+
 	protected final @NonNull CompleteOCLRegistry registry;
 
 	public CompleteOCLRegistryReader(@NonNull CompleteOCLRegistry registry) {
-		super(Platform.getExtensionRegistry(), PivotPlugin.PLUGIN_ID, PivotPlugin.COMPLETE_OCL_REGISTRY_PID);
+		super(ClassUtil.getExtensionRegistry(), PivotPlugin.PLUGIN_ID, PivotPlugin.COMPLETE_OCL_REGISTRY_PID);
 		this.registry = registry;
 	}
 

@@ -4,20 +4,20 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.plugin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * A plugin extension reader that populates the
@@ -36,7 +36,7 @@ public class ASResourceFactoryRegistryReader extends RegistryReader
 	static final @NonNull String ATT_CLASS = "class";
 
 	public ASResourceFactoryRegistryReader() {
-		super(Platform.getExtensionRegistry(), PivotPlugin.getPlugin()
+		super(ClassUtil.getExtensionRegistry(), PivotPlugin.getPlugin()
 			.getBundle().getSymbolicName(), PivotPlugin.AS_RESOURCE_FACTORY_PPID);
 	}
 

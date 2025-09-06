@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ECollections;
@@ -27,6 +29,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -177,6 +180,15 @@ public class ClassUtil
 			eModelElement.getEAnnotations().add(eAnnotation);
 		}
 		return eAnnotation;
+	}
+
+	/**
+	 * Ensure that the EMF RegistryReader support is in place before re-use.
+	 * @since 7.0
+	 */
+	public static @NonNull IExtensionRegistry getExtensionRegistry() {
+		EcorePlugin.ExtensionProcessor.process(null);
+		return requireNonNull(Platform.getExtensionRegistry());
 	}
 
 	/**
