@@ -1088,13 +1088,30 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 					: null;
 	}
 
+	/**
+	 * Return the rational UML name for umlNamedElement.
+	 */
 	private String getName(org.eclipse.uml2.uml.@NonNull NamedElement umlNamedElement) {
+		//
+		//	UML models with that correspond to an Ecore model cannot import originalName annotations and so must use the
+		//	Ecore model spelling. OOPS Ecore.metamodel.uml has a capitalized package name. So we must correct.
+		//
+		//	The code below correct the specific case of a http://www.eclipse.org/emf/2002/Ecore URI.
+		//
+		//	(Alternatively related cases might be detected if the Ecore::EPackage::nsURI stereotype value is null.)
+		//
 		if (umlNamedElement instanceof org.eclipse.uml2.uml.Model) {		// Model not Profile
-			org.eclipse.uml2.uml.Stereotype ecoreEPackageStereotype = umlNamedElement.getAppliedStereotype("Ecore::EPackage");
-			if (ecoreEPackageStereotype != null) {
-				Object packageName = umlNamedElement.getValue(ecoreEPackageStereotype, "packageName");
-				if (packageName != null) {
-					return (String)packageName;
+			org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlNamedElement;
+			if (EcorePackage.eNS_URI.equals(umlModel.getURI())) {
+				org.eclipse.uml2.uml.Stereotype ecoreEPackageStereotype = umlNamedElement.getAppliedStereotype("Ecore::EPackage");
+				if (ecoreEPackageStereotype != null) {
+				//	Object nsURI = umlNamedElement.getValue(ecoreEPackageStereotype, "nsURI");
+				//	if (nsURI == null) {			// Ecore.metamodel.uml
+						Object packageName = umlNamedElement.getValue(ecoreEPackageStereotype, "packageName");
+						if (packageName != null) {
+							return (String)packageName;
+						}
+				//	}
 				}
 			}
 		}

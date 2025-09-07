@@ -1265,6 +1265,10 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static void debugPrintln(@Nullable Object string) {
 		if (!noDebug) {
+			if (contextLine != null) {
+				System.out.println(contextLine);
+				contextLine = null;
+			}
 			System.out.printf("%6.3f [%s] %s\n", 0.001 * (System.currentTimeMillis() - startTime), Thread.currentThread().getName(), String.valueOf(string));
 		}
 	}

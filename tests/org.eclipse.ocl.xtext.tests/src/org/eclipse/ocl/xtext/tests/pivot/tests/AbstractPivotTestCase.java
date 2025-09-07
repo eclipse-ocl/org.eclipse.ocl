@@ -117,7 +117,7 @@ public class AbstractPivotTestCase extends TestCase
 	{
 			PivotUtil.noDebug = false;
 		//	DEBUG_GC = true;
-			DEBUG_ID = true;
+		//	DEBUG_ID = true;
 		//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 		//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
 		//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
