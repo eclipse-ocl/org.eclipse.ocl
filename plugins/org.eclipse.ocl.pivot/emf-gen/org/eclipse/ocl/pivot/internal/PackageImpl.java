@@ -773,7 +773,7 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
-		if ("http://www.eclipse.org/ocl/2015/Orphanage".equals(newName)) {
+		if ("standard".equals(newName)) {
 			getClass();		// XXX
 		}
 		String oldName = name;

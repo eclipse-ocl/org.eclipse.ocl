@@ -142,19 +142,17 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	public abstract void queueReference(@NonNull EObject eObject);
 
-	public <@NonNull T extends NamedElement> T refreshElement(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull EModelElement eModelElement) {
+	/**
+	 * @since 7.0
+	 */
+	public <@NonNull T extends Element> T refreshElement(@NonNull Class<@NonNull T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull EModelElement eModelElement) {
 		assert pivotEClass != null;
 		EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();
 		EObject pivotElement = eFactoryInstance.create(pivotEClass);
-		if (!pivotClass.isAssignableFrom(pivotElement.getClass())) {
-			throw new ClassCastException();
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) pivotElement;
-		return castElement;
+		return pivotClass.cast(pivotElement);
 	}
 
-	public <@NonNull T extends NamedElement> T refreshNamedElement(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull ENamedElement eNamedElement) {
+	public <@NonNull T extends NamedElement> T refreshNamedElement(@NonNull Class<@NonNull T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull ENamedElement eNamedElement) {
 		T castElement = refreshElement(pivotClass, pivotEClass, eNamedElement);
 		castElement.setName(environmentFactory.getTechnology().getOriginalName(eNamedElement));
 		return castElement;

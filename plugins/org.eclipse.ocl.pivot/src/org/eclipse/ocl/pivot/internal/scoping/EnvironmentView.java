@@ -933,7 +933,7 @@ public class EnvironmentView
 		return null;
 	}
 
-	public @NonNull Set<Map.Entry<@NonNull String, Object>> getEntries() {
+	public @NonNull Set<Map.@NonNull Entry<@NonNull String, Object>> getEntries() {
 		return contentsByName.entrySet();
 	}
 
@@ -1025,9 +1025,9 @@ public class EnvironmentView
 							int verdict = 0;
 							for (Class<?> key : disambiguatorMap.keySet()) {
 								if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
-									List<Comparator<Object>> comparators = disambiguatorMap.get(key);
+									List<@NonNull Comparator<@NonNull Object>> comparators = disambiguatorMap.get(key);
 									assert comparators != null;
-									for (Comparator<Object> comparator : comparators) {
+									for (@NonNull Comparator<@NonNull Object> comparator : comparators) {
 										if (comparator instanceof Disambiguator<?>) {
 											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory.getStandardLibrary(), iValue, jValue);
 										}
