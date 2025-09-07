@@ -741,6 +741,13 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
+	public @NonNull String getQualifiedEcorePackage(@NonNull EClassifier eClassifier) {
+		GenClassifier genClassifier = getGenClassifier(eClassifier);
+		GenPackage genPackage = getGenPackage(genClassifier);
+		return genPackage.getBasePackage() + "." + genPackage.getPrefix() + "Package";
+	}
+
+	@Override
 	public @Nullable String getQualifiedFactoryInterfaceName(@NonNull EPackage ePackage) {
 		GenPackage genPackage = getGenPackage(ePackage);
 		if (genPackage == null) {

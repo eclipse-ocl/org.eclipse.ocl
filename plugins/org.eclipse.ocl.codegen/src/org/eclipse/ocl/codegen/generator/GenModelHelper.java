@@ -66,6 +66,7 @@ public interface GenModelHelper
 	@NonNull String getPropertyResultType(@NonNull Property property) throws GenModelException;
 	@NonNull String getQualifiedEcoreLiteralName(@NonNull EClassifier eClassifier);
 	@NonNull String getQualifiedEcoreLiteralName(@NonNull EStructuralFeature eStructuralFeature);
+	@NonNull String getQualifiedEcorePackage(@NonNull EClassifier eClassifier);
 	@Nullable String getQualifiedFactoryInterfaceName(@NonNull EPackage ePackage);
 	@Nullable String getQualifiedFactoryInterfaceName(org.eclipse.ocl.pivot.@NonNull Class type);
 	@Nullable String getQualifiedFactoryInstanceAccessor(@NonNull EPackage ePackage);

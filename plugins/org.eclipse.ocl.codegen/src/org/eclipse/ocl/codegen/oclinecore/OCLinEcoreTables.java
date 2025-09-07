@@ -367,6 +367,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(",\n");
 				}
 				s.append("		");
+				s.addImport(null, genModelHelper.getQualifiedEcorePackage(eClass));
 				s.append(genModelHelper.getQualifiedEcoreLiteralName(eClass));
 				isFirst = false;
 			}
