@@ -1425,28 +1425,20 @@ public abstract class UML2AS extends AbstractExternal2AS
 		pivotAnnotation.getOwnedDetail().add(pivotDetail);
 	} */
 
-	protected @NonNull <T extends Element> T refreshElement(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull EObject umlElement) {
+/*	protected @NonNull <T extends Element> T refreshElement(@NonNull Class<@NonNull T> pivotClass, / *@NonNull* / EClass pivotEClass, @NonNull EModelElement umlElement) {
 		assert pivotEClass != null;
 		EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();
 		EObject pivotElement = eFactoryInstance.create(pivotEClass);
-		if (!pivotClass.isAssignableFrom(pivotElement.getClass())) {
-			throw new ClassCastException();
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) pivotElement;
-		return castElement;
-	}
+		return pivotClass.cast(pivotElement);
+	} */
 
-	protected @NonNull <T extends NamedElement> T refreshNamedElement(@NonNull Class<T> pivotClass,
+	@Deprecated /* Use refreshElement with name resolved in caller */
+	protected @NonNull <T extends NamedElement> T refreshNamedElement(@NonNull Class<@NonNull T> pivotClass,
 			/*@NonNull*/ EClass pivotEClass, org.eclipse.uml2.uml.@NonNull NamedElement umlNamedElement) {
 		assert pivotEClass != null;
 		EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();
 		EObject pivotElement = eFactoryInstance.create(pivotEClass);
-		if (!pivotClass.isAssignableFrom(pivotElement.getClass())) {
-			throw new ClassCastException();
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) pivotElement;
+		T castElement = pivotClass.cast(pivotElement);
 		castElement.setName(umlNamedElement.getName());
 		return castElement;
 	}

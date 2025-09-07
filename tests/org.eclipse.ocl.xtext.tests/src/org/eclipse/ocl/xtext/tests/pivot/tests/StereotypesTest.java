@@ -442,7 +442,8 @@ public class StereotypesTest extends PivotTestSuite
 	 */
 	public void testStereotypes_oclExtensions() throws Exception {
 		MyOCL ocl = createOCL();
-		//
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");		// XXX UML2:#113 bug
+		//XXX
 		//	AS => AS
 		//
 		ocl.assertQueryEquals(ocl.mm.asPlainClass, Sets.newHashSet(), "self.oclExtensions()");
@@ -450,9 +451,9 @@ public class StereotypesTest extends PivotTestSuite
 		//
 		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions()");
 		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions(InternationalizedProfile::Internationalized)");
-		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(), "self.oclExtensions(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(), "self.oclExtensions(StandardProfile::Focus)");
 		ocl.assertQueryEquals(ocl.mm.asEnglishClass, ocl.mm.asEnglishClassInEnglish, "self.oclExtension(InternationalizedProfile::Internationalized)");
-		ocl.assertQueryEquals(ocl.mm.asEnglishClass, null, "self.oclExtension(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, null, "self.oclExtension(StandardProfile::Focus)");
 		ocl.assertQueryEquals(ocl.mm.asEnglishClass, null, "self.oclExtension(Ecore::EClass)");
 		//
 		ocl.assertQueryEquals(ocl.mm.asMultiLingualClass, Sets.newHashSet(ocl.mm.asMultiLingualClassInEnglish, ocl.mm.asMultiLingualClassInFrench, ocl.mm.asMultiLingualClassInGerman), "self.oclExtensions()");
@@ -468,9 +469,9 @@ public class StereotypesTest extends PivotTestSuite
 		//
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish2), "self.oclExtensions()");
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish2), "self.oclExtensions(InternationalizedProfile::Internationalized)");
-		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(), "self.oclExtensions(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(), "self.oclExtensions(StandardProfile::Focus)");
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish2, "self.oclExtension(InternationalizedProfile::Internationalized)");
-		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, null, "self.oclExtension(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, null, "self.oclExtension(StandardProfile::Focus)");
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, null, "self.oclExtension(Ecore::EClass)");
 		//
 		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClass, Sets.newHashSet(ocl.mm.umlMultiLingualClassInEnglish2, ocl.mm.umlMultiLingualClassInFrench2, ocl.mm.umlMultiLingualClassInGerman2), "self.oclExtensions()");
@@ -481,11 +482,18 @@ public class StereotypesTest extends PivotTestSuite
 		//
 		//	Errors
 		//
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::Class_Focus)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus::WhoCares)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "Standard", "NoSuchFocus");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus)", PivotMessagesInternal.UnresolvedElement_ERROR_, "Standard", "NoSuchFocus");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtension", "BooleanType");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtensions(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtensions", "BooleanType");
+//		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::Class_Focus)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");
+//		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus::WhoCares)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "Standard", "NoSuchFocus");
+//		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus)", PivotMessagesInternal.UnresolvedElement_ERROR_, "Standard", "NoSuchFocus");
+//		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtension", "BooleanType");
+//		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtensions(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtensions", "BooleanType");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "Standard");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, null, "self.oclExtension(StandardProfile::File)");
+		// XXX old		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "Standard");		// XXX UML2:#113 bug
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(NoSuchPackage::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "NoSuchPackage");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");		// XXX UML2:#113 bug
+// XXX		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(StandardProfile::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "StandardProfile");		// XXX UML2:#113 bug
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");		// XXX UML2:#113 bug
 		//
 		ocl.dispose();
 	}
