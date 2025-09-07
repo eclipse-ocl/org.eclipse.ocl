@@ -1093,7 +1093,9 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			org.eclipse.uml2.uml.Stereotype ecoreEPackageStereotype = umlNamedElement.getAppliedStereotype("Ecore::EPackage");
 			if (ecoreEPackageStereotype != null) {
 				Object packageName = umlNamedElement.getValue(ecoreEPackageStereotype, "packageName");
-				return (String)packageName;
+				if (packageName != null) {
+					return (String)packageName;
+				}
 			}
 		}
 		return umlNamedElement.getName();
