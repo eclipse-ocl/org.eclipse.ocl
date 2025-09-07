@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * The UML_EAnnotationConverter maps the NamedElement name field to the
@@ -41,6 +42,15 @@ public class UML_EAnnotationConverter extends AbstractEAnnotationConverter
 		for (Map.Entry<String, String> detail : eAnnotation.getDetails()) {
 			if (DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME.equals(detail.getKey())) {
 				String originalName = detail.getValue();
+				if (asElement instanceof org.eclipse.ocl.pivot.Package) {
+					String uri = ((org.eclipse.ocl.pivot.Package)asElement).getURI();
+					if (PivotConstants.UML2_ISSUE113_WORKAROUND_WRONG1.equals(originalName) && PivotConstants.UML2_ISSUE113_WORKAROUND_URI1.equals(uri)) {
+						originalName = PivotConstants.UML2_ISSUE113_WORKAROUND_RIGHT1;
+					}
+					else if (PivotConstants.UML2_ISSUE113_WORKAROUND_WRONG2.equals(originalName) && PivotConstants.UML2_ISSUE113_WORKAROUND_URI2.equals(uri)) {
+						originalName = PivotConstants.UML2_ISSUE113_WORKAROUND_RIGHT2;
+					}
+				}
 				asElement.setName(originalName);
 			}
 			else {

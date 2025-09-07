@@ -379,4 +379,30 @@ public interface PivotConstants
 	 * @since 7.0
 	 */
 	static final @NonNull List<@NonNull Type> EMPTY_TYPE_LIST = Collections.<@NonNull Type>emptyList();
+
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_URI1 = "http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard";
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_WRONG1 = "Standard";
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_RIGHT1 = "StandardProfile";
+
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_URI2 = "http://www.eclipse.org/uml2/5.0.0/Types";
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_WRONG2 = "Types";
+	/**
+	 * @since 7.0
+	 */
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_RIGHT2 = "PrimitiveTypes";
 }

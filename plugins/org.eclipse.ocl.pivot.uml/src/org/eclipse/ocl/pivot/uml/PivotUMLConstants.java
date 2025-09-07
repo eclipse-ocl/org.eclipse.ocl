@@ -23,6 +23,16 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public interface PivotUMLConstants extends PivotConstants
 {
 	/**
+	 * The Package name of the shared standard profile metamodel.
+	 */
+	static final @NonNull String STANDARD_METAMODEL_NAME = "$standard$";	// FIXME Use extension point
+
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull CompletePackageId STANDARD_METAMODEL_ID2 = IdManager.getCompletePackageId(STANDARD_METAMODEL_NAME);
+
+	/**
 	 * The Package name of the shared types metamodel.
 	 */
 	static final @NonNull String TYPES_METAMODEL_NAME = "$types$";	// FIXME Use extension point
@@ -44,6 +54,7 @@ public interface PivotUMLConstants extends PivotConstants
 
 	static final @NonNull RootPackageId UML_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.UML_METAMODEL_NAME);
 	static final @NonNull RootPackageId TYPES_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);
+	static final @NonNull RootPackageId STANDARD_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.STANDARD_METAMODEL_NAME);
 
 	/**
 	 * URI used to identify that a Package contributes to the OCL's AS for UML.

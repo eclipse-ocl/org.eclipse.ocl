@@ -399,5 +399,4 @@ public class ProfileImpl extends PackageImpl implements Profile
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitProfile(this);
 	}
-
 } //ProfileImpl

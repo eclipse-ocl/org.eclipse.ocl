@@ -56,9 +56,11 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.profile.standard.StandardPackage;
 
 public class UMLEcoreTechnology extends AbstractTechnology
 {
@@ -178,6 +180,9 @@ public class UMLEcoreTechnology extends AbstractTechnology
 					else if (ePackage instanceof TypesPackage) {
 						return PivotUMLConstants.TYPES_METAMODEL_ID;
 					}
+					else if (ePackage instanceof StandardPackage) {
+						return PivotUMLConstants.STANDARD_METAMODEL_ID;
+					}
 				}
 			}
 		}
@@ -186,6 +191,9 @@ public class UMLEcoreTechnology extends AbstractTechnology
 
 	@Override
 	public @Nullable String getOriginalName(@NonNull ENamedElement eNamedElement) {
+	//	if (eNamedElement instanceof StandardPackage) {				// XXX
+	//		return eNamedElement.getName();
+	//	}
 		EAnnotation eAnnotation = eNamedElement.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
 			EObject eContainer = eNamedElement.eContainer();
@@ -209,6 +217,15 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			}
 		}
 		String originalName = NameUtil.getOriginalName(eNamedElement);
+		if (eNamedElement instanceof StandardPackage) {
+			String nsURI = ((StandardPackage)eNamedElement).getNsURI();
+			if (PivotConstants.UML2_ISSUE113_WORKAROUND_WRONG1.equals(originalName) && PivotConstants.UML2_ISSUE113_WORKAROUND_URI1.equals(nsURI)) {
+				originalName = PivotConstants.UML2_ISSUE113_WORKAROUND_RIGHT1;
+			}
+			else if (PivotConstants.UML2_ISSUE113_WORKAROUND_WRONG2.equals(originalName) && PivotConstants.UML2_ISSUE113_WORKAROUND_URI2.equals(nsURI)) {
+				originalName = PivotConstants.UML2_ISSUE113_WORKAROUND_RIGHT2;
+			}
+		}
 		return originalName;
 	}
 
@@ -278,6 +295,9 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		//
 		CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
 		completeModel.registerCompletePackageContribution(typesCompletePackage, TypesPackage.eINSTANCE.getNsURI());
+		//
+		CompletePackage standardCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.STANDARD_METAMODEL_ID2, StandardPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.STANDARD_METAMODEL_NAME);	// XXX
+		completeModel.registerCompletePackageContribution(standardCompletePackage, StandardPackage.eINSTANCE.getNsURI());
 		// FIXME All known synonyms
 	}
 }

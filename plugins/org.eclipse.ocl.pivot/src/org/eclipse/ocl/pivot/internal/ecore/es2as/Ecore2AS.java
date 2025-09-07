@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -962,7 +961,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
-	public <@NonNull T extends NamedElement> T refreshElement(@NonNull Class<T> pivotClass, EClass pivotEClass, @NonNull EModelElement eModelElement) {
+	public <@NonNull T extends Element> T refreshElement(@NonNull Class<@NonNull T> pivotClass, EClass pivotEClass, @NonNull EModelElement eModelElement) {
 		EObject pivotElement = null;
 		if (oldIdMap != null) {
 			String id = ((XMLResource)eModelElement.eResource()).getID(eModelElement);
