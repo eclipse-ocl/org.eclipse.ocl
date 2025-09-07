@@ -6,6 +6,6 @@ package UML
 context Operation
 
 --def: hasCreateStereo(): Boolean = self.extension_Create->notEmpty()
-def: hasCreateStereo(): Boolean = self.oclExtensions(Standard::Create)->notEmpty()
+def: hasCreateStereo(): Boolean = self.oclExtensions(StandardProfile::Create)->notEmpty()
 
 endpackage
