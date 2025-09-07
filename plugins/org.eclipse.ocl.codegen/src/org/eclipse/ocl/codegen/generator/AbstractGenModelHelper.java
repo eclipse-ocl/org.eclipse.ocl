@@ -744,7 +744,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public @NonNull String getQualifiedEcorePackage(@NonNull EClassifier eClassifier) {
 		GenClassifier genClassifier = getGenClassifier(eClassifier);
 		GenPackage genPackage = getGenPackage(genClassifier);
-		return genPackage.getBasePackage() + "." + genPackage.getPrefix() + "Package";
+		return genPackage.getBasePackage() + "." + genPackage.getEcorePackage().getName() + "." + genPackage.getPrefix() + "Package";
 	}
 
 	@Override
