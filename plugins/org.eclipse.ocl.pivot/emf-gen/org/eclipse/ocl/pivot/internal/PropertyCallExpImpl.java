@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -148,6 +149,11 @@ implements PropertyCallExp {
 	 */
 	@Override
 	public void setReferredProperty(Property newReferredProperty) {
+		if ((newReferredProperty != null) && "copies".equals(newReferredProperty.getName())) {
+			System.out.println("setReferredProperty " + NameUtil.debugSimpleName(this) +  " " + NameUtil.debugSimpleName(newReferredProperty) +  " " + newReferredProperty.getName());
+			getClass();		// XXX
+		}
+
 		Property oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())

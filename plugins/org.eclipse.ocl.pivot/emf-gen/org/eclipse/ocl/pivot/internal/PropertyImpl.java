@@ -1784,4 +1784,13 @@ implements Property {
 		}
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public void setName(String newName) {
+		if ("copies".equals(newName)) {
+			System.out.println("setName " + NameUtil.debugSimpleName(this) +  " " + newName);
+			getClass();		// XXX
+		}
+		super.setName(newName);
+	}
 } //PropertyImpl

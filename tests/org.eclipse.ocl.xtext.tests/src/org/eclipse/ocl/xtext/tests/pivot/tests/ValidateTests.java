@@ -828,6 +828,15 @@ public class ValidateTests extends AbstractValidateTests
 
 			ThreadLocalExecutor.resetEnvironmentFactory();		// Emulate interactive Load then Validate
 
+			// XXX OOPS externalResourceSet has a CSResource with 'stale' pivots.
+
+		/*	EList<Adapter> eAdapters = resource.getResourceSet().eAdapters();		// XXX Get rid of residue adapters
+			for (int i = eAdapters.size(); --i >= 0; ) {
+				Adapter eAdapter = eAdapters.get(i);
+				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
+					eAdapters.remove(i);
+				}
+			} */
 			@NonNull String[] messages = getMessages(//validationContext,
 				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),

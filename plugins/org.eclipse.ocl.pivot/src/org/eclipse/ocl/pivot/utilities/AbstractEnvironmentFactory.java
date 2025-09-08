@@ -202,6 +202,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet, final @Nullable ResourceSet zzASResourceSet) {		// XXX
 		assert zzASResourceSet == null;
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
