@@ -621,7 +621,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			throw new IllegalStateException("Missing owning type");
 		}
 		CompleteClass completeClass = completeModel.getCompleteClass(pivotClass/*.getPivotClass()*/);
-		Iterable<? extends Property> memberProperties = completeClass.getProperties(pivotProperty);
+		Iterable<? extends Property> memberProperties = completeClass.getProperties(pivotProperty.getName());
 		if (memberProperties != null) {
 			return memberProperties;
 		}
@@ -677,6 +677,10 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property) {
+		if ("copies".equals(property.getName())) {
+			System.out.println("getDefaultExpression " + NameUtil.debugSimpleName(this) +  " " + NameUtil.debugSimpleName(property) +  " " + property.getName());
+			getClass();		// XXX
+		}
 		ExpressionInOCL defaultExpression = null;
 		for (@SuppressWarnings("null")@NonNull Property domainProperty : getAllProperties(property)) {
 			LanguageExpression anExpression = domainProperty.getOwnedExpression();
@@ -796,7 +800,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
 			thisClass = PivotUtil.createNamedElement(asClass);
 			theseClasses.add(thisClass);
-			completeClass.getPartialClasses().add(thisClass);			// XXX fudge why no p[ackage
+			completeClass.getPartialClasses().add(thisClass);			// XXX fudge why no package
+		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
 		}
 		return thisClass;
 	}
@@ -1003,6 +1008,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public @NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
 		LibraryProperty implementation = (LibraryProperty) property.getImplementation();
 		if (implementation == null) {
+			System.out.println("getImplementation " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(property) + " " + property);
 			ImplementationManager implementationManager = getImplementationManager();
 			implementation = implementationManager.getPropertyImplementation(asNavigationExp, sourceValue, property);
 			property.setImplementation(implementation);

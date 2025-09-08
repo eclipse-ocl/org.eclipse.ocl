@@ -119,6 +119,7 @@ public class ExpressionInOCLImpl
 	 */
 	protected ExpressionInOCLImpl() {
 		super();
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -904,6 +905,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 7.0
 	 */
 	public @NonNull CompletePackage getCompletePackage3(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		if ("tutorial".equals(asPackage.getName())) {
+			System.out.println("getCompletePackage3 " + NameUtil.debugSimpleName(this) +  " " + NameUtil.debugSimpleName(asPackage) +  " " + asPackage.getName());
+			getClass();		// XXX
+		}
 		boolean packageAdded = false;
 		CompletePackage completePackage = package2completePackage.get(asPackage);
 		if (completePackage == null) {

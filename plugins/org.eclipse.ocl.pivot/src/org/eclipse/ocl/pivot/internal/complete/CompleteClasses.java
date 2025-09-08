@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -47,6 +48,10 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 
 	@Override
 	protected void didAdd(int index, CompleteClass completeClass) {
+		if ("Member".equals(completeClass.getName())) {
+			System.out.println("didAdd " + index + " " + NameUtil.debugSimpleName(completeClass) +  " " + completeClass.getName());
+			getClass();			// XXX
+		}
 		assert completeClass != null;
 		super.didAdd(index, completeClass);
 		didAdd((CompleteClassInternal) completeClass);
@@ -64,6 +69,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	}
 
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+	//	System.out.println("didAddClass " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) +  " " + partialClass.getName());
 		if (name2completeClass != null) {
 			CompleteClassInternal completeClass = name2completeClass.get(partialClass.getName());
 			if (completeClass == null) {
