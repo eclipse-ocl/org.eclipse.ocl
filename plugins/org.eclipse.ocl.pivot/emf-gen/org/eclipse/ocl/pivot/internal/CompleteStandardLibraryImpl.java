@@ -99,6 +99,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -587,10 +588,16 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
 			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
-			if (asLibraries.size() > 0) {
-				defineLibraryTypes(asLibraries.get(0));				// XXX ?? use installRootContents instead
+			boolean gotLibrary = false;
+			for (Library asLibrary : asLibraries) {
+				defineLibraryTypes(asLibrary);				// XXX ?? use installRootContents instead
+				URI packageSemantics = PivotUtil.basicGetPackageSemantics(asLibrary);
+				if (packageSemantics == PivotConstants.METAMODEL_LIBRARY_URI) {
+					gotLibrary = true;
+				//	break;
+				}
 			}
-			else {
+			if (!gotLibrary) {
 				loadDefaultLibrary(defaultStandardLibraryURI);
 			}
 		}
