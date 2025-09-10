@@ -68,6 +68,7 @@ import org.eclipse.ocl.codegen.java.types.UnboxedDescriptor;
 import org.eclipse.ocl.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
@@ -79,9 +80,10 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -106,15 +108,19 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull CodeGenAnalyzer>
 {
 	protected final @NonNull CodeGenerator codeGenerator;
+	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	public BoxingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
-		codeGenerator = analyzer.getCodeGenerator();
+		this.codeGenerator = analyzer.getCodeGenerator();
+		EnvironmentFactoryInternal environmentFactory = codeGenerator.getEnvironmentFactory();
+		this.completeModel = environmentFactory.getCompleteModel();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 
 	protected boolean hasOclInvalidOperation(@NonNull OperationId operationId) {
-		MetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
-		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclInvalidType());
+		CompleteClass completeClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
 		Operation memberOperation = completeClass.getOperation(operationId);
 		if (memberOperation == null) {
 			return false;
@@ -123,13 +129,12 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		if (owningType == null) {
 			return false;
 		}
-		CompleteClass owningCompleteClass = metamodelManager.getCompleteClass(owningType);
+		CompleteClass owningCompleteClass = completeModel.getCompleteClass(owningType);
 		return completeClass == owningCompleteClass;
 	}
 
 	protected boolean hasOclVoidOperation(@NonNull OperationId operationId) {
-		MetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
-		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
+		CompleteClass completeClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
 		Operation memberOperation = completeClass.getOperation(operationId);
 		if (memberOperation == null) {
 			return false;
@@ -138,7 +143,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		if (owningType == null) {
 			return false;
 		}
-		CompleteClass owningCompleteClass = metamodelManager.getCompleteClass(owningType);
+		CompleteClass owningCompleteClass = completeModel.getCompleteClass(owningType);
 		return completeClass == owningCompleteClass;
 	}
 

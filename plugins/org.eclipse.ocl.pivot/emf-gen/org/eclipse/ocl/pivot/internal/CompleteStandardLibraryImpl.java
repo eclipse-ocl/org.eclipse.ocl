@@ -1327,7 +1327,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	 */
 	@Override
 	public void installLibrary(@NonNull Library asLibrary) {
-		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getCompleteModel().getMetamodelManager();
 		if (!asLibraries.contains(asLibrary)) {
 			String uri = asLibrary.getURI();
 			if (asLibraries.isEmpty()) {
@@ -1420,7 +1419,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			return asLibraryResource2;
 		}
 		boolean savedLibraryLoadInProgress = libraryLoadInProgress;
-		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getCompleteModel().getMetamodelManager();
 		libraryLoadInProgress = true;
 		try {
 			StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uri);
@@ -1440,6 +1438,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			}
 			asLibraryResource = asLibraryResource2;
 			int size = asLibraries.size();
+			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getCompleteModel().getMetamodelManager();
 			metamodelManager.installResource(asLibraryResource2);
 			for (int i = 0; i < size; i++) {
 				defineLibraryTypes(asLibraries.get(i));
@@ -1584,7 +1583,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 					}
 				}
 				org.eclipse.ocl.pivot.@NonNull Class unspecializedSuperClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
-				CompleteClassInternal superCompleteClass = environmentFactory.getMetamodelManager().getCompleteClass(unspecializedSuperClass);
+				CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(unspecializedSuperClass);
 				org.eclipse.ocl.pivot.Class superPivotClass = superCompleteClass.getPrimaryClass();
 				if (superPivotClass instanceof CollectionType) {
 					CollectionType specializedCollection = (CollectionType)specializedClass;

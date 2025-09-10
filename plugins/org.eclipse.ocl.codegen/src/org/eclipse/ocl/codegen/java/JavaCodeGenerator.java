@@ -162,7 +162,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	protected @NonNull GenModelHelper createGenModelHelper(@Nullable GenModel genModel) {
-		return AbstractGenModelHelper.create(metamodelManager, genModel);
+		return AbstractGenModelHelper.create(environmentFactory, genModel);
 	}
 
 	protected @NonNull Id2EClassVisitor createId2EClassVisitor() {

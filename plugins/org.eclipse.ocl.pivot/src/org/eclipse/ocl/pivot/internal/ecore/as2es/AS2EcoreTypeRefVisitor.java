@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -62,6 +63,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
 	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull CompleteModelInternal completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	private boolean isRequired = false;
@@ -70,6 +72,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context) {
 		super(context);
 		this.metamodelManager = context.getMetamodelManager();
+		this.completeModel = context.getCompleteModel();
 		this.standardLibrary = context.getStandardLibrary();
 	}
 
@@ -348,7 +351,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			context.putCreated(pivotType, eClassifier);
 			return eClassifier;
 		}
-		CompleteClass completeClass = metamodelManager.getCompleteClass(pivotType);
+		CompleteClass completeClass = completeModel.getCompleteClass(pivotType);
 		List<org.eclipse.ocl.pivot.Class> partialClasses = completeClass.getPartialClasses();
 		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
 			if (!(aType instanceof PrimitiveType)) {		// FIXME This loop appears to be unnecessary

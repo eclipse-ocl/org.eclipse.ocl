@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -28,7 +29,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -309,7 +309,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 			if (!standardLibrary.conformsTo(expressionType, null, candidateType, bindings)) {
 				boolean coerceable = false;
 				if (useCoercions) {
-					CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(expressionType);
+					CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(expressionType);
 					for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 						if (partialClass instanceof PrimitiveType) {
 							for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {

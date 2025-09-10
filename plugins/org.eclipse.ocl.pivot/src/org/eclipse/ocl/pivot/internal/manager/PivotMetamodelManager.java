@@ -72,7 +72,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
@@ -669,20 +668,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
-	/*	if (asMetamodel == null) {
-			if (!(pivotType instanceof InvalidType) && !(pivotType instanceof IterableType) && !(pivotType instanceof LambdaType) && !(pivotType instanceof TupleType) && !(pivotType instanceof VoidType)) {
-				PivotUtil.errPrintln("getCompleteClass => getASmetamodel for a " + pivotType.getClass().getSimpleName());
-				getASmetamodel();
-			}
-			else {
-				PivotUtil.errPrintln("getCompleteClass getASmetamodel suppressed for a " + pivotType.getClass().getSimpleName());
-			}
-		} */
-		return completeModel.getCompleteClass(pivotType);
-	}
-
-	@Override
 	public @NonNull CompleteEnvironmentInternal getCompleteEnvironment() {
 		return completeEnvironment;
 	}
@@ -869,7 +854,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
 		org.eclipse.ocl.pivot.Class unspecializedType = type1.getUnspecializedElement();
 		org.eclipse.ocl.pivot.Class theType = unspecializedType != null ? unspecializedType : type1;
-		return getCompleteClass(theType).getFlatClass();
+		return completeModel.getCompleteClass(theType).getFlatClass();
 	}
 
 	/**
@@ -1262,7 +1247,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if ((instanceClassName != null) && instanceClassName.equals(java.util.Map.Entry.class.getName())) {		// FIXME a fudge to avoid UML's profile for EStringToStringMapEntry being used
 			return type;
 		}
-		return getCompleteClass(type).getPrimaryClass();
+		return completeModel.getCompleteClass(type).getPrimaryClass();
 		//		TypeTracker typeTracker = packageManager.findTypeTracker(pivotType);
 		//		if (typeTracker != null) {
 		//			return typeTracker.getPrimaryType();
@@ -1278,7 +1263,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (/*(type instanceof Type) &&*/ !isTypeServeable(type)) {
 			return type;			// FIXME bad cast
 		}
-		return getCompleteClass(type).getPrimaryClass();
+		return completeModel.getCompleteClass(type).getPrimaryClass();
 		//		TypeTracker typeTracker = packageManager.findTypeTracker(pivotType);
 		//		if (typeTracker != null) {
 		//			return typeTracker.getPrimaryType();
@@ -1464,13 +1449,13 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public boolean isSuperClassOf(org.eclipse.ocl.pivot.@NonNull Class unspecializedFirstType, org.eclipse.ocl.pivot.@NonNull Class secondType) {
-		CompleteClass firstCompleteClass = getCompleteClass(unspecializedFirstType);
-		CompleteClass secondCompleteClass = getCompleteClass(secondType);
+		CompleteClass firstCompleteClass = completeModel.getCompleteClass(unspecializedFirstType);
+		CompleteClass secondCompleteClass = completeModel.getCompleteClass(secondType);
 		return isSuperCompleteClassOf(firstCompleteClass, secondCompleteClass);
 	}
 
 	public boolean isSuperCompleteClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
-		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPrimaryClass()));	// FIXME cast
+		CompleteClass unspecializedSecondType = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPrimaryClass()));	// FIXME cast
 		//		org.eclipse.ocl.pivot.Class unspecializedSecondType = PivotUtil.getUnspecializedTemplateableElement(secondType);	// FIXME cast
 		if (unspecializedFirstType == unspecializedSecondType) {
 			return true;

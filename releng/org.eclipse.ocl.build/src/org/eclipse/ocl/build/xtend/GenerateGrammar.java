@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.notify.Notifier;
@@ -39,7 +40,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.codegen.generator.EcoreGenModelHelper;
 import org.eclipse.ocl.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -277,8 +278,8 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		OCL ocl = OCL.newInstance();
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		genModelHelper = new EcoreGenModelHelper(metamodelManager);
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		genModelHelper = new EcoreGenModelHelper(environmentFactory);
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 		File folder = new File(rootPath + javaFolder + "/" + javaPackageName.replace(".", "/"));
 		try {

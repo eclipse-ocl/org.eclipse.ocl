@@ -30,13 +30,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.java.ImportUtils;
 import org.eclipse.ocl.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
@@ -67,12 +68,12 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public static final @NonNull String TYPE_PARAMETERS_PACKAGE_NAME = "TypeParameters";
 	public static final @NonNull String TYPES_PACKAGE_NAME = "Types";
 
-	public static @NonNull GenModelHelper create(@NonNull MetamodelManager metamodelManager, @Nullable GenModel genModel) {
+	public static @NonNull GenModelHelper create(@NonNull EnvironmentFactory environmentFactory, @Nullable GenModel genModel) {
 		if (genModel instanceof org.eclipse.uml2.codegen.ecore.genmodel.GenModel) {
-			return new UMLGenModelHelper(metamodelManager);
+			return new UMLGenModelHelper(environmentFactory);
 		}
 		else {
-			return new EcoreGenModelHelper(metamodelManager);
+			return new EcoreGenModelHelper(environmentFactory);
 		}
 	}
 
@@ -155,9 +156,14 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull CompleteModel completeModel;
+	protected final @NonNull StandardLibrary standardLibrary;
 
-	protected AbstractGenModelHelper(@NonNull MetamodelManager metamodelManager) {
-		this.metamodelManager = metamodelManager;
+	protected AbstractGenModelHelper(@NonNull EnvironmentFactory environmentFactory) {
+		this.metamodelManager = environmentFactory.getMetamodelManager();
+	//	EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
+		this.completeModel = environmentFactory.getCompleteModel();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 
 	@Override
@@ -572,7 +578,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		if (asPackage == null) {
 			return null;
 		}
-		CompleteStandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
 		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Class elementType = metamodelManager.getASClass("Element");
 		if ((elementType != null) && (oclstdlibPackage != null)) {
@@ -580,7 +585,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			org.eclipse.ocl.pivot.Package pivotMetamodel = elementType.getOwningPackage();
 			assert pivotMetamodel != null;
 			if (oclstdlibPackage == asPackage) {
-				CompleteClass completeClass = metamodelManager.getCompleteClass(asClass);
+				CompleteClass completeClass = completeModel.getCompleteClass(asClass);
 				if (completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
 					return getGenPackage(pivotMetamodel);
 				}
@@ -589,7 +594,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 				}
 			}
 			else if (pivotMetamodel == asPackage) {
-				CompleteClass completeClass = metamodelManager.getCompleteClass(asClass);
+				CompleteClass completeClass = completeModel.getCompleteClass(asClass);
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
 					if (partialPackage == oclstdlibPackage) {

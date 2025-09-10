@@ -24,16 +24,16 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public class UMLGenModelHelper extends AbstractGenModelHelper
 {
-	public UMLGenModelHelper(@NonNull MetamodelManager metamodelManager) {
-		super(metamodelManager);
+	public UMLGenModelHelper(@NonNull EnvironmentFactory environmentFactory) {
+		super(environmentFactory);
 	}
 
 	/**
-	 * Return the EClass-contained EStructuralFeature lements in the transitive clozure of the
+	 * Return the EClass-contained EStructuralFeature elements in the transitive clozure of the
 	 * 'redefines' EAnnotation of eStructuralFeature.
 	 */
 	protected @Nullable List<@NonNull EStructuralFeature> gatherDefinitions(@Nullable List<@NonNull EStructuralFeature> definingFeatures, @NonNull EStructuralFeature eStructuralFeature) {

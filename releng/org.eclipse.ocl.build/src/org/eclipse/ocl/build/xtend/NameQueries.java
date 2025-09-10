@@ -33,6 +33,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -52,14 +54,20 @@ public class NameQueries
 		return AbstractGenModelHelper.rawEncodeName(name, arity);
 	}
 
+	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull CompleteModelInternal completeModel;
+//	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private @NonNull Map<String, Integer> counters = new HashMap<String, Integer>();
 	private @NonNull Map<Object, String> definedSymbols = new HashMap<Object, String>();
 
-	public NameQueries(@NonNull MetamodelManager metamodelManager) {
-		this.metamodelManager = metamodelManager;
-		this.genModelHelper = new EcoreGenModelHelper(metamodelManager);
+	public NameQueries(@NonNull EnvironmentFactoryInternal environmentFactory) {
+		this.environmentFactory = environmentFactory;
+		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.completeModel = environmentFactory.getCompleteModel();
+//		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.genModelHelper = new EcoreGenModelHelper(environmentFactory);
 	}
 
 	public @Nullable String basicGetSymbolName(@NonNull Object elem) {
@@ -73,7 +81,7 @@ public class NameQueries
 		else if (elem instanceof PrimitiveType)  {
 		}
 		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
-			//	elem = metamodelManager.getCompleteModel().getCompleteClass((Type)elem);
+			//	elem = completeModel.getCompleteClass((Type)elem);
 			elem = metamodelManager.getPrimaryClass((org.eclipse.ocl.pivot.Class)elem);
 		}
 		return definedSymbols.get(elem);
@@ -253,7 +261,7 @@ public class NameQueries
 		else if ((elem instanceof MapType) && (((MapType)elem).getUnspecializedElement() != null)) {
 		}
 		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
-			elem = metamodelManager.getCompleteModel().getCompleteClass((Type)elem);
+			elem = completeModel.getCompleteClass((Type)elem);
 			//			elem = metamodelManager.getPrimaryClass((org.eclipse.ocl.pivot.Class)elem);
 		}
 		return getPrefixedSymbolNameWithoutNormalization(prefix, elem);

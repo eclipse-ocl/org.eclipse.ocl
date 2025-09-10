@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -142,11 +141,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	@NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType);
 
 	/**
 	 * @since 7.0

@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -63,13 +64,25 @@ public abstract class AbstractConversion
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull CompleteModelInternal completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	protected AbstractConversion(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
+		this.completeModel = environmentFactory.getCompleteModel();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompleteModelInternal getCompleteModel() {
+		return completeModel;
 	}
 
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {

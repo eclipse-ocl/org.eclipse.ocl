@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
@@ -620,6 +621,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull CodeGenString s;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull CompleteModelInternal completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor;
@@ -637,6 +639,7 @@ public class OCLinEcoreTablesUtils
 		this.metamodelManager = getMetamodelManager(genPackage);
 		this.s = new CodeGenString(metamodelManager, useNullAnnotations);
 		this.environmentFactory = metamodelManager.getEnvironmentFactory();
+		this.completeModel = environmentFactory.getCompleteModel();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genPackage = genPackage;
 		this.asPackage = ClassUtil.requireNonNull(getPivotPackage(genPackage));
@@ -644,7 +647,7 @@ public class OCLinEcoreTablesUtils
 		this.emitLiteralVisitor = new EmitLiteralVisitor(s, 0);
 		this.emitScopedLiteralVisitor = new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE);
 		this.emitQualifiedLiteralVisitor = new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE | SHOW_TABLES_PACKAGE);
-		this.genModelHelper = AbstractGenModelHelper.create(metamodelManager, genPackage.getGenModel());
+		this.genModelHelper = AbstractGenModelHelper.create(environmentFactory, genPackage.getGenModel());
 		this.activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
 	}
 
@@ -659,11 +662,11 @@ public class OCLinEcoreTablesUtils
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
 		Type elementType = metamodelManager.getASClass("Element");
 		if (oclstdlibPackage == asPackage) {
-			VoidType oclVoidType = metamodelManager.getStandardLibrary().getOclVoidType();
+			VoidType oclVoidType = standardLibrary.getOclVoidType();
 			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class type : oclstdlibPackage.getOwnedClasses()) {
 				assert type != null;
-				CompleteClass completeClass = metamodelManager.getCompleteClass(type);
+				CompleteClass completeClass = completeModel.getCompleteClass(type);
 				if ((elementType == null) || !completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
 					types.add(type);
 				}
@@ -676,7 +679,7 @@ public class OCLinEcoreTablesUtils
 				assert type != null;
 				boolean pruned = false;
 				Type myType = null;
-				CompleteClass completeClass = metamodelManager.getCompleteClass(type);
+				CompleteClass completeClass = completeModel.getCompleteClass(type);
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
 					if (partialPackage == oclstdlibPackage) {
