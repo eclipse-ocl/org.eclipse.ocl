@@ -789,7 +789,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		converter.installPivotUsage(csElement, newPivotElement);
 	}
 
-	protected void installRootContents(@NonNull CSResource csResource) {	// FIXME This code is no longer needed; delete once QVTd checked
+	protected void installRootContents(@NonNull CSResource csResource) {	// XXX FIXME This code is no longer needed; delete once QVTd checked
 		for (EObject eObject : csResource.getContents()) {
 			if (eObject instanceof Pivotable) {
 				Element pivotElement = ((Pivotable)eObject).getPivot();

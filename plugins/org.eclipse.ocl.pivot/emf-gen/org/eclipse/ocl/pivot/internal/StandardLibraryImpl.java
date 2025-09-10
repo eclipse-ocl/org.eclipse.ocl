@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -76,21 +75,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 * @ordered
 	 */
 	public static final int STANDARD_LIBRARY_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
-
-	/**
-	 * The URI used by default for the OCL Standard Library. NB. This
-	 * constant is repeated in GenerateOCLstdlibModel.mwe2 and in
-	 * org.eclipse.ocl.pivot/plugin.xml.
-	 */
-	public static final @NonNull String DEFAULT_OCL_STDLIB_URI = LibraryConstants.STDLIB_URI;
-
-	/**
-	 * The URI to provide the default Standard Library. This value may be
-	 * reassigned prior to any OCL analysis or evaluation to select a different
-	 * default. Alternatively the need for default may be bypassed by explicitly
-	 * invoking loadLibrary().
-	 */
-	protected @NonNull String defaultStandardLibraryURI = DEFAULT_OCL_STDLIB_URI;
 
 	/**
 	 * <!-- begin-user-doc -->

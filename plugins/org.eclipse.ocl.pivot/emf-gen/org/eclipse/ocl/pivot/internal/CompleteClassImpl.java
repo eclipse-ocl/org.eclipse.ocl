@@ -88,6 +88,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		@Override
 		protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
 			assert partialClass != null;
+			if ("BooleanLiteralExp".equals(partialClass.getName())) {
+				getClass();
+			}
 			CompleteClassImpl owner = (CompleteClassImpl)this.owner;
 			if (PARTIAL_CLASSES.isActive()) {
 				PARTIAL_CLASSES.println("Do-didAdd " + partialClass + " => " + this);
