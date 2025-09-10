@@ -87,6 +87,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -255,6 +256,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
+	protected final @NonNull CompleteModelInternal completeModel;
 	/*protected final @NonNull PivotNameResolver nameResolver;*/
 
 	/**
@@ -268,6 +270,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		this.environmentFactory = context.getEnvironmentFactory();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.completeModel = environmentFactory.getCompleteModel();
 		/*this.nameResolver = new PivotNameResolver(environmentFactory); // FIXME factory method*/
 	}
 
@@ -363,7 +366,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				Operation operation = (Operation)invocation;
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
 				if (owningClass != null) {
-					CompleteClass completeClass = metamodelManager.getCompleteClass(owningClass);
+					CompleteClass completeClass = completeModel.getCompleteClass(owningClass);
 					int depth = completeClass.getFlatClass().getDepth();
 					if ((bestOperation == null) || (depth > bestDepth)) {
 						bestOperation = operation;
@@ -678,7 +681,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			//
 			if (asOperation == null) {
 				Operation asCoercion = null;
-				CompleteClass completeClass = metamodelManager.getCompleteClass(explicitSourceType);
+				CompleteClass completeClass = completeModel.getCompleteClass(explicitSourceType);
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					if (partialClass instanceof PrimitiveType) {
 						for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
@@ -723,7 +726,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 */
 	protected @Nullable Operation resolveCoercionFrom(@NonNull Type argType, boolean argIsRequired, @NonNull Type parameterType, boolean parameterIsRequired) {
 		if (!standardLibrary.conformsTo(argType, argIsRequired, null, parameterType, parameterIsRequired, null)) {
-			CompleteClass completeClass = metamodelManager.getCompleteClass(argType);
+			CompleteClass completeClass = completeModel.getCompleteClass(argType);
 			for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 				if (partialClass instanceof PrimitiveType) {
 					for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {

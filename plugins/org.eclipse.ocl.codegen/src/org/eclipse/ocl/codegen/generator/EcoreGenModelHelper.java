@@ -13,12 +13,12 @@ package org.eclipse.ocl.codegen.generator;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public class EcoreGenModelHelper extends AbstractGenModelHelper
 {
-	public EcoreGenModelHelper(@NonNull MetamodelManager metamodelManager) {
-		super(metamodelManager);
+	public EcoreGenModelHelper(@NonNull EnvironmentFactory environmentFactory) {
+		super(environmentFactory);
 	}
 
 	@Override

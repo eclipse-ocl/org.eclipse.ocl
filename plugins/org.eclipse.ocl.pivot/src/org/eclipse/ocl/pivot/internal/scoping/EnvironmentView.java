@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -327,6 +328,10 @@ public class EnvironmentView
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull CompleteModelInternal completeModel;
 	protected final @NonNull EStructuralFeature reference;
 	private EClassifier requiredType;
 
@@ -349,6 +354,7 @@ public class EnvironmentView
 
 	public EnvironmentView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
 		this.environmentFactory = environmentFactory;
+		this.completeModel = environmentFactory.getCompleteModel();
 		this.reference = reference;
 		this.requiredType = reference.getEType();
 		this.name = name;
@@ -405,7 +411,7 @@ public class EnvironmentView
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want operations when looking for NAMESPACE
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
 			type = PivotUtil.getUnspecializedTemplateableElement(type);
-			CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(type);
+			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
 				for (@NonNull Operation operation : completeClass.getOperations(featureFilter, name2)) {
@@ -525,7 +531,7 @@ public class EnvironmentView
 		if (accepts(PivotPackage.Literals.PROPERTY)
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
-			CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(type);
+			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
 				for (@NonNull Property property : completeClass.getProperties(featureFilter, name2)) {
@@ -543,7 +549,7 @@ public class EnvironmentView
 	public void addAllStates(@NonNull Type type) {
 		if (accepts(PivotPackage.Literals.STATE)) {
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
-			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(type);
+			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
 				for (@NonNull State state : completeClass.getStates(name2)) {
@@ -594,7 +600,7 @@ public class EnvironmentView
 					addNamedElement(type);
 				}
 				else {
-					completePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
+					completePackage = completeModel.getPrimitiveCompletePackage();
 					type = completePackage.getMemberType(name2);
 					if (type != null) {
 						addNamedElement(type);
@@ -605,7 +611,7 @@ public class EnvironmentView
 				for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
 					addNamedElement(completeClass.getPrimaryClass());
 				}
-				PrimitiveCompletePackage primitiveCompletePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
+				PrimitiveCompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 				for (CompleteClass completeClass : primitiveCompletePackage.getOwnedCompleteClasses()) {
 					addNamedElement(completeClass.getPrimaryClass());
 				}
@@ -623,7 +629,7 @@ public class EnvironmentView
 					addNamedElement(type);
 				}
 				else {
-					completePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
+					completePackage = completeModel.getPrimitiveCompletePackage();
 					type = completePackage.getMemberType(name2);
 					if (type != null) {
 						addNamedElement(type);
@@ -634,7 +640,7 @@ public class EnvironmentView
 				for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
 					addNamedElement(completeClass.getPrimaryClass());
 				}
-				PrimitiveCompletePackage primitiveCompletePackage = environmentFactory.getCompleteModel().getPrimitiveCompletePackage();
+				PrimitiveCompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 				for (CompleteClass completeClass : primitiveCompletePackage.getOwnedCompleteClasses()) {
 					addNamedElement(completeClass.getPrimaryClass());
 				}
@@ -839,7 +845,6 @@ public class EnvironmentView
 	}
 
 	public void addRootPackages() {
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		String name2 = name;
 		if (name2 != null) {
 			for (CompletePackage rootCompletePackage : PivotUtil.getOwnedCompletePackages(completeModel)) {
@@ -1010,6 +1015,7 @@ public class EnvironmentView
 	 */
 	public int resolveDuplicates() {
 		if ((contentsSize > 1) && (getName() != null)) {
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			int newSize = 0;
 			for (Map.Entry<@NonNull String, Object> entry : contentsByName.entrySet()) {
 				Object listOrValue = entry.getValue();
@@ -1029,7 +1035,7 @@ public class EnvironmentView
 									assert comparators != null;
 									for (@NonNull Comparator<@NonNull Object> comparator : comparators) {
 										if (comparator instanceof Disambiguator<?>) {
-											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory.getStandardLibrary(), iValue, jValue);
+											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(standardLibrary, iValue, jValue);
 										}
 										else {
 											verdict = comparator.compare(iValue, jValue);
