@@ -20,5 +20,6 @@ Export-Package: org.eclipse.ocl.examples.eventmanager;
  org.eclipse.ocl.examples.eventmanager.framework;x-friends:="org.eclipse.ocl.examples.eventmanager.tests",
  org.eclipse.ocl.examples.eventmanager.util;x-friends:="org.eclipse.ocl.examples.impactanalyzer.tests,org.eclipse.ocl.examples.eventmanager.tests"
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.6.0,3.0.0)"
+Require-Bundle: org.eclipse.emf.common;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecore;bundle-version="[2.6.0,3.0.0)"
 Automatic-Module-Name: org.eclipse.ocl.examples.eventmanager

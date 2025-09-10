@@ -12,6 +12,7 @@ Export-Package: org.eclipse.ocl.control,
  org.eclipse.ocl.control.impl,
  org.eclipse.ocl.control.util
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.emf.common;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)"
