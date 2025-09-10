@@ -687,6 +687,13 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public Continuation<?> visitPackageCS(@NonNull PackageCS csPackage) {
+		CompleteModelInternal completeModel = context.getStandardLibrary().getCompleteModel();
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getPivot(org.eclipse.ocl.pivot.Package.class, csPackage);
+		if (asPackage != null) {
+			for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
+				completeModel.getCompleteClass(asClass);
+			}
+		}
 		return null;
 	}
 

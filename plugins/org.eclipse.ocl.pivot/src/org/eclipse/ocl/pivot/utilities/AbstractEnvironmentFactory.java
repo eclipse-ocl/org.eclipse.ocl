@@ -1007,7 +1007,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		EPackage ePackage = eClass.getEPackage();
 		assert ePackage != null;
 		Model asMetamodel = getMetamodel(ePackage);
-		for (org.eclipse.ocl.pivot.Package asMetapackage : asMetamodel.getOwnedPackages()) {
+		for (org.eclipse.ocl.pivot.Package asMetapackage : asMetamodel.getOwnedPackages()) {			// XXX use a cache/map
 			org.eclipse.ocl.pivot.Class asMetaClass = NameUtil.getNameable(asMetapackage.getOwnedClasses(), metaclassName);
 			if (asMetaClass != null) {
 				return asMetaClass;
