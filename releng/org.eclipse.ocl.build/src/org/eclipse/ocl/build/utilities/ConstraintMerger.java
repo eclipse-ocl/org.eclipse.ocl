@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
@@ -108,6 +109,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 		//		final String pivotNsURI = ClassUtil.requireNonNull(ecorePivotPackage.getNsURI());
 		OCLInternal ocl = OCLInternal.newInstance(resourceSet);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
 		//		ocl.getResourceSet().getResources().add(ecoreResource);		// Don't load another copy
@@ -165,7 +167,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 						}
 						else if (eObject instanceof org.eclipse.ocl.pivot.Class) {
 							org.eclipse.ocl.pivot.Class mergeType = (org.eclipse.ocl.pivot.Class)eObject;
-							CompleteClass completeClass = metamodelManager.getCompleteClass(mergeType);
+							CompleteClass completeClass = completeModel.getCompleteClass(mergeType);
 							List<org.eclipse.ocl.pivot.Class> mergeTypes = completeClass2mergeTypes.get(completeClass);
 							if (mergeTypes == null) {
 								mergeTypes = new ArrayList<>();

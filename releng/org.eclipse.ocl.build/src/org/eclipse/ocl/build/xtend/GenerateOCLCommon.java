@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
@@ -229,7 +230,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		protected void analyze(@NonNull Model thisModel) {
 			for (NamedElement asElement : context.external2name.keySet()) {
 				if (asElement instanceof org.eclipse.ocl.pivot.Class) {
-					CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
+					CompleteClassInternal completeClass = context.completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
 					for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
 						externalClasses.add(asPartialClass);
 					}
@@ -361,7 +362,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				sortedParameterTypes.add(asClass);
 			}
 			else if (!externalClasses.contains(asClass)){
-				CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
+				CompleteClassInternal completeClass = context.completeModel.getCompleteClass(asClass);
 				for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
 					internalClasses.add(asPartialClass);
 				}
@@ -595,6 +596,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected final @NonNull Map<@NonNull String, @NonNull NamedElement> name2external = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull String> generatedClassNameMap = new HashMap<>();
 	protected EnvironmentFactoryInternal environmentFactory;
+	protected CompleteModelInternal completeModel;
 	protected MetamodelManager metamodelManager;
 	protected NameQueries nameQueries;
 	protected Model thisModel;
@@ -880,7 +882,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected @NonNull String getPrefixedSymbolNameWithoutNormalization(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull String prefix) {
-		CompleteClass completeClass = metamodelManager.getCompleteClass(type);
+		CompleteClass completeClass = completeModel.getCompleteClass(type);
 		org.eclipse.ocl.pivot.@NonNull Class primaryType = completeClass.getPrimaryClass();
 		String normalizedSymbol = nameQueries.basicGetSymbolName(completeClass);
 		if ((type == primaryType) && (normalizedSymbol != null)) {
@@ -1365,7 +1367,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected void setEnvironmentFactory(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
+		this.completeModel = environmentFactory.getCompleteModel();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
-		nameQueries = new NameQueries(metamodelManager);
+		nameQueries = new NameQueries(environmentFactory);
 	}
 }

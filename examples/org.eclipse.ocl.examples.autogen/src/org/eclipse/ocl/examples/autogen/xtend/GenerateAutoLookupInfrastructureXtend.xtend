@@ -12,31 +12,31 @@ package org.eclipse.ocl.examples.autogen.xtend
 
 import java.util.ArrayList
 import java.util.List
+import java.util.Set
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.mwe.core.WorkflowContext
 import org.eclipse.emf.mwe.core.issues.Issues
-import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper
-import org.eclipse.ocl.codegen.generator.GenModelHelper
-import org.eclipse.ocl.pivot.Class
-import org.eclipse.ocl.pivot.Operation
-import org.eclipse.ocl.pivot.Type
-import org.eclipse.ocl.pivot.utilities.ClassUtil
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory
-import org.eclipse.ocl.pivot.CollectionType
-import org.eclipse.ocl.pivot.utilities.OCL
+import org.eclipse.emf.mwe.core.monitor.ProgressMonitor
 import org.eclipse.ocl.build.utilities.GenPackageHelper
-import org.eclipse.ocl.examples.autogen.lookup.LookupCodeGenerator
-import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup
-import org.eclipse.ocl.pivot.model.OCLstdlib
-import java.util.Set
-import org.eclipse.ocl.examples.autogen.lookup.LookupCGUtil
 import org.eclipse.ocl.build.xtend.GenerateVisitorsXtend
 import org.eclipse.ocl.build.xtend.MergeWriter
-import org.eclipse.emf.mwe.core.WorkflowContext
-import org.eclipse.emf.mwe.core.monitor.ProgressMonitor
+import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper
+import org.eclipse.ocl.codegen.generator.GenModelHelper
+import org.eclipse.ocl.examples.autogen.lookup.LookupCGUtil
+import org.eclipse.ocl.examples.autogen.lookup.LookupCodeGenerator
+import org.eclipse.ocl.pivot.Class
+import org.eclipse.ocl.pivot.CollectionType
+import org.eclipse.ocl.pivot.Operation
+import org.eclipse.ocl.pivot.Type
+import org.eclipse.ocl.pivot.model.OCLstdlib
+import org.eclipse.ocl.pivot.utilities.ClassUtil
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory
 import org.eclipse.ocl.pivot.utilities.MetamodelManager
+import org.eclipse.ocl.pivot.utilities.OCL
 import org.eclipse.ocl.pivot.utilities.PivotUtil
+import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup
 
 class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 {
@@ -567,8 +567,8 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	}
 	
 	private def GenModelHelper createGenModelHelper(GenPackage genPackage) {
-		var MetamodelManager mManager = PivotUtil.getEnvironmentFactory(genPackage.getEcorePackage()).metamodelManager;
-		return AbstractGenModelHelper.create(mManager, genPackage.getGenModel());
+		val environmentFactory = PivotUtil.getEnvironmentFactory(genPackage.getEcorePackage())
+		return AbstractGenModelHelper.create(environmentFactory, genPackage.getGenModel());
 	}
 	
 	private def String getTypeLiteral(Type type) {

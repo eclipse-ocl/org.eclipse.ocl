@@ -760,7 +760,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			String name = asProperty.getName();
 			Type type = asNavigationCallExp.getOwnedSource().getType();
 			if (type != null) {
-				CompleteClassInternal completeClass = context.getMetamodelManager().getCompleteClass(type);
+				CompleteClassInternal completeClass = context.getCompleteModel().getCompleteClass(type);
 				Iterable<@NonNull Property> properties = completeClass.getProperties(name);
 				if ((properties != null) && Iterables.size(properties) > 1) {
 					NameExpCS csOppositeNameExp = createNameExpCS(asOpposite, null);

@@ -518,7 +518,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 							}
 						}
 						else if (intermediateScopeElement instanceof org.eclipse.ocl.pivot.Class) {
-							CompleteClass completeClass = metamodelManager.getCompleteClass((org.eclipse.ocl.pivot.Class)intermediateScopeElement);
+							CompleteClass completeClass = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)intermediateScopeElement);
 							Iterable<@NonNull Property> memberProperties = completeClass.getProperties((Property)primaryElement);
 							if ((memberProperties != null) && !Iterables.isEmpty(memberProperties)) {
 								noAlternatives = false;
