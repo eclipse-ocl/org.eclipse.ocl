@@ -13,6 +13,7 @@ Export-Package: company,
  primitivetypes,
  primitivetypes.impl
 Require-Bundle: org.eclipse.core.runtime;resolution:=optional,
+ org.eclipse.emf.common;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.ocl.examples.impactanalyzer.testmodel.company
