@@ -587,7 +587,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
 			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
-			loadDefaultLibrary(defaultStandardLibraryURI);
+			if (asLibraries.size() > 0) {
+				defineLibraryTypes(asLibraries.get(0));				// XXX ?? use installRootContents instead
+			}
+			else {
+				loadDefaultLibrary(defaultStandardLibraryURI);
+			}
 		}
 		return nameToLibraryTypeMap2.get(typeName);
 	}
@@ -730,7 +735,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	private void defineLibraryTypes(@NonNull Library asLibrary) {
 		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = null;
 		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asLibrary)) {
-			Type asPrimaryType = getPrimaryType(asClass);
+			Type asPrimaryType = asClass; // XXX getPrimaryType(asClass);
 			if ((asClass == asPrimaryType) && !PivotUtil.isOrphanType(asClass)) {
 				if (asClasses == null) {
 					asClasses = new ArrayList<>();

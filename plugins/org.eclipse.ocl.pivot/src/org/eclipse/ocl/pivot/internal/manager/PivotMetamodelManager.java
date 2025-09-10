@@ -51,8 +51,6 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
@@ -68,7 +66,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -673,9 +670,15 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
-		if ((asMetamodel == null) && !(pivotType instanceof InvalidType) && !(pivotType instanceof IterableType) && !(pivotType instanceof LambdaType) && !(pivotType instanceof TupleType) && !(pivotType instanceof VoidType)) {
-			getASmetamodel();
-		}
+	/*	if (asMetamodel == null) {
+			if (!(pivotType instanceof InvalidType) && !(pivotType instanceof IterableType) && !(pivotType instanceof LambdaType) && !(pivotType instanceof TupleType) && !(pivotType instanceof VoidType)) {
+				PivotUtil.errPrintln("getCompleteClass => getASmetamodel for a " + pivotType.getClass().getSimpleName());
+				getASmetamodel();
+			}
+			else {
+				PivotUtil.errPrintln("getCompleteClass getASmetamodel suppressed for a " + pivotType.getClass().getSimpleName());
+			}
+		} */
 		return completeModel.getCompleteClass(pivotType);
 	}
 

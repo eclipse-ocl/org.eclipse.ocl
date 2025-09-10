@@ -1522,6 +1522,9 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
+		if ("BooleanLiteralExp".equals(newName)) {
+			getClass();		// XXX
+		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {
