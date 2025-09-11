@@ -866,15 +866,4 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			}
 		}
 	}
-
-	@Override
-	public void setName(String newName) {
-		if ("$uml$".equals(newName)) {
-			getClass();		// XXX
-		}
-		if ("http://www.eclipse.org/uml2/5.0.0/UML".equals(newName)) {
-			getClass();		// XXX
-		}
-		super.setName(newName);
-	}
 } //CompletePackageImpl
