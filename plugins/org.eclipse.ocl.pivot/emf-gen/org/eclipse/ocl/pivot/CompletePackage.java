@@ -143,7 +143,11 @@ public interface CompletePackage extends NamedElement
 	 */
 	void dispose();
 
-	@NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class pivotType);
+	/**
+	 * Return the CompleteClass for the asClass partial Class, creating it in the CompleteMOdel hierarchy if necessary.
+	 * On return asClass is registered as a partial Class of the CompleteClass.
+	 */
+	@NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	org.eclipse.ocl.pivot.Class getMemberType(String name);
 

@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 
 /**
@@ -135,6 +136,11 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
+
+	/**
+	 * @since 7.0
+	 */
 	@Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId);
 
 	/**
@@ -156,7 +162,12 @@ public interface CompleteModel extends NamedElement
 	 */
 	default @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return null; }
 	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages();
+	@Deprecated /* Use Class */
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	@NonNull CompleteEnvironment getCompleteEnvironment();
 
 	/**

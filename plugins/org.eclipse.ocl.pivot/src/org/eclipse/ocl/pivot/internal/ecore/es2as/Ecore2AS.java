@@ -761,7 +761,11 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (needsLibrary && (asClasses != null)) {
 			Set<@NonNull String> installNames = new HashSet<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
-				installNames.add(PivotUtil.getName(asClass));
+				String className = asClass.getName();
+				assert className != null;		// non-null name such as UML Association shouldn't happen here
+				if (className != null) {		// non-null name such as UML ASsociation shouldn't happen here
+					installNames.add(className);
+				}
 			}
 			for (org.eclipse.ocl.pivot.Class asClass : OCLstdlib.getDefaultPackage().getOwnedClasses()) {		// FIXME use contribution
 				assert asClass != null;
@@ -1218,7 +1222,8 @@ public class Ecore2AS extends AbstractExternal2AS
 					try {
 						behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
 						if (behavioralClass != null) {
-							if (PivotUtil.getName(behavioralClass).equals(pivotElement.getName())) {
+							String behavioralName = behavioralClass.getName();
+							if ((behavioralName == null) || behavioralName.equals(pivotElement.getName())) {
 								behavioralClass = null;
 							}
 							else {

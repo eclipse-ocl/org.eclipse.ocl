@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -400,7 +401,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		org.eclipse.uml2.uml.Stereotype ecoreStereotype = null;
 		DataType pivotElement;
 		if (asPrimitiveType == standardLibrary.getBooleanType()) {
-			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
+			pivotElement = converter.refreshElement(BooleanType.class, PivotPackage.Literals.BOOLEAN_TYPE, umlPrimitiveType);
 		}
 		else if (asPrimitiveType == standardLibrary.getIntegerType()) {
 			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
