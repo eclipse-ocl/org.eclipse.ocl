@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * OperationContext supports parsing OCL expressions in the context of an Operation.
@@ -28,7 +29,7 @@ public class OperationContext extends ClassContext
 	private final @Nullable String resultVariableName;		// Null for none
 
 	public OperationContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, @NonNull Operation operation, @Nullable String resultVariableName) {
-		super(environmentFactory, uri, ClassUtil.requireNonNull(operation.getOwningClass()), null);
+		super(environmentFactory, uri, PivotUtil.getOwningClass(operation), null);
 		this.operation = operation;
 		this.resultVariableName = resultVariableName;
 	}

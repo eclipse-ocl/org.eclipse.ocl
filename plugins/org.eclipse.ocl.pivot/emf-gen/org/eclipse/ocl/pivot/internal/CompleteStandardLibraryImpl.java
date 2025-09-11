@@ -1515,19 +1515,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		super.resetLibrary();
 	}
 
-	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(@NonNull Class<T> requiredClassType, @NonNull String name) {
+	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(@NonNull Class<@NonNull T> requiredClassType, @NonNull String name) {
 		org.eclipse.ocl.pivot.Class type = getRequiredLibraryType(name);
-	//	if (collectionTypeManager == null) {
-	//		init();
-	//	}
-		if (requiredClassType.isAssignableFrom(type.getClass())) {
-			@SuppressWarnings("unchecked")
-			T type2 = (T) type;
-			return type2;
-		}
-		else {
-			throw new IllegalLibraryException(name + " is not a " + requiredClassType.getSimpleName());
-		}
+		return requiredClassType.cast(type);
 	}
 
 	protected @NonNull <T extends TemplateableElement> T resolveRequiredTemplateableType(@NonNull Class<T> requiredClassType, @NonNull String name, int parameterCount) {

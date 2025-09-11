@@ -63,6 +63,9 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
 	protected final @NonNull MetamodelManager metamodelManager;
+	/**
+	 * @since 7.0
+	 */
 	protected final @NonNull CompleteModelInternal completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
