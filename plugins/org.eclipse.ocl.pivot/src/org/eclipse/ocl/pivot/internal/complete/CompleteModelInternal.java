@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public interface CompleteModelInternal extends CompleteModel
@@ -33,6 +34,7 @@ public interface CompleteModelInternal extends CompleteModel
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated /* drop 'Shared' */
 	@Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	/**
@@ -66,6 +68,17 @@ public interface CompleteModelInternal extends CompleteModel
 	void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemovePartialModel(@NonNull Model partialModel);
+
+	/**
+	 * Ensure that a CompleteClass is referenceable for all classes in asPackage.
+	 * @since 7.0
+	 */
+	void getCompleteClasses(@NonNull ASResource asResource);
+	/**
+	 * Ensure that a CompleteClass is referenceable for all classes in asPackage.
+	 * @since 7.0
+	 */
+	void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable String getCompleteURI(@Nullable String nsURI);
 	/**
 	 * @since 7.0

@@ -799,7 +799,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);
 		org.eclipse.ocl.pivot.Package thisPackage = getEquivalentPackage(thisModel, thatPackage);
 		List<org.eclipse.ocl.pivot.Class> theseClasses = thisPackage.getOwnedClasses();
-		String className = PivotUtil.getName(thatClass);
+		String className = thatClass.getName();
+	//	assert className != null;							// XXX Nameless classes such as UML Association cannot be opposites
 		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
 		if (thisClass == null) {
 			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();

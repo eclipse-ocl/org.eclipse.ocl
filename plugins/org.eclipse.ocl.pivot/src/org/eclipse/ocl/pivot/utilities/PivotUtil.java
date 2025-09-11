@@ -1922,6 +1922,7 @@ public class PivotUtil implements PivotConstants
 	 * @since 1.3
 	 */
 	public static @NonNull String getName(@NonNull NamedElement namedElement) {
+		assert !(namedElement instanceof org.eclipse.ocl.pivot.Class);		// UML Associations may be nameless and reified as Class
 		return ClassUtil.requireNonNull(namedElement.getName());
 	}
 

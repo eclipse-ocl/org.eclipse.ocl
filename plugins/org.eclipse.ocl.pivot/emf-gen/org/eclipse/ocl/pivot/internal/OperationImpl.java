@@ -1629,7 +1629,7 @@ implements Operation {
 	 */
 	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		CompleteClassInternal completeClass = environmentFactory.getCompleteEnvironment().basicGetCompleteClass(PivotUtil.getOwningClass(this));
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().basicGetCompleteClass(PivotUtil.getOwningClass(this));
 		if (completeClass != null) {
 			Iterable<@NonNull Operation> operationOverloads = completeClass.getOperationOverloads(this);
 			if (operationOverloads != null) {

@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 
 public interface CompleteEnvironmentInternal extends CompleteEnvironment
@@ -22,11 +21,10 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	/**
 	 * @since 7.0
 	 */
-	default @Nullable CompleteClassInternal basicGetCompleteClass(@NonNull Type asType) { return null; }
+	@Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	void dispose();
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
-	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType);
 	@Override
 	@NonNull CompleteModelInternal getOwnedCompleteModel();
 	@Override

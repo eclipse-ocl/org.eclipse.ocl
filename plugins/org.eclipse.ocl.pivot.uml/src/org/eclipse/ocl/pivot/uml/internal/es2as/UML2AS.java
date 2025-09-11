@@ -1200,7 +1200,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 		if (umlDataType instanceof org.eclipse.uml2.uml.PrimitiveType) {
 			PrimitiveType asPrimitiveType = getPrimitiveTypeByName((org.eclipse.uml2.uml.PrimitiveType)umlDataType);
 			if (asPrimitiveType != null) {
-				if (PivotUtil.getName(asPrimitiveType).equals(umlDataType.getName())) {
+				String primitiveName = asPrimitiveType.getName();
+				if ((primitiveName != null) && primitiveName.equals(umlDataType.getName())) {
 					return null;							// Same named PrimitiveType re-uses / is a synonym
 				}
 				else {

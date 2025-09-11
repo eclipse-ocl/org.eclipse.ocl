@@ -343,8 +343,9 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		if (instanceClass != null) {
 			behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
 			if (behavioralClass != null) {
-				String behavioralName = PivotUtil.getName(behavioralClass);
-				if (behavioralName.equals(pivotElement.getName())) {
+				String behavioralName = behavioralClass.getName();
+				assert behavioralName != null;			// Null name such as UML Association shouldn't happen here.
+				if ((behavioralName == null) || behavioralName.equals(pivotElement.getName())) {
 					behavioralClass = null;
 				}
 			}

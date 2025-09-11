@@ -27,7 +27,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -38,7 +41,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -46,6 +51,7 @@ import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -99,26 +105,15 @@ public class OCLstdlibTests extends XtextTestCase
 		return map;
 	}
 
-	protected ASResource doLoadAS(@NonNull ResourceSet resourceSet, @NonNull URI libraryURI, @NonNull Resource javaResource, boolean validateMonikers) {
-		ASResource asResource = (ASResource) resourceSet.getResource(libraryURI, true);
-		assertNoResourceErrors("Load failed", asResource);
-		assertNoUnresolvedProxies("File Model", asResource);
-		assertNoValidationErrors("File Model", asResource);
-		//		PivotAliasCreator.refreshPackageAliases(javaResource);
-		assertNoResourceErrors("Java Model", javaResource);
-		assertNoUnresolvedProxies("Java Model", javaResource);
-		assertNoValidationErrors("Java Model", javaResource);
-		if (!validateMonikers) {
-			return asResource;
-		}
+	protected void doCompare(@NonNull Resource javaASResource, @NonNull ASResource oclASResource) {
 		//
 		//	Check similar content
 		//
-		Map<String,Element> fileMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(asResource));
+		Map<String,Element> fileMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(oclASResource));
 		//		for (String moniker : fileMoniker2asMap.keySet()) {
 		//			System.out.println("File : " + moniker);
 		//		}
-		Map<String,Element> javaMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(javaResource));
+		Map<String,Element> javaMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(javaASResource));
 		//		for (String moniker : javaMoniker2asMap.keySet()) {
 		//			System.out.println("Java : " + moniker);
 		//		}
@@ -184,6 +179,27 @@ public class OCLstdlibTests extends XtextTestCase
 				}
 			}
 		}
+	}
+
+	protected @NonNull ASResource doLoadJavaAS(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource javaResource) {
+		assertNoResourceErrors("Java Model", javaResource);
+		assertNoUnresolvedProxies("Java Model", javaResource);
+		assertNoValidationErrors("Java Model", javaResource);
+		return javaResource;
+	}
+
+	protected @NonNull ASResource doLoadOCLAS(@NonNull EnvironmentFactory environmentFactory, @NonNull URI libraryURI) {
+		CompleteModelInternal completeModel = (CompleteModelInternal)environmentFactory.getCompleteModel();
+		ResourceSet asResourceSet = environmentFactory.getASResourceSet();
+		ASResource asResource = (ASResource) asResourceSet.getResource(libraryURI, true);
+		completeModel.getCompleteClasses(asResource);
+		BooleanType booleanType = environmentFactory.getStandardLibrary().getBooleanType();
+		CompletePackage completePackage = completeModel.getPrimitiveCompletePackage();
+		CompleteClass completeClass = completePackage.getOwnedCompleteClass(booleanType.getName());
+		assert completeClass != null;
+		assertNoResourceErrors("Load failed", asResource);
+		assertNoUnresolvedProxies("File Model", asResource);
+		assertNoValidationErrors("File Model", asResource);
 		return asResource;
 	}
 
@@ -376,22 +392,23 @@ public class OCLstdlibTests extends XtextTestCase
 	 * Java implementation.
 	 */
 	public void testOCLstdlib_AS() throws Exception {
-		OCL ocl = OCL.newInstance(getProjectMap());
-		//
-		//	Load OCL stdlib as an AS file.
-		//
-		//		ResourceSet resourceSet = ocl.getResourceSet();
-		//		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-		//			getProjectMap().initializeResourceSet(resourceSet);
-		//		}
-		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true);
+		StandaloneProjectMap projectMap = getProjectMap();
 		//
 		//	Load 'oclstdlib.oclstdlib' as pre-code-generated Java.
 		//
-		Resource javaResource = OCLstdlib.getDefault();
-		ASResource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), libraryURI, javaResource, true);
-		asResource.setASonly(true);
-		ocl.dispose();
+		OCL ocl1 = OCL.newInstance(projectMap);
+		ASResource javaASResource = doLoadJavaAS(ocl1.getEnvironmentFactory(), OCLstdlib.getDefault());
+		ocl1.deactivate();
+		//
+		//	Load OCL stdlib as an AS file.
+		//
+		OCL ocl2 = OCL.newInstance(projectMap);
+		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true);
+		ASResource oclASResource = doLoadOCLAS(ocl2.getEnvironmentFactory(), libraryURI);
+		doCompare(javaASResource, oclASResource);
+	//	oclASResource.setASonly(true);
+		ocl2.dispose();
+		ocl1.dispose();
 	}
 
 	/**
@@ -399,25 +416,28 @@ public class OCLstdlibTests extends XtextTestCase
 	 * Java implementation accessed as a platform:/resource.
 	 */
 	public void testPivot_AS_resource() throws Exception {
-		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		//
-		//	Load OCL stdlib as an AS file.
-		//
-		//		ResourceSet resourceSet = new ResourceSetImpl();
-		//		getProjectMap().initializeResourceSet(resourceSet);
-		//		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
-		URI pivotURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
+		StandaloneProjectMap projectMap = getProjectMap();
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//
-		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
+		OCLInternal ocl1 = OCLInternal.newInstance(projectMap, null);
+		CompleteStandardLibrary standardLibrary = ocl1.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
-		Resource javaResource = oclMetamodel.eResource();
 		@SuppressWarnings("unused")
-		ASResource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), pivotURI, javaResource, false);		// FIXME Contents are far from identical
-		asResource.setASonly(true);
-		ocl.dispose();
+		ASResource javaASResource = doLoadJavaAS(ocl1.getEnvironmentFactory(), (ASResource)oclMetamodel.eResource());
+		ocl1.deactivate();
+		//
+		//	Load OCL stdlib as an AS file.
+		//
+		OCL ocl2 = OCL.newInstance(projectMap);
+		URI pivotURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
+		@SuppressWarnings("unused")
+		ASResource oclASResource = doLoadOCLAS(ocl2.getEnvironmentFactory(), pivotURI);
+	//	doCompare(javaASResource, oclASResource);						// FIXME Contents are far from identical
+	//	oclASResource.setASonly(true);
+		ocl2.dispose();
+		ocl1.dispose();
 	}
 
 	/**
@@ -425,24 +445,27 @@ public class OCLstdlibTests extends XtextTestCase
 	 * Java implementation accessed as a platform:/plugin.
 	 */
 	public void testPivot_AS_bundle() throws Exception {
-		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		//
-		//	Load OCL stdlib as an AS file.
-		//
-		//		ResourceSet resourceSet = new ResourceSetImpl();
-		//		getProjectMap().initializeResourceSet(resourceSet);
-		//		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
-		URI pivotURI = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
+		StandaloneProjectMap projectMap = getProjectMap();
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//
-		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
+		OCLInternal ocl1 = OCLInternal.newInstance(projectMap, null);
+		CompleteStandardLibrary standardLibrary = ocl1.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
-		Resource javaResource = oclMetamodel.eResource();
 		@SuppressWarnings("unused")
-		ASResource asResource = doLoadAS(ocl.getMetamodelManager().getASResourceSet(), pivotURI, javaResource, false);		// FIXME Contents are far from identical
-		asResource.setASonly(true);
-		ocl.dispose();
+		ASResource javaASResource = doLoadJavaAS(ocl1.getEnvironmentFactory(), (ASResource)oclMetamodel.eResource());
+		ocl1.deactivate();
+		//
+		//	Load OCL stdlib as an AS file.
+		//
+		OCL ocl2 = OCL.newInstance(projectMap);
+		URI pivotURI = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
+		@SuppressWarnings("unused")
+		ASResource oclASResource = doLoadOCLAS(ocl2.getEnvironmentFactory(), pivotURI);
+	//	doCompare(javaASResource, oclASResource);						// FIXME Contents are far from identical
+	//	oclASResource.setASonly(true);
+		ocl2.dispose();
+		ocl1.dispose();
 	}
 }
