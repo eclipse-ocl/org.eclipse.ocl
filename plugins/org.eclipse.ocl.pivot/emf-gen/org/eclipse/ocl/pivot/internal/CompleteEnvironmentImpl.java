@@ -32,9 +32,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -42,7 +39,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -103,18 +99,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable CompleteClassInternal basicGetCompleteClass(@NonNull Type pivotType) {
-		if (pivotType instanceof TemplateParameter) {
-			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, getOwnedStandardLibrary().getOclAnyType());
-		}
-		if (pivotType instanceof ElementExtension) {
-			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();
-			if (stereotype != null) {
-				pivotType = stereotype;
-			}
-		}
-		CompleteClassInternal completeClass = class2completeClass.get(pivotType);
-		return completeClass;
+	public @Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return class2completeClass.get(asClass);
 	}
 
 	/**
@@ -374,39 +360,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public void dispose() {
 		class2completeClass.clear();
-	}
-
-	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
-		if (pivotType instanceof TemplateParameter) {
-			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, getOwnedStandardLibrary().getOclAnyType());
-		}
-		if (pivotType instanceof ElementExtension) {
-			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();
-			if (stereotype != null) {
-				pivotType = stereotype;
-			}
-		}
-		CompleteClassInternal completeClass = class2completeClass.get(pivotType);
-		if (completeClass != null) {
-			return completeClass;
-		}
-		if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)pivotType;
-			completeClass = (CompleteClassInternal) ownedCompleteModel.basicGetSharedCompleteClass(asClass);
-			if (completeClass != null) {
-				return completeClass;
-			}
-			org.eclipse.ocl.pivot.Package pivotPackage = asClass.getOwningPackage();
-			if (pivotPackage == null) {
-				throw new IllegalStateException("type has no package");
-			}
-			CompletePackage completePackage = ((CompleteModelImpl)ownedCompleteModel).getCompletePackage3(pivotPackage);
-			return (CompleteClassInternal)completePackage.getCompleteClass(asClass);
-		}
-		else {
-			throw new UnsupportedOperationException("TemplateType");
-		}
 	}
 
 	@Override

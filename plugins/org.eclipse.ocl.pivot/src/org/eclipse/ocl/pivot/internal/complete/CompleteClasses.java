@@ -20,8 +20,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
@@ -129,30 +129,36 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		Map<String, CompleteClassInternal> name2completeClass2 = name2completeClass;
 		assert name2completeClass2 != null;
 		String name = partialClass.getName();
-		if (name != null) {
-			CompleteModelInternal completeModel = getCompleteModel();
-			CompleteClass completeClass;
-			if (partialClass instanceof PrimitiveType) {													// Primary OCLstdlib declaration		
-				CompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
-				completeClass = primitiveCompletePackage.getCompleteClass(partialClass);
-			}
-			else if (PivotConstants.METAMODEL_ID == getCompletePackage().getCompletePackageId()) {			// Secondary Complete OCL overlay
-				CompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
-				completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
-			}
-			else {
-				completeClass = completeModel.basicGetSharedCompleteClass(partialClass);
-			}
-			if (completeClass == null) {
-				completeClass = name2completeClass2.get(name);
-				if (completeClass == null) {
-					completeClass = PivotFactory.eINSTANCE.createCompleteClass();
-					completeClass.setName(name);
-					add(completeClass);
-				}
-			}
-			((CompleteClassInternal)completeClass).addClass(partialClass);
+		if (name == null) {
+			return;				// XXX ignore nameless classes
 		}
+		CompleteModelInternal completeModel = getCompleteModel();
+		//
+		//	If a OCLstdlib / Complete OCL has explicitly declared a PrimitveType.
+		//
+		if (partialClass instanceof PrimitiveType) {											// Primary OCLstdlib declaration
+			CompletePackage completePackage = completeModel.getPrimitiveCompletePackage();
+			CompleteClass completeClass = completePackage.getCompleteClass(partialClass);
+			assert completeClass.getPartialClasses().contains(partialClass);			// XXX redundant
+			return;
+		}
+		//
+		//	Else if a Complete OCL has implicitly declared a PrimitiveType by overlaying a known PrimitiveType.
+		//
+		CompletePackage completePackage = getCompletePackage();
+		if (PivotConstants.METAMODEL_ID == completePackage.getCompletePackageId()) {			// Secondary Complete OCL overlay
+			PrimitiveCompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
+			CompleteClass completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
+			if (completeClass != null) {														// If name is a primitive
+				((CompleteClassInternal)completeClass).addClass(partialClass);
+				return;
+			}
+		}
+		//
+		//	Else a regular partial Class contribution to a CompleteClass.
+		//
+		CompleteClass completeClass = completePackage.getCompleteClass(partialClass);
+		assert completeClass.getPartialClasses().contains(partialClass);		// XXX redundant
 	}
 
 	protected @NonNull Map<@NonNull String, @NonNull CompleteClassInternal> doRefreshPartialClasses() {

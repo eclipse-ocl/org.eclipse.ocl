@@ -32,10 +32,17 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
+	private static @NonNull String getName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		String name = asClass.getName();
+		if (name == null) {			// Shoulfn't really happen for a nameless class e.g. UML Association, but why crash?
+			name = "$anon_" + Integer.toHexString(System.identityHashCode(asClass));
+		}
+		return name;
+	}
 	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
 
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass, int flags) {
-		super(flatModel, PivotUtil.getName(asClass), flags);
+		super(flatModel, getName(asClass), flags);
 		this.asClass = asClass;
 		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
 	}

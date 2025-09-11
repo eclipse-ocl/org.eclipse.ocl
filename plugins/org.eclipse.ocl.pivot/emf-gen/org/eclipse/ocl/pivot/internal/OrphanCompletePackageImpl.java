@@ -95,8 +95,8 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		}
 	}
 
-	private @NonNull Map<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>> class2orphanCompleteClass
-				= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>>();
+	private @NonNull Map<org.eclipse.ocl.pivot.Class, WeakReference<CompleteClassInternal>> class2orphanCompleteClass
+				= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<CompleteClassInternal>>();
 
 	protected OrphanCompletePackageImpl()
 	{
@@ -115,6 +115,25 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		org.eclipse.ocl.pivot.Package parentPackage = domainPackage.getOwningPackage();
 		assert parentPackage == null;
 		assert Orphanage.isOrphanage(domainPackage);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	protected @NonNull CompleteClassInternal createCompleteClass() {
+		return new OrphanCompleteClassImpl();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull CompleteClassInternal createCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
+		CompleteClassInternal completeClass = createCompleteClass();
+		completeClass.setName(name);
+	//	getOwnedCompleteClasses().add(completeClass);		// orphans are not 'owned'
+		return completeClass;
 	}
 
 /*	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
@@ -139,19 +158,16 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	} */
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		WeakReference<OrphanCompleteClassImpl> ref = class2orphanCompleteClass.get(type);
-		if (ref != null) {
-			OrphanCompleteClassImpl orphanCompleteClass = ref.get();
-			if (orphanCompleteClass != null) {
-				return orphanCompleteClass;
-			}
+	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		WeakReference<CompleteClassInternal> ref = class2orphanCompleteClass.get(asClass);
+		CompleteClassInternal completeClass = ref != null ? ref.get() : null;
+		if (completeClass == null) {
+			String name = asClass.getName();
+			assert name != null;
+			completeClass = createCompleteClass(asClass, name);
+			class2orphanCompleteClass.put(asClass, new WeakReference<>(completeClass));
 		}
-		final org.eclipse.ocl.pivot.@NonNull Class orphanClass = type;
-		OrphanCompleteClassImpl completeClass = new OrphanCompleteClassImpl();
-		completeClass.setName(orphanClass.getName());
-		completeClass.getPartialClasses().add(orphanClass);
-		class2orphanCompleteClass.put(orphanClass, new WeakReference<>(completeClass));
+		completeClass.getPartialClasses().add(asClass);
 		return completeClass;
 	}
 

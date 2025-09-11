@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -68,16 +67,14 @@ public class PrimitiveCompletePackageImpl extends CompletePackageImpl implements
 	}
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(final org.eclipse.ocl.pivot.@NonNull Class primitiveType) {
-		String name = primitiveType.getName();
+	public @NonNull CompleteClassInternal getCompleteClass(final org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		String name = asClass.getName();
+		assert name != null;
 		CompleteClassInternal completeClass = getOwnedCompleteClass(name);
 		if (completeClass == null) {
-			completeClass = (CompleteClassInternal)PivotFactory.eINSTANCE.createCompleteClass();
-			completeClass.setName(name);
-			getOwnedCompleteClasses().add(completeClass);
-			completeClass.getPartialClasses().add(primitiveType);
-//			didAddClass(completeClass, primitiveType);
+			completeClass = createCompleteClass(asClass, name);
 		}
+		completeClass.getPartialClasses().add(asClass);
 		return completeClass;
 	}
 } //PrimitiveCompletePackageImpl

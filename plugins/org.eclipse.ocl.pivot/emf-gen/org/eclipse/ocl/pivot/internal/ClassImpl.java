@@ -1408,11 +1408,11 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		CompleteClassInternal completeClass = environmentFactory.getCompleteEnvironment().basicGetCompleteClass(this);
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().basicGetCompleteClass(this);
 		if (completeClass != null) {
 			for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
 				EObject esObject = asClass.getESObject();
