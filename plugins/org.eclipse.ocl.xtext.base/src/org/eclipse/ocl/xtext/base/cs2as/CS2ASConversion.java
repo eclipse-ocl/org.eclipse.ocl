@@ -1565,7 +1565,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		} catch (Throwable e) {
 			if (!hasFailed) {
 				hasFailed = true;
-				e.fillInStackTrace();
 				logger.error("Conversion failed for '" + csElement.eClass().getName() + "'\n" + csElement, e);
 				@NonNull String message = String.valueOf(e) + " - see error log for details";
 				addError(csElement, message);
