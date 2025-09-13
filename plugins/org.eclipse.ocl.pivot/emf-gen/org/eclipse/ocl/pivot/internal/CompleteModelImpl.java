@@ -577,27 +577,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return packageURI2completePackage.get(packageURI);
 	}
 
-	@Override
-	public @Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
-			CompletePackage primitiveCompletePackage = getPrimitiveCompletePackage();			// namespacelessCompletePackage
-			return primitiveCompletePackage.getCompleteClass(asClass);
-		}
-		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		else if ((asClass instanceof LambdaType) && (((LambdaType)asClass).getContextType() != null)) {
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		return null;
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -841,15 +820,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if (completeClass != null) {
 			return completeClass;
 		}
-		completeClass = (CompleteClassInternal) basicGetSharedCompleteClass(asClass);
-		if (completeClass != null) {
-			return completeClass;
-		}
-		org.eclipse.ocl.pivot.Package pivotPackage = asClass.getOwningPackage();
-		if (pivotPackage == null) {
-			throw new IllegalStateException("type has no package");
-		}
-		CompletePackage completePackage = getCompletePackage3(pivotPackage);
+		CompletePackage completePackage = getCompletePackage4(asClass);
 		return (CompleteClassInternal)completePackage.getCompleteClass(asClass);
 	}
 
@@ -911,7 +882,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			return null;
 		}
 		URI semantics = PivotUtil.basicGetPackageSemantics(pivotPackage);
-		String completePackageName;
+		String completePackageName;			// XXX CompletePackageId
+
 		if (semantics != null) {
 			completePackageName = semantics.trimFragment().toString();
 		}
@@ -1036,6 +1008,30 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	//	assert (asPackage.getURI() == null) || (packageURI2completePackage.get(asPackage.getURI()) == completePackage);		in didAddPackage caller
 		assert completePackageId2completePackage.get(completePackage.getCompletePackageId()) == completePackage;
+		return completePackage;
+	}
+
+	private @NonNull CompletePackage getCompletePackage4(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CompletePackage completePackage;
+		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
+			completePackage = getPrimitiveCompletePackage();			// namespacelessCompletePackage
+		}
+		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
+			completePackage = getOrphanCompletePackage();
+		}
+		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
+			completePackage = getOrphanCompletePackage();
+		}
+		else if ((asClass instanceof LambdaType) && (((LambdaType)asClass).getContextType() != null)) {
+			completePackage = getOrphanCompletePackage();
+		}
+		else {
+			org.eclipse.ocl.pivot.Package pivotPackage = asClass.getOwningPackage();
+			if (pivotPackage == null) {
+				throw new IllegalStateException("type has no package");
+			}
+			completePackage = getCompletePackage3(pivotPackage);
+		}
 		return completePackage;
 	}
 
