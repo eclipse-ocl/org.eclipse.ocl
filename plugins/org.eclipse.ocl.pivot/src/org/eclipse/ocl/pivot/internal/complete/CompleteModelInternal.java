@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.complete;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -31,11 +30,6 @@ public interface CompleteModelInternal extends CompleteModel
 	 */
 	@Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI);
 
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated /* drop 'Shared' */
-	@Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	/**
 	 * @since 7.0
