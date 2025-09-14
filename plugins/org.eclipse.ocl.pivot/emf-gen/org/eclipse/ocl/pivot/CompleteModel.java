@@ -131,7 +131,7 @@ public interface CompleteModel extends NamedElement
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	@Nullable CompletePackage getOwnedCompletePackage(@NonNull String packageName);
+	@Nullable CompletePackage getOwnedCompletePackage(/*@NonNull*/ String packageName);
 
 	/**
 	 * @since 7.0
