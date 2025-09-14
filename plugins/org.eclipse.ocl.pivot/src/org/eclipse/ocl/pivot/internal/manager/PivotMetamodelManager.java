@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
@@ -1264,7 +1265,9 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (/*(type instanceof Type) &&*/ !isTypeServeable(type)) {
 			return type;			// FIXME bad cast
 		}
-		return completeModel.getCompleteClass(type).getPrimaryClass();
+		CompleteClassInternal completeClass = completeModel.getCompleteClass(type);
+		assert completeClass.getPartialClasses().contains(type);
+		return completeClass.getPrimaryClass();
 		//		TypeTracker typeTracker = packageManager.findTypeTracker(pivotType);
 		//		if (typeTracker != null) {
 		//			return typeTracker.getPrimaryType();
