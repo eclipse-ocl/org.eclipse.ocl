@@ -929,5 +929,44 @@
         <tycho-version>3.0.5</tycho-version>
       </properties>
     </profile>
+    <profile>
+      <id>2025-06</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>2025-06</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>2025-09</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>2025-09</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>2025-12</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>2025-12</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
   </profiles>
 </project>
