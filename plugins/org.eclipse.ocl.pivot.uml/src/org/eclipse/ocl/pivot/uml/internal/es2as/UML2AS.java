@@ -1361,7 +1361,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		return ClassUtil.requireNonNull(umlResource.getURI());
 	}
 
-	protected @NonNull Model installDeclarations(@NonNull Resource asResource) {
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull Model installDeclarations(@NonNull ASResource asResource) {
 		URI pivotURI = asResource.getURI();
 		Model pivotModel2 = pivotModel = PivotUtil.createModel(umlURI != null ? umlURI.toString() : pivotURI.trimFileExtension().toString());
 		asResource.getContents().add(pivotModel2);
@@ -1377,6 +1380,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			}
 		}
 		PivotUtil.refreshList(pivotModel2.getOwnedPackages(), rootPackages);
+		completeModel.getCompleteClasses(asResource);
 		return pivotModel2;
 	}
 

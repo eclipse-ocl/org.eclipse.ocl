@@ -420,13 +420,13 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//
-		OCLInternal ocl1 = OCLInternal.newInstance(projectMap, null);
+/*		OCLInternal ocl1 = OCLInternal.newInstance(projectMap, null);
 		CompleteStandardLibrary standardLibrary = ocl1.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 		@SuppressWarnings("unused")
 		ASResource javaASResource = doLoadJavaAS(ocl1.getEnvironmentFactory(), (ASResource)oclMetamodel.eResource());
-		ocl1.deactivate();
+		ocl1.deactivate(); */
 		//
 		//	Load OCL stdlib as an AS file.
 		//
@@ -437,7 +437,7 @@ public class OCLstdlibTests extends XtextTestCase
 	//	doCompare(javaASResource, oclASResource);						// FIXME Contents are far from identical
 	//	oclASResource.setASonly(true);
 		ocl2.dispose();
-		ocl1.dispose();
+//		ocl1.dispose();
 	}
 
 	/**

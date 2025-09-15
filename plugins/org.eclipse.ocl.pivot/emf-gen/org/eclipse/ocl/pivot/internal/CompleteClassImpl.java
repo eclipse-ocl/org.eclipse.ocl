@@ -456,9 +456,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
-	/**
-	 * Eliminate a partialClass from a CompleteClass returning true if the CompleteClass is empty.
-	 */
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		if (PARTIAL_CLASSES.isActive()) {
@@ -467,9 +464,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		partialClasses.add(partialClass);
 	}
 
-	/**
-	 * Eliminate a partialClass from a CompleteClass returning true if the CompleteClass is empty.
-	 */
 	@Override
 	public boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		if (PARTIAL_CLASSES.isActive()) {

@@ -134,6 +134,9 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompletePackage getOwnedCompletePackage(/*@NonNull*/ String packageName);
 
 	/**
+	 * Return the already created CompleteClass for asClass within this CompleteModel, or null if not yet created.
+	 * <br>
+	 * This is for test purposes only since a CompleteClass is normally created lazily on demand.
 	 * @since 7.0
 	 */
 	@Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
