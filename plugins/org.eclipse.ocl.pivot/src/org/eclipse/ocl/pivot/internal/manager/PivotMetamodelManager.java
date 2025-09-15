@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
@@ -61,9 +60,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -84,9 +81,6 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager.CompleteClassPropertiesIterable;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager.CompleteElementInvariantsIterable;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager.CompleteTypeOperationsIterable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
@@ -121,18 +115,18 @@ import com.google.common.collect.Iterables;
 
 public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 {
-	public class CompleteTypeOperationsIterable extends CompleteElementIterable<org.eclipse.ocl.pivot.Class, @NonNull Operation>
+	public class CompleteTypeOperationsIterable extends CompleteElementIterable<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Operation>
 	{
 		protected final Boolean selectStatic;	// null for static/non-static, true for static, false for non-static
 
-		public CompleteTypeOperationsIterable(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> types, boolean selectStatic) {
-			super(types);
+		public CompleteTypeOperationsIterable(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> asClasses, boolean selectStatic) {
+			super(asClasses);
 			this.selectStatic = selectStatic;
 		}
 
 		@Override
-		protected @NonNull Iterable<@NonNull Operation> getInnerIterable(org.eclipse.ocl.pivot.@NonNull Class model) {
-			return ClassUtil.nullFree(ClassUtil.requireNonNull(model.getOwnedOperations()));
+		protected @NonNull Iterable<@NonNull Operation> getInnerIterable(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			return PivotUtil.getOwnedOperations(asClass);
 		}
 
 		@Override
@@ -156,8 +150,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 
 		@Override
-		protected @NonNull Iterable<@NonNull Property> getInnerIterable(org.eclipse.ocl.pivot.@NonNull Class model) {
-			return ClassUtil.nullFree(model.getOwnedProperties());
+		protected @NonNull Iterable<@NonNull Property> getInnerIterable(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			return PivotUtil.getOwnedProperties(asClass);
 		}
 
 		@Override
@@ -172,15 +166,15 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	public class CompleteElementInvariantsIterable
-	extends CompleteElementIterable<org.eclipse.ocl.pivot.Class, Constraint> {
-
-		public CompleteElementInvariantsIterable(@NonNull Iterable<? extends org.eclipse.ocl.pivot.Class> models) {
-			super(models);
+	extends CompleteElementIterable<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Constraint>
+	{
+		public CompleteElementInvariantsIterable(@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Class> asClasses) {
+			super(asClasses);
 		}
 
 		@Override
-		protected @NonNull Iterable<Constraint> getInnerIterable(org.eclipse.ocl.pivot.@NonNull Class model) {
-			return ClassUtil.requireNonNull(model.getOwnedInvariants());
+		protected @NonNull Iterable<@NonNull Constraint> getInnerIterable(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			return PivotUtil.getOwnedInvariants(asClass);
 		}
 	}
 
@@ -640,17 +634,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return completeClass.getSuperCompleteClasses();
 	}
 
-	@Deprecated
-	private @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllTypes(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		//		if (pivotType == null) {
-		//			return EMPTY_TYPE_LIST;
-		//		}
-		//		return getTypeTracker(pivotType).getTypeServer().getTypes();
-		CompleteClass completeClass = completeModel.getCompleteClass(pivotType);
-		@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> filter = Iterables.filter(completeClass.getPartialClasses(), org.eclipse.ocl.pivot.Class.class);
-		return filter;
-	}
-
 	public @Nullable ExpressionInOCL getBodyExpression(@NonNull Operation operation) {
 		ExpressionInOCL bodyExpression = null;
 		for (@SuppressWarnings("null")@NonNull Operation domainOperation : getOperationOverloads(operation)) {
@@ -1043,9 +1026,10 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull Iterable<Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
-		type = PivotUtil.getUnspecializedTemplateableElement(type);
-		return new CompleteElementInvariantsIterable(getAllTypes(type));
+	public @NonNull Iterable<@NonNull Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
+		CompleteClass completeClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
+		return new CompleteElementInvariantsIterable(partialClasses);
 	}
 
 	@Override
@@ -1055,8 +1039,9 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {
-		type = PivotUtil.getUnspecializedTemplateableElement(type);
-		return new CompleteTypeOperationsIterable(getAllTypes(type), selectStatic);
+		CompleteClass completeClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
+		return new CompleteTypeOperationsIterable(partialClasses, selectStatic);
 	}
 
 	public @NonNull Iterable<? extends CompletePackage> getMemberPackages(org.eclipse.ocl.pivot.@NonNull Package pkg) {
@@ -1065,8 +1050,9 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getMemberProperties(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {
-		type = PivotUtil.getUnspecializedTemplateableElement(type);
-		return new CompleteClassPropertiesIterable(getAllTypes(type), selectStatic);
+		CompleteClass completeClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
+		return new CompleteClassPropertiesIterable(partialClasses, selectStatic);
 	}
 
 	@Override

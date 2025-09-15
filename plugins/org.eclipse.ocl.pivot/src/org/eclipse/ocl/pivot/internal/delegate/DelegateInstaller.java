@@ -657,8 +657,7 @@ public class DelegateInstaller
 		List<@NonNull String> constraintNameSet = null;
 		StringBuilder s = null;
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		for (Constraint pivotConstraint : metamodelManager.getLocalInvariants(pivotType)) {		// XXX metamodelManager
-			assert pivotConstraint != null;
+		for (@NonNull Constraint pivotConstraint : metamodelManager.getLocalInvariants(pivotType)) {		// XXX metamodelManager
 			String constraintName = getAnnotationKey(pivotConstraint);
 			if (!pivotConstraint.isIsCallable()) {
 				if (constraintNameSet == null) {

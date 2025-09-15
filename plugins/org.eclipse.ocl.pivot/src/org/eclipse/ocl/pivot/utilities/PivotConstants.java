@@ -389,7 +389,7 @@ public interface PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	static final @NonNull String UML2_ISSUE113_WORKAROUND_URI1 = "http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard";
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_URI1 = "http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard";	// StandardPackage.eNS_URI
 	/**
 	 * @since 7.0
 	 */
@@ -402,7 +402,7 @@ public interface PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	static final @NonNull String UML2_ISSUE113_WORKAROUND_URI2 = "http://www.eclipse.org/uml2/5.0.0/Types";
+	static final @NonNull String UML2_ISSUE113_WORKAROUND_URI2 = "http://www.eclipse.org/uml2/5.0.0/Types";					// TypesPackage.eNS_URI
 	/**
 	 * @since 7.0
 	 */

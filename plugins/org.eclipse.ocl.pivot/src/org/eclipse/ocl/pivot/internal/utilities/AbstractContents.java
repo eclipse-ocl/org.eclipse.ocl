@@ -92,6 +92,7 @@ public abstract class AbstractContents extends PivotUtil
 			expressionInOCL.setOwnedBody(stringLiteral);
 			expressionInOCL.setType(booleanType);
 			constraint.setName(name);
+			constraint.setIsCallable(true);
 			constraint.setOwnedSpecification(expressionInOCL);
 			constraint.setESObject(esObject);
 			return constraint;

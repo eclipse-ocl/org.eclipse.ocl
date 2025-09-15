@@ -962,14 +962,6 @@ implements Constraint {
 	}
 
 	@Override
-	public void setName(String newName) {
-		if ("BehavioralClassHasDistinctName".equals(newName)) {
-			getClass();			// XXX
-		}
-		super.setName(newName);
-	}
-
-	@Override
 	public void setESObject(@NonNull EObject newTarget) {
 		assert ((newTarget instanceof EStringToStringMapEntryImpl) && OCLCommon.isDelegateURI(((EAnnotation)newTarget.eContainer()).getSource()))
 			|| ((newTarget instanceof EAnnotation) && EcorePackage.eNS_URI.equals(((EAnnotation)newTarget).getSource()))

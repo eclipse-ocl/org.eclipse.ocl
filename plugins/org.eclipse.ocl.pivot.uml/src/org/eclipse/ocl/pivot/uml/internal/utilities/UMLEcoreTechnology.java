@@ -217,8 +217,8 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			}
 		}
 		String originalName = NameUtil.getOriginalName(eNamedElement);
-		if (eNamedElement instanceof StandardPackage) {
-			String nsURI = ((StandardPackage)eNamedElement).getNsURI();
+		if (eNamedElement instanceof EPackage) {
+			String nsURI = ((EPackage)eNamedElement).getNsURI();
 			if (PivotConstants.UML2_ISSUE113_WORKAROUND_WRONG1.equals(originalName) && PivotConstants.UML2_ISSUE113_WORKAROUND_URI1.equals(nsURI)) {
 				originalName = PivotConstants.UML2_ISSUE113_WORKAROUND_RIGHT1;
 			}
