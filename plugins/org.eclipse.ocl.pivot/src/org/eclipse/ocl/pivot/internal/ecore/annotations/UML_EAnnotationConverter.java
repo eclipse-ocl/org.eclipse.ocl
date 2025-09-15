@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.ecore.annotations;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.jdt.annotation.NonNull;
@@ -51,7 +52,7 @@ public class UML_EAnnotationConverter extends AbstractEAnnotationConverter
 						originalName = PivotConstants.UML2_ISSUE113_WORKAROUND_RIGHT2;
 					}
 				}
-				asElement.setName(originalName);
+				assert Objects.equals(originalName, asElement.getName());		// verifying redundancy wrt earlier setName
 			}
 			else {
 				hasFurtherDetails = true;

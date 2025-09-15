@@ -827,6 +827,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void getCompleteClasses(@NonNull ASResource asResource) {
+		// XXX check called just once
+		// XXX pass completePackage
 		for (EObject eObject : asResource.getContents()) {
 			if (eObject instanceof Model) {
 				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages((Model)eObject)) {
@@ -838,7 +840,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {				// XXX migrate to lazy first getCompleteClass
-		getClass();		// XXX
+		// XXX check called just once
+		// XXX pass completePackage
 		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
 			getCompleteClass(asClass);
 		}

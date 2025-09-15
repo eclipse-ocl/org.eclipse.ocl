@@ -669,7 +669,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	protected void setupUMLusage() {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			UMLStandaloneSetup.initEAnnotationConverters();
+		//	UMLASResourceFactory.getInstance();
+		//	UMLStandaloneSetup.initEAnnotationConverters();		// XXX why not full init
+			UMLStandaloneSetup.init();
 			org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 			registerEPackage(org.eclipse.uml2.uml.profile.standard.StandardPackage.eINSTANCE);
 			registerEPackage(org.eclipse.uml2.types.TypesPackage.eINSTANCE);
