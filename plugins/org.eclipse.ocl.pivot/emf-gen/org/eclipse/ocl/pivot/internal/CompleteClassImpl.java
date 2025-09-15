@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
@@ -89,10 +88,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		@Override
 		protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
 			assert partialClass != null;
-			if ("Member".equals(partialClass.getName())) {
-				System.out.println("didAdd " + index + " " + NameUtil.debugSimpleName(owner) +  " " + NameUtil.debugSimpleName(partialClass) +  " " + partialClass.getName());
-				getClass();		// XXX
-			}
 			CompleteClassImpl owner = (CompleteClassImpl)this.owner;
 			if (PARTIAL_CLASSES.isActive()) {
 				PARTIAL_CLASSES.println("Do-didAdd " + partialClass + " => " + this);

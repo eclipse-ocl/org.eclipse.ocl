@@ -83,7 +83,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 		public ExtendedDynamicEClassValidator(@NonNull EnvironmentFactoryInternal environmentFactory,
 				@NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2delegateConstraints,
 				EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry) {
-			System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(eClass2delegateConstraints));
+		//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(eClass2delegateConstraints));
 			this.environmentFactory = environmentFactory;
 			this.eClass2delegateConstraints = eClass2delegateConstraints;
 			this.validationDelegateRegistry = validationDelegateRegistry;
@@ -134,7 +134,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 				//	ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
 					ExpressionInOCL query = (ExpressionInOCL)asConstraint.getOwnedSpecification();
 					assert query != null;
-					System.out.println("validateDelegatedConstraint " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(query) + " " + query + " " + NameUtil.debugSimpleName(asConstraint) +  " " + asConstraint);
+				//	System.out.println("validateDelegatedConstraint " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(query) + " " + query + " " + NameUtil.debugSimpleName(asConstraint) +  " " + asConstraint);
 					result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
 				}
 				else if (validationDelegateFactory != null) {
