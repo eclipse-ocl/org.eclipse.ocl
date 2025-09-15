@@ -643,6 +643,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				assert packageURI2completePackage.get(packageURI) == completePackage;
 			}
 		}
+	//	getCompleteClasses(asPackage);
 	}
 
 	@Override
@@ -828,7 +829,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public void getCompleteClasses(@NonNull ASResource asResource) {
 		for (EObject eObject : asResource.getContents()) {
 			if (eObject instanceof Model) {
-				for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages((Model)eObject)) {
+				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages((Model)eObject)) {
 					getCompleteClasses(asPackage);
 				}
 			}
@@ -837,10 +838,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {				// XXX migrate to lazy first getCompleteClass
+		getClass();		// XXX
 		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
 			getCompleteClass(asClass);
 		}
-		for (org.eclipse.ocl.pivot.Package asNestedPackage : PivotUtil.getOwnedPackages(asPackage)) {
+		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : PivotUtil.getOwnedPackages(asPackage)) {
 			getCompleteClasses(asNestedPackage);
 		}
 	}

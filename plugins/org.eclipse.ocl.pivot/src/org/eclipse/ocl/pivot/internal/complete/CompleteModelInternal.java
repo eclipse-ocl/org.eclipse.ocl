@@ -64,12 +64,16 @@ public interface CompleteModelInternal extends CompleteModel
 	void didRemovePartialModel(@NonNull Model partialModel);
 
 	/**
-	 * Ensure that a CompleteClass is referenceable for all classes in asPackage.
+	 * Ensure that a CompleteClass is referenceable for all classes transitively in asResource.
+	 * <br>
+	 * It is beneficial to invoke this on an ASResource after Classes have been created rather than delaying
+	 * to lazily create each CompleteClass on demand.
 	 * @since 7.0
 	 */
 	void getCompleteClasses(@NonNull ASResource asResource);
+
 	/**
-	 * Ensure that a CompleteClass is referenceable for all classes in asPackage.
+	 * Ensure that a CompleteClass is referenceable for all classes transitively in asPackage.
 	 * @since 7.0
 	 */
 	void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage);

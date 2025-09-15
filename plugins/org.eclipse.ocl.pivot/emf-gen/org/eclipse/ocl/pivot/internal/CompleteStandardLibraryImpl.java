@@ -1343,7 +1343,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 					throw new IllegalLibraryException(PivotMessagesInternal.MissingLibraryURI_ERROR_);
 				}
 				if (!explicitDefaultStandardLibraryURI) {
-					for (org.eclipse.ocl.pivot.Class asClass : asLibrary.getOwnedClasses()) {
+					for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(asLibrary)) {
 						if (TypeId.OCL_ANY_NAME.equals(asClass.getName())) {
 							setDefaultStandardLibraryURI(uri);
 							break;
