@@ -677,10 +677,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property) {
-		if ("copies".equals(property.getName())) {
-			System.out.println("getDefaultExpression " + NameUtil.debugSimpleName(this) +  " " + NameUtil.debugSimpleName(property) +  " " + property.getName());
-			getClass();		// XXX
-		}
 		ExpressionInOCL defaultExpression = null;
 		for (@SuppressWarnings("null")@NonNull Property domainProperty : getAllProperties(property)) {
 			LanguageExpression anExpression = domainProperty.getOwnedExpression();
@@ -1008,7 +1004,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public @NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
 		LibraryProperty implementation = (LibraryProperty) property.getImplementation();
 		if (implementation == null) {
-			System.out.println("getImplementation " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(property) + " " + property);
+		//	System.out.println("getImplementation " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(property) + " " + property);
 			ImplementationManager implementationManager = getImplementationManager();
 			implementation = implementationManager.getPropertyImplementation(asNavigationExp, sourceValue, property);
 			property.setImplementation(implementation);

@@ -156,9 +156,6 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 		List<@NonNull ASResource> asDelegatingResources = new UniqueList<>();
 		for (Map.@NonNull Entry<@NonNull EClass, @NonNull UniqueList<@NonNull URI>> entry : eClass2delegateURIs.entrySet()) {
 			EClass eClass = entry.getKey();
-			if ("Book".equals(eClass.getName())) {
-				getClass();		// XXX
-			}
 			UniqueList<@NonNull Constraint> asConstraints = new UniqueList<>();
 			for (@NonNull URI delegateURI : entry.getValue()) {
 				Constraint asConstraint = null;
@@ -204,12 +201,12 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 				}
 			}
 			eClass2Constraints.put(eClass, asConstraints);
-			StringBuilder s = new StringBuilder();
-			s.append(eClass.getName());
-			for (Constraint asConstraint : asConstraints) {
-				s.append("\n\t" + NameUtil.debugSimpleName(asConstraint) + " " + asConstraint.getName());
-			}
-			System.out.println(s.toString());
+		//	StringBuilder s = new StringBuilder();
+		//	s.append(eClass.getName());
+		//	for (Constraint asConstraint : asConstraints) {
+		//		s.append("\n\t" + NameUtil.debugSimpleName(asConstraint) + " " + asConstraint.getName());
+		//	}
+		//	System.out.println(s.toString());
 		}
 		DelegateInstaller delegateInstaller = new DelegateInstaller(environmentFactory, null);
 		for (ASResource asResource : asDelegatingResources) {

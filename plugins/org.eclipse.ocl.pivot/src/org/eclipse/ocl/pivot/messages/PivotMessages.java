@@ -34,6 +34,10 @@ public class PivotMessages
 	/**
 	 * @since 7.0
 	 */
+	public static String BadExternalResource;
+	/**
+	 * @since 7.0
+	 */
 	public static String ConflictingResource;
 	public static String ConvertibleValueRequired;
 	public static String EObjectRequired;

@@ -202,7 +202,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet, final @Nullable ResourceSet zzASResourceSet) {		// XXX
 		assert zzASResourceSet == null;
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
@@ -231,6 +231,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		technology.registerMetaPackages(this);
 
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
+
+		if (userResourceSet != null) {
+			for (Resource resource : userResourceSet.getResources()) {
+				checkValidExternalResource(resource);
+			}
+		}
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
 		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " EnvironmentFactory.ctor " + NameUtil.debugSimpleName(this) + " es " + NameUtil.debugSimpleName(externalResourceSet) + " as " + NameUtil.debugSimpleName(asResourceSet));
 		if (userResourceSet != null) {
@@ -388,6 +394,22 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected @Nullable MetamodelManager basicGetMetamodelManager() {
 		return metamodelManager;
+	}
+
+	/**
+	 * Throw an IllegalStateException if resource makes use of AS elements from another OCL.
+	 * @since 7.0
+	 */
+	protected void checkValidExternalResource(@NonNull Resource resource) {
+		if (resource instanceof CSResource) {
+			for (@NonNull EObject eObject : new TreeIterable(resource)) {
+				if (eObject instanceof Pivotable) {
+					if (((Pivotable)eObject).getPivot() != null) {
+						throw new IllegalStateException(StringUtil.bind(PivotMessages.BadExternalResource, resource.getURI()));
+					}
+				}
+			}
+		}
 	}
 
 	@Override

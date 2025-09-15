@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -81,7 +80,7 @@ public abstract class AbstractConstraintEvaluator<T>
 			@SuppressWarnings("null")@NonNull String stringSymbol = ((StringLiteralExp)body).getStringSymbol();	// XXX never happens
 			return handleInvalidExpression(stringSymbol);
 		}
-		System.out.println("evaluate " + NameUtil.debugSimpleName(this) +  " " + NameUtil.debugSimpleName(body) +  " " + body);
+	//	System.out.println("evaluate " + NameUtil.debugSimpleName(this) +  " " + NameUtil.debugSimpleName(body) +  " " + body);
 		Object result = null;
 		boolean status = false;
 		try {

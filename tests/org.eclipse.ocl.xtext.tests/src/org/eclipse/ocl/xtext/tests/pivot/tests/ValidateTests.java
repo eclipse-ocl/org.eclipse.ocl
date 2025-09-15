@@ -81,6 +81,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.junit.After;
 import org.junit.Before;
 
+import junit.framework.TestCase;
+
 /**
  * Tests that OCL for model validation works.
  */
@@ -825,24 +827,50 @@ public class ValidateTests extends AbstractValidateTests
 			String problems = helper.installDocuments(oclURI);
 			assertNull("Failed to load " + oclURI, problems);
 			assertTrue(helper.loadMetamodels());
-
-			ThreadLocalExecutor.resetEnvironmentFactory();		// Emulate interactive Load then Validate
-
-			// XXX OOPS externalResourceSet has a CSResource with 'stale' pivots.
-
-		/*	EList<Adapter> eAdapters = resource.getResourceSet().eAdapters();		// XXX Get rid of residue adapters
-			for (int i = eAdapters.size(); --i >= 0; ) {
-				Adapter eAdapter = eAdapters.get(i);
-				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
-					eAdapters.remove(i);
-				}
-			} */
+			//
+			//	Regular validation with the loading OCL
+			//
 			@NonNull String[] messages = getMessages(//validationContext,
 				StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library::lib::Book::b2"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library::lib::Member::m3"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library::lib::Member::m3"),
 				StringUtil.bind(VIOLATED_TEMPLATE, "ExactlyOneCopy", "Library::lib::Book::b2"));
 			//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
+			assertValidationDiagnostics("With Complete OCL", resource, messages);
+			//
+			//	Simplistic/inadequate attempt to hide the loading OCL
+			//	OOPS externalResourceSet has a CSResource with 'stale' pivots.
+			//
+			ThreadLocalExecutor.resetEnvironmentFactory();		// Emulate interactive Load then Validate
+			/*	EList<Adapter> eAdapters = resource.getResourceSet().eAdapters();		// XXX Get rid of residue adapters
+			for (int i = eAdapters.size(); --i >= 0; ) {
+				Adapter eAdapter = eAdapters.get(i);
+				if (eAdapter instanceof ExtendedEObjectValidatorAdapter) {
+					eAdapters.remove(i);
+				}
+			} */
+			//
+			//	Attempted validation after hiding the loading OCL
+			//
+			@NonNull String[] messages2 = getMessages(//validationContext,
+				StringUtil.bind(VIOLATED_TEMPLATE, "XXXX", "Library::lib::Book::b2"));
+			//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
+			try {
+				assertValidationDiagnostics("With Complete OCL", resource, messages);
+				TestCase.fail("Expected IllegalStateException for bad external ResourceSet content");
+			}
+			catch (IllegalStateException e) {
+				String actualMessage = e.getMessage();
+				String expectedMessage = StringUtil.bind(PivotMessages.BadExternalResource, testFile.getFileURI());
+				assertEquals(expectedMessage, actualMessage);
+			}
+			//
+			//	Resuscitate the loading OCL
+			//
+			ocl.activate();
+			//
+			//	Regular validation with the loading OCL again.
+			//
 			assertValidationDiagnostics("With Complete OCL", resource, messages);
 		//	ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
 		//	ValidationContext validationContext = new ValidationContext(validationRegistry);
