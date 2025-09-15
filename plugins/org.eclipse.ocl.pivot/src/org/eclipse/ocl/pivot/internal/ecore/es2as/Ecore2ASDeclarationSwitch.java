@@ -81,9 +81,6 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl;
@@ -98,6 +95,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -148,7 +146,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEAttribute(EAttribute eObject) {
 		@SuppressWarnings("null") @NonNull EAttribute eObject2 = eObject;
-		Property pivotElement = converter.refreshNamedElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
+		Property pivotElement = converter.refreshElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
 		copyStructuralFeature(pivotElement, eObject2);
 		pivotElement.setIsID(eObject2.isID());
 		return pivotElement;
@@ -361,8 +359,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEEnumLiteral(EEnumLiteral eEnumLiteral) {
 		@SuppressWarnings("null") @NonNull EEnumLiteral eEnumLiteral2 = eEnumLiteral;
-		EnumerationLiteral pivotElement = converter.refreshNamedElement(EnumerationLiteral.class,
-			PivotPackage.Literals.ENUMERATION_LITERAL, eEnumLiteral2);
+		EnumerationLiteral pivotElement = converter.refreshElement(EnumerationLiteral.class, PivotPackage.Literals.ENUMERATION_LITERAL, eEnumLiteral2);
 		copyNamedElement(pivotElement, eEnumLiteral2);
 		copyAnnotatedElement(pivotElement, eEnumLiteral2);
 		if (eEnumLiteral2.eIsSet(EcorePackage.Literals.EENUM_LITERAL__LITERAL)) {
@@ -446,8 +443,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		pivotElement.setName(newName);
 		if (ePackage.eIsSet(EcorePackage.Literals.EPACKAGE__NS_URI)) {
-			RootPackageId metamodel = technology.getMetamodelId(environmentFactory, ePackage);
-			PackageId packageId = IdManager.getPackageId(ePackage);
+		//	RootPackageId metamodel = technology.getMetamodelId(environmentFactory, ePackage);
+		//	PackageId packageId = IdManager.getPackageId(ePackage);
 		//	if (metamodel != null) {
 		//		((PackageImpl)pivotElement).setPackageId(packageId);
 		//	}
@@ -467,7 +464,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		if (!(ePackage.eContainer() instanceof EAnnotation)) {
 			String moniker = AS2Moniker.toString(pivotElement);
-			MonikerAliasAdapter adapter = MonikerAliasAdapter.getAdapter(ePackage.eResource());
+			MonikerAliasAdapter adapter = MonikerAliasAdapter.getAdapter(ClassUtil.requireNonNull(ePackage.eResource()));
 			adapter.getAliasMap().put(ePackage, moniker);
 		}
 		converter.addMapping(ePackage, pivotElement);
@@ -490,7 +487,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEParameter(EParameter eObject) {
 		@SuppressWarnings("null") @NonNull EParameter eObject2 = eObject;
-		Parameter pivotElement = converter.refreshNamedElement(Parameter.class, PivotPackage.Literals.PARAMETER, eObject2);
+		Parameter pivotElement = converter.refreshElement(Parameter.class, PivotPackage.Literals.PARAMETER, eObject2);
 		copyTypedElement(pivotElement, eObject2);
 		return pivotElement;
 	}
@@ -498,7 +495,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEReference(EReference eObject) {
 		@SuppressWarnings("null") @NonNull EReference eObject2 = eObject;
-		Property pivotElement = converter.refreshNamedElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
+		Property pivotElement = converter.refreshElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
 		EAnnotation oppositeRole = eObject2.getEAnnotation(EMOFExtendedMetaData.EMOF_PACKAGE_NS_URI_2_0);
 		if (oppositeRole == null) {
 			oppositeRole = eObject2.getEAnnotation(EMOFExtendedMetaData.EMOF_PROPERTY_OPPOSITE_ROLE_NAME_ANNOTATION_SOURCE);
@@ -517,7 +514,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseETypeParameter(ETypeParameter eObject) {
 		@SuppressWarnings("null") @NonNull ETypeParameter eObject2 = eObject;
-		TemplateParameter pivotElement = converter.refreshNamedElement(TemplateParameter.class, PivotPackage.Literals.TEMPLATE_PARAMETER, eObject2);
+		TemplateParameter pivotElement = converter.refreshElement(TemplateParameter.class, PivotPackage.Literals.TEMPLATE_PARAMETER, eObject2);
 		converter.addMapping(eObject2, pivotElement);
 		String name = technology.getOriginalName(eObject2);
 		pivotElement.setName(name);
@@ -563,7 +560,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	protected @NonNull Operation convertEOperation2Operation(@NonNull EOperation eOperation) {
-		Operation pivotElement = converter.refreshNamedElement(Operation.class, PivotPackage.Literals.OPERATION, eOperation);
+		Operation pivotElement = converter.refreshElement(Operation.class, PivotPackage.Literals.OPERATION, eOperation);
 		copyTypedElement(pivotElement, eOperation);
 		doSwitchAll(pivotElement.getOwnedParameters(), eOperation.getEParameters());
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
@@ -613,7 +610,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	 */
 	protected void copyAnnotatedElement(@NonNull NamedElement pivotElement, @NonNull EModelElement eModelElement) {
 		List<Element> asAnnotations = pivotElement.getOwnedAnnotations();
-		for (EAnnotation eAnnotation : eModelElement.getEAnnotations()) {
+		for (@NonNull EAnnotation eAnnotation : ClassUtil.nullFree(eModelElement.getEAnnotations())) {
 			EAnnotationConverter eAnnotationConverter = EAnnotationConverter.getEAnnotationConverter(eAnnotation);
 			try {
 				if (eAnnotationConverter.convertEAnnotationDetails(eAnnotation, pivotElement)) {
