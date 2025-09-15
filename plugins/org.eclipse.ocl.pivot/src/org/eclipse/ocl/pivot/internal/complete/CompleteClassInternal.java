@@ -18,7 +18,13 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 public interface CompleteClassInternal extends CompleteClass
 {
 	void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
+	/**
+	 * Track the addition of a partialClass to a CompleteClass.
+	 */
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
+	/**
+	 * Track the removal of a partialClass from a CompleteClass returning true if the CompleteClass is empty.
+	 */
 	boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	void dispose();
 	void uninstall();

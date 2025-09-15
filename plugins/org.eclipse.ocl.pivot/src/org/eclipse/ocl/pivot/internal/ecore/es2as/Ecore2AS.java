@@ -1032,9 +1032,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.17
+	 * @since 7.0
 	 */
-	protected void resolveDeclarations(@NonNull Resource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
+	protected void resolveDeclarations(@NonNull ASResource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
 		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
 		PivotUtil.refreshList(asResource.getContents(), true, Collections.singletonList(ClassUtil.requireNonNull(pivotModel)));
 		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
@@ -1053,7 +1053,9 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 			}
 		}
+
 		PivotUtil.refreshList(pivotModel.getOwnedPackages(), true, newPackages);
+		completeModel.getCompleteClasses(asResource);
 	}
 
 	/**

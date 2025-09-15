@@ -1745,15 +1745,13 @@ implements Property {
 	 */
 	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().basicGetCompleteClass(PivotUtil.getOwningClass(this));
-		if (completeClass != null) {
-			Iterable<@NonNull Property> asProperties = completeClass.getProperties(this);
-			if (asProperties != null) {
-				for (Property asProperty : asProperties) {
-					EObject esObject = asProperty.getESObject();
-					if (esObject != null) {
-						return esObject;
-					}
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(this));
+		Iterable<@NonNull Property> asProperties = completeClass.getProperties(this);
+		if (asProperties != null) {
+			for (Property asProperty : asProperties) {
+				EObject esObject = asProperty.getESObject();
+				if (esObject != null) {
+					return esObject;
 				}
 			}
 		}

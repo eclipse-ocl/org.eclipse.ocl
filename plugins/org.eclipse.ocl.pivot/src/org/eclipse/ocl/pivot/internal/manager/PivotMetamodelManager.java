@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
@@ -60,7 +61,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -81,6 +84,9 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager.CompleteClassPropertiesIterable;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager.CompleteElementInvariantsIterable;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager.CompleteTypeOperationsIterable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
@@ -1265,8 +1271,11 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (/*(type instanceof Type) &&*/ !isTypeServeable(type)) {
 			return type;			// FIXME bad cast
 		}
-		CompleteClassInternal completeClass = completeModel.getCompleteClass(type);
-		assert completeClass.getPartialClasses().contains(type);
+		org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.@Nullable Class)type;
+		CompleteClassInternal completeClass = completeModel.getCompleteClass(asClass);
+		assert completeClass.getPartialClasses().contains(asClass);		// XXX redundant
+	//	CompleteClassInternal completeClass = completeModel.getCompleteClass(type);
+	//	assert completeClass.getPartialClasses().contains(type);
 		return completeClass.getPrimaryClass();
 		//		TypeTracker typeTracker = packageManager.findTypeTracker(pivotType);
 		//		if (typeTracker != null) {
@@ -1428,6 +1437,10 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		if (INSTALL_MODEL.isActive()) {
 			INSTALL_MODEL.println(NameUtil.debugSimpleName(this) + " " + pivotModel);
+		}
+		ASResource asResource = (ASResource) pivotModel.eResource();			// XXX cast
+		if (asResource != null) {												// XXX some test models don't bother with a Resource
+			completeModel.getCompleteClasses(asResource);
 		}
 		List<org.eclipse.ocl.pivot.Package> ownedPackages = pivotModel.getOwnedPackages();
 		List<Import> ownedImports = pivotModel.getOwnedImports();
