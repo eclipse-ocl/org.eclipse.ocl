@@ -66,6 +66,7 @@ public class PivotIdResolver extends AbstractIdResolver
 			}
 			nsURI2package.put(nsURI, asPackage);
 			if (packageId instanceof RootPackageId) {
+				assert roots2package != null;
 				roots2package.put(((RootPackageId)packageId).getName(), asPackage);
 			}
 		}

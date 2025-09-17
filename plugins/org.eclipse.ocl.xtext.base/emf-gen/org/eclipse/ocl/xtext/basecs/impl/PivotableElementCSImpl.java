@@ -76,6 +76,17 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	 * @generated NOT
 	 */
 	@Override
+	public Element basicGetPivot()
+	{
+		return pivot;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
 	public Element getPivot()
 	{
 		if ((pivot != null) && pivot.eIsProxy()) {

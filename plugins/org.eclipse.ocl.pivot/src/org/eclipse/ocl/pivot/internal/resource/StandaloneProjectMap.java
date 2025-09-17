@@ -276,13 +276,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": install EPackageDescriptor-" + instanceCount + " for '" + uri + "'");
 				}
 			}
-			Object ePackage = packageRegistry.get(uri.toString());
-			if (ePackage instanceof EPackage) {					//  exploit an existing already resolved content
-				packageLoadStatus.setEPackage((EPackage)ePackage);
-			}
-			else {
-				packageRegistry.put(uri.toString(), this);
-			}
+			packageRegistry.put(uri.toString(), this);		// ?? exploit an existing already resolved content
 			if (PROJECT_MAP_INSTALL.isActive()) {
 				PROJECT_MAP_INSTALL.println(toString());
 			}
@@ -807,8 +801,6 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		 */
 		protected boolean recursiveLoadInProgress = false;
 
-		private boolean hasDeferredConfigureDelegatingResource = false;			// XXX Use me
-
 		protected AbstractResourceLoadStatus(@NonNull IResourceDescriptor resourceDescriptor, @Nullable ResourceSet resourceSet) {
 			this.resourceDescriptor = resourceDescriptor;
 			this.resourceSet = resourceSet;
@@ -1165,10 +1157,10 @@ public class StandaloneProjectMap extends AbstractProjectManager
 	public static class DelegatedMultiplePackageResource extends ResourceImpl
 	{
 		protected final @NonNull IResourceLoadStatus resourceLoadStatus;
-		protected final @NonNull Iterable<PackageLoadStatus> packageLoadStatuses;
+		protected final @NonNull Iterable<@NonNull PackageLoadStatus> packageLoadStatuses;
 		private final @NonNull Map<@NonNull String, @NonNull EPackage> fragment2ePackage = new HashMap<>();
 
-		public DelegatedMultiplePackageResource(@NonNull URI uri, @NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Iterable<PackageLoadStatus> packageLoadStatuses) {
+		public DelegatedMultiplePackageResource(@NonNull URI uri, @NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Iterable<@NonNull PackageLoadStatus> packageLoadStatuses) {
 			super(uri);
 			this.resourceLoadStatus = resourceLoadStatus;
 			this.packageLoadStatuses = packageLoadStatuses;
@@ -1540,7 +1532,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		 */
 		private final @NonNull WeakHashMap<@Nullable ResourceSet, @NonNull IResourceLoadStatus> resourceSet2resourceLoadStatus = new WeakHashMap<>();
 
-		private static int genModelReads = 0;
+//		private static int genModelReads = 0;
 
 		protected AbstractResourceDescriptor(@NonNull IProjectDescriptor projectDescriptor, @NonNull URI genModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			this.projectDescriptor = projectDescriptor;
@@ -1723,7 +1715,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 						return;
 					}
 					GenModelReader genModelReader = new GenModelReader(this);
-				//	PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
+//					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
 					saxParser.parse(inputStream, genModelReader);
 					try {
 						setEcoreModel(genModelReader.getEcorePackages(), genModelReader.getNsURI2packageDescriptor());
@@ -2038,6 +2030,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 					for (Map.@NonNull Entry<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> entry2 : genModelURI2nsURI2className.entrySet()) {
 						String genModelURI = entry2.getKey();
 						Map<@NonNull URI, @NonNull String> nsURI2className = entry2.getValue();
+						@SuppressWarnings("unused")
 						IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelURI, nsURI2className);
 //						((AbstractResourceDescriptor)resourceDescriptor).readGenModel();
 					}
@@ -2825,6 +2818,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				for (@NonNull EObject eContent : resource.getContents()) {
 					EClass eClass = eContent.eClass();
 					EPackage ePackage = eClass.getEPackage();
+					assert ePackage != null;
 					ePackages.add(ePackage);
 				}
 			}

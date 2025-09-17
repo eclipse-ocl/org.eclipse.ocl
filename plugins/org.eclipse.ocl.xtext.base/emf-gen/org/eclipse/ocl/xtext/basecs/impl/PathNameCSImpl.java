@@ -332,6 +332,17 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
+	public Element basicGetPivot()
+	{
+		return basicGetReferredElement();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public Element basicGetReferredElement()
 	{
 		if (ownedPathElements == null) {

@@ -277,7 +277,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	protected void scanGenModels(@NonNull SAXParser saxParser) {
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
 		// FIXME Bug 576593 getEPackageNsURIToGenModelLocationMap returns empty cache for not target-platform / non-cache otherwise
-		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
+		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
 		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
 		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
 			URI genModelURI = ePackageNsURIToGenModelLocationMap.get(ePackageNsURI);
@@ -323,7 +323,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 		}
 	}
 
-	private void refreshProject(@NonNull Map<String, IProjectDescriptor> projectDescriptors, @NonNull IProject project) {
+	private void refreshProject(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull IProject project) {
 		//	Map<String, IProjectDescriptor> projectDescriptors = getProjectDescriptors();
 		//	if (projectDescriptors != null) {
 		@SuppressWarnings("null")@NonNull String projectName = project.getName();
@@ -358,7 +358,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 		}
 	}
 
-	protected void scanProjects(@NonNull Map<String, IProjectDescriptor> projectDescriptors) {
+	protected void scanProjects(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors) {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		if (isGlobal && (visitor == null)) {			// Lazily install listening for a/the global ProjectMap
 			visitor = this;

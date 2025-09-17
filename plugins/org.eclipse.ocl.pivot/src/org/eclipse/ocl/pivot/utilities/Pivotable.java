@@ -16,6 +16,10 @@ import org.eclipse.ocl.pivot.Element;
 
 public interface Pivotable extends EObject
 {
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Element basicGetPivot();
 	@Nullable Element getPivot();
 	void resetPivot();
 }

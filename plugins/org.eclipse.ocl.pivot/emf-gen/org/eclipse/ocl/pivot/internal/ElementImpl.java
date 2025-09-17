@@ -250,7 +250,7 @@ public abstract class ElementImpl
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = idResolver.ecoreValueOfAll(Element.class, closure);
-		return (List<Element>)ECORE_closure;
+		return ECORE_closure;
 	}
 
 	/**
@@ -441,7 +441,7 @@ public abstract class ElementImpl
 	}
 
 	/**
-	 * Return the EObject whose URI (or the externalURI for a Model) that should enable the esObject to be reloaded.
+	 * Return the EObject whose URI (or the externalURI for a Model) should enable the esObject to be reloaded.
 	 *
 	 * The default implementation return a non-null esObject directly else attempts to return a CS object via the
 	 * csi2asMapping. Returns null in the absence of CS.

@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -261,7 +262,6 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	protected final @NonNull StandardLibrary standardLibrary;
 	private final @NonNull Set<@NonNull EObject> directRoots = new HashSet<>();
-	private boolean directRootsProcessed = false;
 	private boolean crossReferencedRootsProcessed = false;
 	private /*@LazyNonNull*/ Map<@NonNull EnumerationLiteralId, @NonNull Enumerator> enumerationLiteral2enumerator = null;	// Concurrent puts are duplicates
 	private /*@LazyNonNull*/ Map<@NonNull Enumerator, @NonNull EnumerationLiteralId> enumerator2enumerationLiteralId = null;	// Concurrent puts are duplicates
@@ -274,7 +274,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	/**
 	 * Mapping from root package name to corresponding Pivot Package. (used to resolve RootPackageId).
 	 */
-	protected final @NonNull Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package> roots2package = new HashMap<>();
+	protected @Nullable Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package> roots2package = null;
 
 	/**
 	 * @since 7.0
@@ -286,6 +286,8 @@ public abstract class AbstractIdResolver implements IdResolver
 	protected abstract org.eclipse.ocl.pivot.@NonNull Package addEPackage(@NonNull EPackage ePackage);
 
 	private void addPackage(org.eclipse.ocl.pivot.@NonNull Package userPackage) {
+		Map<@NonNull String, @NonNull Package> roots2package2 = roots2package;
+		assert roots2package2 != null;
 		String nsURI = userPackage.getURI();
 		if (nsURI != null) {
 			nsURI2package.put(nsURI, userPackage);
@@ -293,32 +295,33 @@ public abstract class AbstractIdResolver implements IdResolver
 			EPackage ePackage = userPackage.getEPackage();
 			if (ePackage != null) {
 				if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-					if (roots2package.get(internedMetmodelName) == null) {
-						roots2package.put(internedMetmodelName, userPackage);
+					if (roots2package2.get(internedMetmodelName) == null) {
+						roots2package2.put(internedMetmodelName, userPackage);
 					}
 				}
 			}
-			else {
+		/*	else {			// XXX How much more of this is obsoleted by complete package / semantics ?
 				for (org.eclipse.ocl.pivot.Class asType : userPackage.getOwnedClasses()) {
-					if ("Boolean".equals(asType.getName())) {			// FIXME Check PrimitiveType //$NON-NLS-1$
-						if (roots2package.get(internedMetmodelName) == null) {
-							roots2package.put(internedMetmodelName, userPackage);
+					if ("Boolean".equals(asType.getName())) {			// XXX FIXME Check PrimitiveType //$NON-NLS-1$
+						assert false;			// XXX
+						if (roots2package2.get(internedMetmodelName) == null) {
+							roots2package2.put(internedMetmodelName, userPackage);
 						}
 						break;
 					}
 				}
-			}
+			} */
 		}
 		else {
 			String name = userPackage.getName();
 			if (name != null) {
-				roots2package.put(name.intern(), userPackage);
+				roots2package2.put(name.intern(), userPackage);
 			}
 		}
-		addPackages(userPackage.getOwnedPackages());
+		addPackages(PivotUtil.getOwnedPackages(userPackage));
 	}
 
-	private void addPackages(/*@NonNull*/ Iterable<? extends org.eclipse.ocl.pivot.Package> userPackages) {
+	private void addPackages(@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> userPackages) {
 		for (org.eclipse.ocl.pivot.Package userPackage : userPackages) {
 			assert userPackage != null;
 			addPackage(userPackage);
@@ -967,7 +970,7 @@ public abstract class AbstractIdResolver implements IdResolver
 			asClass = standardLibrary.getJavaType(jClass);
 		}
 	//	System.out.println("getStaticClassOf " + NameUtil.debugSimpleName(value) + " " + value + " => " + NameUtil.debugSimpleName(asClass) + " " + asClass);		// XXX
-		return asClass;
+		return ClassUtil.requireNonNull(asClass);
 	}
 
 	@Override
@@ -1296,7 +1299,7 @@ public abstract class AbstractIdResolver implements IdResolver
 				EObject root = EcoreUtil.getRootContainer(crossReferencedEObject);
 				if (moreRoots.add(root) && !directRoots.contains(root)) {
 					if (root instanceof Model) {
-						addPackages(((Model)root).getOwnedPackages());
+						addPackages(PivotUtil.getOwnedPackages((Model)root));
 					}
 					else if (root instanceof org.eclipse.ocl.pivot.Package) {					// Perhaps this is only needed for a lazy JUnit test
 						addPackage((org.eclipse.ocl.pivot.Package)root);
@@ -1308,23 +1311,22 @@ public abstract class AbstractIdResolver implements IdResolver
 	}
 
 	protected synchronized void processDirectRoots() {
-		if (directRootsProcessed) {
-			return;
-		}
-		directRootsProcessed = true;
-		Set<EPackage> ePackages = new HashSet<>();
-		for (EObject eObject : directRoots) {
+		Map<@NonNull String, @NonNull Package> roots2package2 = roots2package;
+		assert roots2package2 != null;
+		roots2package2.put(PivotConstants.METAMODEL_NAME, standardLibrary.getPackage());
+		Set<@NonNull EPackage> ePackages = new HashSet<>();
+		for (@NonNull EObject eObject : directRoots) {
 			if (eObject instanceof Model) {
-				addPackages(((Model)eObject).getOwnedPackages());
+				addPackages(PivotUtil.getOwnedPackages((Model)eObject));
 			}
 			//			else if (eObject instanceof org.eclipse.ocl.pivot.Package) {							// Perhaps this is only needed for a lazy JUnit test
 			//				addPackage((org.eclipse.ocl.pivot.Package)eObject);
 			//			}
 			else {
-				ePackages.add(eObject.eClass().getEPackage());
+				ePackages.add(ClassUtil.requireNonNull(eObject.eClass().getEPackage()));
 			}
 		}
-		for (@SuppressWarnings("null")@NonNull EPackage ePackage : ePackages) {
+		for (@NonNull EPackage ePackage : ePackages) {
 			addEPackage(ePackage);
 		}
 	}
@@ -1513,7 +1515,9 @@ public abstract class AbstractIdResolver implements IdResolver
 			nsURI2package.put(internedNsURI, libraryPackage);
 			return libraryPackage;
 		}
-		if (!directRootsProcessed) {
+		Map<@NonNull String, @NonNull Package> roots2package2 = roots2package;
+		if (roots2package2 == null) {
+			roots2package = roots2package2 = new HashMap<>();
 			processDirectRoots();
 			knownPackage = nsURI2package.get(internedNsURI);
 			if (knownPackage != null) {
@@ -1605,26 +1609,27 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package visitRootPackageId(@NonNull RootPackageId id) {
-		String internedName = id.getName().intern();
-		org.eclipse.ocl.pivot.Package knownPackage = roots2package.get(internedName);
-		if (knownPackage != null) {
-			return knownPackage;
+		String idName = id.getName();
+		if (idName.equals(PivotConstants.METAMODEL_NAME)) {				// Commonest case may avoid need to processDirectRoots()
+			return standardLibrary.getPackage();
 		}
 		//		org.eclipse.ocl.pivot.Package libraryPackage = standardLibrary.getNsURIPackage(nsURI);
 		//		if (libraryPackage != null) {
 		//			nsURI2package.put(nsURI, libraryPackage);
 		//			return libraryPackage;
 		//		}
-		if (!directRootsProcessed) {
+		Map<@NonNull String, @NonNull Package> roots2package2 = roots2package;
+		if (roots2package2 == null) {
+			roots2package = roots2package2 = new HashMap<>();
 			processDirectRoots();
-			knownPackage = roots2package.get(internedName);
-			if (knownPackage != null) {
-				return knownPackage;
-			}
+		}
+		org.eclipse.ocl.pivot.Package knownPackage = roots2package2.get(idName);
+		if (knownPackage != null) {
+			return knownPackage;
 		}
 		if (!crossReferencedRootsProcessed) {
 			processCrossReferencedRoots();
-			knownPackage = roots2package.get(internedName);
+			knownPackage = roots2package2.get(idName);
 			if (knownPackage != null) {
 				return knownPackage;
 			}
