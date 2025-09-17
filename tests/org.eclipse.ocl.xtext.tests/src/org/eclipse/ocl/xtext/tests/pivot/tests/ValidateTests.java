@@ -852,9 +852,6 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			//	Attempted validation after hiding the loading OCL
 			//
-			@NonNull String[] messages2 = getMessages(//validationContext,
-				StringUtil.bind(VIOLATED_TEMPLATE, "XXXX", "Library::lib::Book::b2"));
-			//	StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
 			try {
 				assertValidationDiagnostics("With Complete OCL", resource, messages);
 				TestCase.fail("Expected IllegalStateException for bad external ResourceSet content");
@@ -872,12 +869,28 @@ public class ValidateTests extends AbstractValidateTests
 			//	Regular validation with the loading OCL again.
 			//
 			assertValidationDiagnostics("With Complete OCL", resource, messages);
+
+			// XXX Making a CSREsource migrate to another EnvironmentFactory is too hard. Why bother? so no need to test.
+
+		//	ThreadLocalExecutor.resetEnvironmentFactory();		// Emulate interactive Load then Validate
+
+
+		//	ElementUtil.resetPivotMappings(csResource);
+		//	for (Resource resource2 : resourceSet.getResources()) {
+		//		if (resource2 instanceof CSResource) {
+		//			ElementUtil.resetPivotMappings((CSResource) resource2);
+		//		}
+		//	}
+		//	resource.unload();
+			//
+			//	XXX proper rest ?? nedd new Thread
+			//
 		//	ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
 		//	ValidationContext validationContext = new ValidationContext(validationRegistry);
 		//	EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resource);			// Eager EnvironmentFactory resolution
-		//	assertValidationDiagnostics("With Complete OCL", resource, validationContext, messages);
+		//	assertValidationDiagnostics("With Complete OCL", resource, messages);
 			//		disposeResourceSet(resourceSet);
-			ocl.activate();
+		//	ocl.activate();
 			helper.dispose();
 		}
 		finally {

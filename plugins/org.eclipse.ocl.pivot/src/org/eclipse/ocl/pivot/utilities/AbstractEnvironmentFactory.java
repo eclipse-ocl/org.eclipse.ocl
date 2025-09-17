@@ -404,7 +404,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (resource instanceof CSResource) {
 			for (@NonNull EObject eObject : new TreeIterable(resource)) {
 				if (eObject instanceof Pivotable) {
-					if (((Pivotable)eObject).getPivot() != null) {
+					Element pivot = ((Pivotable)eObject).basicGetPivot();
+					if ((pivot != null) && !pivot.eIsProxy()) {
 						throw new IllegalStateException(StringUtil.bind(PivotMessages.BadExternalResource, resource.getURI()));
 					}
 				}
@@ -1158,7 +1159,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		else {
 			ecore2as = External2AS.getAdapter(ecoreResource, this);
-			List<Diagnostic> errors = ecoreResource.getErrors();
+			List<@NonNull Diagnostic> errors = ecoreResource.getErrors();
 			assert errors != null;
 			String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 			if (message != null) {
@@ -1166,7 +1167,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 		}
 		Model pivotModel = ecore2as.getASModel();				// XXX only need ASResource
-		List<Diagnostic> errors = pivotModel.eResource().getErrors();
+		List<@NonNull Diagnostic> errors = pivotModel.eResource().getErrors();
 		assert errors != null;
 		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 		if (message != null) {

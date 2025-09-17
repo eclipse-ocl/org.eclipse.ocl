@@ -417,7 +417,7 @@ public class PivotUtil implements PivotConstants
 	}
 
 	public static void checkResourceErrors(@NonNull String message, @NonNull Resource resource) throws ParserException {
-		List<Resource.Diagnostic> errors = ClassUtil.requireNonNull(resource.getErrors());
+		List<Resource.@NonNull Diagnostic> errors = ClassUtil.requireNonNull(resource.getErrors());
 		if (errors.size() > 0) {
 			throw new SemanticException(formatResourceDiagnostics(errors, message, "\n"));
 		}
@@ -427,7 +427,7 @@ public class PivotUtil implements PivotConstants
 	 * @since 1.4
 	 */
 	public static void checkResourceWarnings(@NonNull String message, @NonNull Resource resource) throws ParserException {
-		List<Resource.Diagnostic> warnings = ClassUtil.requireNonNull(resource.getWarnings());
+		List<Resource.@NonNull Diagnostic> warnings = ClassUtil.requireNonNull(resource.getWarnings());
 		if (warnings.size() > 0) {
 			throw new SemanticException(formatResourceDiagnostics(warnings, message, "\n"));
 		}
@@ -1387,7 +1387,7 @@ public class PivotUtil implements PivotConstants
 		}
 	}
 
-	public static String formatResourceDiagnostics(@NonNull List<Resource.Diagnostic> diagnostics, @NonNull String messagePrefix, @NonNull String newLine) {
+	public static String formatResourceDiagnostics(@NonNull List<Resource.@NonNull Diagnostic> diagnostics, @NonNull String messagePrefix, @NonNull String newLine) {
 		if (diagnostics.size() <= 0) {
 			return null;
 		}

@@ -10,11 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -31,7 +28,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -54,7 +50,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 {
-	private @NonNull Map<EClassifier, WeakReference<FlatClass>> typeMap = new WeakHashMap<>();
+//	private @NonNull Map<EClassifier, WeakReference<FlatClass>> typeMap = new WeakHashMap<>();
 
 	/**
 	 * @since 7.0
@@ -75,6 +71,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			PackageId packageId = asPackage.getPackageId();
 			nsURI2package.put(nsURI, asPackage);
 			if (packageId instanceof RootPackageId) {
+				assert roots2package != null;
 				roots2package.put(((RootPackageId)packageId).getName(), asPackage);
 			}
 		}

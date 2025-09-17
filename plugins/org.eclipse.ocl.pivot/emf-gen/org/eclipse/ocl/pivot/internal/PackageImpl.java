@@ -773,9 +773,6 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
-		if ("standard".equals(newName)) {
-			getClass();		// XXX
-		}
 		String oldName = name;
 		EObject eContainer = eContainer();
 		if ((oldName != null) && !oldName.equals(newName)) {

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
@@ -477,6 +478,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		asPackage.setURI(ePackage.getNsURI());
 	//	asPackage.setPackageId(packageId != null ? packageId : IdManager.getPackageId(ePackage));
 		asPackage.setESObject(ePackage);
+		URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
+		if (semantics != null) {
+			Annotation semanticsAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
+			asPackage.getOwnedAnnotations().add(semanticsAnnotation);
+		}
 		return asPackage;
 	}
 

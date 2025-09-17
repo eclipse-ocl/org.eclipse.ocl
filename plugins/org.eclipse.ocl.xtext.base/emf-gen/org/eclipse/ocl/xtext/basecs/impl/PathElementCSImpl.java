@@ -622,6 +622,17 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 	 * @generated NOT
 	 */
 	@Override
+	public Element basicGetPivot()
+	{
+		return basicGetReferredElement();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
 	public Element getPivot() {
 		return getReferredElement();
 	}

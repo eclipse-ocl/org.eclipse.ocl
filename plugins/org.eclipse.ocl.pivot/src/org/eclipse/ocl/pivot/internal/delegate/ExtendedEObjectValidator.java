@@ -290,13 +290,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 			EAnnotation eAnnotation = (EAnnotation)eDetail.eContainer();
 			assert OCLCommon.isDelegateURI(eAnnotation.getSource());
 			URI reloadableURI = asConstraint.getReloadableURI(environmentFactory);
-			if (reloadableURI == null) {		// XXX
-				reloadableURI = asConstraint.getReloadableURI(environmentFactory);
-			}
 			assert reloadableURI != null;			// XXX
-			if (reloadableURI.toString().equals("file:/E:/Development/Workspace/_OCL_ValidateTests__testValidate_Simple_oclinecore_and_ocl/Simple.ecore#//Simple/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%2FOCL%2FPivot%/@details.0")) {		// XXX
-				asConstraint.getReloadableURI(environmentFactory);
-			}
 			assert !PivotUtil.isASURI(reloadableURI);
 			delegateURIs.add(reloadableURI);
 		}
@@ -309,9 +303,6 @@ public class ExtendedEObjectValidator extends EObjectValidator
 				assert !"«null»".equals(String.valueOf(asConstraint.getOwnedSpecification()));		// XXX
 
 				URI reloadableURI = asConstraint.getReloadableURI(environmentFactory);
-				if (reloadableURI == null) {		// XXX
-					asConstraint.getReloadableURI(environmentFactory);
-				}
 				assert reloadableURI != null;
 				delegateURIs.add(reloadableURI);
 			}

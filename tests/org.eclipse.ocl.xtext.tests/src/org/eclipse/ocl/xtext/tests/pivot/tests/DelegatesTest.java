@@ -272,12 +272,11 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	@SuppressWarnings("null")
-	protected void initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
+	protected @NonNull OCLInternal initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
 		Resource ecoreResource = initModelWithErrors(resourceSet);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-	//	environmentFactory.adapt(resourceSet);
 		String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
 		if (message != null)
 			fail(message);
@@ -300,7 +299,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotModel.getOwnedPackages()) {
 			pivotInstaller.installDelegates(metamodelManager.getCompletePackage(nestedPackage));
 		}
-		ocl.dispose();
+		return ocl;
 	}
 
 	protected void initPackageRegistrations(@NonNull ResourceSet resourceSet) {
@@ -1600,12 +1599,13 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			public void runWithThrowable() {
 				ResourceSet resourceSet = createResourceSet();
-				initModelWithErrorsAndOcl(resourceSet);
+				OCLInternal ocl = initModelWithErrorsAndOcl(resourceSet);
 				EClass eClassifier = (EClass) companyPackage.getEClassifier("Detritus");
 				EObject badClassInstance = create(acme, companyDetritus, eClassifier, null);
 				validateWithSeverity("CompleteOCLInvariant", Diagnostic.WARNING, badClassInstance,
 					"Failure on " + eClassifier.getName());
 				unloadResourceSet(resourceSet);
+				ocl.dispose();
 			}
 		});
 	}
