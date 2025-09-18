@@ -2462,7 +2462,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
+		Boolean isRequiredNullCast = Boolean.valueOf(expectedIsNonNull && !actualIsNonNull);
 		//		if (expectedIsNonNull && !actualIsNonNull) {
 		//			js.appendClassReference(null, ClassUtil.class);
 		//			js.append(".requireNonNull(");

@@ -456,10 +456,10 @@ public class JavaStream
 		}
 	}
 
-	public void appendClassCast(@NonNull CGValuedElement cgValue, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
+	public void appendClassCast(@NonNull CGValuedElement cgValue, @Nullable Boolean isRequired/*NullCast*/, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
 		@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 		Class<?> requiredJavaClass = typeDescriptor.getJavaClass();
-		if ((actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
+		if (((isRequired == Boolean.TRUE) && (actualJavaClass == Object.class)) || (actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
 			typeDescriptor.appendCast(this, isRequired, actualJavaClass, subStream);
 		}
 		else {
