@@ -128,14 +128,12 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.TupleType;
 			import org.eclipse.ocl.pivot.VoidType;
-			import org.eclipse.ocl.pivot.ids.IdManager;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-			import org.eclipse.ocl.pivot.model.OCLmetamodel;
 			import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -216,7 +214,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					assert model != null;
 					return model;
 				}
-				«IF (externalPackages.size() == 2)»
 
 				/**
 				 * Return the default «uri» standard Library package.
@@ -228,7 +225,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					assert pkge != null;
 					return pkge;
 				}
-				«ENDIF»
 			
 				/**
 				 * Install this library in the {@link StandardLibraryContribution#REGISTRY}
@@ -379,7 +375,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			
 					protected AbstractLibraryContents() {
 						«FOR pkge : thisModel.getSortedPackages()»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»
 						«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
 						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(orphanPackage, «normalizedTemplateParameter.getIndex()»);

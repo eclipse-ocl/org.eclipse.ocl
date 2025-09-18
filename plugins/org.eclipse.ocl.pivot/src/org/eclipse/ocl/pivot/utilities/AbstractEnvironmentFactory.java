@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -1030,28 +1031,19 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		String metaclassName = eClass.getName();
 		EPackage ePackage = eClass.getEPackage();
 		assert ePackage != null;
-		Model asMetamodel = getMetamodel(ePackage);
-		for (org.eclipse.ocl.pivot.Package asMetapackage : asMetamodel.getOwnedPackages()) {			// XXX use a cache/map
-			org.eclipse.ocl.pivot.Class asMetaClass = NameUtil.getNameable(asMetapackage.getOwnedClasses(), metaclassName);
-			if (asMetaClass != null) {
-				return asMetaClass;
+		CompletePackage completePackage = completeModel.basicGetCompletePackage(PivotConstants.METAMODEL_ID);
+		if ((completePackage == null) || (completePackage.getPartialPackages().size() < 2)) {
+			Model asMetamodel = getMetamodel(ePackage);			// Avoid loading metamodel if one already available
+			completeModel.getPartialModels().add(asMetamodel);
+			completePackage = completeModel.basicGetCompletePackage(PivotConstants.METAMODEL_ID);
+		}
+		if (completePackage != null) {
+			CompleteClass completeClass = completePackage.getOwnedCompleteClass(metaclassName);
+			if (completeClass != null) {
+				return completeClass.getPrimaryClass();
 			}
 		}
-	/*	if (ePackage == )
-		String metaPackageName = ePackage.getName().toLowerCase();
-	//	CompleteClassInternal completeClass = completeModel.getCompleteClass(asInstanceType);
-	//	CompletePackageInternal completePackage = completeClass.getOwningCompletePackage();
-	//	String metaPackageName = completePackage.getMetaPackageName();
-		Iterable<@NonNull CompletePackage> metaCompletePackages = completeModel.getAllMetaCompletePackages(metaPackageName);
-		if (metaCompletePackages != null) {
-			for (CompletePackage metaCompletePackage : metaCompletePackages) {
-				CompleteClass metaCompleteClass = metaCompletePackage.getOwnedCompleteClass(metaClassName);
-				if (metaCompleteClass != null) {
-					return metaCompleteClass.getPrimaryClass();
-				}
-			}
-		} */
-		throw new InvalidValueException("Metaclass '" + metaclassName + "' not found in '" + asMetamodel);
+		throw new InvalidValueException("Metaclass '" + metaclassName + "' not found in '" + completePackage + "'");
 	}
 
 	/**

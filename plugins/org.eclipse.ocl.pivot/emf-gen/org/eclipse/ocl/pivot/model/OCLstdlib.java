@@ -53,21 +53,17 @@ import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -298,7 +294,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		protected AbstractLibraryContents() {
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", null, OCLstdlibPackage.eINSTANCE);
-			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
+			orphanPackage = createPackage("$$", null, "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
 			$$0 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 0);
 			$$1 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 1);
 			$$2 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 2);

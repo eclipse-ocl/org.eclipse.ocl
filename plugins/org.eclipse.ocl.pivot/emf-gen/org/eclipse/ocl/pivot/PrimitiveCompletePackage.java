@@ -16,6 +16,13 @@ package org.eclipse.ocl.pivot;
  * A representation of the model object '<em><b>Primitive Complete Package</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * The PrimitiveCompletePackage comprises each Primitive CompleteClass.
+ * It is a root CompletePackage and so has no distinctive parent.
+ * All explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.
+ * Classes that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getPrimitiveCompletePackage()
  * @generated

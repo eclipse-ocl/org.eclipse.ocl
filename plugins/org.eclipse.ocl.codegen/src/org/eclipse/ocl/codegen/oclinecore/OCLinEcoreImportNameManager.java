@@ -22,7 +22,7 @@ import org.eclipse.ocl.codegen.java.ImportUtils;
 
 /**
  * Manage the mapping from long fully qualified class names to the short class names that may be used once an import has been provided.
- * Fully qualifued names are compressed to a form suitable for use as Java source text embedded with GenModel source text.
+ * Fully qualified names are compressed to a form suitable for use as Java source text embedded with GenModel source text.
  */
 public class OCLinEcoreImportNameManager extends AbstractImportNameManager
 {
