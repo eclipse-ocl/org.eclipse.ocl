@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Manage the mapping from long fully qualified class names to the short class names that may be used once an import has been provided.
- * Fully qualifued names are compressed to a form suitable for use as Java source text.
+ * Fully qualified names are compressed to a form suitable for use as Java source text.
  */
 public class JavaImportNameManager extends AbstractImportNameManager
 {
@@ -90,15 +90,16 @@ public class JavaImportNameManager extends AbstractImportNameManager
 			short2longName.put(shortName, newLongName);
 			return shortName;
 		}
-		else if (newLongName.equals(shortName) && (long2short.get(newLongName) == null)) {	// Matching primitive/reserved name
-			return shortName;								//  avoid a long2short key that would lead to a real import
+		else if (!newLongName.equals(oldLongName)) {		// Conflicting usage
+			return null;									// no short name available
 		}
-		else if (newLongName.equals(oldLongName)) {			// Long-name re-use => re-use shortName
-			long2short.put(newLongName, shortName);			// -- ensure reserved name is known to be used
-			return shortName;
-		}
-		else {												// New conflicting class => just return null
-			return null;
+		else {												// Consistent re-usage
+			if (long2short.get(newLongName) == null) {		// If pre-reserved
+				if (!newLongName.equals(shortName) && !newLongName.equals("java.lang." + shortName)) {	// and import necessary
+					long2short.put(newLongName, shortName);	// Add it to the imports
+				}
+			}
+			return shortName;								//  re-use
 		}
 	}
 

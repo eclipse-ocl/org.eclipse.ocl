@@ -70,6 +70,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -965,7 +966,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getSortedExternalPackages(@NonNull Model root) {
-		List<org.eclipse.ocl.pivot.@NonNull Package> externalPackages = new ArrayList<>(root.getOwnedPackages());
+		List<org.eclipse.ocl.pivot.@NonNull Package> externalPackages = new ArrayList<>(/*root.getOwnedPackages()*/);
 		for (Import asImport : root.getOwnedImports()) {
 			Namespace importedNamespace = asImport.getImportedNamespace();
 			org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.getContainingPackage(importedNamespace);
@@ -977,7 +978,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 		for (Element element : name2external.values()) {
 			org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.getContainingPackage(element);
-			if (externalPackage != null) {
+			if ((externalPackage != null) && !LibraryConstants.STDLIB_URI.equals(externalPackage.getURI()))  {
 				if (!externalPackages.contains(externalPackage)) {
 					externalPackages.add(externalPackage);
 				}

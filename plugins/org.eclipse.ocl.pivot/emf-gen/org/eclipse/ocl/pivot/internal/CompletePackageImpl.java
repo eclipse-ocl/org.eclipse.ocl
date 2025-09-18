@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -57,7 +59,6 @@ import com.google.common.collect.Iterables;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Complete Package</b></em>'.
- * @extends org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

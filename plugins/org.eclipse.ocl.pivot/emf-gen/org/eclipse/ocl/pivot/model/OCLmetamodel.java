@@ -44,20 +44,14 @@ import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -242,7 +236,7 @@ public class OCLmetamodel extends ASResourceImpl
 			super(standardLibraryPackage);
 			root = createModel("http://www.eclipse.org/ocl/2015/Pivot");
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", null, PivotPackage.eINSTANCE);
-			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
+			orphanPackage = createPackage("$$", null, "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
 			installPackages();
 			installClassTypes();
 			installEnumerations();
@@ -5655,6 +5649,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_Parameter, "A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations.");
 			installComment(pr_Parameter_owningOperation, "The Operation owning this parameter.");
 			installComment(iv_ParameterVariable_HasNoInitializer, "Parameter variable has no initializer.");
+			installComment(_PrimitiveCompletePackage, "The PrimitiveCompletePackage comprises each Primitive CompleteClass.\nIt is a root CompletePackage and so has no distinctive parent.\nAll explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.\nClasses that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage.");
 			installComment(_PrimitiveType, "A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically.");
 			installComment(_Profile, "A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain.");
 			installComment(_ProfileApplication, "A profile application is used to show which profiles have been applied to a package.");

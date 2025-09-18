@@ -513,7 +513,7 @@ public class Orphanage extends PackageImpl
 	 * @since 1.18
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull ResourceSet resourceSet) {
-		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -621,10 +621,14 @@ public class Orphanage extends PackageImpl
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
 
-	public Orphanage(@NonNull String name, @NonNull String nsURI) {
+	/**
+	 * @since 7.0
+	 */
+	public Orphanage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 		//		super(uri);
 		//		setLoaded(true);
 		setName(name);
+		setNsPrefix(nsPrefix);
 		setURI(nsURI);
 	}
 

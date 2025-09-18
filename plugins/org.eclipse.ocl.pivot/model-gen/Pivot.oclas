@@ -854,6 +854,7 @@
       <ownedProperties xmi:id="0bJBA" isImplicit="true" isRequired="true" name="Operation" opposite="#aQIF3" type="#SI01z"/>
     </ownedClasses>
     <ownedClasses xmi:id="XSQ4c" name="PrimitiveCompletePackage" superClasses="#+gDEJ">
+      <ownedComments body="The PrimitiveCompletePackage comprises each Primitive CompleteClass.&#xA;It is a root CompletePackage and so has no distinctive parent.&#xA;All explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.&#xA;Classes that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage."/>
       <ownedProperties xmi:id="tpHsl" isImplicit="true" isRequired="true" name="CompleteModel" opposite="#b7Oj2" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="mKorp" isAbstract="true" name="PrimitiveLiteralExp" superClasses="#fKWWp"/>
@@ -1421,7 +1422,7 @@
       <ownedProperties xmi:id="OM4eT" isImplicit="true" name="TemplateParameterSubstitution" opposite="#gMCx3" type="#dBke1"/>
     </ownedClasses>
   </ownedPackages>
-  <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
+  <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$">
     <ownedClasses xsi:type="pivot:BagType" xmi:id="abElO" name="Bag" superClasses="#w2smd">
       <ownedBindings>
         <ownedSubstitutions actual="#g7Mr0" formal="&_0;#k2OA6"/>

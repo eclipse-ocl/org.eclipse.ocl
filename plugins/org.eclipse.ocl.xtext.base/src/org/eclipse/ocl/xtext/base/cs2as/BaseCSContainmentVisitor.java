@@ -197,7 +197,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		T pivotElement;
 		if (pivotObject == null) {
-			pivotElement = PivotUtil.createPackage(pivotClass, pivotEClass, name, csElement.getNsURI(), getPackageId(csElement));
+			pivotElement = PivotUtil.createPackage(pivotClass, pivotEClass, name, csElement.getNsURI(), csElement.getNsPrefix(), getPackageId(csElement));
 			URI semantics = ElementUtil.basicGetPackageSemantics(csElement);
 			if (semantics != null) {
 				Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
@@ -345,7 +345,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 			if (behavioralClass != null) {
 				String behavioralName = behavioralClass.getName();
 				assert behavioralName != null;			// Null name such as UML Association shouldn't happen here.
-				if ((behavioralName == null) || behavioralName.equals(pivotElement.getName())) {
+				if (behavioralName.equals(pivotElement.getName())) {
 					behavioralClass = null;
 				}
 			}

@@ -111,16 +111,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.Parameter;
 			import org.eclipse.ocl.pivot.PivotPackage;
 			import org.eclipse.ocl.pivot.Property;
-			import org.eclipse.ocl.pivot.SequenceType;
 			import org.eclipse.ocl.pivot.SetType;
 			import org.eclipse.ocl.pivot.TemplateParameter;
-			import org.eclipse.ocl.pivot.ids.IdManager;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-			import org.eclipse.ocl.pivot.model.OCLstdlib;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
 
@@ -189,7 +186,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					assert model != null;
 					return model;
 				}
-				«IF (externalPackages.size() == 2)»
+				«IF (externalPackages.size() < 0 /* Not needed */)»
 
 				/**
 				 * Return the default «uri» metamodel Package using the default OCL Standard Library. 
@@ -326,7 +323,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						super(standardLibraryPackage);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						«FOR pkge : root.getSortedPackages()»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»
 						«root.installPackages()»
 						«root.installClassTypes()»

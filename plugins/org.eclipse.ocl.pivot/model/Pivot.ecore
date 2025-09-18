@@ -2503,7 +2503,11 @@
         name="associativity" eType="#T-pivot-AssociativityKind" defaultValueLiteral="left"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-PrimitiveCompletePackage"
-      name="PrimitiveCompletePackage" eSuperTypes="#T-pivot-CompletePackage"/>
+      name="PrimitiveCompletePackage" eSuperTypes="#T-pivot-CompletePackage">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The PrimitiveCompletePackage comprises each Primitive CompleteClass.&#xA;It is a root CompletePackage and so has no distinctive parent.&#xA;All explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.&#xA;Classes that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-PrimitiveLiteralExp" name="PrimitiveLiteralExp"
       abstract="true" eSuperTypes="#T-pivot-LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-PrimitiveType" name="PrimitiveType"

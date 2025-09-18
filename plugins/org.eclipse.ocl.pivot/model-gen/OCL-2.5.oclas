@@ -2638,7 +2638,7 @@
     <ownedPrecedences xmi:id="ZtB8C" name="XOR"/>
     <ownedPrecedences xmi:id="1Odhg" name="IMPLIES"/>
   </ownedPackages>
-  <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
+  <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$">
     <ownedClasses xsi:type="pivot:BagType" xmi:id=",GgED" name="Bag" superClasses="#ViIGS">
       <ownedBindings>
         <ownedSubstitutions actual="#NxGT6" formal="#k2OA6"/>
