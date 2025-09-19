@@ -1531,7 +1531,7 @@ public class StandaloneProjectMap implements ProjectManager
 		 */
 		private final @NonNull WeakHashMap<@Nullable ResourceSet, @NonNull IResourceLoadStatus> resourceSet2resourceLoadStatus = new WeakHashMap<>();
 
-//		private static int genModelReads = 0;
+		private static int genModelReads = 0;
 
 		protected AbstractResourceDescriptor(@NonNull IProjectDescriptor projectDescriptor, @NonNull URI genModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			this.projectDescriptor = projectDescriptor;
@@ -1549,6 +1549,7 @@ public class StandaloneProjectMap implements ProjectManager
 				}
 			}
 			projectDescriptor.addResourceDescriptor(this);
+			System.out.println("create ResourceDescriptor: " + this);
 		}
 
 		@Override
@@ -1714,7 +1715,7 @@ public class StandaloneProjectMap implements ProjectManager
 						return;
 					}
 					GenModelReader genModelReader = new GenModelReader(this);
-//					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
+					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
 					saxParser.parse(inputStream, genModelReader);
 					try {
 						setEcoreModel(genModelReader.getEcorePackages(), genModelReader.getNsURI2packageDescriptor());
@@ -2164,6 +2165,7 @@ public class StandaloneProjectMap implements ProjectManager
 			this.projectMap =  projectMap;
 			this.name = name;
 			this.locationURI = locationURI;
+			System.out.println("create ProjectDescriptor: " + this);
 		}
 
 		@Override
@@ -3080,6 +3082,7 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
+		System.out.println("scanClassPath");
 		@NonNull String[] entries = getClassPathEntries();
 		for (@NonNull String entry : entries) {
 			File fileEntry = new File(entry);
