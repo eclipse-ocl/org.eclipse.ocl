@@ -1707,8 +1707,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 					}
 				} else {
 					URI resolvedGenModelURI = URI.createURI(genModelURI).resolve(locationURI);
-					String fileName = resolvedGenModelURI.isFile() ? resolvedGenModelURI.toFileString() : genModelURI.toString();
-					inputStream = new FileInputStream(fileName);
+					inputStream = URIConverter.INSTANCE.createInputStream(resolvedGenModelURI);
 				}
 				if (inputStream != null) {
 					SAXParser saxParser = ((StandaloneProjectMap)projectDescriptor.getProjectManager()).createSAXParser();
@@ -1821,6 +1820,9 @@ public class StandaloneProjectMap extends AbstractProjectManager
 			this.resourceDescriptor = resourceDescriptor;
 			this.namespaceURI = nsURI;
 			this.className = className;
+			if ("http://www.eclipse.org/ocl/2015/CompleteOCLCS".equals(nsURI.toString())) {
+				getClass();			// XXX
+			}
 		}
 
 		@Override
@@ -2022,11 +2024,11 @@ public class StandaloneProjectMap extends AbstractProjectManager
 			return true;
 		}
 
-		public void readGenModels(@NonNull SAXParser saxParser) {
+		public void createResourceDescriptors() {
 			for (Map.@NonNull Entry<@NonNull IProjectDescriptor, @NonNull Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>>> entry1 : projectDescriptor2genModelURI2nsURI2className.entrySet()) {
 				IProjectDescriptor projectDescriptor = entry1.getKey();
-				URI locationURI = projectDescriptor.getLocationURI();
-				try {
+//				URI locationURI = projectDescriptor.getLocationURI();
+//				try {
 					Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = entry1.getValue();
 					for (Map.@NonNull Entry<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> entry2 : genModelURI2nsURI2className.entrySet()) {
 						String genModelURI = entry2.getKey();
@@ -2035,10 +2037,10 @@ public class StandaloneProjectMap extends AbstractProjectManager
 						IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelURI, nsURI2className);
 //						((AbstractResourceDescriptor)resourceDescriptor).readGenModel();
 					}
-				} catch (Exception e) {
-					System.err.println("Failed to read '" + locationURI + "'" + e);
+//				} catch (Exception e) {
+//					System.err.println("Failed to read '" + locationURI + "'" + e);
 					//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
-				}
+//				}
 			}
 		}
 	}
@@ -2710,7 +2712,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 	protected @NonNull IProjectDescriptor getProjectDescriptorInternal(@NonNull URI platformURI) {
 		@NonNull String projectName = platformURI.segment(1);
-		getProjectDescriptors();
+		getProjectDescriptors();			// XXX redundant
 		IProjectDescriptor projectDescriptor = project2descriptor.get(projectName);
 		if (projectDescriptor == null) {
 			@NonNull URI locationURI = platformURI.trimSegments(platformURI.segmentCount() - 2).appendSegment("");
@@ -2740,13 +2742,15 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor2 = project2descriptor;
 		if (project2descriptor2 == null) {
 			project2descriptor = project2descriptor2 = new HashMap<>();
-			SAXParser saxParser = createSAXParser();
-			if (saxParser != null) {
-				scanClassPath(project2descriptor2, saxParser);
-				GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
-				generatedPackageReader.readRegistry();
-				generatedPackageReader.readGenModels(saxParser);
-			}
+		//	SAXParser saxParser = createSAXParser();
+		//	if (saxParser != null) {			// XXX
+				scanClassPath(project2descriptor2);
+				if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// XXX
+					GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
+					generatedPackageReader.readRegistry();
+					generatedPackageReader.createResourceDescriptors();
+				}
+		//	}
 		}
 		return project2descriptor2;
 	}
@@ -2991,7 +2995,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		}
 	}
 
-	protected @Nullable IProjectDescriptor registerBundle(@NonNull File file, @NonNull SAXParser saxParser) {
+	protected @Nullable IProjectDescriptor registerBundle(@NonNull File file) {
 		JarFile jarFile = null;
 		try {
 			jarFile = new JarFile(file);
@@ -3091,7 +3095,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		// XXX need to reset EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 	}
 
-	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
+	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors) {
 		System.out.println("scanClassPath");
 		@NonNull String[] entries = getClassPathEntries();
 		for (@NonNull String entry : entries) {
@@ -3099,8 +3103,8 @@ public class StandaloneProjectMap extends AbstractProjectManager
 			try {
 				File f = fileEntry.getCanonicalFile();
 				if (f.getPath().endsWith(".jar")) {
-					registerBundle(f, saxParser);
-				} else if (!scanFolder(f, saxParser, new HashSet<>(), 0)) {
+					registerBundle(f);
+				} else if (!scanFolder(f, new HashSet<>(), 0)) {
 					// eclipse bin folder?
 					while((f = f.getParentFile()) != null) {
 						File dotProject = new File(f, ".project");
@@ -3117,7 +3121,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		}
 	}
 
-	protected boolean scanFolder(@NonNull File f, @NonNull SAXParser saxParser, @NonNull Set<String> alreadyVisited, int depth) {
+	protected boolean scanFolder(@NonNull File f, @NonNull Set<String> alreadyVisited, int depth) {
 		try {
 			if (!alreadyVisited.add(f.getCanonicalPath()))
 				return true;
@@ -3131,11 +3135,11 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		if (files != null) {
 			for (File file : files) {
 				if (file.exists() && file.isDirectory() && (depth < 2) && !file.getName().startsWith(".")) {
-					containsProject |= scanFolder(file, saxParser, alreadyVisited, depth + 1);
+					containsProject |= scanFolder(file, alreadyVisited, depth + 1);
 				} else if (".project".equals(file.getName())) {
 					dotProject = file;
 				} else if (file.getName().endsWith(".jar")) {
-					registerBundle(file, saxParser);
+					registerBundle(file);
 				}
 			}
 		}
