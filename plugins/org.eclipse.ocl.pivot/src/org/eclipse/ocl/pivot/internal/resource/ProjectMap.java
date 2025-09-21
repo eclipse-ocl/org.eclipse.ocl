@@ -10,14 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.SAXParser;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -251,14 +247,14 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	}
 
 	@Override
-	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
+	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			super.scanClassPath(projectDescriptors, saxParser);
+			super.scanClassPath(projectDescriptors);
 		}
 		else {
 			//			scanBundles();  -- no need to scan hundreds of bundles when a single URI map entry will handle them all.
 			scanProjects(projectDescriptors);
-			scanGenModels(saxParser);
+			scanGenModels();
 		}
 	}
 
@@ -274,7 +270,9 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 		}
 	} */
 
-	protected void scanGenModels(@NonNull SAXParser saxParser) {
+	private static int genModelReads = 0;
+
+	protected void scanGenModels() {
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
 		// FIXME Bug 576593 getEPackageNsURIToGenModelLocationMap returns empty cache for not target-platform / non-cache otherwise
 		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
@@ -305,10 +303,11 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 				@NonNull URI deresolvedGenModelURI = URIUtil.deresolve(genModelURI, projectDescriptor.getLocationURI(), true, true, true);
 				@NonNull String genModelString = String.valueOf(deresolvedGenModelURI);
 				IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelString, nsURI2className);
-				GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
+			/*	GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
 				InputStream inputStream = null;
 				try {
 					inputStream = uriConverter.createInputStream(genModelURI);
+					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
 					saxParser.parse(inputStream, genModelReader);			// XXX inherited lazy
 				} catch (Exception e) {
 					logException("Failed to parse '" + genModelURI + "'", e);
@@ -318,7 +317,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 							inputStream.close();
 						}
 					} catch (IOException e) {}
-				}
+				} */
 			}
 		}
 	}
