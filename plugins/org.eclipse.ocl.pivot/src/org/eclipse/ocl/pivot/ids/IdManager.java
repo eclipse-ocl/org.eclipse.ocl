@@ -458,7 +458,7 @@ public final class IdManager
 			return getPackageId(ePackage);
 		}
 		String  nsURI = asPackage.getURI();
-		if (nsURI != null) {
+		if ((nsURI != null) && (nsURI.length() > 0)) {
 			if (packageURI2completePackageId != null) {
 				CompletePackageId completePackageId = packageURI2completePackageId.get(nsURI);
 				if (completePackageId != null) {

@@ -162,6 +162,43 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 		return new ProjectDescriptor(this, projectName, locationURI);
 	}
 
+	@Override
+	protected void createResourceDescriptors() {
+		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+		// FIXME Bug 576593 getEPackageNsURIToGenModelLocationMap returns empty cache for not target-platform / non-cache otherwise
+		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
+		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
+		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
+			URI genModelURI = ePackageNsURIToGenModelLocationMap.get(ePackageNsURI);
+			if (genModelURI != null) {
+				if (genModelURI.isPlatformResource()) {			// URI mapping may not (yet) be in place.
+					String platformResourcePath = genModelURI.toPlatformString(true);
+					URI genModelURI2 = URI.createPlatformPluginURI(platformResourcePath, true);
+					if (uriConverter.exists(genModelURI2, null)) {
+						genModelURI = genModelURI2;
+					}
+				}
+				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
+				if (nsURI2className == null) {
+					nsURI2className = new HashMap<>();
+					genModel2nsURI2className.put(genModelURI, nsURI2className);
+				}
+				nsURI2className.put(URI.createURI(ePackageNsURI), null);
+			}
+		}
+		for (@NonNull URI genModelURI : genModel2nsURI2className.keySet()) {
+			if (genModelURI.isPlatformPlugin()) {
+				IProjectDescriptor projectDescriptor = getProjectDescriptorInternal(genModelURI);
+				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
+				assert nsURI2className != null;
+				@NonNull URI deresolvedGenModelURI = URIUtil.deresolve(genModelURI, projectDescriptor.getLocationURI(), true, true, true);
+				@NonNull String genModelString = String.valueOf(deresolvedGenModelURI);
+				@SuppressWarnings("unused")
+				IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelString, nsURI2className);
+			}
+		}
+	}
+
 	/**
 	 * @since 1.7
 	 */
@@ -254,7 +291,6 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 		else {
 			//			scanBundles();  -- no need to scan hundreds of bundles when a single URI map entry will handle them all.
 			scanProjects(projectDescriptors);
-			scanGenModels();
 		}
 	}
 
@@ -269,58 +305,6 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 			}
 		}
 	} */
-
-	private static int genModelReads = 0;
-
-	protected void scanGenModels() {
-		URIConverter uriConverter = new ExtensibleURIConverterImpl();
-		// FIXME Bug 576593 getEPackageNsURIToGenModelLocationMap returns empty cache for not target-platform / non-cache otherwise
-		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
-		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
-		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
-			URI genModelURI = ePackageNsURIToGenModelLocationMap.get(ePackageNsURI);
-			if (genModelURI != null) {
-				if (genModelURI.isPlatformResource()) {			// URI mapping may not (yet) be in place.
-					String platformResourcePath = genModelURI.toPlatformString(true);
-					URI genModelURI2 = URI.createPlatformPluginURI(platformResourcePath, true);
-					if (uriConverter.exists(genModelURI2, null)) {
-						genModelURI = genModelURI2;
-					}
-				}
-				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
-				if (nsURI2className == null) {
-					nsURI2className = new HashMap<>();
-					genModel2nsURI2className.put(genModelURI, nsURI2className);
-				}
-				nsURI2className.put(URI.createURI(ePackageNsURI), null);
-			}
-		}
-		for (@NonNull URI genModelURI : genModel2nsURI2className.keySet()) {
-			if (genModelURI.isPlatformPlugin()) {
-				IProjectDescriptor projectDescriptor = getProjectDescriptorInternal(genModelURI);
-				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
-				assert nsURI2className != null;
-				@NonNull URI deresolvedGenModelURI = URIUtil.deresolve(genModelURI, projectDescriptor.getLocationURI(), true, true, true);
-				@NonNull String genModelString = String.valueOf(deresolvedGenModelURI);
-				IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelString, nsURI2className);
-			/*	GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
-				InputStream inputStream = null;
-				try {
-					inputStream = uriConverter.createInputStream(genModelURI);
-					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
-					saxParser.parse(inputStream, genModelReader);			// XXX inherited lazy
-				} catch (Exception e) {
-					logException("Failed to parse '" + genModelURI + "'", e);
-				} finally {
-					try {
-						if (inputStream != null) {
-							inputStream.close();
-						}
-					} catch (IOException e) {}
-				} */
-			}
-		}
-	}
 
 	private void refreshProject(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull IProject project) {
 		//	Map<String, IProjectDescriptor> projectDescriptors = getProjectDescriptors();
