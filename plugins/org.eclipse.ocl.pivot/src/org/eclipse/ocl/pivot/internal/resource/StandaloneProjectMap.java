@@ -2415,12 +2415,12 @@ public class StandaloneProjectMap extends AbstractProjectManager
 	 * Return the StandaloneProjectMap already installed as an adapter on a
 	 * <tt>resourceSet</tt> if one exists, else creates, installs, initializes
 	 * and returns a new StandaloneProjectMap.
+	 * @since 7.0
 	 */
 	public static @NonNull StandaloneProjectMap getAdapter(@NonNull ResourceSet resourceSet) {
 		StandaloneProjectMap adapter = findAdapter(resourceSet);
 		if (adapter == null) {
-			assert !EMFPlugin.IS_ECLIPSE_RUNNING : "ProjectMap should have overridden";
-			adapter = new StandaloneProjectMap(false);
+			adapter = EMFPlugin.IS_ECLIPSE_RUNNING ? new ProjectMap(false) : new StandaloneProjectMap(false);
 			//			resourceSet.eAdapters().add(adapter);
 			adapter.initializeResourceSet(resourceSet);
 		}
@@ -3110,7 +3110,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 	 * @since 7.0
 	 */
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors) {
-		System.out.println("scanClassPath");
+	//	System.out.println("scanClassPath");
 		@NonNull String[] entries = getClassPathEntries();
 		for (@NonNull String entry : entries) {
 			File fileEntry = new File(entry);
