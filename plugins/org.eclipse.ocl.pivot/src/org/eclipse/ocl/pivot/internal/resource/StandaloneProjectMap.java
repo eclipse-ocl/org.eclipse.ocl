@@ -1549,7 +1549,7 @@ public class StandaloneProjectMap implements ProjectManager
 				}
 			}
 			projectDescriptor.addResourceDescriptor(this);
-			System.out.println("create ResourceDescriptor: " + this);
+		//	System.out.println("create ResourceDescriptor: " + this);
 		}
 
 		@Override
@@ -2167,7 +2167,7 @@ public class StandaloneProjectMap implements ProjectManager
 			this.projectMap =  projectMap;
 			this.name = name;
 			this.locationURI = locationURI;
-			System.out.println("create ProjectDescriptor: " + this);
+		//	System.out.println("create ProjectDescriptor: " + this);
 		}
 
 		@Override
@@ -2412,6 +2412,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public static @NonNull StandaloneProjectMap getAdapter(@NonNull ResourceSet resourceSet) {
 		StandaloneProjectMap adapter = findAdapter(resourceSet);
 		if (adapter == null) {
+			assert !EMFPlugin.IS_ECLIPSE_RUNNING : "ProjectMap should have overridden";
 			adapter = new StandaloneProjectMap(false);
 			//			resourceSet.eAdapters().add(adapter);
 			adapter.initializeResourceSet(resourceSet);
@@ -2570,8 +2571,8 @@ public class StandaloneProjectMap implements ProjectManager
 		this.isGlobal = isGlobal;
 		if (liveStandaloneProjectMaps != null) {
 			liveStandaloneProjectMaps.put(this, null);
-			PivotUtil.debugPrintln("Create " + getClass().getSimpleName()
-				+ "@" + Integer.toHexString(System.identityHashCode(this)) + (isGlobal ? " global" : " local"));
+		//	PivotUtil.debugPrintln("Create " + getClass().getSimpleName()
+		//		+ "@" + Integer.toHexString(System.identityHashCode(this)) + (isGlobal ? " global" : " local"));
 		}
 	}
 
@@ -2613,6 +2614,16 @@ public class StandaloneProjectMap implements ProjectManager
 
 	protected @NonNull IProjectDescriptor createProjectDescriptor(@NonNull String projectName, @NonNull URI locationURI) {
 		return new ProjectDescriptor(this, projectName, locationURI);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected void createResourceDescriptors() {
+		assert !EMFPlugin.IS_ECLIPSE_RUNNING : "ProjectMap should have overridden";
+		GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
+		generatedPackageReader.readRegistry();
+		generatedPackageReader.createResourceDescriptors();
 	}
 
 	/**
@@ -2738,11 +2749,7 @@ public class StandaloneProjectMap implements ProjectManager
 		//	SAXParser saxParser = createSAXParser();
 		//	if (saxParser != null) {			// XXX
 				scanClassPath(project2descriptor2);
-				if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// XXX
-					GeneratedPackageReader generatedPackageReader = new GeneratedPackageReader();
-					generatedPackageReader.readRegistry();
-					generatedPackageReader.createResourceDescriptors();
-				}
+				createResourceDescriptors();
 		//	}
 		}
 		return project2descriptor2;
@@ -2971,6 +2978,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * When a new Resource is added to a watched ResourceSet notify the resourceDescriptor that there is a new
 	 * (ResourceSet, Resource) pair so that it install both platform:/plugin and platform:/resource
 	 * entries in the ResourceSet's uriResourceMap and install a listener to detect when the Resource is loaded.
+	 * @since 7.0
 	 */
 	protected void notifyAddedDynamicResource(@NonNull ResourceSet resourceSet, @NonNull Resource resource) {
 		//		resource.eAdapters().add(this);
@@ -2986,6 +2994,9 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected @Nullable IProjectDescriptor registerBundle(@NonNull File file) {
 		JarFile jarFile = null;
 		try {
@@ -3085,6 +3096,9 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors) {
 		System.out.println("scanClassPath");
 		@NonNull String[] entries = getClassPathEntries();
@@ -3111,6 +3125,9 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	protected boolean scanFolder(@NonNull File f, @NonNull Set<String> alreadyVisited, int depth) {
 		try {
 			if (!alreadyVisited.add(f.getCanonicalPath()))
