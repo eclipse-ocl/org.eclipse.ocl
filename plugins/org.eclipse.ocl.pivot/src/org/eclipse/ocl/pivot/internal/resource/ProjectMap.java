@@ -131,18 +131,6 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 		return (StandaloneProjectMap) EcoreUtil.getAdapter(resourceSet.eAdapters(), ProjectMap.class);
 	}
 
-	public static synchronized @NonNull StandaloneProjectMap getAdapter(@NonNull ResourceSet resourceSet) {
-		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
-			return StandaloneProjectMap.getAdapter(resourceSet);
-		}
-		StandaloneProjectMap adapter = findAdapter(resourceSet);
-		if (adapter == null) {
-			adapter = new ProjectMap(false);
-			adapter.initializeResourceSet(resourceSet);
-		}
-		return adapter;
-	}
-
 	/**
 	 * non-null visitor when this ProjectMap is listening to resource chnages in the workspace.
 	 */
