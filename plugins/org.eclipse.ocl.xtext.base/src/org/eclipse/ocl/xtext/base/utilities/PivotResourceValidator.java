@@ -202,6 +202,9 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		}
 		if (!hasSyntaxError) {
 			OperationCanceledManager operationCanceledManager = getOperationCanceledManager();
+			if (operationCanceledManager == null) {
+				throw new NullPointerException(getClass().getName() + " was not constructed using an injector");
+			}
 			Diagnostician diagnostician = validationContext.getDiagnostician();
 			for (EObject ele : resource.getContents()) {
 				operationCanceledManager.checkCanceled(monitor);
