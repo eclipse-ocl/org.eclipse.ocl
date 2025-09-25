@@ -16,7 +16,7 @@
 	<extension
 		point="org.eclipse.ui.editors">
 		<editor
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.ocl.xtext.idioms.IdiomsEditor"
 			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
 			default="true"
 			extensions="idioms"
@@ -27,7 +27,7 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
 			commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
 			<activeWhen>
 				<reference
@@ -36,7 +36,7 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
 			commandId="org.eclipse.ocl.xtext.idioms.Idioms.validate">
 			<activeWhen>
 				<reference
@@ -46,14 +46,14 @@
 		</handler>
 		<!-- copy qualified name -->
 		<handler
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
 			<activeWhen>
 				<reference definitionId="org.eclipse.ocl.xtext.idioms.Idioms.Editor.opened" />
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
 			<activeWhen>
 				<and>
@@ -90,21 +90,21 @@
 	<extension
 			point="org.eclipse.ui.preferencePages">
 		<page
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="org.eclipse.ocl.xtext.idioms.Idioms"
 			name="Idioms">
 			<keywordReference id="org.eclipse.ocl.xtext.idioms.ui.keyword_Idioms"/>
 		</page>
 		<page
 			category="org.eclipse.ocl.xtext.idioms.Idioms"
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
 			id="org.eclipse.ocl.xtext.idioms.Idioms.coloring"
 			name="Syntax Coloring">
 			<keywordReference id="org.eclipse.ocl.xtext.idioms.ui.keyword_Idioms"/>
 		</page>
 		<page
 			category="org.eclipse.ocl.xtext.idioms.Idioms"
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
 			id="org.eclipse.ocl.xtext.idioms.Idioms.templates"
 			name="Templates">
 			<keywordReference id="org.eclipse.ocl.xtext.idioms.ui.keyword_Idioms"/>
@@ -113,7 +113,7 @@
 	<extension
 			point="org.eclipse.ui.propertyPages">
 		<page
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="org.eclipse.ocl.xtext.idioms.Idioms"
 			name="Idioms">
 			<keywordReference id="org.eclipse.ocl.xtext.idioms.ui.keyword_Idioms"/>
@@ -207,7 +207,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
 			commandId="org.eclipse.xtext.ui.editor.FindReferences">
 			<activeWhen>
 				<reference
@@ -229,13 +229,13 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.resource.IResourceFactory"
 			type="idioms">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
 		<resourceServiceProvider
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
 			uriExtension="idioms">
 		</resourceServiceProvider>
 	</extension>
@@ -265,7 +265,7 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
@@ -298,7 +298,7 @@
 	<extension
 			point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
 			markerType="org.eclipse.ocl.xtext.idioms.ui.idioms.check.fast">
 			<attribute
 				name="FIXABLE_KEY"
@@ -306,7 +306,7 @@
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
 			markerType="org.eclipse.ocl.xtext.idioms.ui.idioms.check.normal">
 			<attribute
 				name="FIXABLE_KEY"
@@ -314,7 +314,7 @@
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
 			markerType="org.eclipse.ocl.xtext.idioms.ui.idioms.check.expensive">
 			<attribute
 				name="FIXABLE_KEY"
@@ -325,7 +325,7 @@
 	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
@@ -350,7 +350,7 @@
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
 			category="org.eclipse.ocl.xtext.idioms.Idioms"
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
 			id="org.eclipse.ocl.xtext.idioms.Idioms.refactoring"
 			name="Refactoring">
 			<keywordReference id="org.eclipse.ocl.xtext.idioms.ui.keyword_Idioms"/>
@@ -358,7 +358,7 @@
 	</extension>
 	<extension point="org.eclipse.compare.contentViewers">
 		<viewer id="org.eclipse.ocl.xtext.idioms.Idioms.compare.contentViewers"
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="idioms">
 		</viewer>
 		<contentTypeBinding
@@ -367,7 +367,7 @@
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
 		<viewer id="org.eclipse.ocl.xtext.idioms.Idioms.compare.contentMergeViewers"
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="idioms" label="Idioms Compare">
 		</viewer>
 		<contentTypeBinding
@@ -376,7 +376,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
 		<provider id="org.eclipse.ocl.xtext.idioms.Idioms.editors.documentProviders"
-			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			class="org.eclipse.ocl.xtext.idioms.ui.IdiomsExecutableExtensionFactoryOverload:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
 			extensions="idioms">
 		</provider>
 	</extension>
