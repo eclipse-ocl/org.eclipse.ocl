@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.context.EObjectContext;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -50,8 +49,8 @@ import com.google.inject.Inject;
 
 public class BaseDocument extends XtextDocument implements ConsoleContext
 {
+//	private static int count = 0;
 
-	private static int count = 0;
 	/**
 	 * The derived BaseDocumentLocker assigns the EnvironmentFactory from the prevailing part thread
 	 * to the current worker thread.
@@ -77,14 +76,14 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 
 		@Override
 		public <T> T modify(IUnitOfWork<T, XtextResource> work) {
-			int myCount = count++;
-			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-queue:" + myCount + " " + NameUtil.debugSimpleName(work));
+		//	int myCount = count++;
+		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-queue:" + myCount + " " + NameUtil.debugSimpleName(work));
 			try {
 				ThreadLocalExecutor partThread2 = partThread;
 				ThreadLocalExecutorUI.NeedsInit needsInit;
 				if (partThread2 != null) {
 					needsInit = ThreadLocalExecutorUI.needsInit(partThread2);
-					System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " needsInit " + needsInit);
+				//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " needsInit " + needsInit);
 					if (needsInit  != ThreadLocalExecutorUI.NeedsInit.AS_IS) {
 						InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
 						{
@@ -93,13 +92,13 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 							@SuppressWarnings("null")
 							@Override
 							public T getResult() {
-								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-result:" + myCount + " " + NameUtil.debugSimpleName(work));
+							//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-result:" + myCount + " " + NameUtil.debugSimpleName(work));
 								return result;
 							}
 
 							@Override
 							public void run() {
-								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-run1:" + myCount + " " + NameUtil.debugSimpleName(work));
+							//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-run1:" + myCount + " " + NameUtil.debugSimpleName(work));
 								result = BaseDocumentLocker.super.modify(work);
 							}
 						};
@@ -107,28 +106,25 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 						return callBack.getResult();
 					}
 				}
-				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-run2:" + myCount + " " + NameUtil.debugSimpleName(work));
+			//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-run2:" + myCount + " " + NameUtil.debugSimpleName(work));
 				return super.modify(work);
 			}
 			finally {
-				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-end:" + myCount + " " + NameUtil.debugSimpleName(work));
+		//		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-end:" + myCount + " " + NameUtil.debugSimpleName(work));
 			}
 		}
 
 
 		@Override
 		protected <T> T internalReadOnly(IUnitOfWork<T, XtextResource> work, boolean isCancelReaders) {
-			int myCount = count++;
-			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-queue:" + myCount + " " + NameUtil.debugSimpleName(work));
+		//	int myCount = count++;
+		//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-queue:" + myCount + " " + NameUtil.debugSimpleName(work));
 			try {
 				ThreadLocalExecutor partThread2 = partThread;
 				ThreadLocalExecutorUI.NeedsInit needsInit;
 				if (partThread2 != null) {
 					needsInit = ThreadLocalExecutorUI.needsInit(partThread2);
-					System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " needsInit " + needsInit);
-					if (Thread.currentThread().getName().contains("Xtext validation")) {
-						getClass();				// XXX
-					}
+				//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " needsInit " + needsInit);
 					if (needsInit != ThreadLocalExecutorUI.NeedsInit.AS_IS) {
 						InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
 						{
@@ -137,13 +133,13 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 							@SuppressWarnings("null")
 							@Override
 							public T getResult() {
-								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-result:" + myCount + " " + NameUtil.debugSimpleName(work));
+							//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-result:" + myCount + " " + NameUtil.debugSimpleName(work));
 								return result;
 							}
 
 							@Override
 							public void run() {
-								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-run1:" + myCount + " " + NameUtil.debugSimpleName(work));
+							//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-run1:" + myCount + " " + NameUtil.debugSimpleName(work));
 								result = BaseDocumentLocker.super.internalReadOnly(work, isCancelReaders);
 							}
 						};
@@ -151,12 +147,11 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 						return callBack.getResult();
 					}
 				}
-				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-run2:" + myCount + " " + NameUtil.debugSimpleName(work));
+			//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-run2:" + myCount + " " + NameUtil.debugSimpleName(work));
 				return super.internalReadOnly(work, isCancelReaders);
 			}
 			finally {
-				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-end:" + myCount + " " + NameUtil.debugSimpleName(work));
-
+			//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-end:" + myCount + " " + NameUtil.debugSimpleName(work));
 			}
 		}
 
@@ -179,10 +174,10 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 	}
 
 	protected void checkForErrors(Resource resource) throws CoreException {
-		List<Resource.Diagnostic> errors = resource.getErrors();
+		List<Resource.@NonNull Diagnostic> errors = resource.getErrors();
 		if (errors.size() > 0) {
 			StringBuilder s = new StringBuilder();
-			for (Resource.Diagnostic diagnostic : errors) {
+			for (Resource.@NonNull Diagnostic diagnostic : errors) {
 				s.append("\n");
 				if (diagnostic instanceof XtextSyntaxDiagnostic) {
 					s.append("Syntax error: ");
