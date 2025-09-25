@@ -28,8 +28,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
@@ -201,14 +201,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 1.10
 	 */
-	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet, final @Nullable ResourceSet zzASResourceSet) {		// XXX
-		assert zzASResourceSet == null;
-		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " ctor " + NameUtil.debugSimpleName(this));
+	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet) {
+//		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " ctor " + NameUtil.debugSimpleName(this));
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
-			PivotUtil.debugPrintln("Create " + toDebugString()
-			+ " " + NameUtil.debugSimpleName(userResourceSet) + " " + NameUtil.debugSimpleName(zzASResourceSet));
+			PivotUtil.debugPrintln("Create " + toDebugString() + " " + NameUtil.debugSimpleName(userResourceSet));
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())

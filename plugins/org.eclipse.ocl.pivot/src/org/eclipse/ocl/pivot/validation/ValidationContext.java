@@ -115,7 +115,7 @@ public class ValidationContext extends HashMap<Object,Object>
 						public void run() {
 							ResourceSet resourceSet2 = editingDomain.getResourceSet();
 							assert resourceSet2 == resourceSet;		// XXX debugging
-							environmentFactoryInternal = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(BasicProjectManager.createDefaultProjectManager(), resourceSet2, null);
+							environmentFactoryInternal = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(BasicProjectManager.createDefaultProjectManager(), resourceSet2);
 						}
 					};
 					ThreadLocalExecutor.init(editingDomain, callBack);

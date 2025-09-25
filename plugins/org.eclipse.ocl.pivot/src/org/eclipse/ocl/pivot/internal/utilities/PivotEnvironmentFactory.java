@@ -43,8 +43,8 @@ public class PivotEnvironmentFactory extends AbstractEnvironmentFactory
 	/**
 	 * @since 1.10
 	 */
-	public PivotEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
-		super(projectManager, csResourceSet, asResourceSet);
+	public PivotEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet userResourceSet) {
+		super(projectManager, userResourceSet);
 	}
 
 	@Override

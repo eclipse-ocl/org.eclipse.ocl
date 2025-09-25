@@ -1769,7 +1769,7 @@ public class PivotUtil implements PivotConstants
 		if (projectManager == null) {
 			projectManager = ProjectManager.CLASS_PATH;
 		}
-		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
+		environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet);
 		ThreadLocalExecutor.setUsesFinalizer();				// auto-created EnvironmentFactory is destroyed by ThreadLocalExecutor.finalize()
 		return environmentFactory;
 	}
