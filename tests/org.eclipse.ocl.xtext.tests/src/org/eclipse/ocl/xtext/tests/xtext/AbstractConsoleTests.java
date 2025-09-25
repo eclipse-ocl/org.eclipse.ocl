@@ -168,7 +168,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 	protected static class TestEnvironmentFactory extends PivotEnvironmentFactory
 	{
 		protected TestEnvironmentFactory() {
-			super(getProjectMap(), null, null);
+			super(getProjectMap(), null);
 		}
 
 		@Override

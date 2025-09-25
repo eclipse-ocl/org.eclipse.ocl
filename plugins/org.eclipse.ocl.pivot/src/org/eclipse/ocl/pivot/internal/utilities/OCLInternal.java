@@ -33,8 +33,8 @@ public class OCLInternal extends OCL
 		return newInstance(BasicProjectManager.createDefaultProjectManager(), resourceSet);
 	}
 
-	public static @NonNull OCLInternal newInstance(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
-		EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, externalResourceSet, null);
+	public static @NonNull OCLInternal newInstance(@NonNull ProjectManager projectManager, @Nullable ResourceSet userResourceSet) {
+		EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, userResourceSet);
 		return newInstance(environmentFactory);
 	}
 

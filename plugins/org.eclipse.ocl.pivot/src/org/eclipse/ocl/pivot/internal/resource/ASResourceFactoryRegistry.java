@@ -131,8 +131,8 @@ public class ASResourceFactoryRegistry
 	/**
 	 * @since 1.10
 	 */
-	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet csResourceSet, @Nullable ResourceSet asResourceSet) {
-		return new PivotEnvironmentFactory(projectManager, csResourceSet, asResourceSet);
+	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet userResourceSet) {
+		return new PivotEnvironmentFactory(projectManager, userResourceSet);
 	}
 
 	public @Nullable ASResourceFactoryContribution get(@NonNull String contentType) {

@@ -486,7 +486,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	public @NonNull Model getASModel() {
 		Model pivotModel2 = pivotModel;
 		if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
-			PivotUtil.debugPrintln("getASModel: " + ecoreResource.getURI());			// XXX
+//			PivotUtil.debugPrintln("getASModel: " + ecoreResource.getURI());
 			loadImports(ecoreResource);
 			pivotModel2 = pivotModel = importObjects(ClassUtil.requireNonNull(ecoreResource.getContents()), createPivotURI());
 			ASResource asResource = (ASResource) pivotModel.eResource();

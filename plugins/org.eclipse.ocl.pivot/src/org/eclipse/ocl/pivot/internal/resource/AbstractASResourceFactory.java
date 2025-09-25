@@ -203,7 +203,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 
 	@Override
 	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager) {
-		return new PivotEnvironmentFactory(projectManager, null, null);
+		return new PivotEnvironmentFactory(projectManager, null);
 	}
 
 	/**
