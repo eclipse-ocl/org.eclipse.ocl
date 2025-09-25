@@ -615,7 +615,7 @@ public class ElementUtil
 		return csMultiplicity.getUpper();
 	}
 
-	public static boolean hasSyntaxError(@NonNull List<Diagnostic> diagnostics) {
+	public static boolean hasSyntaxError(@NonNull List<@NonNull Diagnostic> diagnostics) {
 		for (Diagnostic diagnostic : diagnostics) {
 			if (diagnostic instanceof LibraryDiagnostic) {
 				return true;
