@@ -21,8 +21,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
@@ -166,25 +166,26 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		}
 	} */
 
-	private @Nullable Integer previousCancelIndicator = null;
+//	private @Nullable Integer previousCancelIndicator = null;
 	// FIXME BUG 389675 Remove duplication with respect to inherited method
 	@Override
 	public List<Issue> validate(Resource resource, final CheckMode mode, CancelIndicator mon) {
-	//	System.out.println(Thread.currentThread().getName() + " validate " + NameUtil.debugSimpleName(resource) + " '" + resource.getURI() + "' for " + NameUtil.debugSimpleName(mon));
+		System.out.println(Thread.currentThread().getName() + " validate " + NameUtil.debugSimpleName(resource) + " '" + resource.getURI() + "' for " + NameUtil.debugSimpleName(mon));
 		//		System.out.println(new Date() + " Validate " + mode + " : " + csResource.getURI() + " on " + Thread.currentThread().getName());
 	//	ThreadLocalExecutor.reset();
-		Integer thisCancelIndicator = mon != null ? System.identityHashCode(mon) : null;
+	//	Integer thisCancelIndicator = mon != null ? System.identityHashCode(mon) : null;
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory != null) {
+		// Caller (e.g. via ThreadLocalExecutorUI.init) should provide any re-useable EnvironmentFactory
+	/*	if (environmentFactory != null) {
 			if ((previousCancelIndicator != null) && !previousCancelIndicator.equals(thisCancelIndicator)) {
-				ThreadLocalExecutor.reset();	// Reset if Worker Thread re-used for a distinct validation before GC has cleaned up.
+				ThreadLocalExecutor.reset();	// Reset if Worker Thread re-used for a distinct validation before GC has cleaned up.	// XXX should re-inkit from partThread move to ThreadLocalExecutorUI.init
 				environmentFactory = null;
 			}
 			else {
 				// can re-use with old EnvironmentFactory since the CancelIndicator is re-used.
 			}
 		}
-		previousCancelIndicator = thisCancelIndicator;
+		previousCancelIndicator = thisCancelIndicator; */
 		boolean locallyCreatedEnvironmentFactory = false;
 		if (environmentFactory == null) {			// XXX revise
 			environmentFactory = PivotUtil.getEnvironmentFactory(resource.getResourceSet());		// GC will eventually clean up

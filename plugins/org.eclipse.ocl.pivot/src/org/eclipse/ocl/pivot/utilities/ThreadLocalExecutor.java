@@ -486,6 +486,7 @@ public class ThreadLocalExecutor implements Nameable
 	 */
 	public void localInit(@NonNull ThreadLocalExecutor initPartThread, @NonNull InitWrapperCallBack<?,?> callBack, @NonNull NeedsInit needsInit) {
 	//	assert activePart != NOT_A_PART_THREAD;			// First init is from NOT_A_PART_THREAD
+		System.out.println(getBracketedThreadName() + " localInit " + needsInit);
 		if (needsInit == NeedsInit.ATTACH_FROM_PART_THREAD) {
 		//	assert this.activePartThread == this.activatedPartThread;
 			EnvironmentFactoryInternal environmentFactory = initPartThread.environmentFactory;

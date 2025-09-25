@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.context.EObjectContext;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -49,6 +50,8 @@ import com.google.inject.Inject;
 
 public class BaseDocument extends XtextDocument implements ConsoleContext
 {
+
+	private static int count = 0;
 	/**
 	 * The derived BaseDocumentLocker assigns the EnvironmentFactory from the prevailing part thread
 	 * to the current worker thread.
@@ -74,59 +77,86 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 
 		@Override
 		public <T> T modify(IUnitOfWork<T, XtextResource> work) {
-		//	System.out.println("[" + Thread.currentThread().getName() + "] modify " + NameUtil.debugSimpleName(this));
-			ThreadLocalExecutor partThread2 = partThread;
-			ThreadLocalExecutorUI.NeedsInit needsInit;
-			if ((partThread2 != null) && ((needsInit = ThreadLocalExecutorUI.needsInit(partThread2)) != ThreadLocalExecutorUI.NeedsInit.AS_IS)) {
-				InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
-				{
-					protected @Nullable T result = null;
+			int myCount = count++;
+			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-queue:" + myCount + " " + NameUtil.debugSimpleName(work));
+			try {
+				ThreadLocalExecutor partThread2 = partThread;
+				ThreadLocalExecutorUI.NeedsInit needsInit;
+				if (partThread2 != null) {
+					needsInit = ThreadLocalExecutorUI.needsInit(partThread2);
+					System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " needsInit " + needsInit);
+					if (needsInit  != ThreadLocalExecutorUI.NeedsInit.AS_IS) {
+						InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
+						{
+							protected @Nullable T result = null;
 
-					@SuppressWarnings("null")
-					@Override
-					public T getResult() {
-						return result;
-					}
+							@SuppressWarnings("null")
+							@Override
+							public T getResult() {
+								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-result:" + myCount + " " + NameUtil.debugSimpleName(work));
+								return result;
+							}
 
-					@Override
-					public void run() {
-						result = BaseDocumentLocker.super.modify(work);
+							@Override
+							public void run() {
+								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-run1:" + myCount + " " + NameUtil.debugSimpleName(work));
+								result = BaseDocumentLocker.super.modify(work);
+							}
+						};
+						ThreadLocalExecutorUI.init(partThread2, callBack, needsInit);
+						return callBack.getResult();
 					}
-				};
-				ThreadLocalExecutorUI.init(partThread2, callBack, needsInit);
-				return callBack.getResult();
-			}
-			else {
+				}
+				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-run2:" + myCount + " " + NameUtil.debugSimpleName(work));
 				return super.modify(work);
+			}
+			finally {
+				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " modify-end:" + myCount + " " + NameUtil.debugSimpleName(work));
 			}
 		}
 
+
 		@Override
-		public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
-		//	System.out.println("[" + Thread.currentThread().getName() + "] readOnly " + NameUtil.debugSimpleName(this));
-			ThreadLocalExecutor partThread2 = partThread;
-			ThreadLocalExecutorUI.NeedsInit needsInit;
-			if ((partThread2 != null) && ((needsInit = ThreadLocalExecutorUI.needsInit(partThread2)) != ThreadLocalExecutorUI.NeedsInit.AS_IS)) {
-				InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
-				{
-					protected @Nullable T result = null;
-
-					@SuppressWarnings("null")
-					@Override
-					public T getResult() {
-						return result;
+		protected <T> T internalReadOnly(IUnitOfWork<T, XtextResource> work, boolean isCancelReaders) {
+			int myCount = count++;
+			System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-queue:" + myCount + " " + NameUtil.debugSimpleName(work));
+			try {
+				ThreadLocalExecutor partThread2 = partThread;
+				ThreadLocalExecutorUI.NeedsInit needsInit;
+				if (partThread2 != null) {
+					needsInit = ThreadLocalExecutorUI.needsInit(partThread2);
+					System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " needsInit " + needsInit);
+					if (Thread.currentThread().getName().contains("Xtext validation")) {
+						getClass();				// XXX
 					}
+					if (needsInit != ThreadLocalExecutorUI.NeedsInit.AS_IS) {
+						InitWrapperCallBack<T, Object> callBack = new InitWrapperCallBack<T, Object>()
+						{
+							protected @Nullable T result = null;
 
-					@Override
-					public void run() {
-						result = BaseDocumentLocker.super.readOnly(work);
+							@SuppressWarnings("null")
+							@Override
+							public T getResult() {
+								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-result:" + myCount + " " + NameUtil.debugSimpleName(work));
+								return result;
+							}
+
+							@Override
+							public void run() {
+								System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-run1:" + myCount + " " + NameUtil.debugSimpleName(work));
+								result = BaseDocumentLocker.super.internalReadOnly(work, isCancelReaders);
+							}
+						};
+						ThreadLocalExecutorUI.init(partThread2, callBack, needsInit);
+						return callBack.getResult();
 					}
-				};
-				ThreadLocalExecutorUI.init(partThread2, callBack, needsInit);
-				return callBack.getResult();
+				}
+				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-run2:" + myCount + " " + NameUtil.debugSimpleName(work));
+				return super.internalReadOnly(work, isCancelReaders);
 			}
-			else {
-				return super.readOnly(work);
+			finally {
+				System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " readOnly-end:" + myCount + " " + NameUtil.debugSimpleName(work));
+
 			}
 		}
 
