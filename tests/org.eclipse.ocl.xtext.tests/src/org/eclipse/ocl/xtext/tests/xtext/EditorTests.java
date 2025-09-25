@@ -48,10 +48,12 @@ import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
+import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLUiModule;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 import org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLUiModule;
 import org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator;
+import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
 import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 import org.eclipse.ocl.xtext.oclstdlib.ui.OCLstdlibUiModule;
@@ -202,7 +204,7 @@ public class EditorTests extends XtextTestCase
 		return editor;
 	}
 
-	private String doTestEditor(@NonNull String editorId, @NonNull URI testFile) throws CoreException, PartInitException {
+	private String doTestEditor(@NonNull Injector injector, @NonNull String editorId, @NonNull URI testFile) throws CoreException, PartInitException {
 		IEditorInput input = new EMFURIEditorInput(testFile);
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
@@ -222,7 +224,7 @@ public class EditorTests extends XtextTestCase
 				ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
 				ValidationContext validationContext = new ValidationContext(validationRegistry);
 				Diagnostician diagnostician = validationContext.getDiagnostician();
-				PivotResourceValidator resourceValidator = new PivotResourceValidator();
+				PivotResourceValidator resourceValidator = injector.getInstance(PivotResourceValidator.class);
 				resourceValidator.setDiagnostician(diagnostician);
 				resourceValidator.setDiagnosticConverter(new PivotDiagnosticConverter());
 				resourceValidator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
@@ -326,13 +328,13 @@ public class EditorTests extends XtextTestCase
 
 	public void testEditor_OpenCompleteOCLEditor4Pivot_OCL() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/Pivot.ocl", true);
-		String documentText = doTestEditor(CompleteOCLUiModule.EDITOR_ID, uri);
+		String documentText = doTestEditor(CompleteOCLStandaloneSetup.getInjector(), CompleteOCLUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("inv SourceIsCollection: true"));
 	}
 
 	public void testEditor_OpenCompleteOCLEditor4Fruit_OCL() throws Exception {
 		URI uri = getTestModelURI("models/uml/Fruit.ocl");
-		String documentText = doTestEditor(CompleteOCLUiModule.EDITOR_ID, uri);
+		String documentText = doTestEditor(CompleteOCLStandaloneSetup.getInjector(), CompleteOCLUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("body: Color::red"));
 	}
 
@@ -408,7 +410,7 @@ public class EditorTests extends XtextTestCase
 
 	public void testEditor_OpenOCLinEcoreEditor4Pivot() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/Pivot.ecore", true);
-		String documentText = doTestEditor(OCLinEcoreUiModule.EDITOR_ID, uri);
+		String documentText = doTestEditor(OCLinEcoreStandaloneSetup.getInjector(), OCLinEcoreUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("primitive datatype _'Boolean'"));
 	}
 
@@ -420,7 +422,7 @@ public class EditorTests extends XtextTestCase
 
 	public void testEditor_OpenOCLStdLibEditor4OCL_OCLstdlib() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
-		String documentText = doTestEditor(OCLstdlibUiModule.EDITOR_ID, uri);
+		String documentText = doTestEditor(OCLinEcoreStandaloneSetup.getInjector(), OCLstdlibUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("type UniqueCollection(T) : CollectionType conformsTo Collection(T)"));
 	}
 
@@ -428,7 +430,7 @@ public class EditorTests extends XtextTestCase
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			URI uri = URI.createPlatformPluginURI("org.eclipse.emf.ecore/model/Ecore.ecore", true);
-			String documentText = doTestEditor(OCLinEcoreUiModule.EDITOR_ID, uri);
+			String documentText = doTestEditor(OCLinEcoreStandaloneSetup.getInjector(), OCLinEcoreUiModule.EDITOR_ID, uri);
 			assertTrue(documentText.contains("abstract class ETypedElement extends ENamedElement"));		// No ecore:: qualification
 		} finally {
 			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
@@ -438,7 +440,7 @@ public class EditorTests extends XtextTestCase
 	// FIXME Disabled for BUG 425505 -- needs duplicates/redefines support
 	public void zztestEditor_OpenOCLinEcoreEditor4Pivot_Ecore() throws Exception {
 		URI uri = URI.createPlatformPluginURI(PivotConstantsInternal.PIVOT_ECORE, true);
-		String documentText = doTestEditor(OCLinEcoreUiModule.EDITOR_ID, uri);
+		String documentText = doTestEditor(OCLinEcoreStandaloneSetup.getInjector(), OCLinEcoreUiModule.EDITOR_ID, uri);
 		assertTrue(documentText.contains("abstract class Visitable : 'org.eclipse.ocl.pivot.util.Visitable' { interface };"));
 		assertTrue(documentText.contains("reference Type::ownedAttribute"));							// Tests Bug 363141 EAnnotation reference
 	}
