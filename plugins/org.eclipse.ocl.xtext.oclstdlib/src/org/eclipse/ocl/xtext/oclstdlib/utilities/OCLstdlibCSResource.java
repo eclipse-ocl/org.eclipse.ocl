@@ -82,6 +82,10 @@ public class OCLstdlibCSResource extends EssentialOCLCSResource
 		}
 	}
 
+	public OCLstdlibCSResource() {
+		super();		// XXX TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
 		return new OCLstdlibCS2AS(environmentFactory, this, asResource);
