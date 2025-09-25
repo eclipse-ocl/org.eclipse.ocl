@@ -1714,7 +1714,7 @@ public class StandaloneProjectMap implements ProjectManager
 						return;
 					}
 					GenModelReader genModelReader = new GenModelReader(this);
-					PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
+				//	PivotUtil.debugPrintln("Reading " + ++genModelReads + ": " + genModelURI);			// XXX
 					saxParser.parse(inputStream, genModelReader);
 					try {
 						setEcoreModel(genModelReader.getEcorePackages(), genModelReader.getNsURI2packageDescriptor());

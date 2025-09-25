@@ -13,8 +13,6 @@ package org.eclipse.ocl.xtext.tests.xtext;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
@@ -51,7 +49,6 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 import org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.ui.editor.templates.XtextTemplateProposal;
 
 import com.google.inject.Injector;
@@ -279,8 +276,8 @@ public class CompletionProposalTests extends XtextTestCase
 	}
 
 	public void testEditor_OCLstdlib_Completions() throws Exception {
-		Logger log = Logger.getLogger(XtextDocument.class);
-		log.setLevel(Level.TRACE);
+	//	Logger log = Logger.getLogger(XtextDocument.class);
+	//	log.setLevel(Level.TRACE);
 		boolean isTycho = CGUtil.isTychoSurefire();
 		if (isTycho) {				// FIXME BUG 526252
 			System.err.println(getName() + " has been disabled -see Bug 526252");
