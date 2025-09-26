@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DynamicElement;
@@ -284,7 +283,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		return IdManager.getRootPackageId(completePackageId.getName());		// XXX
 	}
 
-	@Override
+/*	@Override
 	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
 		System.out.println("XXX UMLEcoreTechnology.registerMetaPackages");			// XXX
 		super.registerMetaPackages(completeModel);
@@ -298,5 +297,5 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		CompletePackage standardCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.STANDARD_METAMODEL_ID, StandardPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.STANDARD_METAMODEL_NAME);	// XXX
 		completeModel.registerCompletePackageContribution(standardCompletePackage, StandardPackage.eINSTANCE.getNsURI());
 		// FIXME All known synonyms
-	}
+	} */
 }
