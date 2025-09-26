@@ -24,8 +24,6 @@ import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
@@ -83,13 +81,14 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	}
 
 	private void didAddResource(@NonNull Resource resource) {
-		if (resource instanceof ASResource) {
-			ASResourceFactory asResourceFactory = ((ASResource)resource).getASResourceFactory();
-			asResourceFactory.registerMetaPackages(getCompleteModel());
-		}
+	//	if (resource instanceof ASResource) {
+	//		ASResourceFactory asResourceFactory = ((ASResource)resource).getASResourceFactory();
+	//		asResourceFactory.registerMetaPackages(getCompleteModel());
+	//	}
+		PartialModels partialModels = getCompleteModel().getPartialModels();
 		for (EObject eObject : resource.getContents()) {
 			if (eObject instanceof Model) {
-				getCompleteModel().getPartialModels().add((Model)eObject);
+				partialModels.add((Model)eObject);
 			}
 		}
 		resource.eAdapters().add(this);

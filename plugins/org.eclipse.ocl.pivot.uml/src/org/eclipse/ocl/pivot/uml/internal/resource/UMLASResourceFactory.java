@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -364,21 +363,5 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	@Override
 	public void initializeEValidatorRegistry(org.eclipse.emf.ecore.EValidator.@NonNull Registry eValidatorRegistry) {
 		eValidatorRegistry.put(UMLPackage.eINSTANCE, UMLOCLEValidator.NO_NEW_LINES);
-	}
-
-	@Override
-	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
-/*		System.out.println("UMLASResourceFactory.registerMetaPackages");			// XXX
-		super.registerMetaPackages(completeModel);
-		//
-		CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
-		completeModel.registerCompletePackageContribution(umlCompletePackage, UMLPackage.eINSTANCE.getNsURI());
-		//
-		CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
-		completeModel.registerCompletePackageContribution(typesCompletePackage, TypesPackage.eINSTANCE.getNsURI());
-		//
-		CompletePackage standardCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.STANDARD_METAMODEL_ID, StandardPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.STANDARD_METAMODEL_NAME);	// XXX
-		completeModel.registerCompletePackageContribution(standardCompletePackage, StandardPackage.eINSTANCE.getNsURI());
-		// FIXME All known synonyms */
 	}
 }
