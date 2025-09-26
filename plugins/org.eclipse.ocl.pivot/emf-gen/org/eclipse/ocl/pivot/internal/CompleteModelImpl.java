@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -912,34 +913,36 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				completePackage = packageURI2completePackage.get(packageURI);
 			}
 			if (completePackage == null) {
-				URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
-				CompletePackageId completePackageId;
-				if (semantics != null) {
-					completePackageId = IdManager.getCompletePackageId(String.valueOf(semantics.trimFragment()));
-				}
-				else if (Orphanage.isOrphanage(asPackage)) {
-					completePackageId = PivotConstants.ORPHANAGE_ID;
-				}
-				else if (packageURI != null) {			// XXX ??? and not blank
-					completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
-				}
-			//	else if (packageURI != null) {
-			//XXX		completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
-			//	}
-				else {
-					String packageName = PivotUtil.getName(asPackage);
-				//	 parentCompletePackage = null;
-				//	AbstractCompletePackages parentCompletePackages2 = ownedCompletePackages;
-					org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
-					if (parentPackage != null) {
-						CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
-					//	if (parentCompletePackage != null) {
-						//	parentCompletePackages2 = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
-						completePackageId = IdManager.getCompletePackageId(parentCompletePackage, packageName);
-					//	}
+				CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+				if (completePackageId == null) {
+					URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+					if (semantics != null) {
+						completePackageId = IdManager.getCompletePackageId(String.valueOf(semantics.trimFragment()));
 					}
+					else if (Orphanage.isOrphanage(asPackage)) {
+						completePackageId = PivotConstants.ORPHANAGE_ID;
+					}
+					else if (packageURI != null) {			// XXX ??? and not blank
+						completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
+					}
+				//	else if (packageURI != null) {
+				//XXX		completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
+				//	}
 					else {
-						completePackageId = IdManager.getCompletePackageId(packageName);
+						String packageName = PivotUtil.getName(asPackage);
+					//	 parentCompletePackage = null;
+					//	AbstractCompletePackages parentCompletePackages2 = ownedCompletePackages;
+						org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
+						if (parentPackage != null) {
+							CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
+						//	if (parentCompletePackage != null) {
+							//	parentCompletePackages2 = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
+							completePackageId = IdManager.getCompletePackageId(parentCompletePackage, packageName);
+						//	}
+						}
+						else {
+							completePackageId = IdManager.getCompletePackageId(packageName);
+						}
 					}
 				}
 				completePackage = completePackageId2completePackage.get(completePackageId);
