@@ -28,8 +28,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
@@ -227,7 +227,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel.init(this);
 		this.standardLibrary.init(this);
 
-		technology.registerMetaPackages(this);
+		technology.registerMetaPackages(completeModel);
 
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 

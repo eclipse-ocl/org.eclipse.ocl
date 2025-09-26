@@ -470,7 +470,15 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable PackageId zzpackageId) {
+		return createPackage(ePackage);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage) {
 		assert ePackage != null;
 		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
 		asPackage.setName(ePackage.getName());
@@ -483,6 +491,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			Annotation semanticsAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
 			asPackage.getOwnedAnnotations().add(semanticsAnnotation);
 		}
+		asPackage.getPackageId();
 		return asPackage;
 	}
 

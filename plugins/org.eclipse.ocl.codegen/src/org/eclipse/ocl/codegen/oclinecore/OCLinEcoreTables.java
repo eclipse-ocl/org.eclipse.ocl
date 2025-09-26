@@ -1210,16 +1210,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, org.eclipse.ocl.pivot.Package.class);
-		s.append(" PACKAGE = LIBRARY.createPackage(" + getGenPackagePrefix() + "Package.eINSTANCE");
-		s.append(", ");
-	//	if (asPackage.getPackageId() == IdManager.METAMODEL) {
-	//		s.appendClassReference(null, IdManager.class);
-	//		s.append(".METAMODEL");
-	//	}
-	//	else {
-			s.append("null");
-	//	}
-		s.append(");\n");
+		s.append(" PACKAGE = LIBRARY.createPackage(" + getGenPackagePrefix() + "Package.eINSTANCE);\n");
 
 		if (constants != null) {
 			s.append("\n");
