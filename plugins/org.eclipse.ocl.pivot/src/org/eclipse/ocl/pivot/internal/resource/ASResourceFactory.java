@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -163,10 +162,4 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * Return false if an error message is required
 	 */
 	boolean isCompatibleResource(@NonNull Resource newResource, @NonNull Resource oldResource);
-
-	/**
-	 * Register the meta-packages associated with this ASResourceFactory within completeModel.
-	 * @since 7.0
-	 */
-	void registerMetaPackages(@NonNull CompleteModel completeModel);
 }

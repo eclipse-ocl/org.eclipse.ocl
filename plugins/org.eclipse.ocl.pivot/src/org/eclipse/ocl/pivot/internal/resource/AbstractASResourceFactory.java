@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -373,15 +372,6 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	@Override
 	public boolean isCompatibleResource(@NonNull Resource newResource, @NonNull Resource oldResource) {
 		return false;
-	}
-
-	@Override
-	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
-/*		CompletePackage libraryCompletePackage = completeModel.getCompletePackage(PivotConstants.METAMODEL_ID, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
-		completeModel.registerCompletePackageContribution(libraryCompletePackage, OCLstdlibPackage.eINSTANCE.getNsURI());
-		//
-		CompletePackage pivotCompletePackage = completeModel.getCompletePackage(PivotConstants.METAMODEL_ID, PivotPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
-		completeModel.registerCompletePackageContribution(pivotCompletePackage, PivotPackage.eINSTANCE.getNsURI()); */
 	}
 
 	@Override
