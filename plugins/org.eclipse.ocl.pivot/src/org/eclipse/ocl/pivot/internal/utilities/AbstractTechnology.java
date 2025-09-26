@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Property;
@@ -23,7 +24,6 @@ import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
@@ -80,7 +80,7 @@ public abstract class AbstractTechnology implements Technology
 	}
 
 	@Override
-	public void registerMetaPackages(@NonNull EnvironmentFactory environmentFactory) {
+	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
 		// XXX CompletePackage asCompletePackage = completeModel.getCompletePackage(PivotConstants.METAMODEL_ID, PivotPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 		// XXX completeModel.registerCompletePackageContribution(asCompletePackage, PivotPackage.eINSTANCE.getNsURI());
 	}

@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty
 import org.eclipse.ocl.pivot.uml.internal.library.UMLStereotypeProperty;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -150,11 +149,11 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		}
 		else if (eObject2 instanceof UMLPackage) {
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
-			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
 		}
 		else if (eObject2 instanceof TypesPackage) {
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
-			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
@@ -175,13 +174,13 @@ public class UMLEcoreTechnology extends AbstractTechnology
 				if (eClass != null) {
 					EPackage ePackage = eClass.getEPackage();
 					if (ePackage instanceof UMLPackage) {
-						return PivotUMLConstants.UML_METAMODEL_ID;
+						return IdManager.getRootPackageId(PivotUMLConstants.UML_METAMODEL_NAME);
 					}
 					else if (ePackage instanceof TypesPackage) {
-						return PivotUMLConstants.TYPES_METAMODEL_ID;
+						return IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);
 					}
 					else if (ePackage instanceof StandardPackage) {
-						return PivotUMLConstants.STANDARD_METAMODEL_ID;
+						return IdManager.getRootPackageId(PivotUMLConstants.STANDARD_METAMODEL_NAME);
 					}
 				}
 			}
@@ -286,18 +285,18 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	}
 
 	@Override
-	public void registerMetaPackages(@NonNull EnvironmentFactory environmentFactory) {
-		super.registerMetaPackages(environmentFactory);
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
+	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
+		System.out.println("XXX UMLEcoreTechnology.registerMetaPackages");			// XXX
+		super.registerMetaPackages(completeModel);
 		//
-		CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
+	/*	CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
 		completeModel.registerCompletePackageContribution(umlCompletePackage, UMLPackage.eINSTANCE.getNsURI());
 		//
-		CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
+		CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
 		completeModel.registerCompletePackageContribution(typesCompletePackage, TypesPackage.eINSTANCE.getNsURI());
 		//
-		CompletePackage standardCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.STANDARD_METAMODEL_ID2, StandardPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.STANDARD_METAMODEL_NAME);	// XXX
-		completeModel.registerCompletePackageContribution(standardCompletePackage, StandardPackage.eINSTANCE.getNsURI());
+		CompletePackage standardCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.STANDARD_METAMODEL_ID, StandardPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.STANDARD_METAMODEL_NAME);	// XXX
+		completeModel.registerCompletePackageContribution(standardCompletePackage, StandardPackage.eINSTANCE.getNsURI()); */
 		// FIXME All known synonyms
 	}
 }

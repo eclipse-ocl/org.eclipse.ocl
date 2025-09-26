@@ -189,8 +189,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static void initialize() {
-		IdManager.addCompletePackageURI(PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eNS_URI);
-		IdManager.addCompletePackageURI(PivotUMLConstants.TYPES_METAMODEL_ID2, TypesPackage.eNS_URI);
+		IdManager.addCompletePackageURI(PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eNS_URI);
+		IdManager.addCompletePackageURI(PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eNS_URI);
 	}
 
 	/**

@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -30,7 +29,7 @@ public interface PivotUMLConstants extends PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull CompletePackageId STANDARD_METAMODEL_ID2 = IdManager.getCompletePackageId(STANDARD_METAMODEL_NAME);
+	public static final @NonNull CompletePackageId STANDARD_METAMODEL_ID = IdManager.getCompletePackageId(STANDARD_METAMODEL_NAME);
 
 	/**
 	 * The Package name of the shared types metamodel.
@@ -40,7 +39,7 @@ public interface PivotUMLConstants extends PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull CompletePackageId TYPES_METAMODEL_ID2 = IdManager.getCompletePackageId(TYPES_METAMODEL_NAME);
+	public static final @NonNull CompletePackageId TYPES_METAMODEL_ID = IdManager.getCompletePackageId(TYPES_METAMODEL_NAME);
 
 	/**
 	 * The Package name of the shared uml metamodel.
@@ -50,11 +49,7 @@ public interface PivotUMLConstants extends PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull CompletePackageId UML_METAMODEL_ID2 = IdManager.getCompletePackageId(UML_METAMODEL_NAME);
-
-	static final @NonNull RootPackageId UML_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.UML_METAMODEL_NAME);
-	static final @NonNull RootPackageId TYPES_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.TYPES_METAMODEL_NAME);
-	static final @NonNull RootPackageId STANDARD_METAMODEL_ID = IdManager.getRootPackageId(PivotUMLConstants.STANDARD_METAMODEL_NAME);
+	public static final @NonNull CompletePackageId UML_METAMODEL_ID = IdManager.getCompletePackageId(UML_METAMODEL_NAME);
 
 	/**
 	 * URI used to identify that a Package contributes to the OCL's AS for UML.
