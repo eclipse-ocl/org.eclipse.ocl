@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.uml.PivotUMLConstants;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
 import org.eclipse.ocl.pivot.uml.internal.utilities.UMLEcoreTechnology;
@@ -86,9 +85,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
-import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.OpaqueExpression;
-import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UML22UMLResource;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
@@ -186,11 +183,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 		@SuppressWarnings("unused")
 		Model pivotModel = conversion.getASModel();
 		return conversion.getCreated(Element.class, eObject);
-	}
-
-	public static void initialize() {
-		IdManager.addCompletePackageURI(PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eNS_URI);
-		IdManager.addCompletePackageURI(PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eNS_URI);
 	}
 
 	/**

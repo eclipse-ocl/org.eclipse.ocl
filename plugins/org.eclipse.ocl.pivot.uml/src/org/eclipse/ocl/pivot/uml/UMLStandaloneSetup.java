@@ -93,7 +93,6 @@ public class UMLStandaloneSetup //implements ISetup
 			initialized = true;
 			PivotStandaloneSetup.init();
 			UMLASResourceFactory.getInstance();
-			UML2AS.initialize();
 			UML2AS.initializeUMLglobals();
 			PivotStandaloneSetup.init(OCLforUMLPackage.eINSTANCE);
 			URI ocl4umlProfileURI = URI.createURI(OCL4UML_PROFILE_URI);
