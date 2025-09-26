@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.ocl.pivot" id="thread_local" name="Thread Local"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         The thread_local extension point identifies the derived ThreadLocalExecutor to be used to manage the per-thread EnvironmentFactory. The default implementation is suitable for uniform thread usage with a single logical thread per actual thread. The org.eclipse.ocl.xtext.base.ui plugin overrides to support a distinct logical thread for each Workbench Part without introducing a non-UI to UI dependency. Users are not expected to use this. 
       </documentation>
    </annotation>
 
@@ -52,7 +52,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  Replacement manager for ThreadLOcal EnvironmentFactort and Executor
+                  Replacement manager for ThreadLocal EnvironmentFactory and Executor
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor:or"/>
@@ -76,7 +76,7 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+         The org.eclipse.ocl.xtext.base.ui plugin overrides to support a distinct logical thread for each Workbench Part without introducing a non-UI to UI dependency.
       </documentation>
    </annotation>
 
@@ -85,7 +85,7 @@
          <meta.section type="apiinfo"/>
       </appInfo>
       <documentation>
-         [Enter API information here.]
+          Users are not expected to use this extension point. 
       </documentation>
    </annotation>
 
@@ -94,7 +94,7 @@
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         The default implementation is suitable for uniform thread usage with a single logical thread per actual thread.
       </documentation>
    </annotation>
 

@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.ocl.pivot" id="standard_library" name="Standard Library"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         The standard_library extension point maps a URI to the org.eclipse.ocl.pivot.library.StandardLibraryContribution deriuvation that enables the library package to be loaded.
       </documentation>
    </annotation>
 
@@ -83,7 +83,12 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+            &lt;extension point=&quot;org.eclipse.ocl.pivot.standard_library&quot;
+         id=&quot;qvtimperativelibrary&quot; name=&quot;QVTimperative Library&quot;&gt;
+     &lt;library uri=&quot;http://www.eclipse.org/qvt/2016/QVTimperativeLibrary&quot;
+     	class=&quot;org.eclipse.qvtd.pivot.qvtimperative.model.QVTimperativeLibrary$Loader&quot;/&gt;
+   &lt;/extension&gt;
+
       </documentation>
    </annotation>
 
@@ -101,7 +106,9 @@
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         http://www.eclipse.org/ocl/2015/Library is mapped to org.eclipse.ocl.pivot.model.OCLstdlib$Loader.
+
+For legacy purposes the old http://www.eclipse.org/ocl/3.1.0/OCL.oclstdlib is similarly mapped.
       </documentation>
    </annotation>
 

@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.ocl.pivot" id="as_resource_factory" name="AS Resource Factory"/>
       </appInfo>
       <documentation>
-         An AS Resource Factory supports .
+         The as_resource_factory extension point maps a model file extension and/or content type and/or derived org.eclipse.emf.ecore.resource.Resource to the derived org.eclipse.ocl.pivot.internal.resource.ASResourceFactory suitable for the Abstract Syntax of that extension. In the event of conflicts a priority can be specified to disambiguate in favour of the higher priority.
       </documentation>
    </annotation>
 
@@ -116,10 +116,26 @@ The highest externalPriority identifies the default ASResourceFactory that creat
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
+         THe *.uml extension may be mapped by
+
+  &lt;extension point=&quot;org.eclipse.ocl.pivot.as_resource_factory&quot;&gt;
+     &lt;factory class=&quot;org.eclipse.ocl.pivot.uml.internal.resource.UMLASResourceFactory&quot;
+     	extension=&quot;uml&quot; contentType=&quot;org.eclipse.ocl.oclas.uml&quot; externalPriority=&quot;200&quot;
+     	resourceClass=&quot;org.eclipse.uml2.uml.resource.UMLResource&quot;/&gt;
+  &lt;/extension&gt;
+
       </documentation>
    </annotation>
 
 
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         The *.ecore extension is mapped to org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory.
+      </documentation>
+   </annotation>
 
    <annotation>
       <appInfo>
