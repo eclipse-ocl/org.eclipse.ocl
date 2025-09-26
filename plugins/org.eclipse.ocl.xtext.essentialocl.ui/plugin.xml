@@ -20,7 +20,7 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-              class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.ocl.xtext.essentialocl.EssentialOCLEditor"
+              class="org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLExecutableExtensionFactoryOverload:org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLEditor"
               contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
               default="true"
               extensions="essentialocl"
