@@ -38,25 +38,21 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 	private static final @NonNull String ATTRIBUTE_REGEX = "regex";
 
 	private static Map<@NonNull Pattern, @NonNull CompletePackageId> regexMappings = null;
-	private static Map<@NonNull String, @NonNull CompletePackageId> stringMappings = null;
+	private static final @NonNull Map<@NonNull String, @NonNull CompletePackageId> stringMappings = new HashMap<>();	// Defining plugin has two string mappings
 
-	public static void addRegexMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID) {
+	public static void addRegexMapping(@NonNull String packageRegex, @NonNull CompletePackageId completePackageID) {
 		Map<@NonNull Pattern, @NonNull CompletePackageId> regexMappings2 = regexMappings;
 		if (regexMappings2 == null) {
 			regexMappings = regexMappings2 = new HashMap<>();
 		}
-		Pattern pattern = Pattern.compile(packageURI);
+		Pattern pattern = Pattern.compile(packageRegex);
 		assert pattern != null;
 		CompletePackageId old = regexMappings2.put(pattern, completePackageID);
 		assert (old == null) || (old == completePackageID);
 	}
 
 	public static void addStringMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID) {
-		Map<@NonNull String, @NonNull CompletePackageId> stringMappings2 = stringMappings;
-		if (stringMappings2 == null) {
-			stringMappings = stringMappings2 = new HashMap<>();
-		}
-		CompletePackageId old = stringMappings2.put(packageURI, completePackageID);
+		CompletePackageId old = stringMappings.put(packageURI, completePackageID);
 		assert (old == null) || (old == completePackageID);
 	}
 
@@ -64,16 +60,13 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 	 * Return the CompletePackageId registered to match the packageURI, or null if nothing registered.
 	 */
 	public static @Nullable CompletePackageId basicGetCompletePackageId(@Nullable String packageURI) {
-		if (stringMappings == null) {
-			new CompletePackageIdRegistryReader().readRegistry();
-			assert stringMappings != null;
-		}
 		if (packageURI != null) {
-			if (stringMappings != null) {
-				CompletePackageId completePackageId = stringMappings.get(packageURI);
-				if (completePackageId != null) {
-					return completePackageId;
-				}
+			if (stringMappings.isEmpty()) {			// Defining plugin has two string mappings
+				new CompletePackageIdRegistryReader().readRegistry();
+			}
+			CompletePackageId completePackageId = stringMappings.get(packageURI);
+			if (completePackageId != null) {
+				return completePackageId;
 			}
 			if (regexMappings != null) {
 				for (Pattern pattern : regexMappings.keySet()) {
@@ -87,11 +80,11 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		return null;
 	}
 
-	public static boolean removeRegexMapping(@NonNull String packageURI) {
+	public static boolean removeRegexMapping(@NonNull String packageRegex) {
 		boolean gotOne = false;
 		if (regexMappings != null) {
 			for (Pattern pattern : new ArrayList<>(regexMappings.keySet())) {
-				if (packageURI.equals(pattern.toString())) {
+				if (packageRegex.equals(pattern.toString())) {
 					regexMappings.remove(pattern);
 					gotOne = true;
 				}
@@ -101,7 +94,7 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 	}
 
 	public static boolean removeStringMapping(@NonNull String packageURI) {
-		return (stringMappings != null) && (stringMappings.remove(packageURI) != null);
+		return stringMappings.remove(packageURI) != null;
 	}
 
 	public CompletePackageIdRegistryReader() {
