@@ -1760,7 +1760,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			if (semantics != null) {
 				CompletePackage completePackage = ((CompleteModelImpl)completeModel).getCompletePackage3(asPackage);
 			//	completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
-				completeModel.registerCompletePackageContribution(completePackage, packageURI);			// XXX completePackage.add
+			//	completeModel.registerCompletePackageContribution(completePackage, packageURI);			// XXX completePackage.add
 			}
 		}
 	}

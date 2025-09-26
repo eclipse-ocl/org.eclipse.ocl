@@ -279,7 +279,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		assert packageURI != null;
 		CompletePackage completePackage = completeModel.getCompletePackage(completePackageId, ePackage.getNsPrefix(), packageURI);
 	//	completePackage.didAddPackageURI(packageURI);
-		completeModel.registerCompletePackageContribution(completePackage, packageURI);
+	//	completeModel.registerCompletePackageContribution(completePackage, packageURI);
 		return IdManager.getRootPackageId(completePackageId.getName());		// XXX
 	}
 }
