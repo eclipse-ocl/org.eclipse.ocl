@@ -13,9 +13,7 @@ package org.eclipse.ocl.pivot.ids;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -134,34 +132,12 @@ public final class IdManager
 	 */
 	private static final @NonNull PrimitiveTypeIdSingletonScope primitiveTypes = new PrimitiveTypeIdSingletonScope();
 
-	/**
-	 * Map from precisely known Package URI to its CompletePackageId. This acts as a fallback for use
-	 * when there is no semantics EAnnotation on the EPackage.
-	 */
-	@Deprecated
-	private static @Nullable Map<@NonNull String, @NonNull CompletePackageId> packageURI2completePackageId = null;
-
 	private static @Nullable WildcardId wildcardId = null;
 
 	/**
 	 * @since 7.0
 	 */
 	public static final @NonNull RootPackageId METAMODEL_ID = getRootPackageId(PivotConstants.METAMODEL_NAME);
-
-	/**
-	 * Define packageURI as a known contributor to the completePackageId. This facility is used to enable
-	 * UML2's duplicate Eclipse/OMG models to be treated as merged rather than conflicting.
-	 * @since 7.0
-	 */
-	@Deprecated
-	public static void addCompletePackageURI(@NonNull CompletePackageId completePackageId, /*@NonNull*/ String packageURI) {
-		assert packageURI != null;
-		Map<@NonNull String, @NonNull CompletePackageId> packageURI2completePackageId2 = packageURI2completePackageId;
-		if (packageURI2completePackageId2 == null) {
-			packageURI2completePackageId = packageURI2completePackageId2 = new HashMap<>();
-		}
-		packageURI2completePackageId2.put(packageURI, completePackageId);
-	}
 
 	/**
 	 * Return the bindingsId for a given list of bindings.
@@ -448,13 +424,11 @@ public final class IdManager
 	public static @NonNull PackageId getPackageId(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String nsURI = asPackage.getURI();
 		CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(nsURI);
-	//	if (packageURI2completePackageId != null) {										// XXX review
-	//		CompletePackageId completePackageId = packageURI2completePackageId.get(ePackageURI);
-			if (completePackageId != null) {
-				return getRootPackageId(completePackageId.toString());
-	//		}
+		if (completePackageId != null) {				// If nsURI configured to an explicit (overlaid) CompletePackage
+			return getRootPackageId(completePackageId.toString());
 		}
 		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+// XXX		assert semantics == null;			// XXX
 		if (semantics != null) {
 			URI trimFragment = semantics.trimFragment();
 			if (trimFragment == PivotConstants.METAMODEL_URI) {
