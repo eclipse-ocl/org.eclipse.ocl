@@ -442,8 +442,7 @@ public class StereotypesTest extends PivotTestSuite
 	 */
 	public void testStereotypes_oclExtensions() throws Exception {
 		MyOCL ocl = createOCL();
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::AnyOldClass)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");		// XXX UML2:#113 bug
-		//XXX
+		//
 		//	AS => AS
 		//
 		ocl.assertQueryEquals(ocl.mm.asPlainClass, Sets.newHashSet(), "self.oclExtensions()");
