@@ -33,8 +33,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.ConnectionPointReference;
 import org.eclipse.ocl.pivot.Constraint;
@@ -73,19 +71,12 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.CompletePackageId;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2ASDeclarationSwitch;
-import org.eclipse.ocl.pivot.uml.PivotUMLConstants;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.uml2.common.util.UML2Util;
-import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.eclipse.uml2.uml.profile.standard.StandardPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.util.UMLSwitch;
 import org.eclipse.uml2.uml.util.UMLUtil;
@@ -285,16 +276,6 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		if (umlMetaclass != null) {
 			org.eclipse.uml2.uml.Package umlMetapackage = umlMetaclass.getPackage();
 			if (umlMetapackage != null) {
-				String nsURI = umlMetapackage.getURI();
-				if (nsURI != null) {
-					CompleteModel completeModel = metamodelManager.getCompleteModel();
-					registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE.getNsPrefix(), nsURI);
-//					metamodelManager.getCompleteModel().addPackageURI2completeURI(nsURI, PivotUMLConstants.UML_METAMODEL_NAME);
-//					registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_ID2, umlMetapackage);
-//					CompletePackage completePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID2, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
-					//	completeModel.addPackageURI2completeURI(ClassUtil.requireNonNull(UMLPackage.eNS_URI), PivotUMLConstants.UML_METAMODEL_NAME);
-//					completeModel.registerCompletePackageContribution(completePackage, nsURI);
-				}
 				converter.addImportedPackage(umlMetapackage);
 			}
 		}
@@ -598,7 +579,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		pivotElement.setInstanceClassName(instanceClassName);
 		//		doSwitchAll(umlClass.getSuperClasses());
 		@SuppressWarnings("null") @NonNull List<org.eclipse.uml2.uml.Property> umlAttributes = umlClassifier.getAttributes();
-		/*		converter.addProperties(umlAttributes, new UML2AS.Predicate<org.eclipse.uml2.uml.Property>()
+		/*		converter.addProperties(umlAttributes, new UML2AS.Predicate<>()
 		{
 			public boolean filter(org.eclipse.uml2.uml.@NonNull Property element) {
 				if (element.getAssociation() == null) {
@@ -649,7 +630,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			@Nullable List<org.eclipse.uml2.uml.Constraint> exclusions) {
 		List<org.eclipse.uml2.uml.Constraint> ownedRules = umlNamespace.getOwnedRules();
 		if ((exclusions != null) && (exclusions.size() > 0)) {
-			ownedRules = new ArrayList<org.eclipse.uml2.uml.Constraint>(ownedRules);
+			ownedRules = new ArrayList<>(ownedRules);
 			ownedRules.removeAll(exclusions);
 		}
 		doSwitchAll(pivotElement.getOwnedRule(), ownedRules, null);
@@ -731,47 +712,6 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			}
 		}
 		pivotElement.setNsPrefix(nsPrefix != null ? nsPrefix.toString() : null);
-		if (asURI instanceof String) {
-			String asURI2 = (String)asURI;
-			CompleteModel completeModel = metamodelManager.getCompleteModel();
-			if (/*!(umlPackage instanceof org.eclipse.uml2.uml.Profile) &&*/ asURI2.startsWith("http://www.omg.org/spec/")) {
-				if ("UML".equals(packageName)) {		// OMG's
-				//	for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {			// XXX may be nested
-				//		if ((umlType instanceof org.eclipse.uml2.uml.Class) && "Class".equals(umlType.getName())) {
-							registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE.getNsPrefix(), asURI2);
-							((PackageImpl)pivotElement).setIgnoreInvariants(true);			// FIXME Change to a multi-invariant filter
-				//			break;
-				//		}
-				//	}
-				}
-				else if ("PrimitiveTypes".equals(packageName)) {
-				//	for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
-				//		if ((umlType instanceof org.eclipse.uml2.uml.PrimitiveType) && "Boolean".equals(umlType.getName())) {
-							registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE.getNsPrefix(), asURI2);
-				//			break;
-				//		}
-				//	}
-				}
-				else if ("StandardProfile".equals(packageName)) {
-				//	for (org.eclipse.uml2.uml.Type umlType : umlPackage.getOwnedTypes()) {
-				//		if ((umlType instanceof org.eclipse.uml2.uml.PrimitiveType) && "Boolean".equals(umlType.getName())) {
-							registerCompletePackageContribution(completeModel, PivotUMLConstants.STANDARD_METAMODEL_ID, StandardPackage.eINSTANCE.getNsPrefix(), asURI2);
-				//			break;
-				//		}
-				//	}
-				}
-			}
-		//	CompleteModelInternal completeModel = metamodelManager.getCompleteModel();
-			String sharedURI = ((CompleteModelInternal)completeModel).getCompleteURI(asURI2);
-			if (sharedURI != null) {
-				if (!sharedURI.equals(asURI2)) {
-//					((PackageImpl)pivotElement).setPackageId(IdManager.getRootPackageId(sharedURI));
-				}
-				//				else {
-				//					((PackageImpl)pivotElement).setPackageId(IdManager.getNsURIPackageId(sharedURI, pivotElement.getNsPrefix(), null));
-				//				}
-			}
-		}
 		pivotElement.setURI(nsURI != null ? nsURI.toString() : null);
 		@Nullable List<org.eclipse.uml2.uml.Constraint> umlConstraints = null;
 		@Nullable List<org.eclipse.uml2.uml.Element> umlOtherElements = null;
@@ -784,43 +724,43 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		for (org.eclipse.uml2.uml.Element ownedElement : umlPackage.getOwnedElements()) {
 			if (ownedElement instanceof org.eclipse.uml2.uml.Package) {
 				if (umlNestedPackages == null) {
-					umlNestedPackages = new ArrayList<org.eclipse.uml2.uml.Package>();
+					umlNestedPackages = new ArrayList<>();
 				}
 				umlNestedPackages.add((org.eclipse.uml2.uml.Package)ownedElement);
 			}
 			else if (ownedElement instanceof org.eclipse.uml2.uml.PackageImport) {
 				if (umlImportedPackages == null) {
-					umlImportedPackages = new ArrayList<org.eclipse.uml2.uml.Package>();
+					umlImportedPackages = new ArrayList<>();
 				}
 				umlImportedPackages.add(((org.eclipse.uml2.uml.PackageImport)ownedElement).getImportedPackage());
 			}
 			else if (ownedElement instanceof org.eclipse.uml2.uml.Association) {
 				if (umlAssociations == null) {
-					umlAssociations = new ArrayList<org.eclipse.uml2.uml.Association>();
+					umlAssociations = new ArrayList<>();
 				}
 				umlAssociations.add((org.eclipse.uml2.uml.Association)ownedElement);
 			}
 			else if (ownedElement instanceof org.eclipse.uml2.uml.Constraint) {
 				if (umlConstraints == null) {
-					umlConstraints = new ArrayList<org.eclipse.uml2.uml.Constraint>();
+					umlConstraints = new ArrayList<>();
 				}
 				umlConstraints.add((org.eclipse.uml2.uml.Constraint)ownedElement);
 			}
 			else if (ownedElement instanceof org.eclipse.uml2.uml.InstanceSpecification) {
 				if (umlInstanceSpecifications == null) {
-					umlInstanceSpecifications = new ArrayList<org.eclipse.uml2.uml.InstanceSpecification>();
+					umlInstanceSpecifications = new ArrayList<>();
 				}
 				umlInstanceSpecifications.add((org.eclipse.uml2.uml.InstanceSpecification)ownedElement);
 			}
 			else if (ownedElement instanceof org.eclipse.uml2.uml.Type) {
 				if (umlTypes == null) {
-					umlTypes = new ArrayList<org.eclipse.uml2.uml.Type>();
+					umlTypes = new ArrayList<>();
 				}
 				umlTypes.add((org.eclipse.uml2.uml.Type)ownedElement);
 			}
 			else if (ownedElement instanceof org.eclipse.uml2.uml.ProfileApplication) {
 				if (umlProfileApplications == null) {
-					umlProfileApplications = new ArrayList<org.eclipse.uml2.uml.ProfileApplication>();
+					umlProfileApplications = new ArrayList<>();
 				}
 				umlProfileApplications.add((org.eclipse.uml2.uml.ProfileApplication)ownedElement);
 			}
@@ -829,7 +769,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			}
 			else {
 				if (umlOtherElements == null) {
-					umlOtherElements = new ArrayList<org.eclipse.uml2.uml.Element>();
+					umlOtherElements = new ArrayList<>();
 				}
 				umlOtherElements.add(ownedElement);
 			}
@@ -853,7 +793,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 					org.eclipse.uml2.uml.Profile appliedProfile = umlProfileApplication.getAppliedProfile();
 					if (appliedProfile != null) {
 						if (umlImportedPackages == null) {
-							umlImportedPackages = new ArrayList<org.eclipse.uml2.uml.Package>();
+							umlImportedPackages = new ArrayList<>();
 						}
 						umlImportedPackages.add(appliedProfile);
 					}
@@ -863,7 +803,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		else {
 			pivotElement.getOwnedProfileApplications().clear();
 		}
-		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = new ArrayList<org.eclipse.ocl.pivot.@NonNull Class>();
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = new ArrayList<>();
 		if (umlTypes != null) {
 			doSwitchAll(asClasses, umlTypes, null);
 		}
@@ -1121,11 +1061,5 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 
 	protected @Nullable PrimitiveType getPrimitiveTypeByEcoreStereotype(org.eclipse.uml2.uml.@NonNull Stereotype ecoreStereotype, @NonNull String instanceClassName) {
 		return converter.getPrimitiveTypeByEcoreStereotype(ecoreStereotype, instanceClassName);
-	}
-
-	private void registerCompletePackageContribution(@NonNull CompleteModel completeModel, @NonNull CompletePackageId completePackageId, @Nullable String nsPrefix, @NonNull String nsURI) {
-		IdManager.addCompletePackageURI(completePackageId, nsURI);
-		CompletePackage completePackage = completeModel.getCompletePackage(completePackageId, nsPrefix, nsURI);
-		completeModel.registerCompletePackageContribution(completePackage, nsURI);
 	}
 }
