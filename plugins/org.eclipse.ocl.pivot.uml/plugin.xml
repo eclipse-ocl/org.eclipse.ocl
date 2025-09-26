@@ -63,8 +63,13 @@
   </extension>
 
   <extension point="org.eclipse.ocl.pivot.complete_package_id">
-     <mapping completePackageId="$uml$" packageURI="http://www.omg.org/spec/UML/*"/>
-     <mapping completePackageId="$uml$" packageURI="http://www.omg.org/spec/PrimitiveTypes/*"/>
+     <mapping completePackageId="$uml$" packageURI="http://www\.omg\.org/spec/UML/.*" regex="true"/>
+     <mapping completePackageId="$uml$" packageURI="http://www.eclipse.org/uml2/5.0.0/UML"/>
+  </extension>
+  
+  <extension point="org.eclipse.ocl.pivot.complete_package_id">
+     <mapping completePackageId="$types$" packageURI="http://www\.omg\.org/spec/PrimitiveTypes/.*" regex="true"/>
+     <mapping completePackageId="$types$" packageURI="http://www.eclipse.org/uml2/5.0.0/Types"/>
   </extension>
 
    <extension point="org.eclipse.ocl.pivot.label_generator">

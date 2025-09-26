@@ -64,7 +64,14 @@
          <attribute name="packageURI" type="string" use="required">
             <annotation>
                <documentation>
-                  Regex identifying a Package URI to be merged into the CompletePackage identified by the completePackageId.
+                  String/Regex identifying a Package URI to be merged into the CompletePackage identified by the completePackageId.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="regex" type="boolean">
+            <annotation>
+               <documentation>
+                  TRue if the packageURI is a regular expression rather than a direct string.
                </documentation>
             </annotation>
          </attribute>

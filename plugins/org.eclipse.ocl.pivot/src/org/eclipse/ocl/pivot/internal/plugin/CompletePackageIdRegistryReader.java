@@ -17,14 +17,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * A plugin extension reader that populates the CompletePackageId mappings.
@@ -35,48 +34,78 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 {
 	private static final @NonNull String TAG_MAPPING = "mapping";
 	private static final @NonNull String ATTRIBUTE_PACKAGE_URI = "packageURI";
-	private static final @NonNull String ATTRIBUTE_COMPLETE_PACKAGE_ID = "completePackageID";
+	private static final @NonNull String ATTRIBUTE_COMPLETE_PACKAGE_ID = "completePackageId";
+	private static final @NonNull String ATTRIBUTE_REGEX = "regex";
 
-	private static final @NonNull Map<@NonNull Pattern, @NonNull CompletePackageId> mappings = new HashMap<>();
+	private static Map<@NonNull Pattern, @NonNull CompletePackageId> regexMappings = null;
+	private static Map<@NonNull String, @NonNull CompletePackageId> stringMappings = null;
 
-	public static void addMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID) {
+	public static void addRegexMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID) {
+		Map<@NonNull Pattern, @NonNull CompletePackageId> regexMappings2 = regexMappings;
+		if (regexMappings2 == null) {
+			regexMappings = regexMappings2 = new HashMap<>();
+		}
 		Pattern pattern = Pattern.compile(packageURI);
 		assert pattern != null;
-		CompletePackageId old = mappings.put(pattern, completePackageID);
+		CompletePackageId old = regexMappings2.put(pattern, completePackageID);
 		assert (old == null) || (old == completePackageID);
 	}
 
-	public static @Nullable CompletePackageId basicGetCompletePackageId(@NonNull String packageURI) {
-		if (mappings.isEmpty()) {
-			if (EcorePlugin.IS_ECLIPSE_RUNNING) {
-				new CompletePackageIdRegistryReader().readRegistry();
-			}
-			else {
-				throw new IllegalStateException("Missing " + PivotPlugin.COMPLETE_PACKAGE_ID_PID + " registrations");
-			}
+	public static void addStringMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID) {
+		Map<@NonNull String, @NonNull CompletePackageId> stringMappings2 = stringMappings;
+		if (stringMappings2 == null) {
+			stringMappings = stringMappings2 = new HashMap<>();
 		}
-		for (Pattern pattern : mappings.keySet()) {
-			Matcher matcher = pattern.matcher(packageURI);
-			if (matcher.matches()) {
-				return mappings.get(pattern);
+		CompletePackageId old = stringMappings2.put(packageURI, completePackageID);
+		assert (old == null) || (old == completePackageID);
+	}
+
+	/**
+	 * Return the CompletePackageId registered to match the packageURI, or null if nothing registered.
+	 */
+	public static @Nullable CompletePackageId basicGetCompletePackageId(@Nullable String packageURI) {
+		if (stringMappings == null) {
+			new CompletePackageIdRegistryReader().readRegistry();
+			assert stringMappings != null;
+		}
+		if (packageURI != null) {
+			if (stringMappings != null) {
+				CompletePackageId completePackageId = stringMappings.get(packageURI);
+				if (completePackageId != null) {
+					return completePackageId;
+				}
+			}
+			if (regexMappings != null) {
+				for (Pattern pattern : regexMappings.keySet()) {
+					Matcher matcher = pattern.matcher(packageURI);
+					if (matcher.matches()) {
+						return regexMappings.get(pattern);
+					}
+				}
 			}
 		}
 		return null;
 	}
 
-	public static boolean removeMapping(@NonNull String packageURI) {
+	public static boolean removeRegexMapping(@NonNull String packageURI) {
 		boolean gotOne = false;
-		for (Pattern pattern : new ArrayList<>(mappings.keySet())) {
-			if (packageURI.equals(pattern.toString())) {
-				mappings.remove(pattern);
-				gotOne = true;
+		if (regexMappings != null) {
+			for (Pattern pattern : new ArrayList<>(regexMappings.keySet())) {
+				if (packageURI.equals(pattern.toString())) {
+					regexMappings.remove(pattern);
+					gotOne = true;
+				}
 			}
 		}
 		return gotOne;
 	}
 
+	public static boolean removeStringMapping(@NonNull String packageURI) {
+		return (stringMappings != null) && (stringMappings.remove(packageURI) != null);
+	}
+
 	public CompletePackageIdRegistryReader() {
-		super(Platform.getExtensionRegistry(), PivotPlugin.PLUGIN_ID, PivotPlugin.COMPLETE_PACKAGE_ID_PID);
+		super(ClassUtil.getExtensionRegistry(), PivotPlugin.PLUGIN_ID, PivotPlugin.COMPLETE_PACKAGE_ID_PID);
 	}
 
 	@Override
@@ -87,6 +116,7 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		}
 		final String packageURI = element.getAttribute(ATTRIBUTE_PACKAGE_URI);
 		final String completePackageID = element.getAttribute(ATTRIBUTE_COMPLETE_PACKAGE_ID);
+		final boolean regex = Boolean.parseBoolean(element.getAttribute(ATTRIBUTE_REGEX));
 		if (packageURI == null) {
 			logMissingAttribute(element, ATTRIBUTE_PACKAGE_URI);
 			return false;
@@ -96,9 +126,20 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 			return false;
 		}
 		if (add) {
-			addMapping(packageURI, IdManager.getCompletePackageId(completePackageID));
+			CompletePackageId completePackageId2 = IdManager.getCompletePackageId(completePackageID);
+			if (regex) {
+				addRegexMapping(packageURI, completePackageId2);
+			}
+			else {
+				addStringMapping(packageURI, completePackageId2);
+			}
 		} else {
-			removeMapping(packageURI);
+			if (regex) {
+				removeRegexMapping(packageURI);
+			}
+			else {
+				removeStringMapping(packageURI);
+			}
 		}
 		return true;
 	}
