@@ -354,6 +354,7 @@ public final class IdManager
 	 * Return the URIed package typeId.
 	 */
 	public static @NonNull NsURIPackageId getNsURIPackageId(@NonNull String nsURI, @Nullable String nsPrefix, @Nullable EPackage ePackage) {
+		assert nsURI.length() > 0;
 		NsURIPackageId nsURIPackageId = nsURIs.getSingleton(PRIVATE_INSTANCE, nsURI, nsPrefix, ePackage);
 		if ((ePackage != null) && (nsURIPackageId.getEPackage() == null)) {		// Late ePackage may occur if early lifecycle is OCLinEcore then AS
 			nsURIPackageId.setEPackage(ePackage);
@@ -442,7 +443,7 @@ public final class IdManager
 		if (ePackage != null) {
 			return getPackageId(ePackage);
 		}
-		if (nsURI != null) {
+		if ((nsURI != null) && (nsURI.length() > 0)) {
 			return getNsURIPackageId(nsURI, asPackage.getNsPrefix(), null);
 		}
 		String name = asPackage.getName();
