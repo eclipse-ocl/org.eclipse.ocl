@@ -1144,6 +1144,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
+	public void registerCompletePackageContribution(@NonNull CompletePackage completePackage, /*@NonNull*/ String packageURI) {
+		assert packageURI != null;
+		completePackage.didAddPackageURI(packageURI);										// not "did"
+		CompletePackage old = packageURI2completePackage.put(packageURI, completePackage);
+		assert (old == null) || (old == completePackage);
+	}
+
+	@Override
 	public @NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
