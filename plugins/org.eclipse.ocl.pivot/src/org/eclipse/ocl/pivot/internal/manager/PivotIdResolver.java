@@ -237,6 +237,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		}
 	//	org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
 		else {
+			completePackage = getStandardLibrary().getCompleteModel().getCompletePackage(completePackageId, null, id.getName());
 			throw new UnsupportedOperationException();
 		//	Orphanage orphanage = environmentFactory.getOrphanage();
 		//	rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);
