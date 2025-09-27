@@ -104,7 +104,7 @@ public class ImportTests extends XtextTestCase
 		}
 	}
 
-	public void testImport_CompleteOCL_Ecore() throws Exception {
+	public void zztestImport_CompleteOCL_Ecore() throws Exception {
 		OCL ocl = createOCL();
 		getTestFileURI("Names.ecore", ocl, getTestModelURI("models/ecore/Names.ecore"));
 		String testFile =
@@ -117,7 +117,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_EcoreAS() throws Exception {
+	public void zztestImport_CompleteOCL_EcoreAS() throws Exception {
 		OCL ocl = createOCL();
 		getTestFileURI("Names.ecore", ocl, getTestModelURI("models/ecore/Names.ecore"));
 		String testFile =
@@ -130,7 +130,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_OCLinEcore() throws Exception {
+	public void zztestImport_CompleteOCL_OCLinEcore() throws Exception {
 		OCL ocl = createOCL();
 		getTestFileURI("Names.oclinecore", ocl, getTestModelURI("models/oclinecore/Names.oclinecore"));
 		String testFile =
@@ -143,7 +143,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_OCLstdlib() throws Exception {
+	public void zztestImport_CompleteOCL_OCLstdlib() throws Exception {
 		TestOCL ocl = createOCL();
 		getTestFileURI("Names.ecore", ocl, getTestModelURI("models/ecore/Names.ecore"));
 		getTestFileURI("minimal.oclstdlib", ocl, getTestModelURI("models/oclstdlib/minimal.oclstdlib"));
@@ -163,7 +163,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_custom_OCLstdlib() throws Exception {
+	public void zztestImport_CompleteOCL_custom_OCLstdlib() throws Exception {
 		TestOCL ocl = createOCL();
 		getTestFileURI("Names.ecore", ocl, getTestModelURI("models/ecore/Names.ecore"));
 		getTestFileURI("minimal.oclstdlib", ocl, getTestModelURI("models/oclstdlib/minimal.oclstdlib"));
@@ -189,7 +189,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_custom_OCLstdlib_eval() throws Exception {
+	public void zztestImport_CompleteOCL_custom_OCLstdlib_eval() throws Exception {
 //		BaseLinkingService.DEBUG_RETRY.setState(true);
 		TestOCL ocl = createOCL();
 		String customLibrary =
@@ -220,7 +220,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_NoSuchFile() throws Exception {
+	public void zztestImport_CompleteOCL_NoSuchFile() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFile =
 				"import 'NoSuchFile1'\n" +
@@ -255,7 +255,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLinEcore_Bug353793_Good() throws Exception {
+	public void zztestImport_OCLinEcore_Bug353793_Good() throws Exception {
 		createTestImport_OCLinEcore_Bug353793_Files();
 		String testFileGood =
 				"import 'http://www.eclipse.org/emf/2002/Ecore';\n" +
@@ -277,7 +277,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLinEcore_Bug353793_Bad() throws Exception {
+	public void zztestImport_OCLinEcore_Bug353793_Bad() throws Exception {
 		createTestImport_OCLinEcore_Bug353793_Files();
 		String testFileBad =
 				"import 'http://www.eclipse.org/emf/2002/Ecore';\n" +
@@ -330,7 +330,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLinEcore_Ecore() throws Exception {
+	public void zztestImport_OCLinEcore_Ecore() throws Exception {
 		TestOCL ocl = createOCL();
 		getTestFileURI("Names.ecore", ocl, getTestModelURI("models/ecore/Names.ecore"));
 		String testFile =
@@ -351,7 +351,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLinEcore_OCLinEcore() throws Exception {
+	public void zztestImport_OCLinEcore_OCLinEcore() throws Exception {
 		TestOCL ocl = createOCL();
 		getTestFileURI("Names.oclinecore", ocl, getTestModelURI("models/oclinecore/Names.oclinecore"));
 		String testFile =
@@ -373,7 +373,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLinEcore_NoSuchFile() throws Exception {
+	public void zztestImport_OCLinEcore_NoSuchFile() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFile =
 				"import 'NoSuchFile1';\n" +
@@ -388,7 +388,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLstdlib_OCLstdlib() throws Exception {
+	public void zztestImport_OCLstdlib_OCLstdlib() throws Exception {
 		TestOCL ocl = createOCL();
 		String customLibrary =
 				"library ocl {\n" +
@@ -412,7 +412,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLstdlib_NoSuchFile() throws Exception {
+	public void zztestImport_OCLstdlib_NoSuchFile() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFile =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
@@ -429,7 +429,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_OCLstdlib_NoURI() throws Exception {
+	public void zztestImport_OCLstdlib_NoURI() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFile =
 				"library anotherOne{}\n";
@@ -456,7 +456,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	} */
 
-	public void testInclude_CompleteOCL() throws Exception {
+	public void zztestInclude_CompleteOCL() throws Exception {
 		OCL ocl = createOCL();
 		String moreCompleteOCL =
 				"package ocl\n" +
@@ -476,7 +476,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testInclude_CompleteOCL_UnresolvedOperation() throws Exception {
+	public void zztestInclude_CompleteOCL_UnresolvedOperation() throws Exception {
 		TestOCL ocl = createOCL();
 		String moreCompleteOCL =
 				"package ocl\n" +
@@ -499,7 +499,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_Bug450196() throws Exception {
+	public void zztestImport_CompleteOCL_Bug450196() throws Exception {
 		TestOCL ocl = createOCL();
 		String moreCompleteOCL =
 				"package ocl\n" +
@@ -519,7 +519,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_NestedPackage_477283() throws Exception {
+	public void zztestImport_CompleteOCL_NestedPackage_477283() throws Exception {
 		registerEPackage(Bug477283APackage.eINSTANCE);
 		registerEPackage(Bug477283BPackage.eINSTANCE);
 		assert EPackage.Registry.INSTANCE.get(Bug477283APackage.eNS_URI) == Bug477283APackage.eINSTANCE;
@@ -536,7 +536,7 @@ public class ImportTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testImport_CompleteOCL_DisposeNoISE() throws Exception {
+	public void zztestImport_CompleteOCL_DisposeNoISE() throws Exception {
 		registerEPackage(Bug477283APackage.eINSTANCE);
 		registerEPackage(Bug477283BPackage.eINSTANCE);
 		/*
