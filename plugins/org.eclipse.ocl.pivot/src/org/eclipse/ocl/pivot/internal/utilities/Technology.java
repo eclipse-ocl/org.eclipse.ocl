@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -56,4 +57,9 @@ public interface Technology
 	boolean isStereotype(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass);
 
 	boolean isValidatable(@NonNull EClass eClass);
+
+	/**
+	 * @since 7.0
+	 */
+	void registerMetaPackages(@NonNull CompleteModel completeModel);
 }

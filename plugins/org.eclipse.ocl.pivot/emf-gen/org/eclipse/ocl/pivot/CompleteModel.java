@@ -190,4 +190,9 @@ public interface CompleteModel extends NamedElement
 	@NonNull Orphanage getOrphanage();
 
 	@Deprecated org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
+
+	/**
+	 * @since 7.0
+	 */
+	void registerCompletePackageContribution(@NonNull CompletePackage completePackage, /*@NonNull*/ String packageURI);
 } // CompleteModel
