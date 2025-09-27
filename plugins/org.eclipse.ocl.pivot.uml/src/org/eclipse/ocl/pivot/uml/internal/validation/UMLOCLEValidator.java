@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
@@ -261,6 +262,19 @@ public class UMLOCLEValidator implements EValidator
 		this.mayUseNewLines = mayUseNewLines;
 	}
 
+	private @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@NonNull Map<Object, Object> context, org.eclipse.uml2.uml.@NonNull Element umlElement) {
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)context.get(EnvironmentFactory.class);
+		if (environmentFactory == null) {
+			environmentFactory = ValidationContext.getEnvironmentFactory(context, umlElement);
+			EClass eClass = umlElement.eClass();
+			EPackage ePackage = eClass.getEPackage();
+			org.eclipse.ocl.pivot.Package asPackage = environmentFactory.getMetamodelManager().getASOfEcore(org.eclipse.ocl.pivot.Package.class, ePackage);
+			assert asPackage != null;
+			environmentFactory.getCompleteModel().getCompletePackage(asPackage);	// Side effect $uml$ CompletePackage exists
+		}
+		return environmentFactory;
+	}
+
 	private void propagateProblems(@NonNull DiagnosticChain diagnostics, @NonNull Resource asResource, @Nullable EObject umlElement) {
 		if (!(diagnostics instanceof Diagnostic)) {
 			return;
@@ -300,7 +314,7 @@ public class UMLOCLEValidator implements EValidator
 				if (umlStereotypeApplications.size() > 0) {
 					Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
 					if (umlResource != null) {
-						EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, eObject);
+						EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory(context, (org.eclipse.uml2.uml.Element)eObject);
 						UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
 						uml2as.getASModel();
 						Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements = UML2ASUtil.computeAppliedStereotypes(umlStereotypeApplications);
@@ -560,7 +574,7 @@ public class UMLOCLEValidator implements EValidator
 	 * cached results between successive validations. Returns true if successful, false otherwise.
 	 */
 	protected boolean validateSyntax1(@NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
-		EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(context, opaqueElement);
+		EnvironmentFactory environmentFactory = getEnvironmentFactory(context, opaqueElement);
 		try {
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
@@ -624,7 +638,7 @@ public class UMLOCLEValidator implements EValidator
 
 	protected boolean validateSyntax2(@NonNull EObject instance, @NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		ExpressionInOCL asQuery = null;
-		EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(context, opaqueElement);
+		EnvironmentFactory environmentFactory = getEnvironmentFactory(context, opaqueElement);
 		try {
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
