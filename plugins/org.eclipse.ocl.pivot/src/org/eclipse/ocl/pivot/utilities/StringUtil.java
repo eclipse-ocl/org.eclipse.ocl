@@ -38,6 +38,15 @@ public class StringUtil
 	public static @NonNull String defaultIndentation = "    ";
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull String NULL_PLACEHOLDER = "«null»"; //$NON-NLS-1$
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull String BLANK_PLACEHOLDER = "«blank»"; //$NON-NLS-1$
+
+	/**
 	 * @since 1.13
 	 */
 	public static void appendIndentation(@NonNull StringBuilder s, int depth) {
@@ -96,6 +105,22 @@ public class StringUtil
 			s.append("|?");
 		}
 		s.append("]");
+	}
+
+	/**
+	 * Append name to s, replacing null and blank by visible guilemets.
+	 * @since 7.0
+	 */
+	public static void appendName(@NonNull StringBuilder s, @Nullable String name) {
+		if (name == null) {
+			s.append(NULL_PLACEHOLDER);
+		}
+		else if (name.length() <= 0) {
+			s.append(BLANK_PLACEHOLDER);
+		}
+		else {
+			s.append(name);
+		}
 	}
 
 	public static @NonNull String bind(String messageTemplate, Object... bindings) {

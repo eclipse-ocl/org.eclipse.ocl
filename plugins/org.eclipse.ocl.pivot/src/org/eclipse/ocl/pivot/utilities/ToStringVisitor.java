@@ -174,7 +174,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		}
 		Factory factory = getFactory(asElement);
 		if (factory == null) {
-			return NULL_PLACEHOLDER;
+			return StringUtil.NULL_PLACEHOLDER;
 		}
 		StringBuilder s = new StringBuilder();
 		ToStringVisitor v = factory.createToStringVisitor(s);
@@ -210,7 +210,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 * want just <code>"null"</code> because that would look like the OclVoid
 	 * literal.
 	 */
-	protected static @NonNull String NULL_PLACEHOLDER = "«null»"; //$NON-NLS-1$
+	@Deprecated
+	protected static @NonNull String NULL_PLACEHOLDER = StringUtil.NULL_PLACEHOLDER;
 
 	/**
 	 * Initializes me.
@@ -233,21 +234,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 
 	protected void append(Number number) {
-		if (number != null) {
-			context.append(number.toString());
-		}
-		else {
-			context.append(NULL_PLACEHOLDER);
-		}
+		StringUtil.appendName(context, number != null ? number.toString() : null);
 	}
 
 	protected void append(String string) {
-		if (string != null) {
-			context.append(string);
-		}
-		else {
-			context.append(NULL_PLACEHOLDER);
-		}
+		context.append(string);
 	}
 
 	protected void appendAtPre(FeatureCallExp mpc) {
@@ -258,7 +249,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	protected void appendElementType(@Nullable TypedElement typedElement) {
 		if (typedElement == null) {
-			append(NULL_PLACEHOLDER);
+			append(StringUtil.NULL_PLACEHOLDER);
 		}
 		else {
 			Type type = typedElement.getType();
@@ -280,12 +271,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	protected void appendName(Nameable object) {
-		if (object == null) {
-			context.append(NULL_PLACEHOLDER);
-		}
-		else {
-			context.append(object.getName());
-		}
+		StringUtil.appendName(context, object != null ? object.getName() : null);
 	}
 
 	protected void appendOperationSignature(Operation operation) {
@@ -372,7 +358,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	protected void appendQualifiedName(@Nullable NamedElement object) {
 		if (object == null) {
-			context.append(NULL_PLACEHOLDER);
+			context.append(StringUtil.NULL_PLACEHOLDER);
 		}
 		else {
 			EObject container = object.eContainer();
@@ -481,7 +467,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public @Nullable String safeVisit(org.eclipse.ocl.pivot.util.@Nullable Visitable v) {
 		if (v == null) {
-			append(NULL_PLACEHOLDER);
+			append(StringUtil.NULL_PLACEHOLDER);
 		}
 		else {
 			try {

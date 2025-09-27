@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -885,9 +886,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 * @since 7.0
 	 */
 	public void toString(@NonNull StringBuilder s) {
-		s.append(completePackageId);
+		StringUtil.appendName(s, completePackageId.toString());
 		s.append(" : ");
-		s.append(nsURI);
+		StringUtil.appendName(s, nsURI);
 		s.append(" <=>");
 		for (@NonNull String pURI : packageURIs) {
 			s.append(" ");
@@ -899,17 +900,17 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			}
 			s.append(count);
 			s.append("*");
-			s.append(pURI);
+			StringUtil.appendName(s, pURI);
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
 			String packageURI = partialPackage.getURI();
 			if (packageURI == null) {
 				s.append(" ");
-				s.append(partialPackage.getName());
+				StringUtil.appendName(s, partialPackage.getName());
 			}
 			else if (!packageURIs.contains(packageURI)) {
 				s.append(" ");
-				s.append(packageURI);
+				StringUtil.appendName(s, packageURI);
 			}
 		}
 	}
