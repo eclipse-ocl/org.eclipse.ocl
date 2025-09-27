@@ -573,11 +573,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackageId2completePackage.get(completePackageName); */
 	}
 
-	@Override
-	public @Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI) {
-		return packageURI2completePackage.get(packageURI);
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -925,20 +920,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					else if (packageURI != null) {			// XXX ??? and not blank
 						completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
 					}
-				//	else if (packageURI != null) {
-				//XXX		completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
-				//	}
 					else {
 						String packageName = PivotUtil.getName(asPackage);
-					//	 parentCompletePackage = null;
-					//	AbstractCompletePackages parentCompletePackages2 = ownedCompletePackages;
 						org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 						if (parentPackage != null) {
 							CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
-						//	if (parentCompletePackage != null) {
-							//	parentCompletePackages2 = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
 							completePackageId = IdManager.getCompletePackageId(parentCompletePackage, packageName);
-						//	}
 						}
 						else {
 							completePackageId = IdManager.getCompletePackageId(packageName);
@@ -981,27 +968,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			//	}
 			}
 		}
-//		String name = pivotPackage.getName();
-//		if (packageURI != null) {										// Explicit packageURI for explicit package (merge)
-//			completePackage = getCompleteModel().basicGetCompletePackageForPackageURI(packageURI);
-//		}
-//		else if (name != null) {										// Null packageURI can merge into same named package
-//			completePackage = basicGetOwnedCompletePackage(name);
-//		}
-//		if (completePackage == null) {
-//			completePackage = getOwnedCompletePackage(pivotPackage);
-//			completePackage.assertSamePackage(pivotPackage);		// XXX obsolete / rewrite
-//		}
-//		completePackage.getPartialPackages().add(pivotPackage);
-//		if (packageURI != null) {
-//			completePackage.didAddPackageURI(packageURI);
-//		}
-//		completePackage.addTrackedPackage(pivotPackage);
-//		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotPackage.getOwnedPackages()) {
-//			if (nestedPackage != null) {
-//				addPackage(completePackage, nestedPackage);
-//			}
-//		}
 	//	completePackage.getPartialPackages().add(asPackage);
 		if (!packageAdded) {								// Maybe folding an additional package into a CompletePackage found by name/URI.
 			completePackage.getPartialPackages().add(asPackage);						// UML 2.5 recurses for nested packages mapping to a parent

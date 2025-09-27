@@ -25,11 +25,6 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public interface CompleteModelInternal extends CompleteModel
 {
-	/**
-	 * @since 7.0
-	 */
-	@Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI);
-
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	/**
 	 * @since 7.0
