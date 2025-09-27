@@ -904,7 +904,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompletePackage completePackage = package2completePackage.get(asPackage);
 		if (completePackage == null) {
 			String packageURI = asPackage.getURI();
-			if (packageURI != null) {			// XXX and not blank
+			if (packageURI != null) {			// QVT roots may be blank
 				completePackage = packageURI2completePackage.get(packageURI);
 			}
 			if (completePackage == null) {
@@ -917,7 +917,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					else if (Orphanage.isOrphanage(asPackage)) {
 						completePackageId = PivotConstants.ORPHANAGE_ID;
 					}
-					else if (packageURI != null) {			// XXX ??? and not blank
+					else if (packageURI != null) {			// QVT roots may be blank
 						completePackageId = IdManager.getCompletePackageId(packageURI); // getCompleteURI(packageURI);
 					}
 					else {

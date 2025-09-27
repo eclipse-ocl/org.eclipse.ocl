@@ -15,6 +15,7 @@ import java.io.IOException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 /**
  * Tests that load a UML model and verify that there are no unresolved proxies as a result.
@@ -143,7 +144,7 @@ public class UML25LoadTests extends AbstractUMLLoadTests
 		URI modelFolderURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true);
 		URI modelURI = modelFolderURI.trimSegments(1).appendSegment("DG.xmi");
 		doLoadUML(null, modelURI, false, true, NO_MESSAGES, new @NonNull String[] {
-			"The 'Class::NameIsNotNull' constraint is violated for 'DG::null'"
+			"The 'Class::NameIsNotNull' constraint is violated for 'DG::" + StringUtil.NULL_PLACEHOLDER + "'"
 		});
 	}
 
