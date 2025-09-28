@@ -761,6 +761,9 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			Type type = asNavigationCallExp.getOwnedSource().getType();
 			if (type != null) {
 				CompleteClassInternal completeClass = context.getCompleteModel().getCompleteClass(type);
+				if ("oclContainer".equals(name)) {
+					getClass();		// XXX
+				}
 				Iterable<@NonNull Property> properties = completeClass.getProperties(name);
 				if ((properties != null) && Iterables.size(properties) > 1) {
 					NameExpCS csOppositeNameExp = createNameExpCS(asOpposite, null);

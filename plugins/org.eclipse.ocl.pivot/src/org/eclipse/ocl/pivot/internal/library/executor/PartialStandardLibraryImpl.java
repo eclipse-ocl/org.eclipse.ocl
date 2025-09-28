@@ -460,6 +460,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
 		asProperty.setName(eFeature.getName());
+		asProperty.setType(asClass);
 		asProperty.setESObject(eFeature);
 	//	asProperty.setIndex(propertyIndex);
 	//	asProperty.setImplementation(implementation);
@@ -502,6 +503,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	//	return new ExecutorPropertyWithImplementation(name, asClass, propertyIndex, implementation);
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
 		asProperty.setName(name);
+		asProperty.setType(asClass);
 	//	asProperty.setIndex(propertyIndex);
 		asProperty.setImplementation(implementation);
 		asClass.getOwnedProperties().add(asProperty);
@@ -517,6 +519,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
 		asProperty.setESObject(eFeature);
 		asProperty.setName(eFeature.getName());
+		asProperty.setType(asClass);
 	//	asProperty.setIndex(propertyIndex);
 	//	asProperty.setImplementation(implementation);
 		asClass.getOwnedProperties().add(asProperty);
