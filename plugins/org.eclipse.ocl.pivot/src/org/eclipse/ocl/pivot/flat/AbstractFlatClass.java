@@ -928,6 +928,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			assert fragments != null;
 			for (@NonNull FlatFragment fragment : fragments) {
 				for (@NonNull Property property : fragment.getProperties()) {
+					PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
 					addProperty(property);
 				}
 			}
