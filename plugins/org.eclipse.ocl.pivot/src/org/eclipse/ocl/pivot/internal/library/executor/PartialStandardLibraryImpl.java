@@ -920,6 +920,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return (PrimitiveType) OCLstdlibTables.Types._String;
 	}
 
+	public @NonNull Type getTemplateParameter(@NonNull TypedElement asTypedElement, @NonNull TemplateParameter asTemplateParameter) {
+		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(asTypedElement);
+		return templateParameterization.get(asTemplateParameter.getTemplateParameterId().getIndex());
+	}
+
 	public @NonNull TuplePart getTuplePart(@NonNull String name, @NonNull Type type, boolean isRequired) {
 		return new TuplePart(name, type, isRequired);
 	}
@@ -1011,6 +1016,9 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	public void setNamespace(@NonNull TypedElement asTypedElement) {
 		this.templateParameterization = TemplateParameterization.getTemplateParameterization(asTypedElement);
+		for (TemplateParameter asTemplateParameter : templateParameterization) {
+			asTemplateParameter.getTemplateParameterId();
+		}
 	}
 
 	private void setOperationFlagsAndIndex(@NonNull Operation asOperation, int operationFlagsAndIndex) {
@@ -1070,10 +1078,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		if ((propertyFlagsAndIndex & AbstractTables.IsVolatile) != 0) {
 			asProperty.setIsVolatile(true);
 		}
-	}
-
-	public void setSpecializedType(@NonNull TypedElement asTypedElement, @NonNull Type asType) {
-		asTypedElement.setType(asType);
 	}
 
 	/**
