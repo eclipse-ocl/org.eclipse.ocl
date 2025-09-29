@@ -374,7 +374,7 @@ public class TemplateParameterImpl
 		return standardLibrary.getFlatClass(lowerBound);
 	}
 
-	private /*@LazyNonNull*/ TemplateParameterId templateParameterId;
+	private /*@LazyNonNull*/ TemplateParameterId templateParameterId = null;
 
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
@@ -384,30 +384,35 @@ public class TemplateParameterImpl
 			synchronized (this) {
 				templateParameterId2 = templateParameterId;
 				if (templateParameterId2 == null) {
-					TemplateSignature templateSignature1 = getOwningSignature();
-					assert templateSignature1 != null;
-					TemplateableElement templateableElement = templateSignature1.getOwningElement();
-					AbstractGeneralizedIdImpl<?> generalizedTypeId;
-					if (templateableElement instanceof Operation) {
-						generalizedTypeId = (AbstractGeneralizedIdImpl<?>)((Operation)templateableElement).getOperationId();
-					}
-					else if (templateableElement instanceof org.eclipse.ocl.pivot.Class) {
-						generalizedTypeId = (AbstractGeneralizedIdImpl<?>)((org.eclipse.ocl.pivot.Class)templateableElement).getTypeId();
-					}
-					else {
-						assert false; //templateableElement != null;
-						generalizedTypeId = null;
-					}
-					if (generalizedTypeId != null) {
-						TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(this);
-						int index = templateParameterization.indexOf(this);
-						templateParameterId = templateParameterId2 = generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this));
-					}
-					assert templateParameterId2 != null;
+					templateParameterId = templateParameterId2 = computeTemplateParameterId();
 				}
 			}
 		}
 		return templateParameterId2;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull TemplateParameterId computeTemplateParameterId() {
+		TemplateSignature templateSignature1 = getOwningSignature();
+		assert templateSignature1 != null;
+		TemplateableElement templateableElement = templateSignature1.getOwningElement();
+		AbstractGeneralizedIdImpl<?> generalizedTypeId;
+		if (templateableElement instanceof Operation) {
+			generalizedTypeId = (AbstractGeneralizedIdImpl<?>)((Operation)templateableElement).getOperationId();
+		}
+		else if (templateableElement instanceof org.eclipse.ocl.pivot.Class) {
+			generalizedTypeId = (AbstractGeneralizedIdImpl<?>)((org.eclipse.ocl.pivot.Class)templateableElement).getTypeId();
+		}
+		else {
+			assert false; //templateableElement != null;
+			generalizedTypeId = null;
+		}
+		assert generalizedTypeId != null;
+		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(this);
+		int index = templateParameterization.indexOf(this);
+		return generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this));
 	}
 
 	@Override
