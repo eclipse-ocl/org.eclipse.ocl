@@ -84,6 +84,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -974,15 +975,17 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses) {
+		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
 		Object eContainer = asPackage.eContainer();
 		assert eContainer == null;
 		Model asModel = PivotFactory.eINSTANCE.createModel();
 		asModel.setExternalURI(asPackage.getURI());
 		asModel.getOwnedPackages().add(asPackage);
 	//	EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
-		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
-		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
+		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
+			assert asClass != null;
 			ownedClasses.add(asClass);
 		}
 		addPackage(asPackage, null);
@@ -1004,6 +1007,12 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	public void resetSeverities() {
 		validationKey2severity = null;
+	}
+
+	private TemplateParameterization templateParameterization = null;				// XXX
+
+	public void setNamespace(@NonNull TypedElement asTypedElement) {
+		this.templateParameterization = TemplateParameterization.getTemplateParameterization(asTypedElement);
 	}
 
 	private void setOperationFlagsAndIndex(@NonNull Operation asOperation, int operationFlagsAndIndex) {
@@ -1063,6 +1072,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		if ((propertyFlagsAndIndex & AbstractTables.IsVolatile) != 0) {
 			asProperty.setIsVolatile(true);
 		}
+	}
+
+	public void setSpecializedType(@NonNull TypedElement asTypedElement, @NonNull Type asType) {
+		asTypedElement.setType(asType);
 	}
 
 	/**

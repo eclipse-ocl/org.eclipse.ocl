@@ -147,6 +147,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	protected final @NonNull ImportManager importManager;
 	private final @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses = new HashSet<>();
 	private final @NonNull Set<@NonNull Property> implicitOppositeProperties = new HashSet<>();
+//	private @Nullable Namespace namespace = null;				// Namespace in which template parameters are defined.
 
 	public OCLinEcoreTables(@NonNull GenPackage genPackage) {
 		super(genPackage);
@@ -772,6 +773,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			boolean isFirstOperation = true;
 			for (int i = 0; i < sortedOperations.size(); i++) {
 				Operation op = sortedOperations.get(i);
+//				setNamespace(op);
 				Type resultType = op.getType();
 				if (resultType instanceof IterableType) {
 					if (isFirstClass) {
@@ -784,9 +786,12 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append("\n");
 						isFirstOperation = false;
 					}
-					s.append("\t\t\t");
+					s.append("\t\t\tLIBRARY.setNamespace(");
 					op.accept(emitLiteralVisitor);
-					s.append(".setType(");
+					s.append(");\n");
+					s.append("\t\t\tLIBRARY.setSpecializedType(");
+					op.accept(emitLiteralVisitor);
+					s.append(", ");
 					resultType.accept(declareParameterTypeVisitor);
 					s.append(");\n");
 				}
@@ -795,6 +800,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (!isFirstClass) {
 			s.append("		}\n");
 		}
+//		setNamespace(null);
 		appendInitializationEnd(false);
 		s.append("	}\n");
 	}
@@ -896,6 +902,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		appendInitializationStart(AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME);
 		boolean isFirstClass = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
+//			setNamespace(pClass);
 			boolean isFirstProperty = true;
 			List<@NonNull Property> sortedProperties = getLocalPropertiesSortedByName(pClass);
 			for (int i = 0; i < sortedProperties.size(); i++) {
@@ -1002,6 +1009,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		isFirstClass = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
+//			setNamespace(pClass);
 			boolean isFirstProperty = true;
 			List<@NonNull Property> sortedProperties = getLocalPropertiesSortedByName(pClass);
 			for (int i = 0; i < sortedProperties.size(); i++) {
@@ -1039,6 +1047,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (!isFirstClass) {
 			s.append("		}\n");
 		}
+//		setNamespace(null);
 		appendInitializationEnd(false);
 		s.append("	}\n");
 	}
@@ -1462,6 +1471,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return PivotPackage.Literals.CLASS;
 	}
 
+//	public @NonNull Namespace getNamespace() {
+//		return ClassUtil.requireNonNull(namespace);
+//	}
+
 	public @NonNull String getTablesClassName() {
 		return getTablesClassName(genPackage);
 	}
@@ -1510,6 +1523,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		return paginatedFragmentProperties;
 	}
+
+//	private void setNamespace(@Nullable Namespace namespace) {
+//		this.namespace = namespace;
+//	}
 
 	@Override
 	public @NonNull String toString() {
