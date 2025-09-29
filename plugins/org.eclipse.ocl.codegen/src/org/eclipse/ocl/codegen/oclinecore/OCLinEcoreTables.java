@@ -728,7 +728,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(", ");
 				appendParameterTypesName(op.getParameterTypes());
 				s.append(", ");
-				op.getType().accept(declareParameterTypeVisitor);
+				Type resultType = op.getType();
+				if (resultType instanceof IterableType) {
+					s.append("null");
+				}
+				else {
+					resultType.accept(declareParameterTypeVisitor);
+				}
 				s.append(",\n			" + sFlags.toString() + ", ");
 				if (ownedTemplateSignature == null) {
 					s.appendClassReference(null, TemplateParameters.class);
@@ -754,6 +760,40 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(getImplementationName(op));
 				s.append(");\n");
 			}
+		}
+		boolean isFirstClass = true;
+		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
+			List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
+			Collections.sort(sortedOperations, signatureComparator);
+		//	for (int i = 0; i < sortedOperations.size(); i++) {
+		//		if (i == 0) {
+		//			s.append("\n");
+		//		}
+			boolean isFirstOperation = true;
+			for (int i = 0; i < sortedOperations.size(); i++) {
+				Operation op = sortedOperations.get(i);
+				Type resultType = op.getType();
+				if (resultType instanceof IterableType) {
+					if (isFirstClass) {
+						s.append("\n\n");
+						s.append("		static {\n");
+						isFirstClass = false;
+						isFirstOperation = false;
+					}
+					else if (isFirstOperation) {
+						s.append("\n");
+						isFirstOperation = false;
+					}
+					s.append("\t\t\t");
+					op.accept(emitLiteralVisitor);
+					s.append(".setType(");
+					resultType.accept(declareParameterTypeVisitor);
+					s.append(");\n");
+				}
+			}
+		}
+		if (!isFirstClass) {
+			s.append("		}\n");
 		}
 		appendInitializationEnd(false);
 		s.append("	}\n");
