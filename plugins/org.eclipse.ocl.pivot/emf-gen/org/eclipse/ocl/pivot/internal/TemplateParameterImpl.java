@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -381,7 +382,7 @@ public class TemplateParameterImpl
 
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
-		assert eContainer() != null;
+		assert (this instanceof NormalizedTemplateParameter) || eContainer() != null;
 		TemplateParameterId templateParameterId2 = templateParameterId;
 		if (templateParameterId2 == null) {
 			synchronized (this) {

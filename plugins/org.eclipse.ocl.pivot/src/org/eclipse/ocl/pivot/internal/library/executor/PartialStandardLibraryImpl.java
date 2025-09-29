@@ -457,14 +457,17 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	/**
+	 * Create an operation. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
-	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterTypes parameterTypes, @Nullable Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
 		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
-		asOperation.setType(asType);
+		if (asType != null) {
+			asOperation.setType(asType);
+		}
 	//	asOperation.setESObject(eOperation);
 	//	asOperation.setIndex(index);
 		asOperation.setImplementation(implementation);
@@ -925,12 +928,15 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	public @NonNull Type getTupleType(@NonNull TuplePart @NonNull... tupleParts) {
 	//	orderedPartIds[index] = IdManager.getPartId(index, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired());
 
-		List<@NonNull PartId> partIds = new ArrayList();
+		List<@NonNull PartId> partIds = new ArrayList<>();
 		for (TuplePart tuplePart : tupleParts) {
-			partIds.add(IdManager.getPartId(partIds.size(), tuplePart.getName(), tuplePart.getTypeId(), tuplePart.isIsRequired()));
+			partIds.add(IdManager.getPartId(partIds.size(), PivotUtil.getName(tuplePart), tuplePart.getTypeId(), tuplePart.isIsRequired()));
 		}
-		return getTupleTypeManager().getTupleType(partIds);
+		return getTupleType(partIds);
 	}
+//	Namespace namespace = ElementUtil.basicGetContainingNamespace(csElement);
+//	TemplateParameterSubstitutions templateSpecialization = namespace != null ? TemplateSpecialization.basicGetTemplateSpecialization(namespace) : null;
+//	TupleType tupleType = context.getStandardLibrary().getTupleType(parts, templateSpecialization);			// XXX pass parameterization from ancestral scope
 
 	@Override
 	public @NonNull CollectionType getUniqueCollectionType() {
