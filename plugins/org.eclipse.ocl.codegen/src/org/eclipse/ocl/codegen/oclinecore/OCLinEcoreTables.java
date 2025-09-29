@@ -697,17 +697,39 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				}
 				Operation op = sortedOperations.get(i);
 				TemplateSignature ownedTemplateSignature = op.getOwnedSignature();
+				StringBuilder sFlags = new StringBuilder();
+				sFlags.append(i);
+				if (op.isIsInvalidating()) {
+					sFlags.append(" | IsInvalidating");
+				}
+				if (op.isIsRequired()) {
+					sFlags.append(" | IsRequired");
+				}
+				if (op.isIsStatic()) {
+					sFlags.append(" | IsStatic");
+				}
+				if (op.isIsTransient()) {
+					sFlags.append(" | IsTransient");
+				}
+				if (op.isIsTypeof()) {
+					sFlags.append(" | IsTypeof");
+				}
+				if (op.isIsValidating()) {
+					sFlags.append(" | IsValidating");
+				}
 				s.append("		public static final ");
 				s.appendClassReference(true, Operation.class);
 				s.append(" ");
 				op.accept(emitLiteralVisitor);
 				s.append(" = LIBRARY.createOperation(");
+				op.getOwningClass().accept(emitScopedLiteralVisitor);
+				s.append(", ");
 				s.appendString(ClassUtil.requireNonNull(op.getName()));
 				s.append(", ");
 				appendParameterTypesName(op.getParameterTypes());
 				s.append(", ");
-				op.getOwningClass().accept(emitScopedLiteralVisitor);
-				s.append(",\n			" + i + ", ");
+				op.getType().accept(declareParameterTypeVisitor);
+				s.append(",\n			" + sFlags.toString() + ", ");
 				if (ownedTemplateSignature == null) {
 					s.appendClassReference(null, TemplateParameters.class);
 					s.append(".EMPTY_LIST");
@@ -832,17 +854,57 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static class " + AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME);
-		boolean isFirst = false;
+		boolean isFirstClass = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
+			boolean isFirstProperty = true;
 			List<@NonNull Property> sortedProperties = getLocalPropertiesSortedByName(pClass);
 			for (int i = 0; i < sortedProperties.size(); i++) {
 				Property prop = ClassUtil.requireNonNull(sortedProperties.get(i));
 				if (isProperty(prop)) {
 					s.append("\n");
-					if (isFirst) {
-						s.append("\n");
+					if (isFirstClass) {
+						isFirstClass = false;
+						isFirstProperty = false;
 					}
-					isFirst = false;
+					else if (isFirstProperty) {
+						s.append("\n");
+						isFirstProperty = false;
+					}
+					StringBuilder sFlags = new StringBuilder();
+					sFlags.append(i);
+					if (prop.isIsComposite()) {
+						sFlags.append(" | IsComposite");
+					}
+					if (prop.isIsDerived()) {
+						sFlags.append(" | IsDerived");
+					}
+					if (prop.isIsID()) {
+						sFlags.append(" | IsID");
+					}
+					if (prop.isIsImplicit()) {
+						sFlags.append(" | IsImplicit");
+					}
+					if (prop.isIsReadOnly()) {
+						sFlags.append(" | IsReadOnly");
+					}
+					if (prop.isIsRequired()) {
+						sFlags.append(" | IsRequired");
+					}
+					if (prop.isIsResolveProxies()) {
+						sFlags.append(" | IsResolveProxies");
+					}
+					if (prop.isIsStatic()) {
+						sFlags.append(" | IsStatic");
+					}
+					if (prop.isIsTransient()) {
+						sFlags.append(" | IsTransient");
+					}
+					if (prop.isIsUnsettable()) {
+						sFlags.append(" | IsUnsettable");
+					}
+					if (prop.isIsVolatile()) {
+						sFlags.append(" | IsVolatile");
+					}
 					s.append("		public static final ");
 					s.appendClassReference(true, Property.class);
 					s.append(" ");
@@ -851,45 +913,91 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					String name = ClassUtil.requireNonNull(prop.getName());
 					if (prop.getImplementationClass() != null) {
 						s.append("Property(");
+						pClass.accept(emitScopedLiteralVisitor);
+						s.append(", " );
 						s.appendString(name);
 						s.append(", " );
-						pClass.accept(emitScopedLiteralVisitor);
-						s.append(", " + i + ", ");
+						prop.getType().accept(declareParameterTypeVisitor);
+						s.append(", " + sFlags.toString() + ", ");
 						s.append(prop.getImplementationClass());
 						s.append(".INSTANCE)");
 					}
 					else if (hasEcore(prop)) {
 						EStructuralFeature eStructuralFeature = ClassUtil.requireNonNull((EStructuralFeature)prop.getESObject());
 						s.append("Property(");
+						pClass.accept(emitScopedLiteralVisitor);
+						s.append(", " );
 						s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
 						s.append(", " );
-						pClass.accept(emitScopedLiteralVisitor);
-						s.append(", " + i + ")");
+						prop.getType().accept(declareParameterTypeVisitor);
+						s.append(", " + sFlags.toString() + ")");
 						//						}
 					} else {
 						Property opposite = prop.getOpposite();
 						if ((opposite != null) && hasEcore(opposite)) {
 							EStructuralFeature eStructuralFeature = ClassUtil.requireNonNull((EStructuralFeature)opposite.getESObject());
 							s.append("OppositeProperty(");
+							pClass.accept(emitScopedLiteralVisitor);
+							s.append(", " );
 							s.appendString(name);
 							s.append(", " );
-							pClass.accept(emitScopedLiteralVisitor);
-							s.append(", " + i + ", ");
+							prop.getType().accept(declareParameterTypeVisitor);
+							s.append(", " + sFlags.toString() + ", ");
 							s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
 							s.append(")");
 						}
 						else {
 							s.append("Property(");
+							pClass.accept(emitScopedLiteralVisitor);
+							s.append(", " );
 							s.appendString(name);
 							s.append(", " );
-							pClass.accept(emitScopedLiteralVisitor);
-							s.append(", " + i + ", null)");
+							prop.getType().accept(declareParameterTypeVisitor);
+							s.append(", " + sFlags.toString() + ", null)");
 						}
 					}
 					s.append(";");
 				}
 			}
-			isFirst = true;
+		}
+		isFirstClass = true;
+		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
+			boolean isFirstProperty = true;
+			List<@NonNull Property> sortedProperties = getLocalPropertiesSortedByName(pClass);
+			for (int i = 0; i < sortedProperties.size(); i++) {
+				Property prop = ClassUtil.requireNonNull(sortedProperties.get(i));
+				if (isProperty(prop)) {
+					if (isFirstClass) {
+						s.append("\n\n");
+						s.append("		static {\n");
+						isFirstClass = false;
+						isFirstProperty = false;
+					}
+					else if (isFirstProperty) {
+						s.append("\n");
+						isFirstProperty = false;
+					}
+					String defaultValueString = prop.getDefaultValueString();
+					if (defaultValueString != null) {
+						s.append("			");
+						prop.accept(emitLiteralVisitor);
+						s.append(".setDefaultValueString(");
+						s.appendString(defaultValueString);
+						s.append(");\n");
+					}
+					Property opposite = prop.getOpposite();
+					if (opposite != null) {
+						s.append("			");
+						prop.accept(emitLiteralVisitor);
+						s.append(".setOpposite(");
+						opposite.accept(emitLiteralVisitor);
+						s.append(");\n");
+					}
+				}
+			}
+		}
+		if (!isFirstClass) {
+			s.append("		}\n");
 		}
 		appendInitializationEnd(false);
 		s.append("	}\n");

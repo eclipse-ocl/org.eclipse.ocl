@@ -63,8 +63,10 @@ import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.flat.FlatModel;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
@@ -81,6 +83,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -93,6 +96,7 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
+import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -419,6 +423,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
 			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
@@ -454,13 +459,69 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Property createOppositeProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, /*@NonNull*/ EStructuralFeature eFeature) {
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
+			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
+		asOperation.setName(name);
+		asOperation.setType(asType);
+	//	asOperation.setESObject(eOperation);
+	//	asOperation.setIndex(index);
+		asOperation.setImplementation(implementation);
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			@NonNull Type parameterType = parameterTypes.get(i);
+			ParameterImpl asParameter = (ParameterImpl)PivotFactory.eINSTANCE.createParameter();
+			asParameter.setName("_" + i);
+			asParameter.setType(parameterType);
+			asOperation.getOwnedParameters().add(asParameter);
+		}
+		if (typeParameters.parametersSize() > 0) {
+			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
+			for (int i = 0; i < typeParameters.parametersSize(); i++) {
+			//	Type type = typeParameters.get(i);		// XXX
+				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
+				asTemplateParameter.setName("_" + i);
+			//	asTemplateParameter.setType(type);
+			//	asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
+				asTemplateParameters.add(asTemplateParameter);
+			}
+			asOperation.setOwnedSignature(templateSignature);
+		}
+		setOperationFlagsAndIndex(asOperation, operationFlagsAndIndex);
+		asClass.getOwnedOperations().add(asOperation);
+		return asOperation;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Property createOppositeProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asType, int propertyFlagsAndIndex, /*@NonNull*/ EStructuralFeature eFeature) {
 		assert eFeature != null;
 	//	EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
 	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
 		asProperty.setName(eFeature.getName());
-		asProperty.setType(asClass);
+		asProperty.setType(asType);
+		asProperty.setESObject(eFeature);
+	//	asProperty.setIndex(propertyIndex);
+	//	asProperty.setImplementation(implementation);
+		setPropertyFlagsAndIndex(asProperty, propertyFlagsAndIndex);
+		asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	public @NonNull Property createOppositeProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyFlagsAndIndex, /*@NonNull*/ EStructuralFeature eFeature) {
+		assert eFeature != null;
+	//	EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
+	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setName(eFeature.getName());
+	//	asProperty.setType(asType);
 		asProperty.setESObject(eFeature);
 	//	asProperty.setIndex(propertyIndex);
 	//	asProperty.setImplementation(implementation);
@@ -499,11 +560,25 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Property createProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, @NonNull LibraryProperty implementation) {
+	public @NonNull Property createProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull Type asType, int propertyFlagsAndIndex, @NonNull LibraryProperty implementation) {
 	//	return new ExecutorPropertyWithImplementation(name, asClass, propertyIndex, implementation);
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
 		asProperty.setName(name);
-		asProperty.setType(asClass);
+		asProperty.setType(asType);
+		asProperty.setImplementation(implementation);
+		setPropertyFlagsAndIndex(asProperty, propertyFlagsAndIndex);
+		asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	public @NonNull Property createProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, @NonNull LibraryProperty implementation) {
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setName(name);
+	//	asProperty.setType(asType);
 	//	asProperty.setIndex(propertyIndex);
 		asProperty.setImplementation(implementation);
 		asClass.getOwnedProperties().add(asProperty);
@@ -513,13 +588,28 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex) {
+	public @NonNull Property createProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EStructuralFeature eFeature, @NonNull Type asType, int propertyFlagsAndIndex) {
 		assert eFeature != null;
-	//	return new EcoreExecutorProperty(eFeature, asClass, propertyIndex);
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
 		asProperty.setESObject(eFeature);
 		asProperty.setName(eFeature.getName());
-		asProperty.setType(asClass);
+		asProperty.setType(asType);
+	//	asProperty.setImplementation(implementation);
+		setPropertyFlagsAndIndex(asProperty, propertyFlagsAndIndex);
+		asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	public @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex) {
+		assert eFeature != null;
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setESObject(eFeature);
+		asProperty.setName(eFeature.getName());
+	//	asProperty.setType(asType);
 	//	asProperty.setIndex(propertyIndex);
 	//	asProperty.setImplementation(implementation);
 		asClass.getOwnedProperties().add(asProperty);
@@ -828,6 +918,20 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return (PrimitiveType) OCLstdlibTables.Types._String;
 	}
 
+	public @NonNull TuplePart getTuplePart(@NonNull String name, @NonNull Type type, boolean isRequired) {
+		return new TuplePart(name, type, isRequired);
+	}
+
+	public @NonNull Type getTupleType(@NonNull TuplePart @NonNull... tupleParts) {
+	//	orderedPartIds[index] = IdManager.getPartId(index, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired());
+
+		List<@NonNull PartId> partIds = new ArrayList();
+		for (TuplePart tuplePart : tupleParts) {
+			partIds.add(IdManager.getPartId(partIds.size(), tuplePart.getName(), tuplePart.getTypeId(), tuplePart.isIsRequired()));
+		}
+		return getTupleTypeManager().getTupleType(partIds);
+	}
+
 	@Override
 	public @NonNull CollectionType getUniqueCollectionType() {
 		return (CollectionType) OCLstdlibTables.Types._UniqueCollection;
@@ -894,6 +998,65 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	public void resetSeverities() {
 		validationKey2severity = null;
+	}
+
+	private void setOperationFlagsAndIndex(@NonNull Operation asOperation, int operationFlagsAndIndex) {
+		//	asOperation.setIndex(operationFlagsAndIndex & AbstractTables.IndexMask);
+		if ((operationFlagsAndIndex & AbstractTables.IsInvalidating) != 0) {
+			asOperation.setIsInvalidating(true);
+		}
+		if ((operationFlagsAndIndex & AbstractTables.IsRequired) != 0) {
+			asOperation.setIsRequired(true);
+		}
+		if ((operationFlagsAndIndex & AbstractTables.IsStatic) != 0) {
+			asOperation.setIsStatic(true);
+		}
+		if ((operationFlagsAndIndex & AbstractTables.IsTransient) != 0) {
+			asOperation.setIsTransient(true);
+		}
+		if ((operationFlagsAndIndex & AbstractTables.IsTypeof) != 0) {
+			asOperation.setIsTypeof(true);
+		}
+		if ((operationFlagsAndIndex & AbstractTables.IsValidating) != 0) {
+			asOperation.setIsValidating(true);
+		}
+	}
+
+	private void setPropertyFlagsAndIndex(@NonNull Property asProperty, int propertyFlagsAndIndex) {
+		//	asProperty.setIndex(propertyFlagsAndIndex & AbstractTables.IndexMask);
+		if ((propertyFlagsAndIndex & AbstractTables.IsComposite) != 0) {
+			asProperty.setIsComposite(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsDerived) != 0) {
+			asProperty.setIsDerived(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsID) != 0) {
+			asProperty.setIsID(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsImplicit) != 0) {
+			asProperty.setIsImplicit(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsReadOnly) != 0) {
+			asProperty.setIsReadOnly(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsRequired) != 0) {
+			asProperty.setIsRequired(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsResolveProxies) != 0) {
+			asProperty.setIsResolveProxies(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsStatic) != 0) {
+			asProperty.setIsStatic(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsTransient) != 0) {
+			asProperty.setIsTransient(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsUnsettable) != 0) {
+			asProperty.setIsUnsettable(true);
+		}
+		if ((propertyFlagsAndIndex & AbstractTables.IsVolatile) != 0) {
+			asProperty.setIsVolatile(true);
+		}
 	}
 
 	/**
