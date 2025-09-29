@@ -461,14 +461,12 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 * Create an operation. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
-	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterTypes parameterTypes, @Nullable Type asType,
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
 		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
-		if (asType != null) {
-			asOperation.setType(asType);
-		}
+		asOperation.setType(asType);		// OclInvalid if set later for nested specialization
 	//	asOperation.setESObject(eOperation);
 	//	asOperation.setIndex(index);
 		asOperation.setImplementation(implementation);

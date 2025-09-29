@@ -55,8 +55,12 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
@@ -689,6 +693,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static class " + AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME);
+		List<Operation> nestedSpecializedReturns = new ArrayList<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
 			Collections.sort(sortedOperations, signatureComparator);
@@ -729,9 +734,16 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(", ");
 				appendParameterTypesName(op.getParameterTypes());
 				s.append(", ");
+				if ("product".equals(op.getName())) {
+					getClass();		// XXX
+				}
 				Type resultType = op.getType();
-				if (resultType instanceof IterableType) {
-					s.append("null");
+				if ((resultType instanceof TemplateableElement) && isNestedSpecialization((TemplateableElement)resultType)) {
+					nestedSpecializedReturns.add(op);
+					standardLibrary.getOclInvalidType().accept(emitQualifiedLiteralVisitor);
+					//	emitScopedLiteralVisitor.appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
+				//	OclInemitScopedLiteralVisitor.appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
+				//	s.append("_OclInvalid");
 				}
 				else {
 					resultType.accept(declareParameterTypeVisitor);
@@ -762,42 +774,29 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(");\n");
 			}
 		}
-		boolean isFirstClass = true;
-		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
-			List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
-			Collections.sort(sortedOperations, signatureComparator);
-		//	for (int i = 0; i < sortedOperations.size(); i++) {
-		//		if (i == 0) {
-		//			s.append("\n");
-		//		}
-			boolean isFirstOperation = true;
-			for (int i = 0; i < sortedOperations.size(); i++) {
-				Operation op = sortedOperations.get(i);
-//				setNamespace(op);
-				Type resultType = op.getType();
-				if (resultType instanceof IterableType) {
-					if (isFirstClass) {
-						s.append("\n\n");
-						s.append("		static {\n");
-						isFirstClass = false;
-						isFirstOperation = false;
-					}
-					else if (isFirstOperation) {
-						s.append("\n");
-						isFirstOperation = false;
-					}
-					s.append("\t\t\tLIBRARY.setNamespace(");
-					op.accept(emitLiteralVisitor);
-					s.append(");\n");
-					s.append("\t\t\tLIBRARY.setSpecializedType(");
-					op.accept(emitLiteralVisitor);
-					s.append(", ");
-					resultType.accept(declareParameterTypeVisitor);
-					s.append(");\n");
-				}
+		boolean isFirstOperation = true;
+		for (Operation op : nestedSpecializedReturns) {
+//			setNamespace(op);
+			Type resultType = op.getType();
+			if (isFirstOperation) {
+				s.append("\n");
+				s.append("		static {\n");
+				isFirstOperation = false;
 			}
+			else if (isFirstOperation) {
+				s.append("\n");
+				isFirstOperation = false;
+			}
+			s.append("\t\t\tLIBRARY.setNamespace(");
+			op.accept(emitLiteralVisitor);
+			s.append(");\n");
+			s.append("\t\t\tLIBRARY.setSpecializedType(");
+			op.accept(emitLiteralVisitor);
+			s.append(", ");
+			resultType.accept(declareParameterTypeVisitor);
+			s.append(");\n");
 		}
-		if (!isFirstClass) {
+		if (!isFirstOperation) {
 			s.append("		}\n");
 		}
 //		setNamespace(null);
@@ -1481,6 +1480,44 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	protected String getTablesPackageName() {
 		return genPackage.getReflectionPackageName();
+	}
+
+	private boolean isNestedSpecialization(@NonNull TemplateableElement asType) {
+		for (TemplateBinding asBinding : asType.getOwnedBindings()) {
+			for (TemplateParameterSubstitution asSubstitution : asBinding.getOwnedSubstitutions()) {
+				Type asActual = asSubstitution.getActual();
+				if (asActual instanceof TupleType) {
+					for (Property asProperty : ((TupleType)asActual).getOwnedProperties()) {
+						Type asType2 = asProperty.getType();
+						if (asType2 instanceof TemplateParameter) {
+							return true;
+						}
+						if ((asType2 instanceof TemplateableElement) && isNestedSpecialization2((TemplateableElement)asType2)) {
+							return true;
+						}
+					}
+				}
+				if ((asActual instanceof TemplateableElement) && isNestedSpecialization2((TemplateableElement)asActual)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isNestedSpecialization2(@NonNull TemplateableElement asType) {
+		for (TemplateBinding asBinding : asType.getOwnedBindings()) {
+			for (TemplateParameterSubstitution asSubstitution : asBinding.getOwnedSubstitutions()) {
+				Type asActual = asSubstitution.getActual();
+				if (asActual instanceof TemplateParameter) {
+					return true;
+				}
+				if ((asActual instanceof TemplateableElement) && isNestedSpecialization2((TemplateableElement)asActual)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	protected @NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginateFragmentOperations(@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations) {
