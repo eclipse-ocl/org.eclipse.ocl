@@ -445,16 +445,22 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
-			s.append("LIBRARY.createTupleType(");
-			s.appendString(ClassUtil.requireNonNull(tupleType.getName()));
-			s.append(", ");
+			s.append("LIBRARY.getTupleType(");
+		//	s.appendString(ClassUtil.requireNonNull(tupleType.getName()));
+		//	s.append(", ");
+			boolean isFirst = true;
 			for (Property part : tupleType.getOwnedProperties()) {
-				s.append(", ");
-				s.append("LIBRARY.createTuplePart(");
+				if (!isFirst) {
+					s.append(", ");
+				}
+				s.append("LIBRARY.getTuplePart(");
 				s.appendString(ClassUtil.requireNonNull(part.getName()));
 				s.append(", ");
 				part.getType().accept(this);
+				s.append(", ");
+				s.append(part.isIsRequired() ? "true" : "false");
 				s.append(")");
+				isFirst = false;
 			}
 			s.append(")");
 			return null;

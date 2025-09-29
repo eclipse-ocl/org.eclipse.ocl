@@ -23,6 +23,67 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public abstract class AbstractTables
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsComposite = 1 << 8;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsDerived = IsComposite << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsID = IsDerived << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsImplicit = IsID << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsInvalidating = IsImplicit << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsReadOnly = IsInvalidating << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsRequired = IsReadOnly << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsResolveProxies = IsRequired << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsStatic = IsResolveProxies << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsTransient = IsStatic << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsTypeof = IsTransient << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsUnsettable = IsTypeof << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsValidating = IsUnsettable << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IsVolatile = IsValidating << 1;
+	/**
+	 * @since 7.0
+	 */
+	public static final int IndexMask = IsComposite - 1;
+
 	public static final @NonNull Map<@NonNull String, @NonNull AbstractTables> nsURI2tables = new HashMap<>();
 
 	public static final @Nullable AbstractTables basicGet(@NonNull String nsURI) {
