@@ -68,7 +68,7 @@ public class PivotTables extends AbstractTables
 	/**
 	 *	The package descriptor for the package.
 	 */
-	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(PivotPackage.eINSTANCE, null);
+	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(PivotPackage.eINSTANCE);
 
 	/**
 	 *	Constants used by auto-generated code.
@@ -1893,83 +1893,83 @@ public class PivotTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._BooleanType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation(Types._BooleanType, "allInstances", ParameterTypes.EMPTY_LIST, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf),
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._Class,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation(Types._Class, "allInstances", ParameterTypes.EMPTY_LIST, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf),
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _CompleteModel__getOwnedCompletePackage = LIBRARY.createOperation("getOwnedCompletePackage", Parameters._String, Types._CompleteModel,
+		public static final @NonNull Operation _CompleteModel__getOwnedCompletePackage = LIBRARY.createOperation(Types._CompleteModel, "getOwnedCompletePackage", Parameters._String, PivotTables.Types._CompletePackage,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _CompletePackage__getOwnedCompleteClass = LIBRARY.createOperation("getOwnedCompleteClass", Parameters._String, Types._CompletePackage,
+		public static final @NonNull Operation _CompletePackage__getOwnedCompleteClass = LIBRARY.createOperation(Types._CompletePackage, "getOwnedCompleteClass", Parameters._String, PivotTables.Types._CompleteClass,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation("allOwnedElements", ParameterTypes.EMPTY_LIST, Types._Element,
-			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Element__getValue = LIBRARY.createOperation("getValue", Parameters._Type___String, Types._Element,
+		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation(Types._Element, "allOwnedElements", ParameterTypes.EMPTY_LIST, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Element),
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _Element__getValue = LIBRARY.createOperation(Types._Element, "getValue", Parameters._Type___String, PivotTables.Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._Enumeration,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation(Types._Enumeration, "allInstances", ParameterTypes.EMPTY_LIST, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf),
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._InvalidType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation(Types._InvalidType, "allInstances", ParameterTypes.EMPTY_LIST, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf),
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _OCLExpression__isNonNull = LIBRARY.createOperation("isNonNull", ParameterTypes.EMPTY_LIST, Types._OCLExpression,
-			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OCLExpression__isNull = LIBRARY.createOperation("isNull", ParameterTypes.EMPTY_LIST, Types._OCLExpression,
+		public static final @NonNull Operation _OCLExpression__isNonNull = LIBRARY.createOperation(Types._OCLExpression, "isNonNull", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _OCLExpression__isNull = LIBRARY.createOperation(Types._OCLExpression, "isNull", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull Operation _OperationCallExp__hasOclVoidOverload = LIBRARY.createOperation(Types._OperationCallExp, "hasOclVoidOverload", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull Operation _Property__isAttribute = LIBRARY.createOperation(Types._Property, "isAttribute", Parameters._Property, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyOwningType = LIBRARY.createOperation(Types._PropertyCallExp, "getSpecializedReferredPropertyOwningType", ParameterTypes.EMPTY_LIST, PivotTables.Types._Type,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyType = LIBRARY.createOperation(Types._PropertyCallExp, "getSpecializedReferredPropertyType", ParameterTypes.EMPTY_LIST, PivotTables.Types._Type,
+			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull Operation _ReferringElement__getReferredElement = LIBRARY.createOperation(Types._ReferringElement, "getReferredElement", ParameterTypes.EMPTY_LIST, PivotTables.Types._Element,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull Operation _SelfType__specializeIn = LIBRARY.createOperation(Types._SelfType, "specializeIn", Parameters._CallExp___Type, PivotTables.Types._Type,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation(Types._Stereotype, "allInstances", ParameterTypes.EMPTY_LIST, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf),
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+
+		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation(Types._Type, "conformsTo", Parameters._Type, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
+		public static final @NonNull Operation _Type__flattenedType = LIBRARY.createOperation(Types._Type, "flattenedType", ParameterTypes.EMPTY_LIST, PivotTables.Types._Type,
 			1, TemplateParameters.EMPTY_LIST, null);
-
-		public static final @NonNull Operation _OperationCallExp__hasOclVoidOverload = LIBRARY.createOperation("hasOclVoidOverload", ParameterTypes.EMPTY_LIST, Types._OperationCallExp,
-			0, TemplateParameters.EMPTY_LIST, null);
-
-		public static final @NonNull Operation _Property__isAttribute = LIBRARY.createOperation("isAttribute", Parameters._Property, Types._Property,
-			0, TemplateParameters.EMPTY_LIST, null);
-
-		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyOwningType = LIBRARY.createOperation("getSpecializedReferredPropertyOwningType", ParameterTypes.EMPTY_LIST, Types._PropertyCallExp,
-			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _PropertyCallExp__getSpecializedReferredPropertyType = LIBRARY.createOperation("getSpecializedReferredPropertyType", ParameterTypes.EMPTY_LIST, Types._PropertyCallExp,
-			1, TemplateParameters.EMPTY_LIST, null);
-
-		public static final @NonNull Operation _ReferringElement__getReferredElement = LIBRARY.createOperation("getReferredElement", ParameterTypes.EMPTY_LIST, Types._ReferringElement,
-			0, TemplateParameters.EMPTY_LIST, null);
-
-		public static final @NonNull Operation _SelfType__specializeIn = LIBRARY.createOperation("specializeIn", Parameters._CallExp___Type, Types._SelfType,
-			0, TemplateParameters.EMPTY_LIST, null);
-
-		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._Stereotype,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
-
-		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation("conformsTo", Parameters._Type, Types._Type,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
-		public static final @NonNull Operation _Type__flattenedType = LIBRARY.createOperation("flattenedType", ParameterTypes.EMPTY_LIST, Types._Type,
-			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Type__isClass = LIBRARY.createOperation("isClass", ParameterTypes.EMPTY_LIST, Types._Type,
+		public static final @NonNull Operation _Type__isClass = LIBRARY.createOperation(Types._Type, "isClass", ParameterTypes.EMPTY_LIST, PivotTables.Types._Class,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Type__isTemplateParameter = LIBRARY.createOperation("isTemplateParameter", ParameterTypes.EMPTY_LIST, Types._Type,
+		public static final @NonNull Operation _Type__isTemplateParameter = LIBRARY.createOperation(Types._Type, "isTemplateParameter", ParameterTypes.EMPTY_LIST, PivotTables.Types._TemplateParameter,
 			3, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Type__specializeIn = LIBRARY.createOperation("specializeIn", Parameters._CallExp___Type, Types._Type,
-			4, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _Type__specializeIn = LIBRARY.createOperation(Types._Type, "specializeIn", Parameters._CallExp___Type, PivotTables.Types._Type,
+			4 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _TypedElement__CompatibleBody = LIBRARY.createOperation("CompatibleBody", Parameters._ValueSpecification, Types._TypedElement,
-			0, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _TypedElement__CompatibleBody = LIBRARY.createOperation(Types._TypedElement, "CompatibleBody", Parameters._ValueSpecification, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation("booleanValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
-			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__integerValue = LIBRARY.createOperation("integerValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation(Types._ValueSpecification, "booleanValue", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _ValueSpecification__integerValue = LIBRARY.createOperation(Types._ValueSpecification, "integerValue", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Integer,
 			1, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__isComputable = LIBRARY.createOperation("isComputable", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
-			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__isNull = LIBRARY.createOperation("isNull", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
-			3, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__stringValue = LIBRARY.createOperation("stringValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__isComputable = LIBRARY.createOperation(Types._ValueSpecification, "isComputable", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+			2 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _ValueSpecification__isNull = LIBRARY.createOperation(Types._ValueSpecification, "isNull", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+			3 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _ValueSpecification__stringValue = LIBRARY.createOperation(Types._ValueSpecification, "stringValue", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._String,
 			4, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _ValueSpecification__unlimitedValue = LIBRARY.createOperation("unlimitedValue", ParameterTypes.EMPTY_LIST, Types._ValueSpecification,
+		public static final @NonNull Operation _ValueSpecification__unlimitedValue = LIBRARY.createOperation(Types._ValueSpecification, "unlimitedValue", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._UnlimitedNatural,
 			5, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation("allInstances", ParameterTypes.EMPTY_LIST, Types._VoidType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation(Types._VoidType, "allInstances", ParameterTypes.EMPTY_LIST, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf),
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		static {
 			Init.initEnd();
@@ -1994,512 +1994,990 @@ public class PivotTables extends AbstractTables
 			Operations.init();
 		}
 
-		public static final @NonNull Property _Annotation__ownedContents = LIBRARY.createProperty(PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS, Types._Annotation, 0);
-		public static final @NonNull Property _Annotation__ownedDetails = LIBRARY.createProperty(PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, Types._Annotation, 1);
-		public static final @NonNull Property _Annotation__references = LIBRARY.createProperty(PivotPackage.Literals.ANNOTATION__REFERENCES, Types._Annotation, 2);
-
-		public static final @NonNull Property _AssociationClass__unownedAttributes = LIBRARY.createProperty(PivotPackage.Literals.ASSOCIATION_CLASS__UNOWNED_ATTRIBUTES, Types._AssociationClass, 0);
-		public static final @NonNull Property _AssociationClass__AssociationClassCallExp__referredAssociationClass = LIBRARY.createOppositeProperty("AssociationClassCallExp", Types._AssociationClass, 1, PivotPackage.Literals.ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS);
-
-		public static final @NonNull Property _AssociationClassCallExp__referredAssociationClass = LIBRARY.createProperty(PivotPackage.Literals.ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS, Types._AssociationClassCallExp, 0);
-
-		public static final @NonNull Property _Behavior__owningTransition = LIBRARY.createProperty(PivotPackage.Literals.BEHAVIOR__OWNING_TRANSITION, Types._Behavior, 0);
-		public static final @NonNull Property _Behavior__Class__ownedBehaviors = LIBRARY.createOppositeProperty("Class", Types._Behavior, 1, PivotPackage.Literals.CLASS__OWNED_BEHAVIORS);
-		public static final @NonNull Property _Behavior__State__ownedDoActivity = LIBRARY.createOppositeProperty("State", Types._Behavior, 2, PivotPackage.Literals.STATE__OWNED_DO_ACTIVITY);
-		public static final @NonNull Property _Behavior__State__ownedEntry = LIBRARY.createOppositeProperty("State", Types._Behavior, 3, PivotPackage.Literals.STATE__OWNED_ENTRY);
-		public static final @NonNull Property _Behavior__State__ownedExit = LIBRARY.createOppositeProperty("State", Types._Behavior, 4, PivotPackage.Literals.STATE__OWNED_EXIT);
-
-		public static final @NonNull Property _BooleanLiteralExp__booleanSymbol = LIBRARY.createProperty(PivotPackage.Literals.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL, Types._BooleanLiteralExp, 0);
-
-		public static final @NonNull Property _CallExp__isImplicit = LIBRARY.createProperty(PivotPackage.Literals.CALL_EXP__IS_IMPLICIT, Types._CallExp, 0);
-		public static final @NonNull Property _CallExp__isSafe = LIBRARY.createProperty(PivotPackage.Literals.CALL_EXP__IS_SAFE, Types._CallExp, 1);
-		public static final @NonNull Property _CallExp__ownedSource = LIBRARY.createProperty(PivotPackage.Literals.CALL_EXP__OWNED_SOURCE, Types._CallExp, 2);
-
-		public static final @NonNull Property _CallOperationAction__operation = LIBRARY.createProperty(PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION, Types._CallOperationAction, 0);
-		public static final @NonNull Property _CallOperationAction__MessageExp__ownedCalledOperation = LIBRARY.createOppositeProperty("MessageExp", Types._CallOperationAction, 1, PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION);
-
-		public static final @NonNull Property _Class__extenders = LIBRARY.createProperty(PivotPackage.Literals.CLASS__EXTENDERS, Types._Class, 0);
-		public static final @NonNull Property _Class__instanceClassName = LIBRARY.createProperty(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME, Types._Class, 1);
-		public static final @NonNull Property _Class__isAbstract = LIBRARY.createProperty(PivotPackage.Literals.CLASS__IS_ABSTRACT, Types._Class, 2);
-		public static final @NonNull Property _Class__isActive = LIBRARY.createProperty(PivotPackage.Literals.CLASS__IS_ACTIVE, Types._Class, 3);
-		public static final @NonNull Property _Class__isInterface = LIBRARY.createProperty(PivotPackage.Literals.CLASS__IS_INTERFACE, Types._Class, 4);
-		public static final @NonNull Property _Class__ownedBehaviors = LIBRARY.createProperty(PivotPackage.Literals.CLASS__OWNED_BEHAVIORS, Types._Class, 5);
-		public static final @NonNull Property _Class__ownedInvariants = LIBRARY.createProperty(PivotPackage.Literals.CLASS__OWNED_INVARIANTS, Types._Class, 6);
-		public static final @NonNull Property _Class__ownedOperations = LIBRARY.createProperty(PivotPackage.Literals.CLASS__OWNED_OPERATIONS, Types._Class, 7);
-		public static final @NonNull Property _Class__ownedProperties = LIBRARY.createProperty(PivotPackage.Literals.CLASS__OWNED_PROPERTIES, Types._Class, 8);
-		public static final @NonNull Property _Class__owningPackage = LIBRARY.createProperty(PivotPackage.Literals.CLASS__OWNING_PACKAGE, Types._Class, 9);
-		public static final @NonNull Property _Class__superClasses = LIBRARY.createProperty(PivotPackage.Literals.CLASS__SUPER_CLASSES, Types._Class, 10);
-		public static final @NonNull Property _Class__Class__superClasses = LIBRARY.createOppositeProperty("Class", Types._Class, 11, PivotPackage.Literals.CLASS__SUPER_CLASSES);
-		public static final @NonNull Property _Class__CompleteClass__partialClasses = LIBRARY.createOppositeProperty("CompleteClass", Types._Class, 12, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES);
-		public static final @NonNull Property _Class__DataType__behavioralClass = LIBRARY.createOppositeProperty("DataType", Types._Class, 13, PivotPackage.Literals.DATA_TYPE__BEHAVIORAL_CLASS);
-		public static final @NonNull Property _Class__InstanceSpecification__classes = LIBRARY.createOppositeProperty("InstanceSpecification", Types._Class, 14, PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES);
-		public static final @NonNull Property _Class__MapType__entryClass = LIBRARY.createOppositeProperty("MapType", Types._Class, 15, PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS);
-		public static final @NonNull Property _Class__TemplateParameter__constrainingClasses = LIBRARY.createOppositeProperty("TemplateParameter", Types._Class, 16, PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES);
-
-		public static final @NonNull Property _CollectionItem__ownedItem = LIBRARY.createProperty(PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM, Types._CollectionItem, 0);
-
-		public static final @NonNull Property _CollectionLiteralExp__kind = LIBRARY.createProperty(PivotPackage.Literals.COLLECTION_LITERAL_EXP__KIND, Types._CollectionLiteralExp, 0);
-		public static final @NonNull Property _CollectionLiteralExp__ownedParts = LIBRARY.createProperty(PivotPackage.Literals.COLLECTION_LITERAL_EXP__OWNED_PARTS, Types._CollectionLiteralExp, 1);
-
-		public static final @NonNull Property _CollectionLiteralPart__CollectionLiteralExp__ownedParts = LIBRARY.createOppositeProperty("CollectionLiteralExp", Types._CollectionLiteralPart, 0, PivotPackage.Literals.COLLECTION_LITERAL_EXP__OWNED_PARTS);
-
-		public static final @NonNull Property _CollectionRange__ownedFirst = LIBRARY.createProperty(PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST, Types._CollectionRange, 0);
-		public static final @NonNull Property _CollectionRange__ownedLast = LIBRARY.createProperty(PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST, Types._CollectionRange, 1);
-
-		public static final @NonNull Property _CollectionType__elementType = LIBRARY.createProperty("elementType", Types._CollectionType, 0, org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
-		public static final @NonNull Property _CollectionType__isNullFree = LIBRARY.createProperty(PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE, Types._CollectionType, 1);
-		public static final @NonNull Property _CollectionType__lower = LIBRARY.createProperty("lower", Types._CollectionType, 2, org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
-		public static final @NonNull Property _CollectionType__upper = LIBRARY.createProperty("upper", Types._CollectionType, 3, org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
-
-		public static final @NonNull Property _Comment__annotatedElements = LIBRARY.createProperty(PivotPackage.Literals.COMMENT__ANNOTATED_ELEMENTS, Types._Comment, 0);
-		public static final @NonNull Property _Comment__body = LIBRARY.createProperty(PivotPackage.Literals.COMMENT__BODY, Types._Comment, 1);
-		public static final @NonNull Property _Comment__owningElement = LIBRARY.createProperty(PivotPackage.Literals.COMMENT__OWNING_ELEMENT, Types._Comment, 2);
-
-		public static final @NonNull Property _CompleteClass__owningCompletePackage = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE, Types._CompleteClass, 0);
-		public static final @NonNull Property _CompleteClass__partialClasses = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES, Types._CompleteClass, 1);
-
-		public static final @NonNull Property _CompleteEnvironment__ownedCompleteModel = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, Types._CompleteEnvironment, 0);
-		public static final @NonNull Property _CompleteEnvironment__ownedStandardLibrary = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, Types._CompleteEnvironment, 1);
-		public static final @NonNull Property _CompleteEnvironment__CompleteStandardLibrary__owningCompleteEnvironment = LIBRARY.createOppositeProperty("CompleteStandardLibrary", Types._CompleteEnvironment, 2, PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT);
-
-		public static final @NonNull Property _CompleteModel__orphanCompletePackage = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE, Types._CompleteModel, 0);
-		public static final @NonNull Property _CompleteModel__ownedCompletePackages = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, Types._CompleteModel, 1);
-		public static final @NonNull Property _CompleteModel__owningCompleteEnvironment = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT, Types._CompleteModel, 2);
-		public static final @NonNull Property _CompleteModel__partialModels = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS, Types._CompleteModel, 3);
-		public static final @NonNull Property _CompleteModel__primitiveCompletePackage = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE, Types._CompleteModel, 4);
-
-		public static final @NonNull Property _CompletePackage__ownedCompleteClasses = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES, Types._CompletePackage, 0);
-		public static final @NonNull Property _CompletePackage__ownedCompletePackages = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES, Types._CompletePackage, 1);
-		public static final @NonNull Property _CompletePackage__owningCompleteModel = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, Types._CompletePackage, 2);
-		public static final @NonNull Property _CompletePackage__owningCompletePackage = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, Types._CompletePackage, 3);
-		public static final @NonNull Property _CompletePackage__partialPackages = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES, Types._CompletePackage, 4);
-
-		public static final @NonNull Property _CompleteStandardLibrary__owningCompleteEnvironment = LIBRARY.createProperty(PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, Types._CompleteStandardLibrary, 0);
-		public static final @NonNull Property _CompleteStandardLibrary__CompleteEnvironment__ownedStandardLibrary = LIBRARY.createOppositeProperty("CompleteEnvironment", Types._CompleteStandardLibrary, 1, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY);
-
-		public static final @NonNull Property _ConnectionPointReference__entries = LIBRARY.createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES, Types._ConnectionPointReference, 0);
-		public static final @NonNull Property _ConnectionPointReference__exits = LIBRARY.createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS, Types._ConnectionPointReference, 1);
-		public static final @NonNull Property _ConnectionPointReference__owningState = LIBRARY.createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__OWNING_STATE, Types._ConnectionPointReference, 2);
-
-		public static final @NonNull Property _Constraint__constrainedElements = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__CONSTRAINED_ELEMENTS, Types._Constraint, 0);
-		public static final @NonNull Property _Constraint__context = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__CONTEXT, Types._Constraint, 1);
-		public static final @NonNull Property _Constraint__isCallable = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__IS_CALLABLE, Types._Constraint, 2);
-		public static final @NonNull Property _Constraint__ownedSpecification = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION, Types._Constraint, 3);
-		public static final @NonNull Property _Constraint__owningPostContext = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__OWNING_POST_CONTEXT, Types._Constraint, 4);
-		public static final @NonNull Property _Constraint__owningPreContext = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__OWNING_PRE_CONTEXT, Types._Constraint, 5);
-		public static final @NonNull Property _Constraint__owningState = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__OWNING_STATE, Types._Constraint, 6);
-		public static final @NonNull Property _Constraint__owningTransition = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__OWNING_TRANSITION, Types._Constraint, 7);
-		public static final @NonNull Property _Constraint__redefinedConstraints = LIBRARY.createProperty(PivotPackage.Literals.CONSTRAINT__REDEFINED_CONSTRAINTS, Types._Constraint, 8);
-		public static final @NonNull Property _Constraint__Class__ownedInvariants = LIBRARY.createOppositeProperty("Class", Types._Constraint, 9, PivotPackage.Literals.CLASS__OWNED_INVARIANTS);
-		public static final @NonNull Property _Constraint__Constraint__redefinedConstraints = LIBRARY.createOppositeProperty("Constraint", Types._Constraint, 10, PivotPackage.Literals.CONSTRAINT__REDEFINED_CONSTRAINTS);
-		public static final @NonNull Property _Constraint__Namespace__ownedConstraints = LIBRARY.createOppositeProperty("Namespace", Types._Constraint, 11, PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS);
-
-		public static final @NonNull Property _DataType__behavioralClass = LIBRARY.createProperty(PivotPackage.Literals.DATA_TYPE__BEHAVIORAL_CLASS, Types._DataType, 0);
-		public static final @NonNull Property _DataType__isSerializable = LIBRARY.createProperty(PivotPackage.Literals.DATA_TYPE__IS_SERIALIZABLE, Types._DataType, 1);
-		public static final @NonNull Property _DataType__value = LIBRARY.createProperty(PivotPackage.Literals.DATA_TYPE__VALUE, Types._DataType, 2);
+		public static final @NonNull Property _Annotation__ownedContents = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Element), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Annotation__ownedDetails = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Detail), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Annotation__references = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__REFERENCES, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Element), 2 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _AssociationClass__unownedAttributes = LIBRARY.createProperty(Types._AssociationClass, PivotPackage.Literals.ASSOCIATION_CLASS__UNOWNED_ATTRIBUTES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Property), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _AssociationClass__AssociationClassCallExp__referredAssociationClass = LIBRARY.createOppositeProperty(Types._AssociationClass, "AssociationClassCallExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._AssociationClassCallExp), 1 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS);
+
+		public static final @NonNull Property _AssociationClassCallExp__referredAssociationClass = LIBRARY.createProperty(Types._AssociationClassCallExp, PivotPackage.Literals.ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS, PivotTables.Types._AssociationClass, 0 | IsResolveProxies);
+
+		public static final @NonNull Property _Behavior__owningTransition = LIBRARY.createProperty(Types._Behavior, PivotPackage.Literals.BEHAVIOR__OWNING_TRANSITION, PivotTables.Types._Transition, 0 | IsResolveProxies);
+		public static final @NonNull Property _Behavior__Class__ownedBehaviors = LIBRARY.createOppositeProperty(Types._Behavior, "Class", PivotTables.Types._Class, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.CLASS__OWNED_BEHAVIORS);
+		public static final @NonNull Property _Behavior__State__ownedDoActivity = LIBRARY.createOppositeProperty(Types._Behavior, "State", PivotTables.Types._State, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.STATE__OWNED_DO_ACTIVITY);
+		public static final @NonNull Property _Behavior__State__ownedEntry = LIBRARY.createOppositeProperty(Types._Behavior, "State", PivotTables.Types._State, 3 | IsImplicit | IsResolveProxies, PivotPackage.Literals.STATE__OWNED_ENTRY);
+		public static final @NonNull Property _Behavior__State__ownedExit = LIBRARY.createOppositeProperty(Types._Behavior, "State", PivotTables.Types._State, 4 | IsImplicit | IsResolveProxies, PivotPackage.Literals.STATE__OWNED_EXIT);
+
+		public static final @NonNull Property _BooleanLiteralExp__booleanSymbol = LIBRARY.createProperty(Types._BooleanLiteralExp, PivotPackage.Literals.BOOLEAN_LITERAL_EXP__BOOLEAN_SYMBOL, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies | IsUnsettable);
+
+		public static final @NonNull Property _CallExp__isImplicit = LIBRARY.createProperty(Types._CallExp, PivotPackage.Literals.CALL_EXP__IS_IMPLICIT, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CallExp__isSafe = LIBRARY.createProperty(Types._CallExp, PivotPackage.Literals.CALL_EXP__IS_SAFE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CallExp__ownedSource = LIBRARY.createProperty(Types._CallExp, PivotPackage.Literals.CALL_EXP__OWNED_SOURCE, PivotTables.Types._OCLExpression, 2 | IsComposite | IsResolveProxies);
+
+		public static final @NonNull Property _CallOperationAction__operation = LIBRARY.createProperty(Types._CallOperationAction, PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION, PivotTables.Types._Operation, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CallOperationAction__MessageExp__ownedCalledOperation = LIBRARY.createOppositeProperty(Types._CallOperationAction, "MessageExp", PivotTables.Types._MessageExp, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION);
+
+		public static final @NonNull Property _Class__extenders = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__EXTENDERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._StereotypeExtender), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__instanceClassName = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
+		public static final @NonNull Property _Class__isAbstract = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__IS_ABSTRACT, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__isActive = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__IS_ACTIVE, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__isInterface = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__IS_INTERFACE, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedBehaviors = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_BEHAVIORS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Behavior), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedInvariants = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_INVARIANTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Constraint), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedOperations = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_OPERATIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Operation), 7 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedProperties = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_PROPERTIES, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Property), 8 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__owningPackage = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNING_PACKAGE, PivotTables.Types._Package, 9 | IsResolveProxies);
+		public static final @NonNull Property _Class__superClasses = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__SUPER_CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Class), 10 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__Class__superClasses = LIBRARY.createOppositeProperty(Types._Class, "Class", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Class), 11 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.CLASS__SUPER_CLASSES);
+		public static final @NonNull Property _Class__CompleteClass__partialClasses = LIBRARY.createOppositeProperty(Types._Class, "CompleteClass", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CompleteClass), 12 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES);
+		public static final @NonNull Property _Class__DataType__behavioralClass = LIBRARY.createOppositeProperty(Types._Class, "DataType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._DataType), 13 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.DATA_TYPE__BEHAVIORAL_CLASS);
+		public static final @NonNull Property _Class__InstanceSpecification__classes = LIBRARY.createOppositeProperty(Types._Class, "InstanceSpecification", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._InstanceSpecification), 14 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES);
+		public static final @NonNull Property _Class__MapType__entryClass = LIBRARY.createOppositeProperty(Types._Class, "MapType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._MapType), 15 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS);
+		public static final @NonNull Property _Class__TemplateParameter__constrainingClasses = LIBRARY.createOppositeProperty(Types._Class, "TemplateParameter", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._TemplateParameter), 16 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES);
+
+		public static final @NonNull Property _CollectionItem__ownedItem = LIBRARY.createProperty(Types._CollectionItem, PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM, PivotTables.Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _CollectionLiteralExp__kind = LIBRARY.createProperty(Types._CollectionLiteralExp, PivotPackage.Literals.COLLECTION_LITERAL_EXP__KIND, PivotTables.Types._CollectionKind, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CollectionLiteralExp__ownedParts = LIBRARY.createProperty(Types._CollectionLiteralExp, PivotPackage.Literals.COLLECTION_LITERAL_EXP__OWNED_PARTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._CollectionLiteralPart), 1 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _CollectionLiteralPart__CollectionLiteralExp__ownedParts = LIBRARY.createOppositeProperty(Types._CollectionLiteralPart, "CollectionLiteralExp", PivotTables.Types._CollectionLiteralExp, 0 | IsImplicit | IsResolveProxies, PivotPackage.Literals.COLLECTION_LITERAL_EXP__OWNED_PARTS);
+
+		public static final @NonNull Property _CollectionRange__ownedFirst = LIBRARY.createProperty(Types._CollectionRange, PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST, PivotTables.Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CollectionRange__ownedLast = LIBRARY.createProperty(Types._CollectionRange, PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST, PivotTables.Types._OCLExpression, 1 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _CollectionType__elementType = LIBRARY.createProperty(Types._CollectionType, "elementType", PivotTables.Types._Type, 0 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
+		public static final @NonNull Property _CollectionType__isNullFree = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CollectionType__lower = LIBRARY.createProperty(Types._CollectionType, "lower", OCLstdlibTables.Types._Integer, 2 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
+		public static final @NonNull Property _CollectionType__upper = LIBRARY.createProperty(Types._CollectionType, "upper", OCLstdlibTables.Types._Integer, 3 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
+
+		public static final @NonNull Property _Comment__annotatedElements = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__ANNOTATED_ELEMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Element), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Comment__body = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__BODY, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
+		public static final @NonNull Property _Comment__owningElement = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__OWNING_ELEMENT, PivotTables.Types._Element, 2 | IsResolveProxies);
+
+		public static final @NonNull Property _CompleteClass__owningCompletePackage = LIBRARY.createProperty(Types._CompleteClass, PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE, PivotTables.Types._CompletePackage, 0 | IsResolveProxies);
+		public static final @NonNull Property _CompleteClass__partialClasses = LIBRARY.createProperty(Types._CompleteClass, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Class), 1 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _CompleteEnvironment__ownedCompleteModel = LIBRARY.createProperty(Types._CompleteEnvironment, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, PivotTables.Types._CompleteModel, 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteEnvironment__ownedStandardLibrary = LIBRARY.createProperty(Types._CompleteEnvironment, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, PivotTables.Types._CompleteStandardLibrary, 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteEnvironment__CompleteStandardLibrary__owningCompleteEnvironment = LIBRARY.createOppositeProperty(Types._CompleteEnvironment, "CompleteStandardLibrary", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CompleteStandardLibrary), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT);
+
+		public static final @NonNull Property _CompleteModel__orphanCompletePackage = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE, PivotTables.Types._OrphanCompletePackage, 0 | IsDerived | IsReadOnly | IsTransient);
+		public static final @NonNull Property _CompleteModel__ownedCompletePackages = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._CompletePackage), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteModel__owningCompleteEnvironment = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT, PivotTables.Types._CompleteEnvironment, 2 | IsResolveProxies);
+		public static final @NonNull Property _CompleteModel__partialModels = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Model), 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteModel__primitiveCompletePackage = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE, PivotTables.Types._PrimitiveCompletePackage, 4 | IsDerived | IsReadOnly | IsTransient);
+
+		public static final @NonNull Property _CompletePackage__ownedCompleteClasses = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._CompleteClass), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompletePackage__ownedCompletePackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._CompletePackage), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompletePackage__owningCompleteModel = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, PivotTables.Types._CompleteModel, 2 | IsResolveProxies);
+		public static final @NonNull Property _CompletePackage__owningCompletePackage = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, PivotTables.Types._CompletePackage, 3 | IsResolveProxies);
+		public static final @NonNull Property _CompletePackage__partialPackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Package), 4 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _CompleteStandardLibrary__owningCompleteEnvironment = LIBRARY.createProperty(Types._CompleteStandardLibrary, PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, PivotTables.Types._CompleteEnvironment, 0 | IsResolveProxies);
+		public static final @NonNull Property _CompleteStandardLibrary__CompleteEnvironment__ownedStandardLibrary = LIBRARY.createOppositeProperty(Types._CompleteStandardLibrary, "CompleteEnvironment", PivotTables.Types._CompleteEnvironment, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY);
+
+		public static final @NonNull Property _ConnectionPointReference__entries = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Pseudostate), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ConnectionPointReference__exits = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Pseudostate), 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ConnectionPointReference__owningState = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__OWNING_STATE, PivotTables.Types._State, 2 | IsResolveProxies);
+
+		public static final @NonNull Property _Constraint__constrainedElements = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__CONSTRAINED_ELEMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Element), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Constraint__context = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__CONTEXT, PivotTables.Types._Namespace, 1 | IsDerived | IsReadOnly | IsTransient | IsVolatile);
+		public static final @NonNull Property _Constraint__isCallable = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__IS_CALLABLE, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Constraint__ownedSpecification = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION, PivotTables.Types._LanguageExpression, 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Constraint__owningPostContext = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNING_POST_CONTEXT, PivotTables.Types._Operation, 4 | IsResolveProxies);
+		public static final @NonNull Property _Constraint__owningPreContext = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNING_PRE_CONTEXT, PivotTables.Types._Operation, 5 | IsResolveProxies);
+		public static final @NonNull Property _Constraint__owningState = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNING_STATE, PivotTables.Types._State, 6 | IsResolveProxies);
+		public static final @NonNull Property _Constraint__owningTransition = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNING_TRANSITION, PivotTables.Types._Transition, 7 | IsResolveProxies);
+		public static final @NonNull Property _Constraint__redefinedConstraints = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__REDEFINED_CONSTRAINTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Constraint), 8 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Constraint__Class__ownedInvariants = LIBRARY.createOppositeProperty(Types._Constraint, "Class", PivotTables.Types._Class, 9 | IsImplicit | IsResolveProxies, PivotPackage.Literals.CLASS__OWNED_INVARIANTS);
+		public static final @NonNull Property _Constraint__Constraint__redefinedConstraints = LIBRARY.createOppositeProperty(Types._Constraint, "Constraint", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Constraint), 10 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.CONSTRAINT__REDEFINED_CONSTRAINTS);
+		public static final @NonNull Property _Constraint__Namespace__ownedConstraints = LIBRARY.createOppositeProperty(Types._Constraint, "Namespace", PivotTables.Types._Namespace, 11 | IsImplicit | IsResolveProxies, PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS);
+
+		public static final @NonNull Property _DataType__behavioralClass = LIBRARY.createProperty(Types._DataType, PivotPackage.Literals.DATA_TYPE__BEHAVIORAL_CLASS, PivotTables.Types._Class, 0 | IsResolveProxies);
+		public static final @NonNull Property _DataType__isSerializable = LIBRARY.createProperty(Types._DataType, PivotPackage.Literals.DATA_TYPE__IS_SERIALIZABLE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _DataType__value = LIBRARY.createProperty(Types._DataType, PivotPackage.Literals.DATA_TYPE__VALUE, OCLstdlibTables.Types._String, 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 
-		public static final @NonNull Property _Detail__values = LIBRARY.createProperty(PivotPackage.Literals.DETAIL__VALUES, Types._Detail, 0);
-		public static final @NonNull Property _Detail__Annotation__ownedDetails = LIBRARY.createOppositeProperty("Annotation", Types._Detail, 1, PivotPackage.Literals.ANNOTATION__OWNED_DETAILS);
+		public static final @NonNull Property _Detail__values = LIBRARY.createProperty(Types._Detail, PivotPackage.Literals.DETAIL__VALUES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._String), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Detail__Annotation__ownedDetails = LIBRARY.createOppositeProperty(Types._Detail, "Annotation", PivotTables.Types._Annotation, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ANNOTATION__OWNED_DETAILS);
 
-		public static final @NonNull Property _DynamicElement__metaType = LIBRARY.createProperty(PivotPackage.Literals.DYNAMIC_ELEMENT__META_TYPE, Types._DynamicElement, 0);
+		public static final @NonNull Property _DynamicElement__metaType = LIBRARY.createProperty(Types._DynamicElement, PivotPackage.Literals.DYNAMIC_ELEMENT__META_TYPE, PivotTables.Types._Type, 0 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _DynamicProperty__default = LIBRARY.createProperty(PivotPackage.Literals.DYNAMIC_PROPERTY__DEFAULT, Types._DynamicProperty, 0);
-		public static final @NonNull Property _DynamicProperty__referredProperty = LIBRARY.createProperty(PivotPackage.Literals.DYNAMIC_PROPERTY__REFERRED_PROPERTY, Types._DynamicProperty, 1);
-		public static final @NonNull Property _DynamicProperty__DynamicType__ownedDynamicProperties = LIBRARY.createOppositeProperty("DynamicType", Types._DynamicProperty, 2, PivotPackage.Literals.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES);
+		public static final @NonNull Property _DynamicProperty__default = LIBRARY.createProperty(Types._DynamicProperty, PivotPackage.Literals.DYNAMIC_PROPERTY__DEFAULT, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
+		public static final @NonNull Property _DynamicProperty__referredProperty = LIBRARY.createProperty(Types._DynamicProperty, PivotPackage.Literals.DYNAMIC_PROPERTY__REFERRED_PROPERTY, PivotTables.Types._Property, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _DynamicProperty__DynamicType__ownedDynamicProperties = LIBRARY.createOppositeProperty(Types._DynamicProperty, "DynamicType", PivotTables.Types._DynamicType, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES);
 
-		public static final @NonNull Property _DynamicType__ownedDynamicProperties = LIBRARY.createProperty(PivotPackage.Literals.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES, Types._DynamicType, 0);
+		public static final @NonNull Property _DynamicType__ownedDynamicProperties = LIBRARY.createProperty(Types._DynamicType, PivotPackage.Literals.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._DynamicProperty), 0 | IsComposite | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Element__annotatingComments = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT__ANNOTATING_COMMENTS, Types._Element, 0);
-		public static final @NonNull Property _Element__ownedAnnotations = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, Types._Element, 1);
-		public static final @NonNull Property _Element__ownedComments = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, Types._Element, 2);
-		public static final @NonNull Property _Element__ownedExtensions = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT__OWNED_EXTENSIONS, Types._Element, 3);
-		public static final @NonNull Property _Element__Annotation__ownedContents = LIBRARY.createOppositeProperty("Annotation", Types._Element, 4, PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS);
-		public static final @NonNull Property _Element__Annotation__references = LIBRARY.createOppositeProperty("Annotation", Types._Element, 5, PivotPackage.Literals.ANNOTATION__REFERENCES);
-		public static final @NonNull Property _Element__Constraint__constrainedElements = LIBRARY.createOppositeProperty("Constraint", Types._Element, 6, PivotPackage.Literals.CONSTRAINT__CONSTRAINED_ELEMENTS);
-		public static final @NonNull Property _Element__Element__ownedAnnotations = LIBRARY.createOppositeProperty("Element", Types._Element, 7, PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS);
+		public static final @NonNull Property _Element__annotatingComments = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__ANNOTATING_COMMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Comment), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__ownedAnnotations = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Element), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__ownedComments = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Comment), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__ownedExtensions = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_EXTENSIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._ElementExtension), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__Annotation__ownedContents = LIBRARY.createOppositeProperty(Types._Element, "Annotation", PivotTables.Types._Annotation, 4 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS);
+		public static final @NonNull Property _Element__Annotation__references = LIBRARY.createOppositeProperty(Types._Element, "Annotation", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Annotation), 5 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.ANNOTATION__REFERENCES);
+		public static final @NonNull Property _Element__Constraint__constrainedElements = LIBRARY.createOppositeProperty(Types._Element, "Constraint", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Constraint), 6 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.CONSTRAINT__CONSTRAINED_ELEMENTS);
+		public static final @NonNull Property _Element__Element__ownedAnnotations = LIBRARY.createOppositeProperty(Types._Element, "Element", PivotTables.Types._Element, 7 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS);
 
-		public static final @NonNull Property _ElementExtension__base = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__BASE, Types._ElementExtension, 0);
-		public static final @NonNull Property _ElementExtension__isApplied = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__IS_APPLIED, Types._ElementExtension, 1);
-		public static final @NonNull Property _ElementExtension__isRequired = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__IS_REQUIRED, Types._ElementExtension, 2);
-		public static final @NonNull Property _ElementExtension__stereotype = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__STEREOTYPE, Types._ElementExtension, 3);
+		public static final @NonNull Property _ElementExtension__base = LIBRARY.createProperty(Types._ElementExtension, PivotPackage.Literals.ELEMENT_EXTENSION__BASE, PivotTables.Types._Element, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ElementExtension__isApplied = LIBRARY.createProperty(Types._ElementExtension, PivotPackage.Literals.ELEMENT_EXTENSION__IS_APPLIED, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ElementExtension__isRequired = LIBRARY.createProperty(Types._ElementExtension, PivotPackage.Literals.ELEMENT_EXTENSION__IS_REQUIRED, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ElementExtension__stereotype = LIBRARY.createProperty(Types._ElementExtension, PivotPackage.Literals.ELEMENT_EXTENSION__STEREOTYPE, PivotTables.Types._Stereotype, 3 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _ElementLiteralExp__referredElement = LIBRARY.createProperty(PivotPackage.Literals.ELEMENT_LITERAL_EXP__REFERRED_ELEMENT, Types._ElementLiteralExp, 0);
+		public static final @NonNull Property _ElementLiteralExp__referredElement = LIBRARY.createProperty(Types._ElementLiteralExp, PivotPackage.Literals.ELEMENT_LITERAL_EXP__REFERRED_ELEMENT, PivotTables.Types._EcoreObject, 0 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _EnumLiteralExp__referredLiteral = LIBRARY.createProperty(PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, Types._EnumLiteralExp, 0);
+		public static final @NonNull Property _EnumLiteralExp__referredLiteral = LIBRARY.createProperty(Types._EnumLiteralExp, PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, PivotTables.Types._EnumerationLiteral, 0 | IsResolveProxies);
 
-		public static final @NonNull Property _Enumeration__ownedLiterals = LIBRARY.createProperty(PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, Types._Enumeration, 0);
+		public static final @NonNull Property _Enumeration__ownedLiterals = LIBRARY.createProperty(Types._Enumeration, PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._EnumerationLiteral), 0 | IsComposite | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _EnumerationLiteral__literal = LIBRARY.createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL, Types._EnumerationLiteral, 0);
-		public static final @NonNull Property _EnumerationLiteral__owningEnumeration = LIBRARY.createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__OWNING_ENUMERATION, Types._EnumerationLiteral, 1);
-		public static final @NonNull Property _EnumerationLiteral__value = LIBRARY.createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__VALUE, Types._EnumerationLiteral, 2);
-		public static final @NonNull Property _EnumerationLiteral__EnumLiteralExp__referredLiteral = LIBRARY.createOppositeProperty("EnumLiteralExp", Types._EnumerationLiteral, 3, PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL);
+		public static final @NonNull Property _EnumerationLiteral__literal = LIBRARY.createProperty(Types._EnumerationLiteral, PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
+		public static final @NonNull Property _EnumerationLiteral__owningEnumeration = LIBRARY.createProperty(Types._EnumerationLiteral, PivotPackage.Literals.ENUMERATION_LITERAL__OWNING_ENUMERATION, PivotTables.Types._Enumeration, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _EnumerationLiteral__value = LIBRARY.createProperty(Types._EnumerationLiteral, PivotPackage.Literals.ENUMERATION_LITERAL__VALUE, OCLstdlibTables.Types._Integer, 2 | IsResolveProxies);
+		public static final @NonNull Property _EnumerationLiteral__EnumLiteralExp__referredLiteral = LIBRARY.createOppositeProperty(Types._EnumerationLiteral, "EnumLiteralExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._EnumLiteralExp), 3 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL);
 
-		public static final @NonNull Property _ExpressionInOCL__ownedBody = LIBRARY.createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_BODY, Types._ExpressionInOCL, 0);
-		public static final @NonNull Property _ExpressionInOCL__ownedContext = LIBRARY.createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT, Types._ExpressionInOCL, 1);
-		public static final @NonNull Property _ExpressionInOCL__ownedParameters = LIBRARY.createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS, Types._ExpressionInOCL, 2);
-		public static final @NonNull Property _ExpressionInOCL__ownedResult = LIBRARY.createProperty(PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT, Types._ExpressionInOCL, 3);
+		public static final @NonNull Property _ExpressionInOCL__ownedBody = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_BODY, PivotTables.Types._OCLExpression, 0 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _ExpressionInOCL__ownedContext = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT, PivotTables.Types._Variable, 1 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _ExpressionInOCL__ownedParameters = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Variable), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ExpressionInOCL__ownedResult = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT, PivotTables.Types._Variable, 3 | IsComposite | IsResolveProxies);
 
-		public static final @NonNull Property _Feature__implementation = LIBRARY.createProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION, Types._Feature, 0);
-		public static final @NonNull Property _Feature__implementationClass = LIBRARY.createProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, Types._Feature, 1);
-		public static final @NonNull Property _Feature__isStatic = LIBRARY.createProperty(PivotPackage.Literals.FEATURE__IS_STATIC, Types._Feature, 2);
+		public static final @NonNull Property _Feature__implementation = LIBRARY.createProperty(Types._Feature, PivotPackage.Literals.FEATURE__IMPLEMENTATION, PivotTables.Types._LibraryFeature, 0 | IsResolveProxies | IsTransient);
+		public static final @NonNull Property _Feature__implementationClass = LIBRARY.createProperty(Types._Feature, PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
+		public static final @NonNull Property _Feature__isStatic = LIBRARY.createProperty(Types._Feature, PivotPackage.Literals.FEATURE__IS_STATIC, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _FeatureCallExp__isPre = LIBRARY.createProperty(PivotPackage.Literals.FEATURE_CALL_EXP__IS_PRE, Types._FeatureCallExp, 0);
+		public static final @NonNull Property _FeatureCallExp__isPre = LIBRARY.createProperty(Types._FeatureCallExp, PivotPackage.Literals.FEATURE_CALL_EXP__IS_PRE, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _IfExp__isElseIf = LIBRARY.createProperty(PivotPackage.Literals.IF_EXP__IS_ELSE_IF, Types._IfExp, 0);
-		public static final @NonNull Property _IfExp__ownedCondition = LIBRARY.createProperty(PivotPackage.Literals.IF_EXP__OWNED_CONDITION, Types._IfExp, 1);
-		public static final @NonNull Property _IfExp__ownedElse = LIBRARY.createProperty(PivotPackage.Literals.IF_EXP__OWNED_ELSE, Types._IfExp, 2);
-		public static final @NonNull Property _IfExp__ownedThen = LIBRARY.createProperty(PivotPackage.Literals.IF_EXP__OWNED_THEN, Types._IfExp, 3);
-
-		public static final @NonNull Property _Import__importedNamespace = LIBRARY.createProperty(PivotPackage.Literals.IMPORT__IMPORTED_NAMESPACE, Types._Import, 0);
-		public static final @NonNull Property _Import__xmiidVersion = LIBRARY.createProperty(PivotPackage.Literals.IMPORT__XMIID_VERSION, Types._Import, 1);
-		public static final @NonNull Property _Import__Model__ownedImports = LIBRARY.createOppositeProperty("Model", Types._Import, 2, PivotPackage.Literals.MODEL__OWNED_IMPORTS);
-
-		public static final @NonNull Property _InstanceSpecification__classes = LIBRARY.createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES, Types._InstanceSpecification, 0);
-		public static final @NonNull Property _InstanceSpecification__ownedSlots = LIBRARY.createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SLOTS, Types._InstanceSpecification, 1);
-		public static final @NonNull Property _InstanceSpecification__ownedSpecification = LIBRARY.createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, Types._InstanceSpecification, 2);
-		public static final @NonNull Property _InstanceSpecification__owningPackage = LIBRARY.createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNING_PACKAGE, Types._InstanceSpecification, 3);
-
-		public static final @NonNull Property _IntegerLiteralExp__integerSymbol = LIBRARY.createProperty(PivotPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL, Types._IntegerLiteralExp, 0);
-
-		public static final @NonNull Property _IterateExp__ownedBodies = LIBRARY.createProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, Types._IterateExp, 0);
-		public static final @NonNull Property _IterateExp__ownedResult = LIBRARY.createProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT, Types._IterateExp, 1);
-
-		public static final @NonNull Property _Iteration__ownedAccumulator = LIBRARY.createProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR, Types._Iteration, 0);
-		public static final @NonNull Property _Iteration__ownedIterators = LIBRARY.createProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, Types._Iteration, 1);
-		public static final @NonNull Property _Iteration__LoopExp__referredIteration = LIBRARY.createOppositeProperty("LoopExp", Types._Iteration, 2, PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION);
-
-		public static final @NonNull Property _IteratorExp__ownedBody = LIBRARY.createProperty(PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, Types._IteratorExp, 0);
-
-		public static final @NonNull Property _IteratorVariable__LoopExp__ownedCoIterators = LIBRARY.createOppositeProperty("LoopExp", Types._IteratorVariable, 0, PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS);
-
-		public static final @NonNull Property _LambdaParameter__LambdaType__ownedContext = LIBRARY.createOppositeProperty("LambdaType", Types._LambdaParameter, 0, PivotPackage.Literals.LAMBDA_TYPE__OWNED_CONTEXT);
-		public static final @NonNull Property _LambdaParameter__LambdaType__ownedParameters = LIBRARY.createOppositeProperty("LambdaType", Types._LambdaParameter, 1, PivotPackage.Literals.LAMBDA_TYPE__OWNED_PARAMETERS);
-		public static final @NonNull Property _LambdaParameter__LambdaType__ownedResult = LIBRARY.createOppositeProperty("LambdaType", Types._LambdaParameter, 2, PivotPackage.Literals.LAMBDA_TYPE__OWNED_RESULT);
-
-		public static final @NonNull Property _LambdaType__ownedContext = LIBRARY.createProperty(PivotPackage.Literals.LAMBDA_TYPE__OWNED_CONTEXT, Types._LambdaType, 0);
-		public static final @NonNull Property _LambdaType__ownedParameters = LIBRARY.createProperty(PivotPackage.Literals.LAMBDA_TYPE__OWNED_PARAMETERS, Types._LambdaType, 1);
-		public static final @NonNull Property _LambdaType__ownedResult = LIBRARY.createProperty(PivotPackage.Literals.LAMBDA_TYPE__OWNED_RESULT, Types._LambdaType, 2);
-
-		public static final @NonNull Property _LanguageExpression__body = LIBRARY.createProperty(PivotPackage.Literals.LANGUAGE_EXPRESSION__BODY, Types._LanguageExpression, 0);
-		public static final @NonNull Property _LanguageExpression__language = LIBRARY.createProperty(PivotPackage.Literals.LANGUAGE_EXPRESSION__LANGUAGE, Types._LanguageExpression, 1);
-		public static final @NonNull Property _LanguageExpression__owningConstraint = LIBRARY.createProperty(PivotPackage.Literals.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT, Types._LanguageExpression, 2);
-		public static final @NonNull Property _LanguageExpression__InstanceSpecification__ownedSpecification = LIBRARY.createOppositeProperty("InstanceSpecification", Types._LanguageExpression, 3, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION);
-		public static final @NonNull Property _LanguageExpression__Operation__bodyExpression = LIBRARY.createOppositeProperty("Operation", Types._LanguageExpression, 4, PivotPackage.Literals.OPERATION__BODY_EXPRESSION);
-		public static final @NonNull Property _LanguageExpression__Property__ownedExpression = LIBRARY.createOppositeProperty("Property", Types._LanguageExpression, 5, PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION);
-
-		public static final @NonNull Property _LetExp__ownedIn = LIBRARY.createProperty(PivotPackage.Literals.LET_EXP__OWNED_IN, Types._LetExp, 0);
-		public static final @NonNull Property _LetExp__ownedVariable = LIBRARY.createProperty(PivotPackage.Literals.LET_EXP__OWNED_VARIABLE, Types._LetExp, 1);
-
-		public static final @NonNull Property _Library__ownedPrecedences = LIBRARY.createProperty(PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, Types._Library, 0);
-
-		public static final @NonNull Property _LoopExp__firstOwnedBody = LIBRARY.createProperty(PivotPackage.Literals.LOOP_EXP__FIRST_OWNED_BODY, Types._LoopExp, 0);
-		public static final @NonNull Property _LoopExp__ownedCoIterators = LIBRARY.createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, Types._LoopExp, 1);
-		public static final @NonNull Property _LoopExp__ownedIterators = LIBRARY.createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, Types._LoopExp, 2);
-		public static final @NonNull Property _LoopExp__referredIteration = LIBRARY.createProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, Types._LoopExp, 3);
-
-		public static final @NonNull Property _MapLiteralExp__ownedParts = LIBRARY.createProperty(PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS, Types._MapLiteralExp, 0);
-
-		public static final @NonNull Property _MapLiteralPart__ownedKey = LIBRARY.createProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY, Types._MapLiteralPart, 0);
-		public static final @NonNull Property _MapLiteralPart__ownedValue = LIBRARY.createProperty(PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE, Types._MapLiteralPart, 1);
-		public static final @NonNull Property _MapLiteralPart__MapLiteralExp__ownedParts = LIBRARY.createOppositeProperty("MapLiteralExp", Types._MapLiteralPart, 2, PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS);
-
-		public static final @NonNull Property _MapType__entryClass = LIBRARY.createProperty(PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, Types._MapType, 0);
-		public static final @NonNull Property _MapType__keyType = LIBRARY.createProperty("keyType", Types._MapType, 1, org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
-		public static final @NonNull Property _MapType__keysAreNullFree = LIBRARY.createProperty(PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, Types._MapType, 2);
-		public static final @NonNull Property _MapType__valueType = LIBRARY.createProperty("valueType", Types._MapType, 3, org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
-		public static final @NonNull Property _MapType__valuesAreNullFree = LIBRARY.createProperty(PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, Types._MapType, 4);
-
-		public static final @NonNull Property _MessageExp__ownedArguments = LIBRARY.createProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, Types._MessageExp, 0);
-		public static final @NonNull Property _MessageExp__ownedCalledOperation = LIBRARY.createProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION, Types._MessageExp, 1);
-		public static final @NonNull Property _MessageExp__ownedSentSignal = LIBRARY.createProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_SENT_SIGNAL, Types._MessageExp, 2);
-		public static final @NonNull Property _MessageExp__ownedTarget = LIBRARY.createProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_TARGET, Types._MessageExp, 3);
-
-		public static final @NonNull Property _MessageType__referredOperation = LIBRARY.createProperty(PivotPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION, Types._MessageType, 0);
-		public static final @NonNull Property _MessageType__referredSignal = LIBRARY.createProperty(PivotPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL, Types._MessageType, 1);
-
-		public static final @NonNull Property _Model__externalURI = LIBRARY.createProperty(PivotPackage.Literals.MODEL__EXTERNAL_URI, Types._Model, 0);
-		public static final @NonNull Property _Model__ownedImports = LIBRARY.createProperty(PivotPackage.Literals.MODEL__OWNED_IMPORTS, Types._Model, 1);
-		public static final @NonNull Property _Model__ownedPackages = LIBRARY.createProperty(PivotPackage.Literals.MODEL__OWNED_PACKAGES, Types._Model, 2);
-		public static final @NonNull Property _Model__xmiidVersion = LIBRARY.createProperty(PivotPackage.Literals.MODEL__XMIID_VERSION, Types._Model, 3);
-		public static final @NonNull Property _Model__CompleteModel__partialModels = LIBRARY.createOppositeProperty("CompleteModel", Types._Model, 4, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS);
-
-		public static final @NonNull Property _NamedElement__name = LIBRARY.createProperty(PivotPackage.Literals.NAMED_ELEMENT__NAME, Types._NamedElement, 0);
-
-		public static final @NonNull Property _Namespace__ownedConstraints = LIBRARY.createProperty(PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS, Types._Namespace, 0);
-		public static final @NonNull Property _Namespace__Constraint__context = LIBRARY.createOppositeProperty("Constraint", Types._Namespace, 1, PivotPackage.Literals.CONSTRAINT__CONTEXT);
-		public static final @NonNull Property _Namespace__Import__importedNamespace = LIBRARY.createOppositeProperty("Import", Types._Namespace, 2, PivotPackage.Literals.IMPORT__IMPORTED_NAMESPACE);
-
-		public static final @NonNull Property _NavigationCallExp__navigationSource = LIBRARY.createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE, Types._NavigationCallExp, 0);
-		public static final @NonNull Property _NavigationCallExp__qualifiers = LIBRARY.createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, Types._NavigationCallExp, 1);
-
-		public static final @NonNull Property _NormalizedTemplateParameter__index = LIBRARY.createProperty(PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER__INDEX, Types._NormalizedTemplateParameter, 0);
-
-		public static final @NonNull Property _OCLExpression__typeValue = LIBRARY.createProperty(PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE, Types._OCLExpression, 0);
-		public static final @NonNull Property _OCLExpression__CallExp__ownedSource = LIBRARY.createOppositeProperty("CallExp", Types._OCLExpression, 1, PivotPackage.Literals.CALL_EXP__OWNED_SOURCE);
-		public static final @NonNull Property _OCLExpression__CollectionItem__ownedItem = LIBRARY.createOppositeProperty("CollectionItem", Types._OCLExpression, 2, PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM);
-		public static final @NonNull Property _OCLExpression__CollectionRange__ownedFirst = LIBRARY.createOppositeProperty("CollectionRange", Types._OCLExpression, 3, PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST);
-		public static final @NonNull Property _OCLExpression__CollectionRange__ownedLast = LIBRARY.createOppositeProperty("CollectionRange", Types._OCLExpression, 4, PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST);
-		public static final @NonNull Property _OCLExpression__ExpressionInOCL__ownedBody = LIBRARY.createOppositeProperty("ExpressionInOCL", Types._OCLExpression, 5, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_BODY);
-		public static final @NonNull Property _OCLExpression__IfExp__ownedCondition = LIBRARY.createOppositeProperty("IfExp", Types._OCLExpression, 6, PivotPackage.Literals.IF_EXP__OWNED_CONDITION);
-		public static final @NonNull Property _OCLExpression__IfExp__ownedElse = LIBRARY.createOppositeProperty("IfExp", Types._OCLExpression, 7, PivotPackage.Literals.IF_EXP__OWNED_ELSE);
-		public static final @NonNull Property _OCLExpression__IfExp__ownedThen = LIBRARY.createOppositeProperty("IfExp", Types._OCLExpression, 8, PivotPackage.Literals.IF_EXP__OWNED_THEN);
-		public static final @NonNull Property _OCLExpression__IterateExp__ownedBodies = LIBRARY.createOppositeProperty("IterateExp", Types._OCLExpression, 9, PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES);
-		public static final @NonNull Property _OCLExpression__IteratorExp__ownedBody = LIBRARY.createOppositeProperty("IteratorExp", Types._OCLExpression, 10, PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY);
-		public static final @NonNull Property _OCLExpression__LetExp__ownedIn = LIBRARY.createOppositeProperty("LetExp", Types._OCLExpression, 11, PivotPackage.Literals.LET_EXP__OWNED_IN);
-		public static final @NonNull Property _OCLExpression__LoopExp__firstOwnedBody = LIBRARY.createOppositeProperty("LoopExp", Types._OCLExpression, 12, PivotPackage.Literals.LOOP_EXP__FIRST_OWNED_BODY);
-		public static final @NonNull Property _OCLExpression__MapLiteralPart__ownedKey = LIBRARY.createOppositeProperty("MapLiteralPart", Types._OCLExpression, 13, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY);
-		public static final @NonNull Property _OCLExpression__MapLiteralPart__ownedValue = LIBRARY.createOppositeProperty("MapLiteralPart", Types._OCLExpression, 14, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE);
-		public static final @NonNull Property _OCLExpression__MessageExp__ownedArguments = LIBRARY.createOppositeProperty("MessageExp", Types._OCLExpression, 15, PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS);
-		public static final @NonNull Property _OCLExpression__MessageExp__ownedTarget = LIBRARY.createOppositeProperty("MessageExp", Types._OCLExpression, 16, PivotPackage.Literals.MESSAGE_EXP__OWNED_TARGET);
-		public static final @NonNull Property _OCLExpression__NavigationCallExp__qualifiers = LIBRARY.createOppositeProperty("NavigationCallExp", Types._OCLExpression, 17, PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS);
-		public static final @NonNull Property _OCLExpression__OperationCallExp__ownedArguments = LIBRARY.createOppositeProperty("OperationCallExp", Types._OCLExpression, 18, PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS);
-		public static final @NonNull Property _OCLExpression__ShadowPart__ownedInit = LIBRARY.createOppositeProperty("ShadowPart", Types._OCLExpression, 19, PivotPackage.Literals.SHADOW_PART__OWNED_INIT);
-		public static final @NonNull Property _OCLExpression__TupleLiteralPart__ownedInit = LIBRARY.createOppositeProperty("TupleLiteralPart", Types._OCLExpression, 20, PivotPackage.Literals.TUPLE_LITERAL_PART__OWNED_INIT);
-		public static final @NonNull Property _OCLExpression__Variable__ownedInit = LIBRARY.createOppositeProperty("Variable", Types._OCLExpression, 21, PivotPackage.Literals.VARIABLE__OWNED_INIT);
-
-		public static final @NonNull Property _Operation__bodyExpression = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, Types._Operation, 0);
-		public static final @NonNull Property _Operation__isInvalidating = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__IS_INVALIDATING, Types._Operation, 1);
-		public static final @NonNull Property _Operation__isTransient = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__IS_TRANSIENT, Types._Operation, 2);
-		public static final @NonNull Property _Operation__isTypeof = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__IS_TYPEOF, Types._Operation, 3);
-		public static final @NonNull Property _Operation__isValidating = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__IS_VALIDATING, Types._Operation, 4);
-		public static final @NonNull Property _Operation__ownedParameters = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, Types._Operation, 5);
-		public static final @NonNull Property _Operation__ownedPostconditions = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, Types._Operation, 6);
-		public static final @NonNull Property _Operation__ownedPreconditions = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, Types._Operation, 7);
-		public static final @NonNull Property _Operation__owningClass = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__OWNING_CLASS, Types._Operation, 8);
-		public static final @NonNull Property _Operation__precedence = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__PRECEDENCE, Types._Operation, 9);
-		public static final @NonNull Property _Operation__raisedExceptions = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS, Types._Operation, 10);
-		public static final @NonNull Property _Operation__redefinedOperations = LIBRARY.createProperty(PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS, Types._Operation, 11);
-		public static final @NonNull Property _Operation__CallOperationAction__operation = LIBRARY.createOppositeProperty("CallOperationAction", Types._Operation, 12, PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION);
-		public static final @NonNull Property _Operation__MessageType__referredOperation = LIBRARY.createOppositeProperty("MessageType", Types._Operation, 13, PivotPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION);
-		public static final @NonNull Property _Operation__Operation__redefinedOperations = LIBRARY.createOppositeProperty("Operation", Types._Operation, 14, PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS);
-		public static final @NonNull Property _Operation__OperationCallExp__referredOperation = LIBRARY.createOppositeProperty("OperationCallExp", Types._Operation, 15, PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION);
-		public static final @NonNull Property _Operation__PrimitiveType__coercions = LIBRARY.createOppositeProperty("PrimitiveType", Types._Operation, 16, PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS);
-
-		public static final @NonNull Property _OperationCallExp__isVirtual = LIBRARY.createProperty(PivotPackage.Literals.OPERATION_CALL_EXP__IS_VIRTUAL, Types._OperationCallExp, 0);
-		public static final @NonNull Property _OperationCallExp__ownedArguments = LIBRARY.createProperty(PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS, Types._OperationCallExp, 1);
-		public static final @NonNull Property _OperationCallExp__referredOperation = LIBRARY.createProperty(PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION, Types._OperationCallExp, 2);
-
-		public static final @NonNull Property _OppositePropertyCallExp__referredProperty = LIBRARY.createProperty(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY, Types._OppositePropertyCallExp, 0);
-
-		public static final @NonNull Property _OrphanCompletePackage__CompleteModel__orphanCompletePackage = LIBRARY.createOppositeProperty("CompleteModel", Types._OrphanCompletePackage, 0, PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE);
-
-		public static final @NonNull Property _Package__URI = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__URI, Types._Package, 0);
-		public static final @NonNull Property _Package__importedPackages = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__IMPORTED_PACKAGES, Types._Package, 1);
-		public static final @NonNull Property _Package__nsPrefix = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__NS_PREFIX, Types._Package, 2);
-		public static final @NonNull Property _Package__ownedClasses = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__OWNED_CLASSES, Types._Package, 3);
-		public static final @NonNull Property _Package__ownedInstances = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__OWNED_INSTANCES, Types._Package, 4);
-		public static final @NonNull Property _Package__ownedPackages = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__OWNED_PACKAGES, Types._Package, 5);
-		public static final @NonNull Property _Package__ownedProfileApplications = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__OWNED_PROFILE_APPLICATIONS, Types._Package, 6);
-		public static final @NonNull Property _Package__owningPackage = LIBRARY.createProperty(PivotPackage.Literals.PACKAGE__OWNING_PACKAGE, Types._Package, 7);
-		public static final @NonNull Property _Package__CompletePackage__partialPackages = LIBRARY.createOppositeProperty("CompletePackage", Types._Package, 8, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES);
-		public static final @NonNull Property _Package__Model__ownedPackages = LIBRARY.createOppositeProperty("Model", Types._Package, 9, PivotPackage.Literals.MODEL__OWNED_PACKAGES);
-		public static final @NonNull Property _Package__Package__importedPackages = LIBRARY.createOppositeProperty("Package", Types._Package, 10, PivotPackage.Literals.PACKAGE__IMPORTED_PACKAGES);
-
-		public static final @NonNull Property _Parameter__isTypeof = LIBRARY.createProperty(PivotPackage.Literals.PARAMETER__IS_TYPEOF, Types._Parameter, 0);
-		public static final @NonNull Property _Parameter__owningOperation = LIBRARY.createProperty(PivotPackage.Literals.PARAMETER__OWNING_OPERATION, Types._Parameter, 1);
-		public static final @NonNull Property _Parameter__Iteration__ownedAccumulator = LIBRARY.createOppositeProperty("Iteration", Types._Parameter, 2, PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR);
-		public static final @NonNull Property _Parameter__Iteration__ownedIterators = LIBRARY.createOppositeProperty("Iteration", Types._Parameter, 3, PivotPackage.Literals.ITERATION__OWNED_ITERATORS);
-		public static final @NonNull Property _Parameter__Variable__representedParameter = LIBRARY.createOppositeProperty("Variable", Types._Parameter, 4, PivotPackage.Literals.VARIABLE__REPRESENTED_PARAMETER);
-
-		public static final @NonNull Property _Precedence__associativity = LIBRARY.createProperty(PivotPackage.Literals.PRECEDENCE__ASSOCIATIVITY, Types._Precedence, 0);
-		public static final @NonNull Property _Precedence__Library__ownedPrecedences = LIBRARY.createOppositeProperty("Library", Types._Precedence, 1, PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES);
-		public static final @NonNull Property _Precedence__Operation__precedence = LIBRARY.createOppositeProperty("Operation", Types._Precedence, 2, PivotPackage.Literals.OPERATION__PRECEDENCE);
-
-		public static final @NonNull Property _PrimitiveCompletePackage__CompleteModel__primitiveCompletePackage = LIBRARY.createOppositeProperty("CompleteModel", Types._PrimitiveCompletePackage, 0, PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE);
-
-		public static final @NonNull Property _PrimitiveType__coercions = LIBRARY.createProperty(PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS, Types._PrimitiveType, 0);
-
-		public static final @NonNull Property _Profile__profileApplications = LIBRARY.createProperty(PivotPackage.Literals.PROFILE__PROFILE_APPLICATIONS, Types._Profile, 0);
-
-		public static final @NonNull Property _ProfileApplication__appliedProfile = LIBRARY.createProperty(PivotPackage.Literals.PROFILE_APPLICATION__APPLIED_PROFILE, Types._ProfileApplication, 0);
-		public static final @NonNull Property _ProfileApplication__isStrict = LIBRARY.createProperty(PivotPackage.Literals.PROFILE_APPLICATION__IS_STRICT, Types._ProfileApplication, 1);
-		public static final @NonNull Property _ProfileApplication__owningPackage = LIBRARY.createProperty(PivotPackage.Literals.PROFILE_APPLICATION__OWNING_PACKAGE, Types._ProfileApplication, 2);
-
-		public static final @NonNull Property _Property__associationClass = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__ASSOCIATION_CLASS, Types._Property, 0);
-		public static final @NonNull Property _Property__defaultValue = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__DEFAULT_VALUE, Types._Property, 1);
-		public static final @NonNull Property _Property__defaultValueString = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__DEFAULT_VALUE_STRING, Types._Property, 2);
-		public static final @NonNull Property _Property__isComposite = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_COMPOSITE, Types._Property, 3);
-		public static final @NonNull Property _Property__isDerived = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_DERIVED, Types._Property, 4);
-		public static final @NonNull Property _Property__isID = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_ID, Types._Property, 5);
-		public static final @NonNull Property _Property__isImplicit = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_IMPLICIT, Types._Property, 6);
-		public static final @NonNull Property _Property__isReadOnly = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_READ_ONLY, Types._Property, 7);
-		public static final @NonNull Property _Property__isResolveProxies = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_RESOLVE_PROXIES, Types._Property, 8);
-		public static final @NonNull Property _Property__isTransient = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_TRANSIENT, Types._Property, 9);
-		public static final @NonNull Property _Property__isUnsettable = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_UNSETTABLE, Types._Property, 10);
-		public static final @NonNull Property _Property__isVolatile = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__IS_VOLATILE, Types._Property, 11);
-		public static final @NonNull Property _Property__keys = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__KEYS, Types._Property, 12);
-		public static final @NonNull Property _Property__opposite = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__OPPOSITE, Types._Property, 13);
-		public static final @NonNull Property _Property__ownedExpression = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION, Types._Property, 14);
-		public static final @NonNull Property _Property__owningClass = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__OWNING_CLASS, Types._Property, 15);
-		public static final @NonNull Property _Property__redefinedProperties = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES, Types._Property, 16);
-		public static final @NonNull Property _Property__referredProperty = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__REFERRED_PROPERTY, Types._Property, 17);
-		public static final @NonNull Property _Property__subsettedProperty = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY, Types._Property, 18);
-		public static final @NonNull Property _Property__DynamicProperty__referredProperty = LIBRARY.createOppositeProperty("DynamicProperty", Types._Property, 19, PivotPackage.Literals.DYNAMIC_PROPERTY__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__NavigationCallExp__navigationSource = LIBRARY.createOppositeProperty("NavigationCallExp", Types._Property, 20, PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE);
-		public static final @NonNull Property _Property__OppositePropertyCallExp__referredProperty = LIBRARY.createOppositeProperty("OppositePropertyCallExp", Types._Property, 21, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__Property__keys = LIBRARY.createOppositeProperty("Property", Types._Property, 22, PivotPackage.Literals.PROPERTY__KEYS);
-		public static final @NonNull Property _Property__Property__opposite = LIBRARY.createOppositeProperty("Property", Types._Property, 23, PivotPackage.Literals.PROPERTY__OPPOSITE);
-		public static final @NonNull Property _Property__Property__redefinedProperties = LIBRARY.createOppositeProperty("Property", Types._Property, 24, PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES);
-		public static final @NonNull Property _Property__Property__referredProperty = LIBRARY.createOppositeProperty("Property", Types._Property, 25, PivotPackage.Literals.PROPERTY__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__Property__subsettedProperty = LIBRARY.createOppositeProperty("Property", Types._Property, 26, PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY);
-		public static final @NonNull Property _Property__PropertyCallExp__referredProperty = LIBRARY.createOppositeProperty("PropertyCallExp", Types._Property, 27, PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__ShadowPart__referredProperty = LIBRARY.createOppositeProperty("ShadowPart", Types._Property, 28, PivotPackage.Literals.SHADOW_PART__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__Slot__definingProperty = LIBRARY.createOppositeProperty("Slot", Types._Property, 29, PivotPackage.Literals.SLOT__DEFINING_PROPERTY);
-
-		public static final @NonNull Property _PropertyCallExp__referredProperty = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY, Types._PropertyCallExp, 0);
-
-		public static final @NonNull Property _Pseudostate__kind = LIBRARY.createProperty(PivotPackage.Literals.PSEUDOSTATE__KIND, Types._Pseudostate, 0);
-		public static final @NonNull Property _Pseudostate__owningState = LIBRARY.createProperty(PivotPackage.Literals.PSEUDOSTATE__OWNING_STATE, Types._Pseudostate, 1);
-		public static final @NonNull Property _Pseudostate__owningStateMachine = LIBRARY.createProperty(PivotPackage.Literals.PSEUDOSTATE__OWNING_STATE_MACHINE, Types._Pseudostate, 2);
-		public static final @NonNull Property _Pseudostate__ConnectionPointReference__entries = LIBRARY.createOppositeProperty("ConnectionPointReference", Types._Pseudostate, 3, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES);
-		public static final @NonNull Property _Pseudostate__ConnectionPointReference__exits = LIBRARY.createOppositeProperty("ConnectionPointReference", Types._Pseudostate, 4, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS);
-
-		public static final @NonNull Property _RealLiteralExp__realSymbol = LIBRARY.createProperty(PivotPackage.Literals.REAL_LITERAL_EXP__REAL_SYMBOL, Types._RealLiteralExp, 0);
-
-		public static final @NonNull Property _Region__extendedRegion = LIBRARY.createProperty(PivotPackage.Literals.REGION__EXTENDED_REGION, Types._Region, 0);
-		public static final @NonNull Property _Region__ownedSubvertexes = LIBRARY.createProperty(PivotPackage.Literals.REGION__OWNED_SUBVERTEXES, Types._Region, 1);
-		public static final @NonNull Property _Region__ownedTransitions = LIBRARY.createProperty(PivotPackage.Literals.REGION__OWNED_TRANSITIONS, Types._Region, 2);
-		public static final @NonNull Property _Region__owningState = LIBRARY.createProperty(PivotPackage.Literals.REGION__OWNING_STATE, Types._Region, 3);
-		public static final @NonNull Property _Region__owningStateMachine = LIBRARY.createProperty(PivotPackage.Literals.REGION__OWNING_STATE_MACHINE, Types._Region, 4);
-		public static final @NonNull Property _Region__Region__extendedRegion = LIBRARY.createOppositeProperty("Region", Types._Region, 5, PivotPackage.Literals.REGION__EXTENDED_REGION);
-
-		public static final @NonNull Property _SendSignalAction__signal = LIBRARY.createProperty(PivotPackage.Literals.SEND_SIGNAL_ACTION__SIGNAL, Types._SendSignalAction, 0);
-		public static final @NonNull Property _SendSignalAction__MessageExp__ownedSentSignal = LIBRARY.createOppositeProperty("MessageExp", Types._SendSignalAction, 1, PivotPackage.Literals.MESSAGE_EXP__OWNED_SENT_SIGNAL);
-
-		public static final @NonNull Property _ShadowExp__ownedParts = LIBRARY.createProperty(PivotPackage.Literals.SHADOW_EXP__OWNED_PARTS, Types._ShadowExp, 0);
-		public static final @NonNull Property _ShadowExp__value = LIBRARY.createProperty(PivotPackage.Literals.SHADOW_EXP__VALUE, Types._ShadowExp, 1);
-
-		public static final @NonNull Property _ShadowPart__ownedInit = LIBRARY.createProperty(PivotPackage.Literals.SHADOW_PART__OWNED_INIT, Types._ShadowPart, 0);
-		public static final @NonNull Property _ShadowPart__referredProperty = LIBRARY.createProperty(PivotPackage.Literals.SHADOW_PART__REFERRED_PROPERTY, Types._ShadowPart, 1);
-		public static final @NonNull Property _ShadowPart__ShadowExp__ownedParts = LIBRARY.createOppositeProperty("ShadowExp", Types._ShadowPart, 2, PivotPackage.Literals.SHADOW_EXP__OWNED_PARTS);
-
-		public static final @NonNull Property _Signal__MessageType__referredSignal = LIBRARY.createOppositeProperty("MessageType", Types._Signal, 0, PivotPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL);
-		public static final @NonNull Property _Signal__SendSignalAction__signal = LIBRARY.createOppositeProperty("SendSignalAction", Types._Signal, 1, PivotPackage.Literals.SEND_SIGNAL_ACTION__SIGNAL);
-
-		public static final @NonNull Property _Slot__definingProperty = LIBRARY.createProperty(PivotPackage.Literals.SLOT__DEFINING_PROPERTY, Types._Slot, 0);
-		public static final @NonNull Property _Slot__ownedValues = LIBRARY.createProperty(PivotPackage.Literals.SLOT__OWNED_VALUES, Types._Slot, 1);
-		public static final @NonNull Property _Slot__owningInstance = LIBRARY.createProperty(PivotPackage.Literals.SLOT__OWNING_INSTANCE, Types._Slot, 2);
-
-		public static final @NonNull Property _State__isComposite = LIBRARY.createProperty(PivotPackage.Literals.STATE__IS_COMPOSITE, Types._State, 0);
-		public static final @NonNull Property _State__isOrthogonal = LIBRARY.createProperty(PivotPackage.Literals.STATE__IS_ORTHOGONAL, Types._State, 1);
-		public static final @NonNull Property _State__isSimple = LIBRARY.createProperty(PivotPackage.Literals.STATE__IS_SIMPLE, Types._State, 2);
-		public static final @NonNull Property _State__isSubmachineState = LIBRARY.createProperty(PivotPackage.Literals.STATE__IS_SUBMACHINE_STATE, Types._State, 3);
-		public static final @NonNull Property _State__ownedConnectionPoints = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_CONNECTION_POINTS, Types._State, 4);
-		public static final @NonNull Property _State__ownedConnections = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_CONNECTIONS, Types._State, 5);
-		public static final @NonNull Property _State__ownedDeferrableTriggers = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_DEFERRABLE_TRIGGERS, Types._State, 6);
-		public static final @NonNull Property _State__ownedDoActivity = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_DO_ACTIVITY, Types._State, 7);
-		public static final @NonNull Property _State__ownedEntry = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_ENTRY, Types._State, 8);
-		public static final @NonNull Property _State__ownedExit = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_EXIT, Types._State, 9);
-		public static final @NonNull Property _State__ownedRegions = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_REGIONS, Types._State, 10);
-		public static final @NonNull Property _State__ownedStateInvariant = LIBRARY.createProperty(PivotPackage.Literals.STATE__OWNED_STATE_INVARIANT, Types._State, 11);
-		public static final @NonNull Property _State__redefinedState = LIBRARY.createProperty(PivotPackage.Literals.STATE__REDEFINED_STATE, Types._State, 12);
-		public static final @NonNull Property _State__submachines = LIBRARY.createProperty(PivotPackage.Literals.STATE__SUBMACHINES, Types._State, 13);
-		public static final @NonNull Property _State__State__redefinedState = LIBRARY.createOppositeProperty("State", Types._State, 14, PivotPackage.Literals.STATE__REDEFINED_STATE);
-		public static final @NonNull Property _State__StateExp__referredState = LIBRARY.createOppositeProperty("StateExp", Types._State, 15, PivotPackage.Literals.STATE_EXP__REFERRED_STATE);
-
-		public static final @NonNull Property _StateExp__referredState = LIBRARY.createProperty(PivotPackage.Literals.STATE_EXP__REFERRED_STATE, Types._StateExp, 0);
-
-		public static final @NonNull Property _StateMachine__extendedStateMachines = LIBRARY.createProperty(PivotPackage.Literals.STATE_MACHINE__EXTENDED_STATE_MACHINES, Types._StateMachine, 0);
-		public static final @NonNull Property _StateMachine__ownedConnectionPoints = LIBRARY.createProperty(PivotPackage.Literals.STATE_MACHINE__OWNED_CONNECTION_POINTS, Types._StateMachine, 1);
-		public static final @NonNull Property _StateMachine__ownedRegions = LIBRARY.createProperty(PivotPackage.Literals.STATE_MACHINE__OWNED_REGIONS, Types._StateMachine, 2);
-		public static final @NonNull Property _StateMachine__submachineStates = LIBRARY.createProperty(PivotPackage.Literals.STATE_MACHINE__SUBMACHINE_STATES, Types._StateMachine, 3);
-		public static final @NonNull Property _StateMachine__StateMachine__extendedStateMachines = LIBRARY.createOppositeProperty("StateMachine", Types._StateMachine, 4, PivotPackage.Literals.STATE_MACHINE__EXTENDED_STATE_MACHINES);
-
-		public static final @NonNull Property _Stereotype__ownedExtenders = LIBRARY.createProperty(PivotPackage.Literals.STEREOTYPE__OWNED_EXTENDERS, Types._Stereotype, 0);
-		public static final @NonNull Property _Stereotype__ElementExtension__stereotype = LIBRARY.createOppositeProperty("ElementExtension", Types._Stereotype, 1, PivotPackage.Literals.ELEMENT_EXTENSION__STEREOTYPE);
-
-		public static final @NonNull Property _StereotypeExtender__class = LIBRARY.createProperty(PivotPackage.Literals.STEREOTYPE_EXTENDER__CLASS, Types._StereotypeExtender, 0);
-		public static final @NonNull Property _StereotypeExtender__isRequired = LIBRARY.createProperty(PivotPackage.Literals.STEREOTYPE_EXTENDER__IS_REQUIRED, Types._StereotypeExtender, 1);
-		public static final @NonNull Property _StereotypeExtender__owningStereotype = LIBRARY.createProperty(PivotPackage.Literals.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE, Types._StereotypeExtender, 2);
-
-		public static final @NonNull Property _StringLiteralExp__stringSymbol = LIBRARY.createProperty(PivotPackage.Literals.STRING_LITERAL_EXP__STRING_SYMBOL, Types._StringLiteralExp, 0);
-
-		public static final @NonNull Property _TemplateBinding__ownedSubstitutions = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_BINDING__OWNED_SUBSTITUTIONS, Types._TemplateBinding, 0);
-		public static final @NonNull Property _TemplateBinding__owningElement = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_BINDING__OWNING_ELEMENT, Types._TemplateBinding, 1);
-		public static final @NonNull Property _TemplateBinding__templateSignature = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_BINDING__TEMPLATE_SIGNATURE, Types._TemplateBinding, 2);
-
-		public static final @NonNull Property _TemplateParameter__constrainingClasses = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES, Types._TemplateParameter, 0);
-		public static final @NonNull Property _TemplateParameter__owningSignature = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_SIGNATURE, Types._TemplateParameter, 1);
-		public static final @NonNull Property _TemplateParameter__TemplateParameterSubstitution__formal = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._TemplateParameter, 2, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL);
-
-		public static final @NonNull Property _TemplateParameterSubstitution__actual = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, Types._TemplateParameterSubstitution, 0);
-		public static final @NonNull Property _TemplateParameterSubstitution__actualIsRequired = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED, Types._TemplateParameterSubstitution, 1);
-		public static final @NonNull Property _TemplateParameterSubstitution__formal = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, Types._TemplateParameterSubstitution, 2);
-		public static final @NonNull Property _TemplateParameterSubstitution__ownedWildcard = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD, Types._TemplateParameterSubstitution, 3);
-		public static final @NonNull Property _TemplateParameterSubstitution__owningBinding = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING, Types._TemplateParameterSubstitution, 4);
-
-		public static final @NonNull Property _TemplateSignature__ownedParameters = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNED_PARAMETERS, Types._TemplateSignature, 0);
-		public static final @NonNull Property _TemplateSignature__owningElement = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNING_ELEMENT, Types._TemplateSignature, 1);
-		public static final @NonNull Property _TemplateSignature__TemplateBinding__templateSignature = LIBRARY.createOppositeProperty("TemplateBinding", Types._TemplateSignature, 2, PivotPackage.Literals.TEMPLATE_BINDING__TEMPLATE_SIGNATURE);
-
-		public static final @NonNull Property _TemplateableElement__ownedBindings = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS, Types._TemplateableElement, 0);
-		public static final @NonNull Property _TemplateableElement__ownedSignature = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, Types._TemplateableElement, 1);
-		public static final @NonNull Property _TemplateableElement__unspecializedElement = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT, Types._TemplateableElement, 2);
-		public static final @NonNull Property _TemplateableElement__TemplateableElement__unspecializedElement = LIBRARY.createOppositeProperty("TemplateableElement", Types._TemplateableElement, 3, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT);
-
-		public static final @NonNull Property _Transition__kind = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__KIND, Types._Transition, 0);
-		public static final @NonNull Property _Transition__ownedEffect = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__OWNED_EFFECT, Types._Transition, 1);
-		public static final @NonNull Property _Transition__ownedGuard = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__OWNED_GUARD, Types._Transition, 2);
-		public static final @NonNull Property _Transition__ownedTriggers = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__OWNED_TRIGGERS, Types._Transition, 3);
-		public static final @NonNull Property _Transition__owningRegion = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__OWNING_REGION, Types._Transition, 4);
-		public static final @NonNull Property _Transition__source = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__SOURCE, Types._Transition, 5);
-		public static final @NonNull Property _Transition__target = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__TARGET, Types._Transition, 6);
-
-		public static final @NonNull Property _Trigger__owningState = LIBRARY.createProperty(PivotPackage.Literals.TRIGGER__OWNING_STATE, Types._Trigger, 0);
-		public static final @NonNull Property _Trigger__owningTransition = LIBRARY.createProperty(PivotPackage.Literals.TRIGGER__OWNING_TRANSITION, Types._Trigger, 1);
-
-		public static final @NonNull Property _TupleLiteralExp__ownedParts = LIBRARY.createProperty(PivotPackage.Literals.TUPLE_LITERAL_EXP__OWNED_PARTS, Types._TupleLiteralExp, 0);
-
-		public static final @NonNull Property _TupleLiteralPart__ownedInit = LIBRARY.createProperty(PivotPackage.Literals.TUPLE_LITERAL_PART__OWNED_INIT, Types._TupleLiteralPart, 0);
-		public static final @NonNull Property _TupleLiteralPart__TupleLiteralExp__ownedParts = LIBRARY.createOppositeProperty("TupleLiteralExp", Types._TupleLiteralPart, 1, PivotPackage.Literals.TUPLE_LITERAL_EXP__OWNED_PARTS);
-
-		public static final @NonNull Property _Type__CollectionType__elementType = LIBRARY.createOppositeProperty("CollectionType", Types._Type, 0, PivotPackage.Literals.COLLECTION_TYPE__ELEMENT_TYPE);
-		public static final @NonNull Property _Type__DynamicElement__metaType = LIBRARY.createOppositeProperty("DynamicElement", Types._Type, 1, PivotPackage.Literals.DYNAMIC_ELEMENT__META_TYPE);
-		public static final @NonNull Property _Type__MapType__keyType = LIBRARY.createOppositeProperty("MapType", Types._Type, 2, PivotPackage.Literals.MAP_TYPE__KEY_TYPE);
-		public static final @NonNull Property _Type__MapType__valueType = LIBRARY.createOppositeProperty("MapType", Types._Type, 3, PivotPackage.Literals.MAP_TYPE__VALUE_TYPE);
-		public static final @NonNull Property _Type__OCLExpression__typeValue = LIBRARY.createOppositeProperty("OCLExpression", Types._Type, 4, PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE);
-		public static final @NonNull Property _Type__Operation__raisedExceptions = LIBRARY.createOppositeProperty("Operation", Types._Type, 5, PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS);
-		public static final @NonNull Property _Type__TemplateParameterSubstitution__actual = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._Type, 6, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL);
-		public static final @NonNull Property _Type__TypeExp__referredType = LIBRARY.createOppositeProperty("TypeExp", Types._Type, 7, PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE);
-		public static final @NonNull Property _Type__TypedElement__type = LIBRARY.createOppositeProperty("TypedElement", Types._Type, 8, PivotPackage.Literals.TYPED_ELEMENT__TYPE);
-		public static final @NonNull Property _Type__VariableDeclaration__typeValue = LIBRARY.createOppositeProperty("VariableDeclaration", Types._Type, 9, PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE);
-		public static final @NonNull Property _Type__WildcardType__lowerBound = LIBRARY.createOppositeProperty("WildcardType", Types._Type, 10, PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND);
-		public static final @NonNull Property _Type__WildcardType__upperBound = LIBRARY.createOppositeProperty("WildcardType", Types._Type, 11, PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND);
-
-		public static final @NonNull Property _TypeExp__referredType = LIBRARY.createProperty(PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE, Types._TypeExp, 0);
-
-		public static final @NonNull Property _TypedElement__isMany = LIBRARY.createProperty(PivotPackage.Literals.TYPED_ELEMENT__IS_MANY, Types._TypedElement, 0);
-		public static final @NonNull Property _TypedElement__isRequired = LIBRARY.createProperty(PivotPackage.Literals.TYPED_ELEMENT__IS_REQUIRED, Types._TypedElement, 1);
-		public static final @NonNull Property _TypedElement__type = LIBRARY.createProperty(PivotPackage.Literals.TYPED_ELEMENT__TYPE, Types._TypedElement, 2);
-
-		public static final @NonNull Property _UnlimitedNaturalLiteralExp__unlimitedNaturalSymbol = LIBRARY.createProperty(PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP__UNLIMITED_NATURAL_SYMBOL, Types._UnlimitedNaturalLiteralExp, 0);
-
-		public static final @NonNull Property _ValueSpecification__Slot__ownedValues = LIBRARY.createOppositeProperty("Slot", Types._ValueSpecification, 0, PivotPackage.Literals.SLOT__OWNED_VALUES);
-
-		public static final @NonNull Property _Variable__isImplicit = LIBRARY.createProperty(PivotPackage.Literals.VARIABLE__IS_IMPLICIT, Types._Variable, 0);
-		public static final @NonNull Property _Variable__ownedInit = LIBRARY.createProperty(PivotPackage.Literals.VARIABLE__OWNED_INIT, Types._Variable, 1);
-		public static final @NonNull Property _Variable__representedParameter = LIBRARY.createProperty(PivotPackage.Literals.VARIABLE__REPRESENTED_PARAMETER, Types._Variable, 2);
-		public static final @NonNull Property _Variable__ExpressionInOCL__ownedContext = LIBRARY.createOppositeProperty("ExpressionInOCL", Types._Variable, 3, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT);
-		public static final @NonNull Property _Variable__ExpressionInOCL__ownedParameters = LIBRARY.createOppositeProperty("ExpressionInOCL", Types._Variable, 4, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS);
-		public static final @NonNull Property _Variable__ExpressionInOCL__ownedResult = LIBRARY.createOppositeProperty("ExpressionInOCL", Types._Variable, 5, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
-		public static final @NonNull Property _Variable__IterateExp__ownedResult = LIBRARY.createOppositeProperty("IterateExp", Types._Variable, 6, PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT);
-		public static final @NonNull Property _Variable__LetExp__ownedVariable = LIBRARY.createOppositeProperty("LetExp", Types._Variable, 7, PivotPackage.Literals.LET_EXP__OWNED_VARIABLE);
-		public static final @NonNull Property _Variable__LoopExp__ownedIterators = LIBRARY.createOppositeProperty("LoopExp", Types._Variable, 8, PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS);
-
-		public static final @NonNull Property _VariableDeclaration__typeValue = LIBRARY.createProperty(PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE, Types._VariableDeclaration, 0);
-		public static final @NonNull Property _VariableDeclaration__VariableExp__referredVariable = LIBRARY.createOppositeProperty("VariableExp", Types._VariableDeclaration, 1, PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE);
-
-		public static final @NonNull Property _VariableExp__isImplicit = LIBRARY.createProperty(PivotPackage.Literals.VARIABLE_EXP__IS_IMPLICIT, Types._VariableExp, 0);
-		public static final @NonNull Property _VariableExp__referredVariable = LIBRARY.createProperty(PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE, Types._VariableExp, 1);
-
-		public static final @NonNull Property _Vertex__incomingTransitions = LIBRARY.createProperty(PivotPackage.Literals.VERTEX__INCOMING_TRANSITIONS, Types._Vertex, 0);
-		public static final @NonNull Property _Vertex__outgoingTransitions = LIBRARY.createProperty(PivotPackage.Literals.VERTEX__OUTGOING_TRANSITIONS, Types._Vertex, 1);
-		public static final @NonNull Property _Vertex__owningRegion = LIBRARY.createProperty(PivotPackage.Literals.VERTEX__OWNING_REGION, Types._Vertex, 2);
-
-		public static final @NonNull Property _WildcardType__lowerBound = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, Types._WildcardType, 0);
-		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, Types._WildcardType, 1);
-		public static final @NonNull Property _WildcardType__TemplateParameterSubstitution__ownedWildcard = LIBRARY.createOppositeProperty("TemplateParameterSubstitution", Types._WildcardType, 2, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD);
+		public static final @NonNull Property _IfExp__isElseIf = LIBRARY.createProperty(Types._IfExp, PivotPackage.Literals.IF_EXP__IS_ELSE_IF, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _IfExp__ownedCondition = LIBRARY.createProperty(Types._IfExp, PivotPackage.Literals.IF_EXP__OWNED_CONDITION, PivotTables.Types._OCLExpression, 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _IfExp__ownedElse = LIBRARY.createProperty(Types._IfExp, PivotPackage.Literals.IF_EXP__OWNED_ELSE, PivotTables.Types._OCLExpression, 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _IfExp__ownedThen = LIBRARY.createProperty(Types._IfExp, PivotPackage.Literals.IF_EXP__OWNED_THEN, PivotTables.Types._OCLExpression, 3 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _Import__importedNamespace = LIBRARY.createProperty(Types._Import, PivotPackage.Literals.IMPORT__IMPORTED_NAMESPACE, PivotTables.Types._Namespace, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Import__xmiidVersion = LIBRARY.createProperty(Types._Import, PivotPackage.Literals.IMPORT__XMIID_VERSION, OCLstdlibTables.Types._Integer, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Import__Model__ownedImports = LIBRARY.createOppositeProperty(Types._Import, "Model", PivotTables.Types._Model, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MODEL__OWNED_IMPORTS);
+
+		public static final @NonNull Property _InstanceSpecification__classes = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Class), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _InstanceSpecification__ownedSlots = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SLOTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Slot), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _InstanceSpecification__ownedSpecification = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, PivotTables.Types._LanguageExpression, 2 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _InstanceSpecification__owningPackage = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNING_PACKAGE, PivotTables.Types._Package, 3 | IsResolveProxies);
+
+		public static final @NonNull Property _IntegerLiteralExp__integerSymbol = LIBRARY.createProperty(Types._IntegerLiteralExp, PivotPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL, OCLstdlibTables.Types._Integer, 0 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _IterateExp__ownedBodies = LIBRARY.createProperty(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._OCLExpression), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _IterateExp__ownedResult = LIBRARY.createProperty(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT, PivotTables.Types._Variable, 1 | IsComposite | IsResolveProxies);
+
+		public static final @NonNull Property _Iteration__ownedAccumulator = LIBRARY.createProperty(Types._Iteration, PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR, PivotTables.Types._Parameter, 0 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _Iteration__ownedIterators = LIBRARY.createProperty(Types._Iteration, PivotPackage.Literals.ITERATION__OWNED_ITERATORS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Parameter), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Iteration__LoopExp__referredIteration = LIBRARY.createOppositeProperty(Types._Iteration, "LoopExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._LoopExp), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION);
+
+		public static final @NonNull Property _IteratorExp__ownedBody = LIBRARY.createProperty(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, PivotTables.Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _IteratorVariable__LoopExp__ownedCoIterators = LIBRARY.createOppositeProperty(Types._IteratorVariable, "LoopExp", PivotTables.Types._LoopExp, 0 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS);
+
+		public static final @NonNull Property _LambdaParameter__LambdaType__ownedContext = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", PivotTables.Types._LambdaType, 0 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LAMBDA_TYPE__OWNED_CONTEXT);
+		public static final @NonNull Property _LambdaParameter__LambdaType__ownedParameters = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", PivotTables.Types._LambdaType, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LAMBDA_TYPE__OWNED_PARAMETERS);
+		public static final @NonNull Property _LambdaParameter__LambdaType__ownedResult = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", PivotTables.Types._LambdaType, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LAMBDA_TYPE__OWNED_RESULT);
+
+		public static final @NonNull Property _LambdaType__ownedContext = LIBRARY.createProperty(Types._LambdaType, PivotPackage.Literals.LAMBDA_TYPE__OWNED_CONTEXT, PivotTables.Types._LambdaParameter, 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LambdaType__ownedParameters = LIBRARY.createProperty(Types._LambdaType, PivotPackage.Literals.LAMBDA_TYPE__OWNED_PARAMETERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._LambdaParameter), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LambdaType__ownedResult = LIBRARY.createProperty(Types._LambdaType, PivotPackage.Literals.LAMBDA_TYPE__OWNED_RESULT, PivotTables.Types._LambdaParameter, 2 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _LanguageExpression__body = LIBRARY.createProperty(Types._LanguageExpression, PivotPackage.Literals.LANGUAGE_EXPRESSION__BODY, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
+		public static final @NonNull Property _LanguageExpression__language = LIBRARY.createProperty(Types._LanguageExpression, PivotPackage.Literals.LANGUAGE_EXPRESSION__LANGUAGE, OCLstdlibTables.Types._String, 1 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _LanguageExpression__owningConstraint = LIBRARY.createProperty(Types._LanguageExpression, PivotPackage.Literals.LANGUAGE_EXPRESSION__OWNING_CONSTRAINT, PivotTables.Types._Constraint, 2 | IsResolveProxies);
+		public static final @NonNull Property _LanguageExpression__InstanceSpecification__ownedSpecification = LIBRARY.createOppositeProperty(Types._LanguageExpression, "InstanceSpecification", PivotTables.Types._InstanceSpecification, 3 | IsImplicit | IsResolveProxies, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION);
+		public static final @NonNull Property _LanguageExpression__Operation__bodyExpression = LIBRARY.createOppositeProperty(Types._LanguageExpression, "Operation", PivotTables.Types._Operation, 4 | IsImplicit | IsResolveProxies, PivotPackage.Literals.OPERATION__BODY_EXPRESSION);
+		public static final @NonNull Property _LanguageExpression__Property__ownedExpression = LIBRARY.createOppositeProperty(Types._LanguageExpression, "Property", PivotTables.Types._Property, 5 | IsImplicit | IsResolveProxies, PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION);
+
+		public static final @NonNull Property _LetExp__ownedIn = LIBRARY.createProperty(Types._LetExp, PivotPackage.Literals.LET_EXP__OWNED_IN, PivotTables.Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LetExp__ownedVariable = LIBRARY.createProperty(Types._LetExp, PivotPackage.Literals.LET_EXP__OWNED_VARIABLE, PivotTables.Types._Variable, 1 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _Library__ownedPrecedences = LIBRARY.createProperty(Types._Library, PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Precedence), 0 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _LoopExp__firstOwnedBody = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__FIRST_OWNED_BODY, PivotTables.Types._OCLExpression, 0 | IsDerived | IsRequired | IsTransient | IsVolatile);
+		public static final @NonNull Property _LoopExp__ownedCoIterators = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._IteratorVariable), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LoopExp__ownedIterators = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Variable), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LoopExp__referredIteration = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, PivotTables.Types._Iteration, 3 | IsResolveProxies);
+
+		public static final @NonNull Property _MapLiteralExp__ownedParts = LIBRARY.createProperty(Types._MapLiteralExp, PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._MapLiteralPart), 0 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _MapLiteralPart__ownedKey = LIBRARY.createProperty(Types._MapLiteralPart, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY, PivotTables.Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _MapLiteralPart__ownedValue = LIBRARY.createProperty(Types._MapLiteralPart, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE, PivotTables.Types._OCLExpression, 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _MapLiteralPart__MapLiteralExp__ownedParts = LIBRARY.createOppositeProperty(Types._MapLiteralPart, "MapLiteralExp", PivotTables.Types._MapLiteralExp, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS);
+
+		public static final @NonNull Property _MapType__entryClass = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, PivotTables.Types._Class, 0 | IsResolveProxies);
+		public static final @NonNull Property _MapType__keyType = LIBRARY.createProperty(Types._MapType, "keyType", PivotTables.Types._Type, 1 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
+		public static final @NonNull Property _MapType__keysAreNullFree = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _MapType__valueType = LIBRARY.createProperty(Types._MapType, "valueType", PivotTables.Types._Type, 3 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
+		public static final @NonNull Property _MapType__valuesAreNullFree = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _MessageExp__ownedArguments = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._OCLExpression), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _MessageExp__ownedCalledOperation = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION, PivotTables.Types._CallOperationAction, 1 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _MessageExp__ownedSentSignal = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_SENT_SIGNAL, PivotTables.Types._SendSignalAction, 2 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _MessageExp__ownedTarget = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_TARGET, PivotTables.Types._OCLExpression, 3 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _MessageType__referredOperation = LIBRARY.createProperty(Types._MessageType, PivotPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION, PivotTables.Types._Operation, 0 | IsResolveProxies);
+		public static final @NonNull Property _MessageType__referredSignal = LIBRARY.createProperty(Types._MessageType, PivotPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL, PivotTables.Types._Signal, 1 | IsResolveProxies);
+
+		public static final @NonNull Property _Model__externalURI = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__EXTERNAL_URI, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
+		public static final @NonNull Property _Model__ownedImports = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__OWNED_IMPORTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Import), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Model__ownedPackages = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__OWNED_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Package), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Model__xmiidVersion = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__XMIID_VERSION, OCLstdlibTables.Types._Integer, 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Model__CompleteModel__partialModels = LIBRARY.createOppositeProperty(Types._Model, "CompleteModel", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CompleteModel), 4 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS);
+
+		public static final @NonNull Property _NamedElement__name = LIBRARY.createProperty(Types._NamedElement, PivotPackage.Literals.NAMED_ELEMENT__NAME, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
+
+		public static final @NonNull Property _Namespace__ownedConstraints = LIBRARY.createProperty(Types._Namespace, PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Constraint), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Namespace__Constraint__context = LIBRARY.createOppositeProperty(Types._Namespace, "Constraint", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Constraint), 1 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.CONSTRAINT__CONTEXT);
+		public static final @NonNull Property _Namespace__Import__importedNamespace = LIBRARY.createOppositeProperty(Types._Namespace, "Import", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Import), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.IMPORT__IMPORTED_NAMESPACE);
+
+		public static final @NonNull Property _NavigationCallExp__navigationSource = LIBRARY.createProperty(Types._NavigationCallExp, PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE, PivotTables.Types._Property, 0 | IsResolveProxies);
+		public static final @NonNull Property _NavigationCallExp__qualifiers = LIBRARY.createProperty(Types._NavigationCallExp, PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._OCLExpression), 1 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _NormalizedTemplateParameter__index = LIBRARY.createProperty(Types._NormalizedTemplateParameter, PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER__INDEX, OCLstdlibTables.Types._Integer, 0 | IsDerived | IsReadOnly | IsResolveProxies | IsTransient);
+
+		public static final @NonNull Property _OCLExpression__typeValue = LIBRARY.createProperty(Types._OCLExpression, PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE, PivotTables.Types._Type, 0 | IsTransient);
+		public static final @NonNull Property _OCLExpression__CallExp__ownedSource = LIBRARY.createOppositeProperty(Types._OCLExpression, "CallExp", PivotTables.Types._CallExp, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.CALL_EXP__OWNED_SOURCE);
+		public static final @NonNull Property _OCLExpression__CollectionItem__ownedItem = LIBRARY.createOppositeProperty(Types._OCLExpression, "CollectionItem", PivotTables.Types._CollectionItem, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM);
+		public static final @NonNull Property _OCLExpression__CollectionRange__ownedFirst = LIBRARY.createOppositeProperty(Types._OCLExpression, "CollectionRange", PivotTables.Types._CollectionRange, 3 | IsImplicit | IsResolveProxies, PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST);
+		public static final @NonNull Property _OCLExpression__CollectionRange__ownedLast = LIBRARY.createOppositeProperty(Types._OCLExpression, "CollectionRange", PivotTables.Types._CollectionRange, 4 | IsImplicit | IsResolveProxies, PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST);
+		public static final @NonNull Property _OCLExpression__ExpressionInOCL__ownedBody = LIBRARY.createOppositeProperty(Types._OCLExpression, "ExpressionInOCL", PivotTables.Types._ExpressionInOCL, 5 | IsImplicit | IsResolveProxies, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_BODY);
+		public static final @NonNull Property _OCLExpression__IfExp__ownedCondition = LIBRARY.createOppositeProperty(Types._OCLExpression, "IfExp", PivotTables.Types._IfExp, 6 | IsImplicit | IsResolveProxies, PivotPackage.Literals.IF_EXP__OWNED_CONDITION);
+		public static final @NonNull Property _OCLExpression__IfExp__ownedElse = LIBRARY.createOppositeProperty(Types._OCLExpression, "IfExp", PivotTables.Types._IfExp, 7 | IsImplicit | IsResolveProxies, PivotPackage.Literals.IF_EXP__OWNED_ELSE);
+		public static final @NonNull Property _OCLExpression__IfExp__ownedThen = LIBRARY.createOppositeProperty(Types._OCLExpression, "IfExp", PivotTables.Types._IfExp, 8 | IsImplicit | IsResolveProxies, PivotPackage.Literals.IF_EXP__OWNED_THEN);
+		public static final @NonNull Property _OCLExpression__IterateExp__ownedBodies = LIBRARY.createOppositeProperty(Types._OCLExpression, "IterateExp", PivotTables.Types._IterateExp, 9 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES);
+		public static final @NonNull Property _OCLExpression__IteratorExp__ownedBody = LIBRARY.createOppositeProperty(Types._OCLExpression, "IteratorExp", PivotTables.Types._IteratorExp, 10 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY);
+		public static final @NonNull Property _OCLExpression__LetExp__ownedIn = LIBRARY.createOppositeProperty(Types._OCLExpression, "LetExp", PivotTables.Types._LetExp, 11 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LET_EXP__OWNED_IN);
+		public static final @NonNull Property _OCLExpression__LoopExp__firstOwnedBody = LIBRARY.createOppositeProperty(Types._OCLExpression, "LoopExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._LoopExp), 12 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.LOOP_EXP__FIRST_OWNED_BODY);
+		public static final @NonNull Property _OCLExpression__MapLiteralPart__ownedKey = LIBRARY.createOppositeProperty(Types._OCLExpression, "MapLiteralPart", PivotTables.Types._MapLiteralPart, 13 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY);
+		public static final @NonNull Property _OCLExpression__MapLiteralPart__ownedValue = LIBRARY.createOppositeProperty(Types._OCLExpression, "MapLiteralPart", PivotTables.Types._MapLiteralPart, 14 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE);
+		public static final @NonNull Property _OCLExpression__MessageExp__ownedArguments = LIBRARY.createOppositeProperty(Types._OCLExpression, "MessageExp", PivotTables.Types._MessageExp, 15 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS);
+		public static final @NonNull Property _OCLExpression__MessageExp__ownedTarget = LIBRARY.createOppositeProperty(Types._OCLExpression, "MessageExp", PivotTables.Types._MessageExp, 16 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MESSAGE_EXP__OWNED_TARGET);
+		public static final @NonNull Property _OCLExpression__NavigationCallExp__qualifiers = LIBRARY.createOppositeProperty(Types._OCLExpression, "NavigationCallExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._NavigationCallExp), 17 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS);
+		public static final @NonNull Property _OCLExpression__OperationCallExp__ownedArguments = LIBRARY.createOppositeProperty(Types._OCLExpression, "OperationCallExp", PivotTables.Types._OperationCallExp, 18 | IsImplicit | IsResolveProxies, PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS);
+		public static final @NonNull Property _OCLExpression__ShadowPart__ownedInit = LIBRARY.createOppositeProperty(Types._OCLExpression, "ShadowPart", PivotTables.Types._ShadowPart, 19 | IsImplicit | IsResolveProxies, PivotPackage.Literals.SHADOW_PART__OWNED_INIT);
+		public static final @NonNull Property _OCLExpression__TupleLiteralPart__ownedInit = LIBRARY.createOppositeProperty(Types._OCLExpression, "TupleLiteralPart", PivotTables.Types._TupleLiteralPart, 20 | IsImplicit | IsResolveProxies, PivotPackage.Literals.TUPLE_LITERAL_PART__OWNED_INIT);
+		public static final @NonNull Property _OCLExpression__Variable__ownedInit = LIBRARY.createOppositeProperty(Types._OCLExpression, "Variable", PivotTables.Types._Variable, 21 | IsImplicit | IsResolveProxies, PivotPackage.Literals.VARIABLE__OWNED_INIT);
+
+		public static final @NonNull Property _Operation__bodyExpression = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__BODY_EXPRESSION, PivotTables.Types._LanguageExpression, 0 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _Operation__isInvalidating = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__IS_INVALIDATING, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__isTransient = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__IS_TRANSIENT, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__isTypeof = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__IS_TYPEOF, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__isValidating = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__IS_VALIDATING, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__ownedParameters = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Parameter), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__ownedPostconditions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Constraint), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__ownedPreconditions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Constraint), 7 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__owningClass = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNING_CLASS, PivotTables.Types._Class, 8 | IsResolveProxies);
+		public static final @NonNull Property _Operation__precedence = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__PRECEDENCE, PivotTables.Types._Precedence, 9 | IsResolveProxies);
+		public static final @NonNull Property _Operation__raisedExceptions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Type), 10 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__redefinedOperations = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Operation), 11 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__CallOperationAction__operation = LIBRARY.createOppositeProperty(Types._Operation, "CallOperationAction", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CallOperationAction), 12 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION);
+		public static final @NonNull Property _Operation__MessageType__referredOperation = LIBRARY.createOppositeProperty(Types._Operation, "MessageType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._MessageType), 13 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION);
+		public static final @NonNull Property _Operation__Operation__redefinedOperations = LIBRARY.createOppositeProperty(Types._Operation, "Operation", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Operation), 14 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS);
+		public static final @NonNull Property _Operation__OperationCallExp__referredOperation = LIBRARY.createOppositeProperty(Types._Operation, "OperationCallExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._OperationCallExp), 15 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION);
+		public static final @NonNull Property _Operation__PrimitiveType__coercions = LIBRARY.createOppositeProperty(Types._Operation, "PrimitiveType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._PrimitiveType), 16 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS);
+
+		public static final @NonNull Property _OperationCallExp__isVirtual = LIBRARY.createProperty(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP__IS_VIRTUAL, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _OperationCallExp__ownedArguments = LIBRARY.createProperty(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._OCLExpression), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _OperationCallExp__referredOperation = LIBRARY.createProperty(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION, PivotTables.Types._Operation, 2 | IsResolveProxies);
+
+		public static final @NonNull Property _OppositePropertyCallExp__referredProperty = LIBRARY.createProperty(Types._OppositePropertyCallExp, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY, PivotTables.Types._Property, 0 | IsResolveProxies);
+
+		public static final @NonNull Property _OrphanCompletePackage__CompleteModel__orphanCompletePackage = LIBRARY.createOppositeProperty(Types._OrphanCompletePackage, "CompleteModel", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CompleteModel), 0 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE);
+
+		public static final @NonNull Property _Package__URI = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__URI, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
+		public static final @NonNull Property _Package__importedPackages = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__IMPORTED_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Package), 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__nsPrefix = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__NS_PREFIX, OCLstdlibTables.Types._String, 2 | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedClasses = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Class), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedInstances = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_INSTANCES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._InstanceSpecification), 4 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedPackages = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Package), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedProfileApplications = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_PROFILE_APPLICATIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._ProfileApplication), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__owningPackage = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNING_PACKAGE, PivotTables.Types._Package, 7 | IsResolveProxies);
+		public static final @NonNull Property _Package__CompletePackage__partialPackages = LIBRARY.createOppositeProperty(Types._Package, "CompletePackage", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CompletePackage), 8 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES);
+		public static final @NonNull Property _Package__Model__ownedPackages = LIBRARY.createOppositeProperty(Types._Package, "Model", PivotTables.Types._Model, 9 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MODEL__OWNED_PACKAGES);
+		public static final @NonNull Property _Package__Package__importedPackages = LIBRARY.createOppositeProperty(Types._Package, "Package", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Package), 10 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PACKAGE__IMPORTED_PACKAGES);
+
+		public static final @NonNull Property _Parameter__isTypeof = LIBRARY.createProperty(Types._Parameter, PivotPackage.Literals.PARAMETER__IS_TYPEOF, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Parameter__owningOperation = LIBRARY.createProperty(Types._Parameter, PivotPackage.Literals.PARAMETER__OWNING_OPERATION, PivotTables.Types._Operation, 1 | IsResolveProxies);
+		public static final @NonNull Property _Parameter__Iteration__ownedAccumulator = LIBRARY.createOppositeProperty(Types._Parameter, "Iteration", PivotTables.Types._Iteration, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR);
+		public static final @NonNull Property _Parameter__Iteration__ownedIterators = LIBRARY.createOppositeProperty(Types._Parameter, "Iteration", PivotTables.Types._Iteration, 3 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ITERATION__OWNED_ITERATORS);
+		public static final @NonNull Property _Parameter__Variable__representedParameter = LIBRARY.createOppositeProperty(Types._Parameter, "Variable", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Variable), 4 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.VARIABLE__REPRESENTED_PARAMETER);
+
+		public static final @NonNull Property _Precedence__associativity = LIBRARY.createProperty(Types._Precedence, PivotPackage.Literals.PRECEDENCE__ASSOCIATIVITY, PivotTables.Types._AssociativityKind, 0 | IsResolveProxies);
+		public static final @NonNull Property _Precedence__Library__ownedPrecedences = LIBRARY.createOppositeProperty(Types._Precedence, "Library", PivotTables.Types._Library, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES);
+		public static final @NonNull Property _Precedence__Operation__precedence = LIBRARY.createOppositeProperty(Types._Precedence, "Operation", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Operation), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OPERATION__PRECEDENCE);
+
+		public static final @NonNull Property _PrimitiveCompletePackage__CompleteModel__primitiveCompletePackage = LIBRARY.createOppositeProperty(Types._PrimitiveCompletePackage, "CompleteModel", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CompleteModel), 0 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE);
+
+		public static final @NonNull Property _PrimitiveType__coercions = LIBRARY.createProperty(Types._PrimitiveType, PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._Operation), 0 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _Profile__profileApplications = LIBRARY.createProperty(Types._Profile, PivotPackage.Literals.PROFILE__PROFILE_APPLICATIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._ProfileApplication), 0 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _ProfileApplication__appliedProfile = LIBRARY.createProperty(Types._ProfileApplication, PivotPackage.Literals.PROFILE_APPLICATION__APPLIED_PROFILE, PivotTables.Types._Profile, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ProfileApplication__isStrict = LIBRARY.createProperty(Types._ProfileApplication, PivotPackage.Literals.PROFILE_APPLICATION__IS_STRICT, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ProfileApplication__owningPackage = LIBRARY.createProperty(Types._ProfileApplication, PivotPackage.Literals.PROFILE_APPLICATION__OWNING_PACKAGE, PivotTables.Types._Package, 2 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _Property__associationClass = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__ASSOCIATION_CLASS, PivotTables.Types._AssociationClass, 0 | IsResolveProxies);
+		public static final @NonNull Property _Property__defaultValue = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__DEFAULT_VALUE, PivotTables.Types._Object, 1 | IsDerived | IsResolveProxies | IsTransient);
+		public static final @NonNull Property _Property__defaultValueString = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__DEFAULT_VALUE_STRING, OCLstdlibTables.Types._String, 2 | IsResolveProxies);
+		public static final @NonNull Property _Property__isComposite = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_COMPOSITE, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isDerived = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_DERIVED, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isID = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_ID, OCLstdlibTables.Types._Boolean, 5 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isImplicit = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_IMPLICIT, OCLstdlibTables.Types._Boolean, 6 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isReadOnly = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_READ_ONLY, OCLstdlibTables.Types._Boolean, 7 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isResolveProxies = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_RESOLVE_PROXIES, OCLstdlibTables.Types._Boolean, 8 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isTransient = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_TRANSIENT, OCLstdlibTables.Types._Boolean, 9 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isUnsettable = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_UNSETTABLE, OCLstdlibTables.Types._Boolean, 10 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__isVolatile = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_VOLATILE, OCLstdlibTables.Types._Boolean, 11 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__keys = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__KEYS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Property), 12 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__opposite = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__OPPOSITE, PivotTables.Types._Property, 13 | IsResolveProxies);
+		public static final @NonNull Property _Property__ownedExpression = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION, PivotTables.Types._LanguageExpression, 14 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _Property__owningClass = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__OWNING_CLASS, PivotTables.Types._Class, 15 | IsResolveProxies);
+		public static final @NonNull Property _Property__redefinedProperties = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Property), 16 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__referredProperty = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__REFERRED_PROPERTY, PivotTables.Types._Property, 17 | IsResolveProxies);
+		public static final @NonNull Property _Property__subsettedProperty = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Property), 18 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__DynamicProperty__referredProperty = LIBRARY.createOppositeProperty(Types._Property, "DynamicProperty", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._DynamicProperty), 19 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.DYNAMIC_PROPERTY__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__NavigationCallExp__navigationSource = LIBRARY.createOppositeProperty(Types._Property, "NavigationCallExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._NavigationCallExp), 20 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE);
+		public static final @NonNull Property _Property__OppositePropertyCallExp__referredProperty = LIBRARY.createOppositeProperty(Types._Property, "OppositePropertyCallExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._OppositePropertyCallExp), 21 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__Property__keys = LIBRARY.createOppositeProperty(Types._Property, "Property", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Property), 22 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PROPERTY__KEYS);
+		public static final @NonNull Property _Property__Property__opposite = LIBRARY.createOppositeProperty(Types._Property, "Property", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Property), 23 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PROPERTY__OPPOSITE);
+		public static final @NonNull Property _Property__Property__redefinedProperties = LIBRARY.createOppositeProperty(Types._Property, "Property", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Property), 24 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES);
+		public static final @NonNull Property _Property__Property__referredProperty = LIBRARY.createOppositeProperty(Types._Property, "Property", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Property), 25 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PROPERTY__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__Property__subsettedProperty = LIBRARY.createOppositeProperty(Types._Property, "Property", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Property), 26 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY);
+		public static final @NonNull Property _Property__PropertyCallExp__referredProperty = LIBRARY.createOppositeProperty(Types._Property, "PropertyCallExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._PropertyCallExp), 27 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__ShadowPart__referredProperty = LIBRARY.createOppositeProperty(Types._Property, "ShadowPart", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._ShadowPart), 28 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.SHADOW_PART__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__Slot__definingProperty = LIBRARY.createOppositeProperty(Types._Property, "Slot", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Slot), 29 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.SLOT__DEFINING_PROPERTY);
+
+		public static final @NonNull Property _PropertyCallExp__referredProperty = LIBRARY.createProperty(Types._PropertyCallExp, PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY, PivotTables.Types._Property, 0 | IsResolveProxies);
+
+		public static final @NonNull Property _Pseudostate__kind = LIBRARY.createProperty(Types._Pseudostate, PivotPackage.Literals.PSEUDOSTATE__KIND, PivotTables.Types._PseudostateKind, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Pseudostate__owningState = LIBRARY.createProperty(Types._Pseudostate, PivotPackage.Literals.PSEUDOSTATE__OWNING_STATE, PivotTables.Types._State, 1 | IsResolveProxies);
+		public static final @NonNull Property _Pseudostate__owningStateMachine = LIBRARY.createProperty(Types._Pseudostate, PivotPackage.Literals.PSEUDOSTATE__OWNING_STATE_MACHINE, PivotTables.Types._StateMachine, 2 | IsResolveProxies);
+		public static final @NonNull Property _Pseudostate__ConnectionPointReference__entries = LIBRARY.createOppositeProperty(Types._Pseudostate, "ConnectionPointReference", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._ConnectionPointReference), 3 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES);
+		public static final @NonNull Property _Pseudostate__ConnectionPointReference__exits = LIBRARY.createOppositeProperty(Types._Pseudostate, "ConnectionPointReference", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._ConnectionPointReference), 4 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS);
+
+		public static final @NonNull Property _RealLiteralExp__realSymbol = LIBRARY.createProperty(Types._RealLiteralExp, PivotPackage.Literals.REAL_LITERAL_EXP__REAL_SYMBOL, OCLstdlibTables.Types._Real, 0 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _Region__extendedRegion = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__EXTENDED_REGION, PivotTables.Types._Region, 0 | IsResolveProxies);
+		public static final @NonNull Property _Region__ownedSubvertexes = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNED_SUBVERTEXES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Vertex), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Region__ownedTransitions = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNED_TRANSITIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Transition), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Region__owningState = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNING_STATE, PivotTables.Types._State, 3 | IsResolveProxies);
+		public static final @NonNull Property _Region__owningStateMachine = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNING_STATE_MACHINE, PivotTables.Types._StateMachine, 4 | IsResolveProxies);
+		public static final @NonNull Property _Region__Region__extendedRegion = LIBRARY.createOppositeProperty(Types._Region, "Region", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Region), 5 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.REGION__EXTENDED_REGION);
+
+		public static final @NonNull Property _SendSignalAction__signal = LIBRARY.createProperty(Types._SendSignalAction, PivotPackage.Literals.SEND_SIGNAL_ACTION__SIGNAL, PivotTables.Types._Signal, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _SendSignalAction__MessageExp__ownedSentSignal = LIBRARY.createOppositeProperty(Types._SendSignalAction, "MessageExp", PivotTables.Types._MessageExp, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MESSAGE_EXP__OWNED_SENT_SIGNAL);
+
+		public static final @NonNull Property _ShadowExp__ownedParts = LIBRARY.createProperty(Types._ShadowExp, PivotPackage.Literals.SHADOW_EXP__OWNED_PARTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._ShadowPart), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ShadowExp__value = LIBRARY.createProperty(Types._ShadowExp, PivotPackage.Literals.SHADOW_EXP__VALUE, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
+
+		public static final @NonNull Property _ShadowPart__ownedInit = LIBRARY.createProperty(Types._ShadowPart, PivotPackage.Literals.SHADOW_PART__OWNED_INIT, PivotTables.Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ShadowPart__referredProperty = LIBRARY.createProperty(Types._ShadowPart, PivotPackage.Literals.SHADOW_PART__REFERRED_PROPERTY, PivotTables.Types._Property, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ShadowPart__ShadowExp__ownedParts = LIBRARY.createOppositeProperty(Types._ShadowPart, "ShadowExp", PivotTables.Types._ShadowExp, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.SHADOW_EXP__OWNED_PARTS);
+
+		public static final @NonNull Property _Signal__MessageType__referredSignal = LIBRARY.createOppositeProperty(Types._Signal, "MessageType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._MessageType), 0 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL);
+		public static final @NonNull Property _Signal__SendSignalAction__signal = LIBRARY.createOppositeProperty(Types._Signal, "SendSignalAction", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._SendSignalAction), 1 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.SEND_SIGNAL_ACTION__SIGNAL);
+
+		public static final @NonNull Property _Slot__definingProperty = LIBRARY.createProperty(Types._Slot, PivotPackage.Literals.SLOT__DEFINING_PROPERTY, PivotTables.Types._Property, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Slot__ownedValues = LIBRARY.createProperty(Types._Slot, PivotPackage.Literals.SLOT__OWNED_VALUES, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._ValueSpecification), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Slot__owningInstance = LIBRARY.createProperty(Types._Slot, PivotPackage.Literals.SLOT__OWNING_INSTANCE, PivotTables.Types._InstanceSpecification, 2 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _State__isComposite = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_COMPOSITE, OCLstdlibTables.Types._Boolean, 0 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _State__isOrthogonal = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_ORTHOGONAL, OCLstdlibTables.Types._Boolean, 1 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _State__isSimple = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_SIMPLE, OCLstdlibTables.Types._Boolean, 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _State__isSubmachineState = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_SUBMACHINE_STATE, OCLstdlibTables.Types._Boolean, 3 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _State__ownedConnectionPoints = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_CONNECTION_POINTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Pseudostate), 4 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedConnections = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_CONNECTIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._ConnectionPointReference), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedDeferrableTriggers = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_DEFERRABLE_TRIGGERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Trigger), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedDoActivity = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_DO_ACTIVITY, PivotTables.Types._Behavior, 7 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _State__ownedEntry = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_ENTRY, PivotTables.Types._Behavior, 8 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _State__ownedExit = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_EXIT, PivotTables.Types._Behavior, 9 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _State__ownedRegions = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_REGIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Region), 10 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedStateInvariant = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_STATE_INVARIANT, PivotTables.Types._Constraint, 11 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _State__redefinedState = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__REDEFINED_STATE, PivotTables.Types._State, 12 | IsResolveProxies);
+		public static final @NonNull Property _State__submachines = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__SUBMACHINES, PivotTables.Types._StateMachine, 13 | IsResolveProxies);
+		public static final @NonNull Property _State__State__redefinedState = LIBRARY.createOppositeProperty(Types._State, "State", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._State), 14 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.STATE__REDEFINED_STATE);
+		public static final @NonNull Property _State__StateExp__referredState = LIBRARY.createOppositeProperty(Types._State, "StateExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._StateExp), 15 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.STATE_EXP__REFERRED_STATE);
+
+		public static final @NonNull Property _StateExp__referredState = LIBRARY.createProperty(Types._StateExp, PivotPackage.Literals.STATE_EXP__REFERRED_STATE, PivotTables.Types._State, 0 | IsResolveProxies);
+
+		public static final @NonNull Property _StateMachine__extendedStateMachines = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__EXTENDED_STATE_MACHINES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._StateMachine), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__ownedConnectionPoints = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__OWNED_CONNECTION_POINTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Pseudostate), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__ownedRegions = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__OWNED_REGIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Region), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__submachineStates = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__SUBMACHINE_STATES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._State), 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__StateMachine__extendedStateMachines = LIBRARY.createOppositeProperty(Types._StateMachine, "StateMachine", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._StateMachine), 4 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.STATE_MACHINE__EXTENDED_STATE_MACHINES);
+
+		public static final @NonNull Property _Stereotype__ownedExtenders = LIBRARY.createProperty(Types._Stereotype, PivotPackage.Literals.STEREOTYPE__OWNED_EXTENDERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._StereotypeExtender), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Stereotype__ElementExtension__stereotype = LIBRARY.createOppositeProperty(Types._Stereotype, "ElementExtension", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._ElementExtension), 1 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.ELEMENT_EXTENSION__STEREOTYPE);
+
+		public static final @NonNull Property _StereotypeExtender__class = LIBRARY.createProperty(Types._StereotypeExtender, PivotPackage.Literals.STEREOTYPE_EXTENDER__CLASS, PivotTables.Types._Class, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StereotypeExtender__isRequired = LIBRARY.createProperty(Types._StereotypeExtender, PivotPackage.Literals.STEREOTYPE_EXTENDER__IS_REQUIRED, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StereotypeExtender__owningStereotype = LIBRARY.createProperty(Types._StereotypeExtender, PivotPackage.Literals.STEREOTYPE_EXTENDER__OWNING_STEREOTYPE, PivotTables.Types._Stereotype, 2 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _StringLiteralExp__stringSymbol = LIBRARY.createProperty(Types._StringLiteralExp, PivotPackage.Literals.STRING_LITERAL_EXP__STRING_SYMBOL, OCLstdlibTables.Types._String, 0 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _TemplateBinding__ownedSubstitutions = LIBRARY.createProperty(Types._TemplateBinding, PivotPackage.Literals.TEMPLATE_BINDING__OWNED_SUBSTITUTIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._TemplateParameterSubstitution), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateBinding__owningElement = LIBRARY.createProperty(Types._TemplateBinding, PivotPackage.Literals.TEMPLATE_BINDING__OWNING_ELEMENT, PivotTables.Types._TemplateableElement, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateBinding__templateSignature = LIBRARY.createProperty(Types._TemplateBinding, PivotPackage.Literals.TEMPLATE_BINDING__TEMPLATE_SIGNATURE, PivotTables.Types._TemplateSignature, 2 | IsDerived | IsReadOnly | IsRequired | IsTransient | IsVolatile);
+
+		public static final @NonNull Property _TemplateParameter__constrainingClasses = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Class), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameter__owningSignature = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_SIGNATURE, PivotTables.Types._TemplateSignature, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameter__TemplateParameterSubstitution__formal = LIBRARY.createOppositeProperty(Types._TemplateParameter, "TemplateParameterSubstitution", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._TemplateParameterSubstitution), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL);
+
+		public static final @NonNull Property _TemplateParameterSubstitution__actual = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, PivotTables.Types._Type, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameterSubstitution__actualIsRequired = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameterSubstitution__formal = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, PivotTables.Types._TemplateParameter, 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameterSubstitution__ownedWildcard = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD, PivotTables.Types._WildcardType, 3 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameterSubstitution__owningBinding = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING, PivotTables.Types._TemplateBinding, 4 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _TemplateSignature__ownedParameters = LIBRARY.createProperty(Types._TemplateSignature, PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNED_PARAMETERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._TemplateParameter), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateSignature__owningElement = LIBRARY.createProperty(Types._TemplateSignature, PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNING_ELEMENT, PivotTables.Types._TemplateableElement, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateSignature__TemplateBinding__templateSignature = LIBRARY.createOppositeProperty(Types._TemplateSignature, "TemplateBinding", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._TemplateBinding), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_BINDING__TEMPLATE_SIGNATURE);
+
+		public static final @NonNull Property _TemplateableElement__ownedBindings = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._TemplateBinding), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__ownedSignature = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, PivotTables.Types._TemplateSignature, 1 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__unspecializedElement = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT, PivotTables.Types._TemplateableElement, 2 | IsTransient);
+		public static final @NonNull Property _TemplateableElement__TemplateableElement__unspecializedElement = LIBRARY.createOppositeProperty(Types._TemplateableElement, "TemplateableElement", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._TemplateableElement), 3 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT);
+
+		public static final @NonNull Property _Transition__kind = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__KIND, PivotTables.Types._TransitionKind, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Transition__ownedEffect = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_EFFECT, PivotTables.Types._Behavior, 1 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _Transition__ownedGuard = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_GUARD, PivotTables.Types._Constraint, 2 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _Transition__ownedTriggers = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_TRIGGERS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Trigger), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Transition__owningRegion = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNING_REGION, PivotTables.Types._Region, 4 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Transition__source = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__SOURCE, PivotTables.Types._Vertex, 5 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Transition__target = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__TARGET, PivotTables.Types._Vertex, 6 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _Trigger__owningState = LIBRARY.createProperty(Types._Trigger, PivotPackage.Literals.TRIGGER__OWNING_STATE, PivotTables.Types._State, 0 | IsResolveProxies);
+		public static final @NonNull Property _Trigger__owningTransition = LIBRARY.createProperty(Types._Trigger, PivotPackage.Literals.TRIGGER__OWNING_TRANSITION, PivotTables.Types._Transition, 1 | IsResolveProxies);
+
+		public static final @NonNull Property _TupleLiteralExp__ownedParts = LIBRARY.createProperty(Types._TupleLiteralExp, PivotPackage.Literals.TUPLE_LITERAL_EXP__OWNED_PARTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._TupleLiteralPart), 0 | IsComposite | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _TupleLiteralPart__ownedInit = LIBRARY.createProperty(Types._TupleLiteralPart, PivotPackage.Literals.TUPLE_LITERAL_PART__OWNED_INIT, PivotTables.Types._OCLExpression, 0 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _TupleLiteralPart__TupleLiteralExp__ownedParts = LIBRARY.createOppositeProperty(Types._TupleLiteralPart, "TupleLiteralExp", PivotTables.Types._TupleLiteralExp, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.TUPLE_LITERAL_EXP__OWNED_PARTS);
+
+		public static final @NonNull Property _Type__CollectionType__elementType = LIBRARY.createOppositeProperty(Types._Type, "CollectionType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._CollectionType), 0 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COLLECTION_TYPE__ELEMENT_TYPE);
+		public static final @NonNull Property _Type__DynamicElement__metaType = LIBRARY.createOppositeProperty(Types._Type, "DynamicElement", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._DynamicElement), 1 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.DYNAMIC_ELEMENT__META_TYPE);
+		public static final @NonNull Property _Type__MapType__keyType = LIBRARY.createOppositeProperty(Types._Type, "MapType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._MapType), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.MAP_TYPE__KEY_TYPE);
+		public static final @NonNull Property _Type__MapType__valueType = LIBRARY.createOppositeProperty(Types._Type, "MapType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._MapType), 3 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.MAP_TYPE__VALUE_TYPE);
+		public static final @NonNull Property _Type__OCLExpression__typeValue = LIBRARY.createOppositeProperty(Types._Type, "OCLExpression", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._OCLExpression), 4 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE);
+		public static final @NonNull Property _Type__Operation__raisedExceptions = LIBRARY.createOppositeProperty(Types._Type, "Operation", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._Operation), 5 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS);
+		public static final @NonNull Property _Type__TemplateParameterSubstitution__actual = LIBRARY.createOppositeProperty(Types._Type, "TemplateParameterSubstitution", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._TemplateParameterSubstitution), 6 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL);
+		public static final @NonNull Property _Type__TypeExp__referredType = LIBRARY.createOppositeProperty(Types._Type, "TypeExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._TypeExp), 7 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE);
+		public static final @NonNull Property _Type__TypedElement__type = LIBRARY.createOppositeProperty(Types._Type, "TypedElement", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._TypedElement), 8 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TYPED_ELEMENT__TYPE);
+		public static final @NonNull Property _Type__VariableDeclaration__typeValue = LIBRARY.createOppositeProperty(Types._Type, "VariableDeclaration", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._VariableDeclaration), 9 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE);
+		public static final @NonNull Property _Type__WildcardType__lowerBound = LIBRARY.createOppositeProperty(Types._Type, "WildcardType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._WildcardType), 10 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND);
+		public static final @NonNull Property _Type__WildcardType__upperBound = LIBRARY.createOppositeProperty(Types._Type, "WildcardType", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._WildcardType), 11 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND);
+
+		public static final @NonNull Property _TypeExp__referredType = LIBRARY.createProperty(Types._TypeExp, PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE, PivotTables.Types._Type, 0 | IsResolveProxies);
+
+		public static final @NonNull Property _TypedElement__isMany = LIBRARY.createProperty(Types._TypedElement, PivotPackage.Literals.TYPED_ELEMENT__IS_MANY, OCLstdlibTables.Types._Boolean, 0 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _TypedElement__isRequired = LIBRARY.createProperty(Types._TypedElement, PivotPackage.Literals.TYPED_ELEMENT__IS_REQUIRED, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TypedElement__type = LIBRARY.createProperty(Types._TypedElement, PivotPackage.Literals.TYPED_ELEMENT__TYPE, PivotTables.Types._Type, 2 | IsResolveProxies);
+
+		public static final @NonNull Property _UnlimitedNaturalLiteralExp__unlimitedNaturalSymbol = LIBRARY.createProperty(Types._UnlimitedNaturalLiteralExp, PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP__UNLIMITED_NATURAL_SYMBOL, OCLstdlibTables.Types._UnlimitedNatural, 0 | IsRequired | IsResolveProxies);
+
+		public static final @NonNull Property _ValueSpecification__Slot__ownedValues = LIBRARY.createOppositeProperty(Types._ValueSpecification, "Slot", PivotTables.Types._Slot, 0 | IsImplicit | IsResolveProxies, PivotPackage.Literals.SLOT__OWNED_VALUES);
+
+		public static final @NonNull Property _Variable__isImplicit = LIBRARY.createProperty(Types._Variable, PivotPackage.Literals.VARIABLE__IS_IMPLICIT, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Variable__ownedInit = LIBRARY.createProperty(Types._Variable, PivotPackage.Literals.VARIABLE__OWNED_INIT, PivotTables.Types._OCLExpression, 1 | IsComposite | IsResolveProxies);
+		public static final @NonNull Property _Variable__representedParameter = LIBRARY.createProperty(Types._Variable, PivotPackage.Literals.VARIABLE__REPRESENTED_PARAMETER, PivotTables.Types._Parameter, 2 | IsResolveProxies);
+		public static final @NonNull Property _Variable__ExpressionInOCL__ownedContext = LIBRARY.createOppositeProperty(Types._Variable, "ExpressionInOCL", PivotTables.Types._ExpressionInOCL, 3 | IsImplicit | IsResolveProxies, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT);
+		public static final @NonNull Property _Variable__ExpressionInOCL__ownedParameters = LIBRARY.createOppositeProperty(Types._Variable, "ExpressionInOCL", PivotTables.Types._ExpressionInOCL, 4 | IsImplicit | IsResolveProxies, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS);
+		public static final @NonNull Property _Variable__ExpressionInOCL__ownedResult = LIBRARY.createOppositeProperty(Types._Variable, "ExpressionInOCL", PivotTables.Types._ExpressionInOCL, 5 | IsImplicit | IsResolveProxies, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT);
+		public static final @NonNull Property _Variable__IterateExp__ownedResult = LIBRARY.createOppositeProperty(Types._Variable, "IterateExp", PivotTables.Types._IterateExp, 6 | IsImplicit | IsResolveProxies, PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT);
+		public static final @NonNull Property _Variable__LetExp__ownedVariable = LIBRARY.createOppositeProperty(Types._Variable, "LetExp", PivotTables.Types._LetExp, 7 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LET_EXP__OWNED_VARIABLE);
+		public static final @NonNull Property _Variable__LoopExp__ownedIterators = LIBRARY.createOppositeProperty(Types._Variable, "LoopExp", PivotTables.Types._LoopExp, 8 | IsImplicit | IsResolveProxies, PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS);
+
+		public static final @NonNull Property _VariableDeclaration__typeValue = LIBRARY.createProperty(Types._VariableDeclaration, PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE, PivotTables.Types._Type, 0 | IsTransient);
+		public static final @NonNull Property _VariableDeclaration__VariableExp__referredVariable = LIBRARY.createOppositeProperty(Types._VariableDeclaration, "VariableExp", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, PivotTables.Types._VariableExp), 1 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE);
+
+		public static final @NonNull Property _VariableExp__isImplicit = LIBRARY.createProperty(Types._VariableExp, PivotPackage.Literals.VARIABLE_EXP__IS_IMPLICIT, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _VariableExp__referredVariable = LIBRARY.createProperty(Types._VariableExp, PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE, PivotTables.Types._VariableDeclaration, 1 | IsResolveProxies);
+
+		public static final @NonNull Property _Vertex__incomingTransitions = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__INCOMING_TRANSITIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Transition), 0 | IsReadOnly | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Vertex__outgoingTransitions = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__OUTGOING_TRANSITIONS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, PivotTables.Types._Transition), 1 | IsReadOnly | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Vertex__owningRegion = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__OWNING_REGION, PivotTables.Types._Region, 2 | IsResolveProxies);
+
+		public static final @NonNull Property _WildcardType__lowerBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, PivotTables.Types._Type, 0 | IsResolveProxies);
+		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, PivotTables.Types._Type, 1 | IsResolveProxies);
+		public static final @NonNull Property _WildcardType__TemplateParameterSubstitution__ownedWildcard = LIBRARY.createOppositeProperty(Types._WildcardType, "TemplateParameterSubstitution", PivotTables.Types._TemplateParameterSubstitution, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD);
+
 		static {
+			_Annotation__ownedContents.setOpposite(_Element__Annotation__ownedContents);
+			_Annotation__ownedDetails.setOpposite(_Detail__Annotation__ownedDetails);
+			_Annotation__references.setOpposite(_Element__Annotation__references);
+
+			_AssociationClass__unownedAttributes.setOpposite(_Property__associationClass);
+			_AssociationClass__AssociationClassCallExp__referredAssociationClass.setOpposite(_AssociationClassCallExp__referredAssociationClass);
+
+			_AssociationClassCallExp__referredAssociationClass.setOpposite(_AssociationClass__AssociationClassCallExp__referredAssociationClass);
+
+			_Behavior__owningTransition.setOpposite(_Transition__ownedEffect);
+			_Behavior__Class__ownedBehaviors.setOpposite(_Class__ownedBehaviors);
+			_Behavior__State__ownedDoActivity.setOpposite(_State__ownedDoActivity);
+			_Behavior__State__ownedEntry.setOpposite(_State__ownedEntry);
+			_Behavior__State__ownedExit.setOpposite(_State__ownedExit);
+
+
+			_CallExp__isImplicit.setDefaultValueString("false");
+			_CallExp__isSafe.setDefaultValueString("false");
+			_CallExp__ownedSource.setOpposite(_OCLExpression__CallExp__ownedSource);
+
+			_CallOperationAction__operation.setOpposite(_Operation__CallOperationAction__operation);
+			_CallOperationAction__MessageExp__ownedCalledOperation.setOpposite(_MessageExp__ownedCalledOperation);
+
+			_Class__extenders.setOpposite(_StereotypeExtender__class);
+			_Class__isAbstract.setDefaultValueString("false");
+			_Class__isActive.setDefaultValueString("false");
+			_Class__isInterface.setDefaultValueString("false");
+			_Class__ownedBehaviors.setOpposite(_Behavior__Class__ownedBehaviors);
+			_Class__ownedInvariants.setOpposite(_Constraint__Class__ownedInvariants);
+			_Class__ownedOperations.setOpposite(_Operation__owningClass);
+			_Class__ownedProperties.setOpposite(_Property__owningClass);
+			_Class__owningPackage.setOpposite(_Package__ownedClasses);
+			_Class__superClasses.setOpposite(_Class__Class__superClasses);
+			_Class__Class__superClasses.setOpposite(_Class__superClasses);
+			_Class__CompleteClass__partialClasses.setOpposite(_CompleteClass__partialClasses);
+			_Class__DataType__behavioralClass.setOpposite(_DataType__behavioralClass);
+			_Class__InstanceSpecification__classes.setOpposite(_InstanceSpecification__classes);
+			_Class__MapType__entryClass.setOpposite(_MapType__entryClass);
+			_Class__TemplateParameter__constrainingClasses.setOpposite(_TemplateParameter__constrainingClasses);
+
+			_CollectionItem__ownedItem.setOpposite(_OCLExpression__CollectionItem__ownedItem);
+
+			_CollectionLiteralExp__ownedParts.setOpposite(_CollectionLiteralPart__CollectionLiteralExp__ownedParts);
+
+			_CollectionLiteralPart__CollectionLiteralExp__ownedParts.setOpposite(_CollectionLiteralExp__ownedParts);
+
+			_CollectionRange__ownedFirst.setOpposite(_OCLExpression__CollectionRange__ownedFirst);
+			_CollectionRange__ownedLast.setOpposite(_OCLExpression__CollectionRange__ownedLast);
+
+			_CollectionType__elementType.setOpposite(_Type__CollectionType__elementType);
+			_CollectionType__isNullFree.setDefaultValueString("false");
+
+			_Comment__annotatedElements.setOpposite(_Element__annotatingComments);
+			_Comment__owningElement.setOpposite(_Element__ownedComments);
+
+			_CompleteClass__owningCompletePackage.setOpposite(_CompletePackage__ownedCompleteClasses);
+			_CompleteClass__partialClasses.setOpposite(_Class__CompleteClass__partialClasses);
+
+			_CompleteEnvironment__ownedCompleteModel.setOpposite(_CompleteModel__owningCompleteEnvironment);
+			_CompleteEnvironment__ownedStandardLibrary.setOpposite(_CompleteStandardLibrary__CompleteEnvironment__ownedStandardLibrary);
+			_CompleteEnvironment__CompleteStandardLibrary__owningCompleteEnvironment.setOpposite(_CompleteStandardLibrary__owningCompleteEnvironment);
+
+			_CompleteModel__orphanCompletePackage.setOpposite(_OrphanCompletePackage__CompleteModel__orphanCompletePackage);
+			_CompleteModel__ownedCompletePackages.setOpposite(_CompletePackage__owningCompleteModel);
+			_CompleteModel__owningCompleteEnvironment.setOpposite(_CompleteEnvironment__ownedCompleteModel);
+			_CompleteModel__partialModels.setOpposite(_Model__CompleteModel__partialModels);
+			_CompleteModel__primitiveCompletePackage.setOpposite(_PrimitiveCompletePackage__CompleteModel__primitiveCompletePackage);
+
+			_CompletePackage__ownedCompleteClasses.setOpposite(_CompleteClass__owningCompletePackage);
+			_CompletePackage__ownedCompletePackages.setOpposite(_CompletePackage__owningCompletePackage);
+			_CompletePackage__owningCompleteModel.setOpposite(_CompleteModel__ownedCompletePackages);
+			_CompletePackage__owningCompletePackage.setOpposite(_CompletePackage__ownedCompletePackages);
+			_CompletePackage__partialPackages.setOpposite(_Package__CompletePackage__partialPackages);
+
+			_CompleteStandardLibrary__owningCompleteEnvironment.setOpposite(_CompleteEnvironment__CompleteStandardLibrary__owningCompleteEnvironment);
+			_CompleteStandardLibrary__CompleteEnvironment__ownedStandardLibrary.setOpposite(_CompleteEnvironment__ownedStandardLibrary);
+
+			_ConnectionPointReference__entries.setOpposite(_Pseudostate__ConnectionPointReference__entries);
+			_ConnectionPointReference__exits.setOpposite(_Pseudostate__ConnectionPointReference__exits);
+			_ConnectionPointReference__owningState.setOpposite(_State__ownedConnections);
+
+			_Constraint__constrainedElements.setOpposite(_Element__Constraint__constrainedElements);
+			_Constraint__context.setOpposite(_Namespace__Constraint__context);
+			_Constraint__isCallable.setDefaultValueString("false");
+			_Constraint__ownedSpecification.setOpposite(_LanguageExpression__owningConstraint);
+			_Constraint__owningPostContext.setOpposite(_Operation__ownedPostconditions);
+			_Constraint__owningPreContext.setOpposite(_Operation__ownedPreconditions);
+			_Constraint__owningState.setOpposite(_State__ownedStateInvariant);
+			_Constraint__owningTransition.setOpposite(_Transition__ownedGuard);
+			_Constraint__redefinedConstraints.setOpposite(_Constraint__Constraint__redefinedConstraints);
+			_Constraint__Class__ownedInvariants.setOpposite(_Class__ownedInvariants);
+			_Constraint__Constraint__redefinedConstraints.setOpposite(_Constraint__redefinedConstraints);
+			_Constraint__Namespace__ownedConstraints.setOpposite(_Namespace__ownedConstraints);
+
+			_DataType__behavioralClass.setOpposite(_Class__DataType__behavioralClass);
+			_DataType__isSerializable.setDefaultValueString("true");
+			_DataType__value.setDefaultValueString("");
+
+			_Detail__Annotation__ownedDetails.setOpposite(_Annotation__ownedDetails);
+
+			_DynamicElement__metaType.setOpposite(_Type__DynamicElement__metaType);
+
+			_DynamicProperty__referredProperty.setOpposite(_Property__DynamicProperty__referredProperty);
+			_DynamicProperty__DynamicType__ownedDynamicProperties.setOpposite(_DynamicType__ownedDynamicProperties);
+
+			_DynamicType__ownedDynamicProperties.setOpposite(_DynamicProperty__DynamicType__ownedDynamicProperties);
+
+			_Element__annotatingComments.setOpposite(_Comment__annotatedElements);
+			_Element__ownedAnnotations.setOpposite(_Element__Element__ownedAnnotations);
+			_Element__ownedComments.setOpposite(_Comment__owningElement);
+			_Element__ownedExtensions.setOpposite(_ElementExtension__base);
+			_Element__Annotation__ownedContents.setOpposite(_Annotation__ownedContents);
+			_Element__Annotation__references.setOpposite(_Annotation__references);
+			_Element__Constraint__constrainedElements.setOpposite(_Constraint__constrainedElements);
+			_Element__Element__ownedAnnotations.setOpposite(_Element__ownedAnnotations);
+
+			_ElementExtension__base.setOpposite(_Element__ownedExtensions);
+			_ElementExtension__isApplied.setDefaultValueString("false");
+			_ElementExtension__isRequired.setDefaultValueString("false");
+			_ElementExtension__stereotype.setOpposite(_Stereotype__ElementExtension__stereotype);
+
+
+			_EnumLiteralExp__referredLiteral.setOpposite(_EnumerationLiteral__EnumLiteralExp__referredLiteral);
+
+			_Enumeration__ownedLiterals.setOpposite(_EnumerationLiteral__owningEnumeration);
+
+			_EnumerationLiteral__literal.setDefaultValueString("0");
+			_EnumerationLiteral__owningEnumeration.setOpposite(_Enumeration__ownedLiterals);
+			_EnumerationLiteral__value.setDefaultValueString("0");
+			_EnumerationLiteral__EnumLiteralExp__referredLiteral.setOpposite(_EnumLiteralExp__referredLiteral);
+
+			_ExpressionInOCL__ownedBody.setOpposite(_OCLExpression__ExpressionInOCL__ownedBody);
+			_ExpressionInOCL__ownedContext.setOpposite(_Variable__ExpressionInOCL__ownedContext);
+			_ExpressionInOCL__ownedParameters.setOpposite(_Variable__ExpressionInOCL__ownedParameters);
+			_ExpressionInOCL__ownedResult.setOpposite(_Variable__ExpressionInOCL__ownedResult);
+
+			_Feature__isStatic.setDefaultValueString("false");
+
+			_FeatureCallExp__isPre.setDefaultValueString("false");
+
+			_IfExp__isElseIf.setDefaultValueString("false");
+			_IfExp__ownedCondition.setOpposite(_OCLExpression__IfExp__ownedCondition);
+			_IfExp__ownedElse.setOpposite(_OCLExpression__IfExp__ownedElse);
+			_IfExp__ownedThen.setOpposite(_OCLExpression__IfExp__ownedThen);
+
+			_Import__importedNamespace.setOpposite(_Namespace__Import__importedNamespace);
+			_Import__xmiidVersion.setDefaultValueString("0");
+			_Import__Model__ownedImports.setOpposite(_Model__ownedImports);
+
+			_InstanceSpecification__classes.setOpposite(_Class__InstanceSpecification__classes);
+			_InstanceSpecification__ownedSlots.setOpposite(_Slot__owningInstance);
+			_InstanceSpecification__ownedSpecification.setOpposite(_LanguageExpression__InstanceSpecification__ownedSpecification);
+			_InstanceSpecification__owningPackage.setOpposite(_Package__ownedInstances);
+
+
+			_IterateExp__ownedBodies.setOpposite(_OCLExpression__IterateExp__ownedBodies);
+			_IterateExp__ownedResult.setOpposite(_Variable__IterateExp__ownedResult);
+
+			_Iteration__ownedAccumulator.setOpposite(_Parameter__Iteration__ownedAccumulator);
+			_Iteration__ownedIterators.setOpposite(_Parameter__Iteration__ownedIterators);
+			_Iteration__LoopExp__referredIteration.setOpposite(_LoopExp__referredIteration);
+
+			_IteratorExp__ownedBody.setOpposite(_OCLExpression__IteratorExp__ownedBody);
+
+			_IteratorVariable__LoopExp__ownedCoIterators.setOpposite(_LoopExp__ownedCoIterators);
+
+			_LambdaParameter__LambdaType__ownedContext.setOpposite(_LambdaType__ownedContext);
+			_LambdaParameter__LambdaType__ownedParameters.setOpposite(_LambdaType__ownedParameters);
+			_LambdaParameter__LambdaType__ownedResult.setOpposite(_LambdaType__ownedResult);
+
+			_LambdaType__ownedContext.setOpposite(_LambdaParameter__LambdaType__ownedContext);
+			_LambdaType__ownedParameters.setOpposite(_LambdaParameter__LambdaType__ownedParameters);
+			_LambdaType__ownedResult.setOpposite(_LambdaParameter__LambdaType__ownedResult);
+
+			_LanguageExpression__owningConstraint.setOpposite(_Constraint__ownedSpecification);
+			_LanguageExpression__InstanceSpecification__ownedSpecification.setOpposite(_InstanceSpecification__ownedSpecification);
+			_LanguageExpression__Operation__bodyExpression.setOpposite(_Operation__bodyExpression);
+			_LanguageExpression__Property__ownedExpression.setOpposite(_Property__ownedExpression);
+
+			_LetExp__ownedIn.setOpposite(_OCLExpression__LetExp__ownedIn);
+			_LetExp__ownedVariable.setOpposite(_Variable__LetExp__ownedVariable);
+
+			_Library__ownedPrecedences.setOpposite(_Precedence__Library__ownedPrecedences);
+
+			_LoopExp__firstOwnedBody.setOpposite(_OCLExpression__LoopExp__firstOwnedBody);
+			_LoopExp__ownedCoIterators.setOpposite(_IteratorVariable__LoopExp__ownedCoIterators);
+			_LoopExp__ownedIterators.setOpposite(_Variable__LoopExp__ownedIterators);
+			_LoopExp__referredIteration.setOpposite(_Iteration__LoopExp__referredIteration);
+
+			_MapLiteralExp__ownedParts.setOpposite(_MapLiteralPart__MapLiteralExp__ownedParts);
+
+			_MapLiteralPart__ownedKey.setOpposite(_OCLExpression__MapLiteralPart__ownedKey);
+			_MapLiteralPart__ownedValue.setOpposite(_OCLExpression__MapLiteralPart__ownedValue);
+			_MapLiteralPart__MapLiteralExp__ownedParts.setOpposite(_MapLiteralExp__ownedParts);
+
+			_MapType__entryClass.setOpposite(_Class__MapType__entryClass);
+			_MapType__keyType.setOpposite(_Type__MapType__keyType);
+			_MapType__keysAreNullFree.setDefaultValueString("true");
+			_MapType__valueType.setOpposite(_Type__MapType__valueType);
+			_MapType__valuesAreNullFree.setDefaultValueString("true");
+
+			_MessageExp__ownedArguments.setOpposite(_OCLExpression__MessageExp__ownedArguments);
+			_MessageExp__ownedCalledOperation.setOpposite(_CallOperationAction__MessageExp__ownedCalledOperation);
+			_MessageExp__ownedSentSignal.setOpposite(_SendSignalAction__MessageExp__ownedSentSignal);
+			_MessageExp__ownedTarget.setOpposite(_OCLExpression__MessageExp__ownedTarget);
+
+			_MessageType__referredOperation.setOpposite(_Operation__MessageType__referredOperation);
+			_MessageType__referredSignal.setOpposite(_Signal__MessageType__referredSignal);
+
+			_Model__ownedImports.setOpposite(_Import__Model__ownedImports);
+			_Model__ownedPackages.setOpposite(_Package__Model__ownedPackages);
+			_Model__xmiidVersion.setDefaultValueString("0");
+			_Model__CompleteModel__partialModels.setOpposite(_CompleteModel__partialModels);
+
+
+			_Namespace__ownedConstraints.setOpposite(_Constraint__Namespace__ownedConstraints);
+			_Namespace__Constraint__context.setOpposite(_Constraint__context);
+			_Namespace__Import__importedNamespace.setOpposite(_Import__importedNamespace);
+
+			_NavigationCallExp__navigationSource.setOpposite(_Property__NavigationCallExp__navigationSource);
+			_NavigationCallExp__qualifiers.setOpposite(_OCLExpression__NavigationCallExp__qualifiers);
+
+			_NormalizedTemplateParameter__index.setDefaultValueString("-1");
+
+			_OCLExpression__typeValue.setOpposite(_Type__OCLExpression__typeValue);
+			_OCLExpression__CallExp__ownedSource.setOpposite(_CallExp__ownedSource);
+			_OCLExpression__CollectionItem__ownedItem.setOpposite(_CollectionItem__ownedItem);
+			_OCLExpression__CollectionRange__ownedFirst.setOpposite(_CollectionRange__ownedFirst);
+			_OCLExpression__CollectionRange__ownedLast.setOpposite(_CollectionRange__ownedLast);
+			_OCLExpression__ExpressionInOCL__ownedBody.setOpposite(_ExpressionInOCL__ownedBody);
+			_OCLExpression__IfExp__ownedCondition.setOpposite(_IfExp__ownedCondition);
+			_OCLExpression__IfExp__ownedElse.setOpposite(_IfExp__ownedElse);
+			_OCLExpression__IfExp__ownedThen.setOpposite(_IfExp__ownedThen);
+			_OCLExpression__IterateExp__ownedBodies.setOpposite(_IterateExp__ownedBodies);
+			_OCLExpression__IteratorExp__ownedBody.setOpposite(_IteratorExp__ownedBody);
+			_OCLExpression__LetExp__ownedIn.setOpposite(_LetExp__ownedIn);
+			_OCLExpression__LoopExp__firstOwnedBody.setOpposite(_LoopExp__firstOwnedBody);
+			_OCLExpression__MapLiteralPart__ownedKey.setOpposite(_MapLiteralPart__ownedKey);
+			_OCLExpression__MapLiteralPart__ownedValue.setOpposite(_MapLiteralPart__ownedValue);
+			_OCLExpression__MessageExp__ownedArguments.setOpposite(_MessageExp__ownedArguments);
+			_OCLExpression__MessageExp__ownedTarget.setOpposite(_MessageExp__ownedTarget);
+			_OCLExpression__NavigationCallExp__qualifiers.setOpposite(_NavigationCallExp__qualifiers);
+			_OCLExpression__OperationCallExp__ownedArguments.setOpposite(_OperationCallExp__ownedArguments);
+			_OCLExpression__ShadowPart__ownedInit.setOpposite(_ShadowPart__ownedInit);
+			_OCLExpression__TupleLiteralPart__ownedInit.setOpposite(_TupleLiteralPart__ownedInit);
+			_OCLExpression__Variable__ownedInit.setOpposite(_Variable__ownedInit);
+
+			_Operation__bodyExpression.setOpposite(_LanguageExpression__Operation__bodyExpression);
+			_Operation__isInvalidating.setDefaultValueString("false");
+			_Operation__isTransient.setDefaultValueString("false");
+			_Operation__isTypeof.setDefaultValueString("false");
+			_Operation__isValidating.setDefaultValueString("false");
+			_Operation__ownedParameters.setOpposite(_Parameter__owningOperation);
+			_Operation__ownedPostconditions.setOpposite(_Constraint__owningPostContext);
+			_Operation__ownedPreconditions.setOpposite(_Constraint__owningPreContext);
+			_Operation__owningClass.setOpposite(_Class__ownedOperations);
+			_Operation__precedence.setOpposite(_Precedence__Operation__precedence);
+			_Operation__raisedExceptions.setOpposite(_Type__Operation__raisedExceptions);
+			_Operation__redefinedOperations.setOpposite(_Operation__Operation__redefinedOperations);
+			_Operation__CallOperationAction__operation.setOpposite(_CallOperationAction__operation);
+			_Operation__MessageType__referredOperation.setOpposite(_MessageType__referredOperation);
+			_Operation__Operation__redefinedOperations.setOpposite(_Operation__redefinedOperations);
+			_Operation__OperationCallExp__referredOperation.setOpposite(_OperationCallExp__referredOperation);
+			_Operation__PrimitiveType__coercions.setOpposite(_PrimitiveType__coercions);
+
+			_OperationCallExp__isVirtual.setDefaultValueString("true");
+			_OperationCallExp__ownedArguments.setOpposite(_OCLExpression__OperationCallExp__ownedArguments);
+			_OperationCallExp__referredOperation.setOpposite(_Operation__OperationCallExp__referredOperation);
+
+			_OppositePropertyCallExp__referredProperty.setOpposite(_Property__OppositePropertyCallExp__referredProperty);
+
+			_OrphanCompletePackage__CompleteModel__orphanCompletePackage.setOpposite(_CompleteModel__orphanCompletePackage);
+
+			_Package__importedPackages.setOpposite(_Package__Package__importedPackages);
+			_Package__ownedClasses.setOpposite(_Class__owningPackage);
+			_Package__ownedInstances.setOpposite(_InstanceSpecification__owningPackage);
+			_Package__ownedPackages.setOpposite(_Package__owningPackage);
+			_Package__ownedProfileApplications.setOpposite(_ProfileApplication__owningPackage);
+			_Package__owningPackage.setOpposite(_Package__ownedPackages);
+			_Package__CompletePackage__partialPackages.setOpposite(_CompletePackage__partialPackages);
+			_Package__Model__ownedPackages.setOpposite(_Model__ownedPackages);
+			_Package__Package__importedPackages.setOpposite(_Package__importedPackages);
+
+			_Parameter__isTypeof.setDefaultValueString("false");
+			_Parameter__owningOperation.setOpposite(_Operation__ownedParameters);
+			_Parameter__Iteration__ownedAccumulator.setOpposite(_Iteration__ownedAccumulator);
+			_Parameter__Iteration__ownedIterators.setOpposite(_Iteration__ownedIterators);
+			_Parameter__Variable__representedParameter.setOpposite(_Variable__representedParameter);
+
+			_Precedence__associativity.setDefaultValueString("left");
+			_Precedence__Library__ownedPrecedences.setOpposite(_Library__ownedPrecedences);
+			_Precedence__Operation__precedence.setOpposite(_Operation__precedence);
+
+			_PrimitiveCompletePackage__CompleteModel__primitiveCompletePackage.setOpposite(_CompleteModel__primitiveCompletePackage);
+
+			_PrimitiveType__coercions.setOpposite(_Operation__PrimitiveType__coercions);
+
+			_Profile__profileApplications.setOpposite(_ProfileApplication__appliedProfile);
+
+			_ProfileApplication__appliedProfile.setOpposite(_Profile__profileApplications);
+			_ProfileApplication__isStrict.setDefaultValueString("false");
+			_ProfileApplication__owningPackage.setOpposite(_Package__ownedProfileApplications);
+
+			_Property__associationClass.setOpposite(_AssociationClass__unownedAttributes);
+			_Property__isComposite.setDefaultValueString("false");
+			_Property__isDerived.setDefaultValueString("false");
+			_Property__isID.setDefaultValueString("false");
+			_Property__isImplicit.setDefaultValueString("false");
+			_Property__isReadOnly.setDefaultValueString("false");
+			_Property__isResolveProxies.setDefaultValueString("true");
+			_Property__isTransient.setDefaultValueString("false");
+			_Property__isUnsettable.setDefaultValueString("false");
+			_Property__isVolatile.setDefaultValueString("false");
+			_Property__keys.setOpposite(_Property__Property__keys);
+			_Property__opposite.setOpposite(_Property__Property__opposite);
+			_Property__ownedExpression.setOpposite(_LanguageExpression__Property__ownedExpression);
+			_Property__owningClass.setOpposite(_Class__ownedProperties);
+			_Property__redefinedProperties.setOpposite(_Property__Property__redefinedProperties);
+			_Property__referredProperty.setOpposite(_Property__Property__referredProperty);
+			_Property__subsettedProperty.setOpposite(_Property__Property__subsettedProperty);
+			_Property__DynamicProperty__referredProperty.setOpposite(_DynamicProperty__referredProperty);
+			_Property__NavigationCallExp__navigationSource.setOpposite(_NavigationCallExp__navigationSource);
+			_Property__OppositePropertyCallExp__referredProperty.setOpposite(_OppositePropertyCallExp__referredProperty);
+			_Property__Property__keys.setOpposite(_Property__keys);
+			_Property__Property__opposite.setOpposite(_Property__opposite);
+			_Property__Property__redefinedProperties.setOpposite(_Property__redefinedProperties);
+			_Property__Property__referredProperty.setOpposite(_Property__referredProperty);
+			_Property__Property__subsettedProperty.setOpposite(_Property__subsettedProperty);
+			_Property__PropertyCallExp__referredProperty.setOpposite(_PropertyCallExp__referredProperty);
+			_Property__ShadowPart__referredProperty.setOpposite(_ShadowPart__referredProperty);
+			_Property__Slot__definingProperty.setOpposite(_Slot__definingProperty);
+
+			_PropertyCallExp__referredProperty.setOpposite(_Property__PropertyCallExp__referredProperty);
+
+			_Pseudostate__kind.setDefaultValueString("initial");
+			_Pseudostate__owningState.setOpposite(_State__ownedConnectionPoints);
+			_Pseudostate__owningStateMachine.setOpposite(_StateMachine__ownedConnectionPoints);
+			_Pseudostate__ConnectionPointReference__entries.setOpposite(_ConnectionPointReference__entries);
+			_Pseudostate__ConnectionPointReference__exits.setOpposite(_ConnectionPointReference__exits);
+
+
+			_Region__extendedRegion.setOpposite(_Region__Region__extendedRegion);
+			_Region__ownedSubvertexes.setOpposite(_Vertex__owningRegion);
+			_Region__ownedTransitions.setOpposite(_Transition__owningRegion);
+			_Region__owningState.setOpposite(_State__ownedRegions);
+			_Region__owningStateMachine.setOpposite(_StateMachine__ownedRegions);
+			_Region__Region__extendedRegion.setOpposite(_Region__extendedRegion);
+
+			_SendSignalAction__signal.setOpposite(_Signal__SendSignalAction__signal);
+			_SendSignalAction__MessageExp__ownedSentSignal.setOpposite(_MessageExp__ownedSentSignal);
+
+			_ShadowExp__ownedParts.setOpposite(_ShadowPart__ShadowExp__ownedParts);
+
+			_ShadowPart__ownedInit.setOpposite(_OCLExpression__ShadowPart__ownedInit);
+			_ShadowPart__referredProperty.setOpposite(_Property__ShadowPart__referredProperty);
+			_ShadowPart__ShadowExp__ownedParts.setOpposite(_ShadowExp__ownedParts);
+
+			_Signal__MessageType__referredSignal.setOpposite(_MessageType__referredSignal);
+			_Signal__SendSignalAction__signal.setOpposite(_SendSignalAction__signal);
+
+			_Slot__definingProperty.setOpposite(_Property__Slot__definingProperty);
+			_Slot__ownedValues.setOpposite(_ValueSpecification__Slot__ownedValues);
+			_Slot__owningInstance.setOpposite(_InstanceSpecification__ownedSlots);
+
+			_State__ownedConnectionPoints.setOpposite(_Pseudostate__owningState);
+			_State__ownedConnections.setOpposite(_ConnectionPointReference__owningState);
+			_State__ownedDeferrableTriggers.setOpposite(_Trigger__owningState);
+			_State__ownedDoActivity.setOpposite(_Behavior__State__ownedDoActivity);
+			_State__ownedEntry.setOpposite(_Behavior__State__ownedEntry);
+			_State__ownedExit.setOpposite(_Behavior__State__ownedExit);
+			_State__ownedRegions.setOpposite(_Region__owningState);
+			_State__ownedStateInvariant.setOpposite(_Constraint__owningState);
+			_State__redefinedState.setOpposite(_State__State__redefinedState);
+			_State__submachines.setOpposite(_StateMachine__submachineStates);
+			_State__State__redefinedState.setOpposite(_State__redefinedState);
+			_State__StateExp__referredState.setOpposite(_StateExp__referredState);
+
+			_StateExp__referredState.setOpposite(_State__StateExp__referredState);
+
+			_StateMachine__extendedStateMachines.setOpposite(_StateMachine__StateMachine__extendedStateMachines);
+			_StateMachine__ownedConnectionPoints.setOpposite(_Pseudostate__owningStateMachine);
+			_StateMachine__ownedRegions.setOpposite(_Region__owningStateMachine);
+			_StateMachine__submachineStates.setOpposite(_State__submachines);
+			_StateMachine__StateMachine__extendedStateMachines.setOpposite(_StateMachine__extendedStateMachines);
+
+			_Stereotype__ownedExtenders.setOpposite(_StereotypeExtender__owningStereotype);
+			_Stereotype__ElementExtension__stereotype.setOpposite(_ElementExtension__stereotype);
+
+			_StereotypeExtender__class.setOpposite(_Class__extenders);
+			_StereotypeExtender__isRequired.setDefaultValueString("false");
+			_StereotypeExtender__owningStereotype.setOpposite(_Stereotype__ownedExtenders);
+
+
+			_TemplateBinding__ownedSubstitutions.setOpposite(_TemplateParameterSubstitution__owningBinding);
+			_TemplateBinding__owningElement.setOpposite(_TemplateableElement__ownedBindings);
+			_TemplateBinding__templateSignature.setOpposite(_TemplateSignature__TemplateBinding__templateSignature);
+
+			_TemplateParameter__constrainingClasses.setOpposite(_Class__TemplateParameter__constrainingClasses);
+			_TemplateParameter__owningSignature.setOpposite(_TemplateSignature__ownedParameters);
+			_TemplateParameter__TemplateParameterSubstitution__formal.setOpposite(_TemplateParameterSubstitution__formal);
+
+			_TemplateParameterSubstitution__actual.setOpposite(_Type__TemplateParameterSubstitution__actual);
+			_TemplateParameterSubstitution__actualIsRequired.setDefaultValueString("true");
+			_TemplateParameterSubstitution__formal.setOpposite(_TemplateParameter__TemplateParameterSubstitution__formal);
+			_TemplateParameterSubstitution__ownedWildcard.setOpposite(_WildcardType__TemplateParameterSubstitution__ownedWildcard);
+			_TemplateParameterSubstitution__owningBinding.setOpposite(_TemplateBinding__ownedSubstitutions);
+
+			_TemplateSignature__ownedParameters.setOpposite(_TemplateParameter__owningSignature);
+			_TemplateSignature__owningElement.setOpposite(_TemplateableElement__ownedSignature);
+			_TemplateSignature__TemplateBinding__templateSignature.setOpposite(_TemplateBinding__templateSignature);
+
+			_TemplateableElement__ownedBindings.setOpposite(_TemplateBinding__owningElement);
+			_TemplateableElement__ownedSignature.setOpposite(_TemplateSignature__owningElement);
+			_TemplateableElement__unspecializedElement.setOpposite(_TemplateableElement__TemplateableElement__unspecializedElement);
+			_TemplateableElement__TemplateableElement__unspecializedElement.setOpposite(_TemplateableElement__unspecializedElement);
+
+			_Transition__kind.setDefaultValueString("external");
+			_Transition__ownedEffect.setOpposite(_Behavior__owningTransition);
+			_Transition__ownedGuard.setOpposite(_Constraint__owningTransition);
+			_Transition__ownedTriggers.setOpposite(_Trigger__owningTransition);
+			_Transition__owningRegion.setOpposite(_Region__ownedTransitions);
+			_Transition__source.setOpposite(_Vertex__outgoingTransitions);
+			_Transition__target.setOpposite(_Vertex__incomingTransitions);
+
+			_Trigger__owningState.setOpposite(_State__ownedDeferrableTriggers);
+			_Trigger__owningTransition.setOpposite(_Transition__ownedTriggers);
+
+			_TupleLiteralExp__ownedParts.setOpposite(_TupleLiteralPart__TupleLiteralExp__ownedParts);
+
+			_TupleLiteralPart__ownedInit.setOpposite(_OCLExpression__TupleLiteralPart__ownedInit);
+			_TupleLiteralPart__TupleLiteralExp__ownedParts.setOpposite(_TupleLiteralExp__ownedParts);
+
+			_Type__CollectionType__elementType.setOpposite(_CollectionType__elementType);
+			_Type__DynamicElement__metaType.setOpposite(_DynamicElement__metaType);
+			_Type__MapType__keyType.setOpposite(_MapType__keyType);
+			_Type__MapType__valueType.setOpposite(_MapType__valueType);
+			_Type__OCLExpression__typeValue.setOpposite(_OCLExpression__typeValue);
+			_Type__Operation__raisedExceptions.setOpposite(_Operation__raisedExceptions);
+			_Type__TemplateParameterSubstitution__actual.setOpposite(_TemplateParameterSubstitution__actual);
+			_Type__TypeExp__referredType.setOpposite(_TypeExp__referredType);
+			_Type__TypedElement__type.setOpposite(_TypedElement__type);
+			_Type__VariableDeclaration__typeValue.setOpposite(_VariableDeclaration__typeValue);
+			_Type__WildcardType__lowerBound.setOpposite(_WildcardType__lowerBound);
+			_Type__WildcardType__upperBound.setOpposite(_WildcardType__upperBound);
+
+			_TypeExp__referredType.setOpposite(_Type__TypeExp__referredType);
+
+			_TypedElement__isRequired.setDefaultValueString("false");
+			_TypedElement__type.setOpposite(_Type__TypedElement__type);
+
+
+			_ValueSpecification__Slot__ownedValues.setOpposite(_Slot__ownedValues);
+
+			_Variable__isImplicit.setDefaultValueString("false");
+			_Variable__ownedInit.setOpposite(_OCLExpression__Variable__ownedInit);
+			_Variable__representedParameter.setOpposite(_Parameter__Variable__representedParameter);
+			_Variable__ExpressionInOCL__ownedContext.setOpposite(_ExpressionInOCL__ownedContext);
+			_Variable__ExpressionInOCL__ownedParameters.setOpposite(_ExpressionInOCL__ownedParameters);
+			_Variable__ExpressionInOCL__ownedResult.setOpposite(_ExpressionInOCL__ownedResult);
+			_Variable__IterateExp__ownedResult.setOpposite(_IterateExp__ownedResult);
+			_Variable__LetExp__ownedVariable.setOpposite(_LetExp__ownedVariable);
+			_Variable__LoopExp__ownedIterators.setOpposite(_LoopExp__ownedIterators);
+
+			_VariableDeclaration__typeValue.setOpposite(_Type__VariableDeclaration__typeValue);
+			_VariableDeclaration__VariableExp__referredVariable.setOpposite(_VariableExp__referredVariable);
+
+			_VariableExp__isImplicit.setDefaultValueString("false");
+			_VariableExp__referredVariable.setOpposite(_VariableDeclaration__VariableExp__referredVariable);
+
+			_Vertex__incomingTransitions.setOpposite(_Transition__target);
+			_Vertex__outgoingTransitions.setOpposite(_Transition__source);
+			_Vertex__owningRegion.setOpposite(_Region__ownedSubvertexes);
+
+			_WildcardType__lowerBound.setOpposite(_Type__WildcardType__lowerBound);
+			_WildcardType__upperBound.setOpposite(_Type__WildcardType__upperBound);
+			_WildcardType__TemplateParameterSubstitution__ownedWildcard.setOpposite(_TemplateParameterSubstitution__ownedWildcard);
+
 			Init.initEnd();
 		}
 
