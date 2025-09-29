@@ -551,7 +551,7 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
 			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
 			appendTablesPackageQualification(unspecializedType);
-			appendTablesSubackageQualification("Types");
+			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(unspecializedType);
 			return null;
