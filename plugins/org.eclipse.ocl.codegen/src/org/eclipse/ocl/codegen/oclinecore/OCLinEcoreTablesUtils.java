@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ParameterTypes;
@@ -479,6 +480,7 @@ public class OCLinEcoreTablesUtils
 		protected final @NonNull CodeGenString s;
 		protected final boolean showTablesPackage;
 		protected final boolean showTablesSubpackage;
+		private @Nullable Namespace namespace = null;
 
 		protected EmitLiteralVisitor(@NonNull CodeGenString s, int showFlags) {
 			super(null);
@@ -499,6 +501,14 @@ public class OCLinEcoreTablesUtils
 				s.append(subPackageName);
 				s.append(".");
 			}
+		}
+
+		public @Nullable Namespace basicGetNamespace() {
+			return namespace;
+		}
+
+		public void setNamespace(Namespace namespace) {
+			this.namespace = namespace;
 		}
 
 		@Override
@@ -597,11 +607,20 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
+			Namespace namespace2 = namespace;
+			if (namespace2 != null) {
+				s.append("LIBRARY.getTemplateParameter(");
+				namespace2.accept(this);
+				s.append(", ");
+			}
 			int index = asTemplateParameter.getTemplateParameterId().getIndex();
 			Orphanage orphanage = environmentFactory.getOrphanage();
 			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(orphanage, index);
 			appendTablesSubackageQualification(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
 			s.append(normalizedTemplateParameter.getName());
+			if (namespace2 != null) {
+				s.append(")");
+			}
 			return null;
 		}
 
