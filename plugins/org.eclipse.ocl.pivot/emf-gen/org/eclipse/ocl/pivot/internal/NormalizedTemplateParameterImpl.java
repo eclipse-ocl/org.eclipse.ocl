@@ -186,26 +186,15 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 		return visitor.visitNormalizedTemplateParameter(this);
 	}
 
-	private /*@LazyNonNull*/ TemplateParameterId templateParameterId;
+	@Override
+	protected synchronized @NonNull TemplateParameterId computeTemplateParameterId() {
+		return IdManager.getTemplateParameterId(index.intValue());
+	}
 
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class lowerBound = /*PivotUtil.getLowerBound(this,*/ standardLibrary.getOclAnyType();//);
 		return standardLibrary.getFlatClass(lowerBound);
-	}
-
-	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId() {
-		TemplateParameterId templateParameterId2 = templateParameterId;
-		if (templateParameterId2 == null) {
-			templateParameterId = templateParameterId2 = IdManager.getTemplateParameterId(index.intValue());
-		}
-		return templateParameterId2;
-	}
-
-	@Override
-	public @NonNull TemplateParameterId getTypeId() {
-		return getTemplateParameterId();
 	}
 
 	@Override
