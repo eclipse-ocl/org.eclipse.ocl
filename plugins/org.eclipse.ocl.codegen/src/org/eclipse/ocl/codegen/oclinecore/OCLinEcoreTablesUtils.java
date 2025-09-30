@@ -230,21 +230,31 @@ public class OCLinEcoreTablesUtils
 		return genPackage;
 	} */
 
+	/**
+	 * CodeGenString elaborates a StringBuilder with helpers for Java generation.
+	 * In particular addImport and addClassReference facilitate management of the imports,.
+	 */
 	public static class CodeGenString
 	{
 		protected final @NonNull MetamodelManager metamodelManager;
 		protected final boolean useNullAnnotations;
-		private final @NonNull StringBuilder s = new StringBuilder();
-		//		private @NonNull Map<@NonNull String, @Nullable String> classReferences = new HashMap<>();
-		private @NonNull JavaImportNameManager importNameManager = new JavaImportNameManager();
-
-		protected final @NonNull Map<Type, String> typeNameMap = new HashMap<>();
-		protected final @NonNull Set<String> typeNameUse = new HashSet<>();
-//		private final @NonNull Stack<@NonNull String> stack = new Stack<>();
+		protected final @NonNull StringBuilder s = new StringBuilder();
+		protected final @NonNull JavaImportNameManager importNameManager = new JavaImportNameManager();
+		protected final @NonNull Map<@NonNull Type, @NonNull String> typeNameMap = new HashMap<>();
+		protected final @NonNull Set<@NonNull String> typeNameUse = new HashSet<>();
 
 		public CodeGenString(@NonNull MetamodelManager metamodelManager, boolean useNullAnnotations) {
 			this.metamodelManager = metamodelManager;
 			this.useNullAnnotations = useNullAnnotations;
+		}
+
+		public @NonNull String addClassReference(@Nullable Boolean isRequired, @NonNull Class<?> referencedClass) {
+			@NonNull String fullName = referencedClass.getName();
+			return importNameManager.addImport(useNullAnnotations ? isRequired : null, fullName);
+		}
+
+		public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String referencedClass) {
+			return importNameManager.addImport(isRequired, referencedClass);
 		}
 
 		public void append(char c) {
@@ -255,17 +265,6 @@ public class OCLinEcoreTablesUtils
 			if (string != null) {
 				s.append(string);
 			}
-		}
-
-		public @NonNull String addClassReference(@Nullable Boolean isRequired, @NonNull Class<?> referencedClass) {
-			//	@NonNull String simpleName = referencedClass.getSimpleName();
-			@NonNull String fullName = referencedClass.getName();
-			//	addClassReference(simpleName, fullName);
-			return importNameManager.addImport(useNullAnnotations ? isRequired : null, fullName);
-		}
-
-		public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String referencedClass) {
-			return importNameManager.addImport(isRequired, referencedClass);
 		}
 
 		public void appendAndEncodeName(@NonNull NamedElement namedElement) {
@@ -290,10 +289,15 @@ public class OCLinEcoreTablesUtils
 
 		/**
 		 * Append the encoded name of a type with a suffix if disambiguation across packages is required.
-		 * @param metamodelManager
 		 */
 		public void appendUnscopedTypeName(@NonNull Type theType) {
 			s.append(getTypeName(metamodelManager.getPrimaryType(theType)));
+		}
+
+		public @NonNull List<@NonNull String> getClassReferences() {
+			List<@NonNull String> names = new ArrayList<>(importNameManager.getLong2ShortImportNames().keySet());
+			Collections.sort(names);
+			return names;
 		}
 
 		private @NonNull String getTypeName(@NonNull Type theType) {
@@ -315,176 +319,16 @@ public class OCLinEcoreTablesUtils
 			return name;
 		}
 
-		public @NonNull List<@NonNull String> getClassReferences() {
-			//	List<String> names = new ArrayList<>(classReferences.values());
-			List<@NonNull String> names = new ArrayList<>(importNameManager.getLong2ShortImportNames().keySet());
-			Collections.sort(names);
-			return names;
-		}
-
-//		public void pop() {
-//			stack .pop();
-//		}
-
-//		public void push(@NonNull String packagePathElements) {
-//			stack.push(packagePathElements);
-//		}
-
 		@Override
 		public @NonNull String toString() {
 			return s.toString();
 		}
 	}
 
-	public class DeclareParameterTypeVisitor extends AbstractExtendingVisitor<Object, Object>
-	{
-		protected DeclareParameterTypeVisitor(@NonNull Object context) {
-			super(context);
-		}
-
-		@Override
-		public @Nullable Object visiting(@NonNull Visitable visitable) {
-			throw new UnsupportedOperationException("Unsupported DeclareParameterTypeVisitor for " + visitable.eClass().getName());
-		}
-
-		@Override
-		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-			//			TemplateParameter owningTemplateParameter = type.isTemplateParameter();
-			//			if (owningTemplateParameter == null) {
-			type.accept(emitReferencedElementVisitor);
-			/*			}
-			else if (owningTemplateParameter.getSignature().getTemplate() instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Class containerType = (org.eclipse.ocl.pivot.Class) owningTemplateParameter.getSignature().getTemplate();
-				assert containerType != null;
-				String prefix = getQualifiedTablesClassName(containerType);
-				if (prefix.length() <= 0) {
-					s.append("(");
-					s.appendClassReference(DomainType.class);
-					s.append(")null/*containerType._package.name/");
-				}
-				else {
-					s.appendClassReference(prefix);
-					s.append(".TypeParameters.");
-					s.appendScopedTypeName(containerType);
-					s.append("_");
-					s.appendParameterName(type);
-				}
-			}
-			else if (owningTemplateParameter.getSignature().getTemplate() instanceof Operation) {
-				Operation containerOperation  = (Operation) owningTemplateParameter.getSignature().getTemplate();
-				org.eclipse.ocl.pivot.Class containerType = containerOperation.getOwningClass();
-				assert containerType != null;
-				String prefix = getQualifiedTablesClassName(containerType);
-				if (prefix.length() <= 0) {
-					s.append("(");
-					s.appendClassReference(DomainType.class);
-					s.append(")null/*containerOperation.owningType._package.name/");
-				}
-				else {
-					s.appendClassReference(prefix);
-					s.append(".TypeParameters._");
-					containerOperation.accept(emitLiteralVisitor);
-					s.append("_");
-					s.appendParameterName(type);
-				}
-			} */
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
-			s.append("LIBRARY.getCollectionType(");
-			type.accept(emitReferencedElementVisitor);
-			s.append(", ");
-			type.getElementType().accept(this);
-			s.append(")");
-			return null;
-		}
-
-		@Override
-		public Object visitDataType(@NonNull DataType type) {
-			org.eclipse.ocl.pivot.Package dataTypePackage = PivotUtil.getContainingPackage(type);
-			if (dataTypePackage != asPackage) {
-				Type behavioralClass = type.getBehavioralClass();
-				if (behavioralClass != null) {
-					return behavioralClass.accept(this);				// Bug 577563 workaround to Avoid referencing potentially non-existing EcoreTables
-				}
-			}
-			return super.visitDataType(type);
-		}
-
-		@Override
-		public Object visitLambdaParameter(@NonNull LambdaParameter asLambdaParameter) {
-			s.append(getLambdaParameterName(asLambdaParameter));
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitLambdaType(@NonNull LambdaType lambdaType) {
-			s.append("LIBRARY.getLambdaType(");
-			lambdaType.getOwnedContext().accept(this);
-			for (LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
-				s.append(", ");
-				parameter.accept(this);
-			}
-			s.append(", ");
-			lambdaType.getOwnedResult().accept(this);
-			s.append(")");
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitMapType(@NonNull MapType type) {
-			s.append("LIBRARY.getMapType(");
-			type.accept(emitReferencedElementVisitor);
-			s.append(", ");
-			type.getKeyType().accept(this);
-			s.append(", ");
-			type.getValueType().accept(this);
-			s.append(")");
-			return null;
-		}
-
-		@Override
-		public Object visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter asNormalizedTemplateParameter) {
-			s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
-			s.append(".");
-			s.append(PivotUtil.getName(asNormalizedTemplateParameter));
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
-			s.append("LIBRARY.getTupleType(");
-		//	s.appendString(ClassUtil.requireNonNull(tupleType.getName()));
-		//	s.append(", ");
-			boolean isFirst = true;
-			for (Property part : tupleType.getOwnedProperties()) {
-				if (!isFirst) {
-					s.append(", ");
-				}
-				s.append("LIBRARY.getTuplePart(");
-				s.appendString(ClassUtil.requireNonNull(part.getName()));
-				s.append(", ");
-				part.getType().accept(this);
-				s.append(", ");
-				s.append(part.isIsRequired() ? "true" : "false");
-				s.append(")");
-				isFirst = false;
-			}
-			s.append(")");
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
-			asTemplateParameter.accept(emitReferencedElementVisitor);
-		//	s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
-			return null;
-		}
-	}
-
-	public class EmitDeclaredNameVisitor extends AbstractExtendingVisitor<Object, Object>
+	/**
+	 * EmitDeclaredNameVisitor.accept(T) emits the name of T.
+	 */
+	public static class EmitDeclaredNameVisitor extends AbstractExtendingVisitor<Object, Object>
 	{
 		protected final @NonNull CodeGenString s;
 
@@ -493,7 +337,11 @@ public class OCLinEcoreTablesUtils
 			this.s = s;
 		}
 
-		protected void appendDeclaredClassName(org.eclipse.ocl.pivot.@NonNull NamedElement asNamedElement) {
+		protected void appendClassReference(@NonNull String nestedClassName, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			appendDeclaredClassName(asClass);
+		}
+
+		protected void appendDeclaredClassName(@NonNull NamedElement asNamedElement) {
 			s.append("_");
 			s.appendAndEncodeName(asNamedElement);
 		}
@@ -501,140 +349,6 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visiting(@NonNull Visitable visitable) {
 			throw new UnsupportedOperationException("Unsupported EmitDeclaredNameVisitor for " + visitable.eClass().getName());
-		}
-
-		@Override
-		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			appendDeclaredClassName(asClass);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
-			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-			appendDeclaredClassName(unspecializedType);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitConstraint(@NonNull Constraint constraint) {
-			Type type = ClassUtil.requireNonNull((Type) constraint.eContainer());
-			appendDeclaredClassName(type);
-			s.append("__");
-			s.append(NameQueries.getUniqueText(type, constraint));
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
-			Enumeration asEnumeration = PivotUtil.getOwningEnumeration(asEnumerationLiteral);
-			appendDeclaredClassName(asEnumeration);
-			s.append("__");
-			s.appendAndEncodeName(asEnumerationLiteral);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
-			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
-			appendDeclaredClassName(unspecializedType);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitOperation(@NonNull Operation asOperation) {
-			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			appendDeclaredClassName(asClass);
-			s.append("__");
-			s.appendAndEncodeName(asOperation);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-			appendDeclaredClassName(asPackage);
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitProperty(@NonNull Property asProperty) {
-			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
-			appendDeclaredClassName(asClass);
-			s.append("__");
-			s.appendAndEncodeName(asProperty);
-			if (asProperty.isIsImplicit()) {
-				Property asOpposite = asProperty.getOpposite();
-				if (asOpposite != null) {
-					s.append("__");
-					s.appendAndEncodeName(asOpposite);
-				}
-			}
-			return null;
-		}
-
-	/*	@Override
-		public @Nullable Object visitTupleType(@NonNull TupleType asTupleType) {
-			appendTablesPackageQualification(asTupleType);
-			s.append("tuple_type_");			//
-			s.appendUnscopedTypeName(asTupleType);
-			return null;
-		} */
-	}
-
-	public class EmitReferencedElementVisitor extends EmitDeclaredNameVisitor
-	{
-		/**
-		 * Prevailing namespace of synthesized declaration - the provider of the TemplateParameterization.
-		 */
-		private @Nullable Namespace namespace = null;
-		/**
-		 * Prevailing class scope when synthesizing Java code.
-		 */
-		private @Nullable String tablesClassPath = null;
-		/**
-		 * Prevailing nested class scope when synthesizing Java code.
-		 */
-		private @Nullable String nestedClassName = null;
-
-		protected EmitReferencedElementVisitor(@NonNull CodeGenString s) {
-			super(s);
-		}
-
-		protected void appendClassReference(@NonNull String nestedClassName, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			GenPackage genPackage = genModelHelper.getGenPackage(asClass);
-			String tablesClassPath = getQualifiedTablesClassName(genPackage);
-			if (!tablesClassPath.equals(this.tablesClassPath)) {
-				s.appendClassReference(null, tablesClassPath);
-				s.append(".");
-				s.append(nestedClassName);
-				s.append(".");
-			}
-			else if (!nestedClassName.equals(this.nestedClassName)) {
-				s.append(nestedClassName);
-				s.append(".");
-			}
-			appendDeclaredClassName(asClass);
-		}
-
-		public @Nullable Namespace basicGetNamespace() {
-			return namespace;
-		}
-
-		public void setNamespace(Namespace namespace) {
-			this.namespace = namespace;
-		}
-
-		public void setNestedClassName(@Nullable String nestedClassName) {
-			this.nestedClassName = nestedClassName;
-		}
-
-		public void setTablesClassPath(@Nullable String tablesClassPath) {
-			this.tablesClassPath = tablesClassPath;
-		}
-
-		@Override
-		public @Nullable Object visiting(@NonNull Visitable visitable) {
-			throw new UnsupportedOperationException("Unsupported EmitReferencedElementVisitor for " + visitable.eClass().getName());
 		}
 
 		@Override
@@ -685,6 +399,12 @@ public class OCLinEcoreTablesUtils
 		}
 
 		@Override
+		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+			appendDeclaredClassName(asPackage);
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 			appendClassReference(AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME, asClass);
@@ -698,6 +418,78 @@ public class OCLinEcoreTablesUtils
 				}
 			}
 			return null;
+		}
+
+		/*	@Override
+			public @Nullable Object visitTupleType(@NonNull TupleType asTupleType) {
+				GenPackage genPackage = genModelHelper.getGenPackage(asTupleType);
+				s.appendClassReference(null, getQualifiedTablesClassName(genPackage));
+				s.append(".");
+				s.append("tuple_type_");			//
+				s.appendUnscopedTypeName(asTupleType);
+				return null;
+			} */
+	}
+
+	/**
+	 * EmitReferencedElementVisitor.accept(T) emits the name of T with the minimal necessary qualification for the configured
+	 * tablesClassPath and nestedClassName resolving any TEmplateParameter references via the configured namespace's TemplateParameterization.
+	 */
+	public class EmitReferencedElementVisitor extends EmitDeclaredNameVisitor
+	{
+		/**
+		 * Prevailing namespace of synthesized declaration - the provider of the TemplateParameterization.
+		 */
+		private @Nullable Namespace namespace = null;
+		/**
+		 * Prevailing class scope when synthesizing Java code.
+		 */
+		private @Nullable String tablesClassPath = null;
+		/**
+		 * Prevailing nested class scope when synthesizing Java code.
+		 */
+		private @Nullable String nestedClassName = null;
+
+		protected EmitReferencedElementVisitor(@NonNull CodeGenString s) {
+			super(s);
+		}
+
+		@Override
+		protected void appendClassReference(@NonNull String nestedClassName, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			GenPackage genPackage = genModelHelper.getGenPackage(asClass);
+			String tablesClassPath = getQualifiedTablesClassName(genPackage);
+			if (!tablesClassPath.equals(this.tablesClassPath)) {
+				s.appendClassReference(null, tablesClassPath);
+				s.append(".");
+				s.append(nestedClassName);
+				s.append(".");
+			}
+			else if (!nestedClassName.equals(this.nestedClassName)) {
+				s.append(nestedClassName);
+				s.append(".");
+			}
+			appendDeclaredClassName(asClass);
+		}
+
+		public @Nullable Namespace basicGetNamespace() {
+			return namespace;
+		}
+
+		public void setNamespace(Namespace namespace) {
+			this.namespace = namespace;
+		}
+
+		public void setNestedClassName(@Nullable String nestedClassName) {
+			this.nestedClassName = nestedClassName;
+		}
+
+		public void setTablesClassPath(@Nullable String tablesClassPath) {
+			this.tablesClassPath = tablesClassPath;
+		}
+
+		@Override
+		public @Nullable Object visiting(@NonNull Visitable visitable) {
+			throw new UnsupportedOperationException("Unsupported EmitReferencedElementVisitor for " + visitable.eClass().getName());
 		}
 
 		@Override
@@ -719,16 +511,119 @@ public class OCLinEcoreTablesUtils
 			}
 			return null;
 		}
+	}
 
-	/*	@Override
-		public @Nullable Object visitTupleType(@NonNull TupleType asTupleType) {
-			GenPackage genPackage = genModelHelper.getGenPackage(asTupleType);
-			s.appendClassReference(null, getQualifiedTablesClassName(genPackage));
-			s.append(".");
-			s.append("tuple_type_");			//
-			s.appendUnscopedTypeName(asTupleType);
+	/**
+	 * EmitTypeExpressionVisitor.accept(T) emits the an expression that computes T.
+	 */
+	public class EmitTypeExpressionVisitor extends AbstractExtendingVisitor<Object, Object>
+	{
+		protected final @NonNull CodeGenString s;
+
+		protected EmitTypeExpressionVisitor(@NonNull CodeGenString s) {
+			super(null);
+			this.s = s;
+		}
+
+		@Override
+		public @Nullable Object visiting(@NonNull Visitable visitable) {
+			throw new UnsupportedOperationException("Unsupported DeclareParameterTypeVisitor for " + visitable.eClass().getName());
+		}
+
+		@Override
+		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+			type.accept(emitReferencedElement);
 			return null;
-		} */
+		}
+
+		@Override
+		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
+			s.append("LIBRARY.getCollectionType(");
+			type.accept(emitReferencedElement);
+			s.append(", ");
+			type.getElementType().accept(this);
+			s.append(")");
+			return null;
+		}
+
+		@Override
+		public Object visitDataType(@NonNull DataType type) {
+			org.eclipse.ocl.pivot.Package dataTypePackage = PivotUtil.getContainingPackage(type);
+			if (dataTypePackage != asPackage) {
+				Type behavioralClass = type.getBehavioralClass();
+				if (behavioralClass != null) {
+					return behavioralClass.accept(this);				// Bug 577563 workaround to Avoid referencing potentially non-existing EcoreTables
+				}
+			}
+			return super.visitDataType(type);
+		}
+
+		@Override
+		public Object visitLambdaParameter(@NonNull LambdaParameter asLambdaParameter) {
+			s.append(getLambdaParameterName(asLambdaParameter));
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitLambdaType(@NonNull LambdaType lambdaType) {
+			s.append("LIBRARY.getLambdaType(");
+			lambdaType.getOwnedContext().accept(this);
+			for (LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
+				s.append(", ");
+				parameter.accept(this);
+			}
+			s.append(", ");
+			lambdaType.getOwnedResult().accept(this);
+			s.append(")");
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitMapType(@NonNull MapType type) {
+			s.append("LIBRARY.getMapType(");
+			type.accept(emitReferencedElement);
+			s.append(", ");
+			type.getKeyType().accept(this);
+			s.append(", ");
+			type.getValueType().accept(this);
+			s.append(")");
+			return null;
+		}
+
+		@Override
+		public Object visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter asNormalizedTemplateParameter) {
+			s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+			s.append(".");
+			s.append(PivotUtil.getName(asNormalizedTemplateParameter));
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
+			asTemplateParameter.accept(emitReferencedElement);
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
+			s.append("LIBRARY.getTupleType(");
+			boolean isFirst = true;
+			for (@NonNull Property part : PivotUtil.getOwnedProperties(tupleType)) {
+				if (!isFirst) {
+					s.append(", ");
+				}
+				s.append("LIBRARY.getTuplePart(");
+				s.appendString(PivotUtil.getName(part));
+				s.append(", ");
+				part.getType().accept(this);
+				s.append(", ");
+				s.append(part.isIsRequired() ? "true" : "false");
+				s.append(")");
+				isFirst = false;
+			}
+			s.append(")");
+			return null;
+		}
 	}
 
 	private static @NonNull MetamodelManager getMetamodelManager(@NonNull GenPackage genPackage) {
@@ -747,9 +642,9 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull CompleteModelInternal completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
-	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor;
-	protected final @NonNull EmitDeclaredNameVisitor emitDeclaredNameVisitor;				// emit _ZZZ
-	protected final @NonNull EmitReferencedElementVisitor emitReferencedElementVisitor;		// emit XXXTables.YYY._ZZZ
+	protected final @NonNull EmitTypeExpressionVisitor emitTypeExpression;			// emit LIBRARY.getSomething
+	protected final @NonNull EmitDeclaredNameVisitor emitDeclaredName;				// emit _ZZZ
+	protected final @NonNull EmitReferencedElementVisitor emitReferencedElement;	// emit XXXTables.YYY._ZZZ
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
 	protected final @NonNull Map<@NonNull ParameterTypes, String> legacyTemplateBindingsNames = new HashMap<>();
 	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
@@ -765,9 +660,9 @@ public class OCLinEcoreTablesUtils
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genPackage = genPackage;
 		this.asPackage = ClassUtil.requireNonNull(getPivotPackage(genPackage));
-		this.declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
-		this.emitDeclaredNameVisitor = new EmitDeclaredNameVisitor(s);
-		this.emitReferencedElementVisitor = new EmitReferencedElementVisitor(s);
+		this.emitTypeExpression = new EmitTypeExpressionVisitor(s);
+		this.emitDeclaredName = new EmitDeclaredNameVisitor(s);
+		this.emitReferencedElement = new EmitReferencedElementVisitor(s);
 		this.genModelHelper = AbstractGenModelHelper.create(environmentFactory, genPackage.getGenModel());
 		this.activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
 	}
