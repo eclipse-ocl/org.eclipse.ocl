@@ -151,7 +151,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	protected final @NonNull ImportManager importManager;
 	private final @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses = new HashSet<>();
 	private final @NonNull Set<@NonNull Property> implicitOppositeProperties = new HashSet<>();
-//	private @Nullable Namespace namespace = null;				// Namespace in which template parameters are defined.
 
 	public OCLinEcoreTables(@NonNull GenPackage genPackage) {
 		super(genPackage);
@@ -229,6 +228,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void appendInitializationStart(@NonNull String name) {
+		emitLiteralVisitor.setNestedClassName(name);
 		currentPackageName = name;
 		s.append("\t\tstatic {\n");
 		//		s.append("\t\t\tSystem.out.println(\"" + getTablesClassName() + "::" + currentPackageName + " Start\");\n");
@@ -253,6 +253,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("\t\t */\n");
 		s.append("\t\tpublic static void init() {}\n");
 		precedingPackageName = currentPackageName;
+		emitLiteralVisitor.setNestedClassName(null);
 	}
 
 	protected void appendParameterTypesName(@NonNull ParameterTypes parameterTypes) {	// Workaround deprecated _ name
@@ -404,7 +405,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append("		public static final ");
 					s.appendClassReference(true, EnumerationLiteral.class);
 					s.append(" ");
-					asEnumerationLiteral.accept(emitLiteralVisitor);
+					asEnumerationLiteral.accept(emitDeclaredNameVisitor);
 					s.append(" = LIBRARY.createEnumerationLiteral(");
 					s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
 					s.append(".getEEnumLiteral(");
@@ -726,11 +727,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append("		public static final ");
 				s.appendClassReference(true, Operation.class);
 				s.append(" ");
-				op.accept(emitLiteralVisitor);
+				op.accept(emitDeclaredNameVisitor);
 				s.append(" = LIBRARY.createOperation(");
 				op.getOwningClass().accept(emitScopedLiteralVisitor);
 				s.append(", ");
-				s.appendString(ClassUtil.requireNonNull(op.getName()));
+				s.appendString(PivotUtil.getName(op));
 				s.append(", ");
 				appendParameterTypesName(op.getParameterTypes());
 				s.append(", ");
@@ -947,9 +948,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append("		public static final ");
 					s.appendClassReference(true, Property.class);
 					s.append(" ");
-					prop.accept(emitLiteralVisitor);
+					prop.accept(emitDeclaredNameVisitor);
 					s.append(" = LIBRARY.create");
-					String name = ClassUtil.requireNonNull(prop.getName());
+					String name = PivotUtil.getName(prop);
 					if (prop.getImplementationClass() != null) {
 						s.append("Property(");
 						pClass.accept(emitScopedLiteralVisitor);
@@ -1029,7 +1030,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append("			");
 						prop.accept(emitLiteralVisitor);
 						s.append(".setOpposite(");
-						opposite.accept(emitLiteralVisitor);
+						opposite.accept(emitQualifiedLiteralVisitor);
 						s.append(");\n");
 					}
 				}
@@ -1054,7 +1055,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
 		}
 		s.append(" ");
-		asClass.accept(emitLiteralVisitor);
+		asClass.accept(emitDeclaredNameVisitor);
 		s.append(" = LIBRARY.create");
 		if (asClass instanceof Enumeration) {
 			s.append("Enumeration");
@@ -1083,7 +1084,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(genModelHelper.getEcoreLiteralName(eClassifier));
 			}
 			else {
-				s.appendString(ClassUtil.requireNonNull(asClass.getName()));
+				s.appendString(PivotUtil.getName(asClass));
 			}
 		}
 		else { */
@@ -1325,6 +1326,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(" * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.\n");
 		s.append(" */\n");
 		//		s.append("@SuppressWarnings(\"nls\")\n");
+		emitLiteralVisitor.setTablesClassPath(getTablesPackageName() + "." + tablesClassName);
 		s.append("public class " + tablesClassName + " extends ");
 		s.appendClassReference(null, AbstractTables.class);
 		s.append("\n");
@@ -1409,6 +1411,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append(tablesPostamble);
 		}
 		s.append("}\n");
+		emitLiteralVisitor.setTablesClassPath(null);
 		return s.toString();
 	}
 
@@ -1460,10 +1463,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		return PivotPackage.Literals.CLASS;
 	}
-
-//	public @NonNull Namespace getNamespace() {
-//		return ClassUtil.requireNonNull(namespace);
-//	}
 
 	public @NonNull String getTablesClassName() {
 		return getTablesClassName(genPackage);

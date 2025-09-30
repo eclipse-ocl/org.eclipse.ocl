@@ -81,8 +81,8 @@ import org.eclipse.xtext.util.Strings;
 
 public class OCLinEcoreTablesUtils
 {
-	private static int SHOW_TABLES_PACKAGE = 1;
-	private static int SHOW_TABLES_SUBPACKAGE = 2;
+//	private static int SHOW_TABLES_PACKAGE = 1;
+//	private static int SHOW_TABLES_SUBPACKAGE = 2;
 
 	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
 	{
@@ -240,6 +240,7 @@ public class OCLinEcoreTablesUtils
 
 		protected final @NonNull Map<Type, String> typeNameMap = new HashMap<>();
 		protected final @NonNull Set<String> typeNameUse = new HashSet<>();
+//		private final @NonNull Stack<@NonNull String> stack = new Stack<>();
 
 		public CodeGenString(@NonNull MetamodelManager metamodelManager, boolean useNullAnnotations) {
 			this.metamodelManager = metamodelManager;
@@ -320,6 +321,14 @@ public class OCLinEcoreTablesUtils
 			Collections.sort(names);
 			return names;
 		}
+
+//		public void pop() {
+//			stack .pop();
+//		}
+
+//		public void push(@NonNull String packagePathElements) {
+//			stack.push(packagePathElements);
+//		}
 
 		@Override
 		public @NonNull String toString() {
@@ -475,32 +484,148 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
+	public class EmitDeclaredNameVisitor extends AbstractExtendingVisitor<Object, Object>
+	{
+		protected final @NonNull CodeGenString s;
+
+		protected EmitDeclaredNameVisitor(@NonNull CodeGenString s) {
+			super(null);
+			this.s = s;
+		}
+
+		protected synchronized void appendDeclaredClassName(org.eclipse.ocl.pivot.@NonNull Type asType) {
+			s.append("_");
+			s.appendAndEncodeName(asType);
+		}
+
+		@Override
+		public @Nullable Object visiting(@NonNull Visitable visitable) {
+			throw new UnsupportedOperationException("Unsupported EmitDeclaredNameVisitor for " + visitable.eClass().getName());
+		}
+
+		@Override
+		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			appendDeclaredClassName(asClass);
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
+			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
+			appendDeclaredClassName(unspecializedType);
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitConstraint(@NonNull Constraint constraint) {
+			Type type = ClassUtil.requireNonNull((Type) constraint.eContainer());
+			appendDeclaredClassName(type);
+			s.append("__");
+			s.append(NameQueries.getUniqueText(type, constraint));
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
+			Enumeration asEnumeration = PivotUtil.getOwningEnumeration(asEnumerationLiteral);
+			appendDeclaredClassName(asEnumeration);
+			s.append("__");
+			s.appendAndEncodeName(asEnumerationLiteral);
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
+			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
+			appendDeclaredClassName(unspecializedType);
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitOperation(@NonNull Operation asOperation) {
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
+			appendDeclaredClassName(asClass);
+			s.append("__");
+			s.appendAndEncodeName(asOperation);
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+			s.append("_");
+			s.appendAndEncodeName(asPackage);
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitProperty(@NonNull Property asProperty) {
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
+			appendDeclaredClassName(asClass);
+			s.append("__");
+			s.appendAndEncodeName(asProperty);
+			if (asProperty.isIsImplicit()) {
+				Property asOpposite = asProperty.getOpposite();
+				if (asOpposite != null) {
+					s.append("__");
+					s.appendAndEncodeName(asOpposite);
+				}
+			}
+			return null;
+		}
+
+	/*	@Override
+		public @Nullable Object visitTupleType(@NonNull TupleType asTupleType) {
+			appendTablesPackageQualification(asTupleType);
+			s.append("tuple_type_");			//
+			s.appendUnscopedTypeName(asTupleType);
+			return null;
+		} */
+	}
+
 	public class EmitLiteralVisitor extends AbstractExtendingVisitor<Object, Object>
 	{
 		protected final @NonNull CodeGenString s;
-		protected final boolean showTablesPackage;
-		protected final boolean showTablesSubpackage;
+		protected final boolean qualified;
+		//	protected final boolean showTablesPackage;
+	//	protected final boolean showTablesSubpackage;
 		private @Nullable Namespace namespace = null;
+		/**
+		 * Prevailing package scope when synthesizing Java code.
+		 */
+//		private @Nullable String tablesPackageName = null;
+		/**
+		 * Prevailing class scope when synthesizing Java code.
+		 */
+		private @Nullable String tablesClassPath = null;
+		/**
+		 * Prevailing class scope when synthesizing Java code.
+		 */
+//		private @Nullable String tablesClassName = null;
+		/**
+		 * Prevailing nested class scope when synthesizing Java code.
+		 */
+		private @Nullable String nestedClassName = null;
 
 		protected EmitLiteralVisitor(@NonNull CodeGenString s, int showFlags) {
 			super(null);
 			this.s = s;
-			this.showTablesPackage = (showFlags & SHOW_TABLES_PACKAGE) != 0;
-			this.showTablesSubpackage = (showFlags & SHOW_TABLES_SUBPACKAGE) != 0;
+			this.qualified = showFlags != 0;
+			//		this.showTablesPackage = (showFlags & SHOW_TABLES_PACKAGE) != 0;
+	//		this.showTablesSubpackage = (showFlags & SHOW_TABLES_SUBPACKAGE) != 0;
 		}
 
 		protected void appendTablesPackageQualification(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			if (showTablesPackage) {
+		//	if (showTablesPackage) {
 				s.appendClassReference(null, getQualifiedTablesClassName(asClass));
 				s.append(".");
-			}
+		//	}
 		}
 
 		protected void appendTablesSubackageQualification(@NonNull String subPackageName) {
-			if (showTablesSubpackage) {
+		//	if (showTablesSubpackage) {
 				s.append(subPackageName);
 				s.append(".");
-			}
+		//	}
 		}
 
 		public @Nullable Namespace basicGetNamespace() {
@@ -511,6 +636,19 @@ public class OCLinEcoreTablesUtils
 			this.namespace = namespace;
 		}
 
+		public void setNestedClassName(@Nullable String nestedClassName) {
+			this.nestedClassName = nestedClassName;
+		}
+
+//		public void setPackageName(@Nullable String tablesPackageName, @Nullable String tablesClassName) {
+//			this.tablesPackageName = tablesPackageName;
+//			this.tablesClassName = tablesClassName;
+//		}
+
+		public void setTablesClassPath(@Nullable String tablesClassPath) {
+			this.tablesClassPath = tablesClassPath;
+		}
+
 		@Override
 		public @Nullable Object visiting(@NonNull Visitable visitable) {
 			throw new UnsupportedOperationException("Unsupported EmitLiteralVisitor for " + visitable.eClass().getName());
@@ -518,20 +656,39 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			appendTablesPackageQualification(asClass);
-			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
-			s.append("_");
-			s.appendAndEncodeName(asClass);
+		//	appendTablesPackageQualification(asClass);
+		//	appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
+		//	s.append("_");
+		//	s.appendAndEncodeName(asClass);
+			appendClassReference(null, AbstractGenModelHelper.TYPES_PACKAGE_NAME, "_", asClass);
 			return null;
+		}
+
+		private void appendClassReference(@Nullable String tablesClassPath, @NonNull String nestedClassName, @NonNull String classNamePrefix,
+				org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			if (qualified) {
+				if (tablesClassPath == null) {			// Nothing specified, must be current
+					tablesClassPath = getQualifiedTablesClassName(asClass);
+				}
+				if (!tablesClassPath.equals(this.tablesClassPath)) {
+					s.appendClassReference(null, tablesClassPath);
+					s.append(".");
+					s.append(nestedClassName);
+					s.append(".");
+				}
+				else if (!nestedClassName.equals(this.nestedClassName)) {
+					s.append(nestedClassName);
+					s.append(".");
+				}
+			}
+			s.append(classNamePrefix);
+			s.appendAndEncodeName(asClass);
 		}
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-			appendTablesPackageQualification(unspecializedType);
-			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
-			s.append("_");
-			s.appendAndEncodeName(unspecializedType);
+			appendClassReference(null, AbstractGenModelHelper.TYPES_PACKAGE_NAME, "_", unspecializedType);
 			return null;
 		}
 
@@ -548,10 +705,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
 			Enumeration asEnumeration = PivotUtil.getOwningEnumeration(asEnumerationLiteral);
-			appendTablesPackageQualification(asEnumeration);
-			appendTablesSubackageQualification(AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME);
-			s.append("_");
-			s.appendAndEncodeName(asEnumeration);
+			appendClassReference(null, AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME, "_", asEnumeration);
 			s.append("__");
 			s.appendAndEncodeName(asEnumerationLiteral);
 			return null;
@@ -560,20 +714,14 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
 			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
-			appendTablesPackageQualification(unspecializedType);
-			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
-			s.append("_");
-			s.appendAndEncodeName(unspecializedType);
+			appendClassReference(null, AbstractGenModelHelper.TYPES_PACKAGE_NAME, "_", unspecializedType);
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitOperation(@NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			appendTablesPackageQualification(asClass);
-			appendTablesSubackageQualification(AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME);
-			s.append("_");
-			s.appendAndEncodeName(asClass);
+			appendClassReference(null, AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME, "_", asClass);
 			s.append("__");
 			s.appendAndEncodeName(asOperation);
 			return null;
@@ -589,10 +737,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
-			appendTablesPackageQualification(asClass);
-			appendTablesSubackageQualification(AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME);
-			s.append("_");
-			s.appendAndEncodeName(asClass);
+			appendClassReference(null, AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME, "_", asClass);
 			s.append("__");
 			s.appendAndEncodeName(asProperty);
 			if (asProperty.isIsImplicit()) {
@@ -650,6 +795,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor;
+	protected final @NonNull EmitDeclaredNameVisitor emitDeclaredNameVisitor;				// emit _ZZZ
 	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor;				// emit _ZZZ
 	protected final @NonNull EmitLiteralVisitor emitScopedLiteralVisitor;		// emit YYY._ZZZ
 	protected final @NonNull EmitLiteralVisitor emitQualifiedLiteralVisitor;	// emit XXXTables.YYY._ZZZ
@@ -669,9 +815,10 @@ public class OCLinEcoreTablesUtils
 		this.genPackage = genPackage;
 		this.asPackage = ClassUtil.requireNonNull(getPivotPackage(genPackage));
 		this.declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
+		this.emitDeclaredNameVisitor = new EmitDeclaredNameVisitor(s);
 		this.emitLiteralVisitor = new EmitLiteralVisitor(s, 0);
-		this.emitScopedLiteralVisitor = new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE);
-		this.emitQualifiedLiteralVisitor = new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE | SHOW_TABLES_PACKAGE);
+		this.emitScopedLiteralVisitor = new EmitLiteralVisitor(s, 1);
+		this.emitQualifiedLiteralVisitor = emitScopedLiteralVisitor; //new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE | SHOW_TABLES_PACKAGE);
 		this.genModelHelper = AbstractGenModelHelper.create(environmentFactory, genPackage.getGenModel());
 		this.activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
 	}
@@ -1177,7 +1324,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	/**
-	 * Return  true if property has an Ecore counterpart. Non-navigable opposites may have a Property
+	 * Return true if property has an Ecore counterpart. Non-navigable opposites may have a Property
 	 * but no Ecore EReference.
 	 */
 	protected @NonNull Boolean hasEcore(@NonNull Property property) {
