@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.EMFPlugin;
@@ -551,12 +552,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return true;
 	}
 
-	protected boolean doEcoreCompile(@NonNull OCL ocl, @NonNull String... testProjectNames) throws Exception {
-		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
-		return doCompile(ocl, classpath, testProjectNames);
-	}
+//	protected boolean doEcoreCompile(@NonNull OCL ocl, @NonNull String... testProjectNames) throws Exception {
+//		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
+//		return doCompile(ocl, classpath, testProjectNames);
+//	}
 
-	protected void doGenModel(@NonNull URI genmodelURI) throws Exception {
+	protected @NonNull GenModel doGenModel(@NonNull URI genmodelURI) throws Exception {
 		OCL ocl= createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
@@ -628,6 +629,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			String newGenModelStr = EmfFormatter.objToStr(genModel);
 			TestCase.assertEquals(oldGenModelStr, newGenModelStr);
 			//		metamodelManager.dispose();
+			return genModel;
 		}
 		finally {
 			ocl.dispose();
@@ -637,6 +639,22 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		}
 	}
 
+	protected boolean doGenModelCompile(@NonNull OCL ocl, @NonNull GenModel genModel, @NonNull String... testProjectNames) throws Exception {
+		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
+		for (GenPackage genPackage : genModel.getAllUsedGenPackagesWithClassifiers()) {
+			String qualifiedPackageClassName = genPackage.getQualifiedPackageClassName();
+			try {
+				Class<?> qualifiedPackageClass = Class.forName(qualifiedPackageClassName);
+				classpath.addBundleForClass(qualifiedPackageClass);
+			}
+			catch (ClassNotFoundException e) {
+				System.out.println("Failed to find genmodel for " + qualifiedPackageClassName + "\n\t" + e);
+			}
+
+		}
+		return doCompile(ocl, classpath, testProjectNames);
+	}
+
 	protected EPackage doLoadPackage(@NonNull ExplicitClassLoader classLoader, @NonNull String qualifiedModelPackageName) throws Exception {
 		Class<?> testClass = classLoader.loadClass(qualifiedModelPackageName);
 		//		System.out.println("Loaded " + testClass.getName());
@@ -644,12 +662,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return (EPackage) eInstance;
 	}
 
-	protected void doUMLCompile(@NonNull TestOCL ocl, @NonNull String testProjectName) throws Exception {
-		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
-		classpath.addBundleForClass(org.eclipse.uml2.types.TypesPackage.class);
-		classpath.addBundleForClass(org.eclipse.uml2.uml.UMLPackage.class);
-		doCompile(ocl, classpath, testProjectName);
-	}
+//	protected void doUMLCompile(@NonNull TestOCL ocl, @NonNull String testProjectName) throws Exception {
+//		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
+//		classpath.addBundleForClass(org.eclipse.uml2.types.TypesPackage.class);
+//		classpath.addBundleForClass(org.eclipse.uml2.uml.UMLPackage.class);
+//		doCompile(ocl, classpath, testProjectName);
+//	}
 
 	@Override
 	protected void initializeResourceSet() {
@@ -741,9 +759,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent("Bug370824", null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -769,9 +787,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent("Bug409650", null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
 				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
@@ -820,9 +838,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -869,10 +887,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				URI genModelURIA = createModels(testFileStemA, oclinecoreFileA, genmodelFileA);
 				URI genModelURIB = createModels(testFileStemB, oclinecoreFileB, genmodelFileB);
 				// B first demonstrates the demand load of Bug416421A to fix Bug 416421
-				doGenModel(genModelURIB);
+				GenModel genModel = doGenModel(genModelURIB);
 				doGenModel(genModelURIA);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectNameA, testProjectNameB);
+				doGenModelCompile(ocl, genModel, testProjectNameA, testProjectNameB);
 				ocl.dispose();
 			}
 		});
@@ -919,9 +937,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -962,9 +980,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -1011,9 +1029,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -1050,9 +1068,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 
 
 				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
@@ -1104,9 +1122,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-		doGenModel(genModelURI);
+		GenModel genModel = doGenModel(genModelURI);
 		TestOCL ocl = createOCL();
-		doEcoreCompile(ocl, testProjectName);
+		doGenModelCompile(ocl, genModel, testProjectName);
 		ocl.dispose();
 	} */
 
@@ -1151,11 +1169,11 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				}
 				//
 				//
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				//
 				TestOCL ocl = createOCL();
 				try {
-					doUMLCompile(ocl, testProjectName);
+					doGenModelCompile(ocl, genModel, testProjectName);
 
 					// Execute the profile
 				}
@@ -1191,10 +1209,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				importer.reloadGenModel(genModelPath);
 				ocl0.dispose();
 				//
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				//
 				TestOCL ocl = createOCL();
-				doUMLCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 
 				// Execute the profile
 
@@ -1225,9 +1243,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent("Bug570802", null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -1262,10 +1280,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				importer.reloadGenModel(genModelPath);
 				ocl0.dispose();
 				//
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				//
 				TestOCL ocl = createOCL();
-				doUMLCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -1302,10 +1320,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				importer.reloadGenModel(genModelPath);
 				ocl1.dispose();
 				//
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				//
 				TestOCL ocl2 = createOCL();
-				doUMLCompile(ocl2, testProjectName);
+				doGenModelCompile(ocl2, genModel, testProjectName);
 
 				//
 				int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
@@ -1355,10 +1373,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				importer.reloadGenModel(genModelPath);
 				ocl1.dispose();
 				//
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				//
 				TestOCL ocl2 = createOCL();
-				doUMLCompile(ocl2, testProjectName);
+				doGenModelCompile(ocl2, genModel, testProjectName);
 
 				//
 				int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
@@ -1422,10 +1440,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				importer.reloadGenModel(genModelPath);
 				ocl1.dispose();
 				//
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				//
 				TestOCL ocl2 = createOCL();
-				doUMLCompile(ocl2, testProjectName);
+				doGenModelCompile(ocl2, genModel, testProjectName);
 
 				//
 			/*	int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
@@ -1489,9 +1507,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, genOptions);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				String qualifiedPackageName = testProjectName + ".coreM." + testFileStem + "Package";
 				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
@@ -1542,10 +1560,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				finally {
 					ocl0.dispose();
 				}
-				doGenModel(targetGenModelURI);
+				GenModel genModel = doGenModel(targetGenModelURI);
 				TestOCL ocl = createOCL();
 				try {
-					doEcoreCompile(ocl, testProjectName);
+					doGenModelCompile(ocl, genModel, testProjectName);
 				}
 				finally {
 					ocl.dispose();
@@ -1640,10 +1658,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent("Bug570717", null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
 				try {
-					doEcoreCompile(ocl, testProjectName);
+					doGenModelCompile(ocl, genModel, testProjectName);
 					String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
 					File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 					List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
@@ -1751,9 +1769,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent("Bug412736", null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
 				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
@@ -1806,9 +1824,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
 				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
@@ -1858,9 +1876,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
 				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
@@ -1910,11 +1928,11 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				//			getTestFileURI("SysML_ValueTypes_QUDV.ecore", ocl, getTestModelURI("models/genmodel/SysML_ValueTypes_QUDV.ecore"));
 				//			URI targetGenModelURI = getTestFileURI("SysML_ValueTypes_QUDV.genmodel", ocl, getTestModelURI("models/genmodel/SysML_ValueTypes_QUDV.genmodel"));
 				//
-				doGenModel(targetGenModelURI);
+				GenModel genModel = doGenModel(targetGenModelURI);
 
 				TestOCL ocl = createOCL();
 				try {
-					doEcoreCompile(ocl, testProjectName);
+					doGenModelCompile(ocl, genModel, testProjectName);
 					File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 					List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 					ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
@@ -2107,9 +2125,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, genOptions);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
@@ -2138,9 +2156,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
-				doGenModel(genModelURI);
+				GenModel genModel = doGenModel(genModelURI);
 				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
+				doGenModelCompile(ocl, genModel, testProjectName);
 				ocl.dispose();
 			}
 		});
