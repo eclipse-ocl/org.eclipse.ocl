@@ -617,9 +617,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(name)");
 
 		// nested collections not flattened
-		Set<org.eclipse.ocl.pivot.Package> e1 = Collections.singleton(ocl.jim);
+		Set<org.eclipse.ocl.pivot.@NonNull Package> e1 = Collections.singleton(ocl.jim);
 		Set<?> e2 = Collections.EMPTY_SET;
-		HashSet<Object> e3 = new HashSet<Object>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
+		HashSet<Object> e3 = new HashSet<>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
 		CollectionValue expected2 = idResolver.createBagOfEach(typeId, e1, e2, e3);
 
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->collectNested(ownedPackages)");
@@ -877,9 +877,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->gather(name)");
 
 		// nested collections not flattened
-		Set<org.eclipse.ocl.pivot.Package> e1 = Collections.singleton(ocl.jim);
+		Set<org.eclipse.ocl.pivot.@NonNull Package> e1 = Collections.singleton(ocl.jim);
 		Set<?> e2 = Collections.EMPTY_SET;
-		HashSet<Object> e3 = new HashSet<Object>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
+		HashSet<Object> e3 = new HashSet<>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
 		CollectionValue expected2 = idResolver.createBagOfEach(typeId, e1, e2, e3);
 
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->gather(ownedPackages)");

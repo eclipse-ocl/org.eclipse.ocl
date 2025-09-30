@@ -930,17 +930,12 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	public @NonNull Type getTupleType(@NonNull TuplePart @NonNull... tupleParts) {
-	//	orderedPartIds[index] = IdManager.getPartId(index, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired());
-
 		List<@NonNull PartId> partIds = new ArrayList<>();
-		for (TuplePart tuplePart : tupleParts) {
+		for (@NonNull TuplePart tuplePart : tupleParts) {
 			partIds.add(IdManager.getPartId(partIds.size(), PivotUtil.getName(tuplePart), tuplePart.getTypeId(), tuplePart.isIsRequired()));
 		}
 		return getTupleType(partIds);
 	}
-//	Namespace namespace = ElementUtil.basicGetContainingNamespace(csElement);
-//	TemplateParameterSubstitutions templateSpecialization = namespace != null ? TemplateSpecialization.basicGetTemplateSpecialization(namespace) : null;
-//	TupleType tupleType = context.getStandardLibrary().getTupleType(parts, templateSpecialization);			// XXX pass parameterization from ancestral scope
 
 	@Override
 	public @NonNull CollectionType getUniqueCollectionType() {
