@@ -351,7 +351,7 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 			//			TemplateParameter owningTemplateParameter = type.isTemplateParameter();
 			//			if (owningTemplateParameter == null) {
-			type.accept(emitQualifiedLiteralVisitor);
+			type.accept(emitReferencedElementVisitor);
 			/*			}
 			else if (owningTemplateParameter.getSignature().getTemplate() instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class containerType = (org.eclipse.ocl.pivot.Class) owningTemplateParameter.getSignature().getTemplate();
@@ -394,7 +394,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
 			s.append("LIBRARY.getCollectionType(");
-			emitQualifiedLiteralVisitor.visit(type);
+			type.accept(emitReferencedElementVisitor);
 			s.append(", ");
 			type.getElementType().accept(this);
 			s.append(")");
@@ -436,7 +436,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType type) {
 			s.append("LIBRARY.getMapType(");
-			emitQualifiedLiteralVisitor.visit(type);
+			type.accept(emitReferencedElementVisitor);
 			s.append(", ");
 			type.getKeyType().accept(this);
 			s.append(", ");
@@ -478,7 +478,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
-			asTemplateParameter.accept(emitQualifiedLiteralVisitor);
+			asTemplateParameter.accept(emitReferencedElementVisitor);
 		//	s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
 			return null;
 		}
@@ -493,9 +493,9 @@ public class OCLinEcoreTablesUtils
 			this.s = s;
 		}
 
-		protected synchronized void appendDeclaredClassName(org.eclipse.ocl.pivot.@NonNull Type asType) {
+		protected void appendDeclaredClassName(org.eclipse.ocl.pivot.@NonNull NamedElement asNamedElement) {
 			s.append("_");
-			s.appendAndEncodeName(asType);
+			s.appendAndEncodeName(asNamedElement);
 		}
 
 		@Override
@@ -552,8 +552,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-			s.append("_");
-			s.appendAndEncodeName(asPackage);
+			appendDeclaredClassName(asPackage);
 			return null;
 		}
 
@@ -582,50 +581,39 @@ public class OCLinEcoreTablesUtils
 		} */
 	}
 
-	public class EmitLiteralVisitor extends AbstractExtendingVisitor<Object, Object>
+	public class EmitReferencedElementVisitor extends EmitDeclaredNameVisitor
 	{
-		protected final @NonNull CodeGenString s;
-		protected final boolean qualified;
-		//	protected final boolean showTablesPackage;
-	//	protected final boolean showTablesSubpackage;
-		private @Nullable Namespace namespace = null;
 		/**
-		 * Prevailing package scope when synthesizing Java code.
+		 * Prevailing namespace of synthesized declaration - the provider of the TemplateParameterization.
 		 */
-//		private @Nullable String tablesPackageName = null;
+		private @Nullable Namespace namespace = null;
 		/**
 		 * Prevailing class scope when synthesizing Java code.
 		 */
 		private @Nullable String tablesClassPath = null;
 		/**
-		 * Prevailing class scope when synthesizing Java code.
-		 */
-//		private @Nullable String tablesClassName = null;
-		/**
 		 * Prevailing nested class scope when synthesizing Java code.
 		 */
 		private @Nullable String nestedClassName = null;
 
-		protected EmitLiteralVisitor(@NonNull CodeGenString s, int showFlags) {
-			super(null);
-			this.s = s;
-			this.qualified = showFlags != 0;
-			//		this.showTablesPackage = (showFlags & SHOW_TABLES_PACKAGE) != 0;
-	//		this.showTablesSubpackage = (showFlags & SHOW_TABLES_SUBPACKAGE) != 0;
+		protected EmitReferencedElementVisitor(@NonNull CodeGenString s) {
+			super(s);
 		}
 
-		protected void appendTablesPackageQualification(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		//	if (showTablesPackage) {
-				s.appendClassReference(null, getQualifiedTablesClassName(asClass));
+		protected void appendClassReference(@NonNull String nestedClassName, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			GenPackage genPackage = genModelHelper.getGenPackage(asClass);
+			String tablesClassPath = getQualifiedTablesClassName(genPackage);
+			if (!tablesClassPath.equals(this.tablesClassPath)) {
+				s.appendClassReference(null, tablesClassPath);
 				s.append(".");
-		//	}
-		}
-
-		protected void appendTablesSubackageQualification(@NonNull String subPackageName) {
-		//	if (showTablesSubpackage) {
-				s.append(subPackageName);
+				s.append(nestedClassName);
 				s.append(".");
-		//	}
+			}
+			else if (!nestedClassName.equals(this.nestedClassName)) {
+				s.append(nestedClassName);
+				s.append(".");
+			}
+			appendDeclaredClassName(asClass);
 		}
 
 		public @Nullable Namespace basicGetNamespace() {
@@ -640,63 +628,32 @@ public class OCLinEcoreTablesUtils
 			this.nestedClassName = nestedClassName;
 		}
 
-//		public void setPackageName(@Nullable String tablesPackageName, @Nullable String tablesClassName) {
-//			this.tablesPackageName = tablesPackageName;
-//			this.tablesClassName = tablesClassName;
-//		}
-
 		public void setTablesClassPath(@Nullable String tablesClassPath) {
 			this.tablesClassPath = tablesClassPath;
 		}
 
 		@Override
 		public @Nullable Object visiting(@NonNull Visitable visitable) {
-			throw new UnsupportedOperationException("Unsupported EmitLiteralVisitor for " + visitable.eClass().getName());
+			throw new UnsupportedOperationException("Unsupported EmitReferencedElementVisitor for " + visitable.eClass().getName());
 		}
 
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		//	appendTablesPackageQualification(asClass);
-		//	appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
-		//	s.append("_");
-		//	s.appendAndEncodeName(asClass);
-			appendClassReference(null, AbstractGenModelHelper.TYPES_PACKAGE_NAME, "_", asClass);
+			appendClassReference(AbstractGenModelHelper.TYPES_PACKAGE_NAME, asClass);
 			return null;
-		}
-
-		private void appendClassReference(@Nullable String tablesClassPath, @NonNull String nestedClassName, @NonNull String classNamePrefix,
-				org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			if (qualified) {
-				if (tablesClassPath == null) {			// Nothing specified, must be current
-					tablesClassPath = getQualifiedTablesClassName(asClass);
-				}
-				if (!tablesClassPath.equals(this.tablesClassPath)) {
-					s.appendClassReference(null, tablesClassPath);
-					s.append(".");
-					s.append(nestedClassName);
-					s.append(".");
-				}
-				else if (!nestedClassName.equals(this.nestedClassName)) {
-					s.append(nestedClassName);
-					s.append(".");
-				}
-			}
-			s.append(classNamePrefix);
-			s.appendAndEncodeName(asClass);
 		}
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-			appendClassReference(null, AbstractGenModelHelper.TYPES_PACKAGE_NAME, "_", unspecializedType);
+			appendClassReference(AbstractGenModelHelper.TYPES_PACKAGE_NAME, unspecializedType);
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitConstraint(@NonNull Constraint constraint) {
 			Type type = ClassUtil.requireNonNull((Type) constraint.eContainer());
-			s.append("_");
-			s.appendAndEncodeName(type);
+			appendDeclaredClassName(type);
 			s.append("__");
 			s.append(NameQueries.getUniqueText(type, constraint));
 			return null;
@@ -705,7 +662,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
 			Enumeration asEnumeration = PivotUtil.getOwningEnumeration(asEnumerationLiteral);
-			appendClassReference(null, AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME, "_", asEnumeration);
+			appendClassReference(AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME, asEnumeration);
 			s.append("__");
 			s.appendAndEncodeName(asEnumerationLiteral);
 			return null;
@@ -714,30 +671,23 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
 			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
-			appendClassReference(null, AbstractGenModelHelper.TYPES_PACKAGE_NAME, "_", unspecializedType);
+			appendClassReference(AbstractGenModelHelper.TYPES_PACKAGE_NAME, unspecializedType);
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitOperation(@NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			appendClassReference(null, AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME, "_", asClass);
+			appendClassReference(AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME, asClass);
 			s.append("__");
 			s.appendAndEncodeName(asOperation);
 			return null;
 		}
 
 		@Override
-		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-			s.append("_");
-			s.appendAndEncodeName(asPackage);
-			return null;
-		}
-
-		@Override
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
-			appendClassReference(null, AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME, "_", asClass);
+			appendClassReference(AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME, asClass);
 			s.append("__");
 			s.appendAndEncodeName(asProperty);
 			if (asProperty.isIsImplicit()) {
@@ -761,7 +711,8 @@ public class OCLinEcoreTablesUtils
 			int index = asTemplateParameter.getTemplateParameterId().getIndex();
 			Orphanage orphanage = environmentFactory.getOrphanage();
 			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(orphanage, index);
-			appendTablesSubackageQualification(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+			s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+			s.append(".");
 			s.append(normalizedTemplateParameter.getName());
 			if (namespace2 != null) {
 				s.append(")");
@@ -769,13 +720,15 @@ public class OCLinEcoreTablesUtils
 			return null;
 		}
 
-		@Override
+	/*	@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType asTupleType) {
-			appendTablesPackageQualification(asTupleType);
+			GenPackage genPackage = genModelHelper.getGenPackage(asTupleType);
+			s.appendClassReference(null, getQualifiedTablesClassName(genPackage));
+			s.append(".");
 			s.append("tuple_type_");			//
 			s.appendUnscopedTypeName(asTupleType);
 			return null;
-		}
+		} */
 	}
 
 	private static @NonNull MetamodelManager getMetamodelManager(@NonNull GenPackage genPackage) {
@@ -796,9 +749,7 @@ public class OCLinEcoreTablesUtils
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor;
 	protected final @NonNull EmitDeclaredNameVisitor emitDeclaredNameVisitor;				// emit _ZZZ
-	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor;				// emit _ZZZ
-	protected final @NonNull EmitLiteralVisitor emitScopedLiteralVisitor;		// emit YYY._ZZZ
-	protected final @NonNull EmitLiteralVisitor emitQualifiedLiteralVisitor;	// emit XXXTables.YYY._ZZZ
+	protected final @NonNull EmitReferencedElementVisitor emitReferencedElementVisitor;		// emit XXXTables.YYY._ZZZ
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
 	protected final @NonNull Map<@NonNull ParameterTypes, String> legacyTemplateBindingsNames = new HashMap<>();
 	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
@@ -816,9 +767,7 @@ public class OCLinEcoreTablesUtils
 		this.asPackage = ClassUtil.requireNonNull(getPivotPackage(genPackage));
 		this.declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
 		this.emitDeclaredNameVisitor = new EmitDeclaredNameVisitor(s);
-		this.emitLiteralVisitor = new EmitLiteralVisitor(s, 0);
-		this.emitScopedLiteralVisitor = new EmitLiteralVisitor(s, 1);
-		this.emitQualifiedLiteralVisitor = emitScopedLiteralVisitor; //new EmitLiteralVisitor(s, SHOW_TABLES_SUBPACKAGE | SHOW_TABLES_PACKAGE);
+		this.emitReferencedElementVisitor = new EmitReferencedElementVisitor(s);
 		this.genModelHelper = AbstractGenModelHelper.create(environmentFactory, genPackage.getGenModel());
 		this.activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
 	}
@@ -1193,18 +1142,7 @@ public class OCLinEcoreTablesUtils
 		return properties;
 	}
 
-	protected @NonNull String getQualifiedTablesClassName(org.eclipse.ocl.pivot.@NonNull Class type) {
-		GenPackage genPackage = genModelHelper.getGenPackage(type);
-		if (genPackage != null) {
-			return genPackage.getReflectionPackageName() + "." + getTablesClassName(genPackage);
-		}
-		else {
-			return "UnknownMetamodelTables";
-		}
-	}
-
-	protected @NonNull String getQualifiedTablesClassName(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		GenPackage genPackage = genModelHelper.getGenPackage(asPackage);
+	protected @NonNull String getQualifiedTablesClassName(@Nullable GenPackage genPackage) {
 		if (genPackage != null) {
 			return genPackage.getReflectionPackageName() + "." + getTablesClassName(genPackage);
 		}
