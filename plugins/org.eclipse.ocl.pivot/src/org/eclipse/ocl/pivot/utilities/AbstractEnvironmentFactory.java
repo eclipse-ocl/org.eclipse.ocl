@@ -227,6 +227,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel.init(this);
 		this.standardLibrary.init(this);
 
+		technology.registerMetaPackages(completeModel);
+
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 
 		if (userResourceSet != null) {

@@ -14,9 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 
 /**
  * @since 1.14
@@ -88,6 +92,26 @@ public abstract class AbstractTables
 
 	public static final @Nullable AbstractTables basicGet(@NonNull String nsURI) {
 		return nsURI2tables.get(nsURI);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected static org.eclipse.ocl.pivot.@NonNull Property createOpposite(@NonNull EClass eClass, @NonNull String name, @NonNull Property asProperty) {
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eClass);
+		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+		org.eclipse.ocl.pivot.Class asClass = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, eClass);
+		assert asClass != null;
+		return metamodelManager.createAndInstallOpposite(asClass, name, asProperty);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected static org.eclipse.ocl.pivot.@NonNull Class getASClass(@NonNull EClassifier eClassifier) {
+		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eClassifier);
+		org.eclipse.ocl.pivot.Class asClass = environmentFactory.getMetamodelManager().getASOfEcore(org.eclipse.ocl.pivot.Class.class, eClassifier);
+		return asClass;
 	}
 
 	protected AbstractTables(@NonNull String nsURI) {

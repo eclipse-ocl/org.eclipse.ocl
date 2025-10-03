@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenAnnotation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
@@ -459,6 +460,9 @@ public class OCLinEcoreTablesUtils
 			GenPackage genPackage = genModelHelper.getGenPackage(asClass);
 			String tablesClassPath = getQualifiedTablesClassName(genPackage);
 			if (!tablesClassPath.equals(this.tablesClassPath)) {
+				if (tablesClassPath.contains("UMLTables")) {
+					getClass();		// XXX
+				}
 				s.appendClassReference(null, tablesClassPath);
 				s.append(".");
 				s.append(nestedClassName);
@@ -490,6 +494,34 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visiting(@NonNull Visitable visitable) {
 			throw new UnsupportedOperationException("Unsupported EmitReferencedElementVisitor for " + visitable.eClass().getName());
+		}
+
+		@Override
+		public @Nullable Object visitProperty(@NonNull Property asProperty) {
+			GenAnnotation genAnnotation = null;
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
+			GenClassifier genClassifier = genModelHelper.getGenClassifier(asClass);
+			if (genClassifier == null) {
+				return null;
+			}
+			GenModel genModel = genClassifier.getGenModel();
+			if (genModel == null) {
+				return null;
+			}
+			genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
+			if (genAnnotation == null) {
+				s.append("createOpposite(");
+				emitASClass(genClassifier);
+				s.append(", ");
+				s.appendString(PivotUtil.getName(asProperty));
+				s.append(",");
+				asProperty.getOpposite().accept(this);
+				s.append(")");
+				return null;
+			}
+			else {
+				return super.visitProperty(asProperty);
+			}
 		}
 
 		@Override
@@ -532,7 +564,24 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-			type.accept(emitReferencedElement);
+			type = PivotUtil.getUnspecializedTemplateableElement(type);
+			GenClassifier genClassifier = genModelHelper.getGenClassifier(type);
+			if (genClassifier == null) {
+				return null;
+			}
+			GenModel genModel = genClassifier.getGenModel();
+			if (genModel == null) {
+				return null;
+			}
+			GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
+			if (genAnnotation != null) {					// has xxxTables
+				type.accept(emitReferencedElement);
+			}
+			else {
+				s.append("getASClass(");
+				emitASClass(genClassifier);
+				s.append(")");
+			}
 			return null;
 		}
 
@@ -665,6 +714,21 @@ public class OCLinEcoreTablesUtils
 		this.emitReferencedElement = new EmitReferencedElementVisitor(s);
 		this.genModelHelper = AbstractGenModelHelper.create(environmentFactory, genPackage.getGenModel());
 		this.activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
+	}
+
+	protected void emitASClass(@NonNull GenClassifier genClassifier) {
+		GenPackage genPackage = genClassifier.getGenPackage();
+		//s.append(genClassifier.getQualifiedClassifierAccessor());			-- expanded below to expose import
+		s.appendClassReference(null, genPackage.getQualifiedPackageInterfaceName());
+		if (genPackage.isLiteralsInterface()) {
+			s.append(".Literals.");
+			s.append(genClassifier.getClassifierID());
+		}
+		else {
+			s.append(".eINSTANCE.get");
+			s.append(genClassifier.getClassifierAccessorName());
+			s.append("()");
+		}
 	}
 
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getActiveClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
