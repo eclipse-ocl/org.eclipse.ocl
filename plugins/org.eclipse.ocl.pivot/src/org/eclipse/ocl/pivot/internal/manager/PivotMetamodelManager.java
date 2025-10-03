@@ -783,7 +783,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
 		CompleteClass completeClass = completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.basicGetContainingModel(thatClass);
-		if (thisModel == thatModel) {
+		if ((thisModel == thatModel) || Orphanage.isOrphanage(thatModel)) {
 			return thatClass;
 		}
 		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);
@@ -817,10 +817,12 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		org.eclipse.ocl.pivot.Package thatParentPackage = thatPackage.getOwningPackage();
 		if (thatParentPackage == null) {
 			thesePackages = thisModel.getOwnedPackages();
+		//	assert thisModel.eResource().getResourceSet() != null; // xxxTables models have no Resource and so no ResourceSet
 		}
 		else {
 			org.eclipse.ocl.pivot.Package thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
 			thesePackages = thisParentPackage.getOwnedPackages();
+			assert thisParentPackage.eResource().getResourceSet() != null;
 		}
 		String packageName = PivotUtil.getName(thatPackage);
 		org.eclipse.ocl.pivot.Package thisPackage = NameUtil.getNameable(thesePackages, packageName);
@@ -1372,7 +1374,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if ((thatClass == null) || (thatClass instanceof DataType)) {
 			return;
 		}
-	//	org.eclipse.ocl.pivot.Class thatUnspecializedClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)thatClass);
+		//	org.eclipse.ocl.pivot.Class thatUnspecializedClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)thatClass);
+		thatClass = PivotUtil.getUnspecializedTemplateableElement(thatClass);
 		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
 		if (thisClass == null) {								// e.g. an EAnnotation
 			return;
@@ -1381,6 +1384,14 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (name == null) {
 			return;
 		}
+		createAndInstallOpposite(thatClass, name, thisProperty);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Property createAndInstallOpposite(org.eclipse.ocl.pivot.@NonNull Class thatClass, @NonNull String name, @NonNull Property thisProperty) {
+		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
 		assert thisClass == PivotUtil.getUnspecializedTemplateableElement(thisClass); //	thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
 		// If there is no implicit property with the implicit name, create one
 		//   result a pair of mutual opposites
@@ -1399,10 +1410,11 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
-		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
+// XXX fails for AbstractTables.createOpposite		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
 		thisOppositeClass.getOwnedProperties().add(newOpposite);
 		newOpposite.setOpposite(thisProperty);
 		thisProperty.setOpposite(newOpposite);
+		return newOpposite;
 	}
 
 	@Override

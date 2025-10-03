@@ -1787,7 +1787,7 @@ implements Property {
 
 	@Override
 	public void setName(String newName) {
-		if ("oclContainer".equals(newName)) {
+		if ("Bug570802".equals(newName)) {
 			getClass();		// XXX
 		}
 		super.setName(newName);

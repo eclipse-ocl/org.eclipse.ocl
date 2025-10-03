@@ -233,7 +233,10 @@ public class PivotIdResolver extends AbstractIdResolver
 		CompletePackage completePackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
 		if (completePackage != null) {
 			List<org.eclipse.ocl.pivot.Package> partialPackages = completePackage.getPartialPackages();
-			return partialPackages.size() > 0 ? partialPackages.get(0) : null;
+			if (partialPackages.size() > 0) {
+				return partialPackages.get(0);
+			}
+			return null;					// XXX ??? try to load the/all packageURIs
 		}
 	//	org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
 		else {

@@ -574,6 +574,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		asClass = PivotUtil.getUnspecializedTemplateableElement(asClass);
 		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
 		if (asPackage == null) {
 			return null;
