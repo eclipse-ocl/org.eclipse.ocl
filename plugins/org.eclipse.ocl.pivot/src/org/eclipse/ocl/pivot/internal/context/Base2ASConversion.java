@@ -29,7 +29,7 @@ public interface Base2ASConversion
 	@NonNull PivotHelper getHelper();
 	void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance);
 	void setClassifierContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Type contextType);
-	void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> operationParameterVariables);
-	void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<String, Type> parameters);
+	void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<@NonNull Parameter> operationParameterVariables);
+	void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<@NonNull String, @NonNull Type> parameters);
 	void setResultVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @NonNull String resultName);
 }

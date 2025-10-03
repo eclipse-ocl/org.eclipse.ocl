@@ -83,6 +83,7 @@ public class OCLmetamodel extends ASResourceImpl
 		Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
 		Model model = contents.getModel();
 		resource.getContents().add(model);
+		resource.setSaveable(false);
 		@SuppressWarnings("null")@NonNull Package pkge = model.getOwnedPackages().get(0);
 		return pkge;
 	}

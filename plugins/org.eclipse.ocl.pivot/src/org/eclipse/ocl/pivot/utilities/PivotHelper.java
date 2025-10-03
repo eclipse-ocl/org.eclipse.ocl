@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
@@ -57,6 +56,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -212,7 +212,7 @@ public class PivotHelper extends PivotUtil
 				for (int i = 0; i < argumentCount; i++) {
 					Type asParameterType = ClassUtil.requireNonNull(asParameters.get(i).getType());
 					OCLExpression asArgument = asArguments[i];
-					Type asArgumentType = asArgument.getType();
+					Type asArgumentType = PivotUtil.getType(asArgument);
 					if (asParameterType instanceof SelfType) {
 						if (standardLibrary.conformsTo(asArgumentType, asType) && standardLibrary.conformsTo(asType, asArgumentType)) {
 							exactMatches++;
@@ -433,22 +433,28 @@ public class PivotHelper extends PivotUtil
 	 * @since 1.4
 	 */
 	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance) {
+		if (contextType == null) {
+			contextType = standardLibrary.getOclVoidType();
+		}
+		EObject eContainer = pivotSpecification.eContainer();
+		boolean contextIsRequired = !(eContainer instanceof Operation) || !((Operation)eContainer).isIsValidating();
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if (contextVariable == null) {
-			@NonNull ParameterVariable nonNullContextVariable = PivotFactory.eINSTANCE.createParameterVariable();
-			contextVariable = nonNullContextVariable;
+			contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
 			pivotSpecification.setOwnedContext(contextVariable);
-			if (contextType == null) {
-				contextType = standardLibrary.getOclVoidType();
+			refreshName(contextVariable, selfVariableName);
+			setType(contextVariable, contextType, contextIsRequired, contextInstance);
+		}
+		else {
+			assert selfVariableName.equals(contextVariable.getName());
+			assert contextIsRequired == contextVariable.isIsRequired();
+			assert contextType != null;
+			Type oldContextType = PivotUtil.getType(contextVariable);
+			if (contextType != oldContextType) {
+				CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+				assert completeModel.getCompleteClass(contextType) == completeModel.getCompleteClass(oldContextType);
 			}
 		}
-		refreshName(contextVariable, selfVariableName);
-		boolean contextIsRequired = true;
-		EObject eContainer = pivotSpecification.eContainer();
-		if ((eContainer instanceof Operation) && ((Operation)eContainer).isIsValidating()) {
-			contextIsRequired = false;
-		}
-		setType(contextVariable, contextType, contextIsRequired, contextInstance);
 	}
 
 	/**

@@ -748,7 +748,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 						ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
 						contextVariable.setName(PivotConstants.SELF_NAME);
 						contextVariable.setType(pivotElement);
-						contextVariable.setIsRequired(contextVariable.isIsRequired());
+						contextVariable.setIsRequired(true);
 						expression.setOwnedContext(contextVariable);
 					}
 					String value = eDetail.getValue();

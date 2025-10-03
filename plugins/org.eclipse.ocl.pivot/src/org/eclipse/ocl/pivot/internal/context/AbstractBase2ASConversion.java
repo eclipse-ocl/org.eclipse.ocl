@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -74,8 +73,8 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		//		pivotSpecification.getParameterVariable().clear();
 		if ((contextVariable != null) && !contextOperation.eIsProxy()) {
-			getHelper().setType(contextVariable, contextOperation.getOwningClass(), true);
-			setParameterVariables(pivotSpecification, ClassUtil.requireNonNull(contextOperation.getOwnedParameters()));
+		//	getHelper().setType(contextVariable, contextOperation.getOwningClass(), true);
+			setParameterVariables(pivotSpecification, PivotUtil.getOwnedParametersList(contextOperation));
 		}
 		if (resultName != null) {
 			setResultVariable(pivotSpecification, contextOperation, resultName);
@@ -86,7 +85,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	 * @since 1.17
 	 */
 	@Override
-	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> operationParameterVariables) {
+	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<@NonNull Parameter> operationParameterVariables) {
 		List<@NonNull Variable> oldSpecificationVariables = PivotUtil.getOwnedParametersList(pivotSpecification);
 		List<@NonNull Variable> residualSpecificationVariables = new ArrayList<>(oldSpecificationVariables);
 		List<@NonNull Variable> newSpecificationVariables = new ArrayList<>();
@@ -116,7 +115,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	}
 
 	@Override
-	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<String, Type> parameters) {
+	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<@NonNull String, @NonNull Type> parameters) {
 		List<@NonNull Variable> oldSpecificationVariables = PivotUtil.getOwnedParametersList(pivotSpecification);
 		List<@NonNull Variable> residualSpecificationVariables = new ArrayList<>(oldSpecificationVariables);
 		List<@NonNull Variable> newSpecificationVariables = new ArrayList<>();
