@@ -77,7 +77,6 @@ import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.OCL_Import_EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.OCL_Pivot_Operation_EAnnotationConverter;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -565,9 +564,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	public Object visitModel(@NonNull Model pivotModel) {
 		EModelElement firstElement = null;
 		List<EObject> outputObjects = new ArrayList<>();
-		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package pivotObject : pivotModel.getOwnedPackages()) {
-			if (!Orphanage.isOrphanage(pivotObject) && !PivotUtil.isImplicitPackage(pivotObject)) {
-				Object ecoreObject = safeVisit(pivotObject);
+		for (org.eclipse.ocl.pivot.@NonNull Package pivotPackage : PivotUtil.getOwnedPackages(pivotModel)) {
+			if (!PivotUtil.isImplicitPackage(pivotPackage)) {
+				Object ecoreObject = safeVisit(pivotPackage);
 				if (ecoreObject instanceof EObject) {
 					outputObjects.add((EObject) ecoreObject);
 					if ((firstElement == null) && (ecoreObject instanceof EModelElement)) {

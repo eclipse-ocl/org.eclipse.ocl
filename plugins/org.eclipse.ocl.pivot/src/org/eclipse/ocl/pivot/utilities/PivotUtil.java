@@ -136,6 +136,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -2932,6 +2933,9 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static boolean isImplicitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		boolean hasImplicits = false;
+		if (Orphanage.isOrphanage(asPackage)) {
+			return true;
+		}
 		if (!asPackage.getOwnedAnnotations().isEmpty()) {
 			return false;
 		}
@@ -2947,10 +2951,12 @@ public class PivotUtil implements PivotConstants
 		if (!asPackage.getOwnedInstances().isEmpty()) {
 			return false;
 		}
-		if (!asPackage.getOwnedPackages().isEmpty()) {
-			return false;
+		for (org.eclipse.ocl.pivot.Package asNestedPackage : PivotUtil.getOwnedPackages(asPackage)) {
+			if (!isImplicitPackage(asNestedPackage)) {
+				return false;
+			}
 		}
-		for (org.eclipse.ocl.pivot.Class asClass : asPackage.getOwnedClasses()) {
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
 			if (!asClass.getOwnedAnnotations().isEmpty()) {
 				return false;
 			}
@@ -2975,7 +2981,7 @@ public class PivotUtil implements PivotConstants
 			if (!asClass.getOwnedOperations().isEmpty()) {
 				return false;
 			}
-			for (Property asProperty : asClass.getOwnedProperties()) {
+			for (Property asProperty : PivotUtil.getOwnedProperties(asClass)) {
 				if (!asProperty.isIsImplicit()) {
 					return false;
 				}

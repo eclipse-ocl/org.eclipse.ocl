@@ -820,20 +820,17 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (thisModel == thatModel) {
 			return thatPackage;
 		}
-		List<org.eclipse.ocl.pivot.@NonNull Package> thesePackages;
+		org.eclipse.ocl.pivot.Package thisParentPackage;
 		org.eclipse.ocl.pivot.Package thatParentPackage = thatPackage.getOwningPackage();
 		if (thatParentPackage == null) {
-		//	thesePackages = PivotUtil.getOwnedPackagesList(thisModel);
-			org.eclipse.ocl.pivot.Package thisParentPackage = Orphanage.getLocalOrphanPackage(thisModel);
-			thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
-			assert thisParentPackage.eResource().getResourceSet() != null;
-		//	assert thisModel.eResource().getResourceSet() != null; // xxxTables models have no Resource and so no ResourceSet
+			thisParentPackage = Orphanage.getLocalOrphanPackage(thisModel);
+		//	assert thisParentPackage.eResource().getResourceSet() != null; // xxxTables models have no Resource and so no ResourceSet
 		}
 		else {
-			org.eclipse.ocl.pivot.Package thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
-			thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
+			thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
 			assert thisParentPackage.eResource().getResourceSet() != null;
 		}
+		List<org.eclipse.ocl.pivot.@NonNull Package> thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
 		String packageName = PivotUtil.getName(thatPackage);
 		String packageURI = thatPackage.getURI();
 		for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
