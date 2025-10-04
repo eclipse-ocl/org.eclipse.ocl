@@ -197,7 +197,7 @@
               <ownedThen xsi:type="pivot:VariableExp" isRequired="true" name="self" referredVariable="#ZRze7" type="#XEMMs"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="ZRze7" isRequired="true" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="ZRze7" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="0BvIH" name="b" representedParameter="#+H4XU" type="#XEMMs"/>
         </bodyExpression>
         <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -227,7 +227,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" isRequired="true" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="MxyDI" isRequired="true" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="MxyDI" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="nhutT" isRequired="true" name="b" representedParameter="#tix9E"
               type="#XEMMs"/>
         </bodyExpression>
@@ -292,7 +292,7 @@
               <ownedThen xsi:type="pivot:VariableExp" isRequired="true" name="self" referredVariable="#5IH8B" type="#XEMMs"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="5IH8B" isRequired="true" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="5IH8B" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="U5CmN" name="b" representedParameter="#e1OHk" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
@@ -317,7 +317,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" isRequired="true" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="spaQQ" isRequired="true" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="spaQQ" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="HaW6b" isRequired="true" name="b" representedParameter="#Nlx5s"
               type="#XEMMs"/>
         </bodyExpression>
@@ -345,7 +345,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:VariableExp" isRequired="true" name="self" referredVariable="#Hy6AH" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Hy6AH" isRequired="true" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Hy6AH" name="self" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
       </ownedOperations>
@@ -419,7 +419,7 @@
               <ownedThen xsi:type="pivot:VariableExp" isRequired="true" name="self" referredVariable="#FjUTe" type="#XEMMs"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="FjUTe" isRequired="true" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="FjUTe" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="gTQ9p" name="b" representedParameter="#aX,sO" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
@@ -444,7 +444,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" isRequired="true" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="gV6f," isRequired="true" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="gV6f," name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="7F2JL" isRequired="true" name="b" representedParameter="#RBSMV"
               type="#XEMMs"/>
         </bodyExpression>

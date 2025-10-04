@@ -23,7 +23,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.tests.codegen.company;
 
-import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
@@ -79,7 +78,7 @@ public class CodegencompanyTables extends AbstractTables
 	/**
 	 *	The package descriptor for the package.
 	 */
-	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(CodegencompanyPackage.eINSTANCE, null);
+	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(CodegencompanyPackage.eINSTANCE);
 
 	/**
 	 *	Constants used by auto-generated code.
@@ -194,21 +193,21 @@ public class CodegencompanyTables extends AbstractTables
 			Types.init();
 		}
 
-		private static final @NonNull FlatFragment _Bug418716__Bug418716 = LIBRARY.createFragment(Types._Bug418716, CodegencompanyTables.Types._Bug418716);
+		private static final @NonNull FlatFragment _Bug418716__Bug418716 = LIBRARY.createFragment(Types._Bug418716, Types._Bug418716);
 		private static final @NonNull FlatFragment _Bug418716__OclAny = LIBRARY.createFragment(Types._Bug418716, OCLstdlibTables.Types._OclAny);
 		private static final @NonNull FlatFragment _Bug418716__OclElement = LIBRARY.createFragment(Types._Bug418716, OCLstdlibTables.Types._OclElement);
 
-		private static final @NonNull FlatFragment _Company__Company = LIBRARY.createFragment(Types._Company, CodegencompanyTables.Types._Company);
+		private static final @NonNull FlatFragment _Company__Company = LIBRARY.createFragment(Types._Company, Types._Company);
 		private static final @NonNull FlatFragment _Company__OclAny = LIBRARY.createFragment(Types._Company, OCLstdlibTables.Types._OclAny);
 		private static final @NonNull FlatFragment _Company__OclElement = LIBRARY.createFragment(Types._Company, OCLstdlibTables.Types._OclElement);
 
-		private static final @NonNull FlatFragment _CompanySizeKind__CompanySizeKind = LIBRARY.createFragment(Types._CompanySizeKind, CodegencompanyTables.Types._CompanySizeKind);
+		private static final @NonNull FlatFragment _CompanySizeKind__CompanySizeKind = LIBRARY.createFragment(Types._CompanySizeKind, Types._CompanySizeKind);
 		private static final @NonNull FlatFragment _CompanySizeKind__OclAny = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclAny);
 		private static final @NonNull FlatFragment _CompanySizeKind__OclElement = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclElement);
 		private static final @NonNull FlatFragment _CompanySizeKind__OclEnumeration = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclEnumeration);
 		private static final @NonNull FlatFragment _CompanySizeKind__OclType = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclType);
 
-		private static final @NonNull FlatFragment _Employee__Employee = LIBRARY.createFragment(Types._Employee, CodegencompanyTables.Types._Employee);
+		private static final @NonNull FlatFragment _Employee__Employee = LIBRARY.createFragment(Types._Employee, Types._Employee);
 		private static final @NonNull FlatFragment _Employee__OclAny = LIBRARY.createFragment(Types._Employee, OCLstdlibTables.Types._OclAny);
 		private static final @NonNull FlatFragment _Employee__OclElement = LIBRARY.createFragment(Types._Employee, OCLstdlibTables.Types._OclElement);
 
@@ -235,7 +234,7 @@ public class CodegencompanyTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _Employee = new ParameterTypes(CodegencompanyTables.Types._Employee);
+		public static final @NonNull ParameterTypes _Employee = new ParameterTypes(Types._Employee);
 
 		static {
 			Init.initEnd();
@@ -260,10 +259,10 @@ public class CodegencompanyTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", ParameterTypes.EMPTY_LIST, Types._Employee,
-			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation("reportsTo", Parameters._Employee, Types._Employee,
-			1, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation(Types._Employee, "hasNameAsOperation", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation(Types._Employee, "reportsTo", Parameters._Employee, OCLstdlibTables.Types._Boolean,
+			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
 		static {
 			Init.initEnd();
@@ -288,25 +287,39 @@ public class CodegencompanyTables extends AbstractTables
 			Operations.init();
 		}
 
-		public static final @NonNull Property _Bug418716__AttributeWithInitital = LIBRARY.createProperty(CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITH_INITITAL, Types._Bug418716, 0);
-		public static final @NonNull Property _Bug418716__AttributeWithoutInitital = LIBRARY.createProperty(CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITHOUT_INITITAL, Types._Bug418716, 1);
+		public static final @NonNull Property _Bug418716__AttributeWithInitital = LIBRARY.createProperty(Types._Bug418716, CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITH_INITITAL, OCLstdlibTables.Types._Integer, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Bug418716__AttributeWithoutInitital = LIBRARY.createProperty(Types._Bug418716, CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITHOUT_INITITAL, OCLstdlibTables.Types._Integer, 1 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Company__employees = LIBRARY.createProperty(CodegencompanyPackage.Literals.COMPANY__EMPLOYEES, Types._Company, 0);
-		public static final @NonNull Property _Company__name = LIBRARY.createProperty(CodegencompanyPackage.Literals.COMPANY__NAME, Types._Company, 1);
-		public static final @NonNull Property _Company__size = LIBRARY.createProperty(CodegencompanyPackage.Literals.COMPANY__SIZE, Types._Company, 2);
+		public static final @NonNull Property _Company__employees = LIBRARY.createProperty(Types._Company, CodegencompanyPackage.Literals.COMPANY__EMPLOYEES, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Company__name = LIBRARY.createProperty(Types._Company, CodegencompanyPackage.Literals.COMPANY__NAME, OCLstdlibTables.Types._String, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Company__size = LIBRARY.createProperty(Types._Company, CodegencompanyPackage.Literals.COMPANY__SIZE, Types._CompanySizeKind, 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 
-		public static final @NonNull Property _Employee__allReports = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS, Types._Employee, 0);
-		public static final @NonNull Property _Employee__company = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__COMPANY, Types._Employee, 1);
-		public static final @NonNull Property _Employee__directReports = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS, Types._Employee, 2);
-		public static final @NonNull Property _Employee__hasNameAsAttribute = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__HAS_NAME_AS_ATTRIBUTE, Types._Employee, 3);
-		public static final @NonNull Property _Employee__manager = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__MANAGER, Types._Employee, 4);
-		public static final @NonNull Property _Employee__name = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__NAME, Types._Employee, 5);
-		public static final @NonNull Property _Employee__reportingChain = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN, Types._Employee, 6);
-		public static final @NonNull Property _Employee__Employee__allReports = LIBRARY.createOppositeProperty("Employee", Types._Employee, 7, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS);
-		public static final @NonNull Property _Employee__Employee__directReports = LIBRARY.createOppositeProperty("Employee", Types._Employee, 8, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS);
-		public static final @NonNull Property _Employee__Employee__manager = LIBRARY.createOppositeProperty("Employee", Types._Employee, 9, CodegencompanyPackage.Literals.EMPLOYEE__MANAGER);
-		public static final @NonNull Property _Employee__Employee__reportingChain = LIBRARY.createOppositeProperty("Employee", Types._Employee, 10, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN);
+		public static final @NonNull Property _Employee__allReports = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Employee), 0 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _Employee__company = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__COMPANY, Types._Company, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Employee__directReports = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _Employee__hasNameAsAttribute = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__HAS_NAME_AS_ATTRIBUTE, OCLstdlibTables.Types._Boolean, 3 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _Employee__manager = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__MANAGER, Types._Employee, 4 | IsResolveProxies);
+		public static final @NonNull Property _Employee__name = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__NAME, OCLstdlibTables.Types._String, 5 | IsResolveProxies);
+		public static final @NonNull Property _Employee__reportingChain = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 6 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _Employee__Employee__allReports = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 7 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS);
+		public static final @NonNull Property _Employee__Employee__directReports = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 8 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS);
+		public static final @NonNull Property _Employee__Employee__manager = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 9 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__MANAGER);
+		public static final @NonNull Property _Employee__Employee__reportingChain = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 10 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN);
+
 		static {
+
+			_Company__employees.setOpposite(_Employee__company);
+
+			_Employee__allReports.setOpposite(_Employee__Employee__allReports);
+			_Employee__company.setOpposite(_Company__employees);
+			_Employee__directReports.setOpposite(_Employee__Employee__directReports);
+			_Employee__manager.setOpposite(_Employee__Employee__manager);
+			_Employee__reportingChain.setOpposite(_Employee__Employee__reportingChain);
+			_Employee__Employee__allReports.setOpposite(_Employee__allReports);
+			_Employee__Employee__directReports.setOpposite(_Employee__directReports);
+			_Employee__Employee__manager.setOpposite(_Employee__manager);
+			_Employee__Employee__reportingChain.setOpposite(_Employee__reportingChain);
+
 			Init.initEnd();
 		}
 
@@ -487,8 +500,8 @@ public class CodegencompanyTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _Employee__Employee = {
-			CodegencompanyTables.Operations._Employee__hasNameAsOperation /* hasNameAsOperation() */,
-			CodegencompanyTables.Operations._Employee__reportsTo /* reportsTo(Employee[?]) */
+			Operations._Employee__hasNameAsOperation /* hasNameAsOperation() */,
+			Operations._Employee__reportsTo /* reportsTo(Employee[?]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Employee__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -562,18 +575,18 @@ public class CodegencompanyTables extends AbstractTables
 		}
 
 		private static final @NonNull Property @NonNull [] _Bug418716 = {
-			CodegencompanyTables.Properties._Bug418716__AttributeWithInitital,
-			CodegencompanyTables.Properties._Bug418716__AttributeWithoutInitital,
+			Properties._Bug418716__AttributeWithInitital,
+			Properties._Bug418716__AttributeWithoutInitital,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
 		private static final @NonNull Property @NonNull [] _Company = {
-			CodegencompanyTables.Properties._Company__employees,
-			CodegencompanyTables.Properties._Company__name,
+			Properties._Company__employees,
+			Properties._Company__name,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
-			CodegencompanyTables.Properties._Company__size
+			Properties._Company__size
 		};
 
 		private static final @NonNull Property @NonNull [] _CompanySizeKind = {
@@ -582,15 +595,15 @@ public class CodegencompanyTables extends AbstractTables
 		};
 
 		private static final @NonNull Property @NonNull [] _Employee = {
-			CodegencompanyTables.Properties._Employee__allReports,
-			CodegencompanyTables.Properties._Employee__company,
-			CodegencompanyTables.Properties._Employee__directReports,
-			CodegencompanyTables.Properties._Employee__hasNameAsAttribute,
-			CodegencompanyTables.Properties._Employee__manager,
-			CodegencompanyTables.Properties._Employee__name,
+			Properties._Employee__allReports,
+			Properties._Employee__company,
+			Properties._Employee__directReports,
+			Properties._Employee__hasNameAsAttribute,
+			Properties._Employee__manager,
+			Properties._Employee__name,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
-			CodegencompanyTables.Properties._Employee__reportingChain
+			Properties._Employee__reportingChain
 		};
 
 		/**

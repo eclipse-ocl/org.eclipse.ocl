@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.Type
 import org.eclipse.ocl.pivot.model.OCLstdlib
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory
-import org.eclipse.ocl.pivot.utilities.MetamodelManager
 import org.eclipse.ocl.pivot.utilities.OCL
 import org.eclipse.ocl.pivot.utilities.PivotUtil
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup
