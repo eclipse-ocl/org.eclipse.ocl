@@ -507,9 +507,23 @@ public class OCLinEcoreTablesUtils
 			if (genModel == null) {
 				return null;
 			}
-			GenFeature genFeature = genModelHelper.basicGetGenFeature(asProperty);
-			GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
-			if ((genFeature == null) || (genAnnotation == null)) {
+			boolean isImplicit = asProperty.isIsImplicit();				// XXX
+			if (!isImplicit) {
+				return super.visitProperty(asProperty);
+			}
+			if (!Orphanage.isOrphan(asProperty)) {
+				return super.visitProperty(asProperty);
+			}
+		//	GenFeature genFeature = genModelHelper.basicGetGenFeature(asProperty);
+		//	if (genFeature != null) {
+		//		GenPackage genFeaturePackage = genFeature.getGenPackage();
+		//		if (genFeaturePackage == genPackage) {
+		//			return super.visitProperty(asProperty);
+		//		}
+		//	}
+		//	GenFeature genFeature2 = genModelHelper.basicGetGenFeature(asProperty.getOpposite());
+		//	GenAnnotation genAnnotation = null; //genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
+		//	if ((genFeature == null) || (genAnnotation == null)) {
 				s.append("createOpposite(");
 				emitASClass(genClassifier);
 				s.append(", ");
@@ -518,10 +532,10 @@ public class OCLinEcoreTablesUtils
 				asProperty.getOpposite().accept(this);
 				s.append(")");
 				return null;
-			}
-			else {
-				return super.visitProperty(asProperty);
-			}
+		//	}
+		//	else {
+		//		return super.visitProperty(asProperty);
+		//	}
 		}
 
 		@Override

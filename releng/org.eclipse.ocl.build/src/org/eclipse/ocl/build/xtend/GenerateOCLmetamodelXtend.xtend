@@ -279,7 +279,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					}
 			
 					/**
-					 * Overridden to trivialise loading of the shared instance.
+					 * Overridden to trivialize loading of the shared instance.
 					 */
 					@Override
 					public void load(Map<?, ?> options) throws IOException {

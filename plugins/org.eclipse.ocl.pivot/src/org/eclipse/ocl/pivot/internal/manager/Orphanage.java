@@ -608,8 +608,12 @@ public class Orphanage extends PackageImpl
 	 * @since 1.18
 	 */
 	public static boolean isOrphan(@NonNull Element asElement) {
-		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(asElement);
-		return (asPackage != null) && isOrphanage(asPackage);
+		for (EObject eObject = asElement, eContainer; (eContainer = eObject.eContainer()) != null; eObject = eContainer) {
+			if (eContainer instanceof Model) {
+				return (eObject instanceof org.eclipse.ocl.pivot.Package) && isOrphanage((org.eclipse.ocl.pivot.Package)eObject);
+			}
+		}
+		return false;
 	}
 
 	/**
