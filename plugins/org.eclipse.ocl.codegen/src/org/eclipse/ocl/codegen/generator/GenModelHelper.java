@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public interface GenModelHelper
 {
+	@Nullable GenFeature basicGetGenFeature(@NonNull Property property) throws GenModelException;
 	@NonNull Class<?> getAbstractOperationClass(int parameterCount);
 	@Nullable Class<?> getEcoreFactoryClass(@NonNull EPackage ePackage);
 	@NonNull Class<?> getEcoreInterfaceClass(org.eclipse.ocl.pivot.@NonNull Class owningType) throws GenModelException;

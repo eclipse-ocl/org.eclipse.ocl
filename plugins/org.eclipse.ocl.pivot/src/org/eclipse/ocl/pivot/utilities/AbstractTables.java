@@ -97,7 +97,7 @@ public abstract class AbstractTables
 	/**
 	 * @since 7.0
 	 */
-	protected static org.eclipse.ocl.pivot.@NonNull Property createOpposite(@NonNull EClass eClass, @NonNull String name, @NonNull Property asProperty) {
+	protected static org.eclipse.ocl.pivot.@NonNull Property createOpposite(/*@NonNull*/ EClass eClass, @NonNull String name, @NonNull Property asProperty) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eClass);
 		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
 		org.eclipse.ocl.pivot.Class asClass = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, eClass);
@@ -111,6 +111,7 @@ public abstract class AbstractTables
 	protected static org.eclipse.ocl.pivot.@NonNull Class getASClass(@NonNull EClassifier eClassifier) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eClassifier);
 		org.eclipse.ocl.pivot.Class asClass = environmentFactory.getMetamodelManager().getASOfEcore(org.eclipse.ocl.pivot.Class.class, eClassifier);
+		assert asClass != null;
 		return asClass;
 	}
 

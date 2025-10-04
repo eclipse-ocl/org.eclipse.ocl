@@ -498,7 +498,6 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
-			GenAnnotation genAnnotation = null;
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 			GenClassifier genClassifier = genModelHelper.getGenClassifier(asClass);
 			if (genClassifier == null) {
@@ -508,13 +507,14 @@ public class OCLinEcoreTablesUtils
 			if (genModel == null) {
 				return null;
 			}
-			genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
-			if (genAnnotation == null) {
+			GenFeature genFeature = genModelHelper.basicGetGenFeature(asProperty);
+			GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
+			if ((genFeature == null) || (genAnnotation == null)) {
 				s.append("createOpposite(");
 				emitASClass(genClassifier);
 				s.append(", ");
 				s.appendString(PivotUtil.getName(asProperty));
-				s.append(",");
+				s.append(", ");
 				asProperty.getOpposite().accept(this);
 				s.append(")");
 				return null;

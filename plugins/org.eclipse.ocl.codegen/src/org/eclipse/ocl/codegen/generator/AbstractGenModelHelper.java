@@ -167,6 +167,22 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
+	public @Nullable GenFeature basicGetGenFeature(@NonNull Property property) {
+		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
+		if (owningType != null) {
+			GenClass genClass = getGenClass(owningType);
+			String name = property.getName();
+			for (GenFeature genFeature : genClass.getGenFeatures()) {
+				String featureName = getName(genFeature.getEcoreFeature());
+				if (name.equals(featureName)) {
+					return genFeature;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public @NonNull Class<?> getAbstractOperationClass(int parameterCount) {
 		switch (parameterCount) {
 			case 0: return AbstractUnaryOperation.class;
@@ -423,16 +439,9 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull GenFeature getGenFeature(@NonNull Property property) throws GenModelException {
-		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
-		if (owningType != null) {
-			GenClass genClass = getGenClass(owningType);
-			String name = property.getName();
-			for (GenFeature genFeature : genClass.getGenFeatures()) {
-				String featureName = getName(genFeature.getEcoreFeature());
-				if (name.equals(featureName)) {
-					return genFeature;
-				}
-			}
+		GenFeature genFeature = basicGetGenFeature(property);
+		if (genFeature != null) {
+				return genFeature;
 		}
 		throw new GenModelException("No GenFeature for " + property);
 	}
