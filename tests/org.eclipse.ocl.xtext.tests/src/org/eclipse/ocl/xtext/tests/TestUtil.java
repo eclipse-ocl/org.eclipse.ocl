@@ -56,6 +56,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
@@ -65,6 +66,7 @@ import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.EAnnotationConstraintsNormalizer;
+import org.eclipse.ocl.xtext.tests.XtextTestCase.EAnnotationImportNormalizer;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.EDetailsNormalizer;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.EOperationsNormalizer;
@@ -298,12 +300,17 @@ public class TestUtil
 			}
 			if (eObject instanceof EAnnotation) {
 				EAnnotation eAnnotation = (EAnnotation) eObject;
-				EMap<String, String> eDetails = eAnnotation.getDetails();
-				if (eDetails.size() > 1) {
-					normalizers.add(new EDetailsNormalizer(eAnnotation));
+				if (PivotConstants.IMPORT_ANNOTATION_SOURCE.equals(eAnnotation.getSource())) {
+					normalizers.add(new EAnnotationImportNormalizer(eAnnotation));
 				}
-				if (EcorePackage.eNS_URI.equals(eAnnotation.getSource()) && eDetails.containsKey("constraints")) {
-					normalizers.add(new EAnnotationConstraintsNormalizer(eAnnotation));
+				else {
+					EMap<String, String> eDetails = eAnnotation.getDetails();
+					if (eDetails.size() > 1) {
+						normalizers.add(new EDetailsNormalizer(eAnnotation));
+					}
+					if (EcorePackage.eNS_URI.equals(eAnnotation.getSource()) && eDetails.containsKey("constraints")) {
+						normalizers.add(new EAnnotationConstraintsNormalizer(eAnnotation));
+					}
 				}
 			}
 		}
