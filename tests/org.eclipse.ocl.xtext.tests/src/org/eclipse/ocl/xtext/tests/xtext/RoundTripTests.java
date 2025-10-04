@@ -226,7 +226,7 @@ public class RoundTripTests extends XtextTestCase
 		asResource.setSaveable(wasSaveable);
 		@NonNull String @NonNull[] validationDiagnostics = saveOptions != null ? (@NonNull String @NonNull[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : NO_MESSAGES;
 		assertValidationDiagnostics("Ecore2AS invalid", asResource, validationDiagnostics);
-		XMLResource outputResource = AS2Ecore.createResource(environmentFactory, asResource, inputURI, saveOptions);
+		XMLResource outputResource = AS2Ecore.createResource(environmentFactory, asResource, outputURI, saveOptions);
 		assertNoResourceErrors("Ecore2AS failed", outputResource);
 		OutputStream outputStream = resourceSet.getURIConverter().createOutputStream(outputURI);
 		outputResource.save(outputStream, XMIUtil.createSaveOptions(outputResource));
