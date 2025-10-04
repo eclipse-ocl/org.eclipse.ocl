@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -792,13 +793,19 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		String className = thatClass.getName();
 	//	assert className != null;							// XXX Nameless classes such as UML Association cannot be opposites
 		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
-		if (thisClass == null) {
-			org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
-			thisClass = PivotUtil.createNamedElement(asClass);
-			theseClasses.add(thisClass);
-			completeClass.getPartialClasses().add(thisClass);			// XXX fudge why no package
-		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
+		if (thisClass != null) {
+			return thisClass;
 		}
+		org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
+		thisClass = PivotUtil.createNamedElement(asClass);			// XXX what about template parameter??
+		TemplateSignature thatSignature = asClass.getOwnedSignature();
+		if (thatSignature != null) {
+			TemplateSignature thisSignature = EcoreUtil.copy(thatSignature);
+			thisClass.setOwnedSignature(thisSignature);
+		}
+		theseClasses.add(thisClass);
+		completeClass.getPartialClasses().add(thisClass);			// XXX fudge why no package
+		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
 		return thisClass;
 	}
 
@@ -813,24 +820,37 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (thisModel == thatModel) {
 			return thatPackage;
 		}
-		List<org.eclipse.ocl.pivot.Package> thesePackages;
+		List<org.eclipse.ocl.pivot.@NonNull Package> thesePackages;
 		org.eclipse.ocl.pivot.Package thatParentPackage = thatPackage.getOwningPackage();
 		if (thatParentPackage == null) {
-			thesePackages = thisModel.getOwnedPackages();
+		//	thesePackages = PivotUtil.getOwnedPackagesList(thisModel);
+			org.eclipse.ocl.pivot.Package thisParentPackage = Orphanage.getLocalOrphanPackage(thisModel);
+			thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
+			assert thisParentPackage.eResource().getResourceSet() != null;
 		//	assert thisModel.eResource().getResourceSet() != null; // xxxTables models have no Resource and so no ResourceSet
 		}
 		else {
 			org.eclipse.ocl.pivot.Package thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
-			thesePackages = thisParentPackage.getOwnedPackages();
+			thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
 			assert thisParentPackage.eResource().getResourceSet() != null;
 		}
 		String packageName = PivotUtil.getName(thatPackage);
-		org.eclipse.ocl.pivot.Package thisPackage = NameUtil.getNameable(thesePackages, packageName);
-		if (thisPackage == null) {
-			String pkgURI = ClassUtil.requireNonNull(thatPackage.getURI());
-			thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), pkgURI, thatPackage.getPackageId());
-			thesePackages.add(thisPackage);
+		String packageURI = thatPackage.getURI();
+		for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
+			if (packageURI.equals(thisPackage.getURI())) {
+				return thisPackage;
+			}
 		}
+		if (packageURI == null) {
+			for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
+				if (packageName.equals(thisPackage.getName())) {
+					return thisPackage;
+				}
+			}
+			packageURI = "";
+		}
+		org.eclipse.ocl.pivot.Package thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), packageURI, thatPackage.getPackageId());
+		thesePackages.add(thisPackage);
 		return thisPackage;
 	}
 
