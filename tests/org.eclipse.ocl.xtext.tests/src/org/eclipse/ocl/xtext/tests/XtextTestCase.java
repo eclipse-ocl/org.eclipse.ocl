@@ -21,8 +21,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -95,6 +97,9 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		void normalize();
 	}
 
+	/**
+	 * Normalize EAnnotations by imposing an alphabetic order.
+	 */
 	public static class EAnnotationsNormalizer implements Normalizer
 	{
 		protected final @NonNull EModelElement eModelElement;
@@ -102,7 +107,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 		public EAnnotationsNormalizer(@NonNull EModelElement eModelElement) {
 			this.eModelElement = eModelElement;
-			this.oldOrder = new ArrayList<EAnnotation>(eModelElement.getEAnnotations());
+			this.oldOrder = new ArrayList<>(eModelElement.getEAnnotations());
 		}
 
 		@Override
@@ -115,13 +120,16 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		@Override
 		public void normalize() {
 			EList<EAnnotation> eList = eModelElement.getEAnnotations();
-			List<EAnnotation> newOrder = new ArrayList<EAnnotation>(eList);
+			List<EAnnotation> newOrder = new ArrayList<>(eList);
 			Collections.sort(newOrder, NameUtil.EAnnotationComparator.INSTANCE);
 			eList.clear();
 			eList.addAll(newOrder);
 		}
 	}
 
+	/**
+	 * Normalize the EcorePackage.eNS_URI EAnnotation details by imposing an alphabetic order on the constraints.
+	 */
 	public static class EAnnotationConstraintsNormalizer implements Normalizer
 	{
 		protected final @NonNull EAnnotation eAnnotation;
@@ -154,14 +162,52 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
+	/**
+	 * Normalize an IMPORT_ANNOTATION_SOURCE EAnnotation by resolving the URIs wrt the containing Resource.
+	 */
+	public static class EAnnotationImportNormalizer extends EDetailsNormalizer
+	{
+		public EAnnotationImportNormalizer(@NonNull EAnnotation eAnnotation) {
+			super(eAnnotation);
+		}
+
+		@Override
+		public void normalize() {
+			super.normalize();
+			URI baseURI = eAnnotation.eResource().getURI();
+			EMap<String, String> details = eAnnotation.getDetails();
+			for (Entry<String, String> entry : details) {
+				String key = entry.getKey();
+				URI uriValue = URI.createURI(entry.getValue());
+				URI resolvedValue = uriValue.resolve(baseURI);
+				details.put(key, resolvedValue.toString());
+			}
+		}
+	}
+
+	/**
+	 * Normalize EAnnotation details by imposing an alphabetic order.
+	 */
 	public static class EDetailsNormalizer implements Normalizer
 	{
+		protected static class DetailComparator implements Comparator<Entry<String, String>>
+		{
+			@Override
+			public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
+				String n1 = o1.getKey();
+				String n2 = o2.getKey();
+				return n1.compareTo(n2);
+			}
+		}
+
+		protected static final @NonNull Comparator<Map.Entry<String, String>> detailComparator = new DetailComparator();
+
 		protected final @NonNull EAnnotation eAnnotation;
 		protected final List<Map.Entry<String, String>> oldOrder;
 
 		public EDetailsNormalizer(@NonNull EAnnotation eAnnotation) {
 			this.eAnnotation = eAnnotation;
-			this.oldOrder = new ArrayList<Map.Entry<String, String>>(eAnnotation.getDetails());
+			this.oldOrder = new ArrayList<>(eAnnotation.getDetails());
 		}
 
 		@Override
@@ -174,17 +220,8 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		@Override
 		public void normalize() {
 			List<Map.Entry<String, String>> eDetails = eAnnotation.getDetails();
-			List<Map.Entry<String, String>> newOrder = new ArrayList<Map.Entry<String, String>>(eDetails);
-			Collections.sort(newOrder, new Comparator<Map.Entry<String, String>>()
-			{
-				@Override
-				public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
-					String n1 = o1.getKey();
-					String n2 = o2.getKey();
-					return n1.compareTo(n2);
-				}
-			}
-					);
+			List<Map.Entry<String, String>> newOrder = new ArrayList<>(eDetails);
+			Collections.sort(newOrder, detailComparator);
 			eDetails.clear();
 			eDetails.addAll(newOrder);
 		}
@@ -211,12 +248,24 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 	public static class EOperationsNormalizer implements Normalizer
 	{
+		protected static class OperationComparator implements Comparator<EOperation>
+		{
+			@Override
+			public int compare(EOperation o1, EOperation o2) {
+				String n1 = o1.getName();
+				String n2 = o2.getName();
+				return n1.compareTo(n2);
+			}
+		}
+
+		protected static final @NonNull OperationComparator operationComparator = new OperationComparator();
+
 		protected final @NonNull EClass eClass;
 		protected final List<EOperation> oldOrder;
 
 		public EOperationsNormalizer(@NonNull EClass eClass) {
 			this.eClass = eClass;
-			this.oldOrder = new ArrayList<EOperation>(eClass.getEOperations());
+			this.oldOrder = new ArrayList<>(eClass.getEOperations());
 		}
 
 		@Override
@@ -229,17 +278,8 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		@Override
 		public void normalize() {
 			EList<EOperation> eOperations = eClass.getEOperations();
-			List<EOperation> newOrder = new ArrayList<EOperation>(eOperations);
-			Collections.sort(newOrder, new Comparator<EOperation>()
-			{
-				@Override
-				public int compare(EOperation o1, EOperation o2) {
-					String n1 = o1.getName();
-					String n2 = o2.getName();
-					return n1.compareTo(n2);
-				}
-			}
-					);
+			List<EOperation> newOrder = new ArrayList<>(eOperations);
+			Collections.sort(newOrder, operationComparator);
 			eOperations.clear();
 			eOperations.addAll(newOrder);
 		}
@@ -311,7 +351,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		URI libraryURI = getTestFileURI(fileName, inputStream);
 		@SuppressWarnings("null")@NonNull BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(libraryURI);
 		xtextResource.load(null);
-		Bag<String> actualErrorMessages = new BagImpl<String>();
+		Bag<String> actualErrorMessages = new BagImpl<>();
 		for (Resource.Diagnostic actualError : xtextResource.getErrors()) {
 			actualErrorMessages.add(actualError.getMessage());
 		}
@@ -540,7 +580,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 					ResourceSet resourceSet = resource.getResourceSet();
 					Map<URI, Resource> uriResourceMap = ((ResourceSetImpl)resourceSet).getURIResourceMap();
 					if (uriResourceMap == null) {
-						uriResourceMap = new HashMap<URI, Resource>();
+						uriResourceMap = new HashMap<>();
 						((ResourceSetImpl)resourceSet).setURIResourceMap(uriResourceMap);
 					}
 					uriResourceMap.put(URI.createURI(nsURI), resource);
