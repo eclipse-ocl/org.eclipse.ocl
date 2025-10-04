@@ -234,8 +234,8 @@ public class LookupTables extends AbstractTables
 		public static final @NonNull Property _LookupEnvironment__LookupEnvironment__parentEnv = LIBRARY.createOppositeProperty(Types._LookupEnvironment, "LookupEnvironment", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._LookupEnvironment), 2 | IsImplicit | IsRequired | IsResolveProxies, LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV);
 
 		static {
-			_LookupEnvironment__namedElements.setOpposite(createOpposite(PivotPackage.Literals.NAMED_ELEMENT, "LookupEnvironment",_LookupEnvironment__namedElements));
-			_LookupEnvironment__parentEnv.setOpposite(createOpposite(LookupPackage.Literals.LOOKUP_ENVIRONMENT, "LookupEnvironment",_LookupEnvironment__parentEnv));
+			_LookupEnvironment__namedElements.setOpposite(createOpposite(PivotPackage.Literals.NAMED_ELEMENT, "LookupEnvironment", _LookupEnvironment__namedElements));
+			_LookupEnvironment__parentEnv.setOpposite(_LookupEnvironment__LookupEnvironment__parentEnv);
 			_LookupEnvironment__LookupEnvironment__parentEnv.setOpposite(_LookupEnvironment__parentEnv);
 
 			Init.initEnd();

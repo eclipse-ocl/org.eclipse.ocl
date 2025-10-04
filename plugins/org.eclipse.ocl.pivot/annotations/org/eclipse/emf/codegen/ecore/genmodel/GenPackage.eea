@@ -1,0 +1,4 @@
+class org/eclipse/emf/codegen/ecore/genmodel/GenPackage
+getQualifiedPackageInterfaceName
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
