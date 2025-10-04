@@ -527,6 +527,17 @@ public class Orphanage extends PackageImpl
 	/**
 	 * @since 7.0
 	 */
+	public static org.eclipse.ocl.pivot.@NonNull Package getLocalOrphanPackage(@NonNull Model asModel) {
+		org.eclipse.ocl.pivot.Package asPackage = basicGetLocalOrphanPackage(asModel);
+		if (asPackage == null) {
+			asPackage = createLocalOrphanPackage(asModel);
+		}
+		return asPackage;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @NonNull TemplateParameter templateParameter) {
 		int index = templateParameter.getTemplateParameterId().getIndex();
 		return getNormalizedTemplateParameter(orphanPackage, index);
