@@ -1406,7 +1406,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					//
 				}
 				else {
-					System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
+					if (!(localOrphan instanceof Property)) {
+						nameQueries.putSymbolName(localOrphan, symbolName);
+					}
+				//	System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
 				}
 			}
 		}
