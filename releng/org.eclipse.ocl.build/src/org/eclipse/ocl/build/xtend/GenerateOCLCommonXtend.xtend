@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.CollectionType
 import org.eclipse.ocl.pivot.Comment
 import org.eclipse.ocl.pivot.EnumerationLiteral
 import org.eclipse.ocl.pivot.LambdaType
+import org.eclipse.ocl.pivot.Library
 import org.eclipse.ocl.pivot.MapType
 import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.Operation
@@ -38,6 +39,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 import org.eclipse.ocl.pivot.Constraint
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter
 import org.eclipse.ocl.pivot.LambdaParameter
+import org.eclipse.ocl.pivot.internal.manager.Orphanage
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -49,7 +51,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«FOR pkge : sortedPackages»
 
 			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-				private final @NonNull «type.eClass.name» «type.getPrefixedSymbolNameWithoutNormalization("_" + type.partialName())» = create«type.
+				private final «getEClassReference(true, type)» «type.getPrefixedSymbolNameWithoutNormalization("_" + type.partialName())» = create«type.
 				eClass.name»("«type.name»");
 			«ENDFOR»
 		«ENDFOR»
@@ -65,12 +67,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.getOwnedSignature() !== null»
-			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+			private final «getEClassReference(true, type)» «typeName» = create«type.eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 			«ENDIF»
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.getOwnedSignature() === null»
-			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
+			private final «getEClassReference(true, type)» «typeName» = create«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
 			«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -105,13 +107,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«FOR pkge : sortedPackages»
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 				«IF type.getOwnedSignature() !== null»
-					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
 					eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 				«ENDIF»
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 				«IF type.getOwnedSignature() === null»
-					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
 					eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
 				«ENDIF»
 			«ENDFOR»
@@ -174,9 +176,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installClassTypes() {
-				List<Class> ownedClasses;
-				List<Class> superClasses;
-				Class type;
+				List<org.eclipse.ocl.pivot.Class> ownedClasses;
+				List<org.eclipse.ocl.pivot.Class> superClasses;
+				org.eclipse.ocl.pivot.Class type;
 				«FOR pkge : sortedPackages»
 
 				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
@@ -207,8 +209,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installCollectionTypes() {
-				List<Class> ownedClasses;
-				List<Class> superClasses;
+				List<org.eclipse.ocl.pivot.Class> ownedClasses;
+				List<org.eclipse.ocl.pivot.Class> superClasses;
 				CollectionType type;
 				«FOR pkge : sortedPackages»
 
@@ -255,7 +257,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installEnumerations() {
-				List<Class> ownedClasses;
+				List<org.eclipse.ocl.pivot.Class> ownedClasses;
 				Enumeration type;
 				List<EnumerationLiteral> enumerationLiterals;
 				«FOR pkge : sortedPackages»
@@ -281,12 +283,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			«FOR name : externals»«var element = ClassUtil.requireNonNull(name2external.get(name))»
-			«IF element instanceof org.eclipse.ocl.pivot.Package»
-			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«IF element instanceof Library»
 			«ELSEIF element instanceof PrimitiveType»
-			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			private final org.eclipse.ocl.pivot.@NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSE»
-			private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			private final «getEClassReference(true, element)» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ENDIF»
 			«ENDFOR»
 		'''
@@ -406,9 +407,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			
 			private void installLambdaTypes() {
-				final List<Class> orphanTypes = «ClassUtil.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
+				final List<org.eclipse.ocl.pivot.Class> orphanTypes = «ClassUtil.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
 				LambdaType type;
-				List<Class> superClasses;
+				List<org.eclipse.ocl.pivot.Class> superClasses;
 				«FOR type : allLambdaTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);	
 					type.setOwnedContext(createLambdaParameter("«type.ownedContext.name»", «type.ownedContext.type.getTemplateIndex()», «type.ownedContext.isRequired ? "true" : "false"»));
@@ -429,8 +430,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installMapTypes() {
-				List<Class> ownedClasses;
-				List<Class> superClasses;
+				List<org.eclipse.ocl.pivot.Class> ownedClasses;
+				List<org.eclipse.ocl.pivot.Class> superClasses;
 				MapType type;
 				«FOR pkge : sortedPackages»
 
@@ -512,20 +513,15 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String definePackages(/*@NonNull*/ Model root) {
-		var allPackages = root.getSortedPackages();
+		var localPackages = root.getSortedLocalPackages();
 		var import2alias = root.getSortedImports();
 		var importKeys = new ArrayList<org.eclipse.ocl.pivot.Package>(import2alias.keySet());
 		Collections.sort(importKeys, NameUtil.NAMEABLE_COMPARATOR);
-		if (allPackages.isEmpty()) return "";
+		if (localPackages.isEmpty()) return "";
 		'''
 
 			private void installPackages() {
 				«emitRoot(root)»
-				«IF allPackages.size() > 0»
-				«FOR pkg2 : allPackages»
-				«emitPackage(pkg2)»
-				«ENDFOR»
-				«ENDIF»
 			«FOR importKey : importKeys»«val importName = import2alias.get(importKey)»
 				«root.getSymbolName()».getOwnedImports().add(createImport(«IF importName !== null»"«importName»"«ELSE»null«ENDIF», «importKey.getSymbolName()»));
 			«ENDFOR»
@@ -573,7 +569,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installPrimitiveTypes() {
-				List<Class> ownedClasses;
+				List<org.eclipse.ocl.pivot.Class> ownedClasses;
 				PrimitiveType type;
 				«FOR pkge : sortedPackages»
 
@@ -704,9 +700,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			private void installTupleTypes() {
-				final List<Class> orphanTypes = «ClassUtil.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
+				final List<org.eclipse.ocl.pivot.Class> orphanTypes = «ClassUtil.requireNonNull(orphanPackage).getSymbolName()».getOwnedClasses();
 				TupleType type;
-				List<Class> superClasses;
+				List<org.eclipse.ocl.pivot.Class> superClasses;
 				«FOR type : allTupleTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);
 					«FOR property : type.getSortedProperties()»
@@ -727,22 +723,18 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String emitPackage(org.eclipse.ocl.pivot.Package pkg) {
 		'''
-			«FOR nestedPackage : pkg.getSortedPackages()»
-				«IF nestedPackage.getOwnedPackages().size() > 0»
-					«emitPackage(nestedPackage)»
-				«ENDIF»
+			«FOR nestedPackage : pkg.getSortedNestedPackages()»
 				«pkg.getSymbolName()».getOwnedPackages().add(«nestedPackage.getSymbolName()»);
+				«emitPackage(nestedPackage)»
 			«ENDFOR»
 		'''
 	}
 
-	protected def String emitRoot(Model pkg) {
+	protected def String emitRoot(Model root) {
 		'''
-			«FOR nestedPackage : pkg.getSortedPackages()»
-				«IF nestedPackage.getOwnedPackages().size() > 0»
-					«emitPackage(nestedPackage)»
-				«ENDIF»
-				«pkg.getSymbolName()».getOwnedPackages().add(«nestedPackage.getSymbolName()»);
+			«FOR localPackage : root.getSortedNestedPackages()»
+			«root.getSymbolName()».getOwnedPackages().add(«localPackage.getSymbolName()»);
+			«emitPackage(localPackage)»
 			«ENDFOR»
 		'''
 	}
@@ -827,7 +819,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String installPackages(/*@NonNull*/ Model root) {
-		var allPackages = root.getSortedPackages();
+		var allPackages = root.getSortedLocalPackages();
 		if (allPackages.isEmpty()) return "";
 		'''installPackages();'''
 	}
@@ -883,8 +875,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			EnumerationLiteral case element.owningEnumeration === null: return "null"
 			EnumerationLiteral: return element.owningEnumeration.partialName() + "_" + element.javaName()
 			LambdaParameter: return element.javaName()
+			Library: return "standardLibraryPackage"
 			Operation case element.owningClass === null: return "null_" + element.javaName()
 			Operation: return element.owningClass.partialName() + "_" + element.javaName()
+			org.eclipse.ocl.pivot.Package case element == basicGetOrphanPackage(thisModel): return "local_orphanage"
+			org.eclipse.ocl.pivot.Package case Orphanage.isOrphan(element): return "local_" + element.javaName()
 			org.eclipse.ocl.pivot.Package: return element.javaName()
 			Parameter case element.eContainer() === null: return "null_" + element.javaName()
 			Parameter: return element.eContainer().partialName() + "_" + element.javaName()

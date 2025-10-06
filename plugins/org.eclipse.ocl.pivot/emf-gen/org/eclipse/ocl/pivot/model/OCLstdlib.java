@@ -31,7 +31,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
@@ -42,7 +41,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -59,12 +57,11 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -140,8 +137,8 @@ public class OCLstdlib extends ASResourceImpl
 	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib
 	 *  is used as the default when no overriding copy is registered.
 	 */
-	public static @NonNull Package getDefaultPackage() {
-		Package pkge = getDefaultModel().getOwnedPackages().get(0);
+	public static org.eclipse.ocl.pivot.@NonNull Package getDefaultPackage() {
+		org.eclipse.ocl.pivot.Package pkge = getDefaultModel().getOwnedPackages().get(0);
 		assert pkge != null;
 		return pkge;
 	}
@@ -286,20 +283,20 @@ public class OCLstdlib extends ASResourceImpl
 
 	private static class AbstractLibraryContents extends AbstractContents
 	{
-		protected final @NonNull Library ocl;
-		protected final @NonNull Package orphanPackage;
+		protected final @NonNull Library standardLibraryPackage;
+		protected final org.eclipse.ocl.pivot.@NonNull Package local_orphanage;
 		protected final @NonNull NormalizedTemplateParameter $$0;
 		protected final @NonNull NormalizedTemplateParameter $$1;
 		protected final @NonNull NormalizedTemplateParameter $$2;
 		protected final @NonNull NormalizedTemplateParameter $$3;
 
 		protected AbstractLibraryContents() {
-			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", null, OCLstdlibPackage.eINSTANCE);
-			orphanPackage = createPackage("$$", null, "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
-			$$0 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 0);
-			$$1 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 1);
-			$$2 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 2);
-			$$3 = Orphanage.getNormalizedTemplateParameter(orphanPackage, 3);
+			standardLibraryPackage = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", null, OCLstdlibPackage.eINSTANCE);
+			local_orphanage = createPackage("$$", null, "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
+			$$0 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 0);
+			$$1 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 1);
+			$$2 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 2);
+			$$3 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 3);
 		}
 	}
 
@@ -331,35 +328,35 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installPackages() {
-			model.getOwnedPackages().add(ocl);
-			model.getOwnedPackages().add(orphanPackage);
+			model.getOwnedPackages().add(standardLibraryPackage);
+			model.getOwnedPackages().add(local_orphanage);
 		}
 
-		private final @NonNull Class _BooleanType = createClass("BooleanType");
-		private final @NonNull Class _Class = createClass("Class");
-		private final @NonNull Class _CollectionType = createClass("CollectionType");
-		private final @NonNull Class _Enumeration = createClass("Enumeration");
-		private final @NonNull Class _EnumerationLiteral = createClass("EnumerationLiteral");
-		private final @NonNull Class _InvalidType = createClass("InvalidType");
-		private final @NonNull Class _MapType = createClass("MapType");
+		private final org.eclipse.ocl.pivot.@NonNull Class _BooleanType = createClass("BooleanType");
+		private final org.eclipse.ocl.pivot.@NonNull Class _Class = createClass("Class");
+		private final org.eclipse.ocl.pivot.@NonNull Class _CollectionType = createClass("CollectionType");
+		private final org.eclipse.ocl.pivot.@NonNull Class _Enumeration = createClass("Enumeration");
+		private final org.eclipse.ocl.pivot.@NonNull Class _EnumerationLiteral = createClass("EnumerationLiteral");
+		private final org.eclipse.ocl.pivot.@NonNull Class _InvalidType = createClass("InvalidType");
+		private final org.eclipse.ocl.pivot.@NonNull Class _MapType = createClass("MapType");
 		private final @NonNull AnyType _OclAny = createAnyType(OCLstdlibPackage.Literals.OCL_ANY);
-		private final @NonNull Class _OclComparable = createClass(OCLstdlibPackage.Literals.OCL_COMPARABLE);
-		private final @NonNull Class _OclElement = createClass(OCLstdlibPackage.Literals.OCL_ELEMENT);
-		private final @NonNull Class _OclEnumeration = createClass(OCLstdlibPackage.Literals.OCL_ENUMERATION);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclComparable = createClass(OCLstdlibPackage.Literals.OCL_COMPARABLE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclElement = createClass(OCLstdlibPackage.Literals.OCL_ELEMENT);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclEnumeration = createClass(OCLstdlibPackage.Literals.OCL_ENUMERATION);
 		private final @NonNull InvalidType _OclInvalid = createInvalidType(OCLstdlibPackage.Literals.OCL_INVALID);
-		private final @NonNull Class _OclLambda = createClass(OCLstdlibPackage.Literals.OCL_LAMBDA);
-		private final @NonNull Class _OclMessage = createClass(OCLstdlibPackage.Literals.OCL_MESSAGE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclLambda = createClass(OCLstdlibPackage.Literals.OCL_LAMBDA);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclMessage = createClass(OCLstdlibPackage.Literals.OCL_MESSAGE);
 		private final @NonNull SelfType _OclSelf = createSelfType(OCLstdlibPackage.Literals.OCL_SELF);
-		private final @NonNull Class _OclState = createClass(OCLstdlibPackage.Literals.OCL_STATE);
-		private final @NonNull Class _OclStereotype = createClass(OCLstdlibPackage.Literals.OCL_STEREOTYPE);
-		private final @NonNull Class _OclSummable = createClass(OCLstdlibPackage.Literals.OCL_SUMMABLE);
-		private final @NonNull Class _OclTuple = createClass(OCLstdlibPackage.Literals.OCL_TUPLE);
-		private final @NonNull Class _OclType = createClass(OCLstdlibPackage.Literals.OCL_TYPE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclState = createClass(OCLstdlibPackage.Literals.OCL_STATE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclStereotype = createClass(OCLstdlibPackage.Literals.OCL_STEREOTYPE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclSummable = createClass(OCLstdlibPackage.Literals.OCL_SUMMABLE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclTuple = createClass(OCLstdlibPackage.Literals.OCL_TUPLE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclType = createClass(OCLstdlibPackage.Literals.OCL_TYPE);
 		private final @NonNull VoidType _OclVoid = createVoidType(OCLstdlibPackage.Literals.OCL_VOID);
-		private final @NonNull Class _State = createClass("State");
-		private final @NonNull Class _Stereotype = createClass("Stereotype");
-		private final @NonNull Class _Type = createClass("Type");
-		private final @NonNull Class _VoidType = createClass("VoidType");
+		private final org.eclipse.ocl.pivot.@NonNull Class _State = createClass("State");
+		private final org.eclipse.ocl.pivot.@NonNull Class _Stereotype = createClass("Stereotype");
+		private final org.eclipse.ocl.pivot.@NonNull Class _Type = createClass("Type");
+		private final org.eclipse.ocl.pivot.@NonNull Class _VoidType = createClass("VoidType");
 
 		private final @NonNull PrimitiveType _Boolean = createPrimitiveType(OCLstdlibPackage.Literals.BOOLEAN);
 		private final @NonNull PrimitiveType _Integer = createPrimitiveType(OCLstdlibPackage.Literals.INTEGER);
@@ -527,11 +524,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull MapType _Map_$$2_T_$$3_T = createMapType(_Map_Map_K_Map_V);
 
 		private void installClassTypes() {
-			List<Class> ownedClasses;
-			List<Class> superClasses;
-			Class type;
+			List<org.eclipse.ocl.pivot.Class> ownedClasses;
+			List<org.eclipse.ocl.pivot.Class> superClasses;
+			org.eclipse.ocl.pivot.Class type;
 
-			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses = standardLibraryPackage.getOwnedClasses();
 			type = _BooleanType;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
@@ -647,10 +644,10 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installPrimitiveTypes() {
-			List<Class> ownedClasses;
+			List<org.eclipse.ocl.pivot.Class> ownedClasses;
 			PrimitiveType type;
 
-			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses = standardLibraryPackage.getOwnedClasses();
 			type = _Boolean;
 			type.getSuperClasses().add(_OclAny);
 			ownedClasses.add(type);
@@ -671,11 +668,11 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installCollectionTypes() {
-			List<Class> ownedClasses;
-			List<Class> superClasses;
+			List<org.eclipse.ocl.pivot.Class> ownedClasses;
+			List<org.eclipse.ocl.pivot.Class> superClasses;
 			CollectionType type;
 
-			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses = standardLibraryPackage.getOwnedClasses();
 			type = _Bag_Bag_T;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_$$0_F);
@@ -709,7 +706,7 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_Collection_$$0_F);
 			ownedClasses.add(type);
 
-			ownedClasses = orphanPackage.getOwnedClasses();
+			ownedClasses = local_orphanage.getOwnedClasses();
 			type = _Bag_$$0_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_$$0_F);
@@ -1020,17 +1017,17 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installMapTypes() {
-			List<Class> ownedClasses;
-			List<Class> superClasses;
+			List<org.eclipse.ocl.pivot.Class> ownedClasses;
+			List<org.eclipse.ocl.pivot.Class> superClasses;
 			MapType type;
 
-			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses = standardLibraryPackage.getOwnedClasses();
 			type = _Map_Map_K_Map_V;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 
-			ownedClasses = orphanPackage.getOwnedClasses();
+			ownedClasses = local_orphanage.getOwnedClasses();
 			type = _Map_$$0_T_$$1_T;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
@@ -1046,9 +1043,9 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installTupleTypes() {
-			final List<Class> orphanTypes = orphanPackage.getOwnedClasses();
+			final List<org.eclipse.ocl.pivot.Class> orphanTypes = local_orphanage.getOwnedClasses();
 			TupleType type;
-			List<Class> superClasses;
+			List<org.eclipse.ocl.pivot.Class> superClasses;
 			orphanTypes.add(type = _Tuple);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclTuple);
@@ -1082,9 +1079,9 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull LambdaType _Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F = createLambdaType("Lambda");
 
 		private void installLambdaTypes() {
-			final List<Class> orphanTypes = orphanPackage.getOwnedClasses();
+			final List<org.eclipse.ocl.pivot.Class> orphanTypes = local_orphanage.getOwnedClasses();
 			LambdaType type;
-			List<Class> superClasses;
+			List<org.eclipse.ocl.pivot.Class> superClasses;
 			orphanTypes.add(type = _Lambda_self_$$0_F_result_$$1_F);
 			type.setOwnedContext(createLambdaParameter("self", $$0, false));
 			type.setOwnedResult(createLambdaParameter("result", $$1, false));
@@ -3255,7 +3252,7 @@ public class OCLstdlib extends ASResourceImpl
 			final Precedence prec_UNARY = createPrecedence("UNARY", AssociativityKind.LEFT);
 			final Precedence prec_XOR = createPrecedence("XOR", AssociativityKind.LEFT);
 
-			ownedPrecedences = ocl.getOwnedPrecedences();
+			ownedPrecedences = standardLibraryPackage.getOwnedPrecedences();
 			ownedPrecedences.add(prec_NAVIGATION);
 			ownedPrecedences.add(prec_UNARY);
 			ownedPrecedences.add(prec_MULTIPLICATIVE);
@@ -3417,7 +3414,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_UnlimitedNatural_min, "The minimum of oclText[self] an i.");
 			installComment(op_UnlimitedNatural_oclAsType, "Evaluates to oclText[self], where oclText[self] is of the type identified by T.\nThe type T may be any classifier defined in the UML model;\nif the actual type of oclText[self] at evaluation time does not conform to T,\nthen the oclAsType operation evaluates to oclText[invalid].\n\nThe standard behavior is redefined for UnlimitedNatural. Numeric values may be converted to\nReal or Integer, but the e[unlimited] value may not.\nConversion of e[unlimited] to Real or Integer returns oclText[invalid].");
 			installComment(op_UnlimitedNatural_toInteger, "Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].");
-			installComment(ocl, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
+			installComment(standardLibraryPackage, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
 			installComment(_Bag_Bag_T, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
 			installComment(op_Bag__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Bag__eq_, "True if oclText[self] and bag contain the same elements, the same number of times.");

@@ -28,9 +28,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 
 			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
 				«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
 				«ELSE»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -70,7 +70,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 	/*@NonNull*/ protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		// initModel(root); in caller
 		var lib = ClassUtil.requireNonNull(thisModel.getLibrary());
-		var externalPackages = thisModel.getSortedExternalPackages();
 		var year = new GregorianCalendar().get(GregorianCalendar.YEAR);
 		'''
 			/*******************************************************************************
@@ -106,7 +105,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.AnyType;
 			import org.eclipse.ocl.pivot.AssociativityKind;
 			import org.eclipse.ocl.pivot.BagType;
-			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
 			import org.eclipse.ocl.pivot.InvalidType;
 			import org.eclipse.ocl.pivot.Iteration;
@@ -117,7 +115,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 			import org.eclipse.ocl.pivot.Operation;
 			import org.eclipse.ocl.pivot.OrderedSetType;
-			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
 			import org.eclipse.ocl.pivot.Precedence;
 			import org.eclipse.ocl.pivot.PrimitiveType;
@@ -134,18 +131,13 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-			import org.eclipse.ocl.pivot.model.OCLmetamodel;
-			import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 			import org.eclipse.ocl.pivot.utilities.PivotUtil;
-			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
-
-			«FOR externalPackage : externalPackages»
-				«externalPackage.declarePackageImport()»
+			«FOR importedClassName : thisModel.getSortedImportedJavaClassNames()»
+				import «importedClassName»;
 			«ENDFOR»
-			«ENDIF»
 
 			/**
 			 * This is the «uri» Standard Library
@@ -221,8 +213,8 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 *  This static definition auto-generated from «sourceFile»
 				 *  is used as the default when no overriding copy is registered.
 				 */
-				public static @NonNull Package getDefaultPackage() {
-					Package pkge = getDefaultModel().getOwnedPackages().get(0);
+				public static org.eclipse.ocl.pivot.@NonNull Package getDefaultPackage() {
+					org.eclipse.ocl.pivot.Package pkge = getDefaultModel().getOwnedPackages().get(0);
 					assert pkge != null;
 					return pkge;
 				}
@@ -367,19 +359,19 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			
 				private static class AbstractLibraryContents extends AbstractContents
 				{
-					«FOR pkge : thisModel.getSortedPackages()»
-					protected final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.basicGetOrphanPackage()) "orphanage" else pkge.getName())»;
+					«FOR pkge : thisModel.getSortedLocalPackages()»
+					protected final «getEClassReference(true, pkge)» «pkge.getSymbolName()»;
 					«ENDFOR»
 					«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
 					protected final @NonNull NormalizedTemplateParameter «normalizedTemplateParameter.getPrefixedSymbolName(normalizedTemplateParameter.getName())»;
 					«ENDFOR»
 			
 					protected AbstractLibraryContents() {
-						«FOR pkge : thisModel.getSortedPackages()»
+						«FOR pkge : thisModel.getSortedLocalPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»
 						«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
-						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(orphanPackage, «normalizedTemplateParameter.getIndex()»);
+						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(«thisModel.getOrphanPackage().getSymbolName()», «normalizedTemplateParameter.getIndex()»);
 						«ENDFOR»
 					}
 				}
