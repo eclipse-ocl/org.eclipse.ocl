@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -637,7 +638,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected CompleteModelInternal completeModel;
 	protected MetamodelManager metamodelManager;
 	protected NameQueries nameQueries;
-	protected Model thisModel;
+	protected Model thisModel = null;
+	protected Library standardLibrary = null;
 	private List<@NonNull Element> orphans;
 	protected final @NonNull ContentAnalysis contentAnalysis = createContentAnalysis();
 
@@ -908,6 +910,21 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	public @NonNull Iterable<NamedElement> getNamedValues() {
 		return name2external.values();
+	}
+
+	protected @NonNull List<@NonNull NormalizedTemplateParameter> getNormalizedTemplateParameters(@NonNull Model model) {
+		List<@NonNull NormalizedTemplateParameter> normalizedTemplateParameters = new ArrayList<>();
+		org.eclipse.ocl.pivot.Package orphanage = Orphanage.basicGetLocalOrphanPackage(model);
+		if (orphanage != null) {
+			NormalizedTemplateParameter normalizedTemplateParameter;
+			while ((normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size())) != null) {
+				normalizedTemplateParameters.add(normalizedTemplateParameter);
+			}
+			while (normalizedTemplateParameters.size() < 4) {
+				normalizedTemplateParameters.add(Orphanage.getNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size()));			// Define four in case in transition from no NormalizedTemplateParameters.
+			}
+		}
+		return normalizedTemplateParameters;
 	}
 
 	protected org.eclipse.ocl.pivot.@Nullable Package getOrphanPackage(org.eclipse.ocl.pivot.@NonNull Package elem) {
@@ -1215,19 +1232,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return allElements;
 	}
 
-	protected @NonNull List<@NonNull NormalizedTemplateParameter> getNormalizedTemplateParameters(@NonNull Model model) {
-		List<@NonNull NormalizedTemplateParameter> normalizedTemplateParameters = new ArrayList<>();
-		org.eclipse.ocl.pivot.Package orphanage = Orphanage.basicGetLocalOrphanPackage(model);
-		if (orphanage != null) {
-			NormalizedTemplateParameter normalizedTemplateParameter;
-			while ((normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size())) != null) {
-				normalizedTemplateParameters.add(normalizedTemplateParameter);
-			}
-			while (normalizedTemplateParameters.size() < 4) {
-				normalizedTemplateParameters.add(Orphanage.getNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size()));			// Define four in case in transition from no NormalizedTemplateParameters.
-			}
-		}
-		return normalizedTemplateParameters;
+	protected @NonNull Library getStandardLibrary() {
+		return standardLibrary;
 	}
 
 	protected String getSymbolName(@NonNull EObject elem) {
@@ -1298,6 +1304,19 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	public void initModel(@NonNull Model thisModel, ASSaver.@NonNull ASSaverWithInverse asSaver) {
 		this.thisModel = thisModel;
+		for (Model model : environmentFactory.getCompleteModel().getPartialModels()) {
+			if (LibraryConstants.STDLIB_URI.equals(model.getExternalURI())) {
+				for (org.eclipse.ocl.pivot.Package asPackage : model.getOwnedPackages()) {
+					if (asPackage instanceof Library) {
+						this.standardLibrary = (Library) asPackage;
+						break;
+					}
+				}
+			}
+		}
+		if (standardLibrary == null) {
+			throw new IllegalStateException("No StandardLibrary package");
+		}
 		initLocalTypes();
 		initOrphanSymbolNames(asSaver);
 	}

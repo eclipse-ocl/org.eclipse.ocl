@@ -121,9 +121,9 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 
 	@Override
 	protected String getExternalReference(@NonNull Element element) {
-		if ((element instanceof Library) && (element.eResource() instanceof OCLstdlib)) {
-			return "standardLibraryPackage";
-		}
+	//	if ((element instanceof Library) && (element.eResource() instanceof OCLstdlib)) {
+	//		return "standardLibraryPackage";
+	//	}
 		return super.getExternalReference(element);
 	}
 
