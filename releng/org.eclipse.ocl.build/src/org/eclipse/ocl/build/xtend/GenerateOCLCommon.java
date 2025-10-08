@@ -639,7 +639,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected MetamodelManager metamodelManager;
 	protected NameQueries nameQueries;
 	protected Model thisModel = null;
-	protected Library standardLibrary = null;
+	/**
+	 * STandard library used (by a language MetaModel) or referenced (by an extension library), null for the library itself.
+	 */
+	protected @Nullable Library referencedStandardLibrary = null;
 	private List<@NonNull Element> orphans;
 	protected final @NonNull ContentAnalysis contentAnalysis = createContentAnalysis();
 
@@ -1232,8 +1235,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return allElements;
 	}
 
-	protected @NonNull Library getStandardLibrary() {
-		return standardLibrary;
+	protected @Nullable Library getReferencedStandardLibrary() {
+		return referencedStandardLibrary;
 	}
 
 	protected String getSymbolName(@NonNull EObject elem) {
@@ -1308,14 +1311,14 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			if (LibraryConstants.STDLIB_URI.equals(model.getExternalURI())) {
 				for (org.eclipse.ocl.pivot.Package asPackage : model.getOwnedPackages()) {
 					if (asPackage instanceof Library) {
-						this.standardLibrary = (Library) asPackage;
+						this.referencedStandardLibrary = (Library) asPackage;
 						break;
 					}
 				}
+				if (this.referencedStandardLibrary != null) {
+					break;
+				}
 			}
-		}
-		if (standardLibrary == null) {
-			throw new IllegalStateException("No StandardLibrary package");
 		}
 		initLocalTypes();
 		initOrphanSymbolNames(asSaver);

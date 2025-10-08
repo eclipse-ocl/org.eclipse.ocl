@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.Constraint
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter
 import org.eclipse.ocl.pivot.LambdaParameter
 import org.eclipse.ocl.pivot.internal.manager.Orphanage
-import org.eclipse.jdt.annotation.NonNull
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -284,7 +283,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			«FOR name : externals»«var element = ClassUtil.requireNonNull(name2external.get(name))»
-			«IF element instanceof Library»
+			«IF element === referencedStandardLibrary»
 			«ELSEIF element instanceof PrimitiveType»
 			private final org.eclipse.ocl.pivot.@NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSE»
@@ -876,7 +875,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			EnumerationLiteral case element.owningEnumeration === null: return "null"
 			EnumerationLiteral: return element.owningEnumeration.partialName() + "_" + element.javaName()
 			LambdaParameter: return element.javaName()
-			Library case element == standardLibrary: return "standardLibraryPackage"
+			Library case element == referencedStandardLibrary: return "standardLibraryPackage"
 			Library: return "library"
 			Operation case element.owningClass === null: return "null_" + element.javaName()
 			Operation: return element.owningClass.partialName() + "_" + element.javaName()

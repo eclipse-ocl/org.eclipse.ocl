@@ -29,24 +29,40 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/CGLibrary Standard Library
@@ -122,8 +138,8 @@ public class CGLibrary extends ASResourceImpl
 	 *  This static definition auto-generated from /org.eclipse.ocl.codegen/model/CGLibrary.oclstdlib
 	 *  is used as the default when no overriding copy is registered.
 	 */
-	public static @NonNull Package getDefaultPackage() {
-		Package pkge = getDefaultModel().getOwnedPackages().get(0);
+	public static org.eclipse.ocl.pivot.@NonNull Package getDefaultPackage() {
+		org.eclipse.ocl.pivot.Package pkge = getDefaultModel().getOwnedPackages().get(0);
 		assert pkge != null;
 		return pkge;
 	}
@@ -268,20 +284,22 @@ public class CGLibrary extends ASResourceImpl
 
 	private static class AbstractLibraryContents extends AbstractContents
 	{
-		protected final @NonNull Library ocl;
+		protected final org.eclipse.ocl.pivot.@NonNull Package standardLibraryPackage;
 
 		protected AbstractLibraryContents() {
-			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", null, OCLstdlibPackage.eINSTANCE);
+			standardLibraryPackage = getPackage(org.eclipse.ocl.pivot.model.OCLstdlib.getDefaultModel(), "ocl");
 		}
 	}
 
 	private static class Contents extends AbstractLibraryContents
 	{
 		private final @NonNull Model model;
+		private final org.eclipse.ocl.pivot.@NonNull Package library;
 
 		private Contents(@NonNull String asURI)
 		{
 			model = createModel(asURI);
+			library = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", null, OCLstdlibPackage.eINSTANCE);
 			installPackages();
 			installPrimitiveTypes();
 			installOperations();
@@ -292,25 +310,24 @@ public class CGLibrary extends ASResourceImpl
 			return model;
 		}
 
-		private final @NonNull Package _ocl = getPackage(org.eclipse.ocl.pivot.model.OCLstdlib.getDefaultModel(), "ocl");
-		private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
-		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
-		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
-		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
+		private final org.eclipse.ocl.pivot.@NonNull Class _Boolean = getBooleanType(standardLibraryPackage, "Boolean");
+		private final org.eclipse.ocl.pivot.@NonNull Class _Integer = getPrimitiveType(standardLibraryPackage, "Integer");
+		private final @NonNull AnyType _OclAny = getAnyType(standardLibraryPackage, "OclAny");
+		private final org.eclipse.ocl.pivot.@NonNull Class _OclElement = getClass(standardLibraryPackage, "OclElement");
+		private final org.eclipse.ocl.pivot.@NonNull Class _String = getPrimitiveType(standardLibraryPackage, "String");
 
 		private void installPackages() {
-			model.getOwnedPackages().add(ocl);
-			model.getOwnedImports().add(createImport(null, _ocl));
+			model.getOwnedPackages().add(library);
+			model.getOwnedImports().add(createImport(null, standardLibraryPackage));
 		}
 
 		private final @NonNull PrimitiveType _String_1 = createPrimitiveType(OCLstdlibPackage.Literals.STRING);
 
 		private void installPrimitiveTypes() {
-			List<Class> ownedClasses;
+			List<org.eclipse.ocl.pivot.Class> ownedClasses;
 			PrimitiveType type;
 
-			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses = library.getOwnedClasses();
 			type = _String_1;
 			type.getSuperClasses().add(_OclElement);
 			ownedClasses.add(type);
