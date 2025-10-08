@@ -11,10 +11,12 @@
 package org.eclipse.ocl.build.xtend
 
 import org.eclipse.ocl.pivot.DataType
+import org.eclipse.ocl.pivot.Library
 import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
+import org.eclipse.ocl.pivot.internal.manager.Orphanage
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
@@ -131,6 +133,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+			import org.eclipse.ocl.pivot.model.OCLmetamodel;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
@@ -359,17 +362,14 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			
 				private static class AbstractLibraryContents extends AbstractContents
 				{
-					«FOR pkge : thisModel.getSortedLocalPackages()»
-					protected final «getEClassReference(true, pkge)» «pkge.getSymbolName()»;
-					«ENDFOR»
+					«var stdlib = getStandardLibrary()»
+					protected final «getEClassReference(true, stdlib)» «stdlib.getSymbolName()»;
 					«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
 					protected final @NonNull NormalizedTemplateParameter «normalizedTemplateParameter.getPrefixedSymbolName(normalizedTemplateParameter.getName())»;
 					«ENDFOR»
 			
 					protected AbstractLibraryContents() {
-						«FOR pkge : thisModel.getSortedLocalPackages()»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
-						«ENDFOR»
+						«stdlib.getSymbolName()» = create«stdlib.eClass().getName()»("«stdlib.getName()»", «stdlib.getNsPrefix() !== null ? "\""+stdlib.getNsPrefix()+"\"" : "null"», "«stdlib.getURI()»", «stdlib.getGeneratedPackageId()», «getEcoreLiteral(stdlib)»);
 						«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
 						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(«thisModel.getOrphanPackage().getSymbolName()», «normalizedTemplateParameter.getIndex()»);
 						«ENDFOR»
@@ -379,10 +379,24 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				private static class Contents extends AbstractLibraryContents
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
+					«FOR pkge : thisModel.getSortedAllPackages()»
+					«IF pkge == stdlib»
+					«ELSEIF (pkge.eContainer() != thisModel) && !Orphanage.isOrphan(pkge)»
+					«ELSE»
+					private final org.eclipse.ocl.pivot.@NonNull Package «pkge.getSymbolName()»;
+					«ENDIF»
+					«ENDFOR»
 			
 					private Contents(@NonNull String asURI)
 					{
 						«thisModel.getSymbolName()» = createModel(asURI);
+						«FOR pkge : thisModel.getSortedAllPackages()»
+						«IF pkge == stdlib»
+						«ELSEIF (pkge.eContainer() != thisModel) && !Orphanage.isOrphan(pkge)»
+						«ELSE»
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«ENDIF»
+						«ENDFOR»
 						«thisModel.installPackages()»
 						«thisModel.installClassTypes()»
 						«thisModel.installPrimitiveTypes()»

@@ -283,7 +283,7 @@ public class NameQueries
 	}
 
 	public void putSymbolName(@NonNull Object elem, @NonNull String symbolName) {
-		if (symbolName.startsWith("Model")) {
+		if (symbolName.startsWith("standardLibraryPackage")) {
 			getClass();			// FIXME Debugging
 		}
 		if (symbolName.startsWith("symbol_")) {
