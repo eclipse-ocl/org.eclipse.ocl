@@ -1045,9 +1045,14 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _UnlimitedNatural__toInteger = LIBRARY.createOperation(Types._UnlimitedNatural, "toInteger", ParameterTypes.EMPTY_LIST, Types._Integer,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
 
-		static {
+		/*
+		 * Deferred initialization for operations with a return type involving a nested specialization.
+		 */
+		public static void postInit() {
 			_Collection__product.setType(LIBRARY.getCollectionType(Types._Set, LIBRARY.getTupleType(LIBRARY.getTuplePart("first", LIBRARY.getTemplateParameter(_Collection__product, TypeParameters.$$0), false), LIBRARY.getTuplePart("second", LIBRARY.getTemplateParameter(_Collection__product, TypeParameters.$$1), false))));
+		}
 
+		static {
 			Init.initEnd();
 		}
 
@@ -2950,6 +2955,7 @@ public class OCLstdlibTables extends AbstractTables
 				if (--initCount == 0) {
 					initCount = -1;
 					EnumerationLiterals.init();
+					Operations.postInit();
 				}
 			}
 		}
