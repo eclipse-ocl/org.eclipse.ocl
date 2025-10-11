@@ -992,9 +992,11 @@ public class PivotUtil implements PivotConstants
 	 * @since 1.16
 	 */
 	public static @NonNull PrimitiveType createPrimitiveType(/*@NonNull*/ EDataType eDataType) {
+		assert eDataType != null;
 		boolean isBoolean = eDataType.getInstanceClass() == Boolean.class;
 		PrimitiveType pivotType = isBoolean ? PivotFactory.eINSTANCE.createBooleanType() : PivotFactory.eINSTANCE.createPrimitiveType();
 		pivotType.setName(eDataType.getName());
+		pivotType.setInstanceClassName(eDataType.getInstanceClassName());
 		((PivotObjectImpl)pivotType).setESObject(eDataType);
 		return pivotType;
 	}

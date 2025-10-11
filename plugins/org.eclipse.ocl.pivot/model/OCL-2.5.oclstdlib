@@ -877,7 +877,7 @@ One can also use qualification by OclAny (name of the type) to explicitly refer 
 
 Operations of OclAny, where the instance of OclAny is called object.
 */
-abstract type OclAny : AnyType {
+abstract type OclAny : AnyType => 'org.eclipse.ocl.pivot.AnyType' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	True if oclText[self] is the same object as object2. Infix operator.
@@ -1104,7 +1104,7 @@ It has one single instance, identified as  oclText[invalid].
 Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().
 OclInvalid is itself an instance of the metatype InvalidType.
 */
-abstract type OclInvalid : InvalidType conformsTo OclVoid {
+abstract type OclInvalid : InvalidType conformsTo OclVoid => 'org.eclipse.ocl.pivot.InvalidType' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Returns oclText[invalid].
@@ -1191,7 +1191,7 @@ abstract type OclMessage conformsTo OclAny {
 The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation
 and Iteration signatures. Instances of OclSelf are never created. 
 */
-abstract type OclSelf : SelfType conformsTo OclAny {
+abstract type OclSelf : SelfType conformsTo OclAny => 'org.eclipse.ocl.pivot.SelfType' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 }
 
@@ -1248,7 +1248,7 @@ If the source is the oclText[null] literal, it is implicitly converted to Bag{}.
 
 OclVoid is itself an instance of the metatype VoidType.
 */
-abstract type OclVoid : VoidType conformsTo OclAny {
+abstract type OclVoid : VoidType conformsTo OclAny => 'org.eclipse.ocl.pivot.VoidType' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]

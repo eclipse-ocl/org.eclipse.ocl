@@ -190,9 +190,9 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	//	if (instanceClass == null) {
 	//		instanceClass = EObject.class;
 	//	}
-		if ((instanceClass != null) && (instanceClassName == null)) {
-			instanceClassName = instanceClass.getName();
-		}
+	//	if ((instanceClass != null) && (instanceClassName == null)) {
+	//		instanceClassName = instanceClass.getName();
+	//	}
 		//
 		//	Finally refresh the class.
 		//
