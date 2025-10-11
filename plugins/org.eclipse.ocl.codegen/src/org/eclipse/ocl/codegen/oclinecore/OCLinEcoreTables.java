@@ -644,7 +644,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 	}
 
-	protected void declareInit() {
+	protected void declareInit(boolean hasPostInit) {
 		s.append("	/**\n");
 		s.append("	 * The multiple packages above avoid problems with the Java 65536 byte limit but introduce a difficulty in ensuring that\n");
 		s.append("	 * static construction occurs in the disciplined order of the packages when construction may start in any of the packages.\n");
@@ -678,13 +678,16 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("				if (--initCount == 0) {\n");
 		s.append("					initCount = -1;\n");
 		s.append("					" + precedingPackageName + ".init();\n");
+		if (hasPostInit) {
+			s.append("					" + AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME + ".postInit();\n");
+		}
 		s.append("				}\n");
 		s.append("			}\n");
 		s.append("		}\n");
 		s.append("	}\n");
 	}
 
-	protected void declareOperations() {
+	protected boolean declareOperations() {
 		s.append("	/**\n");
 		s.append("	 *	The operation descriptors for each operation of each type.\n");
 		s.append("	 *\n");
@@ -777,7 +780,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			Type resultType = op.getType();
 			if (isFirstOperation) {
 				s.append("\n");
-				s.append("		static {\n");
+				s.append("		/*\n");
+				s.append("		 * Deferred initialization for operations with a return type involving a nested specialization.\n");
+				s.append("		 */\n");
+				s.append("		public static void postInit() {\n");
 				isFirstOperation = false;
 			}
 			else if (isFirstOperation) {
@@ -793,10 +799,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			emitReferencedElement.setNamespace(null);
 		}
 		if (!isFirstOperation) {
-			s.append("\n");
+			s.append("		}\n");
 		}
-		appendInitializationEnd(!isFirstOperation);
+		appendInitializationEnd(false);
 		s.append("	}\n");
+		return !isFirstOperation;
 	}
 
 	protected void declareParameterLists() {
@@ -1377,7 +1384,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("\n");
 		declareParameterLists();
 		s.append("\n");
-		declareOperations();
+		boolean hasPostInit = declareOperations();
 		s.append("\n");
 		declareProperties();
 		s.append("\n");
@@ -1389,7 +1396,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		//		s.append("\n");
 		declareEnumerationLiterals();
 		s.append("\n");
-		declareInit();
+		declareInit(hasPostInit);
 		s.append("\n");
 		s.append("	static {\n");
 		s.append("		Init.initEnd();\n");
