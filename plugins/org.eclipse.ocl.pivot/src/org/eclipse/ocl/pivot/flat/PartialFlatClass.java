@@ -117,22 +117,6 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		return asClass;
 	}
 
-	@Override
-	protected void initOperationsInternal() {
-		for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
-			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
-			//	initMemberOperationsFrom(unspecializedPartialType);
-			//	if (INIT_MEMBER_OPERATIONS.isActive()) {
-			//		INIT_MEMBER_OPERATIONS.println(this + " from " + unspecializedPartialType);
-			//	}
-			for (@SuppressWarnings("null")@NonNull Operation pivotOperation : unspecializedType.getOwnedOperations()) {
-				if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
-					addOperation(pivotOperation);
-				}
-			}
-		}
-	}
-
 /*	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initMemberOperations() {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
