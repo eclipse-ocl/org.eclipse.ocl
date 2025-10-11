@@ -7,8 +7,7 @@
     xmiidVersion="1">
   <ownedImports importedNamespace="pivot:Library &_0;#S673I" xmiidVersion="1"/>
   <ownedPackages xsi:type="pivot:Library" xmi:id="S673I" URI="http://www.eclipse.org/ocl/2015/Library" name="ocl" nsPrefix="ocl">
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="AlwVZ" instanceClassName="org.eclipse.ocl.pivot.PrimitiveType" name="String"
-        superClasses="&_0;#zfDWR">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="AlwVZ" name="String" superClasses="&_0;#zfDWR">
       <ownedOperations xmi:id="oLwNm" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation" isRequired="true"
           name="getSeverity" type="pivot:PrimitiveType &_0;#tYtCd"/>
       <ownedOperations xmi:id="fsh7B" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation" isRequired="true"

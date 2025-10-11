@@ -330,8 +330,9 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				eClassifier.setName(name);
 				ePackage.getEClassifiers().add(eClassifier);
 			}
-			if (!javaClass.getName().equals(eClassifier.getInstanceClassName())) {
-				log.error("Wrong " + typeName + "::instanceClassName - " + eClassifier.getInstanceClassName() + " rather than " + javaClass.getName());
+			String eClassifierInstanceClassName = eClassifier.getInstanceClassName();
+			if ((eClassifierInstanceClassName != null) && !javaClass.getName().equals(eClassifierInstanceClassName)) {
+				log.error("Wrong " + typeName + "::instanceClassName - " + eClassifierInstanceClassName + " rather than " + javaClass.getName());
 			}
 		//	eClassifier.setInstanceClassName(javaClass.getName());
 			if (comment != null) {
