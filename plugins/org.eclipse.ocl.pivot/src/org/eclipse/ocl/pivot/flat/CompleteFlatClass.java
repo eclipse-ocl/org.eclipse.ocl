@@ -155,24 +155,22 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	 */
 	protected @Nullable List<@NonNull Property> gatherMetaExtensions(@Nullable List<@NonNull Property> asProperties) {
 		CompletePackage rootCompletePackage = completeClass.getOwningCompletePackage().getRootCompletePackage();
-		org.eclipse.ocl.pivot.Package pivotPackage = rootCompletePackage.getPrimaryPackage();
-		if (pivotPackage != null) {
-			org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
-			EnvironmentFactoryInternal environmentFactory = completeClass.getEnvironmentFactory();
-			PackageId metapackageId = environmentFactory.getTechnology().getMetapackageId(environmentFactory, pivotPackage);
-			org.eclipse.ocl.pivot.Package metapackage = environmentFactory.getIdResolver().basicGetPackage(metapackageId);
-			if (metapackage != null) {
-				CompletePackage metaCompletePackage = environmentFactory.getMetamodelManager().getCompletePackage(metapackage);
-				String metatypeName = pivotClass.eClass().getName();
-				Type metatype = metaCompletePackage.getType(metatypeName);
-				if (metatype != null) {
-					CompleteClass metaCompleteClass = environmentFactory.getCompleteModel().getCompleteClass(metatype);
-					for (@NonNull Property property : metaCompleteClass.getProperties(FeatureFilter.SELECT_EXTENSION)) {
-						if (asProperties == null) {
-							asProperties = new ArrayList<>();
-						}
-						asProperties.add(property);	// FIXME Clone the M2 property to have the correct M1 container/type
+		org.eclipse.ocl.pivot.@NonNull Package pivotPackage = rootCompletePackage.getPrimaryPackage();
+		org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
+		EnvironmentFactoryInternal environmentFactory = completeClass.getEnvironmentFactory();
+		PackageId metapackageId = environmentFactory.getTechnology().getMetapackageId(environmentFactory, pivotPackage);
+		org.eclipse.ocl.pivot.Package metapackage = environmentFactory.getIdResolver().basicGetPackage(metapackageId);
+		if (metapackage != null) {
+			CompletePackage metaCompletePackage = environmentFactory.getMetamodelManager().getCompletePackage(metapackage);
+			String metatypeName = pivotClass.eClass().getName();
+			Type metatype = metaCompletePackage.getType(metatypeName);
+			if (metatype != null) {
+				CompleteClass metaCompleteClass = environmentFactory.getCompleteModel().getCompleteClass(metatype);
+				for (@NonNull Property property : metaCompleteClass.getProperties(FeatureFilter.SELECT_EXTENSION)) {
+					if (asProperties == null) {
+						asProperties = new ArrayList<>();
 					}
+					asProperties.add(property);	// FIXME Clone the M2 property to have the correct M1 container/type
 				}
 			}
 		}
@@ -235,9 +233,11 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 	}
 
-	@Override
+/*	@Override
 	protected void initOperationsInternal() {
-		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+		initFragments();
+		super.initOperationsInternal();
+	/ *	for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
 			for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
 				org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
 				CompleteClass unspecializedCompleteClass = completeClass.getCompleteModel().getCompleteClass(unspecializedType);
@@ -255,7 +255,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 				}
 			}
 		}
-	}
+	} */
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();

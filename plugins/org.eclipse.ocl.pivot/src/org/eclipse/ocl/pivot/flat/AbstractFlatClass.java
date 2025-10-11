@@ -641,9 +641,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = initOperations();
 		}
-		Iterable<Iterable<Iterable<@NonNull Operation>>> transformed = Iterables.transform(name2partialOperations2.values(), PartialOperations.partialOperations2allOperations);
-		@NonNull Iterable<@NonNull Operation> concat = Iterables.concat(Iterables.concat(transformed));
-		return concat;
+		@NonNull Iterable<@NonNull Iterable<@NonNull Iterable<@NonNull Operation>>> transformed = ClassUtil.requireNonNull(Iterables.transform(name2partialOperations2.values(), PartialOperations.partialOperations2allOperations));
+		return ClassUtil.requireNonNull(Iterables.concat(ClassUtil.requireNonNull(Iterables.concat(transformed))));
 	}
 
 //	@Override
@@ -661,14 +660,14 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = initOperations();
 		}
-		Iterable<@NonNull PartialOperations> itMapListOps = name2partialOperations2.values();
-		@NonNull Iterable<Iterable<Iterable<@NonNull Operation>>> itItListOps = Iterables.transform(itMapListOps, PartialOperations.partialOperations2allOperations);
-		@NonNull Iterable<Iterable<@NonNull Operation>> itListOps = Iterables.concat(itItListOps);
-		@NonNull Iterable<@NonNull Operation> itOps = Iterables.concat(itListOps);
+		@NonNull Iterable<@NonNull PartialOperations> itMapListOps = name2partialOperations2.values();
+		@NonNull Iterable<@NonNull Iterable<@NonNull Iterable<@NonNull Operation>>> itItListOps = ClassUtil.requireNonNull(Iterables.transform(itMapListOps, PartialOperations.partialOperations2allOperations));
+		@NonNull Iterable<@NonNull Iterable<@NonNull Operation>> itListOps = ClassUtil.requireNonNull(Iterables.concat(itItListOps));
+		@NonNull Iterable<@NonNull Operation> itOps = ClassUtil.requireNonNull(Iterables.concat(itListOps));
 		if (featureFilter == null) {
 			return itOps;
 		}
-		@NonNull Iterable<@NonNull Operation> subItOps = Iterables.filter(itOps,
+		Iterable<@NonNull Operation> subItOps = Iterables.filter(itOps,
 			new Predicate<@NonNull Operation>()
 			{
 				@Override
@@ -676,7 +675,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 					return featureFilter.accept(domainOperation);
 				}
 			});
-		return subItOps;
+		return ClassUtil.requireNonNull(subItOps);
 	}
 
 //	@Override
@@ -758,7 +757,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	/**
 	 * Initialize the super-fragment hierarchy by reflective analysis.
 	 */
-	private synchronized void initFragments() {
+	private synchronized void initFragments() {			// XXX Bypass fro PartialFlatClass
 		assert mutable != Boolean.FALSE;
 	//	this.mutable = Boolean.TRUE;
 	//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this);
@@ -901,7 +900,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		installClassListeners();
 	}
 
-	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
+	private synchronized @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
@@ -918,19 +917,52 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name2partialOperations2;
 	}
 
-	protected abstract void initOperationsInternal();
+	private void initOperationsInternal() {
+	/*	for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
+			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
+			//	initMemberOperationsFrom(unspecializedPartialType);
+			//	if (INIT_MEMBER_OPERATIONS.isActive()) {
+			//		INIT_MEMBER_OPERATIONS.println(this + " from " + unspecializedPartialType);
+			//	}
+			for (@SuppressWarnings("null")@NonNull Operation pivotOperation : unspecializedType.getOwnedOperations()) {
+				if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
+					addOperation(pivotOperation);
+				}
+			}
+		} */
+		if (fragments == null) {
+			initFragments();
+		}
+		@NonNull FlatFragment[] fragments2 = fragments;
+		assert fragments2 != null;
+		OPERATIONS.println(NameUtil.debugSimpleName(flatModel) + " " + this);
+		for (@NonNull FlatFragment fragment : fragments2) {
+			for (@NonNull Operation operation : fragment.getOperations()) {
+				OPERATIONS.println("\t" + NameUtil.debugSimpleName(operation) + " " + operation);
+				addOperation(operation);
+			}
+		}
+	}
 
 	private synchronized void initProperties() {
 		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
 		if (name2propertyOrProperties2 == null) {
-			PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);
 			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
-			assert fragments != null;
-			for (@NonNull FlatFragment fragment : fragments) {
-				for (@NonNull Property property : fragment.getProperties()) {
-					PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
-					addProperty(property);
-				}
+			initPropertiesInternal();
+		}
+	}
+
+	private void initPropertiesInternal() {
+		if (fragments == null) {
+			initFragments();
+		}
+		@NonNull FlatFragment[] fragments2 = fragments;
+		assert fragments2 != null;
+		PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);
+		for (@NonNull FlatFragment fragment : fragments2) {
+			for (@NonNull Property property : fragment.getProperties()) {
+				PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
+				addProperty(property);
 			}
 		}
 	}

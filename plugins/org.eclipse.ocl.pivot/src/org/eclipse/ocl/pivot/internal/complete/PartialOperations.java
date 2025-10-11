@@ -36,11 +36,11 @@ import com.google.common.collect.Iterators;
 public class PartialOperations //extends HashMap<ParametersId, List<DomainOperation>>
 {
 	//	private static final long serialVersionUID = 1L;
-	public static final @NonNull Function<PartialOperations, Iterable<Iterable<Operation>>> partialOperations2allOperations =
-			new Function<PartialOperations, Iterable<Iterable<Operation>>>() {
+	public static final @NonNull Function<@NonNull PartialOperations, @NonNull Iterable<@NonNull Iterable<@NonNull Operation>>> partialOperations2allOperations =
+			new Function<@NonNull PartialOperations, @NonNull Iterable<@NonNull Iterable<@NonNull Operation>>>() {
 
 		@Override
-		public Iterable<Iterable<Operation>> apply(PartialOperations partialOperations) {
+		public @NonNull Iterable<@NonNull Iterable<@NonNull Operation>> apply(@NonNull PartialOperations partialOperations) {
 			return partialOperations.getOperationsInternal(null);
 		}
 	};
@@ -154,7 +154,8 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 			OverloadsList nonStaticOperations2 = nonStaticOperations;
 			if (staticOperations2 != null) {
 				if (nonStaticOperations2 != null) {
-					return Iterators.concat(nonStaticOperations2.iterator(), staticOperations2.iterator());
+					Iterator<@NonNull Operation> concat = Iterators.concat(nonStaticOperations2.iterator(), staticOperations2.iterator());
+					return ClassUtil.requireNonNull(concat);
 				}
 				else {
 					return staticOperations2.iterator();
@@ -206,7 +207,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 	 */
 	protected final @NonNull StandardLibrary standardLibrary;
 	protected final @NonNull String name;
-	private final @NonNull Map<@NonNull ParametersId, Object> map = new HashMap<@NonNull ParametersId, Object>();
+	private final @NonNull Map<@NonNull ParametersId, Object> map = new HashMap<>();
 
 	/**
 	 * @since 7.0
@@ -290,13 +291,14 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 			if (featureFilter == null) {
 				return overloads;
 			}
-			return Iterables.filter(overloads, new Predicate<@NonNull Operation>()
+			Iterable<@NonNull Operation> filter = Iterables.filter(overloads, new Predicate<@NonNull Operation>()
 			{
 				@Override
 				public boolean apply(@NonNull Operation input) {
 					return featureFilter.accept(input);
 				}
 			});
+			return ClassUtil.requireNonNull(filter);
 		}
 		else if (partials != null) {			// Must be an Operation
 			Operation operation = (Operation) partials;
@@ -308,23 +310,25 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 	}
 
 	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(final @Nullable FeatureFilter featureFilter) {
-		Iterable<@NonNull Operation> unfilteredOverloads = Iterables.concat(Iterables.transform(map.keySet(), new Function<@NonNull ParametersId, @NonNull Iterable<@NonNull Operation>>()
+		Iterable<@NonNull Operation> concat = Iterables.concat(Iterables.transform(map.keySet(), new Function<@NonNull ParametersId, @NonNull Iterable<@NonNull Operation>>()
 		{
 			@Override
 			public @NonNull Iterable<@NonNull Operation> apply(@NonNull ParametersId parametersId) {
 				return getOperationOverloads(parametersId, featureFilter);
 			}
 		}));
+		@NonNull Iterable<@NonNull Operation> unfilteredOverloads = ClassUtil.requireNonNull(concat);
 		if (featureFilter == null) {
 			return unfilteredOverloads;
 		}
-		return Iterables.filter(unfilteredOverloads, new Predicate<@NonNull Operation>()
+		Iterable<@NonNull Operation> filter = Iterables.filter(unfilteredOverloads, new Predicate<@NonNull Operation>()
 		{
 			@Override
 			public boolean apply(@NonNull Operation input) {
 				return featureFilter.accept(input);
 			}
 		});
+		return ClassUtil.requireNonNull(filter);
 	}
 
 	@SuppressWarnings("null")
@@ -342,14 +346,15 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 	}
 
 	private @NonNull Iterable<@NonNull Iterable<@NonNull Operation>> getOperationsInternal(final @Nullable FeatureFilter featureFilter) {
-		return Iterables.transform(map.keySet(), new Function<ParametersId, @NonNull Iterable<@NonNull Operation>>()
+		Function<@NonNull ParametersId, @NonNull Iterable<@NonNull Operation>> function = new Function<@NonNull ParametersId, @NonNull Iterable<@NonNull Operation>>()
 		{
 			@Override
-			public @NonNull Iterable<@NonNull Operation> apply(ParametersId parametersId) {
-				assert parametersId != null;
+			public @NonNull Iterable<@NonNull Operation> apply(@NonNull ParametersId parametersId) {
 				return getOperationOverloads(parametersId, featureFilter);
 			}
-		});
+		};
+		Iterable<@NonNull Iterable<@NonNull Operation>> transform = Iterables.transform(map.keySet(), function);
+		return ClassUtil.requireNonNull(transform);
 	}
 
 /*	public void initMemberOperationsPostProcess() {
