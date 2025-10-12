@@ -288,13 +288,13 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
 		super.registerMetaPackages(completeModel);
 		//
-		CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
+	/*	CompletePackage umlCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.UML_METAMODEL_NAME);
 		completeModel.registerCompletePackageContribution(umlCompletePackage, UMLPackage.eINSTANCE.getNsURI());
 		//
 		CompletePackage typesCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.TYPES_METAMODEL_NAME);	// XXX
 		completeModel.registerCompletePackageContribution(typesCompletePackage, TypesPackage.eINSTANCE.getNsURI());
 		//
 		CompletePackage standardCompletePackage = completeModel.getCompletePackage(PivotUMLConstants.STANDARD_METAMODEL_ID, StandardPackage.eINSTANCE.getNsPrefix(), PivotUMLConstants.STANDARD_METAMODEL_NAME);	// XXX
-		completeModel.registerCompletePackageContribution(standardCompletePackage, StandardPackage.eINSTANCE.getNsURI());
+		completeModel.registerCompletePackageContribution(standardCompletePackage, StandardPackage.eINSTANCE.getNsURI()); */
 	}
 }

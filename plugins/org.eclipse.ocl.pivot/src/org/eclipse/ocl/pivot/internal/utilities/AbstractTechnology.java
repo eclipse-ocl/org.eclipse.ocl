@@ -85,10 +85,10 @@ public abstract class AbstractTechnology implements Technology
 
 	@Override
 	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
-		CompletePackage libraryCompletePackage = completeModel.getCompletePackage(PivotConstants.METAMODEL_ID, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
+	/*	CompletePackage libraryCompletePackage = completeModel.getCompletePackage(PivotConstants.METAMODEL_ID, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 		completeModel.registerCompletePackageContribution(libraryCompletePackage, OCLstdlibPackage.eINSTANCE.getNsURI());
 		//
 		CompletePackage pivotCompletePackage = completeModel.getCompletePackage(PivotConstants.METAMODEL_ID, PivotPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
-		completeModel.registerCompletePackageContribution(pivotCompletePackage, PivotPackage.eINSTANCE.getNsURI());
+		completeModel.registerCompletePackageContribution(pivotCompletePackage, PivotPackage.eINSTANCE.getNsURI()); */
 	}
 }

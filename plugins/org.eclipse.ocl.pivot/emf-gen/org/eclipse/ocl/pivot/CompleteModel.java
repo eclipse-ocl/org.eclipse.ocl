@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
@@ -194,5 +195,5 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
-	void registerCompletePackageContribution(@NonNull CompletePackage completePackage, /*@NonNull*/ String packageURI);
+	void registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage);
 } // CompleteModel
