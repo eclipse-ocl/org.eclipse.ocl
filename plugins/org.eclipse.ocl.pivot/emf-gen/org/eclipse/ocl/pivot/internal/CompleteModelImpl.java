@@ -1154,7 +1154,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public void registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage) {
+	public @NonNull CompletePackageId registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage) {
 		assert ePackage != null;
 		CompletePackageId completePackageId = IdManager.getCompletePackageId(metamodelName);
 		CompletePackage completePackage = getCompletePackage(completePackageId, ePackage.getNsPrefix(), metamodelName);
@@ -1163,5 +1163,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		completePackage.didAddPackageURI(packageURI);										// not "did"
 		CompletePackage old = packageURI2completePackage.put(packageURI, completePackage);
 		assert (old == null) || (old == completePackage);
+		return completePackageId;
 	}
 } //CompleteModelImpl

@@ -76,16 +76,6 @@ public interface PivotConstants
 	public static final @NonNull CompletePackageId PRIMITIVES_ID = IdManager.getCompletePackageId(PRIMITIVES_NAME);
 
 	/**
-	 * The Package name of the shared types metamodel.
-	 */
-//	static final @NonNull String TYPES_METAMODEL_NAME = "$types$";	// FIXME Use extension point
-
-	/**
-	 * The Package name of the shared uml metamodel.
-	 */
-//	static final @NonNull String UML_METAMODEL_NAME = "$uml$";	// FIXME Use extension point
-
-	/**
 	 * URI used to identify that a Package contributes to the OCL AS.
 	 * Fragments may be appended tio identify a particular aspect of the AS.
 	 * @since 7.0
