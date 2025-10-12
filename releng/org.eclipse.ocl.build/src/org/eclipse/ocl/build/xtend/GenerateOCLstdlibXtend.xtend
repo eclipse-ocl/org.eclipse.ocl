@@ -408,7 +408,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«IF pkge == stdlib»
 						«ELSEIF (pkge.eContainer() != thisModel) && !Orphanage.isOrphan(pkge)»
 						«ELSE»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+stdlib.getNsPrefix()+"\"" : "null"», "«stdlib.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDIF»
 						«ENDFOR»
 						«ENDIF»
