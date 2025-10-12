@@ -195,5 +195,5 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
-	void registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage);
+	@NonNull CompletePackageId registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage);
 } // CompleteModel

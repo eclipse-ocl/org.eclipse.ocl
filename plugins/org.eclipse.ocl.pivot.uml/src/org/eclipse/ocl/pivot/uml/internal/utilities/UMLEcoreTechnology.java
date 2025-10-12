@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DynamicElement;
 import org.eclipse.ocl.pivot.Element;
@@ -149,11 +148,15 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		}
 		else if (eObject2 instanceof UMLPackage) {
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
-			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+//			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			CompletePackageId completePackageId = completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_NAME, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			metamodel = IdManager.getRootPackageId(completePackageId.getName());
 		}
 		else if (eObject2 instanceof TypesPackage) {
 //			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
-			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+//			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			CompletePackageId completePackageId = completeModel.registerCompletePackageContribution(PivotUMLConstants.TYPES_METAMODEL_NAME, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
+			metamodel = IdManager.getRootPackageId(completePackageId.getName());
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
@@ -274,7 +277,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		return true;
 	}
 
-	private @NonNull RootPackageId registerCompletePackageContribution(@NonNull CompleteModelInternal completeModel, @NonNull CompletePackageId completePackageId, /*@NonNull*/ EPackage ePackage) {
+/*	private @NonNull RootPackageId registerCompletePackageContribution(@NonNull CompleteModelInternal completeModel, @NonNull CompletePackageId completePackageId, / *@NonNull* / EPackage ePackage) {
 		assert ePackage != null;
 		String packageURI = ePackage.getNsURI();
 		assert packageURI != null;
@@ -282,7 +285,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	//	completePackage.didAddPackageURI(packageURI);
 	//	completeModel.registerCompletePackageContribution(completePackage, packageURI);
 		return IdManager.getRootPackageId(completePackageId.getName());		// XXX
-	}
+	} */
 
 	@Override
 	public void registerMetaPackages(@NonNull CompleteModel completeModel) {

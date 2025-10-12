@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
@@ -46,7 +45,11 @@ public interface Technology
 
 	String getExtensionName(@NonNull Element asStereotypedElement);
 
-	RootPackageId getMetamodelId(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage eObject2);
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated /* ?? not used */
+	PackageId getMetamodelId(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage eObject2);
 
 	@NonNull PackageId getMetapackageId(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
