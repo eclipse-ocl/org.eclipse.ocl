@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
@@ -1144,19 +1145,23 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public void registerCompletePackageContribution(@NonNull CompletePackage completePackage, /*@NonNull*/ String packageURI) {
-		assert packageURI != null;
-		completePackage.didAddPackageURI(packageURI);										// not "did"
-		CompletePackage old = packageURI2completePackage.put(packageURI, completePackage);
-		assert (old == null) || (old == completePackage);
-	}
-
-	@Override
 	public @NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;
+	}
+
+	@Override
+	public void registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage) {
+		assert ePackage != null;
+		CompletePackageId completePackageId = IdManager.getCompletePackageId(metamodelName);
+		CompletePackage completePackage = getCompletePackage(completePackageId, ePackage.getNsPrefix(), metamodelName);
+		String packageURI = ePackage.getNsURI();
+		assert packageURI != null;
+		completePackage.didAddPackageURI(packageURI);										// not "did"
+		CompletePackage old = packageURI2completePackage.put(packageURI, completePackage);
+		assert (old == null) || (old == completePackage);
 	}
 } //CompleteModelImpl

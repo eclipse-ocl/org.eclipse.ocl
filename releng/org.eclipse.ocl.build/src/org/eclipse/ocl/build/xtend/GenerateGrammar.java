@@ -281,6 +281,9 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		genModelHelper = new EcoreGenModelHelper(environmentFactory);
 		String rootPath = StandaloneSetup.getPlatformRootPath();
+//		if (rootPath == null) {
+//			rootPath = "";
+//		}
 		File folder = new File(rootPath + javaFolder + "/" + javaPackageName.replace(".", "/"));
 		try {
 			sourceFile = new File(folder, grammarFileStem + ".xtextbin").toString();
