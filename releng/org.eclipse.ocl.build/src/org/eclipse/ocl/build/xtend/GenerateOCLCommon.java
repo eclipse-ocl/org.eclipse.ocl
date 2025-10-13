@@ -301,7 +301,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			Collections.sort(sortedTemplateSignatures, monikerComparator);
 			Collections.sort(sortedTemplateableElements, monikerComparator);
 
-			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(thisModel)) {
+			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : sortedAllPackages) {
 				List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = package2sortedClasses.get(asPackage);
 				if (sortedClasses != null) {
 					Collections.sort(sortedClasses, NameUtil.NAMEABLE_COMPARATOR);
@@ -1159,7 +1159,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return sortedElements;
 	}
 
-	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getSortedPackages(@NonNull Model root, @NonNull Collection<? extends org.eclipse.ocl.pivot.Package> packages) {
+	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getSortedPackages(@NonNull Model root, @NonNull Collection<? extends org.eclipse.ocl.pivot.@NonNull Package> packages) {
 		List<org.eclipse.ocl.pivot.@NonNull Package> sortedElements = new ArrayList<>(packages);
 		Collections.sort(sortedElements, contentAnalysis.packageComparator);
 		return sortedElements;
