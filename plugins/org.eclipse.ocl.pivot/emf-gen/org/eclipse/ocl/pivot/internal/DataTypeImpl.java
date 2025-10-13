@@ -675,7 +675,7 @@ implements DataType {
 								public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object BOXED_superClasses, final /*@NonInvalid*/ @Nullable Object _1) {
 									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class CAST_null = (org.eclipse.ocl.pivot.Class)_1;
 									if (CAST_null == null) {
-										throw new InvalidValueException("Null source for \'Class::superClasses\'");
+										throw new InvalidValueException("Null source for \'Class::superClasses : Set(Class[*|1])\'");
 									}
 									final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses_0 = CAST_null.getSuperClasses();
 									final /*@Thrown*/ @NonNull SetValue BOXED_superClasses_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses_0);
