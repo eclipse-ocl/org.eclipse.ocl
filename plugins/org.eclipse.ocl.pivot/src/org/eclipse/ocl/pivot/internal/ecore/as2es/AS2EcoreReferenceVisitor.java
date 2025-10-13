@@ -595,7 +595,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (needsDelegates) {
 			context.getDelegateInstaller().installDelegates(ePackage);
 		}
-		if (context.isPivot(pivotPackage)) {
+		if (context.isPivot(pivotPackage)) {				// XXX is this necessary ???
 			ClassUtil.getMetamodelAnnotation(ePackage);
 		}
 		return null;
