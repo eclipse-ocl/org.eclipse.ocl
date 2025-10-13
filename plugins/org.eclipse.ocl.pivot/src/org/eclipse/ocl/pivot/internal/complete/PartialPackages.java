@@ -202,6 +202,11 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		return allPackages;
 	}
 
+	@Override
+	public @NonNull String toString() {
+		return getCompletePackage().getName() + " : " + super.toString();
+	}
+
 	public void uninstalled(@NonNull CompleteClassInternal completeClass) {
 		//		System.out.println("PartialPackages.uninstalled " + completeClass + " " + NameUtil.debugFullName(completeClass));
 		AbstractFlatClass flatClass = name2flatClass.remove(completeClass.getName());
