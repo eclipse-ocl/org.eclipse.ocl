@@ -79,12 +79,10 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * A BoxingAnalyzer performs a bottom up tree-traversal inserting:
@@ -595,8 +593,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			referredPropertyName = referredProperty.getName();
 		}
 		else {
-			PropertyId referredPropertyId = referredProperty.getPropertyId();
-			referredPropertyName = ValueUtil.getElementIdName(referredPropertyId);
+			referredPropertyName = referredProperty.toString();
 		}
 		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredPropertyName + "'");
 		return null;

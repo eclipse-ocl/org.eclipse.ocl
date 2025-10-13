@@ -707,7 +707,7 @@ implements OperationCallExp {
 							final /*@Thrown*/ @NonNull OrderedSetValue safe_at_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
 							final /*@Thrown*/ @Nullable Parameter parameter = (@Nullable Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
 							if (parameter == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+								throw new InvalidValueException("Null source for \'TypedElement::type : Type\'");
 							}
 							final /*@Thrown*/ @Nullable Type parameterType = parameter.getType();
 							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
@@ -738,7 +738,7 @@ implements OperationCallExp {
 								requiredType = safe_specializeIn_source;
 							}
 							if (argument == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+								throw new InvalidValueException("Null source for \'TypedElement::type : Type\'");
 							}
 							final /*@Thrown*/ @Nullable Type type = argument.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;
