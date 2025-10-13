@@ -131,7 +131,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				for (EObject eObject : ecoreResource.getContents()) {
 					if (eObject instanceof EPackage) {
 						EPackage ePackage = (EPackage) eObject;
-						ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
+					//	ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
 					}
 				}
 				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
