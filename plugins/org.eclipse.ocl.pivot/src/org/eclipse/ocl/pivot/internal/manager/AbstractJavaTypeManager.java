@@ -108,7 +108,7 @@ public abstract class AbstractJavaTypeManager implements JavaTypeManager
 	}
 
 	@Override
-	public final synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object) {
+	public final synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object) {		// XXX heavy; can import an Ecore model
 		if (object instanceof TypeId) {
 			TypeId typeId = (TypeId)object;
 			org.eclipse.ocl.pivot.Class asClass;

@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -374,13 +373,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		Operation actualOperation;
 		org.eclipse.ocl.pivot.Class actualSourceClass = null;
 		if (actualSourceType != null) {
-			actualSourceClass = actualSourceType.isClass();
-			if (actualSourceClass == null)  {
-				TemplateParameter templateParameter = actualSourceType.isTemplateParameter();
-				if (templateParameter != null) {
-					actualSourceClass = PivotUtil.getLowerBound(templateParameter, standardLibrary.getOclAnyType());
-				}
-			}
+			actualSourceClass = PivotUtil.getClass(actualSourceType, standardLibrary);
 		}
 		if (actualSourceClass != null) {
 			actualOperation = actualSourceClass.lookupActualOperation(standardLibrary, apparentOperation);

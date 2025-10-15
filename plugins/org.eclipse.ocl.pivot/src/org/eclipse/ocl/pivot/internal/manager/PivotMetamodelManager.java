@@ -341,46 +341,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 	}
 
-	/**
-	 * @since 1.8
-	 */
-	@Override
-	public void createImplicitOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
-			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
-		org.eclipse.ocl.pivot.Class localType = asProperty.getOwningClass();
-		if (localType == null) {
-			asProperty.setOpposite(null);
-			return;
-//			localType = standardLibrary.getOclInvalidType();
-		}
-		Model thisModel = PivotUtil.getContainingModel(localType);
-		org.eclipse.ocl.pivot.Class remoteType = (org.eclipse.ocl.pivot.Class)asProperty.getType();	// FIXME cast
-		while (remoteType instanceof CollectionType) {
-			remoteType = (org.eclipse.ocl.pivot.Class)((CollectionType)remoteType).getElementType();	// FIXME cast
-		}
-		if (remoteType == null) {
-			asProperty.setOpposite(null);
-			return;
-		}
-		org.eclipse.ocl.pivot.Class thisRemoteType = getEquivalentClass(thisModel, remoteType);
-		Property oppositeProperty = PivotFactory.eINSTANCE.createProperty();
-		oppositeProperty.setName(oppositeName);
-		oppositeProperty.setIsImplicit(true);
-		if (!upper.equals(ValueUtil.UNLIMITED_ONE_VALUE)) {
-			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, localType, false, lower, upper);
-			oppositeProperty.setType(standardLibrary.getCollectionType(typeArguments));
-			oppositeProperty.setIsRequired(true);
-		}
-		else {
-			oppositeProperty.setType(localType);
-			oppositeProperty.setIsRequired(lower.equals(ValueUtil.ONE_VALUE));
-		}
-		thisRemoteType.getOwnedProperties().add(oppositeProperty);
-		oppositeProperty.setOpposite(asProperty);
-		asProperty.setOpposite(oppositeProperty);
-	}
-
 	@Override
 	public @NonNull Orphanage createOrphanage() {
 		return Orphanage.getOrphanage(asResourceSet);
@@ -1362,7 +1322,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	 * Create an implicit opposite property if there is no explicit opposite.
 	 */
 	@Override
-	public void installPropertyDeclaration(@NonNull Property thisProperty) {
+	public void installImplicitOppositePropertyDeclaration(@NonNull Property thisProperty) {
 		// We cannot detect ambiguous opposites reliably since a later Property might invalidate previously ok derived opposites
 		//		if ((thisProperty.isIsTransient() || thisProperty.isIsVolatile()) && !thisProperty.isIsDerived()) {		// FIXME Are any exclusions justified?
 		//			return;
@@ -1378,17 +1338,8 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (thatType == null) {
 			return;
 		}
-		org.eclipse.ocl.pivot.Class thatClass = thatType.isClass();
-		if (thatClass == null) {
-			TemplateParameter thatTemplateParameter = thatType.isTemplateParameter();
-			if (thatTemplateParameter != null) {
-				org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(thatTemplateParameter);
-				if (lowerBound != null) {
-					thatClass = lowerBound;
-				}
-			}
-		}
-		if ((thatClass == null) || (thatClass instanceof DataType)) {
+		org.eclipse.ocl.pivot.@NonNull Class thatClass = PivotUtil.getClass(thatType, standardLibrary);
+		if (thatClass instanceof DataType) {
 			return;
 		}
 		//	org.eclipse.ocl.pivot.Class thatUnspecializedClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)thatClass);
@@ -1401,20 +1352,22 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (name == null) {
 			return;
 		}
-		createAndInstallOpposite(thatClass, name, thisProperty);
+		installImplicitOppositePropertyDeclaration(thatClass, name, thisProperty);
 	}
 
 	/**
 	 * @since 7.0
+	 * XXX remove duplication wrt installSpecifiedOppositeProperty -- compute OppositeDetails
 	 */
-	public @NonNull Property createAndInstallOpposite(org.eclipse.ocl.pivot.@NonNull Class thatClass, @NonNull String name, @NonNull Property thisProperty) {
+	public @NonNull Property installImplicitOppositePropertyDeclaration(org.eclipse.ocl.pivot.@NonNull Class thatClass, @NonNull String oppositeName, @NonNull Property thisProperty) {
+		System.out.println("installImplicitOppositePropertyDeclaration " + thisProperty + " - " + oppositeName);
 		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
 		assert thisClass == PivotUtil.getUnspecializedTemplateableElement(thisClass); //	thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
 		// If there is no implicit property with the implicit name, create one
 		//   result a pair of mutual opposites
 		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
 		newOpposite.setIsImplicit(true);
-		newOpposite.setName(name);
+		newOpposite.setName(oppositeName);
 		if (thisProperty.isIsComposite()) {
 			newOpposite.setType(thisClass);
 			newOpposite.setIsRequired(false);
@@ -1474,6 +1427,49 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				}
 			}
 		}
+	}
+
+	/**
+	 * @since 1.8
+	 */
+	@Override
+	public void installSpecifiedOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName,
+			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
+		System.out.println("installSpecifiedOppositeProperty " + thisProperty + " - " + oppositeName);
+		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
+		assert thisClass != null;
+		if (thisClass == null) {
+			thisProperty.setOpposite(null);
+			return;
+//			localType = standardLibrary.getOclInvalidType();
+		}
+		Model thisModel = PivotUtil.getContainingModel(thisClass);
+		org.eclipse.ocl.pivot.Class remoteType = (org.eclipse.ocl.pivot.Class)thisProperty.getType();	// FIXME cast
+		while (remoteType instanceof CollectionType) {
+			remoteType = (org.eclipse.ocl.pivot.Class)((CollectionType)remoteType).getElementType();	// FIXME cast
+		}
+		assert remoteType != null;
+		if (remoteType == null) {
+			thisProperty.setOpposite(null);
+			return;
+		}
+		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, remoteType);
+		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
+		newOpposite.setName(oppositeName);
+		newOpposite.setIsImplicit(true);
+		if (!upper.equals(ValueUtil.UNLIMITED_ONE_VALUE)) {
+			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, thisClass, false, lower, upper);
+			newOpposite.setType(standardLibrary.getCollectionType(typeArguments));
+			newOpposite.setIsRequired(true);
+		}
+		else {
+			newOpposite.setType(thisClass);
+			newOpposite.setIsRequired(lower.equals(ValueUtil.ONE_VALUE));
+		}
+		thisOppositeClass.getOwnedProperties().add(newOpposite);
+		newOpposite.setOpposite(thisProperty);
+		thisProperty.setOpposite(newOpposite);
 	}
 
 	@Override

@@ -90,12 +90,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	void createImplicitOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
-			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull Orphanage createOrphanage();
 
 	/**
@@ -314,9 +308,10 @@ public interface MetamodelManager
 	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
+	 * Create and install the implicit opposite of asProperty.
 	 * @since 7.0
 	 */
-	void installPropertyDeclaration(@NonNull Property thisProperty);
+	void installImplicitOppositePropertyDeclaration(@NonNull Property asProperty);
 
 	/**
 	 * @since 7.0
@@ -327,6 +322,14 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void installRoot(@NonNull Model pivotModel);
+
+	/**
+	 * Create and install the opposite of asProperty from the modelled paramerization; perhaps from an explicit model element
+	 * or from a fall-back annotation.
+	 * @since 7.0
+	 */
+	void installSpecifiedOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
+			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 
 	/**
 	 * @since 7.0

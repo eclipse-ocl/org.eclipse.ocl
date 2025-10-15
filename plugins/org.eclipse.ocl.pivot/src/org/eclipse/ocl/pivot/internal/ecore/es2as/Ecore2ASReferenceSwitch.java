@@ -200,17 +200,14 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		else {
 			OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromEReference(eReference);
 			if (oppositePropertyDetails != null) {
-				metamodelManager.createImplicitOppositeProperty(asProperty, oppositePropertyDetails.getName(),
+				metamodelManager.installSpecifiedOppositeProperty(asProperty, oppositePropertyDetails.getName(),
 					oppositePropertyDetails.isOrdered(), oppositePropertyDetails.isUnique(),
 					oppositePropertyDetails.getLower(), oppositePropertyDetails.getUpper());
 			}
 			else {
-				asProperty.setOpposite(null);
+				metamodelManager.installImplicitOppositePropertyDeclaration(asProperty);
 			}
 		}
-		//		else if (eObject.eContainer() instanceof EClass) {		// Skip annotation references
-		//			metamodelManager.installPropertyDeclaration(pivotElement);
-		//		}
 		return asProperty;
 	}
 

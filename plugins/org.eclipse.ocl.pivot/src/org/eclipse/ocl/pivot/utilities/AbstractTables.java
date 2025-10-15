@@ -102,7 +102,7 @@ public abstract class AbstractTables
 		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
 		org.eclipse.ocl.pivot.Class asClass = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, eClass);
 		assert asClass != null;
-		return metamodelManager.createAndInstallOpposite(asClass, name, asProperty);
+		return metamodelManager.installImplicitOppositePropertyDeclaration(asClass, name, asProperty);
 	}
 
 	/**

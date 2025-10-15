@@ -485,14 +485,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * nothing is found. If asTypeValue is non-null a fall-back attempt to look up a static operation in asTypeValue is made.
 	 */
 	protected @Nullable Invocations getInvocations(@NonNull Type asType, @Nullable Type asTypeValue, @NonNull String name, int iteratorCount, int expressionCount) {
-		TemplateParameter asTemplateParameter = asType.isTemplateParameter();
-		if (asTemplateParameter != null) {
-			asType = PivotUtil.getLowerBound(asTemplateParameter, standardLibrary.getOclAnyType());
-		}
-		Iterable<@NonNull ? extends Operation> nonStaticOperations = metamodelManager.getAllOperations(asType, FeatureFilter.SELECT_NON_STATIC, name);
+		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getClass(asType, standardLibrary);
+		Iterable<@NonNull ? extends Operation> nonStaticOperations = metamodelManager.getAllOperations(asClass, FeatureFilter.SELECT_NON_STATIC, name);
 		List<@NonNull NamedElement> invocations = getInvocationsInternal(null, nonStaticOperations, iteratorCount, expressionCount);
-		if (asType instanceof ElementExtension) {				// FIXME review me
-			Type asStereotype = ((ElementExtension)asType).getStereotype();
+		if (asClass instanceof ElementExtension) {				// FIXME review me
+			Type asStereotype = ((ElementExtension)asClass).getStereotype();
 			if (asStereotype != null) {
 				Iterable<@NonNull ? extends Operation> stereotypeOperations = metamodelManager.getAllOperations(asStereotype, FeatureFilter.SELECT_NON_STATIC, name);
 				invocations = getInvocationsInternal(invocations, stereotypeOperations, iteratorCount, expressionCount);
@@ -502,7 +499,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Iterable<@NonNull ? extends Operation> staticOperations = metamodelManager.getAllOperations(asTypeValue, FeatureFilter.SELECT_STATIC, name);
 			invocations = getInvocationsInternal(invocations, staticOperations, iteratorCount, expressionCount);
 		}
-		return invocations != null ? new UnresolvedInvocations(asType, invocations) : null;
+		return invocations != null ? new UnresolvedInvocations(asClass, invocations) : null;
 	}
 	protected @Nullable List<@NonNull NamedElement> getInvocationsInternal(@Nullable List<@NonNull NamedElement> invocations,
 			@NonNull Iterable<@NonNull ? extends Operation> allOperations, int iteratorCount, int expressionCount) {

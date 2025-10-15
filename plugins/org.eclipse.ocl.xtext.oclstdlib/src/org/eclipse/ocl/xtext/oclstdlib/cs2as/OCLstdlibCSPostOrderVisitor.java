@@ -70,13 +70,13 @@ public class OCLstdlibCSPostOrderVisitor extends AbstractOCLstdlibCSPostOrderVis
 					//	logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
 						upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
 					}
-					metamodelManager.createImplicitOppositeProperty(pivotElement, oppositeName,
+					metamodelManager.installSpecifiedOppositeProperty(pivotElement, oppositeName,
 						isOrdered, isUnique, lower, upper);
 				}
 			}
 			else {
 				pivotElement.setOpposite(null);
-				metamodelManager.installPropertyDeclaration(pivotElement);
+				metamodelManager.installImplicitOppositePropertyDeclaration(pivotElement);
 			}
 		}
 		return continuation;

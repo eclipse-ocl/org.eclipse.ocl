@@ -54,6 +54,10 @@ public class OppositePropertyDetails
 	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = "Property.oppositeLower"; //$NON-NLS-1$
 	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = "Property.oppositeUpper"; //$NON-NLS-1$
 
+	/**
+	 * Return the details of the explicit eOpposite or eAnnotated opposite.
+	 * (Does not provide details of the fall-back implicit opposite.)
+	 */
 	public static @Nullable OppositePropertyDetails createFromEReference(@NonNull EReference eReference) {
 		EReference eOpposite = eReference.getEOpposite();
 		if (eOpposite != null) {
