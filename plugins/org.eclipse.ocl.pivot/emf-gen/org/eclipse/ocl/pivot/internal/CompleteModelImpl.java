@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -794,16 +793,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
-		if (pivotType instanceof TemplateParameter) {
-			pivotType = PivotUtil.getLowerBound((TemplateParameter)pivotType, getStandardLibrary().getOclAnyType());
-		}
-		if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)pivotType;
-			return getCompleteClass(asClass);
-		}
-		else {
-			throw new UnsupportedOperationException("TemplateType");
-		}
+		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getClass(pivotType, getStandardLibrary());
+		return getCompleteClass(asClass);
 	}
 
 	@Override

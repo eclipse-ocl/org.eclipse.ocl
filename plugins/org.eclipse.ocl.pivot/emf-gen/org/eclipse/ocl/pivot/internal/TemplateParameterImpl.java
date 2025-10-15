@@ -371,7 +371,7 @@ public class TemplateParameterImpl
 
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.getLowerBound(this, standardLibrary.getOclAnyType());
+		org.eclipse.ocl.pivot.@NonNull Class lowerBound = PivotUtil.getClass(this, standardLibrary);
 		return standardLibrary.getFlatClass(lowerBound);
 	}
 

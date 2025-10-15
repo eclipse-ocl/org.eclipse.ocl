@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -58,7 +57,6 @@ import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
@@ -765,7 +763,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 				String className = asClass.getName();
 				assert className != null;		// non-null name such as UML Association shouldn't happen here
-				if (className != null) {		// non-null name such as UML ASsociation shouldn't happen here
+				if (className != null) {
 					installNames.add(className);
 				}
 			}
@@ -1170,17 +1168,6 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 			if ((moreReferencers == null) || (moreReferencers.size() < theReferencers.size())) {		// Avoid infinite loop
 				theReferencers = moreReferencers;
-			}
-		}
-		for (EObject eObject : referencers) {
-			if (eObject instanceof EReference) {
-				Property pivotElement = getCreated(Property.class, eObject);
-				if (pivotElement != null) {
-					Property oppositeProperty = pivotElement.getOpposite();
-					if ((oppositeProperty == null) && (eObject.eContainer() instanceof EClass)) {		// Skip annotation references
-						metamodelManager.installPropertyDeclaration(pivotElement);
-					}
-				}
 			}
 		}
 		referencers = null;
