@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.CompleteModel#getOrphanCompletePackage <em>Orphan Complete Package</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CompleteModel#getOwnedCompletePackages <em>Owned Complete Packages</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.CompleteModel#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CompleteModel#getPartialModels <em>Partial Models</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.CompleteModel#getPrimitiveCompletePackage <em>Primitive Complete Package</em>}</li>
  * </ul>
@@ -72,33 +71,6 @@ public interface CompleteModel extends NamedElement
 	 * @generated
 	 */
 	@NonNull List<CompletePackage> getOwnedCompletePackages();
-
-	/**
-	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedCompleteModel <em>Owned Complete Model</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owning Complete Environment</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owning Complete Environment</em>' container reference.
-	 * @see #setOwningCompleteEnvironment(CompleteEnvironment)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteModel_OwningCompleteEnvironment()
-	 * @see org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedCompleteModel
-	 * @generated
-	 */
-	CompleteEnvironment getOwningCompleteEnvironment();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompleteModel#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owning Complete Environment</em>' container reference.
-	 * @see #getOwningCompleteEnvironment()
-	 * @generated
-	 */
-	void setOwningCompleteEnvironment(CompleteEnvironment value);
 
 	/**
 	 * Returns the value of the '<em><b>Partial Models</b></em>' reference list.
@@ -179,7 +151,6 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
-	@NonNull CompleteEnvironment getCompleteEnvironment();
 
 	/**
 	 * @since 7.0

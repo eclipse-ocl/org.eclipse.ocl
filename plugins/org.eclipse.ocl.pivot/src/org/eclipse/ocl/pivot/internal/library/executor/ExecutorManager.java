@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -219,11 +218,6 @@ public abstract class ExecutorManager implements Executor
 //		System.out.println("Finalize " + NameUtil.debugSimpleName(this));
 //		super.finalize();
 //	}
-
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		throw new UnsupportedOperationException();
-	}
 
 	/**
 	 * @since 1.1

@@ -519,14 +519,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteEnvironment" name="CompleteEnvironment"
-      eSuperTypes="#T-pivot-Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteEnvironment-ownedCompleteModel"
-        name="ownedCompleteModel" lowerBound="1" eType="#T-pivot-CompleteModel" containment="true"
-        eOpposite="#F-pivot-CompleteModel-owningCompleteEnvironment"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteEnvironment-ownedStandardLibrary"
-        name="ownedStandardLibrary" lowerBound="1" eType="#T-pivot-CompleteStandardLibrary"
-        containment="true"/>
-  </eClassifiers>
+      eSuperTypes="#T-pivot-Element"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteModel" name="CompleteModel"
       eSuperTypes="#T-pivot-NamedElement">
     <eOperations name="getOwnedCompletePackage" eType="#T-pivot-CompletePackage">
@@ -542,8 +535,6 @@
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteModel-owningCompleteEnvironment"
-        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedCompleteModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteModel-partialModels"
         name="partialModels" ordered="false" upperBound="-1" eType="#T-pivot-Model">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
@@ -585,10 +576,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteStandardLibrary" name="CompleteStandardLibrary"
-      eSuperTypes="#T-pivot-StandardLibrary">
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"
-        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment"/>
-  </eClassifiers>
+      eSuperTypes="#T-pivot-StandardLibrary"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ConnectionPointReference"
       name="ConnectionPointReference" eSuperTypes="#T-pivot-Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

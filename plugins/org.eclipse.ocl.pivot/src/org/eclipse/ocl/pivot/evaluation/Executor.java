@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -43,7 +42,6 @@ public interface Executor
 	}
 	void dispose();
 	@Nullable Object evaluate(@NonNull OCLExpression body);
-	@NonNull CompleteEnvironment getCompleteEnvironment();
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@NonNull EvaluationEnvironment getEvaluationEnvironment();
 	@NonNull IdResolver getIdResolver();

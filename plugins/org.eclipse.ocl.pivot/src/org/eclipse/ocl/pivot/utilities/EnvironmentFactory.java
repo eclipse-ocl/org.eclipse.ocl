@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
@@ -129,11 +128,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	@NonNull ResourceSetImpl createASResourceSet();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull CompleteEnvironment createCompleteEnvironment();
 
 	/**
 	 * Creates a new evaluation environment to track the values of variables in
@@ -286,12 +280,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	@Nullable ICSI2ASMapping getCSI2ASMapping();
-
-	/**
-	 * Return the CompleteEnvironment that supervises the additional types need for collections specializations and tuples.
-	 * @since 7.0
-	 */
-	@NonNull CompleteEnvironment getCompleteEnvironment();
 
 	/**
 	 * Return the CompleteModel that contains all the CompletePackages, which in turn contain all the CompleteClasses that

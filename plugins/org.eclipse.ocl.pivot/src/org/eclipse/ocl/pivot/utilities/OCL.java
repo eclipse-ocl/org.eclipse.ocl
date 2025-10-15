@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -129,7 +128,7 @@ public class OCL
 	}
 
 	/**
-	 * The EnvironmentFactory that can create objects and which provides the MetamodelManager, CompleteEnvironment and StandardLibrary.
+	 * The EnvironmentFactory that can create objects and which provides the MetamodelManager, and StandardLibrary.
 	 * This is non-null until the OCL is disposed. Any subsequent usage will provoke NPEs.
 	 */
 	protected /*@NonNull*/ EnvironmentFactory environmentFactory;			// Set null once disposed, so NPE is use after dispose
@@ -472,10 +471,6 @@ public class OCL
 	public @NonNull CSResource getCSResource(@NonNull URI uri, @NonNull String testDocument) throws IOException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		return getCSResource(uri, inputStream);
-	}
-
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return environmentFactory.getCompleteEnvironment();
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getContextType(@Nullable Object contextObject) {

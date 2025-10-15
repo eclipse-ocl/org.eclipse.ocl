@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -29,7 +28,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -38,7 +36,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -87,7 +84,6 @@ import com.google.common.collect.Lists;
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteModelImpl#getOrphanCompletePackage <em>Orphan Complete Package</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteModelImpl#getOwnedCompletePackages <em>Owned Complete Packages</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteModelImpl#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteModelImpl#getPartialModels <em>Partial Models</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteModelImpl#getPrimitiveCompletePackage <em>Primitive Complete Package</em>}</li>
  * </ul>
@@ -124,7 +120,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @generated
 	 * @ordered
 	 */
-	public static final int COMPLETE_MODEL_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 5;
+	public static final int COMPLETE_MODEL_FEATURE_COUNT = NamedElementImpl.NAMED_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Complete Model</em>' class.
@@ -175,10 +171,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
 			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedCompletePackages()).basicAdd(otherEnd, msgs);
-			case 7:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetOwningCompleteEnvironment((CompleteEnvironment)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -203,26 +195,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 6:
 				return ((InternalEList<?>)getOwnedCompletePackages()).basicRemove(otherEnd, msgs);
-			case 7:
-				return basicSetOwningCompleteEnvironment(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
-	{
-		switch (eContainerFeatureID())
-		{
-			case 7:
-				return eInternalContainer().eInverseRemove(this, 4, CompleteEnvironment.class, msgs);
-		}
-		return eDynamicBasicRemoveFromContainer(msgs);
 	}
 
 	/**
@@ -250,10 +224,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			case 6:
 				return getOwnedCompletePackages();
 			case 7:
-				return getOwningCompleteEnvironment();
-			case 8:
 				return getPartialModels();
-			case 9:
+			case 8:
 				return getPrimitiveCompletePackage();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -294,9 +266,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				getOwnedCompletePackages().addAll((Collection<? extends CompletePackage>)newValue);
 				return;
 			case 7:
-				setOwningCompleteEnvironment((CompleteEnvironment)newValue);
-				return;
-			case 8:
 				getPartialModels().clear();
 				getPartialModels().addAll((Collection<? extends Model>)newValue);
 				return;
@@ -333,9 +302,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				getOwnedCompletePackages().clear();
 				return;
 			case 7:
-				setOwningCompleteEnvironment((CompleteEnvironment)null);
-				return;
-			case 8:
 				getPartialModels().clear();
 				return;
 		}
@@ -367,10 +333,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			case 6:
 				return ownedCompletePackages != null && !ownedCompletePackages.isEmpty();
 			case 7:
-				return getOwningCompleteEnvironment() != null;
-			case 8:
 				return partialModels != null && !partialModels.isEmpty();
-			case 9:
+			case 8:
 				return primitiveCompletePackage != null;
 		}
 		return eDynamicIsSet(featureID);
@@ -394,53 +358,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				return getOwnedCompletePackage((String)arguments.get(0));
 		}
 		return eDynamicInvoke(operationID, arguments);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment, NotificationChain msgs)
-	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningCompleteEnvironment, 7, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public CompleteEnvironment getOwningCompleteEnvironment()
-	{
-		if (eContainerFeatureID() != (7)) return null;
-		return (CompleteEnvironment)eInternalContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment)
-	{
-		if (newOwningCompleteEnvironment != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningCompleteEnvironment != null))
-		{
-			if (EcoreUtil.isAncestor(this, newOwningCompleteEnvironment))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newOwningCompleteEnvironment != null)
-				msgs = ((InternalEObject)newOwningCompleteEnvironment).eInverseAdd(this, 4, CompleteEnvironment.class, msgs);
-			msgs = basicSetOwningCompleteEnvironment(newOwningCompleteEnvironment, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningCompleteEnvironment, newOwningCompleteEnvironment));
 	}
 
 	/**
@@ -472,11 +389,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	{
 		super();
 	}
-
-	/**
-	 * Map from each partial Class to the CompleteClass that supervises its merge. CompleteClass are created lazily.
-	 */
-	private /*final @NonNull*/ CompleteEnvironment completeEnvironment;
 
 	/**
 	 * Map of (hierarchical) complete package id to CompletePackage.
@@ -844,12 +756,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		assert completeEnvironment != null;
-		return completeEnvironment;
-	}
-
-	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CompletePackage aT = package2completePackage.get(asPackage);
 		return ClassUtil.requireNonNull(aT);
@@ -1116,6 +1022,25 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return environmentFactory.getMetamodelManager();
 	}
 
+//	@Override
+	/**
+	 * @since 7.0
+	 */
+	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
+		CompletePackage completePackage = getMetamodelManager().getCompletePackage(domainPackage);
+		CompletePackage memberPackage = completePackage.basicGetOwnedCompletePackage(name);
+		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
+	}
+
+//	@Override
+	/**
+	 * @since 7.0
+	 */
+	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
+		CompletePackage completePackage = getMetamodelManager().getCompletePackage(domainPackage);
+		return completePackage.getMemberType(name);
+	}
+
 	@Override
 	public @NonNull OrphanCompletePackageImpl getOrphanCompletePackage()
 	{
@@ -1210,13 +1135,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull CompleteStandardLibrary getStandardLibrary() {
-		return completeEnvironment.getOwnedStandardLibrary();
+		return environmentFactory.getStandardLibrary();
 	}
 
 	@Override
 	public @NonNull CompleteModel init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;

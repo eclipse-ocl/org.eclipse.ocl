@@ -166,11 +166,7 @@
       <ownedProperties xmi:id="ZmPN3" name="owningCompletePackage" opposite="#ms6IU" type="#+gDEJ"/>
       <ownedProperties xmi:id="tpc+a" isRequired="true" name="partialClasses" opposite="#,UeqX" type="#awKqS"/>
     </ownedClasses>
-    <ownedClasses xmi:id="LqaWx" name="CompleteEnvironment" superClasses="#t5rpa">
-      <ownedProperties xmi:id="Cv6PO" isComposite="true" isRequired="true" name="ownedCompleteModel" opposite="#Tjqfq" type="#hzOMU"/>
-      <ownedProperties xmi:id="Qrg5Y" isComposite="true" isRequired="true" name="ownedStandardLibrary" opposite="#ffH8o" type="#2w6uT"/>
-      <ownedProperties xmi:id="u2SB2" isImplicit="true" isRequired="true" name="CompleteStandardLibrary" opposite="#U772W" type="#Anzva"/>
-    </ownedClasses>
+    <ownedClasses xmi:id="LqaWx" name="CompleteEnvironment" superClasses="#t5rpa"/>
     <ownedClasses xmi:id="hzOMU" name="CompleteModel" superClasses="#0kVqz">
       <ownedOperations xmi:id="f+Wm," name="getOwnedCompletePackage" type="#+gDEJ">
         <ownedParameters xmi:id="ZfQvw" name="name" type="#CPVxu"/>
@@ -178,7 +174,6 @@
       <ownedProperties xmi:id="aU0xR" isDerived="true" isReadOnly="true" isResolveProxies="false" isTransient="true" name="orphanCompletePackage"
           opposite="#pwEaB" type="#WaoLl"/>
       <ownedProperties xmi:id="AQg0n" isComposite="true" isRequired="true" name="ownedCompletePackages" opposite="#SgDQD" type="#niCJl"/>
-      <ownedProperties xmi:id="Tjqfq" name="owningCompleteEnvironment" opposite="#Cv6PO" type="#LqaWx"/>
       <ownedProperties xmi:id="AF1+9" isRequired="true" name="partialModels" opposite="#n0An," type="#jKxIE"/>
       <ownedProperties xmi:id="b7Oj2" isDerived="true" isReadOnly="true" isResolveProxies="false" isTransient="true" name="primitiveCompletePackage"
           opposite="#tpHsl" type="#XSQ4c"/>
@@ -193,10 +188,7 @@
       <ownedProperties xmi:id="vpFYN" name="owningCompletePackage" opposite="#pXZYG" type="#+gDEJ"/>
       <ownedProperties xmi:id="slBkJ" isRequired="true" name="partialPackages" opposite="#CUgnW" type="#4WjM+"/>
     </ownedClasses>
-    <ownedClasses xmi:id="2w6uT" name="CompleteStandardLibrary" superClasses="#v6b4D">
-      <ownedProperties xmi:id="U772W" name="owningCompleteEnvironment" opposite="#u2SB2" type="#LqaWx"/>
-      <ownedProperties xmi:id="ffH8o" isImplicit="true" name="CompleteEnvironment" opposite="#Qrg5Y" type="#LqaWx"/>
-    </ownedClasses>
+    <ownedClasses xmi:id="2w6uT" name="CompleteStandardLibrary" superClasses="#v6b4D"/>
     <ownedClasses xmi:id="KXGhD" name="ConnectionPointReference" superClasses="#VVKEz">
       <ownedComments body="A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State."/>
       <ownedProperties xmi:id="KPNEV" isRequired="true" name="entries" opposite="#1udyj" type="#91QED">
@@ -1463,11 +1455,6 @@
         <ownedSubstitutions actual="#+gDEJ" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="Anzva" name="Bag" superClasses="#WCcxp">
-      <ownedBindings>
-        <ownedSubstitutions actual="#2w6uT" formal="&_0;#k2OA6"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="047h3" name="Bag" superClasses="#KUkjG">
       <ownedBindings>
         <ownedSubstitutions actual="#KXGhD" formal="&_0;#k2OA6"/>
@@ -1726,11 +1713,6 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="j8mK0" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#+gDEJ" formal="&_0;#qs59R"/>
-      </ownedBindings>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="WCcxp" name="Collection" superClasses="&_0;#jbMkR">
-      <ownedBindings>
-        <ownedSubstitutions actual="#2w6uT" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KUkjG" name="Collection" superClasses="&_0;#jbMkR">

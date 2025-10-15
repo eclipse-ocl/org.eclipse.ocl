@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -32,6 +31,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -91,15 +91,14 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
-		Type nestedType = environment.getNestedType(parentPackage, name);
+		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
+		Type nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
-			CompletePackage asParentCompletePackage = environment.getOwnedCompleteModel().getCompletePackage(parentPackage);
+			CompletePackage asParentCompletePackage = completeModel.getCompletePackage(parentPackage);
 			CompleteClass nestedCompleteType = (CompleteClass) asParentCompletePackage.getType(name);
 			nestedType = nestedCompleteType.getPrimaryClass();
-		//	environment.getOwnedCompleteModel().ge
 
-			nestedType = environment.getNestedType(parentPackage, name);		// XXX debugging
+			nestedType = completeModel.getNestedType(parentPackage, name);		// XXX debugging
 			throw new UnsupportedOperationException();
 		}
 		return nestedType;
@@ -110,10 +109,10 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
-		Type nestedType = environment.getNestedType(parentPackage, name);
+		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
+		Type nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, name);
+			nestedType = completeModel.getNestedType(parentPackage, name);
 			if (nestedType == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -126,10 +125,10 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
-		Type nestedType = environment.getNestedType(parentPackage, name);
+		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
+		Type nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, name);
+			nestedType = completeModel.getNestedType(parentPackage, name);
 			if (nestedType == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -139,8 +138,8 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected org.eclipse.ocl.pivot.@NonNull Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
-		org.eclipse.ocl.pivot.Package nestedPackage = environment.getNestedPackage(parentPackage, name);
+		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
+		org.eclipse.ocl.pivot.Package nestedPackage = completeModel.getNestedPackage(parentPackage, name);
 		if (nestedPackage == null) {
 			throw new UnsupportedOperationException();
 		}

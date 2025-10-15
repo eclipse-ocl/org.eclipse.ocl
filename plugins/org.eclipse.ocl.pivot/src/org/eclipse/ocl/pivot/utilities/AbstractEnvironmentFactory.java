@@ -37,7 +37,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -76,7 +75,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
@@ -148,10 +146,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final @NonNull ResourceSet externalResourceSet;
 	private final @NonNull ResourceSet asResourceSet;
 	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
-	/**
-	 * @since 7.0
-	 */
-	protected final @NonNull CompleteEnvironment completeEnvironment;
 	/**
 	 * @since 7.0
 	 */
@@ -230,7 +224,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	//	adapt(externalResourceSet);
 		this.standardLibrary = createStandardLibrary();
 		this.completeModel = createCompleteModel();
-		this.completeEnvironment = createCompleteEnvironment();
 
 		((CompleteModelInternal)this.completeModel).init(this);
 		this.standardLibrary.init(this);
@@ -441,13 +434,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		projectManager.initializeResourceSet(asResourceSet);
 		packageRegistry.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 		return asResourceSet;
-	}
-
-	@Override
-	public @NonNull CompleteEnvironment createCompleteEnvironment() {
-		CompleteEnvironment completeEnvironment = PivotFactory.eINSTANCE.createCompleteEnvironment();
-		((CompleteEnvironmentImpl)completeEnvironment).init(this);
-		return completeEnvironment;
 	}
 
 	/**
@@ -887,9 +873,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				csi2asMapping.dispose();
 				csi2asMapping = null;
 			}
-		//	completeEnvironment = null;
-		//	standardLibrary = null;
-		//	completeModel = null;
 			//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			//			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " disposeInternal " + toDebugString() + " => " + NameUtil.debugSimpleName(PivotUtil.findEnvironmentFactory(externalResourceSet)));
 			//		}
@@ -980,11 +963,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class dClass = getIdResolver().getStaticClassOf(context);
 		return metamodelManager.getPrimaryClass(dClass);
-	}
-
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return completeEnvironment; //completeModel.getCompleteEnvironment();
 	}
 
 	@Override
