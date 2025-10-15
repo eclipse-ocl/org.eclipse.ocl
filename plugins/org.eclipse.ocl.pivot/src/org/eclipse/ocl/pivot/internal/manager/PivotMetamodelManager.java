@@ -41,6 +41,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
@@ -206,7 +207,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	/**
 	 * The known packages.
 	 */
-	private final @NonNull CompleteModelInternal completeModel;
+	private final @NonNull CompleteModel completeModel;
 
 	/**
 	 * The known precedences.
@@ -265,7 +266,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		assert asResourceSetAdapters.contains(environmentFactory.getProjectManager());
 		completeEnvironment = (CompleteEnvironmentInternal) environmentFactory.getCompleteEnvironment();
 		standardLibrary = environmentFactory.getStandardLibrary();
-		completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
+		completeModel = environmentFactory.getCompleteModel();
 		//		System.out.println("ctor " + this);
 		//		initializePivotResourceSet(asResourceSet);
 		if (liveMetamodelManagers != null) {
@@ -616,7 +617,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal getCompleteModel() {
+	public @NonNull CompleteModel getCompleteModel() {
 		return completeModel;
 	}
 
@@ -1248,7 +1249,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public void installRoot(@NonNull Model pivotModel) {
-		PartialModels partialModels = completeModel.getPartialModels();
+		PartialModels partialModels = ((CompleteModelInternal)completeModel).getPartialModels();
 		if (partialModels.contains(pivotModel)) {
 			return;
 		}
@@ -1257,7 +1258,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		ASResource asResource = (ASResource) pivotModel.eResource();			// XXX cast
 		if (asResource != null) {												// XXX some test models don't bother with a Resource
-			completeModel.getCompleteClasses(asResource);
+			((CompleteModelInternal)completeModel).getCompleteClasses(asResource);
 		}
 		List<org.eclipse.ocl.pivot.Package> ownedPackages = pivotModel.getOwnedPackages();
 		List<Import> ownedImports = pivotModel.getOwnedImports();

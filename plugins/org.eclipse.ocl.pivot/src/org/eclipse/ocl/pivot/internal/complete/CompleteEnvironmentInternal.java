@@ -26,8 +26,6 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	@Override
-	@NonNull CompleteModelInternal getOwnedCompleteModel();
-	@Override
 	@NonNull CompleteStandardLibrary getOwnedStandardLibrary();
 	/**
 	 * @since 7.0

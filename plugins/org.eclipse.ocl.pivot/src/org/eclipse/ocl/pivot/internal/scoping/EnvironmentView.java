@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -331,7 +330,7 @@ public class EnvironmentView
 	/**
 	 * @since 7.0
 	 */
-	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull CompleteModel completeModel;
 	protected final @NonNull EStructuralFeature reference;
 	private EClassifier requiredType;
 
@@ -357,7 +356,7 @@ public class EnvironmentView
 	 */
 	public EnvironmentView(@NonNull EnvironmentFactory environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
 		this.environmentFactory = environmentFactory;
-		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
+		this.completeModel = environmentFactory.getCompleteModel();
 		this.reference = reference;
 		this.requiredType = reference.getEType();
 		this.name = name;

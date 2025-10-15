@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
@@ -109,7 +110,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			}
 		}
 		if (partialClass.getUnspecializedElement() == null) {
-			getCompleteModel().didRemoveClass(partialClass);
+			((CompleteModelInternal)getCompleteModel()).didRemoveClass(partialClass);
 		}
 	}
 
@@ -134,7 +135,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		if (name == null) {
 			return;				// XXX ignore nameless classes
 		}
-		CompleteModelInternal completeModel = getCompleteModel();
+		CompleteModel completeModel = getCompleteModel();
 		//
 		//	If a OCLstdlib / Complete OCL has explicitly declared a PrimitveType.
 		//
@@ -181,8 +182,11 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		}
 	}
 
-	public @NonNull CompleteModelInternal getCompleteModel() {
-		return (CompleteModelInternal) getCompletePackage().getCompleteModel();
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompleteModel getCompleteModel() {
+		return getCompletePackage().getCompleteModel();
 	}
 
 	/**

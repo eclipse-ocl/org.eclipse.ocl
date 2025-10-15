@@ -15,14 +15,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public interface CompleteModelInternal extends CompleteModel
 {
@@ -43,14 +41,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type partialClass);
 	@Override
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
-	/**
-	 * @since 7.0
-	 */
-	@NonNull EnvironmentFactory getEnvironmentFactory();
-	/**
-	 * @since 7.0
-	 */
-	@NonNull MetamodelManager getMetamodelManager();
 	@Override
 	@NonNull OrphanCompletePackageImpl getOrphanCompletePackage();
 	@Override
@@ -58,7 +48,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@Override
 	@NonNull PrimitiveCompletePackageImpl getPrimitiveCompletePackage();
 
-	void dispose();
 	void didAddPartialModel(@NonNull Model partialModel);
 	/**
 	 * @since 7.0
@@ -82,14 +71,10 @@ public interface CompleteModelInternal extends CompleteModel
 	 */
 	void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable String getCompleteURI(@Nullable String nsURI);
-	/**
-	 * @since 7.0
-	 */
-	@NonNull CompleteStandardLibrary getStandardLibrary();
 	@Override
 	@NonNull CompleteEnvironmentInternal getCompleteEnvironment();
 	/**
 	 * @since 7.0
 	 */
-	@NonNull CompleteModelInternal init(@NonNull EnvironmentFactory environmentFactory);
+	@NonNull CompleteModel init(@NonNull EnvironmentFactory environmentFactory);
 }

@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -315,8 +316,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		copyDataTypeOrEnum(pivotElement, eDataType);
 		if (isPrimitive) {
 			MetamodelManager metamodelManager = converter.getMetamodelManager();
-			CompleteModelInternal completeModelInternal = metamodelManager.getCompleteModel();
-			PrimitiveCompletePackageImpl primitiveCompletePackage = completeModelInternal.getPrimitiveCompletePackage();
+			CompleteModel completeModel = metamodelManager.getCompleteModel();
+			PrimitiveCompletePackageImpl primitiveCompletePackage = ((CompleteModelInternal)completeModel).getPrimitiveCompletePackage();
 			CompleteClassInternal completeClass = primitiveCompletePackage.getCompleteClass(pivotElement);
 			if (!completeClass.getPartialClasses().contains(pivotElement)) {
 				completeClass.addClass(pivotElement);

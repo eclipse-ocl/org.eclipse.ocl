@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
@@ -96,7 +97,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				owner.classListeners.didAddPartialClass(index, partialClass);
 			}
 			if (partialClass.getUnspecializedElement() == null) {
-				owner.getCompleteModel().didAddClass(partialClass, owner);
+				((CompleteModelInternal)owner.getCompleteModel()).didAddClass(partialClass, owner);
 			}
 		}
 
@@ -499,8 +500,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal getCompleteModel() {
-		return (CompleteModelInternal) getOwningCompletePackage().getCompleteModel();
+	public @NonNull CompleteModel getCompleteModel() {
+		return getOwningCompletePackage().getCompleteModel();
 	}
 
 	/**

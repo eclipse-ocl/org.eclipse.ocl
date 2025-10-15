@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -89,7 +88,7 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 	@Override
 	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
-	@NonNull CompleteModelInternal getCompleteModel();
+	@NonNull CompleteModel getCompleteModel();
 	@NonNull String getDefaultStandardLibraryURI();
 
 	/**

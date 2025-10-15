@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -44,7 +45,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -66,7 +66,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	/**
 	 * @since 7.0
 	 */
-	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull CompleteModel completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	private boolean isRequired = false;

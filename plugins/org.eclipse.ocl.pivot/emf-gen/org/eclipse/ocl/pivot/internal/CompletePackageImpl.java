@@ -409,7 +409,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	private @NonNull List<@NonNull String> packageURIs = new ArrayList<>();
 
-	private @Nullable CompleteModelInternal completeModel = null;
+	private @Nullable CompleteModel completeModel = null;
 
 	/**
 	 * EObject to CompleteClass mapping for nameless EObjects such as an (?? OCL Constraint) or UML Association.
@@ -452,7 +452,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				//				assert serverBasedNsURI == null;
 			}
 			else {
-				CompleteModelInternal completeModel = getCompleteModel();
+				CompleteModel completeModel = getCompleteModel();
 // XXX				assert (serverBasedNsURI == null) || (completeModel.getCompletePackageByURI(typeBasedNsURI) == completeModel.getCompletePackageByURI(serverBasedNsURI));
 			}
 		}
@@ -512,7 +512,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
 //		getOwnedCompletePackages().didAddPackage(nestedPackage);
 //		throw new UnsupportedOperationException();
-		getCompleteModel().didAddPackage(nestedPackage);
+		((CompleteModelInternal)getCompleteModel()).didAddPackage(nestedPackage);
 		if (COMPLETE_URIS.isActive()) {
 			traceURImapping();
 		}
@@ -539,7 +539,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		if ((partialClass instanceof PrimitiveType) && !(this instanceof PrimitiveCompletePackage)) {
-			getCompleteModel().getPrimitiveCompletePackage().didRemoveClass(partialClass);
+			((CompleteModelInternal)getCompleteModel()).getPrimitiveCompletePackage().didRemoveClass(partialClass);
 		}
 		else {
 			if (ownedCompleteClasses != null) {
@@ -609,14 +609,14 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal getCompleteModel() {
-		CompleteModelInternal completeModel2 = completeModel;
+	public @NonNull CompleteModel getCompleteModel() {
+		CompleteModel completeModel2 = completeModel;
 		if (completeModel2 != null) {
 			return completeModel2;
 		}
 		EObject eContainer = eContainer();
-		if (eContainer instanceof CompleteModelInternal) {
-			completeModel2 = completeModel = (CompleteModelInternal) eContainer;
+		if (eContainer instanceof CompleteModel) {
+			completeModel2 = completeModel = (CompleteModel)eContainer;
 			return completeModel2;
 		}
 		else if (eContainer instanceof CompletePackageImpl) {
