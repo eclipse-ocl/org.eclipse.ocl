@@ -10,43 +10,20 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Complete Environment</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl#getOwnedCompleteModel <em>Owned Complete Model</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl#getOwnedStandardLibrary <em>Owned Standard Library</em>}</li>
- * </ul>
  *
  * @generated
  */
+@Deprecated
 public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvironment
 {
 	/**
@@ -56,7 +33,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * @generated
 	 * @ordered
 	 */
-	public static final int COMPLETE_ENVIRONMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 2;
+	public static final int COMPLETE_ENVIRONMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 0;
 	/**
 	 * The number of operations of the '<em>Complete Environment</em>' class.
 	 * <!-- begin-user-doc -->
@@ -88,331 +65,11 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public NotificationChain basicSetOwnedCompleteModel(CompleteModel newOwnedCompleteModel, NotificationChain msgs)
-	{
-		CompleteModel oldOwnedCompleteModel = ownedCompleteModel;
-		ownedCompleteModel = newOwnedCompleteModel;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL.getFeatureID(), oldOwnedCompleteModel, newOwnedCompleteModel);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedCompleteModel(CompleteModel newOwnedCompleteModel)
-	{
-		if (newOwnedCompleteModel != ownedCompleteModel)
-		{
-			NotificationChain msgs = null;
-			if (ownedCompleteModel != null)
-				msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, 7, CompleteModel.class, msgs);
-			if (newOwnedCompleteModel != null)
-				msgs = ((InternalEObject)newOwnedCompleteModel).eInverseAdd(this, 7, CompleteModel.class, msgs);
-			msgs = basicSetOwnedCompleteModel(newOwnedCompleteModel, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 4, newOwnedCompleteModel, newOwnedCompleteModel));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public NotificationChain basicSetOwnedStandardLibrary(StandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
-	{
-		StandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
-		ownedStandardLibrary = (CompleteStandardLibrary) newOwnedStandardLibrary;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY.getFeatureID(), oldOwnedStandardLibrary, newOwnedStandardLibrary);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
-			case 0:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
-			case 2:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
-			case 3:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 4:
-				if (ownedCompleteModel != null)
-					msgs = ((InternalEObject)ownedCompleteModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (4), null, msgs);
-				return basicSetOwnedCompleteModel((CompleteModel)otherEnd, msgs);
-		}
-		return eDynamicInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
-			case 0:
-				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
-			case 1:
-				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
-			case 2:
-				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
-			case 3:
-				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case 4:
-				return basicSetOwnedCompleteModel(null, msgs);
-			case 5:
-				return basicSetOwnedStandardLibrary(null, msgs);
-		}
-		return eDynamicInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
-			case 0:
-				return getAnnotatingComments();
-			case 1:
-				return getOwnedAnnotations();
-			case 2:
-				return getOwnedComments();
-			case 3:
-				return getOwnedExtensions();
-			case 4:
-				return getOwnedCompleteModel();
-			case 5:
-				return getOwnedStandardLibrary();
-		}
-		return eDynamicGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
-			case 0:
-				getAnnotatingComments().clear();
-				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
-				return;
-			case 1:
-				getOwnedAnnotations().clear();
-				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
-				return;
-			case 2:
-				getOwnedComments().clear();
-				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
-				return;
-			case 3:
-				getOwnedExtensions().clear();
-				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
-				return;
-			case 4:
-				setOwnedCompleteModel((CompleteModel)newValue);
-				return;
-			case 5:
-				setOwnedStandardLibrary((CompleteStandardLibrary)newValue);
-				return;
-		}
-		eDynamicSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
-			case 0:
-				getAnnotatingComments().clear();
-				return;
-			case 1:
-				getOwnedAnnotations().clear();
-				return;
-			case 2:
-				getOwnedComments().clear();
-				return;
-			case 3:
-				getOwnedExtensions().clear();
-				return;
-			case 4:
-				setOwnedCompleteModel((CompleteModel)null);
-				return;
-			case 5:
-				setOwnedStandardLibrary((CompleteStandardLibrary)null);
-				return;
-		}
-		eDynamicUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
-			case 0:
-				return annotatingComments != null && !annotatingComments.isEmpty();
-			case 1:
-				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case 2:
-				return ownedComments != null && !ownedComments.isEmpty();
-			case 3:
-				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case 4:
-				return ownedCompleteModel != null;
-			case 5:
-				return ownedStandardLibrary != null;
-		}
-		return eDynamicIsSet(featureID);
-	}
-	/**
 	 * {@inheritDoc}
 	 * @generated
 	 */
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitCompleteEnvironment(this);
-	}
-	protected /*final @NonNull*/ EnvironmentFactory environmentFactory;
-	protected /*final @NonNull*/ CompleteModel ownedCompleteModel;
-	protected /*final @NonNull*/ CompleteStandardLibrary ownedStandardLibrary;
-
-	@Override
-	public @NonNull CompleteModel getOwnedCompleteModel() {
-		return ClassUtil.requireNonNull(ownedCompleteModel);
-	}
-
-	@Override
-	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		return ClassUtil.requireNonNull(environmentFactory);
-	}
-
-	//	@Override
-	//	public @NonNull MetamodelManager getMetamodelManager() {
-	//		assert metamodelManager != null;
-	//		return metamodelManager;
-	//	}
-
-	@Override
-	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
-		CompletePackage memberPackage = completePackage.basicGetOwnedCompletePackage(name);
-		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
-		return completePackage.getMemberType(name);
-	}
-
-	@Override
-	public @NonNull CompleteStandardLibrary getOwnedStandardLibrary() {
-		return ClassUtil.requireNonNull(ownedStandardLibrary);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
-	{
-		CompleteStandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
-		ownedStandardLibrary = newOwnedStandardLibrary;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldOwnedStandardLibrary, newOwnedStandardLibrary);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary)
-	{
-		if (newOwnedStandardLibrary != ownedStandardLibrary)
-		{
-			NotificationChain msgs = null;
-			if (ownedStandardLibrary != null)
-				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
-			if (newOwnedStandardLibrary != null)
-				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
-			msgs = basicSetOwnedStandardLibrary(newOwnedStandardLibrary, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedStandardLibrary, newOwnedStandardLibrary));
-	}
-
-	@Override
-	public @NonNull CompleteStandardLibrary getStandardLibrary() {
-		return getOwnedStandardLibrary();
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull CompleteEnvironment init(@NonNull EnvironmentFactory environmentFactory) {
-		this.environmentFactory = environmentFactory;
-		setOwnedCompleteModel(environmentFactory.getCompleteModel());
-		setOwnedStandardLibrary(environmentFactory.getStandardLibrary());
-		return this;
 	}
 } //CompleteEnvironmentImpl

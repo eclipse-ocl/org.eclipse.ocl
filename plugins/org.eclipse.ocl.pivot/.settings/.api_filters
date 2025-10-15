@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteEnvironment.java" type="org.eclipse.ocl.pivot.CompleteEnvironment">
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getOwnedStandardLibrary()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="setOwnedStandardLibrary(CompleteStandardLibrary)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteStandardLibrary.java" type="org.eclipse.ocl.pivot.CompleteStandardLibrary">
         <filter id="1110441988">
             <message_arguments>
@@ -116,11 +104,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="getCompleteStandardLibrary_OwningCompleteEnvironment()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="getIterateExp_OwnedBodies()"/>
             </message_arguments>
         </filter>
@@ -183,11 +166,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="ITERATE_EXP__OWNED_BODIES"/>
             </message_arguments>
         </filter>
@@ -243,16 +221,6 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="BAG_CLSSid_CompleteStandardLibrary"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="CLSSid_CompleteStandardLibrary"/>
-            </message_arguments>
-        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CLSSid_LambdaParameter"/>
@@ -506,13 +474,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getStandardLibrary()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CompleteEnvironmentImpl.java" type="org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="basicSetOwnedStandardLibrary(CompleteStandardLibrary, NotificationChain)"/>
             </message_arguments>
         </filter>
     </resource>

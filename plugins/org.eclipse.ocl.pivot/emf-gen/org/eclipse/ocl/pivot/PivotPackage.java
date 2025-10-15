@@ -2252,17 +2252,6 @@ extends EPackage
 	EClass getCompleteStandardLibrary();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Owning Complete Environment</em>'.
-	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment()
-	 * @see #getCompleteStandardLibrary()
-	 * @generated
-	 */
-	EReference getCompleteStandardLibrary_OwningCompleteEnvironment();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.MessageType <em>Message Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5050,28 +5039,6 @@ extends EPackage
 	EClass getCompleteEnvironment();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedCompleteModel <em>Owned Complete Model</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Owned Complete Model</em>'.
-	 * @see org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedCompleteModel()
-	 * @see #getCompleteEnvironment()
-	 * @generated
-	 */
-	EReference getCompleteEnvironment_OwnedCompleteModel();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Owned Standard Library</em>'.
-	 * @see org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary()
-	 * @see #getCompleteEnvironment()
-	 * @generated
-	 */
-	EReference getCompleteEnvironment_OwnedStandardLibrary();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CompleteModel <em>Complete Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5102,17 +5069,6 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getCompleteModel_OwnedCompletePackages();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.CompleteModel#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owning Complete Environment</em>'.
-	 * @see org.eclipse.ocl.pivot.CompleteModel#getOwningCompleteEnvironment()
-	 * @see #getCompleteModel()
-	 * @generated
-	 */
-	EReference getCompleteModel_OwningCompleteEnvironment();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.pivot.CompleteModel#getPartialModels <em>Partial Models</em>}'.
@@ -9945,22 +9901,6 @@ extends EPackage
 		EClass COMPLETE_ENVIRONMENT = eINSTANCE.getCompleteEnvironment();
 
 		/**
-		 * The meta object literal for the '<em><b>Owned Complete Model</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL = eINSTANCE.getCompleteEnvironment_OwnedCompleteModel();
-
-		/**
-		 * The meta object literal for the '<em><b>Owned Standard Library</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY = eINSTANCE.getCompleteEnvironment_OwnedStandardLibrary();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CompleteModelImpl <em>Complete Model</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9985,14 +9925,6 @@ extends EPackage
 		 * @generated
 		 */
 		EReference COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES = eINSTANCE.getCompleteModel_OwnedCompletePackages();
-
-		/**
-		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getCompleteModel_OwningCompleteEnvironment();
 
 		/**
 		 * The meta object literal for the '<em><b>Partial Models</b></em>' reference list feature.
@@ -10085,14 +10017,6 @@ extends EPackage
 		 * @generated
 		 */
 		EClass COMPLETE_STANDARD_LIBRARY = eINSTANCE.getCompleteStandardLibrary();
-
-		/**
-		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getCompleteStandardLibrary_OwningCompleteEnvironment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.ConnectionPointReferenceImpl <em>Connection Point Reference</em>}' class.

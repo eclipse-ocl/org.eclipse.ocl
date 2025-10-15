@@ -41,7 +41,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -202,7 +201,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	private final @NonNull CompleteStandardLibrary standardLibrary;
-	private final @NonNull CompleteEnvironment completeEnvironment;
 
 	/**
 	 * The known packages.
@@ -264,7 +262,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		assert !asResourceSetAdapters.contains(this);
 		asResourceSetAdapters.add(this);
 		assert asResourceSetAdapters.contains(environmentFactory.getProjectManager());
-		completeEnvironment = environmentFactory.getCompleteEnvironment();
 		standardLibrary = environmentFactory.getStandardLibrary();
 		completeModel = environmentFactory.getCompleteModel();
 		//		System.out.println("ctor " + this);
@@ -609,11 +606,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			}
 		}
 		return bodyExpression;
-	}
-
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return completeEnvironment;
 	}
 
 	@Override

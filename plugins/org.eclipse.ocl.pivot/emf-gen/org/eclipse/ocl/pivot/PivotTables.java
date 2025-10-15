@@ -91,10 +91,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CollectionType = PivotTables.PACKid_$metamodel$.getClassId("CollectionType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Comment = PivotTables.PACKid_$metamodel$.getClassId("Comment", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CompleteClass = PivotTables.PACKid_$metamodel$.getClassId("CompleteClass", 0);
-	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CompleteEnvironment = PivotTables.PACKid_$metamodel$.getClassId("CompleteEnvironment", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CompleteModel = PivotTables.PACKid_$metamodel$.getClassId("CompleteModel", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CompletePackage = PivotTables.PACKid_$metamodel$.getClassId("CompletePackage", 0);
-	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CompleteStandardLibrary = PivotTables.PACKid_$metamodel$.getClassId("CompleteStandardLibrary", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ConnectionPointReference = PivotTables.PACKid_$metamodel$.getClassId("ConnectionPointReference", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Constraint = PivotTables.PACKid_$metamodel$.getClassId("Constraint", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_DataType = PivotTables.PACKid_$metamodel$.getClassId("DataType", 0);
@@ -215,7 +213,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_CompleteClass = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_CompleteClass, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_CompleteModel = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_CompleteModel, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_CompletePackage = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_CompletePackage, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_CompleteStandardLibrary = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_CompleteStandardLibrary, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_ConnectionPointReference = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_ConnectionPointReference, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Constraint = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Constraint, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_DataType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_DataType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -2058,24 +2055,16 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _CompleteClass__owningCompletePackage = LIBRARY.createProperty(Types._CompleteClass, PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE, Types._CompletePackage, 0 | IsResolveProxies);
 		public static final @NonNull Property _CompleteClass__partialClasses = LIBRARY.createProperty(Types._CompleteClass, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Class), 1 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _CompleteEnvironment__ownedCompleteModel = LIBRARY.createProperty(Types._CompleteEnvironment, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, Types._CompleteModel, 0 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CompleteEnvironment__ownedStandardLibrary = LIBRARY.createProperty(Types._CompleteEnvironment, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, Types._CompleteStandardLibrary, 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CompleteEnvironment__CompleteStandardLibrary__owningCompleteEnvironment = LIBRARY.createOppositeProperty(Types._CompleteEnvironment, "CompleteStandardLibrary", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._CompleteStandardLibrary), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT);
-
 		public static final @NonNull Property _CompleteModel__orphanCompletePackage = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE, Types._OrphanCompletePackage, 0 | IsDerived | IsReadOnly | IsTransient);
 		public static final @NonNull Property _CompleteModel__ownedCompletePackages = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._CompletePackage), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CompleteModel__owningCompleteEnvironment = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT, Types._CompleteEnvironment, 2 | IsResolveProxies);
-		public static final @NonNull Property _CompleteModel__partialModels = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Model), 3 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CompleteModel__primitiveCompletePackage = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE, Types._PrimitiveCompletePackage, 4 | IsDerived | IsReadOnly | IsTransient);
+		public static final @NonNull Property _CompleteModel__partialModels = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Model), 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteModel__primitiveCompletePackage = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE, Types._PrimitiveCompletePackage, 3 | IsDerived | IsReadOnly | IsTransient);
 
 		public static final @NonNull Property _CompletePackage__ownedCompleteClasses = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._CompleteClass), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _CompletePackage__ownedCompletePackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._CompletePackage), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _CompletePackage__owningCompleteModel = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, Types._CompleteModel, 2 | IsResolveProxies);
 		public static final @NonNull Property _CompletePackage__owningCompletePackage = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, Types._CompletePackage, 3 | IsResolveProxies);
 		public static final @NonNull Property _CompletePackage__partialPackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Package), 4 | IsRequired | IsResolveProxies);
-
-		public static final @NonNull Property _CompleteStandardLibrary__owningCompleteEnvironment = LIBRARY.createProperty(Types._CompleteStandardLibrary, PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, Types._CompleteEnvironment, 0 | IsResolveProxies);
-		public static final @NonNull Property _CompleteStandardLibrary__CompleteEnvironment__ownedStandardLibrary = LIBRARY.createOppositeProperty(Types._CompleteStandardLibrary, "CompleteEnvironment", Types._CompleteEnvironment, 1 | IsImplicit | IsResolveProxies, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY);
 
 		public static final @NonNull Property _ConnectionPointReference__entries = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _ConnectionPointReference__exits = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate), 1 | IsRequired | IsResolveProxies);
@@ -2559,13 +2548,8 @@ public class PivotTables extends AbstractTables
 			_CompleteClass__owningCompletePackage.setOpposite(_CompletePackage__ownedCompleteClasses);
 			_CompleteClass__partialClasses.setOpposite(_Class__CompleteClass__partialClasses);
 
-			_CompleteEnvironment__ownedCompleteModel.setOpposite(_CompleteModel__owningCompleteEnvironment);
-			_CompleteEnvironment__ownedStandardLibrary.setOpposite(_CompleteStandardLibrary__CompleteEnvironment__ownedStandardLibrary);
-			_CompleteEnvironment__CompleteStandardLibrary__owningCompleteEnvironment.setOpposite(_CompleteStandardLibrary__owningCompleteEnvironment);
-
 			_CompleteModel__orphanCompletePackage.setOpposite(_OrphanCompletePackage__CompleteModel__orphanCompletePackage);
 			_CompleteModel__ownedCompletePackages.setOpposite(_CompletePackage__owningCompleteModel);
-			_CompleteModel__owningCompleteEnvironment.setOpposite(_CompleteEnvironment__ownedCompleteModel);
 			_CompleteModel__partialModels.setOpposite(_Model__CompleteModel__partialModels);
 			_CompleteModel__primitiveCompletePackage.setOpposite(_PrimitiveCompletePackage__CompleteModel__primitiveCompletePackage);
 
@@ -2574,9 +2558,6 @@ public class PivotTables extends AbstractTables
 			_CompletePackage__owningCompleteModel.setOpposite(_CompleteModel__ownedCompletePackages);
 			_CompletePackage__owningCompletePackage.setOpposite(_CompletePackage__ownedCompletePackages);
 			_CompletePackage__partialPackages.setOpposite(_Package__CompletePackage__partialPackages);
-
-			_CompleteStandardLibrary__owningCompleteEnvironment.setOpposite(_CompleteEnvironment__CompleteStandardLibrary__owningCompleteEnvironment);
-			_CompleteStandardLibrary__CompleteEnvironment__ownedStandardLibrary.setOpposite(_CompleteEnvironment__ownedStandardLibrary);
 
 			_ConnectionPointReference__entries.setOpposite(_Pseudostate__ConnectionPointReference__entries);
 			_ConnectionPointReference__exits.setOpposite(_Pseudostate__ConnectionPointReference__exits);
@@ -12620,9 +12601,7 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Element__ownedComments,
-			Properties._CompleteEnvironment__ownedCompleteModel,
-			Properties._Element__ownedExtensions,
-			Properties._CompleteEnvironment__ownedStandardLibrary
+			Properties._Element__ownedExtensions
 		};
 
 		private static final @NonNull Property @NonNull [] _CompleteModel = {
@@ -12635,7 +12614,6 @@ public class PivotTables extends AbstractTables
 			Properties._Element__ownedComments,
 			Properties._CompleteModel__ownedCompletePackages,
 			Properties._Element__ownedExtensions,
-			Properties._CompleteModel__owningCompleteEnvironment,
 			Properties._CompleteModel__partialModels,
 			Properties._CompleteModel__primitiveCompletePackage
 		};
@@ -12661,8 +12639,7 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Element__ownedComments,
-			Properties._Element__ownedExtensions,
-			Properties._CompleteStandardLibrary__owningCompleteEnvironment
+			Properties._Element__ownedExtensions
 		};
 
 		private static final @NonNull Property @NonNull [] _ConnectionPointReference = {

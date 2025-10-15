@@ -455,7 +455,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull BagType _Bag_CompleteClass_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_CompleteModel_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_CompletePackage_F = createBagType(_Bag);
-		private final @NonNull BagType _Bag_CompleteStandardLibrary_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_ConnectionPointReference_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_Constraint_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_DataType_F = createBagType(_Bag);
@@ -508,7 +507,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_CompleteModel_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_CompletePackage_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_CompletePackage_T = createCollectionType(_Collection);
-		private final @NonNull CollectionType _Collection_CompleteStandardLibrary_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_ConnectionPointReference_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_ConnectionPointReference_T = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_Constraint_F = createCollectionType(_Collection);
@@ -1389,10 +1387,6 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_CompletePackage_F);
 			ownedClasses.add(type);
-			type = _Bag_CompleteStandardLibrary_F;
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_CompleteStandardLibrary_F);
-			ownedClasses.add(type);
 			type = _Bag_ConnectionPointReference_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_ConnectionPointReference_F);
@@ -1604,10 +1598,6 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _Collection_CompletePackage_T;
 			type.setIsNullFree(true);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type);
-			type = _Collection_CompleteStandardLibrary_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -2736,12 +2726,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Comment_owningElement = createProperty(PivotPackage.Literals.COMMENT__OWNING_ELEMENT, _Element);
 		private final @NonNull Property pr_CompleteClass_owningCompletePackage = createProperty(PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE, _CompletePackage);
 		private final @NonNull Property pr_CompleteClass_partialClasses = createProperty(PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES, _Set_Class_T);
-		private final @NonNull Property pr_CompleteEnvironment_ownedCompleteModel = createProperty(PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, _CompleteModel);
-		private final @NonNull Property pr_CompleteEnvironment_ownedStandardLibrary = createProperty(PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, _CompleteStandardLibrary);
-		private final @NonNull Property pr_CompleteEnvironment_CompleteStandardLibrary_owningCompleteEnvironment = createProperty("CompleteStandardLibrary", _Bag_CompleteStandardLibrary_F);
 		private final @NonNull Property pr_CompleteModel_orphanCompletePackage = createProperty(PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE, _OrphanCompletePackage);
 		private final @NonNull Property pr_CompleteModel_ownedCompletePackages = createProperty(PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, _Set_CompletePackage_T);
-		private final @NonNull Property pr_CompleteModel_owningCompleteEnvironment = createProperty(PivotPackage.Literals.COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT, _CompleteEnvironment);
 		private final @NonNull Property pr_CompleteModel_partialModels = createProperty(PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS, _Set_Model_T);
 		private final @NonNull Property pr_CompleteModel_primitiveCompletePackage = createProperty(PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE, _PrimitiveCompletePackage);
 		private final @NonNull Property pr_CompletePackage_ownedCompleteClasses = createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES, _Set_CompleteClass_T);
@@ -2749,8 +2735,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_CompletePackage_owningCompleteModel = createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, _CompleteModel);
 		private final @NonNull Property pr_CompletePackage_owningCompletePackage = createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, _CompletePackage);
 		private final @NonNull Property pr_CompletePackage_partialPackages = createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES, _Set_Package_T);
-		private final @NonNull Property pr_CompleteStandardLibrary_owningCompleteEnvironment = createProperty(PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, _CompleteEnvironment);
-		private final @NonNull Property pr_CompleteStandardLibrary_CompleteEnvironment_ownedStandardLibrary = createProperty("CompleteEnvironment", _CompleteEnvironment);
 		private final @NonNull Property pr_ConnectionPointReference_entries = createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES, _Set_Pseudostate_T);
 		private final @NonNull Property pr_ConnectionPointReference_exits = createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS, _Set_Pseudostate_T);
 		private final @NonNull Property pr_ConnectionPointReference_owningState = createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__OWNING_STATE, _State);
@@ -3327,23 +3311,6 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Class_CompleteClass_partialClasses);
 
-			ownedProperties = _CompleteEnvironment.getOwnedProperties();
-			ownedProperties.add(property = pr_CompleteEnvironment_ownedCompleteModel);
-			property.setIsComposite(true);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CompleteModel_owningCompleteEnvironment);
-			ownedProperties.add(property = pr_CompleteEnvironment_ownedStandardLibrary);
-			property.setIsComposite(true);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CompleteStandardLibrary_CompleteEnvironment_ownedStandardLibrary);
-			ownedProperties.add(property = pr_CompleteEnvironment_CompleteStandardLibrary_owningCompleteEnvironment);
-			property.setIsImplicit(true);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CompleteStandardLibrary_owningCompleteEnvironment);
-
 			ownedProperties = _CompleteModel.getOwnedProperties();
 			ownedProperties.add(property = pr_CompleteModel_orphanCompletePackage);
 			property.setIsDerived(true);
@@ -3355,9 +3322,6 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CompletePackage_owningCompleteModel);
-			ownedProperties.add(property = pr_CompleteModel_owningCompleteEnvironment);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CompleteEnvironment_ownedCompleteModel);
 			ownedProperties.add(property = pr_CompleteModel_partialModels);
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
@@ -3389,15 +3353,6 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Package_CompletePackage_partialPackages);
-
-			ownedProperties = _CompleteStandardLibrary.getOwnedProperties();
-			ownedProperties.add(property = pr_CompleteStandardLibrary_owningCompleteEnvironment);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CompleteEnvironment_CompleteStandardLibrary_owningCompleteEnvironment);
-			ownedProperties.add(property = pr_CompleteStandardLibrary_CompleteEnvironment_ownedStandardLibrary);
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CompleteEnvironment_ownedStandardLibrary);
 
 			ownedProperties = _ConnectionPointReference.getOwnedProperties();
 			ownedProperties.add(property = pr_ConnectionPointReference_entries);
@@ -5285,7 +5240,6 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_Bag_CompleteClass_F, _CompleteClass);
 			addBinding(_Bag_CompleteModel_F, _CompleteModel);
 			addBinding(_Bag_CompletePackage_F, _CompletePackage);
-			addBinding(_Bag_CompleteStandardLibrary_F, _CompleteStandardLibrary);
 			addBinding(_Bag_ConnectionPointReference_F, _ConnectionPointReference);
 			addBinding(_Bag_Constraint_F, _Constraint);
 			addBinding(_Bag_DataType_F, _DataType);
@@ -5338,7 +5292,6 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_Collection_CompleteModel_F, _CompleteModel);
 			addBinding(_Collection_CompletePackage_F, _CompletePackage);
 			addBinding(_Collection_CompletePackage_T, _CompletePackage);
-			addBinding(_Collection_CompleteStandardLibrary_F, _CompleteStandardLibrary);
 			addBinding(_Collection_ConnectionPointReference_F, _ConnectionPointReference);
 			addBinding(_Collection_ConnectionPointReference_T, _ConnectionPointReference);
 			addBinding(_Collection_Constraint_F, _Constraint);

@@ -10,90 +10,16 @@
  */
 package org.eclipse.ocl.pivot;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Complete Environment</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedCompleteModel <em>Owned Complete Model</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}</li>
- * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteEnvironment()
  * @generated
  */
+@Deprecated
 public interface CompleteEnvironment extends Element
 {
-	/**
-	 * Returns the value of the '<em><b>Owned Complete Model</b></em>' containment reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.CompleteModel#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owned Complete Model</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owned Complete Model</em>' containment reference.
-	 * @see #setOwnedCompleteModel(CompleteModel)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteEnvironment_OwnedCompleteModel()
-	 * @see org.eclipse.ocl.pivot.CompleteModel#getOwningCompleteEnvironment
-	 * @generated
-	 */
-	@NonNull CompleteModel getOwnedCompleteModel();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedCompleteModel <em>Owned Complete Model</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owned Complete Model</em>' containment reference.
-	 * @see #getOwnedCompleteModel()
-	 * @generated
-	 */
-	void setOwnedCompleteModel(CompleteModel value);
-
-	/**
-	 * Returns the value of the '<em><b>Owned Standard Library</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owned Standard Library</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owned Standard Library</em>' containment reference.
-	 * @see #setOwnedStandardLibrary(CompleteStandardLibrary)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteEnvironment_OwnedStandardLibrary()
-	 * @generated
-	 */
-	@NonNull CompleteStandardLibrary getOwnedStandardLibrary();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owned Standard Library</em>' containment reference.
-	 * @see #getOwnedStandardLibrary()
-	 * @generated
-	 */
-	void setOwnedStandardLibrary(CompleteStandardLibrary value);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull EnvironmentFactory getEnvironmentFactory();
-
-	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
-
-	Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull CompleteStandardLibrary getStandardLibrary();
 } // CompleteEnvironment

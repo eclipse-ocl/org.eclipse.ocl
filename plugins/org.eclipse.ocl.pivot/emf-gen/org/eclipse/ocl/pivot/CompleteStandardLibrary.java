@@ -25,43 +25,12 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  * A representation of the model object '<em><b>Standard Library Internal</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
- * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteStandardLibrary()
  * @generated
  */
 public interface CompleteStandardLibrary extends StandardLibrary
 {
-	/**
-	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owning Complete Environment</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owning Complete Environment</em>' reference.
-	 * @see #setOwningCompleteEnvironment(CompleteEnvironment)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteStandardLibrary_OwningCompleteEnvironment()
-	 * @generated
-	 */
-	CompleteEnvironment getOwningCompleteEnvironment();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owning Complete Environment</em>' reference.
-	 * @see #getOwningCompleteEnvironment()
-	 * @generated
-	 */
-	void setOwningCompleteEnvironment(CompleteEnvironment value);
-
 	org.eclipse.ocl.pivot.@Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId);
 	/**
 	 * @since 1.17

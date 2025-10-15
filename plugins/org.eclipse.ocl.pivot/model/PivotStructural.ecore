@@ -242,12 +242,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CompleteEnvironment" eSuperTypes="#//Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCompleteModel" lowerBound="1"
-        eType="#//CompleteModel" containment="true" eOpposite="#//CompleteModel/owningCompleteEnvironment"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedStandardLibrary" lowerBound="1"
-        eType="#//CompleteStandardLibrary" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteEnvironment" eSuperTypes="#//Element"/>
   <eClassifiers xsi:type="ecore:EClass" name="CompleteModel" eSuperTypes="#//NamedElement">
     <eOperations name="getOwnedCompletePackage" eType="#//CompletePackage">
       <eParameters name="name" eType="#//String"/>
@@ -262,8 +257,6 @@
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteEnvironment"
-        eType="#//CompleteEnvironment" eOpposite="#//CompleteEnvironment/ownedCompleteModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partialModels" ordered="false"
         upperBound="-1" eType="#//Model">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
@@ -302,10 +295,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CompleteStandardLibrary" eSuperTypes="#//StandardLibrary">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteEnvironment"
-        eType="#//CompleteEnvironment"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteStandardLibrary" eSuperTypes="#//StandardLibrary"/>
   <eClassifiers xsi:type="ecore:EClass" name="ConnectionPointReference" eSuperTypes="#//Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State."/>

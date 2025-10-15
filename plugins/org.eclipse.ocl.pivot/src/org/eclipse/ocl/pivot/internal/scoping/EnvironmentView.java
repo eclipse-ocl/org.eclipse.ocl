@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -668,7 +667,7 @@ public class EnvironmentView
 			while (true) {
 				EObject eContainer = eObject.eContainer();
 				if (eContainer == null) {
-					if (eObject instanceof CompleteEnvironment) {
+					if (eObject instanceof CompleteModel) {
 						break;
 					}
 					if (eObject.eResource() != null) {

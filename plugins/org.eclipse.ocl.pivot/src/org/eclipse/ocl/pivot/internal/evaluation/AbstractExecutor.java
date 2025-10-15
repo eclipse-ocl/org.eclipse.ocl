@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -198,11 +197,6 @@ public abstract class AbstractExecutor implements ExecutorInternal
 			evaluationCache2 = evaluationCache = createEvaluationCache();
 		}
 		return evaluationCache2.getCachedEvaluationResult(implementation, caller, sourceAndArgumentValues);
-	}
-
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return environmentFactory.getCompleteEnvironment();
 	}
 
 	@Override

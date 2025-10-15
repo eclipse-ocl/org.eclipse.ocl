@@ -11,18 +11,14 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -30,14 +26,11 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
@@ -112,12 +105,6 @@ import org.eclipse.osgi.util.NLS;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Standard Library Internal</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
- * </ul>
  *
  * @generated
  */
@@ -130,7 +117,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	 * @generated
 	 * @ordered
 	 */
-	public static final int COMPLETE_STANDARD_LIBRARY_FEATURE_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_FEATURE_COUNT + 1;
+	public static final int COMPLETE_STANDARD_LIBRARY_FEATURE_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Complete Standard Library</em>' class.
@@ -140,16 +127,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	 * @ordered
 	 */
 	public static final int COMPLETE_STANDARD_LIBRARY_OPERATION_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_OPERATION_COUNT + 0;
-
-	/**
-	 * The cached value of the '{@link #getOwningCompleteEnvironment() <em>Owning Complete Environment</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwningCompleteEnvironment()
-	 * @generated
-	 * @ordered
-	 */
-	protected CompleteEnvironment owningCompleteEnvironment;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -170,163 +147,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	protected EClass eStaticClass()
 	{
 		return PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public CompleteEnvironment getOwningCompleteEnvironment()
-	{
-		if (owningCompleteEnvironment != null && owningCompleteEnvironment.eIsProxy())
-		{
-			InternalEObject oldOwningCompleteEnvironment = (InternalEObject)owningCompleteEnvironment;
-			owningCompleteEnvironment = (CompleteEnvironment)eResolveProxy(oldOwningCompleteEnvironment);
-			if (owningCompleteEnvironment != oldOwningCompleteEnvironment)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 4, oldOwningCompleteEnvironment, owningCompleteEnvironment));
-			}
-		}
-		return owningCompleteEnvironment;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public CompleteEnvironment basicGetOwningCompleteEnvironment()
-	{
-		return owningCompleteEnvironment;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwningCompleteEnvironment(CompleteEnvironment newOwningCompleteEnvironment)
-	{
-		CompleteEnvironment oldOwningCompleteEnvironment = owningCompleteEnvironment;
-		owningCompleteEnvironment = newOwningCompleteEnvironment;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldOwningCompleteEnvironment, owningCompleteEnvironment));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
-			case 0:
-				return getAnnotatingComments();
-			case 1:
-				return getOwnedAnnotations();
-			case 2:
-				return getOwnedComments();
-			case 3:
-				return getOwnedExtensions();
-			case 4:
-				if (resolve) return getOwningCompleteEnvironment();
-				return basicGetOwningCompleteEnvironment();
-		}
-		return eDynamicGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
-			case 0:
-				getAnnotatingComments().clear();
-				getAnnotatingComments().addAll((Collection<? extends Comment>)newValue);
-				return;
-			case 1:
-				getOwnedAnnotations().clear();
-				getOwnedAnnotations().addAll((Collection<? extends Element>)newValue);
-				return;
-			case 2:
-				getOwnedComments().clear();
-				getOwnedComments().addAll((Collection<? extends Comment>)newValue);
-				return;
-			case 3:
-				getOwnedExtensions().clear();
-				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
-				return;
-			case 4:
-				setOwningCompleteEnvironment((CompleteEnvironment)newValue);
-				return;
-		}
-		eDynamicSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
-			case 0:
-				getAnnotatingComments().clear();
-				return;
-			case 1:
-				getOwnedAnnotations().clear();
-				return;
-			case 2:
-				getOwnedComments().clear();
-				return;
-			case 3:
-				getOwnedExtensions().clear();
-				return;
-			case 4:
-				setOwningCompleteEnvironment((CompleteEnvironment)null);
-				return;
-		}
-		eDynamicUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
-			case 0:
-				return annotatingComments != null && !annotatingComments.isEmpty();
-			case 1:
-				return ownedAnnotations != null && !ownedAnnotations.isEmpty();
-			case 2:
-				return ownedComments != null && !ownedComments.isEmpty();
-			case 3:
-				return ownedExtensions != null && !ownedExtensions.isEmpty();
-			case 4:
-				return owningCompleteEnvironment != null;
-		}
-		return eDynamicIsSet(featureID);
 	}
 
 	/**
