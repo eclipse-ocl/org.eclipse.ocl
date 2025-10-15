@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -186,7 +187,10 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		return completeFlatClass;
 	}
 
-	public @NonNull CompleteModelInternal getCompleteModel() {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompleteModel getCompleteModel() {
 		return getCompletePackage().getCompleteModel();
 	}
 

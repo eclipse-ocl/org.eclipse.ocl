@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
@@ -66,7 +67,6 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
@@ -635,7 +635,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected final @NonNull Map<@NonNull String, @NonNull NamedElement> name2external = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull String> generatedClassNameMap = new HashMap<>();
 	protected EnvironmentFactory environmentFactory;
-	protected CompleteModelInternal completeModel;
+	protected CompleteModel completeModel;
 	protected MetamodelManager metamodelManager;
 	protected NameQueries nameQueries;
 	protected Model thisModel = null;
@@ -1470,7 +1470,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected void setEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
+		this.completeModel = environmentFactory.getCompleteModel();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		nameQueries = new NameQueries(environmentFactory);
 	}

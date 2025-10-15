@@ -21,13 +21,13 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -43,7 +43,7 @@ public class FinalAnalysis
 	 */
 	public static final @NonNull TracingOption FINAL_ANALYSIS = new TracingOption(PivotPlugin.PLUGIN_ID, "finalAnalysis");
 
-	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull CompleteModel completeModel;
 
 	/**
 	 * Map from a CompleteClass to all its sub CompleteClasses.
@@ -55,7 +55,7 @@ public class FinalAnalysis
 	 */
 	private final @NonNull Map<@NonNull Operation, @Nullable Set<@NonNull Operation>> operation2overrides = new HashMap<>();
 
-	public FinalAnalysis(@NonNull CompleteModelInternal completeModel) {
+	public FinalAnalysis(@NonNull CompleteModel completeModel) {
 		this.completeModel = completeModel;
 		MetamodelManager metamodelManager = completeModel.getMetamodelManager();
 		for (@NonNull CompletePackage completePackage :  completeModel.getAllCompletePackages()) {

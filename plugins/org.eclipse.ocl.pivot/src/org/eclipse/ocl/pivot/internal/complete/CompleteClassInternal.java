@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.complete;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 
 public interface CompleteClassInternal extends CompleteClass
 {
@@ -26,7 +27,10 @@ public interface CompleteClassInternal extends CompleteClass
 	boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	void dispose();
 	void uninstall();
-	@NonNull CompleteModelInternal getCompleteModel();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompleteModel getCompleteModel();
 //	@Override
 //	CompletePackageInternal getOwningCompletePackage();
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();

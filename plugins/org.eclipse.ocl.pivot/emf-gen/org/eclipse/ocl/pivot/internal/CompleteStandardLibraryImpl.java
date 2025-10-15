@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
@@ -72,7 +73,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
@@ -568,7 +568,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	private boolean libraryLoadInProgress = false;
 
-	private /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
+	private /*final*/ /*@NonNull*/ CompleteModel completeModel;
 	private /*final*/ /*@NonNull*/ EnvironmentFactory environmentFactory;
 
 	@Override
@@ -854,7 +854,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal getCompleteModel() {
+	public @NonNull CompleteModel getCompleteModel() {
 		assert completeModel != null;
 		return completeModel;
 	}
@@ -1320,7 +1320,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public @NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
+		this.completeModel = environmentFactory.getCompleteModel();
 		return this;
 	}
 

@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -111,7 +110,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public NotificationChain basicSetOwnedCompleteModel(CompleteModel newOwnedCompleteModel, NotificationChain msgs)
 	{
 		CompleteModel oldOwnedCompleteModel = ownedCompleteModel;
-		ownedCompleteModel = (CompleteModelInternal) newOwnedCompleteModel;
+		ownedCompleteModel = newOwnedCompleteModel;
 		if (eNotificationRequired())
 		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL.getFeatureID(), oldOwnedCompleteModel, newOwnedCompleteModel);
@@ -339,7 +338,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return visitor.visitCompleteEnvironment(this);
 	}
 	protected /*final @NonNull*/ EnvironmentFactory environmentFactory;
-	protected /*final @NonNull*/ CompleteModelInternal ownedCompleteModel;
+	protected /*final @NonNull*/ CompleteModel ownedCompleteModel;
 	protected /*final @NonNull*/ CompleteStandardLibrary ownedStandardLibrary;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
 
@@ -363,7 +362,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal getOwnedCompleteModel() {
+	public @NonNull CompleteModel getOwnedCompleteModel() {
 		return ClassUtil.requireNonNull(ownedCompleteModel);
 	}
 

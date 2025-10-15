@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -73,7 +74,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -760,7 +760,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			String name = asProperty.getName();
 			Type type = asNavigationCallExp.getOwnedSource().getType();
 			if (type != null) {
-				CompleteClassInternal completeClass = context.getCompleteModel().getCompleteClass(type);
+				CompleteClass completeClass = context.getCompleteModel().getCompleteClass(type);
 				if ("oclContainer".equals(name)) {
 					getClass();		// XXX
 				}

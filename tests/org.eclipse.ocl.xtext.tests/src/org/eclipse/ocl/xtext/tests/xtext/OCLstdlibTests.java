@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
@@ -189,10 +190,10 @@ public class OCLstdlibTests extends XtextTestCase
 	}
 
 	protected @NonNull ASResource doLoadOCLAS(@NonNull EnvironmentFactory environmentFactory, @NonNull URI libraryURI) {
-		CompleteModelInternal completeModel = (CompleteModelInternal)environmentFactory.getCompleteModel();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		ResourceSet asResourceSet = environmentFactory.getASResourceSet();
 		ASResource asResource = (ASResource) asResourceSet.getResource(libraryURI, true);
-		completeModel.getCompleteClasses(asResource);
+		((CompleteModelInternal)completeModel).getCompleteClasses(asResource);
 		BooleanType booleanType = environmentFactory.getStandardLibrary().getBooleanType();
 		CompletePackage completePackage = completeModel.getPrimitiveCompletePackage();
 		CompleteClass completeClass = completePackage.getOwnedCompleteClass(booleanType.getName());

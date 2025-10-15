@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -28,7 +29,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
@@ -144,7 +144,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				Type contextType = PivotUtil.getPivot(Type.class, csContext);
 				Type resultType = PivotUtil.getPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
-					CompleteModelInternal completeModel = context.getMetamodelManager().getCompleteModel();
+					CompleteModel completeModel = context.getMetamodelManager().getCompleteModel();
 					Orphanage orphanage = completeModel.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (ParameterCS csParameter : csElement.getOwnedParameters()) {
@@ -214,7 +214,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				Type contextType = PivotUtil.getPivot(Type.class, csContext);
 				Type resultType = PivotUtil.getPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
-					CompleteModelInternal completeModel = context.getMetamodelManager().getCompleteModel();
+					CompleteModel completeModel = context.getMetamodelManager().getCompleteModel();
 					Orphanage orphanage = completeModel.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
@@ -689,7 +689,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	public Continuation<?> visitPackageCS(@NonNull PackageCS csPackage) {
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getPivot(org.eclipse.ocl.pivot.Package.class, csPackage);
 		if (asPackage != null) {
-			CompleteModelInternal completeModel = context.getStandardLibrary().getCompleteModel();
+			CompleteModel completeModel = context.getStandardLibrary().getCompleteModel();
 		//	completeModel.getCompleteClasses(asPackage);
 		}
 		return null;

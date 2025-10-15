@@ -18,6 +18,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * <!-- begin-user-doc -->
@@ -158,6 +160,11 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompletePackage basicGetCompletePackageForURI(@NonNull String packageURI);
 
 	/**
+	 * @since 7.0
+	 */
+	void dispose();
+
+	/**
 	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
 	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constraint> rather than just a Constraint.
 	 * The multiples are most-executable first. Returns null for none.
@@ -186,6 +193,10 @@ public interface CompleteModel extends NamedElement
 	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull EnvironmentFactory getEnvironmentFactory();
+	/**
 	 * Return the equivalent class to thatClass in thisModel, where equivalent is the same class/package name
 	 * hierarchy wrt the orphan package in thisModel. This is typically used to create a merge contribution
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
@@ -195,6 +206,10 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull MetamodelManager getMetamodelManager();
 
 	/**
 	 * @since 7.0
@@ -202,6 +217,11 @@ public interface CompleteModel extends NamedElement
 	@NonNull Orphanage getOrphanage();
 
 	@Deprecated org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
 	 * @since 7.0

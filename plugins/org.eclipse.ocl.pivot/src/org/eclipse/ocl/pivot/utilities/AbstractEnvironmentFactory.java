@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
@@ -74,7 +75,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
@@ -160,7 +160,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * The known packages.
 	 * @since 7.0
 	 */
-	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull CompleteModel completeModel;
 
 	private /*@LazyNonNull*/ IdResolver idResolver;
 
@@ -229,7 +229,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeModel = createCompleteModel();
 		this.completeEnvironment = createCompleteEnvironment();
 
-		this.completeModel.init(this);
+		((CompleteModelInternal)this.completeModel).init(this);
 		this.standardLibrary.init(this);
 
 		technology.registerMetaPackages(completeModel);
@@ -450,8 +450,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 7.0
 	 */
-	protected @NonNull CompleteModelInternal createCompleteModel() {
-		CompleteModelImpl completeModel = (CompleteModelImpl)PivotFactory.eINSTANCE.createCompleteModel();
+	protected @NonNull CompleteModel createCompleteModel() {
+		CompleteModel completeModel = PivotFactory.eINSTANCE.createCompleteModel();
 		return completeModel;
 	}
 
@@ -985,7 +985,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal getCompleteModel() {
+	public @NonNull CompleteModel getCompleteModel() {
 		return completeModel;
 	}
 

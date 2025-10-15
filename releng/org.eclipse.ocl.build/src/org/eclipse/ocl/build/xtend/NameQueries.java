@@ -25,6 +25,7 @@ import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.codegen.generator.EcoreGenModelHelper;
 import org.eclipse.ocl.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -33,7 +34,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -56,7 +56,7 @@ public class NameQueries
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
-	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull CompleteModel completeModel;
 //	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private @NonNull Map<String, Integer> counters = new HashMap<String, Integer>();
@@ -65,7 +65,7 @@ public class NameQueries
 	public NameQueries(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
-		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
+		this.completeModel = environmentFactory.getCompleteModel();
 //		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genModelHelper = new EcoreGenModelHelper(environmentFactory);
 	}
