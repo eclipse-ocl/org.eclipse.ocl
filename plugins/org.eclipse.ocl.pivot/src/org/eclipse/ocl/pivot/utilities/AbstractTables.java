@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 
 /**
@@ -97,12 +96,9 @@ public abstract class AbstractTables
 	/**
 	 * @since 7.0
 	 */
-	protected static org.eclipse.ocl.pivot.@NonNull Property createOpposite(/*@NonNull*/ EClass eClass, @NonNull String name, @NonNull Property asProperty) {
+	protected static void createOpposite(/*@NonNull*/ EClass eClass, @NonNull String name, @NonNull Property asProperty) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eClass);
-		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
-		org.eclipse.ocl.pivot.Class asClass = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, eClass);
-		assert asClass != null;
-		return metamodelManager.installImplicitOppositePropertyDeclaration(asClass, name, asProperty);
+		environmentFactory.installImplicitOppositePropertyDeclaration(asProperty, name);
 	}
 
 	/**

@@ -50,6 +50,8 @@ import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * A factory for creating OCL parser and evaluation artefacts.  Clients of the OCL
@@ -358,6 +360,26 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	@NonNull ResourceSet getUserResourceSet();
+
+	/**
+	 * Create and install the implicit opposite of asProperty with the default name.
+	 * @since 7.0
+	 */
+	void installImplicitOppositePropertyDeclaration(@NonNull Property asProperty);
+
+	/**
+	 * Create and install the implicit opposite of asProperty with an explicit name.
+	 * @since 7.0
+	 */
+	void installImplicitOppositePropertyDeclaration(@NonNull Property asProperty, @NonNull String oppositeName);
+
+	/**
+	 * Create and install the opposite of asProperty from the modelled paramerization; perhaps from an explicit model element
+	 * or from a fall-back annotation.
+	 * @since 7.0
+	 */
+	void installOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
+			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 
 	/**
 	 * Return true if this EnvironmentFactory's life cycle has completed.
