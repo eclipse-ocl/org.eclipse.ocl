@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
@@ -134,7 +133,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * @since 7.0
 	 */
-	@NonNull CompleteEnvironmentInternal createCompleteEnvironment();
+	@NonNull CompleteEnvironment createCompleteEnvironment();
 
 	/**
 	 * Creates a new evaluation environment to track the values of variables in
@@ -388,6 +387,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 
 	/**
+	 * @since 7.0
+	 */
+	boolean isCodeGeneration();
+
+	/**
 	 * Return true if this EnvironmentFactory's life cycle has completed.
 	 *
 	 * @since 1.14
@@ -445,6 +449,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	void setCSI2ASMapping(ICSI2ASMapping csi2asMapping);
+
+	/**
+	 * @since 7.0
+	 */
+	void setCodeGeneration(boolean isCodeGeneration);
 
 	/**
 	 * @since 7.0

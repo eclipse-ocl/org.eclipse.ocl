@@ -11,8 +11,6 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -21,9 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -32,8 +28,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -42,7 +36,6 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Complete Environment</b></em>'.
- * @extends org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -54,7 +47,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  *
  * @generated
  */
-public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvironment, org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal
+public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvironment
 {
 	/**
 	 * The number of structural features of the '<em>Complete Environment</em>' class.
@@ -92,14 +85,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	protected EClass eStaticClass()
 	{
 		return PivotPackage.Literals.COMPLETE_ENVIRONMENT;
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	@Override
-	public @Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return class2completeClass.get(asClass);
 	}
 
 	/**
@@ -340,26 +325,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	protected /*final @NonNull*/ EnvironmentFactory environmentFactory;
 	protected /*final @NonNull*/ CompleteModel ownedCompleteModel;
 	protected /*final @NonNull*/ CompleteStandardLibrary ownedStandardLibrary;
-	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
-
-	private boolean isCodeGeneration = false;
-
-	@Override
-	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
-		//		assert partialClass.getUnspecializedElement() == null;
-		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
-		assert (oldCompleteClass == null) || (oldCompleteClass == completeClass);
-	}
-
-	@Override
-	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		class2completeClass.remove(pivotType);
-	}
-
-	@Override
-	public void dispose() {
-		class2completeClass.clear();
-	}
 
 	@Override
 	public @NonNull CompleteModel getOwnedCompleteModel() {
@@ -437,25 +402,17 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @NonNull StandardLibrary getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return getOwnedStandardLibrary();
 	}
 
-	@Override
-	public @NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactory environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompleteEnvironment init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		setOwnedCompleteModel(environmentFactory.getCompleteModel());
 		setOwnedStandardLibrary(environmentFactory.getStandardLibrary());
 		return this;
-	}
-
-	@Override
-	public boolean isCodeGeneration() {
-		return isCodeGeneration ;
-	}
-
-	@Override
-	public void setCodeGeneration(boolean isCodeGeneration) {
-		this.isCodeGeneration = isCodeGeneration;
 	}
 } //CompleteEnvironmentImpl

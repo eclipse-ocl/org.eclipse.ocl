@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -59,7 +60,6 @@ import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.AbstractCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -476,7 +476,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * Map from each partial Class to the CompleteClass that supervises its merge. CompleteClass are created lazily.
 	 */
-	private /*final @NonNull*/ CompleteEnvironmentInternal completeEnvironment;
+	private /*final @NonNull*/ CompleteEnvironment completeEnvironment;
 
 	/**
 	 * Map of (hierarchical) complete package id to CompletePackage.
@@ -499,6 +499,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	protected /*final @NonNull*/ EnvironmentFactory environmentFactory;
 
 	private Orphanage orphanage = null;
+
+	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteClassInternal> class2completeClass = new WeakHashMap<>();
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
@@ -543,7 +545,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				asClass = stereotype;
 			}
 		}
-		return completeEnvironment.basicGetCompleteClass(asClass);
+		return class2completeClass.get(asClass);
 	}
 
 	/**
@@ -586,7 +588,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
-		completeEnvironment.didAddClass(partialClass, completeClass);
+		//		assert partialClass.getUnspecializedElement() == null;
+		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
+		assert (oldCompleteClass == null) || (oldCompleteClass == completeClass);
 	}
 
 	/**
@@ -655,7 +659,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		completeEnvironment.didRemoveClass(pivotType);
+		class2completeClass.remove(pivotType);
 	}
 
 	@Override
@@ -712,11 +716,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public synchronized void dispose() {
-		completeEnvironment.dispose();
 		ownedCompletePackages.dispose();
 		completePackageId2completePackage.clear();
 		package2completePackage.clear();
 		packageURI2completePackage.clear();
+		class2completeClass.clear();
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 != null) {
 			orphanage2.removePackageListener(getOrphanCompletePackage().getPartialPackages());
@@ -806,7 +810,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				asClass = stereotype;
 			}
 		}
-		CompleteClassInternal completeClass = completeEnvironment.basicGetCompleteClass(asClass);
+		CompleteClassInternal completeClass = basicGetCompleteClass(asClass);
 		if (completeClass != null) {
 			return completeClass;
 		}
@@ -840,7 +844,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull CompleteEnvironmentInternal getCompleteEnvironment() {
+	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		assert completeEnvironment != null;
 		return completeEnvironment;
 	}
@@ -1212,7 +1216,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @NonNull CompleteModel init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.completeEnvironment = (CompleteEnvironmentInternal) environmentFactory.getCompleteEnvironment();
+		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;

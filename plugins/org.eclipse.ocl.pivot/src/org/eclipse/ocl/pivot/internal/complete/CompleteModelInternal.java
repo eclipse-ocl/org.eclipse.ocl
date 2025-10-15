@@ -65,8 +65,6 @@ public interface CompleteModelInternal extends CompleteModel
 	 */
 	void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable String getCompleteURI(@Nullable String nsURI);
-	@Override
-	@NonNull CompleteEnvironmentInternal getCompleteEnvironment();
 	/**
 	 * @since 7.0
 	 */

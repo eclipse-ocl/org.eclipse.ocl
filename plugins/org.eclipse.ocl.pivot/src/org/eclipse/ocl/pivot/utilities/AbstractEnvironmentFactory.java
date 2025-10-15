@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -75,7 +76,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
+import org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
@@ -150,7 +151,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 7.0
 	 */
-	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
+	protected final @NonNull CompleteEnvironment completeEnvironment;
 	/**
 	 * @since 7.0
 	 */
@@ -188,6 +189,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * True once dispose() has started.
 	 */
 	private boolean isDisposing = false;
+
+	private boolean isCodeGeneration = false;
 
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
@@ -441,9 +444,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull CompleteEnvironmentInternal createCompleteEnvironment() {
-		CompleteEnvironmentInternal completeEnvironment = (CompleteEnvironmentInternal)PivotFactory.eINSTANCE.createCompleteEnvironment();
-		completeEnvironment.init(this);
+	public @NonNull CompleteEnvironment createCompleteEnvironment() {
+		CompleteEnvironment completeEnvironment = PivotFactory.eINSTANCE.createCompleteEnvironment();
+		((CompleteEnvironmentImpl)completeEnvironment).init(this);
 		return completeEnvironment;
 	}
 
@@ -980,7 +983,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull CompleteEnvironmentInternal getCompleteEnvironment() {
+	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return completeEnvironment; //completeModel.getCompleteEnvironment();
 	}
 
@@ -1186,6 +1189,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
+	public boolean isCodeGeneration() {
+		return isCodeGeneration ;
+	}
+
+	@Override
 	public boolean isDisposed() {
 		return attachCount < 0;
 	}
@@ -1330,6 +1338,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void setCSI2ASMapping(ICSI2ASMapping csi2asMapping) {
 		this.csi2asMapping = csi2asMapping;
+	}
+
+	@Override
+	public void setCodeGeneration(boolean isCodeGeneration) {
+		this.isCodeGeneration = isCodeGeneration;
 	}
 
 	/**

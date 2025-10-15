@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
@@ -46,15 +45,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 {
 	public static @NonNull String generateClassFile(@NonNull EnvironmentFactory environmentFactory, @NonNull ExpressionInOCL query,
 			@NonNull String packageName, @NonNull String className) {
-		CompleteEnvironmentInternal completeEnvironment = environmentFactory.getMetamodelManager().getCompleteEnvironment();
-		boolean savedIsCodeGenerator = completeEnvironment.isCodeGeneration();
+		boolean savedIsCodeGenerator = environmentFactory.isCodeGeneration();
 		try {
-			completeEnvironment.setCodeGeneration(true);		// Workaround for BUG 452621
+			environmentFactory.setCodeGeneration(true);		// Workaround for BUG 452621
 			JUnitCodeGenerator expressionInOCL2Class = new JUnitCodeGenerator(environmentFactory, null, true);
 			return expressionInOCL2Class.generate(query, packageName, className);
 		}
 		finally {
-			completeEnvironment.setCodeGeneration(savedIsCodeGenerator);
+			environmentFactory.setCodeGeneration(savedIsCodeGenerator);
 		}
 	}
 
