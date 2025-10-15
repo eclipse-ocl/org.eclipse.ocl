@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -44,6 +43,7 @@ import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.uml.internal.utilities.UMLEcoreTechnology;
 import org.eclipse.ocl.pivot.uml.internal.validation.UMLOCLEValidator;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.uml2.types.TypesPackage;
@@ -86,8 +86,11 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 		UML2AS.initializeUML(csResourceSet);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		throw new UnsupportedOperationException("There is no CS for UML");
 	}
 
@@ -95,7 +98,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	 * @since 1.23
 	 */
 	@Override
-	public @NonNull External2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull External2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		return UML2AS.getAdapter(resource, environmentFactory);
 	}
 
@@ -108,7 +111,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	@Override
-	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory,
+	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactory environmentFactory,
 			@NonNull Class<T> pivotClass, @NonNull EObject eObject) throws ParserException {
 		Resource metamodel = eObject.eResource();
 		if (metamodel == null) {
@@ -150,7 +153,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 		return getInstance();
 	}
 
-	protected org.eclipse.uml2.uml.Constraint getConstraintForEOperation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EOperation eOperation) {
+	protected org.eclipse.uml2.uml.Constraint getConstraintForEOperation(@NonNull EnvironmentFactory environmentFactory, @NonNull EOperation eOperation) {
 		if (EcoreUtil.isInvariant(eOperation)) {
 			EClass eContainingClass = eOperation.getEContainingClass();
 			EAnnotation eAnnotation = eContainingClass.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI); // UMLUtil.UML2_UML_PACKAGE_2_0_NS_URI
@@ -304,7 +307,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 		return 200;
 	}
 
-	protected org.eclipse.uml2.uml.Profile getProfileForEPackage(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage) {
+	protected org.eclipse.uml2.uml.Profile getProfileForEPackage(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage ePackage) {
 		EObject eAnnotationParent = null;
 		for (EObject eObject = ePackage; true; eObject = eObject.eContainer()) {
 			if (eObject == null) {
@@ -327,7 +330,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 		return UMLResource.class.getName();
 	}
 
-	protected org.eclipse.uml2.uml.Stereotype getStereotypeForEClass(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass) {
+	protected org.eclipse.uml2.uml.Stereotype getStereotypeForEClass(@NonNull EnvironmentFactory environmentFactory, @NonNull EClass eClass) {
 		EObject eAnnotationParent = null;
 		for (EObject eObject = eClass; true; eObject = eObject.eContainer()) {
 			if (eObject == null) {
@@ -347,7 +350,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	}
 
 	@Override
-	public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource umlResource, @Nullable URI uri) throws ParserException {
+	public @Nullable Element importFromResource(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource umlResource, @Nullable URI uri) throws ParserException {
 		UML2AS conversion = UML2AS.getAdapter(umlResource, environmentFactory);
 		conversion.setUMLURI(uri != null ? uri.trimFragment() : null);
 		Model pivotModel = conversion.getASModel();

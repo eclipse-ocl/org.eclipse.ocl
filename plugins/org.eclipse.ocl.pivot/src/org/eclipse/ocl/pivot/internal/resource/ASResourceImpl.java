@@ -44,10 +44,10 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -396,7 +396,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	protected void doUnload() {
 		isUnloading = true;
 		try {
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {		// Reset may have set environmentFactory null before finalization/dispose/unload
 				preUnload(environmentFactory);
 			}
@@ -579,7 +579,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 *
 	 * @since 7.0
 	 */
-	public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public void preUnload(@NonNull EnvironmentFactory environmentFactory) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
 //		System.out.println("preUnload " + NameUtil.debugSimpleName(this) + " : " + uri + " : " + isASonly);
 		if (!isASonly && (asElement2reloadableURI == null)) {
@@ -697,13 +697,13 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	protected void unloaded(InternalEObject internalEObject) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if ((environmentFactory == null) || environmentFactory.isDisposed() || environmentFactory.isDisposing()) {
 			return;
 		}
 		if ((internalEObject instanceof ModelImpl)) {
 			ModelImpl asModel = (ModelImpl)internalEObject;
-		//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		//	EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		//	if (environmentFactory != null) {
 				environmentFactory.getCompleteModel().getPartialModels().remove(asModel);
 		//	}

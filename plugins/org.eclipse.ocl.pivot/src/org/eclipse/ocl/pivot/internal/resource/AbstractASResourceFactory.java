@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EcoreTechnology;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
@@ -206,7 +205,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager) {
+	public @NonNull EnvironmentFactory createEnvironmentFactory(@NonNull ProjectManager projectManager) {
 		return new PivotEnvironmentFactory(projectManager, null);
 	}
 
@@ -253,7 +252,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	@Override
-	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Class<T> requiredClass, @NonNull EObject eObject) throws ParserException {
+	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactory environmentFactory, @NonNull Class<T> requiredClass, @NonNull EObject eObject) throws ParserException {
 		if (eObject instanceof Pivotable) {
 			Element element = ((Pivotable)eObject).getPivot();
 			if (element != null) {
@@ -331,7 +330,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	@Override
-	public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory,
+	public @Nullable Element importFromResource(@NonNull EnvironmentFactory environmentFactory,
 			@NonNull Resource resource, @Nullable URI uri) throws ParserException {
 		Resource asResource;
 		if (resource instanceof ASResource) {

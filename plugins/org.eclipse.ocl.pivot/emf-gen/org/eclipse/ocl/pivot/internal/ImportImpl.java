@@ -29,8 +29,8 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
@@ -335,18 +335,18 @@ public class ImportImpl extends NamedElementImpl implements Import
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactory environmentFactory) {
 		throw new IllegalStateException("Import's reloadable may be a URI");
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactory environmentFactory) {
 		Namespace namespace = basicGetImportedNamespace();
 		if (namespace != null) {
 			if (namespace.eIsProxy()) {

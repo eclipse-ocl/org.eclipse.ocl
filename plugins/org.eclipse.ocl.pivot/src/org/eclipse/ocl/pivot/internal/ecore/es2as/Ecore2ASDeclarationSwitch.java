@@ -91,11 +91,11 @@ import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -107,7 +107,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 {
 	protected final @NonNull AbstractExternal2AS converter;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Technology technology;
 
 	public Ecore2ASDeclarationSwitch(@NonNull AbstractExternal2AS converter) {

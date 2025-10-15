@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -52,6 +51,7 @@ import org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty
 import org.eclipse.ocl.pivot.uml.internal.library.UMLStereotypeProperty;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -66,18 +66,21 @@ public class UMLEcoreTechnology extends AbstractTechnology
 
 	protected UMLEcoreTechnology() {}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public  @NonNull UMLIdResolver createIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public  @NonNull UMLIdResolver createIdResolver(@NonNull EnvironmentFactory environmentFactory) {
 		return new UMLIdResolver(environmentFactory);
 	}
 
 	@Override
-	public @NonNull LibraryProperty createBasePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
+	public @NonNull LibraryProperty createBasePropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
 		return new UMLBaseProperty(property);
 	}
 
 	@Override
-	public @NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory,
+	public @NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactory environmentFactory,
 			@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
 		if (sourceValue instanceof org.eclipse.uml2.uml.InstanceSpecification) {
 			org.eclipse.ocl.pivot.Package owningPackage = PivotUtil.getContainingPackage(asNavigationExp);
@@ -104,7 +107,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	}
 
 	@Override
-	public @NonNull LibraryProperty createExtensionPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
+	public @NonNull LibraryProperty createExtensionPropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
 		if (property.isIsImplicit()) {
 			Type type = property.getType();
 			assert type instanceof Stereotype;
@@ -120,7 +123,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	}
 
 	@Override
-	public @NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
+	public @NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
 		return new UMLStereotypeProperty(property);
 	}
 
@@ -139,9 +142,12 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		return name;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public RootPackageId getMetamodelId(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage eObject2) {
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+	public RootPackageId getMetamodelId(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage eObject2) {
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		RootPackageId metamodel = null;
 		if (ClassUtil.basicGetMetamodelAnnotation(eObject2) != null) {
 			metamodel = IdManager.METAMODEL_ID;
@@ -160,7 +166,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 		}
 		else {
 			String nsURI = eObject2.getNsURI();
-			String sharedNsURI = completeModel.getCompleteURI(nsURI);
+			String sharedNsURI = ((CompleteModelInternal)completeModel).getCompleteURI(nsURI);
 			if ((sharedNsURI != null) && !sharedNsURI.equals(nsURI)) {
 				metamodel = IdManager.getRootPackageId(sharedNsURI);
 			}
@@ -169,7 +175,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	}
 
 	@Override
-	public @NonNull PackageId getMetapackageId(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	public @NonNull PackageId getMetapackageId(@NonNull EnvironmentFactory environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		if (asPackage instanceof PivotObjectImpl) {
 			EObject eTarget = ((PivotObjectImpl)asPackage).getESObject();
 			if (eTarget != null) {
@@ -232,21 +238,23 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	}
 
 	@Override
-	public @Nullable Element getParseableElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EObject eObject) throws ParserException {
+	public @Nullable Element getParseableElement(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject eObject) throws ParserException {
 		Element pivotElement;
 		if (eObject instanceof Element) {
 			return (Element) eObject;
 		}
-		EnvironmentFactoryInternal environmentFactoryInternalExtension = environmentFactory;
-		pivotElement = environmentFactoryInternalExtension.getASOf(Element.class, eObject);
+		pivotElement = environmentFactory.getASOf(Element.class, eObject);
 		if ((eObject instanceof org.eclipse.uml2.uml.Constraint) && (pivotElement instanceof Constraint) && (pivotElement.eContainer() == null)) {
-			pivotElement = environmentFactoryInternalExtension.getASOf(Element.class, ((org.eclipse.uml2.uml.Constraint)eObject).getSpecification());
+			pivotElement = environmentFactory.getASOf(Element.class, ((org.eclipse.uml2.uml.Constraint)eObject).getSpecification());
 		}
 		return pivotElement;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public boolean isStereotype(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass) {
+	public boolean isStereotype(@NonNull EnvironmentFactory environmentFactory, @NonNull EClass eClass) {
 		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
 			EClassifier eType = eFeature.getEType();
 			if (eType != null) {

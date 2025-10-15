@@ -17,7 +17,6 @@ import java.util.WeakHashMap;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -134,7 +133,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	private @Nullable ThreadLocalExecutor closingPartThread = NOT_A_PART_THREAD;
 
 	/**
-	 * An IWorkbenchPart to EnvironmentFactoryInternal binding is present for every OCL-using IWorkbenchPart.
+	 * An IWorkbenchPart to EnvironmentFactory binding is present for every OCL-using IWorkbenchPart.
 	 * The binding is explicitly established for OCL-aware IWorkbenchParts by calls of initPart and destroyed by partClosed.
 	 * The binding is implicitly established for OCL-blind IWorkbenchParts by calls of initPart from lazy OCL creation and destroyed by a partClosed.
 	 */
@@ -204,7 +203,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 
 	@Override
-	public void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
+	public void localAttachEnvironmentFactory(@NonNull EnvironmentFactory newEnvironmentFactory) {
 		assert closingPartThread == null;
 		if (activePartThread != null) {
 			activePartThread.localAttachEnvironmentFactory(newEnvironmentFactory);
@@ -216,7 +215,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 
 	@Override
-	public @Nullable EnvironmentFactoryInternal localBasicGetEnvironmentFactory() {
+	public @Nullable EnvironmentFactory localBasicGetEnvironmentFactory() {
 		if (closingPartThread != null) {
 			return closingPartThread.localBasicGetEnvironmentFactory();
 		}
@@ -407,7 +406,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 
 	@Override
-	public void setEnvironmentFactory(@Nullable EnvironmentFactoryInternal newEnvironmentFactory) {
+	public void setEnvironmentFactory(@Nullable EnvironmentFactory newEnvironmentFactory) {
 		assert closingPartThread == null;
 		assert initPartThread == null;
 		if (activePartThread != null) {

@@ -14,14 +14,13 @@ import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -38,7 +37,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public abstract class AbstractEvaluationVisitor
 extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> implements EvaluationVisitor
 {
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	/**
 	 * @since 1.1
 	 */

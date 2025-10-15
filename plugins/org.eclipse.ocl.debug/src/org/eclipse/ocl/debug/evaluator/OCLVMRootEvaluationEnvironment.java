@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class OCLVMRootEvaluationEnvironment extends VMRootEvaluationEnvironment implements OCLVMEvaluationEnvironment
@@ -55,7 +54,7 @@ public class OCLVMRootEvaluationEnvironment extends VMRootEvaluationEnvironment 
 		pcVariable = ClassUtil.requireNonNull(PivotFactory.eINSTANCE.createVariable());
 		pcVariable.setName(VMVirtualMachine.PC_NAME);
 		String typeName = ClassUtil.requireNonNull(PivotPackage.Literals.OCL_EXPRESSION.getName());
-		pcVariable.setType(((EnvironmentFactoryInternal)environmentFactory).getASClass(typeName));
+		pcVariable.setType(environmentFactory.getASClass(typeName));
 	}
 
 	@Override

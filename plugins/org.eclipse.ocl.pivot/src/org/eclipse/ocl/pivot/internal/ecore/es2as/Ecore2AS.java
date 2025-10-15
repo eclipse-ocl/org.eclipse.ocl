@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
@@ -80,6 +79,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -108,9 +108,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	public static final @NonNull TracingOption NOT_OPTIONAL = new TracingOption(PivotPlugin.PLUGIN_ID, "ecore2as/notOptional");
 
 	/**
-	 * @since 1.14
+	 * @since 7.0
 	 */
-	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
 		Ecore2AS castAdapter = (Ecore2AS)adapter;
 		return castAdapter;
@@ -139,11 +139,14 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		return new Ecore2AS(resource, environmentFactory);
 	}
 
-	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		Ecore2AS adapter = (Ecore2AS)External2AS.findAdapter(resource, environmentFactory);
 		if (adapter == null) {
 			adapter = createExternal2AS(resource, environmentFactory);
@@ -241,8 +244,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @param ecoreResource the annotated Ecore resource
 	 *
 	 * @return the Pivot root package
+	 * @since 7.0
 	 */
-	public static @NonNull Model importFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, String alias, @NonNull Resource ecoreResource) {
+	public static @NonNull Model importFromEcore(@NonNull EnvironmentFactory environmentFactory, String alias, @NonNull Resource ecoreResource) {
 		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
 		return conversion.getASModel();
 	}
@@ -279,7 +283,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public static @Nullable Ecore2AS loadFromEcore(@NonNull ASResource ecoreASResource, @NonNull URI ecoreURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(ecoreASResource.getResourceSet());
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(ecoreASResource.getResourceSet());
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
 		if (ecoreResource == null) {
@@ -328,8 +332,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * @param eObject the annotated Ecore object
 	 *
 	 * @return the pivot element
+	 * @since 7.0
 	 */
-	public static Element importFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, String alias, @NonNull EObject eObject) {
+	public static Element importFromEcore(@NonNull EnvironmentFactory environmentFactory, String alias, @NonNull EObject eObject) {
 		Resource ecoreResource = ClassUtil.requireNonNull(eObject.eResource());
 		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
 		@SuppressWarnings("unused")
@@ -392,7 +397,10 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	private Set<EObject> importedEObjects = null;
 
-	public Ecore2AS(@NonNull Resource ecoreResource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public Ecore2AS(@NonNull Resource ecoreResource, @NonNull EnvironmentFactory environmentFactory) {
 		super(environmentFactory);
 		this.ecoreResource = ecoreResource;
 		this.environmentFactory.addExternal2AS(this);

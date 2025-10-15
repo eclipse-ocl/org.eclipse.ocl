@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -122,7 +121,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		assertNoValidationErrors("Pivot validation errors", ClassUtil.requireNonNull(asResource.getContents().get(0)));
-		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
+		XMLResource ecoreResource = AS2Ecore.createResource(ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
 		if (assignIds) {
 			for (TreeIterator<EObject> tit = ecoreResource.getAllContents(); tit.hasNext(); ) {

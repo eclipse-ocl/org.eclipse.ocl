@@ -47,13 +47,13 @@ import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EMF_GenModel_EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -276,7 +276,10 @@ public class AS2Ecore extends AbstractConversion
 		return eOperation;
 	}
 
-	public static @NonNull XMLResource createResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull XMLResource createResource(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		AS2Ecore converter = new AS2Ecore(environmentFactory, asResource, ecoreURI, options);
 		return converter.getEcoreResource();
 	}
@@ -362,7 +365,7 @@ public class AS2Ecore extends AbstractConversion
 	/**
 	 * @since 7.0
 	 */
-	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
+	public AS2Ecore(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		super(environmentFactory);
 		Model asModel = PivotUtil.getModel(asResource);
 		assert asModel != null;

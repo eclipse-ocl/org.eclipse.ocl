@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 
 /**
@@ -93,16 +92,18 @@ public class ThreadLocalExecutor implements Nameable
 	/**
 	 * Register the start of environmentFactory's activity. If another EnvironmentFactory is already
 	 * registered concurrentEnvironmentFactories is set and basicGetExecutor() returns null until reset().
+	 * @since 7.0
 	 */
-	public static void attachEnvironmentFactory(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static void attachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		threadLocalExecutor.localAttachEnvironmentFactory(environmentFactory);
 	}
 
 	/**
 	 * Return the prevailing thread-unique EnvironmentFactory or null if none/many.
+	 * @since 7.0
 	 */
-	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
+	public static @Nullable EnvironmentFactory basicGetEnvironmentFactory() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor == null) {
 			return null;
@@ -171,9 +172,9 @@ public class ThreadLocalExecutor implements Nameable
 	/**
 	 * Return the prevailing thread-unique EnvironmentFactory or throw an IllegalStateException none/many.
 	 *
-	 * @since 1.18
+	 * @since 7.0
 	 */
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public static @NonNull EnvironmentFactory getEnvironmentFactory() {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		return ClassUtil.requireNonNull(threadLocalExecutor.localBasicGetEnvironmentFactory());
 	}
@@ -330,7 +331,7 @@ public class ThreadLocalExecutor implements Nameable
 	/**
 	 * The only active EnvironmentFactory on th thread, null if none or many.
 	 */
-	private @Nullable EnvironmentFactoryInternal environmentFactory = null;
+	private @Nullable EnvironmentFactory environmentFactory = null;
 
 	/**
 	 * The Executor for the only active EnvironmentFactory on this thread, null if no unique Executor.
@@ -412,9 +413,9 @@ public class ThreadLocalExecutor implements Nameable
 	}
 
 	/**
-	 * @since 1.20
+	 * @since 7.0
 	 */
-	public void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
+	public void localAttachEnvironmentFactory(@NonNull EnvironmentFactory newEnvironmentFactory) {
 		if (!concurrentEnvironmentFactories && !newEnvironmentFactory.isDisposed()) {
 			EnvironmentFactory oldEnvironmentFactory = this.environmentFactory;
 			if (oldEnvironmentFactory == null) {
@@ -444,10 +445,10 @@ public class ThreadLocalExecutor implements Nameable
 	}
 
 	/**
-	 * @since 1.20
+	 * @since 7.0
 	 */
-	public @Nullable EnvironmentFactoryInternal localBasicGetEnvironmentFactory() {
-		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
+	public @Nullable EnvironmentFactory localBasicGetEnvironmentFactory() {
+		EnvironmentFactory environmentFactory2 = environmentFactory;
 		if (concurrentEnvironmentFactories) {
 			assert environmentFactory2 == null;
 		}
@@ -461,7 +462,7 @@ public class ThreadLocalExecutor implements Nameable
 		if (concurrentEnvironmentFactories) {
 			assert executor == null;
 		}
-		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
+		EnvironmentFactory environmentFactory2 = environmentFactory;
 		return (environmentFactory2 == null) || !environmentFactory2.isDisposed() ? executor : null;
 	}
 
@@ -489,7 +490,7 @@ public class ThreadLocalExecutor implements Nameable
 	//	System.out.println(getBracketedThreadName() + " localInit " + needsInit);
 		if (needsInit == NeedsInit.ATTACH_FROM_PART_THREAD) {
 		//	assert this.activePartThread == this.activatedPartThread;
-			EnvironmentFactoryInternal environmentFactory = initPartThread.environmentFactory;
+			EnvironmentFactory environmentFactory = initPartThread.environmentFactory;
 			if (environmentFactory != null) {
 				localAttachEnvironmentFactory(environmentFactory);
 				try {
@@ -547,7 +548,7 @@ public class ThreadLocalExecutor implements Nameable
 				this.executor = executor;
 			}
 			if (executor instanceof PivotExecutorManager) {
-				localAttachEnvironmentFactory((EnvironmentFactoryInternal) ((PivotExecutorManager)executor).getEnvironmentFactory());
+				localAttachEnvironmentFactory(((PivotExecutorManager)executor).getEnvironmentFactory());
 			}
 			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Set " + toString());
@@ -563,10 +564,10 @@ public class ThreadLocalExecutor implements Nameable
 	}
 
 	/**
-	 * @since 1.20
+	 * @since 7.0
 	 */
-	public void setEnvironmentFactory(@Nullable EnvironmentFactoryInternal newEnvironmentFactory) {
-		EnvironmentFactoryInternal oldEnvironmentFactory = this.environmentFactory;
+	public void setEnvironmentFactory(@Nullable EnvironmentFactory newEnvironmentFactory) {
+		EnvironmentFactory oldEnvironmentFactory = this.environmentFactory;
 		if (newEnvironmentFactory != oldEnvironmentFactory) {
 			if (oldEnvironmentFactory != null) {
 				if (!oldEnvironmentFactory.isDisposed()) {

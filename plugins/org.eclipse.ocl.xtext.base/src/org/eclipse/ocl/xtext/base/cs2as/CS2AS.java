@@ -46,10 +46,10 @@ import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -391,7 +391,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 
 	private boolean isUpdating = false;
 
-	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+	public CS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory);
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		this.csResource = csResource;
@@ -608,7 +608,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		BaseCSResource baseCSResource = (BaseCSResource)csResource;
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
 		ParserContext parserContext = baseCSResource.getParserContext();				// The contextVariable pivot of the parent ExpSpecificationCSImpl would be simple and avoid a ParserContext
-		EnvironmentView environmentView = new EnvironmentView((EnvironmentFactoryInternal)parserContext.getEnvironmentFactory(), eReference, PivotConstants.SELF_NAME);
+		EnvironmentView environmentView = new EnvironmentView(parserContext.getEnvironmentFactory(), eReference, PivotConstants.SELF_NAME);
 		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
 		VariableDeclaration variableDeclaration = (VariableDeclaration) environmentView.getContent();
@@ -699,7 +699,7 @@ public abstract class CS2AS extends AbstractConversion implements ICS2AS	// FIXM
 		 *
 		 * If required, the caller should probably (re-)install to ensure consistent (re-)uninstall.
 		 *
-		DelegateInstaller delegateInstaller = new DelegateInstaller((EnvironmentFactoryInternal)getHelper().getEnvironmentFactory(), null);
+		DelegateInstaller delegateInstaller = new DelegateInstaller(getHelper().getEnvironmentFactory(), null);
 		delegateInstaller.installCompleteOCLDelegates(asResource);
 		csResource.getErrors().addAll(consumer.getResult(Severity.ERROR));
 		csResource.getWarnings().addAll(consumer.getResult(Severity.WARNING));

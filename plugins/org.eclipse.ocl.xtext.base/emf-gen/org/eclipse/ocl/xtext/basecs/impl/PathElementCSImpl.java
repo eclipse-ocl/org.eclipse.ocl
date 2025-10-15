@@ -29,9 +29,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -495,7 +495,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		if (esResolvedProxy == null) {									// Not resolved
 		}
 		else if (esResolvedProxy instanceof CSResource) {
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				CSResource csResource = (CSResource)esResolvedProxy;
 				CS2AS cs2as = (CS2AS)csResource.getCS2AS(environmentFactory);
@@ -503,7 +503,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 			}
 		}
 		else if (esResolvedProxy instanceof Resource) {					// If resolution is to an Ecore resource resolve to its AS Model
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				try {
 					External2AS es2as = External2AS.getAdapter((Resource)esResolvedProxy, environmentFactory);
@@ -523,7 +523,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 				}
 				return proxy;
 			}
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				try {
 					asResolvedProxy = environmentFactory.getASOf(Element.class, eModelElement);

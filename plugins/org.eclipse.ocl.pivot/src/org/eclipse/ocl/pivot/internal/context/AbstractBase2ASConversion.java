@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -36,7 +36,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractBase2ASConversion extends AbstractConversion implements Base2ASConversion
 {
-	protected AbstractBase2ASConversion(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	protected AbstractBase2ASConversion(@NonNull EnvironmentFactory environmentFactory) {
 		super(environmentFactory);
 	}
 

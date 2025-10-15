@@ -51,9 +51,9 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.dynamic.DerivedEObjectValidator;
 import org.eclipse.ocl.pivot.internal.dynamic.DerivedEObjectValidatorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -75,12 +75,12 @@ public class ExtendedEObjectValidator extends EObjectValidator
 	 */
 	public class ExtendedDynamicEClassValidator extends DynamicEClassValidator
 	{
-		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @NonNull EnvironmentFactory environmentFactory;
 		protected final @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2delegateConstraints;
 		protected final EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry;
 		protected final @Nullable ValidationDelegate [] validationDelegates;
 
-		public ExtendedDynamicEClassValidator(@NonNull EnvironmentFactoryInternal environmentFactory,
+		public ExtendedDynamicEClassValidator(@NonNull EnvironmentFactory environmentFactory,
 				@NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2delegateConstraints,
 				EValidator.ValidationDelegate.@NonNull Registry validationDelegateRegistry) {
 		//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(eClass2delegateConstraints));
@@ -262,7 +262,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 
 	private static final @NonNull WeakHashMap<@NonNull EPackage, @NonNull ExtendedEObjectValidator> ePackage2extendedEObjectValidator = new WeakHashMap<>();
 
-	private static void addConstraint(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Collection<@NonNull URI> delegateURIs, @NonNull Constraint asConstraint) {
+	private static void addConstraint(@NonNull EnvironmentFactory environmentFactory, @NonNull Collection<@NonNull URI> delegateURIs, @NonNull Constraint asConstraint) {
 	//	Resource eResource = asConstraint.eResource();
 		EObject esObject = asConstraint.getESObject();
 		if (esObject == null) {							// XXX Complete OCL partial class - dynamic delegate is another partial
@@ -316,7 +316,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 		}
 	}
 
-	private static @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull URI>> gatherEClass2delegateURIs(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+	private static @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull URI>> gatherEClass2delegateURIs(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource) {
 	//	Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
 		Map<@NonNull EClass, @NonNull UniqueList<@NonNull URI>> eClass2delegateURIs = new HashMap<>();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
@@ -356,7 +356,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 		return eClass2delegateURIs;
 	}
 
-	public static void installFor(@NonNull ResourceSet userResourceSet, @NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage, @NonNull ASResource asResource) throws SemanticException {
+	public static void installFor(@NonNull ResourceSet userResourceSet, @NonNull EnvironmentFactory environmentFactory, @NonNull EPackage ePackage, @NonNull ASResource asResource) throws SemanticException {
 		assert userResourceSet == environmentFactory.getUserResourceSet();			// XXX
 		EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(ePackage);
 	// XXX FIXME	if (eValidator instanceof CompositeEValidator // ComposedValidator) {
@@ -486,7 +486,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 			return diagnostics != null;
 		}
 		ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = null;
-		EnvironmentFactoryInternal environmentFactory = null;
+		EnvironmentFactory environmentFactory = null;
 		Resource eResource = eObject.eResource();
 		if (eResource != null) {
 			//

@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASUtil;
@@ -262,8 +261,8 @@ public class UMLOCLEValidator implements EValidator
 		this.mayUseNewLines = mayUseNewLines;
 	}
 
-	private @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@NonNull Map<Object, Object> context, org.eclipse.uml2.uml.@NonNull Element umlElement) {
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)context.get(EnvironmentFactory.class);
+	private @NonNull EnvironmentFactory getEnvironmentFactory(@NonNull Map<Object, Object> context, org.eclipse.uml2.uml.@NonNull Element umlElement) {
+		EnvironmentFactory environmentFactory = (EnvironmentFactory)context.get(EnvironmentFactory.class);
 		if (environmentFactory == null) {
 			environmentFactory = ValidationContext.getEnvironmentFactory(context, umlElement);
 			EClass eClass = umlElement.eClass();
@@ -314,7 +313,7 @@ public class UMLOCLEValidator implements EValidator
 				if (umlStereotypeApplications.size() > 0) {
 					Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
 					if (umlResource != null) {
-						EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory(context, (org.eclipse.uml2.uml.Element)eObject);
+						EnvironmentFactory environmentFactory = getEnvironmentFactory(context, (org.eclipse.uml2.uml.Element)eObject);
 						UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
 						uml2as.getASModel();
 						Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements = UML2ASUtil.computeAppliedStereotypes(umlStereotypeApplications);

@@ -71,11 +71,11 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -634,7 +634,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	private final @NonNull Map<@NonNull NamedElement, @NonNull String> external2name = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull NamedElement> name2external = new HashMap<>();
 	protected final @NonNull Map<@NonNull String, @NonNull String> generatedClassNameMap = new HashMap<>();
-	protected EnvironmentFactoryInternal environmentFactory;
+	protected EnvironmentFactory environmentFactory;
 	protected CompleteModelInternal completeModel;
 	protected MetamodelManager metamodelManager;
 	protected NameQueries nameQueries;
@@ -710,7 +710,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			assert !"Annotation".equals(reference.getName());
 			//			hasComplements = hasComplements((Type) reference);
 		/*	The following now loads existing classes when we are generating new ones for GeneratePivotModel.
-		 * EnvironmentFactoryInternal environmentFactory = PivotUtil.findEnvironmentFactory(reference);
+		 * EnvironmentFactory environmentFactory = PivotUtil.findEnvironmentFactory(reference);
 			//			assert environmentFactory == this.environmentFactory;
 			if (environmentFactory != null) {	// FIXME this conveniently does not relocate the built-in PrimitiveTypes
 				CompleteClassInternal completeClass = environmentFactory.getMetamodelManager().getCompleteClass((Type)reference);
@@ -847,7 +847,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return nameQueries.getEcoreLiteral(elem);
 	}
 
-	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	protected @NonNull EnvironmentFactory getEnvironmentFactory() {
 		assert environmentFactory != null;
 		return environmentFactory;
 	}
@@ -1468,9 +1468,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected abstract /*@NonNull*/ String partialName(EObject element);
 
-	protected void setEnvironmentFactory(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected void setEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.completeModel = environmentFactory.getCompleteModel();
+		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		nameQueries = new NameQueries(environmentFactory);
 	}

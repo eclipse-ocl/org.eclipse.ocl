@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
  * ScopeViews support access to some or all of the elements in a scope.
@@ -66,14 +66,17 @@ public class PivotScopeView implements ScopeView
 		}
 	};
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Element target;							// AST node in which a lookup is to be performed
 	protected final @Nullable Element child;							// AST node from which a lookup is to be performed
 	protected final boolean isQualified;								// True of the lookup has an explicit namespace qualification
 	private ScopeView parent = null;									// Lazily computed scope view for target's parent
 	private Attribution attribution = null;								// Lazily computed attributes helper for the target CS node
 
-	protected PivotScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Element target, @Nullable Element child, boolean isQualified) {
+	/**
+	 * @since 7.0
+	 */
+	protected PivotScopeView(@NonNull EnvironmentFactory environmentFactory, @NonNull Element target, @Nullable Element child, boolean isQualified) {
 		this.environmentFactory = environmentFactory;
 		this.target = target;
 		this.child = child;

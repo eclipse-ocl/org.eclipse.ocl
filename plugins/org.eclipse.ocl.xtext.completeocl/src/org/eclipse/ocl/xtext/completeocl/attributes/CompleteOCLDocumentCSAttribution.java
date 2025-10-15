@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.scoping.AbstractRootCSAttribution;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
@@ -29,7 +29,7 @@ public class CompleteOCLDocumentCSAttribution extends AbstractRootCSAttribution
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		CompleteOCLDocumentCS targetElement = (CompleteOCLDocumentCS)target;
-		EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = environmentView.getEnvironmentFactory();
 		for (ImportCS anImport : targetElement.getOwnedImports()) {
 			Namespace namespace = anImport.getReferredNamespace();
 			if ((namespace != null) && !namespace.eIsProxy()) {

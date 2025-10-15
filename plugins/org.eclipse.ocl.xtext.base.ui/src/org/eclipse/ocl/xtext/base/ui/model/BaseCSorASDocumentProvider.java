@@ -49,11 +49,11 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
@@ -538,7 +538,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 		String loadedAs = loadedAsMap.get(xtextDocument);
 		boolean needModify = false;
 		if (!isText(loadedAs) && (xtextDocument instanceof BaseDocument)) {
-			EnvironmentFactoryInternal environmentFactory = ((BaseDocument)xtextDocument).basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ((BaseDocument)xtextDocument).basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				needModify = true;
 			}

@@ -34,10 +34,10 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ocl.emf.validation.validity.ui.view.SelectionUtil;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
@@ -84,7 +84,7 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 					if (xtextResource == null) {
 						return null;
 					}
-					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+					EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 					if (environmentFactory != null) {
 						return environmentFactory.getResourceSet();
 					}
@@ -136,7 +136,7 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 		}
 		OCLInternal ocl = OCLInternal.newInstance(resourceSet);		// Don't reuse an OCL since export trashes its pivot input.
 		try {
-			EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 			ASResource asResource = getASResource(shell, environmentFactory, selectedResource);
 			if (asResource == null) {
 				return null;
@@ -149,7 +149,7 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 		}
 	}
 
-	protected @Nullable Resource exportEmbeddedOCL(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory,
+	protected @Nullable Resource exportEmbeddedOCL(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory,
 			@NonNull ASResource asResource, @NonNull URI exportURI) {
 		ResourceSetImpl csResourceSet = new ResourceSetImpl();
 		BaseCSResource oclResource = (BaseCSResource) csResourceSet.createResource(exportURI, CompleteOCLCSPackage.eCONTENT_TYPE);
@@ -167,7 +167,7 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 		return oclResource;
 	}
 
-	protected ASResource getASResource(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource selectedResource) {
+	protected ASResource getASResource(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory, @NonNull Resource selectedResource) {
 		Element asRoot;
 		try {
 			asRoot = environmentFactory.loadResource(selectedResource, null);

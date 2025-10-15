@@ -34,8 +34,8 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -472,15 +472,15 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull Element getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull Element getReloadableEObject(@NonNull EnvironmentFactory environmentFactory) {
 		throw new IllegalStateException("Model has a URI but no EObject");
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Override
-	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactory environmentFactory) {
 		return URI.createURI(externalURI);
 	}
 

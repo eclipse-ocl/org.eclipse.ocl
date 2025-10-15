@@ -117,8 +117,8 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-			import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 			import org.eclipse.ocl.pivot.model.OCLstdlib;
+			import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			«FOR importedClassName : root.getSortedImportedJavaClassNames()»
 				import «importedClassName»;
@@ -296,7 +296,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					 * @since 7.0
 					 */
 					@Override
-					public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
+					public void preUnload(@NonNull EnvironmentFactory environmentFactory) {}
 			
 					/**
 					 * Overridden to inhibit unloading of the shared instance.

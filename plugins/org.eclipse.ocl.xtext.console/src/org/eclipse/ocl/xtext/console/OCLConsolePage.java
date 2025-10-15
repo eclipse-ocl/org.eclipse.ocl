@@ -64,7 +64,6 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.options.PivotConsoleOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -177,7 +176,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			monitor.subTask(ConsoleMessages.Progress_Synchronising);
 			monitor.worked(1);
 			//			CS2ASResourceAdapter csAdapter = CS2ASResourceAdapter.getAdapter((BaseCSResource)resource, metamodelManager);
-			EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) editor.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = editor.getEnvironmentFactory();
 			ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 			try {
 				//			monitor.subTask(ConsoleMessages.Progress_CST);
@@ -536,7 +535,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 		Composite client = s1; //new Composite(s1, SWT.NULL);
 		Injector injector = XtextConsolePlugin.getInstance().getInjector(EssentialOCLPlugin.LANGUAGE_ID);
 		Composite editorComposite = client; //new Composite(client, SWT.NULL);
-		EnvironmentFactoryInternal currentEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory currentEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		editor = new EmbeddedXtextEditor(editorComposite, injector, /*SWT.BORDER |*/ SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL, currentEnvironmentFactory);
 		//		MetamodelManagerResourceSetAdapter.getAdapter(editor.getResourceSet(), metamodelManager);
 

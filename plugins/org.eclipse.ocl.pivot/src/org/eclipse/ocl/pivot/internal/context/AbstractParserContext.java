@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -67,13 +66,13 @@ public abstract class AbstractParserContext implements ParserContext
 		}
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull URI uri;
 	protected @Nullable Element rootElement = null;
 	private @Nullable ResourceSet parsingResourceSet;
 
 	protected AbstractParserContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri) {
-		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
+		this.environmentFactory = environmentFactory;
 		if (uri != null) {
 			this.uri = uri;
 		}
@@ -138,7 +137,7 @@ public abstract class AbstractParserContext implements ParserContext
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

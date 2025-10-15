@@ -145,7 +145,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIteration
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.LongIntegerValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
@@ -158,6 +157,7 @@ import org.eclipse.ocl.pivot.library.LibraryUntypedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -197,7 +197,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	protected final @NonNull JavaGlobalContext<@NonNull ?> globalContext;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Id2JavaInterfaceVisitor id2JavaInterfaceVisitor;
 	protected final @NonNull JavaStream js;
 	protected final @NonNull Map<@NonNull Class<? extends LibraryOperation>, @NonNull LibraryOperationHandler> libraryOperation2handler = new HashMap<>();;

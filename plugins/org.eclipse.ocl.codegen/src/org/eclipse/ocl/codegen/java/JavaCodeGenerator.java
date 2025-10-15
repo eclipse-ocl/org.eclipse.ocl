@@ -69,7 +69,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.AnyIteration;
 import org.eclipse.ocl.pivot.library.iterator.CollectIteration;
@@ -84,6 +83,7 @@ import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SearchIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 import com.google.common.collect.Lists;
 
@@ -121,7 +121,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
 
-	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
+	public JavaCodeGenerator(@NonNull EnvironmentFactory environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);
 	}
 

@@ -39,8 +39,8 @@ import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.PackageListeners;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
@@ -740,10 +740,10 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	@Override
-	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactory environmentFactory) {
 		CompletePackage completePackage = environmentFactory.getCompleteModel().basicGetCompletePackage(this);
 		if (completePackage != null) {
 			for (org.eclipse.ocl.pivot.Package asPackage : completePackage.getPartialPackages()) {

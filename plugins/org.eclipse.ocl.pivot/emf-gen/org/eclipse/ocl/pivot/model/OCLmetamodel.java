@@ -48,8 +48,8 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
@@ -213,7 +213,7 @@ public class OCLmetamodel extends ASResourceImpl
 		 * @since 7.0
 		 */
 		@Override
-		public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {}
+		public void preUnload(@NonNull EnvironmentFactory environmentFactory) {}
 
 		/**
 		 * Overridden to inhibit unloading of the shared instance.

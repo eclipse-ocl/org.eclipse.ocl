@@ -29,13 +29,13 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.PartId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
@@ -45,7 +45,7 @@ public class ImplementationManager
 {
 	private static final Logger logger = Logger.getLogger(ImplementationManager.class);
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Technology technology;
 	private final @NonNull MetamodelManager metamodelManager;
 
@@ -54,7 +54,10 @@ public class ImplementationManager
 	 */
 	private List<@NonNull ClassLoader> classLoaders = null;
 
-	public ImplementationManager(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public ImplementationManager(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.technology = environmentFactory.getTechnology();
 		this.metamodelManager = environmentFactory.getMetamodelManager();

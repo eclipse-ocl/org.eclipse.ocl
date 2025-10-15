@@ -84,7 +84,6 @@ import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
@@ -97,6 +96,7 @@ import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.types.TemplateArguments;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -354,7 +354,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			CollectionType collectionType = super.createCollectionType(typeArguments);
 			CollectionType genericCollectionType = (CollectionType)collectionType.getUnspecializedElement();
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			completeStandardLibrary.resolveSuperClasses(collectionType, genericCollectionType);
 			environmentFactory.addOrphanClass(collectionType);
 			return collectionType;
@@ -395,7 +395,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			LambdaType lambdaType = super.createLambdaType(context, parameters, result);
 			lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			environmentFactory.addOrphanClass(lambdaType);
 			return lambdaType;
 		}
@@ -417,7 +417,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			MapType mapType = super.createMapType(typeArguments, entryClass);
 			MapType genericMapType = (MapType)mapType.getUnspecializedElement();
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			completeStandardLibrary.resolveSuperClasses(mapType, genericMapType);
 			environmentFactory.addOrphanClass(mapType);
 			return mapType;
@@ -467,7 +467,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			}
 			specializedType.getOwnedBindings().add(templateBinding);
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			completeStandardLibrary.resolveSuperClasses(specializedType, unspecializedType);
 //			if (specializedType instanceof Metaclass) {
 //				Type instanceType = (Type) templateArguments.get(0);
@@ -494,7 +494,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
 			TupleType tupleType = super.createTupleType(tupleTypeId);
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactoryInternal environmentFactory = completeStandardLibrary.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			environmentFactory.addOrphanClass(tupleType);
 			return tupleType;
 		}
@@ -569,7 +569,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	private boolean libraryLoadInProgress = false;
 
 	private /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
-	private /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
+	private /*final*/ /*@NonNull*/ EnvironmentFactory environmentFactory;
 
 	@Override
 	protected @Nullable Type basicGetBehavioralType(@NonNull Type type) {
@@ -877,7 +877,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ClassUtil.requireNonNull(environmentFactory);
 	}
 
@@ -1318,9 +1318,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.completeModel = environmentFactory.getCompleteModel();
+		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
 		return this;
 	}
 

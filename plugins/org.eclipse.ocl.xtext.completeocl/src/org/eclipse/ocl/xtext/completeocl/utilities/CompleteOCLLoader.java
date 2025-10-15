@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -90,7 +89,7 @@ public abstract class CompleteOCLLoader
 	protected final @NonNull Map<@NonNull EPackage, @NonNull CompletePackage> mmPackage2completePackage = new HashMap<>();
 
 	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
-		this.ocl = OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
+		this.ocl = OCLInternal.newInstance(environmentFactory);
 	}
 
 	public void dispose() {
@@ -99,7 +98,7 @@ public abstract class CompleteOCLLoader
 
 	protected abstract boolean error(@NonNull String primaryMessage, @Nullable String detailMessage);
 
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ocl.getEnvironmentFactory();
 	}
 
@@ -112,7 +111,7 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadMetamodels(@Nullable StringBuilder sErrors) {
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		List<@NonNull Resource> esResources = ocl.getResourceSet().getResources();
 		for (int index = 0; index < esResources.size(); index++) {		// Tolerate 'concurrent' profile resolution
 			@NonNull Resource resource = esResources.get(index);
@@ -207,7 +206,7 @@ public abstract class CompleteOCLLoader
 		//
 		//	Install validation for all the complemented packages that need a distinct PivotEObjectValidator (e.g. UML but not Ecore).
 		//
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		@SuppressWarnings("unused") ValidationRegistryAdapter localValidationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		for (@NonNull EPackage mmPackage : mmPackage2completePackage.keySet()) {
@@ -312,7 +311,7 @@ public abstract class CompleteOCLLoader
 			assert errors != null;
 			message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 			if (message2 == null) {
-				EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+				EnvironmentFactory environmentFactory = getEnvironmentFactory();
 				CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
 				ASResource asResource = cs2as.getASResource();
 				errors = asResource.getErrors();
@@ -358,7 +357,7 @@ public abstract class CompleteOCLLoader
 	}
 
 	public @NonNull ASResource unloadDocument(@NonNull URI oclURI) {
-		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = getEnvironmentFactory();
 		CSResource csResource = (CSResource)environmentFactory.getResourceSet().getResource(oclURI, false);
 		assert csResource != null;
 	//	ASResource asResource = unloadResource(csResource);
@@ -396,7 +395,7 @@ public abstract class CompleteOCLLoader
 	 * Unload the CompleteOCL CS resource and its AS resource counterpart.
 	 *
 	public @NonNull ASResource unloadResource(@NonNull CSResource csResource) {
-		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = getEnvironmentFactory();
 		CSI2ASMapping iCSI2ASMapping = (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
 		assert iCSI2ASMapping != null;
 		ASResource asResource = iCSI2ASMapping.getASResource(csResource);

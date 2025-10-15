@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisit
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -79,19 +78,19 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 *
 	 * @since 7.0
 	 */
-	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource);
+	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource);
 
 	/**
 	 * Create an EnvironmentFactory appropriate to the AS Resource using projectManager.
 	 *
 	 * @since 7.0
 	 */
-	@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager);
+	@NonNull EnvironmentFactory createEnvironmentFactory(@NonNull ProjectManager projectManager);
 
 	/**
 	 * @since 7.0
 	 */
-	default @NonNull External2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	default @NonNull External2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -120,8 +119,9 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	/**
 	 * Return the OCL AS element corresponding to eObject using metamodelManager to supervise
 	 * the correspondence and ensuring that the result is of asClass.
+	 * @since 7.0
 	 */
-	@Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Class<T> asClass, @NonNull EObject eObject) throws ParserException;
+	@Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactory environmentFactory, @NonNull Class<T> asClass, @NonNull EObject eObject) throws ParserException;
 
 	@NonNull String getContentType();
 
@@ -153,8 +153,9 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * Return the root element in the Pivot resource resulting from import of the available
 	 * resource.
 	 * @throws ParserException
+	 * @since 7.0
 	 */
-	@Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource resource, @Nullable URI uri) throws ParserException;
+	@Nullable Element importFromResource(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource resource, @Nullable URI uri) throws ParserException;
 
 	void initializeEValidatorRegistry(EValidator.@NonNull Registry eValidatorRegistry);
 

@@ -59,12 +59,12 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -379,7 +379,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 	protected ASResource doLoadASResourceFromString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String testContents) throws Exception {
 		InputStream inputStream = new URIConverter.ReadableInputStream(testContents, "UTF-8");
 		URI libraryURI = getTestFileURI(fileName, inputStream);
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		ModelContext modelContext = new ModelContext(environmentFactory, libraryURI);
 		BaseCSResource xtextResource = (BaseCSResource) modelContext.createBaseResource(null);
 		assertNoResourceErrors("Load failed", xtextResource);
@@ -546,7 +546,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 			Resource asResource = cs2as.getASResource();
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
-			XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
+			XMLResource ecoreResource = AS2Ecore.createResource(ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
 			assertNoResourceErrors("To Ecore errors", ecoreResource);
 			if (assignIds) {
 				for (TreeIterator<EObject> tit = ecoreResource.getAllContents(); tit.hasNext(); ) {

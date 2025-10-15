@@ -20,9 +20,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.util.QueryDelegate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
@@ -69,7 +69,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	 */
 	public OCLQueryDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier context, @Nullable Map<String, EClassifier> parameters, @NonNull String expression) {
 		this.delegateDomain = delegateDomain;
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(context);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(context);
 		this.parserContext = new EInvocationContext(environmentFactory, null, context, parameters);
 		this.expression = expression;
 	}
@@ -104,7 +104,7 @@ public class OCLQueryDelegate implements QueryDelegate
 			}
 			@SuppressWarnings("null")
 			@NonNull ExpressionInOCL nonNullSpecification = specification;
-			EnvironmentFactoryInternal environmentFactory = parserContext.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = parserContext.getEnvironmentFactory();
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			Object targetValue = idResolver.boxedValueOf(target);
 			Type requiredType = PivotUtil.getType(PivotUtil.getOwnedContext(nonNullSpecification));

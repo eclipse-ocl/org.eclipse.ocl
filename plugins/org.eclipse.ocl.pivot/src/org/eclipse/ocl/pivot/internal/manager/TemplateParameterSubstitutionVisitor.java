@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
@@ -41,7 +42,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -52,12 +52,12 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -84,7 +84,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	 *
 	 * @since 7.0
 	 */
-	public static @NonNull TemplateParameterSubstitutionVisitor create(@NonNull EnvironmentFactoryInternal environmentFactory,
+	public static @NonNull TemplateParameterSubstitutionVisitor create(@NonNull EnvironmentFactory environmentFactory,
 				@NonNull CallExp actualExp, @Nullable Type selfType) {
 		Element referredElement;
 		 if (actualExp instanceof NavigationCallExp) {
@@ -107,7 +107,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	/**
 	 * @since 7.0
 	 */
-	public static @Nullable TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public static @Nullable TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		BasicTemplateSpecialization templateSpecialization = BasicTemplateSpecialization.basicGetTemplateSpecialization((Element)eObject);
 		if (templateSpecialization == null) {
 			return null;
@@ -206,9 +206,9 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	 * Return the specialized form of type analyzing actualExp to determine the formal to actual parameter mappings under the
 	 * supervision of a metamodelManager and using selfType as the value of OclSelf.
 	 *
-	 * @since 1.23
+	 * @since 7.0
 	 */
-	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 		TemplateParameterSubstitutionVisitor visitor = create(environmentFactory, actualExp, selfType);
 		return visitor.specializeType(type);
@@ -217,7 +217,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	/**
 	 * @since 7.0
 	 */
-	public static org.eclipse.ocl.pivot.@NonNull Class specializeTypeToLowerBound(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static org.eclipse.ocl.pivot.@NonNull Class specializeTypeToLowerBound(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull EnvironmentFactory environmentFactory) {
 		TemplateParameterSubstitutionVisitor visitor = createVisitor(type, environmentFactory, null, null);
 		if (visitor == null) {
 			return type;
@@ -233,7 +233,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		return (org.eclipse.ocl.pivot.Class) visitor.specializeType(type);
 	}
 
-	private final @NonNull EnvironmentFactoryInternal environmentFactory;
+	private final @NonNull EnvironmentFactory environmentFactory;
 	private final @Nullable Type selfType;
 	private @Nullable NamedElement excludedTarget = null;
 
@@ -244,7 +244,10 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 
 	private @Nullable BasicTemplateSpecialization templateSpecialization = null;		// XXX move to constructor
 
-	public /*protected*/ TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	/**
+	 * @since 7.0
+	 */
+	public /*protected*/ TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		super(null);
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;

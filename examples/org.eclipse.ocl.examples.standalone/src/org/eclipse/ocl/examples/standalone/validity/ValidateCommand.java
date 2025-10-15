@@ -43,7 +43,7 @@ import org.eclipse.ocl.examples.standalone.StandaloneApplication;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand;
 import org.eclipse.ocl.examples.standalone.StandaloneResponse;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 
@@ -332,9 +332,9 @@ public class ValidateCommand extends StandaloneCommand
 	protected class ValidationRunnable implements Runnable
 	{
 		private final StandaloneValidityManager validityManager;
-		private @NonNull EnvironmentFactoryInternal environmentFactory;
+		private @NonNull EnvironmentFactory environmentFactory;
 
-		protected ValidationRunnable(StandaloneValidityManager validityManager, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		protected ValidationRunnable(StandaloneValidityManager validityManager, @NonNull EnvironmentFactory environmentFactory) {
 			this.validityManager = validityManager;
 			this.environmentFactory = environmentFactory;
 		}
@@ -440,7 +440,7 @@ public class ValidateCommand extends StandaloneCommand
 			return StandaloneResponse.FAIL;
 		}
 		try {
-			final @Nullable EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			final @Nullable EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory == null) {
 				logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
 				return StandaloneResponse.FAIL;

@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
@@ -79,7 +78,7 @@ public abstract class AbstractVMEvaluationStepper implements VMEvaluationStepper
 		invalidVariable = ClassUtil.requireNonNull(PivotFactory.eINSTANCE.createVariable());
 		invalidVariable.setName(VMVirtualMachine.EXCEPTION_NAME);
 		String typeName = ClassUtil.requireNonNull(PivotPackage.Literals.OCL_EXPRESSION.getName());
-		invalidVariable.setType(((EnvironmentFactoryInternal)vmExecutor.getEnvironmentFactory()).getASClass(typeName));
+		invalidVariable.setType(vmExecutor.getEnvironmentFactory().getASClass(typeName));
 	}
 
 	protected abstract @NonNull VMStackFrameData @NonNull [] createStackFrame();

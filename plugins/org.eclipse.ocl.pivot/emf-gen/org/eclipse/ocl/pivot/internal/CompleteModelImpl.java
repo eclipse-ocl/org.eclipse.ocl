@@ -65,10 +65,10 @@ import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -497,7 +497,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	private final @NonNull Map<@NonNull String, @NonNull CompletePackage> packageURI2completePackage = new HashMap<>();
 
-	protected /*final @NonNull*/ EnvironmentFactoryInternal environmentFactory;
+	protected /*final @NonNull*/ EnvironmentFactory environmentFactory;
 
 	private Orphanage orphanage = null;
 
@@ -1019,7 +1019,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ClassUtil.requireNonNull(environmentFactory);
 	}
 
@@ -1211,9 +1211,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull CompleteModelInternal init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
+		this.completeEnvironment = (CompleteEnvironmentInternal) environmentFactory.getCompleteEnvironment();
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;

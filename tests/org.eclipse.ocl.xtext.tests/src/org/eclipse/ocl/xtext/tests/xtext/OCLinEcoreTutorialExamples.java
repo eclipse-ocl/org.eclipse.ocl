@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.util.PivotValidator;
@@ -204,7 +203,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 			assert b2EClass != null;
 			Resource b2EClassResource = b2EClass.eResource();
 			assert b2EClassResource != null;
-			Ecore2AS ecore2as = Ecore2AS.getAdapter(b2EClassResource, (EnvironmentFactoryInternal) ocl.getEnvironmentFactory());
+			Ecore2AS ecore2as = Ecore2AS.getAdapter(b2EClassResource, ocl.getEnvironmentFactory());
 			org.eclipse.ocl.pivot.Class bookType = ecore2as.getCreated(org.eclipse.ocl.pivot.Class.class, b2EClass);
 
 			Object b2Copies = b2Book.eGet(bookCopies);			// Static eGet

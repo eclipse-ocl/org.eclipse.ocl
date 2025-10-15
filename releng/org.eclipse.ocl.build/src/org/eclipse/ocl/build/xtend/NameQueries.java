@@ -34,8 +34,8 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -54,7 +54,7 @@ public class NameQueries
 		return AbstractGenModelHelper.rawEncodeName(name, arity);
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteModelInternal completeModel;
 //	protected final @NonNull CompleteStandardLibrary standardLibrary;
@@ -62,10 +62,10 @@ public class NameQueries
 	private @NonNull Map<String, Integer> counters = new HashMap<String, Integer>();
 	private @NonNull Map<Object, String> definedSymbols = new HashMap<Object, String>();
 
-	public NameQueries(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public NameQueries(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
-		this.completeModel = environmentFactory.getCompleteModel();
+		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
 //		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.genModelHelper = new EcoreGenModelHelper(environmentFactory);
 	}

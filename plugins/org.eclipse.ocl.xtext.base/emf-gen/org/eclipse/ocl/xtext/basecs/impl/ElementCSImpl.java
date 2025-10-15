@@ -28,9 +28,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -286,7 +286,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 				if (eObject instanceof Pivotable) {
 					Pivotable csElement = (Pivotable)eObject;
 					if (csElement.getPivot() == null) {
-						EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+						EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
 						CS2AS cs2as = (CS2AS)csResource.getCS2AS(environmentFactory);
 
 						try {
@@ -303,7 +303,7 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 		ResourceSet resourceSet = csResource.getResourceSet();
 		URI resourceURI = eProxyURI.trimFragment();
 		if (PivotUtil.isASURI(resourceURI)) {				// XXX review wrt earlier Xtext test
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				try {
 					Element element = environmentFactory.getMetamodelManager().loadResource(eProxyURI, null, null);

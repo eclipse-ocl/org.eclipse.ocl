@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -70,7 +71,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			//
 			//	A non-AS (ES) proxy must try to resolve in the externalResourceSet.
 			//
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				ResourceSet externalResourceSet = environmentFactory.getResourceSet();
 				resolvedProxy = EcoreUtil.resolve(proxy, externalResourceSet);
@@ -97,7 +98,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 				resourceSet = eResource.getResourceSet();
 			}
 			if (resourceSet == null) {				// CompleteClass has no eResource()
-				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+				EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 				if (environmentFactory != null) {
 					resourceSet = environmentFactory.getResourceSet();
 				}

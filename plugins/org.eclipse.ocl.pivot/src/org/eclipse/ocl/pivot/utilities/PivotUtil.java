@@ -143,7 +143,6 @@ import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -324,8 +323,8 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Object object) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	public static @Nullable EnvironmentFactory basicGetEnvironmentFactory(@Nullable Object object) {
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		return environmentFactory;
 	}
 
@@ -1320,7 +1319,7 @@ public class PivotUtil implements PivotConstants
 	 * @since 7.0
 	 */
 	public static @Nullable MetamodelManager findMetamodelManager(@NonNull Resource resource) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			return null;
 		}
@@ -1527,7 +1526,7 @@ public class PivotUtil implements PivotConstants
 				Type behavioralElementType = getBehavioralType(asElementType);
 				assert behavioralElementType != null;
 				if (behavioralElementType != asElementType) {
-					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+					EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 					if (environmentFactory != null) {
 						CollectionType unspecializedElement = (CollectionType)collectionType.getUnspecializedElement();
 						assert unspecializedElement != null;
@@ -1751,8 +1750,8 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Notifier notifier) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	public static @NonNull EnvironmentFactory getEnvironmentFactory(@Nullable Notifier notifier) {
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			return environmentFactory;
 		}

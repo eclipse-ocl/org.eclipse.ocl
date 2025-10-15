@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -60,6 +59,7 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -681,7 +681,7 @@ public class TestOCL extends OCLInternal
 			String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = getEnvironmentFactory();
 			ParserContext classContext = new ClassContext(environmentFactory, null, contextType, null);
 			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
@@ -862,7 +862,7 @@ public class TestOCL extends OCLInternal
 		}
 	}
 
-	public CodeGenHelper getCodeGenHelper(@NonNull EnvironmentFactoryInternal environmentFactory) throws IOException {
+	public CodeGenHelper getCodeGenHelper(@NonNull EnvironmentFactory environmentFactory) throws IOException {
 		URI genModelURI = URI.createPlatformResourceURI(
 			"/org.eclipse.ocl.pivot/model/Pivot.genmodel",
 			true);

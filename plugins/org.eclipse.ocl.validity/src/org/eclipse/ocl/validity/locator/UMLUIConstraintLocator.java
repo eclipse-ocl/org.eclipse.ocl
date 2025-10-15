@@ -44,8 +44,8 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -63,12 +63,12 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Shell shell;
-		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @NonNull EnvironmentFactory environmentFactory;
 		protected final @Nullable EObject contextObject;
 		protected final @NonNull String expression;
 		private @Nullable ILaunch launch = null;
 
-		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
+		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
 			this.shell = shell;
 			this.environmentFactory = environmentFactory;
 			this.contextObject = contextObject;
@@ -206,7 +206,7 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 			//			return false;
 		}
 		org.eclipse.uml2.uml.Constraint umlConstraint = (org.eclipse.uml2.uml.Constraint)object;
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(umlConstraint);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(umlConstraint);
 		Constraint constraint = null;
 		try {
 			constraint = environmentFactory.getASOf(Constraint.class, umlConstraint);

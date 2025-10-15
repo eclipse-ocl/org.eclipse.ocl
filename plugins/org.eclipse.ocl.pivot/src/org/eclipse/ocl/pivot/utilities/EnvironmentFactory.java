@@ -26,13 +26,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
@@ -89,6 +89,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	void addExternalResources(@NonNull ResourceSet externalResourceSet);
+
+	/**
+	 * @since 7.0
+	 */
+	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement);
 
 	/**
 	 * Analyze all OCL functioality below eRootObject,typically a pivot Package, to populate the
@@ -346,8 +351,9 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 
 	/**
 	 * Return the (OCL) Standard Library that provides the build-in language facilities such as the OclAny and Set types.
+	 * @since 7.0
 	 */
-	@NonNull StandardLibrary getStandardLibrary();
+	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
 	 * @since 7.0

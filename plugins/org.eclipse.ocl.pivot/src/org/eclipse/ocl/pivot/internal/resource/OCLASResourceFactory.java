@@ -24,9 +24,9 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.library.RegisteredContribution;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
  * The <b>Resource Factory</b> for the pivot and extended pivot abstract syntax.
@@ -146,8 +146,11 @@ public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 		super(ASResource.CONTENT_TYPE, ASResource.FILE_EXTENSION, resourceSet);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		throw new UnsupportedOperationException("There is no CS for the abstract oclas");
 	}
 

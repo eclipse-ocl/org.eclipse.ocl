@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.uml2.uml.Element;
@@ -80,9 +80,9 @@ public class UML2ASUtil
 
 	/**
 	 * Return the metaType of umlElement using the UML meta namespace identifiable from stereotype applications.
+	 * @since 7.0
 	 */
-	public static org.eclipse.ocl.pivot.@Nullable Class getMetaType(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.uml2.uml.@NonNull Element umlElement) {
-		EnvironmentFactoryInternal environmentFactoryInternalExtension = environmentFactory;
+	public static org.eclipse.ocl.pivot.@Nullable Class getMetaType(@NonNull EnvironmentFactory environmentFactory, org.eclipse.uml2.uml.@NonNull Element umlElement) {
 		EClass umlEClass = umlElement.eClass();
 		for (org.eclipse.uml2.uml.Stereotype umlStereotype : umlElement.getApplicableStereotypes()) {
 			for (org.eclipse.uml2.uml.Class umlMetaclass : umlStereotype.getAllExtendedMetaclasses()) {
@@ -90,7 +90,7 @@ public class UML2ASUtil
 				org.eclipse.uml2.uml.Type umlType = umlPackage.getOwnedType(umlEClass.getName());
 				if (umlType != null) {
 					try {
-						org.eclipse.ocl.pivot.Class umlAStype = environmentFactoryInternalExtension.getASOf(org.eclipse.ocl.pivot.Class.class, umlType);
+						org.eclipse.ocl.pivot.Class umlAStype = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlType);
 						if (umlAStype != null) {
 							return umlAStype;
 						}

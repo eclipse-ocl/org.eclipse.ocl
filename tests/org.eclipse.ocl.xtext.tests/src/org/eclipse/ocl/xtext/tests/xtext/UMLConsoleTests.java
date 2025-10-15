@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 /**
@@ -169,7 +169,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	public void testConsole_UML() throws Exception {
 		doDelete(PLUGIN_ID);
 		OCL ocl = consolePage.getEditorOCL();
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		ResourceSet resourceSet = ocl.getResourceSet();
 
 		Resource umlResource = resourceSet.getResource(getTestModelURI("models/uml/InternationalizedClasses.uml"), true);

@@ -36,7 +36,7 @@ import org.eclipse.ocl.debug.vm.utils.ShallowProcess;
 import org.eclipse.ocl.debug.vm.utils.StreamsProxy;
 import org.eclipse.ocl.debug.vm.utils.VMRuntimeException;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 public class OCLLaunchConfigurationDelegate extends LaunchConfigurationDelegate implements OCLLaunchConstants
@@ -61,7 +61,7 @@ public class OCLLaunchConfigurationDelegate extends LaunchConfigurationDelegate 
 
 				@Override
 				public void run() throws Exception {
-					EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null);
+					EnvironmentFactory environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null);
 					IVMContext vmContext = new VMContext(environmentFactory);
 					OCLVMExecutor vmExecutor = new OCLVMExecutor(vmContext, oclURI, elementURI);
 					vmExecutor.execute();

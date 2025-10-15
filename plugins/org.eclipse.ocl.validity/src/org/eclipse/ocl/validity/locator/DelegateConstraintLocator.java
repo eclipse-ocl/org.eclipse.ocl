@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -184,7 +184,7 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 		if (resultConstrainingNode == null) {
 			return;
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Constraint asConstraint = null;
 		try {

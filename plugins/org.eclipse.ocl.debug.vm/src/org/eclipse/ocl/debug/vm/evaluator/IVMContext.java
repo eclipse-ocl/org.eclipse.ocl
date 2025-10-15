@@ -14,11 +14,11 @@ package org.eclipse.ocl.debug.vm.evaluator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.debug.vm.IVMDebuggerShell;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public interface IVMContext
 {
-	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@NonNull IVMDebuggerShell getShell();
 	boolean keepDebug();
 	void setShell(@Nullable IVMDebuggerShell shell);

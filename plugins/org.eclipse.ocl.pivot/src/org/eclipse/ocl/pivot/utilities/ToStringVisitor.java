@@ -104,7 +104,6 @@ import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -160,7 +159,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		if (asElement.eIsProxy()) {
 			return "«" + EcoreUtil.getURI(asElement) +"»";
 		}
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			assert !environmentFactory.isDisposed() : "Use of ToStringVisitor while disposed";
 			assert !environmentFactory.isDisposing() || (environmentFactory.getMetamodelManager() != null) : "Use of ToStringVisitor while disposing";	// See Bug 583347

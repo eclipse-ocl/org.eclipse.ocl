@@ -29,7 +29,7 @@ import org.eclipse.ocl.common.delegate.DelegateResourceSetAdapter;
 import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -311,7 +311,7 @@ public class OCLDelegateDomain implements DelegateDomain
 	}
 
 	public <T extends Element> @Nullable T getPivot(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		EnvironmentFactoryInternal eEnvironmentFactory = PivotUtil.getEnvironmentFactory(eObject);
+		EnvironmentFactory eEnvironmentFactory = PivotUtil.getEnvironmentFactory(eObject);
 		try {
 			return eEnvironmentFactory.getASOf(requiredClass, eObject);
 		} catch (ParserException e) {

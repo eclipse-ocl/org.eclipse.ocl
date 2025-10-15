@@ -14,20 +14,20 @@ package org.eclipse.ocl.debug.vm.evaluator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.debug.vm.IVMDebuggerShell;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public class VMContext implements IVMContext
 {
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	private IVMDebuggerShell shell;
 
-	public VMContext(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public VMContext(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

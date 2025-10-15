@@ -13,9 +13,9 @@ package org.eclipse.ocl.xtext.completeocl.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.completeoclcs.util.CompleteOCLCSVisitor;
@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2AS;
 
 public class CompleteOCLCS2AS extends EssentialOCLCS2AS
 {
-	public CompleteOCLCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+	public CompleteOCLCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}
 

@@ -28,8 +28,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.context.EObjectContext;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -66,7 +66,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 			super();
 		}
 
-		public @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
+		public @Nullable EnvironmentFactory basicGetEnvironmentFactory() {
 			return partThread != null ? partThread.localBasicGetEnvironmentFactory() : null;
 		}
 
@@ -169,7 +169,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		super(tokenSource, composer);
 	}
 
-	public @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
+	public @Nullable EnvironmentFactory basicGetEnvironmentFactory() {
 		return baseStateAccess != null ? baseStateAccess.basicGetEnvironmentFactory() : null;
 	}
 
@@ -303,7 +303,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 	@Override
 	public void setInput(XtextResource resource) {
 		assert baseStateAccess != null;
-		EnvironmentFactoryInternal environmentFactory = baseStateAccess.basicGetEnvironmentFactory();
+		EnvironmentFactory environmentFactory = baseStateAccess.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			ThreadLocalExecutor partThread = ThreadLocalExecutorUI.basicGetPartThread();
 			if (partThread != null) {

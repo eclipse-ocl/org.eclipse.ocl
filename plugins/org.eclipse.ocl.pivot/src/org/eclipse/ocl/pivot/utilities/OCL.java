@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
 import org.eclipse.ocl.pivot.internal.helper.OCLHelperImpl;
 import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLDebugOptions;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -54,9 +53,9 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * Ecore metamodel to the superclass's generic type parameters.  This frees
  * client code from the long list of parameter substitutions.  This subclass
  * also provides a shortcut to creating an <code>OCL</code> on the shared
- * {@link EnvironmentFactoryInternal} instance.
+ * {@link EnvironmentFactory} instance.
  *
- * @see EnvironmentFactoryInternal
+ * @see EnvironmentFactory
  */
 public class OCL
 {
@@ -133,7 +132,7 @@ public class OCL
 	 * The EnvironmentFactory that can create objects and which provides the MetamodelManager, CompleteEnvironment and StandardLibrary.
 	 * This is non-null until the OCL is disposed. Any subsequent usage will provoke NPEs.
 	 */
-	protected /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;			// Set null once disposed, so NPE is use after dispose
+	protected /*@NonNull*/ EnvironmentFactory environmentFactory;			// Set null once disposed, so NPE is use after dispose
 
 	private @Nullable ModelManager modelManager;
 
@@ -144,8 +143,9 @@ public class OCL
 	 *
 	 * @param environmentFactory
 	 *            my environment factory
+	 * @since 7.0
 	 */
-	protected OCL(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected OCL(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		environmentFactory.attach(this);
 		environmentFactory.setEvaluationTracingEnabled(traceEvaluation);
@@ -361,7 +361,7 @@ public class OCL
 	 * omitted, finalize() will detach() when garbage collection of the OCL instance occurs.</p>
 	 */
 	public synchronized void dispose() {
-		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
+		EnvironmentFactory environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
 		//	assert environmentFactory2 == ThreadLocalExecutor.basicGetEnvironmentFactory() : "Disposing non-thread EnvironmentFactory";
 			environmentFactory2.detach(this);
@@ -376,7 +376,7 @@ public class OCL
 	 * @since 1.17
 	 */
 	public void dispose(boolean force) {
-		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
+		EnvironmentFactory environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
 			if (force) {
 				environmentFactory2.preDispose();
@@ -427,7 +427,7 @@ public class OCL
 	 */
 	@Override
 	public synchronized void finalize() {
-		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
+		EnvironmentFactory environmentFactory2 = environmentFactory;
 		if (environmentFactory2 != null) {
 			environmentFactory = null;
 			ThreadLocalExecutor.incrementFinalizerReleases();

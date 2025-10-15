@@ -94,10 +94,10 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.iterator.ClosureIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -253,7 +253,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @NonNull CompleteModelInternal completeModel;
@@ -270,7 +270,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		this.environmentFactory = context.getEnvironmentFactory();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
-		this.completeModel = environmentFactory.getCompleteModel();
+		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
 		/*this.nameResolver = new PivotNameResolver(environmentFactory); // FIXME factory method*/
 	}
 

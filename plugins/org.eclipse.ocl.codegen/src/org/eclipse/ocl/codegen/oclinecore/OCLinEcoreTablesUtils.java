@@ -40,6 +40,7 @@ import org.eclipse.ocl.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -65,16 +66,15 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -693,7 +693,7 @@ public class OCLinEcoreTablesUtils
 		Resource genModelResource = genPackage.eResource();
 		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
 		assert genModelResourceSet != null;
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(genModelResourceSet);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(genModelResourceSet);
 		return environmentFactory.getMetamodelManager();
 	}
 
@@ -701,8 +701,8 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CodeGenString s;
 	protected final @NonNull GenPackage genPackage;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull CompleteModelInternal completeModel;
+	protected final @NonNull EnvironmentFactory environmentFactory;
+	protected final @NonNull CompleteModel completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull EmitTypeExpressionVisitor emitTypeExpression;			// emit LIBRARY.getSomething

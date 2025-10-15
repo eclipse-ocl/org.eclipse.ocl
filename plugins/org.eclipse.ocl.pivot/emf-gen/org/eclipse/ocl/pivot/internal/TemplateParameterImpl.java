@@ -41,8 +41,8 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -435,7 +435,7 @@ public class TemplateParameterImpl
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp expr, @Nullable Type selfType) {
 		assert expr != null;
 		if (selfType != null) {
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
 			return TemplateParameterSubstitutionVisitor.specializeType(this, expr, environmentFactory, selfType, null);
 		}
 		return this;

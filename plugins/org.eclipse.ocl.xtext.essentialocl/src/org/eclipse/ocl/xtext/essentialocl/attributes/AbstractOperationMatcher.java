@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Iteration;
@@ -31,10 +32,9 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSLeft2RightVisitor.CS2ASContext;
@@ -109,19 +109,19 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	}
 
 	protected @Nullable CS2ASContext cs2asContext;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @Nullable Type sourceType;
 	private @Nullable List<@NonNull Operation> ambiguities = null;
 
 	protected AbstractOperationMatcher(@NonNull CS2ASContext cs2asContext, @Nullable Type sourceType) {
 		this.cs2asContext = cs2asContext;
-		this.environmentFactory = (EnvironmentFactoryInternal)cs2asContext.getEnvironmentFactory();
+		this.environmentFactory = cs2asContext.getEnvironmentFactory();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.sourceType = sourceType;// != null ? PivotUtil.getBehavioralType(sourceType) : null;		// FIXME redundant
 	}
 
-	protected AbstractOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
+	protected AbstractOperationMatcher(@NonNull EnvironmentFactory environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
 		this.cs2asContext = null;
 		this.environmentFactory = environmentFactory;
 		this.standardLibrary = environmentFactory.getStandardLibrary();
@@ -131,7 +131,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 
 	protected int compareMatches(@NonNull Object match1, @Nullable TemplateParameterSubstitutions referenceBindings,
 			@NonNull Object match2, @Nullable TemplateParameterSubstitutions candidateBindings, boolean useCoercions) {
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		@NonNull Operation reference = (Operation) match1;
 		@NonNull Operation candidate = (Operation) match2;
 		org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();

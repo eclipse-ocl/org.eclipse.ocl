@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -50,6 +49,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -250,7 +250,7 @@ public abstract class ElementImpl
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = idResolver.ecoreValueOfAll(Element.class, closure);
-		return (List<Element>)ECORE_closure;
+		return ECORE_closure;
 	}
 
 	/**
@@ -453,7 +453,7 @@ public abstract class ElementImpl
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactory environmentFactory) {
 		// Look for the specific ES
 		EObject esObject = getESObject();
 		if (esObject != null) {
@@ -490,7 +490,7 @@ public abstract class ElementImpl
 	 *
 	 * @since 7.0
 	 */
-	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactory environmentFactory) {
 		return null;
 	}
 
@@ -506,7 +506,7 @@ public abstract class ElementImpl
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactory environmentFactory) {
 		EObject reloadableEObject = getReloadableEObject(environmentFactory);
 		if (reloadableEObject != null) {
 			return EcoreUtil.getURI(reloadableEObject);

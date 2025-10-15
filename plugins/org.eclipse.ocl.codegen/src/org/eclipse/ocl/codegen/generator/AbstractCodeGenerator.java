@@ -23,7 +23,7 @@ import org.eclipse.ocl.codegen.analyzer.NameManager;
 import org.eclipse.ocl.codegen.java.ImportNameManager;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
@@ -31,7 +31,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NON_NULL = "org.eclipse.jdt.annotation.NonNull";
 	public static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE = "org.eclipse.jdt.annotation.Nullable";
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull NameManager nameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
@@ -42,14 +42,14 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	private /*@LazyNonNull*/ List<@NonNull Exception> problems = null;
 	private @NonNull String defaultIndent = "    ";
 
-	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
+	protected AbstractCodeGenerator(@NonNull EnvironmentFactory environmentFactory, @Nullable GenModel genModel) {
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.nameManager = createNameManager();
 		this.genModelHelper = createGenModelHelper(genModel);
 	}
 
-	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull NameManager nameManager,
+	protected AbstractCodeGenerator(@NonNull EnvironmentFactory environmentFactory, @NonNull NameManager nameManager,
 			@NonNull GenModelHelper genModelHelper) {
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
@@ -99,7 +99,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

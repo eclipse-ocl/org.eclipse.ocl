@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.validation.model.Category;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -73,7 +72,7 @@ public class UMLProfileConstraintProvider extends LoadableConstraintProvider
 
 		Resource asResource;
 		try {
-			UML2AS uml2as = UML2AS.getAdapter(umlResource, (EnvironmentFactoryInternal)environmentFactory);
+			UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
 			Model pivotModel = uml2as.getASModel();
 			asResource = ClassUtil.requireNonNull(pivotModel.eResource());
 		} catch (ParserException e) {

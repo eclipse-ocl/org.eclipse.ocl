@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -47,7 +47,7 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 		}
 		if (contextVariable != null) {
 			Type type = contextVariable.getType();
-			EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = environmentView.getEnvironmentFactory();
 			if (type != null) {
 				environmentView.addNamedElement(contextVariable);
 			}

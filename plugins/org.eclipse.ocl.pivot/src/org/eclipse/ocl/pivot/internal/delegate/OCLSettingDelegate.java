@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -112,7 +111,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	protected Object get(InternalEObject ecoreObject, boolean resolve, boolean coreType) {
 		assert ecoreObject != null;
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(ecoreObject);
+			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(ecoreObject);
 			Executor executor = PivotUtil.getExecutor(ecoreObject);
 			ModelManager modelManager = executor.getModelManager();
 			ExpressionInOCL query = getQuery(environmentFactory);

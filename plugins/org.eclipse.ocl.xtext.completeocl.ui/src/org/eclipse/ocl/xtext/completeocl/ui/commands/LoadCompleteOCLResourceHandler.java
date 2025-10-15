@@ -42,8 +42,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.utilities.PDEUtils;
@@ -224,7 +224,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 
 		protected final Shell parent;
 		protected final @NonNull ResourceSet resourceSet;
-		private final @NonNull EnvironmentFactoryInternal environmentFactory;
+		private final @NonNull EnvironmentFactory environmentFactory;
 		private DropTarget target;
 		private Set<URI> registeredURIsForResourceSet;
 		private DeferredLoadDocumentJob job = null;
@@ -473,7 +473,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 					if (xtextResource == null) {
 						return null;
 					}
-					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+					EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 					if (environmentFactory != null) {
 						return environmentFactory.getResourceSet();
 					}

@@ -29,8 +29,8 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -42,11 +42,11 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	public OCLinEcoreAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull OCLinEcoreGlobalContext globalContext) {
 		super(analyzer);
 		this.globalContext = globalContext;
-		EnvironmentFactoryInternal environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();
 		createSeverityOperations(environmentFactory);
 	}
 
-	private void createSeverityOperations(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	private void createSeverityOperations(@NonNull EnvironmentFactory environmentFactory) {
 		// TODO Auto-generated method stub
 
 	}

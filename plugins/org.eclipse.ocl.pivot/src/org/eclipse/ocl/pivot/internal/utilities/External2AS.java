@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
@@ -32,14 +33,14 @@ public interface External2AS
 	/**
 	 * @since 7.0
 	 */
-	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {		// XXX not an Adapter
+	public static @Nullable External2AS findAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {		// XXX not an Adapter
 		return environmentFactory.getMetamodelManager().getES2AS(resource);
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull External2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @NonNull External2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		External2AS es2as = External2AS.findAdapter(resource, environmentFactory);		// XXX review prolific guards
 		if (es2as == null) {
 			ASResourceFactory asResourceFactory = ASResourceFactoryRegistry.INSTANCE.getASResourceFactory(resource);

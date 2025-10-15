@@ -37,8 +37,8 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -57,12 +57,12 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Shell shell;
-		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @NonNull EnvironmentFactory environmentFactory;
 		protected final @Nullable EObject contextObject;
 		protected final @NonNull ExpressionInOCL constraint;
 		private @Nullable ILaunch launch = null;
 
-		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable EObject contextObject, @NonNull ExpressionInOCL constraint) {
+		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory, @Nullable EObject contextObject, @NonNull ExpressionInOCL constraint) {
 			this.shell = shell;
 			this.environmentFactory = environmentFactory;
 			this.contextObject = contextObject;
@@ -129,7 +129,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 		ValidatableNode validatableNode = resultConstrainingNode.getResultValidatableNode().getParent();
 		assert validatableNode != null;
 		EObject constrainedObject = validatableNode.getConstrainedObject();
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
 		Constraint asConstraint = null;
 		Object constrainingObject = resultConstrainingNode.getParent().getConstrainingObject();
 		if (constrainingObject instanceof Constraint) {

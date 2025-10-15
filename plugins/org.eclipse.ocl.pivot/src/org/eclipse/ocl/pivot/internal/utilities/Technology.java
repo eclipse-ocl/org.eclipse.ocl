@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
@@ -31,17 +32,32 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
  */
 public interface Technology
 {
-	@NonNull LibraryProperty createBasePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryProperty createBasePropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property);
 
 	// See Bug 458394 for the need for the asNavigationExp argument.
-	@NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory,
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactory environmentFactory,
 			@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
 
-	@NonNull LibraryProperty createExtensionPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryProperty createExtensionPropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property);
 
-	@NonNull IdResolver createIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull IdResolver createIdResolver(@NonNull EnvironmentFactory environmentFactory);
 
-	@NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property);
 
 	String getExtensionName(@NonNull Element asStereotypedElement);
 
@@ -49,15 +65,24 @@ public interface Technology
 	 * @since 7.0
 	 */
 	@Deprecated /* ?? not used */
-	PackageId getMetamodelId(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage eObject2);
+	PackageId getMetamodelId(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage eObject2);
 
-	@NonNull PackageId getMetapackageId(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull PackageId getMetapackageId(@NonNull EnvironmentFactory environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	@Nullable String getOriginalName(@NonNull ENamedElement eNamedElement);
 
-	@Nullable Element getParseableElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EObject eObject) throws ParserException;
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Element getParseableElement(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject eObject) throws ParserException;
 
-	boolean isStereotype(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass);
+	/**
+	 * @since 7.0
+	 */
+	boolean isStereotype(@NonNull EnvironmentFactory environmentFactory, @NonNull EClass eClass);
 
 	boolean isValidatable(@NonNull EClass eClass);
 

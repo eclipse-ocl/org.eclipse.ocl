@@ -21,8 +21,8 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
  * @since 1.1
@@ -34,7 +34,7 @@ public interface ExecutorInternal extends Executor
 	 */
 	@Nullable Object getCachedEvaluationResult(@NonNull LibraryOperation implementation, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues);
 	@Override
-	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	@NonNull EnvironmentFactory getEnvironmentFactory();
 	/**
 	 * @since 7.0
 	 */

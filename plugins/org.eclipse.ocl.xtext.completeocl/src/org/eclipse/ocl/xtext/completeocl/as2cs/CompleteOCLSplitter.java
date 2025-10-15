@@ -36,10 +36,10 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotSwitch;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -50,7 +50,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class CompleteOCLSplitter
 {
-	public static @Nullable ASResource separate(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource) {
+	public static @Nullable ASResource separate(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource asResource) {
 		List<@NonNull Constraint> allConstraints = new ArrayList<@NonNull Constraint>();
 		List<@NonNull LanguageExpression> allExpressionInOCLs = new ArrayList<@NonNull LanguageExpression>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
@@ -166,7 +166,6 @@ public class CompleteOCLSplitter
 			org.eclipse.ocl.pivot.Class parent = ClassUtil.requireNonNull(object.getOwningClass());
 			org.eclipse.ocl.pivot.Class separateParent = getSeparate(parent);
 			List<Operation> separateSiblings = separateParent.getOwnedOperations();
-			@SuppressWarnings("serial")
 			EcoreUtil.Copier copier = new EcoreUtil.Copier(false, true)
 			{
 				@Override
@@ -216,7 +215,6 @@ public class CompleteOCLSplitter
 			org.eclipse.ocl.pivot.Class parent = ClassUtil.requireNonNull(object.getOwningClass());
 			org.eclipse.ocl.pivot.Class separateParent = getSeparate(parent);
 			List<Property> separateSiblings = separateParent.getOwnedProperties();
-			@SuppressWarnings("serial")
 			EcoreUtil.Copier copier = new EcoreUtil.Copier(false, true)
 			{
 				@Override

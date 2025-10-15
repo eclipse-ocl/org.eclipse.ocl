@@ -82,7 +82,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.CompleteElementIterable;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -93,6 +92,7 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -199,7 +199,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return ClassUtil.requireNonNull(adapter);
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	private final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 
@@ -254,17 +254,18 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	/**
 	 * Construct a MetamodelManager that will use environmentFactory to create its artefacts
 	 * such as an asResourceSet to contain pivot copies of meta-models.
+	 * @since 7.0
 	 */
-	public PivotMetamodelManager(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ResourceSet asResourceSet) {
+	public PivotMetamodelManager(@NonNull EnvironmentFactory environmentFactory, @NonNull ResourceSet asResourceSet) {
 		this.environmentFactory = environmentFactory;
 		this.asResourceSet = asResourceSet;
 		List<Adapter> asResourceSetAdapters = asResourceSet.eAdapters();
 		assert !asResourceSetAdapters.contains(this);
 		asResourceSetAdapters.add(this);
 		assert asResourceSetAdapters.contains(environmentFactory.getProjectManager());
-		completeEnvironment = environmentFactory.getCompleteEnvironment();
+		completeEnvironment = (CompleteEnvironmentInternal) environmentFactory.getCompleteEnvironment();
 		standardLibrary = environmentFactory.getStandardLibrary();
-		completeModel = environmentFactory.getCompleteModel();
+		completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
 		//		System.out.println("ctor " + this);
 		//		initializePivotResourceSet(asResourceSet);
 		if (liveMetamodelManagers != null) {
@@ -348,7 +349,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public void dispose() {
-		EnvironmentFactoryInternal threadEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory threadEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if ((threadEnvironmentFactory != environmentFactory) && (threadEnvironmentFactory != null)) {		// XXX
 			Thread thread = Thread.currentThread();
 			String threadName = thread.getName();
@@ -722,7 +723,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

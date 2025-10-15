@@ -61,7 +61,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -71,6 +70,7 @@ import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1411,7 +1411,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	@Override
-	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactory environmentFactory) {
 		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
 		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
 			EObject esObject = asClass.getESObject();
@@ -1546,7 +1546,7 @@ implements org.eclipse.ocl.pivot.Class {
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp callExpr, @Nullable Type selfType) {
 		assert callExpr != null;
 		if (selfType != null) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(callExpr);
+			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(callExpr);
 			TemplateSignature templateSignature = getOwnedSignature();
 			if (templateSignature != null) {
 				return TemplateParameterSubstitutionVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);

@@ -33,8 +33,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -150,7 +150,7 @@ public class ExtendedEObjectValidatorAdapter implements Adapter
 	 * Return a per-EClass map that identifies actaul delegate constraints resolved in environmentFactory for each delegate URI.
 	 * @throws ParserException
 	 */
-	public @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> resolveDelegateConstraints(@NonNull EnvironmentFactoryInternal environmentFactory) throws ParserException {
+	public @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> resolveDelegateConstraints(@NonNull EnvironmentFactory environmentFactory) throws ParserException {
 		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2Constraints = new HashMap<>();
 		ResourceSet externalResourceSet = environmentFactory.getResourceSet();
 		List<@NonNull ASResource> asDelegatingResources = new UniqueList<>();

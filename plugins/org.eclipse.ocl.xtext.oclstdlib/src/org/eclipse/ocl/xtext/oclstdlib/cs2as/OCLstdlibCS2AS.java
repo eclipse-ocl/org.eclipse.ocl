@@ -27,9 +27,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
@@ -49,7 +49,7 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 	private @NonNull Map<@NonNull String, @NonNull MetaclassNameCS> metaTypeNames = new HashMap<>();
 	private @NonNull Map<@NonNull String, @NonNull Precedence> name2precedence = new HashMap<>();
 
-	public OCLstdlibCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+	public OCLstdlibCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 		Resource metaTypeResource = new ResourceImpl(URI.createURI("internal_list;;//of_meta-type_names"));
 		List<@NonNull EObject> metaTypes = metaTypeResource.getContents();

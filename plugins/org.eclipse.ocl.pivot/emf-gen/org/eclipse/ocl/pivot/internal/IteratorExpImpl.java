@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
@@ -65,6 +64,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.validation.ValidationWarning;
@@ -208,7 +208,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			return true;
 		}
 		Diagnostic diagnostic = null;
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(this);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(this);
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		try {
 			org.eclipse.ocl.pivot.Class oclComparableType = standardLibrary.getOclComparableType();

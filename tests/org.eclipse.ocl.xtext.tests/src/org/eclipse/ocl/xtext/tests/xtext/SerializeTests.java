@@ -28,13 +28,13 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -234,7 +234,7 @@ public class SerializeTests extends XtextTestCase
 		//
 		@SuppressWarnings("unused") XtextResource xtextResource = null;
 		try {
-			EnvironmentFactoryInternal environmentFactory1 = ocl1.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory1 = ocl1.getEnvironmentFactory();
 			@SuppressWarnings("unused")
 			Resource asResource = getPivotFromUML(environmentFactory1, umlResource, testHelper.asFirstValidationMessages());
 			//
@@ -276,7 +276,7 @@ public class SerializeTests extends XtextTestCase
 		TestUtil.assertSameModel(ecoreResource, ecoreResource2);		*/
 	}
 
-	protected Resource getPivotFromUML(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource umlResource, @NonNull String @NonNull [] asValidationMessages) throws ParserException {
+	protected Resource getPivotFromUML(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource umlResource, @NonNull String @NonNull [] asValidationMessages) throws ParserException {
 		//		String problem = UML2AS.initialize(metamodelManager.getExternalResourceSet());
 		//		assertNull(problem);
 		UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);

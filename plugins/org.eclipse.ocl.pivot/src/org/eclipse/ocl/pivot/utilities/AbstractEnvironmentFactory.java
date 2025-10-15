@@ -97,7 +97,6 @@ import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRe
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -116,10 +115,10 @@ import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
- * Partial implementation of the {@link EnvironmentFactoryInternal} interface, useful
+ * Partial implementation of the {@link EnvironmentFactory} interface, useful
  * for subclassing to define the Pivot binding for a metamodel.
  */
-public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactoryInternal
+public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactory
 {
 	/**
 	 * @since 1.4
@@ -279,7 +278,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public void activate() {
-		EnvironmentFactoryInternal basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: environmentFactory = " + NameUtil.debugSimpleName(this));
 	//	System.out.println("[" + Thread.currentThread().getName() + "] activate: ThreadLocalExecutor.basicGetEnvironmentFactory() = " + NameUtil.debugSimpleName(basicGetEnvironmentFactory));
 		if ((basicGetEnvironmentFactory != this) && (basicGetEnvironmentFactory != null)) {
@@ -378,7 +377,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public synchronized void attach(@NonNull Object attachOwner) {
-	//	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	//	EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 	//	assert (environmentFactory == null) || (environmentFactory == this) : ThreadLocalExecutor.getBracketedThreadName() + " " + toDebugString() + " should be " + NameUtil.debugSimpleName(environmentFactory);
 		if (isDisposed()) {
 			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
@@ -1064,8 +1063,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return metamodelManager2;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	protected @Nullable EnvironmentFactoryInternal getParent() {
+	protected @Nullable EnvironmentFactory getParent() {
 		return null;
 	}
 
@@ -1110,7 +1112,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
-	 * Create an implicit opposite property if there is no explicit opposite.
 	 * @since 7.0
 	 */
 	@Override
@@ -1128,7 +1129,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public void installImplicitOppositePropertyDeclaration(@NonNull Property thisProperty, @NonNull String oppositeName) {
-		System.out.println("installImplicitOppositePropertyDeclaration " + thisProperty + " - " + oppositeName);
 		boolean isOrdered = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED;
 		boolean isUnique = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE;
 		IntegerValue lower;
@@ -1151,7 +1151,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public void installOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName,
 			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
 		assert thisProperty.getOpposite() == null;
-		System.out.println("installOppositeProperty " + thisProperty + " - " + oppositeName);
 		Type thatType = PivotUtil.getType(thisProperty);
 		if (thatType instanceof CollectionType) {				// opposite can only be one collection deep
 			thatType = PivotUtil.getElementType((CollectionType)thatType);

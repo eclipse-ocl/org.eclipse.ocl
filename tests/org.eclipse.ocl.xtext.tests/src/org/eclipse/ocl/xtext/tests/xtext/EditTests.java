@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
@@ -925,7 +924,7 @@ public class EditTests extends XtextTestCase
 		Resource ecoreResource0 = getEcoreFromCS(ocl1, testDocument, ecoreURI0);
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
 		BaseCSResource xtextResource = (BaseCSResource)ClassUtil.requireNonNull(ocl.getCSResource(outputURI, testDocument));
@@ -1022,7 +1021,7 @@ public class EditTests extends XtextTestCase
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		BaseCSResource xtextResource = (BaseCSResource)ocl.getCSResource(outputURI, testDocument);
 		Resource asResource = cs2as(ocl.getEnvironmentFactory(), xtextResource, null);
 		{
@@ -1067,7 +1066,7 @@ public class EditTests extends XtextTestCase
 
 	public void testEdit_StaleSpecialization() throws Exception {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		String testDocument =

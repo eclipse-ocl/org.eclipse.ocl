@@ -42,7 +42,6 @@ import org.eclipse.ocl.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.debug.vm.ui.launching.LaunchingUtils;
 import org.eclipse.ocl.debug.vm.ui.utils.DebugUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -71,14 +70,14 @@ public final class DebugAction extends Action
 	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Shell shell;
-		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @NonNull EnvironmentFactory environmentFactory;
 		protected final @Nullable EObject contextObject;
 		protected final @NonNull String expression;
 		private @Nullable ILaunch launch = null;
 
 		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
 			this.shell = shell;
-			this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
+			this.environmentFactory = environmentFactory;
 			this.contextObject = contextObject;
 			this.expression = expression;
 		}

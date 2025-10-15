@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
@@ -146,7 +146,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 	public List<Issue> validate(Resource resource, final CheckMode mode, CancelIndicator mon) {
 //		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " validate " + NameUtil.debugSimpleName(resource) + " '" + resource.getURI() + "' for " + NameUtil.debugSimpleName(mon));
 		//		System.out.println(new Date() + " Validate " + mode + " : " + csResource.getURI() + " on " + ThreadLocalExecutor.getBracketedThreadName());
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		boolean locallyCreatedEnvironmentFactory = false;
 		if (environmentFactory == null) {
 			environmentFactory = PivotUtil.getEnvironmentFactory(resource.getResourceSet());		// GC will eventually clean up

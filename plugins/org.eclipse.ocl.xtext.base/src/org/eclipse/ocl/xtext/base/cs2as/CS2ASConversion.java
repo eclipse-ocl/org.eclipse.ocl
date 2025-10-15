@@ -35,6 +35,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -61,7 +62,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
@@ -1254,7 +1254,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					templateParameterSubstitutions.add(templateParameterSubstitution);
 				}
 			}
-			CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+			CompleteModel completeModel = environmentFactory.getCompleteModel();
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
 				Orphanage orphanage = completeModel.getOrphanage();

@@ -15,7 +15,7 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -39,7 +39,7 @@ public class OCLInstanceSuspend extends AbstractWorkflowComponent
 
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
-		EnvironmentFactoryInternal environmentFactory = oclInstanceSetup.getOCL().getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = oclInstanceSetup.getOCL().getEnvironmentFactory();
 		log.info("Suspending OCL Instance - " + NameUtil.debugSimpleName(environmentFactory));
 		ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 	}

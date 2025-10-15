@@ -38,7 +38,6 @@ import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -163,7 +162,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 
 	public static @NonNull Resource as2ecore(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @NonNull String @NonNull [] asValidationMessages) throws IOException {
 		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == environmentFactory;
-		Resource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) environmentFactory, asResource, ecoreURI, null);
+		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
 		ecoreResource.save(null);
 		if (asValidationMessages != SUPPRESS_VALIDATION) {
 			//			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);
@@ -414,7 +413,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 	{
 		static int count = 0;
 
-		private @Nullable EnvironmentFactoryInternal environmentFactory;
+		private @Nullable EnvironmentFactory environmentFactory;
 		protected final @NonNull String name;
 		private @Nullable Throwable throwable = null;
 
@@ -423,7 +422,7 @@ public class PivotTestCase extends AbstractPivotTestCase
 		}
 
 		protected TestRunnable(@Nullable EnvironmentFactory environmentFactory) {
-			this.environmentFactory = (EnvironmentFactoryInternal)environmentFactory;
+			this.environmentFactory = environmentFactory;
 			this.name = "test" + count++;
 		}
 

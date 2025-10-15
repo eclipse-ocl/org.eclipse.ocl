@@ -12,7 +12,7 @@ package org.eclipse.ocl.xtext.oclstdlib.ui;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.scoping.JavaClassScope;
 import org.eclipse.ocl.xtext.oclstdlib.cs2as.OCLstdlibCS2AS;
@@ -34,7 +34,7 @@ public class OCLstdlibJavaClassPathResourceForIEditorInputFactory extends JavaCl
 			IProject project = ((FileEditorInput)editorInput).getFile().getProject();
 			if (project != null) {
 				OCLstdlibCSResource csResource2 = (OCLstdlibCSResource)csResource;
-				EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(null);
+				EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(null);
 				OCLstdlibCS2AS oclStdlibCS2AS = (OCLstdlibCS2AS)csResource2.getCS2AS(environmentFactory);
 				JavaClassScope javaClassScope = oclStdlibCS2AS.getJavaClassScope();
 				javaClassScope.addProject(project);

@@ -44,6 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -55,11 +56,9 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -327,11 +326,14 @@ public class DelegateInstaller
 		}
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Map<@NonNull String, @Nullable Object> options;
 	protected final @Nullable String exportDelegateURI;
 
-	public DelegateInstaller(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Map<@NonNull String, @Nullable Object> options) {
+	/**
+	 * @since 7.0
+	 */
+	public DelegateInstaller(@NonNull EnvironmentFactory environmentFactory, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		this.environmentFactory = environmentFactory;
 		this.options = options != null ? options : new HashMap<>();
 		this.exportDelegateURI = getExportDelegateURI(this.options);
@@ -420,7 +422,7 @@ public class DelegateInstaller
 	 */
 	private @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> gatherEClass2Constraints(@NonNull Iterable<@NonNull Resource> asResources) {
 		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		for (Resource asResource : asResources) {
 			for (EObject eObject : new TreeIterable(asResource)) {
 				if (eObject instanceof Constraint) {

@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -127,7 +127,7 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 				}
 			}
 			if (target instanceof Element) {
-				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
+				EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
 				URI uri = ((Element)target).getReloadableURI(environmentFactory);
 				if (uri != null) {
 					assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION);

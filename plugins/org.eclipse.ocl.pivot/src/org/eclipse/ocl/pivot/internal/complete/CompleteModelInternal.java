@@ -19,8 +19,8 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.OrphanCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public interface CompleteModelInternal extends CompleteModel
@@ -37,7 +37,10 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type partialClass);
 	@Override
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
-	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EnvironmentFactory getEnvironmentFactory();
 	/**
 	 * @since 7.0
 	 */
@@ -82,5 +85,5 @@ public interface CompleteModelInternal extends CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	@NonNull CompleteModelInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
+	@NonNull CompleteModelInternal init(@NonNull EnvironmentFactory environmentFactory);
 }
