@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -95,7 +95,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		}
 	}
 
-	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 
 	/**
 	 * Construction helper.
@@ -104,7 +104,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	public BaseCSPostOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
-		this.metamodelManager= context.getMetamodelManager();
+		this.environmentFactory= context.getEnvironmentFactory();
 		this.helper = context.getHelper();
 	}
 
@@ -341,12 +341,11 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 						//	logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
 							upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
 						}
-						metamodelManager.installSpecifiedOppositeProperty(pivotElement, oppositeName,
-							isOrdered, isUnique, lower, upper);
+						environmentFactory.installOppositeProperty(pivotElement, oppositeName, isOrdered, isUnique, lower, upper);
 					}
 				}
 				else {
-					metamodelManager.installImplicitOppositePropertyDeclaration(pivotElement);
+					environmentFactory.installImplicitOppositePropertyDeclaration(pivotElement);
 				}
 			}
 		}

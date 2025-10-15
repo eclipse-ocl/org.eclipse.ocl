@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -69,6 +70,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -98,6 +100,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
@@ -106,8 +109,11 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.ObjectValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * Partial implementation of the {@link EnvironmentFactoryInternal} interface, useful
@@ -1101,6 +1107,83 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull ResourceSet getUserResourceSet() {
 		return userResourceSet != null ? userResourceSet : externalResourceSet;
+	}
+
+	/**
+	 * Create an implicit opposite property if there is no explicit opposite.
+	 * @since 7.0
+	 */
+	@Override
+	public void installImplicitOppositePropertyDeclaration(@NonNull Property thisProperty) {
+		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
+		String oppositeName = thisClass.getName();
+		if (oppositeName == null) {
+			return;
+		}
+		installImplicitOppositePropertyDeclaration(thisProperty, oppositeName);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void installImplicitOppositePropertyDeclaration(@NonNull Property thisProperty, @NonNull String oppositeName) {
+		System.out.println("installImplicitOppositePropertyDeclaration " + thisProperty + " - " + oppositeName);
+		boolean isOrdered = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED;
+		boolean isUnique = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE;
+		IntegerValue lower;
+		UnlimitedNaturalValue upper;
+		if (thisProperty.isIsComposite()) {
+			lower = ValueUtil.ZERO_VALUE;
+			upper = ValueUtil.UNLIMITED_ONE_VALUE;
+		}
+		else {
+			lower = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE;
+			upper = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE;
+		}
+		installOppositeProperty(thisProperty, oppositeName, isOrdered, isUnique, lower, upper);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void installOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName,
+			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
+		assert thisProperty.getOpposite() == null;
+		System.out.println("installOppositeProperty " + thisProperty + " - " + oppositeName);
+		Type thatType = PivotUtil.getType(thisProperty);
+		if (thatType instanceof CollectionType) {				// opposite can only be one collection deep
+			thatType = PivotUtil.getElementType((CollectionType)thatType);
+		}
+		org.eclipse.ocl.pivot.Class thatClass = PivotUtil.getClass(thatType, standardLibrary);
+		if (thatClass instanceof DataType) {
+			return;
+		}
+		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
+		assert thisClass == PivotUtil.getUnspecializedTemplateableElement(thisClass); //	thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
+		Model thisModel = PivotUtil.getContainingModel(thisClass);
+		org.eclipse.ocl.pivot.Class mutableThatClass = completeModel.getEquivalentClass(thisModel, thatClass);
+		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
+		newOpposite.setName(oppositeName);
+		newOpposite.setIsImplicit(true);
+		Type oppositeType;
+		boolean isRequired;
+		if (upper.equals(ValueUtil.UNLIMITED_ONE_VALUE)) {
+			oppositeType = thisClass;
+			isRequired = lower.equals(ValueUtil.ONE_VALUE);
+		}
+		else {
+			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, thisClass, false, lower, upper);
+			oppositeType = standardLibrary.getCollectionType(typeArguments);
+			isRequired = true;
+		}
+		newOpposite.setType(oppositeType);
+		newOpposite.setIsRequired(isRequired);
+		mutableThatClass.getOwnedProperties().add(newOpposite);
+		newOpposite.setOpposite(thisProperty);
+		thisProperty.setOpposite(newOpposite);
 	}
 
 	@Override

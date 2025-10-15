@@ -49,8 +49,6 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * @since 7.0
@@ -172,11 +170,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
-
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass);
 
 	/**
 	 * @since 7.0
@@ -308,12 +301,6 @@ public interface MetamodelManager
 	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
-	 * Create and install the implicit opposite of asProperty.
-	 * @since 7.0
-	 */
-	void installImplicitOppositePropertyDeclaration(@NonNull Property asProperty);
-
-	/**
 	 * @since 7.0
 	 */
 	void installResource(@NonNull Resource asResource);
@@ -322,14 +309,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void installRoot(@NonNull Model pivotModel);
-
-	/**
-	 * Create and install the opposite of asProperty from the modelled paramerization; perhaps from an explicit model element
-	 * or from a fall-back annotation.
-	 * @since 7.0
-	 */
-	void installSpecifiedOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
-			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 
 	/**
 	 * @since 7.0

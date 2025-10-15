@@ -40,12 +40,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -64,12 +62,9 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
@@ -107,10 +102,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Iterables;
 
@@ -735,82 +726,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return environmentFactory;
 	}
 
-	/**
-	 * Return the equivalent class to thatClass in thisModel, where equivalent is the same
-	 * class/package name hierarchy. This is typically used to create a merge contribution
-	 * for thatClass in thisModel avoiding the need to modify thatClass.
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
-		CompleteClass completeClass = completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
-		Model thatModel = PivotUtil.basicGetContainingModel(thatClass);
-		if ((thisModel == thatModel) || Orphanage.isOrphanage(thatModel)) {
-			return thatClass;
-		}
-		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);
-		org.eclipse.ocl.pivot.Package thisPackage = getEquivalentPackage(thisModel, thatPackage);
-		List<org.eclipse.ocl.pivot.Class> theseClasses = thisPackage.getOwnedClasses();
-		String className = thatClass.getName();
-	//	assert className != null;							// XXX Nameless classes such as UML Association cannot be opposites
-		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
-		if (thisClass != null) {
-			return thisClass;
-		}
-		org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
-		thisClass = PivotUtil.createNamedElement(asClass);			// XXX what about template parameter??
-		TemplateSignature thatSignature = asClass.getOwnedSignature();
-		if (thatSignature != null) {
-			TemplateSignature thisSignature = EcoreUtil.copy(thatSignature);
-			thisClass.setOwnedSignature(thisSignature);
-		}
-		theseClasses.add(thisClass);
-		completeClass.getPartialClasses().add(thisClass);			// XXX fudge why no package
-		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
-		return thisClass;
-	}
-
-	/**
-	 * Return the equivalent package to thatPackage in thisModel, where equivalent is the same
-	 * package name hierarchy. This is typically used to create a merge contribution
-	 * for thatClass in thisModel avoiding the need to modify thatClass.
-	 */
-	private org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
-		completeModel.getCompletePackage(thatPackage);					// Ensure thatPackage has a complete representation
-		Model thatModel = PivotUtil.basicGetContainingModel(thatPackage);
-		if (thisModel == thatModel) {
-			return thatPackage;
-		}
-		org.eclipse.ocl.pivot.Package thisParentPackage;
-		org.eclipse.ocl.pivot.Package thatParentPackage = thatPackage.getOwningPackage();
-		if (thatParentPackage == null) {
-			thisParentPackage = Orphanage.getLocalOrphanPackage(thisModel);
-		//	assert thisParentPackage.eResource().getResourceSet() != null; // xxxTables models have no Resource and so no ResourceSet
-		}
-		else {
-			thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
-			assert thisParentPackage.eResource().getResourceSet() != null;
-		}
-		List<org.eclipse.ocl.pivot.@NonNull Package> thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
-		String packageName = PivotUtil.getName(thatPackage);
-		String packageURI = thatPackage.getURI();
-		for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
-			if (packageURI.equals(thisPackage.getURI())) {
-				return thisPackage;
-			}
-		}
-		if (packageURI == null) {
-			for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
-				if (packageName.equals(thisPackage.getName())) {
-					return thisPackage;
-				}
-			}
-			packageURI = "";
-		}
-		org.eclipse.ocl.pivot.Package thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), packageURI, thatPackage.getPackageId());
-		thesePackages.add(thisPackage);
-		return thisPackage;
-	}
-
 	@Override
 	public @NonNull FinalAnalysis getFinalAnalysis() {
 		FinalAnalysis finalAnalysis2 = finalAnalysis;
@@ -1318,75 +1233,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return asResourceSet;
 	}
 
-	/**
-	 * Create an implicit opposite property if there is no explicit opposite.
-	 */
-	@Override
-	public void installImplicitOppositePropertyDeclaration(@NonNull Property thisProperty) {
-		// We cannot detect ambiguous opposites reliably since a later Property might invalidate previously ok derived opposites
-		//		if ((thisProperty.isIsTransient() || thisProperty.isIsVolatile()) && !thisProperty.isIsDerived()) {		// FIXME Are any exclusions justified?
-		//			return;
-		//		}
-		Property opposite = thisProperty.getOpposite();
-		if (opposite != null) {
-			return;
-		}
-		Type thatType = thisProperty.getType();
-		if (thatType instanceof CollectionType) {
-			thatType = ((CollectionType)thatType).getElementType();
-		}
-		if (thatType == null) {
-			return;
-		}
-		org.eclipse.ocl.pivot.@NonNull Class thatClass = PivotUtil.getClass(thatType, standardLibrary);
-		if (thatClass instanceof DataType) {
-			return;
-		}
-		//	org.eclipse.ocl.pivot.Class thatUnspecializedClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)thatClass);
-		thatClass = PivotUtil.getUnspecializedTemplateableElement(thatClass);
-		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
-		if (thisClass == null) {								// e.g. an EAnnotation
-			return;
-		}
-		String name = thisClass.getName();
-		if (name == null) {
-			return;
-		}
-		installImplicitOppositePropertyDeclaration(thatClass, name, thisProperty);
-	}
-
-	/**
-	 * @since 7.0
-	 * XXX remove duplication wrt installSpecifiedOppositeProperty -- compute OppositeDetails
-	 */
-	public @NonNull Property installImplicitOppositePropertyDeclaration(org.eclipse.ocl.pivot.@NonNull Class thatClass, @NonNull String oppositeName, @NonNull Property thisProperty) {
-		System.out.println("installImplicitOppositePropertyDeclaration " + thisProperty + " - " + oppositeName);
-		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
-		assert thisClass == PivotUtil.getUnspecializedTemplateableElement(thisClass); //	thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
-		// If there is no implicit property with the implicit name, create one
-		//   result a pair of mutual opposites
-		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
-		newOpposite.setIsImplicit(true);
-		newOpposite.setName(oppositeName);
-		if (thisProperty.isIsComposite()) {
-			newOpposite.setType(thisClass);
-			newOpposite.setIsRequired(false);
-		}
-		else {
-			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED, PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, thisClass, false, PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE, PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE);
-			newOpposite.setType(standardLibrary.getCollectionType(typeArguments));
-			newOpposite.setIsRequired(true);
-		}
-		Model thisModel = PivotUtil.getContainingModel(thisClass);
-		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
-// XXX fails for AbstractTables.createOpposite		assert thisOppositeClass.eResource().getResourceSet() != null : "ResourceSet required";
-		thisOppositeClass.getOwnedProperties().add(newOpposite);
-		newOpposite.setOpposite(thisProperty);
-		thisProperty.setOpposite(newOpposite);
-		return newOpposite;
-	}
-
 	@Override
 	public void installResource(@NonNull Resource asResource) {
 		for (EObject eObject : asResource.getContents()) {
@@ -1427,49 +1273,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				}
 			}
 		}
-	}
-
-	/**
-	 * @since 1.8
-	 */
-	@Override
-	public void installSpecifiedOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName,
-			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
-		System.out.println("installSpecifiedOppositeProperty " + thisProperty + " - " + oppositeName);
-		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
-		assert thisClass != null;
-		if (thisClass == null) {
-			thisProperty.setOpposite(null);
-			return;
-//			localType = standardLibrary.getOclInvalidType();
-		}
-		Model thisModel = PivotUtil.getContainingModel(thisClass);
-		org.eclipse.ocl.pivot.Class remoteType = (org.eclipse.ocl.pivot.Class)thisProperty.getType();	// FIXME cast
-		while (remoteType instanceof CollectionType) {
-			remoteType = (org.eclipse.ocl.pivot.Class)((CollectionType)remoteType).getElementType();	// FIXME cast
-		}
-		assert remoteType != null;
-		if (remoteType == null) {
-			thisProperty.setOpposite(null);
-			return;
-		}
-		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, remoteType);
-		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
-		newOpposite.setName(oppositeName);
-		newOpposite.setIsImplicit(true);
-		if (!upper.equals(ValueUtil.UNLIMITED_ONE_VALUE)) {
-			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, thisClass, false, lower, upper);
-			newOpposite.setType(standardLibrary.getCollectionType(typeArguments));
-			newOpposite.setIsRequired(true);
-		}
-		else {
-			newOpposite.setType(thisClass);
-			newOpposite.setIsRequired(lower.equals(ValueUtil.ONE_VALUE));
-		}
-		thisOppositeClass.getOwnedProperties().add(newOpposite);
-		newOpposite.setOpposite(thisProperty);
-		thisProperty.setOpposite(newOpposite);
 	}
 
 	@Override

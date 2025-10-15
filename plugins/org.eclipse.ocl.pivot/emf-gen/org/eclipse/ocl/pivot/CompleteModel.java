@@ -186,6 +186,17 @@ public interface CompleteModel extends NamedElement
 	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
+	 * Return the equivalent class to thatClass in thisModel, where equivalent is the same class/package name
+	 * hierarchy wrt the orphan package in thisModel. This is typically used to create a merge contribution
+	 * for thatClass in thisModel avoiding the need to modify thatClass.
+	 * <br>
+	 * i.e the equivalent of A::B::thatClass in thatModel is $$::A::B::thatClass in thisModel.
+	 *
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass);
+
+	/**
 	 * @since 7.0
 	 */
 	@NonNull Orphanage getOrphanage();

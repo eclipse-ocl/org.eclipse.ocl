@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -83,14 +82,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	 * @since 7.0
 	 */
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private /*@LazyNonNull*/ Property oclInvalidProperty = null;
 
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
-		this.metamodelManager = converter.getMetamodelManager();
 		this.standardLibrary = (CompleteStandardLibrary)environmentFactory.getStandardLibrary();
 	}
 
@@ -200,12 +197,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		else {
 			OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromEReference(eReference);
 			if (oppositePropertyDetails != null) {
-				metamodelManager.installSpecifiedOppositeProperty(asProperty, oppositePropertyDetails.getName(),
+				environmentFactory.installOppositeProperty(asProperty, oppositePropertyDetails.getName(),
 					oppositePropertyDetails.isOrdered(), oppositePropertyDetails.isUnique(),
 					oppositePropertyDetails.getLower(), oppositePropertyDetails.getUpper());
 			}
 			else {
-				metamodelManager.installImplicitOppositePropertyDeclaration(asProperty);
+				environmentFactory.installImplicitOppositePropertyDeclaration(asProperty);
 			}
 		}
 		return asProperty;

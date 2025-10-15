@@ -1035,10 +1035,16 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					Property opposite = prop.getOpposite();
 					if (opposite != null) {
 						s.append("			");
-						prop.accept(emitDeclaredName);
-						s.append(".setOpposite(");
-						opposite.accept(emitReferencedElement);
-						s.append(");\n");
+						if (!Orphanage.isOrphan(opposite)) {
+							prop.accept(emitDeclaredName);
+							s.append(".setOpposite(");
+							opposite.accept(emitReferencedElement);
+							s.append(");\n");
+						}
+						else {
+							opposite.accept(emitReferencedElement);
+							s.append(";\n");
+						}
 					}
 				}
 			}
