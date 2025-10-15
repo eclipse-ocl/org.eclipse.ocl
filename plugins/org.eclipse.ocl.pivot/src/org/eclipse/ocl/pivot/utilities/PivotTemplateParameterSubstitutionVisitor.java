@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 
 /**
  * @since 1.1
@@ -22,7 +21,10 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
  */
 public class PivotTemplateParameterSubstitutionVisitor extends TemplateParameterSubstitutionVisitor {
 
-	public PivotTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	/**
+	 * @since 7.0
+	 */
+	public PivotTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		super(environmentFactory, selfType, null);
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}

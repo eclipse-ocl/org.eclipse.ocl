@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
@@ -61,6 +60,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -1744,7 +1744,7 @@ implements Property {
 	 * @since 7.0
 	 */
 	@Override
-	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactory environmentFactory) {
 		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(this));
 		Iterable<@NonNull Property> asProperties = completeClass.getProperties(this);
 		if (asProperties != null) {
@@ -1758,14 +1758,20 @@ implements Property {
 		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactory environmentFactory) {
 		assert !isIsImplicit();			// XXX redundant debugging
 		return super.getReloadableEObject(environmentFactory);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @Nullable URI getReloadableURI(@NonNull EnvironmentFactory environmentFactory) {
 		if (isIsImplicit()) {
 			return null;
 		}

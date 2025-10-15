@@ -21,8 +21,8 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -73,7 +73,7 @@ public class InstanceSlotNavigationProperty extends AbstractProperty
 						ValueSpecification valueSpecification = values.get(0);
 						if (valueSpecification instanceof OpaqueExpression) {
 							try {
-								EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) executor.getEnvironmentFactory();
+								EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 								ExpressionInOCL specification = environmentFactory.getASOf(ExpressionInOCL.class, valueSpecification);
 								if (specification == null) {
 									throw new InvalidValueException("Missing spec for " + specification);

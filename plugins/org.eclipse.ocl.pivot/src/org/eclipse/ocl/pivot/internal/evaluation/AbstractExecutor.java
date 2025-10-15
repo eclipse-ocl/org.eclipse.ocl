@@ -40,12 +40,12 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.IndentingLogger;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -63,7 +63,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	// this is the same as HashMap's default load factor
 	private static final float DEFAULT_REGEX_CACHE_LOAD_FACTOR = 0.75f;
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	private /*@LazyNonNull*/ EvaluationEnvironment rootEvaluationEnvironment = null;
 	private /*@LazyNonNull*/ EvaluationEnvironment evaluationEnvironment = null;
 	private /*@LazyNonNull*/ EvaluationVisitor evaluationVisitor;
@@ -98,7 +98,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	/**
 	 * @since 7.0
 	 */
-	protected AbstractExecutor(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected AbstractExecutor(@NonNull EnvironmentFactory environmentFactory) {
 		CONSTRUCTION_COUNT++;
 		this.environmentFactory = environmentFactory;
 		this.idResolver = environmentFactory.getIdResolver();
@@ -206,7 +206,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

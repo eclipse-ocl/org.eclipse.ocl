@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -43,12 +42,12 @@ public interface BaseCSResource extends CSResource
 	/**
 	 * Create the AS2CS converter for the cs2asResourceMap conversions using metamodelManager.
 	 */
-	@NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactoryInternal environmentFactory);
+	@NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap, @NonNull EnvironmentFactory environmentFactory);
 
 	/**
 	 * Create the CS2AS converter for the cs2asResourceMap conversions using metamodelManager.
 	 */
-	@NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+	@NonNull CS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource);
 
 	/**
 	 * Return the CS2AS adapter for this resource, or null if none in use.
@@ -77,7 +76,7 @@ public interface BaseCSResource extends CSResource
 	 * If no CS2AS adapter installed, one is created and installed using the provided metamodelManager,
 	 * which if null is also created.
 	 */
-	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+	@NonNull CS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource);
 
 	/**
 	 * Return the name of the editor for use in diagnostics.

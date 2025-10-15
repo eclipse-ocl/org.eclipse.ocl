@@ -29,9 +29,9 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -61,14 +61,14 @@ public class AliasAnalysis extends AdapterImpl
 	}
 
 	public static @NonNull AliasAnalysis getAdapter(@NonNull Resource resource) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			throw new IllegalStateException("No EnvironmentFactory");
 		}
 		return getAdapter(resource, environmentFactory);
 	}
 
-	public static @NonNull AliasAnalysis getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @NonNull AliasAnalysis getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		List<Adapter> eAdapters = resource.eAdapters();
 		for (Adapter adapter : eAdapters) {
 			if (adapter instanceof AliasAnalysis) {
@@ -86,7 +86,7 @@ public class AliasAnalysis extends AdapterImpl
 		return aliasAnalysis;
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 
 	/**
 	 * Mapping of all named elements from the name to the name usage,
@@ -105,7 +105,7 @@ public class AliasAnalysis extends AdapterImpl
 	 */
 	private @NonNull Map<@NonNull CompletePackage, @Nullable String> allAliases = new HashMap<>();
 
-	public AliasAnalysis(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public AliasAnalysis(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		resource.eAdapters().add(this);
 		this.environmentFactory = environmentFactory;
 	}

@@ -80,9 +80,9 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
  * A BoxingAnalyzer performs a bottom up tree-traversal inserting:
@@ -112,8 +112,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public BoxingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
 		this.codeGenerator = analyzer.getCodeGenerator();
-		EnvironmentFactoryInternal environmentFactory = codeGenerator.getEnvironmentFactory();
-		this.completeModel = environmentFactory.getCompleteModel();
+		EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 

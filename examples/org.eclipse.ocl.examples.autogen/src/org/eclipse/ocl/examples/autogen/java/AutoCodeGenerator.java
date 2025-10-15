@@ -47,8 +47,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -74,7 +74,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected final @NonNull Map<String, CGPackage> externalPackages = new HashMap<String, CGPackage>();
 
 
-	public AutoCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory,
+	public AutoCodeGenerator(@NonNull EnvironmentFactory environmentFactory,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage,
 			org.eclipse.ocl.pivot.@Nullable Package asSuperPackage,
 			@NonNull GenPackage genPackage,

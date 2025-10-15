@@ -37,13 +37,13 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -69,7 +69,7 @@ public class RoundTripTests extends XtextTestCase
 	private static final @NonNull String AS2ES_VALIDATION_ERRORS = "AS2ES_VALIDATION_ERRORS";
 	private static final @NonNull String NEEDS_BOWDLERIZATION = "NEEDS_BOWDLERIZATION";
 
-	public @NonNull Resource createEcoreFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI ecoreURI) throws IOException {
+	public @NonNull Resource createEcoreFromPivot(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource, @NonNull URI ecoreURI) throws IOException {
 		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
 		//		if (ecoreURI != null) {
@@ -77,7 +77,7 @@ public class RoundTripTests extends XtextTestCase
 		//		}
 		return ecoreResource;
 	}
-	public @NonNull ASResource createPivotFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource) throws IOException {
+	public @NonNull ASResource createPivotFromEcore(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource ecoreResource) throws IOException {
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
 		ASResource asResource = (ASResource) ClassUtil.requireNonNull(pivotModel.eResource());
@@ -85,7 +85,7 @@ public class RoundTripTests extends XtextTestCase
 		assertNoValidationErrors("Ecore2AS invalid", asResource);
 		return asResource;
 	}
-	public @NonNull ASResource createPivotFromXtext(@NonNull EnvironmentFactoryInternal environmentFactory, BaseCSResource xtextResource, int expectedContentCount) throws IOException {
+	public @NonNull ASResource createPivotFromXtext(@NonNull EnvironmentFactory environmentFactory, BaseCSResource xtextResource, int expectedContentCount) throws IOException {
 		try {
 			CS2AS cs2as = xtextResource.getCS2AS(environmentFactory);
 			ASResource asResource = cs2as.getASResource();
@@ -100,7 +100,7 @@ public class RoundTripTests extends XtextTestCase
 		//	xtextResource.dispose();		-- inhibits proxification
 		}
 	}
-	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
+	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		BaseCSResource xtextResource = (BaseCSResource)resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
@@ -112,7 +112,7 @@ public class RoundTripTests extends XtextTestCase
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", (XtextResource)xtextResource);
 		return xtextResource;
 	}
-	public BaseCSResource createXtextFromURI(@NonNull EnvironmentFactoryInternal environmentFactory, URI xtextURI) throws IOException {
+	public BaseCSResource createXtextFromURI(@NonNull EnvironmentFactory environmentFactory, URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		//		ProjectMap.initializeURIResourceMap(resourceSet2);
 		ProjectMap.initializeURIResourceMap(null);
@@ -122,7 +122,7 @@ public class RoundTripTests extends XtextTestCase
 		return xtextResource;
 	}
 
-	public CSResource createCompleteOCLXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
+	public CSResource createCompleteOCLXtextFromPivot(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
@@ -155,7 +155,7 @@ public class RoundTripTests extends XtextTestCase
 			//			String outputName = stem + ".regenerated.ocl";
 			URI outputURI = inputURI.trimFileExtension().appendFileExtension("regenerated.ocl");
 			OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
-			EnvironmentFactoryInternal environmentFactory1 = ocl1.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory1 = ocl1.getEnvironmentFactory();
 		//	environmentFactory1.adapt(resourceSet);
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
@@ -167,7 +167,7 @@ public class RoundTripTests extends XtextTestCase
 			ocl1 = null;
 			//
 			OCLInternal ocl3 = OCLInternal.newInstance(getProjectMap(), null);
-			EnvironmentFactoryInternal environmentFactory3 = ocl3.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory3 = ocl3.getEnvironmentFactory();
 			BaseCSResource xtextResource3 = createXtextFromURI(environmentFactory3, outputURI);
 			@SuppressWarnings("unused")
 			ASResource pivotResource3 = createPivotFromXtext(environmentFactory3, xtextResource3, 1);
@@ -194,7 +194,7 @@ public class RoundTripTests extends XtextTestCase
 		doRoundTripFromEcore(ocl.getEnvironmentFactory(), inputURI, referenceURI, saveOptions);
 		ocl.dispose();
 	}
-	protected void doRoundTripFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
+	protected void doRoundTripFromEcore(@NonNull EnvironmentFactory environmentFactory, URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
 		boolean needsBowdlerization = (saveOptions != null) && (saveOptions.get(NEEDS_BOWDLERIZATION) == Boolean.TRUE);
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String pivotName = stem + ".ecore.oclas";
@@ -282,7 +282,7 @@ public class RoundTripTests extends XtextTestCase
 		String outputName = stem + ".regenerated.oclinecore";
 		URI ecoreURI = getTestFileURI(ecoreName);
 		URI outputURI = getTestFileURI(outputName);
-		EnvironmentFactoryInternal environmentFactory1 = ocl1.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory1 = ocl1.getEnvironmentFactory();
 		//		environmentFactory1.adapt(resourceSet);
 		BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 		xtextResource1.saveAsXMI(xtextResource1.getURI().appendFileExtension("xmi"));
@@ -291,7 +291,7 @@ public class RoundTripTests extends XtextTestCase
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		//
 		OCLInternal ocl2 = OCLInternal.newInstance(getProjectMap(), null);
-		EnvironmentFactoryInternal environmentFactory2 = ocl2.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory2 = ocl2.getEnvironmentFactory();
 		ASResource pivotResource2 = createPivotFromEcore(environmentFactory2, ecoreResource);
 		@SuppressWarnings("unused")
 		BaseCSResource xtextResource2 = createXtextFromPivot(environmentFactory2, pivotResource2, outputURI);
@@ -300,7 +300,7 @@ public class RoundTripTests extends XtextTestCase
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		//
 		OCLInternal ocl3 = OCLInternal.newInstance(getProjectMap(), null);
-		EnvironmentFactoryInternal environmentFactory3 = ocl3.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory3 = ocl3.getEnvironmentFactory();
 		BaseCSResource xtextResource3 = createXtextFromURI(environmentFactory3, outputURI);
 		ASResource pivotResource3 = createPivotFromXtext(environmentFactory3, xtextResource3, 1);
 		pivotResource1.setSaveable(true);
@@ -700,7 +700,7 @@ public class RoundTripTests extends XtextTestCase
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.ecore", true);
 		//		String stem = uri.trimFileExtension().lastSegment();
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		getProjectMap().configureLoadFirst(environmentFactory.getResourceSet(), EcorePackage.eNS_URI);
 		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
 		saveOptions.put(NEEDS_BOWDLERIZATION, Boolean.TRUE);

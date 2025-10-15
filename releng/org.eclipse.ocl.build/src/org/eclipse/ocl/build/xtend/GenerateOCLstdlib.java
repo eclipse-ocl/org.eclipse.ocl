@@ -47,11 +47,11 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -123,7 +123,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
-			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = getEnvironmentFactory();
 			if (useOCLstdlib) {
 				environmentFactory.getStandardLibrary().getOclAnyType();
 			}

@@ -105,7 +105,7 @@ public class OCLUI
 			metamodelManager = OCL.createEnvironmentFactory(null).getMetamodelManager();
 			// FIXME install
 		}
-		EnvironmentFactoryInternal envFactory = metamodelManager.getEnvironmentFactory();
+		EnvironmentFactory envFactory = metamodelManager.getEnvironmentFactory();
 		OCL ocl = OCL.newInstance(envFactory);
 		org.eclipse.ocl.pivot.Class selfType = ocl.getContextType(selfObject);
 		ExpressionInOCL createQuery = ocl.createQuery(selfType, oclExpression);

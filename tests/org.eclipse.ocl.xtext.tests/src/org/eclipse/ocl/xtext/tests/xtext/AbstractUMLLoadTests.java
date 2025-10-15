@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
@@ -41,6 +40,7 @@ import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -198,7 +198,7 @@ public class AbstractUMLLoadTests extends AbstractLoadTests
 			StandaloneProjectMap.IProjectDescriptor projectDescriptor2 = ClassUtil.requireNonNull(projectDescriptor1);
 			projectDescriptor2.initializeURIMap(URIConverter.URI_MAP);		// *.ecore2xml must be global
 		}
-		EnvironmentFactoryInternal environmentFactory = internalOCL.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = internalOCL.getEnvironmentFactory();
 		//		EnvironmentFactoryResourceSetAdapter.getAdapter(resourceSet, environmentFactory);
 		Resource umlResource = null;
 		try {

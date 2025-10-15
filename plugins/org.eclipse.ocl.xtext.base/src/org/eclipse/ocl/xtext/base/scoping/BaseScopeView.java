@@ -33,9 +33,9 @@ import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
@@ -128,11 +128,11 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		}
 	};
 
-	public static @NonNull BaseScopeView getScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ElementCS target, @NonNull EReference targetReference) {
+	public static @NonNull BaseScopeView getScopeView(@NonNull EnvironmentFactory environmentFactory, @NonNull ElementCS target, @NonNull EReference targetReference) {
 		return new BaseScopeView(environmentFactory, target, null, targetReference, false);
 	}
 
-	private static @NonNull IScopeView getParent(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ElementCS target, @NonNull EReference targetReference, boolean isQualified) {
+	private static @NonNull IScopeView getParent(@NonNull EnvironmentFactory environmentFactory, @NonNull ElementCS target, @NonNull EReference targetReference, boolean isQualified) {
 		ElementCS csParent = target.getParent();
 		if (csParent == null) {
 			return NULLSCOPEVIEW;
@@ -140,14 +140,14 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		return new BaseScopeView(environmentFactory, csParent, target, targetReference, isQualified);
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull ElementCS target;							// CS node in which a lookup is to be performed
 	protected final @Nullable ElementCS child;							// CS node from which a lookup is to be performed
 	protected final @NonNull EReference targetReference;				// The AST reference to the location at which the lookup is to be stored
 	protected final boolean isQualified;								// FIXME always false
 	private Attribution attribution = null;								// Lazily computed Attributes helper for the target CS node
 
-	protected BaseScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ElementCS target, @Nullable ElementCS child, @NonNull EReference targetReference, boolean isQualified) {
+	protected BaseScopeView(@NonNull EnvironmentFactory environmentFactory, @NonNull ElementCS target, @Nullable ElementCS child, @NonNull EReference targetReference, boolean isQualified) {
 		super(getParent(environmentFactory, target, targetReference, isQualified), false);
 		this.environmentFactory = environmentFactory;
 		this.target = target;

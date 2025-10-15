@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -31,10 +32,9 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
@@ -42,10 +42,13 @@ public class PivotIdResolver extends AbstractIdResolver
 {
 	private static final Logger logger = Logger.getLogger(PivotIdResolver.class);
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull MetamodelManager metamodelManager;
 
-	public PivotIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public PivotIdResolver(@NonNull EnvironmentFactory environmentFactory) {
 		super(environmentFactory.getStandardLibrary());
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
@@ -88,7 +91,7 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
+		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
 		Type nestedType = environment.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			CompletePackage asParentCompletePackage = environment.getOwnedCompleteModel().getCompletePackage(parentPackage);
@@ -107,7 +110,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
+		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
 		Type nestedType = environment.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			nestedType = environment.getNestedType(parentPackage, name);
@@ -123,7 +126,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
+		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
 		Type nestedType = environment.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			nestedType = environment.getNestedType(parentPackage, name);
@@ -136,7 +139,7 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected org.eclipse.ocl.pivot.@NonNull Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteEnvironmentInternal environment = environmentFactory.getCompleteEnvironment();
+		CompleteEnvironment environment = environmentFactory.getCompleteEnvironment();
 		org.eclipse.ocl.pivot.Package nestedPackage = environment.getNestedPackage(parentPackage, name);
 		if (nestedPackage == null) {
 			throw new UnsupportedOperationException();

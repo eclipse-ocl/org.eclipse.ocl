@@ -88,7 +88,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
-		this.standardLibrary = (CompleteStandardLibrary)environmentFactory.getStandardLibrary();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 
 	@Override

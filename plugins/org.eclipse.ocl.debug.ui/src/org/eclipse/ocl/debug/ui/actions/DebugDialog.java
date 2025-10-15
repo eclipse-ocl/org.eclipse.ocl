@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -63,7 +63,7 @@ public class DebugDialog extends Dialog
 				String selectedText = constraintsCombo.getItem(selectedIndex);
 				URI selectedURI = constraintsText2resourceURI.get(selectedText);
 				if (selectedURI != null) {
-					EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(selectedObject);
+					EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(selectedObject);
 					MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 					Element resource = null;
 					try {

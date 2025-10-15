@@ -14,8 +14,8 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public class BaseAS2CS extends AS2CS
@@ -31,7 +31,7 @@ public class BaseAS2CS extends AS2CS
 	}
 
 	public BaseAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
-			@NonNull EnvironmentFactoryInternal environmentFactory) {
+			@NonNull EnvironmentFactory environmentFactory) {
 		super(cs2asResourceMap, environmentFactory);
 		addFactory(Factory.INSTANCE);
 	}

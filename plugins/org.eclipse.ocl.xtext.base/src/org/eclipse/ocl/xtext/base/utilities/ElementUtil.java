@@ -46,9 +46,9 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -325,7 +325,7 @@ public class ElementUtil
 	}
 
 	public static @Nullable ModelElementCS getCsElement(@NonNull Element asElement) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(asElement);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(asElement);
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();
 		if (csi2asMapping == null) {
 			return null;

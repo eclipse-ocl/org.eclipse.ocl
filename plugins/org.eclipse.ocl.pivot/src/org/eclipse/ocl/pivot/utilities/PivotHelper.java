@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -56,10 +57,8 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 
 import com.google.common.collect.Lists;
@@ -70,12 +69,12 @@ import com.google.common.collect.Lists;
  */
 public class PivotHelper extends PivotUtil
 {
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {
-		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
+		this.environmentFactory = environmentFactory;
 		this.standardLibrary = this.environmentFactory.getStandardLibrary();
 	}
 
@@ -318,7 +317,7 @@ public class PivotHelper extends PivotUtil
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 
@@ -451,7 +450,7 @@ public class PivotHelper extends PivotUtil
 			assert contextType != null;
 			Type oldContextType = PivotUtil.getType(contextVariable);
 			if (contextType != oldContextType) {
-				CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+				CompleteModel completeModel = environmentFactory.getCompleteModel();
 				assert completeModel.getCompleteClass(contextType) == completeModel.getCompleteClass(oldContextType);
 			}
 		}

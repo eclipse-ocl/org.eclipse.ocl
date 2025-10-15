@@ -53,10 +53,10 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -229,7 +229,7 @@ public class DebuggerTests extends XtextTestCase
 		@SuppressWarnings("unchecked")List<EObject> customers = (List<EObject>) xmiRoot.eGet(ref_RandL_Customer);
 		EObject eObject = customers.get(0);
 
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class customerClass = ClassUtil.requireNonNull(environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eObject.eClass()));
 		Iterable<Constraint> customerInvariants = environmentFactory.getMetamodelManager().getAllInvariants(customerClass);
 		Constraint constraint = ClassUtil.requireNonNull(NameUtil.getNameable(customerInvariants, "invariant_sizesAgree"));

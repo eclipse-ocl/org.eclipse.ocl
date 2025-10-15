@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -181,7 +180,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		if (eObject == null) {
 			throw new NullPointerException("Null EObject");
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eObject);			// XXX context lookup first
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(eObject);			// XXX context lookup first
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
@@ -207,7 +206,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull EOperation invariant, String expression, int severity, String source, int code) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
 	//	MetamodelManager metamodelManager = delegateDomain.getMetamodelManager();
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
@@ -309,7 +308,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
-		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, value);// instanceof Notifier ? (Notifier)value : null);
+		EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(context, value);// instanceof Notifier ? (Notifier)value : null);
 		// XXX ??? must confirm that value is in the externalResourceSet
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = delegateDomain.getPivot(Type.class, eClassifier);

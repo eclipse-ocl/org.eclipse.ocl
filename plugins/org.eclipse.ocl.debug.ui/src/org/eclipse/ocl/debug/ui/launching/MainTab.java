@@ -37,9 +37,9 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -126,7 +126,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 			try {
 				Model root = null;
 				BaseCSResource xtextResource = null;
-				EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+				EnvironmentFactory environmentFactory = getEnvironmentFactory();
 				xtextResource = (BaseCSResource) environmentFactory.getResourceSet().getResource(oclURI, true);
 				if (xtextResource != null) {
 					ASResource asResource = xtextResource.getCS2AS(environmentFactory).getASResource();

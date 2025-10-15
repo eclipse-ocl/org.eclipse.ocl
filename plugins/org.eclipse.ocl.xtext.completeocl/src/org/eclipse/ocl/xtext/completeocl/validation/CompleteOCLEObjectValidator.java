@@ -20,9 +20,9 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin;
@@ -63,14 +63,14 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	 * This is called lazily by validatePivot() but may be called eagerly to move parsing
 	 * overheads up front.
 	 */
-	public @Nullable ASResource initialize(@NonNull EnvironmentFactoryInternal environmentFactory) throws ParserException {
+	public @Nullable ASResource initialize(@NonNull EnvironmentFactory environmentFactory) throws ParserException {
 		return environmentFactory.loadCompleteOCLResource(ePackage, oclURI);
 	}
 
 	@Override
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
+		EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
 		Object cachedCompleteOCLEObjectValidator = validationContext.get(COMPLETE_OCL_LOAD_SUCCESSFUL);
 		if (cachedCompleteOCLEObjectValidator == null) {
 			try {

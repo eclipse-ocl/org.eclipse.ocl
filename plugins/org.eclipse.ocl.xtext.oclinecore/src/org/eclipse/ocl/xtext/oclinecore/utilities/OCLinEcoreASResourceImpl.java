@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
@@ -30,7 +30,7 @@ public class OCLinEcoreASResourceImpl extends ASResourceImpl
 	@Override
 	public void load(Map<?, ?> options) throws IOException {
 		@NonNull URI oclURI = uri.trimFileExtension();
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(getResourceSet());
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(getResourceSet());
 		BaseCSResource csResource = (BaseCSResource) environmentFactory.getResourceSet().createResource(oclURI);
 		assert csResource != null;
 		csResource.getCS2AS(environmentFactory, this);

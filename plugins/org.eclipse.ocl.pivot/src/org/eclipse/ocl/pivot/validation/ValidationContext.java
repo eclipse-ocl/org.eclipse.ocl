@@ -27,7 +27,6 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -50,14 +49,14 @@ public class ValidationContext extends HashMap<Object,Object>
 	 *
 	 * @since 7.0
 	 */
-	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Object object) {
+	public static @Nullable EnvironmentFactory basicGetEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Object object) {
 		if (validationContext != null) {
 			Object environmentFactory = validationContext.get(EnvironmentFactory.class);
 			if (environmentFactory != null) {
-				return (EnvironmentFactoryInternal)environmentFactory;
+				return (EnvironmentFactory)environmentFactory;
 			}
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.basicGetEnvironmentFactory(object);
+		EnvironmentFactory environmentFactory = PivotUtil.basicGetEnvironmentFactory(object);
 		if ((environmentFactory != null) && (validationContext != null)) {
 			validationContext.put(EnvironmentFactory.class, environmentFactory);
 		}
@@ -72,20 +71,20 @@ public class ValidationContext extends HashMap<Object,Object>
 	 *
 	 * @since 7.0
 	 */
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Object object) {
+	public static @NonNull EnvironmentFactory getEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Object object) {
 		//
 		//	If already cached by validationContext, re-use.
 		//
 		if (validationContext != null) {
 			Object environmentFactory = validationContext.get(EnvironmentFactory.class);
 			if (environmentFactory != null) {
-				return (EnvironmentFactoryInternal)environmentFactory;
+				return (EnvironmentFactory)environmentFactory;
 			}
 		}
 		//
 		//	If already cached by the ThreadLocalExecutor, re-use.
 		//
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.basicGetEnvironmentFactory(object);
+		EnvironmentFactory environmentFactory = PivotUtil.basicGetEnvironmentFactory(object);
 		if (environmentFactory != null) {
 			return environmentFactory;
 		}
@@ -101,12 +100,12 @@ public class ValidationContext extends HashMap<Object,Object>
 				if (resourceSet instanceof IEditingDomainProvider) {			// AdapterFactoryEditingDomainResourceSet
 					EditingDomain editingDomain = ((IEditingDomainProvider)resourceSet).getEditingDomain();
 					assert editingDomain != null;
-					InitWrapperCallBack<@NonNull EnvironmentFactoryInternal, @Nullable Object> callBack = new InitWrapperCallBack<@NonNull EnvironmentFactoryInternal, @Nullable Object>()
+					InitWrapperCallBack<@NonNull EnvironmentFactory, @Nullable Object> callBack = new InitWrapperCallBack<@NonNull EnvironmentFactory, @Nullable Object>()
 					{
-						protected @Nullable EnvironmentFactoryInternal environmentFactoryInternal = null;
+						protected @Nullable EnvironmentFactory environmentFactoryInternal = null;
 
 						@Override
-						public @NonNull EnvironmentFactoryInternal getResult() {
+						public @NonNull EnvironmentFactory getResult() {
 							assert environmentFactoryInternal != null;
 							return environmentFactoryInternal;
 						}

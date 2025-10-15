@@ -31,19 +31,19 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.dynamic.OCL2JavaFileObject;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public class JavaGenModelCodeGenHelper implements CodeGenHelper
 {	// FIXME Isn't all this functionality available elsewhere?
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	private @NonNull Map<EPackage, GenPackage> ePackageMap = new HashMap<EPackage, GenPackage>();
 	private @NonNull Map<String, GenPackage> uriMap = new HashMap<String, GenPackage>();
 	private @NonNull Map<EClassifier, GenClassifier> eClassifierMap = new HashMap<EClassifier, GenClassifier>();
 
-	public JavaGenModelCodeGenHelper(@NonNull GenModel genModel, @NonNull EnvironmentFactoryInternal environmentFactory) throws IOException {
+	public JavaGenModelCodeGenHelper(@NonNull GenModel genModel, @NonNull EnvironmentFactory environmentFactory) throws IOException {
 		this.environmentFactory = environmentFactory;
 		for (GenPackage genPackage : genModel.getGenPackages()) {
 			assert genPackage != null;

@@ -16,7 +16,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * <!-- begin-user-doc -->
@@ -90,7 +92,15 @@ public interface CompleteClass extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@NonNull EnvironmentFactory getEnvironmentFactory();
+	/**
+	 * @since 7.0
+	 */
 	@NonNull FlatClass getFlatClass();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull MetamodelManager getMetamodelManager();
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
 	@Nullable Operation getOperation(@NonNull Operation operationId);
 	@Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation);

@@ -57,7 +57,6 @@ import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -214,7 +213,7 @@ public class EmbeddedXtextEditor
 		this(control, injector, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL, null);
 	}
 
-	public EmbeddedXtextEditor(Composite control, Injector injector, int style, @Nullable EnvironmentFactoryInternal currentEnvironmentFactory) {
+	public EmbeddedXtextEditor(Composite control, Injector injector, int style, @Nullable EnvironmentFactory currentEnvironmentFactory) {
 		fControl = control;
 		fStyle = style;
 		fAnnotationPreferences = new MarkerAnnotationPreferences();

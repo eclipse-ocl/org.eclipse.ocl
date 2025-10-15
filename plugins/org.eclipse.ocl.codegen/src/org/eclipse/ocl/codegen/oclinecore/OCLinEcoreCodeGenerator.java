@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -57,7 +58,6 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -66,10 +66,10 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -348,7 +348,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 	public static void generatePackage(@NonNull GenPackage genPackage,
 			@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(genPackage);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(genPackage);
 		OCLinEcoreCodeGenerator generator = new OCLinEcoreCodeGenerator(environmentFactory, genPackage);
 		generator.generate(uri2body, constantsTexts);
 	}
@@ -364,7 +364,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	protected final @NonNull PrimitiveType stringType;
 	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery = null;
 
-	protected OCLinEcoreCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GenPackage genPackage) {
+	protected OCLinEcoreCodeGenerator(@NonNull EnvironmentFactory environmentFactory, @NonNull GenPackage genPackage) {
 		super(environmentFactory, genPackage.getGenModel());
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		GenModel genModel = ClassUtil.requireNonNull(genPackage.getGenModel());

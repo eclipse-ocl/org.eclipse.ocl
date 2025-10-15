@@ -14,8 +14,8 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -38,12 +38,12 @@ public class CompleteOCLCSResource extends EssentialOCLCSResource
 
 	@Override
 	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
-			@NonNull EnvironmentFactoryInternal environmentFactory) {
+			@NonNull EnvironmentFactory environmentFactory) {
 		return new CompleteOCLAS2CS(cs2asResourceMap, environmentFactory);
 	}
 
 	@Override
-	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
+	public @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource) {
 		return new CompleteOCLCS2AS(environmentFactory, this, asResource);
 	}
 

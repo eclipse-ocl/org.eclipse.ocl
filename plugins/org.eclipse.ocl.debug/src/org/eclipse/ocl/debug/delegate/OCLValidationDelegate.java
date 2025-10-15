@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -151,7 +150,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 		if (eObject == null) {
 			throw new NullPointerException("Null EObject");
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
@@ -178,7 +177,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	@Override
 	public boolean validate(@NonNull EClass eClass, @NonNull EObject eObject, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull EOperation invariant, String expression, int severity, String source, int code) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(eObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(invariant));
 		if (namedElement instanceof Operation) {
@@ -275,7 +274,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @NonNull Object value, @Nullable DiagnosticChain diagnostics,
 			Map<Object, Object> context, @NonNull String constraintName, String source, int code) {
-		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(context, value);
+		EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(context, value);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Type type = delegateDomain.getPivot(Type.class, eClassifier);
 		Constraint constraint = ValidationBehavior.INSTANCE.getConstraint(metamodelManager, eClassifier, constraintName);

@@ -52,8 +52,8 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -85,7 +85,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	private @NonNull Set<Property> filteringProps = new HashSet<Property>();
 	private @NonNull Map<CGClass, List<@NonNull CGProperty>> cgClass2cgFilteringProps = new HashMap<CGClass, @NonNull List<@NonNull CGProperty>>();
 
-	protected LookupFilterGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage,
+	protected LookupFilterGenerator(@NonNull EnvironmentFactory environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage,
 			org.eclipse.ocl.pivot.@Nullable Package asSuperPackage, org.eclipse.ocl.pivot.@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage, @Nullable GenPackage baseGenPackage,
 			@NonNull String lookupPackageName, @Nullable String superLookupPackageName,

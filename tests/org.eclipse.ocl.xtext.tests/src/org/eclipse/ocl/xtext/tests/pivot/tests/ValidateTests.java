@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -57,6 +56,7 @@ import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -169,7 +169,7 @@ public class ValidateTests extends AbstractValidateTests
 //		OCL ocl = createOCL();
 		ResourceSet testResourceSet = new ResourceSetImpl();
 		OCL ocl = OCL.newInstance(getProjectMap(), testResourceSet);
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		URI inputURI = getTestFile("Simple.oclinecore", ocl, getTestModelURI("models/oclinecore/Simple.oclinecore")).getFileURI();
 		URI ecoreURI = getTestFile("Simple.ecore").getFileURI();
 		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
@@ -678,7 +678,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			checkValidationDiagnostics(testInstance1, Diagnostic.OK);
 			assertLoggerText(conflictingResourceMessage);
-			EnvironmentFactoryInternal dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory dynamicEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			assert dynamicEnvironmentFactory != null;
 			Model dynamicModel = PivotUtil.getModel(dynamicEnvironmentFactory.getASResourceSet().getResources().get(0));
 			assert dynamicEnvironmentFactory != ocl0.getEnvironmentFactory();
@@ -887,7 +887,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 		//	ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resource);
 		//	ValidationContext validationContext = new ValidationContext(validationRegistry);
-		//	EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resource);			// Eager EnvironmentFactory resolution
+		//	EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resource);			// Eager EnvironmentFactory resolution
 		//	assertValidationDiagnostics("With Complete OCL", resource, messages);
 			//		disposeResourceSet(resourceSet);
 		//	ocl.activate();

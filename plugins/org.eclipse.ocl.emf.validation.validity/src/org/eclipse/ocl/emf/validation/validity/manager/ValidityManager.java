@@ -56,7 +56,6 @@ import org.eclipse.ocl.emf.validation.validity.plugin.ValidityPlugin;
 import org.eclipse.ocl.emf.validation.validity.utilities.IVisibilityFilter;
 import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidatorAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -678,7 +677,7 @@ public class ValidityManager
 				newResources.addAll(ClassUtil.nullFree(selectedResourceSet.getResources()));
 				ExtendedEObjectValidatorAdapter extendedEObjectValidatorAdapter = ExtendedEObjectValidatorAdapter.basicGetAdapter(selectedResourceSet);
 				if (extendedEObjectValidatorAdapter != null) {
-					EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(selectedResourceSet);
+					EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(selectedResourceSet);
 					ResourceSet externalResourceSet = environmentFactory.getResourceSet();
 					UniqueList<@NonNull URI> delegateURIs = extendedEObjectValidatorAdapter.getDelegateURIs();
 					for (@NonNull URI delegateURI : delegateURIs) {

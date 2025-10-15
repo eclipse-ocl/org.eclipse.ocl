@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -48,7 +47,7 @@ public class BaseDocumentProvider extends XtextDocumentProvider
 	protected void disconnected() {
 		OCL ocl2 = ocl;
 		if (ocl2 != null) {
-			EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			EnvironmentFactory environmentFactory = ocl2.getEnvironmentFactory();
 			if (savedEnvironmentFactory != environmentFactory) {
 				environmentFactory.activate();
@@ -62,10 +61,10 @@ public class BaseDocumentProvider extends XtextDocumentProvider
 		super.disconnected();
 	}
 
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 	//	EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 	//	if (environmentFactory != null) {
-	//		return (EnvironmentFactoryInternal) environmentFactory;
+	//		return (EnvironmentFactory) environmentFactory;
 	//	}
 		return getOCL().getEnvironmentFactory();
 	}
@@ -99,7 +98,7 @@ public class BaseDocumentProvider extends XtextDocumentProvider
 			IResource resource = ClassUtil.getAdapter(editorInput, IResource.class);
 			if (resource != null) {
 				IProject project = resource.getProject();
-				EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+				EnvironmentFactory environmentFactory = getEnvironmentFactory();
 				environmentFactory.setProject(project);
 			}
 		}

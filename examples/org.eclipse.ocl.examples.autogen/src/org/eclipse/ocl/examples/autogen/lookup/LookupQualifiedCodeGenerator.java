@@ -29,15 +29,15 @@ import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 
 	protected LookupQualifiedCodeGenerator(
-			@NonNull EnvironmentFactoryInternal environmentFactory,
+			@NonNull EnvironmentFactory environmentFactory,
 			@NonNull Package asPackage, @Nullable Package asSuperPackage,
 			@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage,
@@ -47,7 +47,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 	}
 
 	protected LookupQualifiedCodeGenerator(
-			@NonNull EnvironmentFactoryInternal environmentFactory,
+			@NonNull EnvironmentFactory environmentFactory,
 			@NonNull Package asPackage, @Nullable Package asSuperPackage,
 			@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage,

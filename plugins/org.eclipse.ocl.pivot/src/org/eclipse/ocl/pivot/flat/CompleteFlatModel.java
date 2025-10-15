@@ -15,7 +15,6 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
@@ -47,6 +46,6 @@ public class CompleteFlatModel extends AbstractFlatModel
 
 	@Override
 	public @NonNull Type getPrimaryType(org.eclipse.ocl.pivot.@NonNull Class owningType) {
-		return ((CompleteModelInternal)completeModel).getCompleteClass(owningType).getPrimaryClass();
+		return completeModel.getCompleteClass(owningType).getPrimaryClass();
 	}
 }

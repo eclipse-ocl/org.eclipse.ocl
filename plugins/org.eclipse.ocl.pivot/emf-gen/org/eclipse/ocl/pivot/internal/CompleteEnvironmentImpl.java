@@ -35,9 +35,9 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
@@ -338,7 +338,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitCompleteEnvironment(this);
 	}
-	protected /*final @NonNull*/ EnvironmentFactoryInternal environmentFactory;
+	protected /*final @NonNull*/ EnvironmentFactory environmentFactory;
 	protected /*final @NonNull*/ CompleteModelInternal ownedCompleteModel;
 	protected /*final @NonNull*/ CompleteStandardLibrary ownedStandardLibrary;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
@@ -368,7 +368,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ClassUtil.requireNonNull(environmentFactory);
 	}
 
@@ -443,7 +443,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		setOwnedCompleteModel(environmentFactory.getCompleteModel());
 		setOwnedStandardLibrary(environmentFactory.getStandardLibrary());

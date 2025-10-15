@@ -31,6 +31,7 @@ import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
 import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -49,9 +50,8 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -77,7 +77,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 	private @Nullable CGProperty cgChildProperty = null;
 
 	protected LookupUnqualifiedCodeGenerator(
-			@NonNull EnvironmentFactoryInternal environmentFactory,
+			@NonNull EnvironmentFactory environmentFactory,
 			@NonNull Package asPackage, @Nullable Package asSuperPackage,
 			@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage,
@@ -87,7 +87,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 	}
 
 	protected LookupUnqualifiedCodeGenerator(
-			@NonNull EnvironmentFactoryInternal environmentFactory,
+			@NonNull EnvironmentFactory environmentFactory,
 			@NonNull Package asPackage, @Nullable Package asSuperPackage,
 			@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage,
@@ -97,7 +97,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 			superGenPackage, baseGenPackage, envOperationName);
 		this.helper = new PivotHelper(environmentFactory);
 		ParametersId emptyParametersId = IdManager.getParametersId();
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class asOclElement = standardLibrary.getOclElementType();
 		CompleteClass asElementCompleteClass = metamodelManager.getCompletePackage(standardLibrary.getPackage()).getCompleteClass(asOclElement);

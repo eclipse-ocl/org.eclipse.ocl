@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.internal.delegate.ExtendedEObjectValidator;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -522,7 +521,7 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertLazyValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
-		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		ResourceSet resourceSet = resource.getResourceSet();
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);
@@ -536,7 +535,7 @@ public class AbstractPivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
-		EnvironmentFactoryInternal savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		EnvironmentFactory savedEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		ResourceSet resourceSet = resource.getResourceSet();
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		ValidationContext validationContext = new ValidationContext(validationRegistry);

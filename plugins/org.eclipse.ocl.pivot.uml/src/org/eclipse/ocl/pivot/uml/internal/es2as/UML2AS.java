@@ -63,7 +63,6 @@ import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -75,6 +74,7 @@ import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
 import org.eclipse.ocl.pivot.uml.internal.utilities.UMLEcoreTechnology;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -114,11 +114,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull UML2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @NonNull UML2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		return new Outer(resource, environmentFactory);
 	}
 
-	public static @NonNull UML2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull UML2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		UMLStandaloneSetup.assertInitialized();
 		UML2AS adapter = (UML2AS)External2AS.findAdapter(resource, environmentFactory);
 		if (adapter == null) {
@@ -154,8 +157,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 	 *
 	 * @return the Pivot root package
 	 * @throws ParserException
+	 * @since 7.0
 	 */
-	public static Model importFromUML(@NonNull EnvironmentFactoryInternal environmentFactory, String alias, Resource umlResource) throws ParserException {
+	public static Model importFromUML(@NonNull EnvironmentFactory environmentFactory, String alias, Resource umlResource) throws ParserException {
 		if (umlResource == null) {
 			return null;
 		}
@@ -170,8 +174,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 	 *
 	 * @return the pivot element
 	 * @throws ParserException
+	 * @since 7.0
 	 */
-	public static Element importFromUML(@NonNull EnvironmentFactoryInternal environmentFactory, String alias, EObject eObject) throws ParserException {
+	public static Element importFromUML(@NonNull EnvironmentFactory environmentFactory, String alias, EObject eObject) throws ParserException {
 		if (eObject == null) {
 			return null;
 		}
@@ -289,7 +294,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static UML2AS loadFromUML(@NonNull ASResource umlASResource, @NonNull URI umlURI) {
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(umlASResource.getResourceSet());
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(umlASResource.getResourceSet());
 		Resource umlResource = environmentFactory.getResourceSet().getResource(umlURI, true);
 		if (umlResource == null) {
 			return null;
@@ -479,7 +484,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		//		private @NonNull Map<Type, List<Property>> stereotypeProperties = new HashMap<Type, List<>>();
 		private final @NonNull Map<org.eclipse.uml2.uml.NamedElement, Boolean> namedElement2isNullFree = new HashMap<>();
 
-		protected Outer(@NonNull Resource umlResource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		/**
+		 * @since 7.0
+		 */
+		protected Outer(@NonNull Resource umlResource, @NonNull EnvironmentFactory environmentFactory) {
 			super(umlResource, environmentFactory);
 			Technology technology = environmentFactory.getTechnology();
 			assert technology instanceof UMLEcoreTechnology;
@@ -1075,7 +1083,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 	private URI umlURI = null;
 	private final @NonNull Map<@NonNull AssociationClass, @NonNull AssociationClassProperties> association2properties = new HashMap<>();
 
-	protected UML2AS(@NonNull Resource umlResource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	protected UML2AS(@NonNull Resource umlResource, @NonNull EnvironmentFactory environmentFactory) {
 		super(environmentFactory);
 		if (CONVERT_RESOURCE.isActive()) {
 			CONVERT_RESOURCE.println(umlResource.getURI().toString());

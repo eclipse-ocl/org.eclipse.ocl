@@ -52,8 +52,8 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -91,7 +91,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	private @Nullable CGProperty cgEvaluatorVariable = null;
 	private @Nullable CGProperty cgIdResolverVariable = null;
 
-	protected LookupVisitorsCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage,
+	protected LookupVisitorsCodeGenerator(@NonNull EnvironmentFactory environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage,
 			org.eclipse.ocl.pivot.@Nullable Package asSuperPackage, org.eclipse.ocl.pivot.@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage, @Nullable GenPackage baseGenPackage, @NonNull String envOpName) {
 		super(environmentFactory, asPackage, asSuperPackage, genPackage, superGenPackage, baseGenPackage);

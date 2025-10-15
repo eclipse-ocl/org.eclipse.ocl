@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
@@ -809,7 +808,7 @@ public abstract class ValueUtil
 		}
 		else {
 			try {
-				EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)executor.getEnvironmentFactory();
+				EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 				return ClassUtil.requireNonNull(environmentFactory.getASOf(jClass, (EObject)value));
 			} catch (Throwable e) {
 				throw new InvalidValueException(e, "Failed to access AS of " + value);

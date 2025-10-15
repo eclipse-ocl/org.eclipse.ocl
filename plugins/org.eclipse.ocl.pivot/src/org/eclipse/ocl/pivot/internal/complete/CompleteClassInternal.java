@@ -12,8 +12,6 @@ package org.eclipse.ocl.pivot.internal.complete;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public interface CompleteClassInternal extends CompleteClass
 {
@@ -29,11 +27,6 @@ public interface CompleteClassInternal extends CompleteClass
 	void dispose();
 	void uninstall();
 	@NonNull CompleteModelInternal getCompleteModel();
-	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
-	/**
-	 * @since 7.0
-	 */
-	@NonNull MetamodelManager getMetamodelManager();
 //	@Override
 //	CompletePackageInternal getOwningCompletePackage();
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();

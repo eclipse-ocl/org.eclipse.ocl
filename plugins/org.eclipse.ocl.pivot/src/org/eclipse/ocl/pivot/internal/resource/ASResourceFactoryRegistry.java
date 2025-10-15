@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -129,9 +129,9 @@ public class ASResourceFactoryRegistry
 	}
 
 	/**
-	 * @since 1.10
+	 * @since 7.0
 	 */
-	public @NonNull EnvironmentFactoryInternal createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet userResourceSet) {
+	public @NonNull EnvironmentFactory createEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet userResourceSet) {
 		return new PivotEnvironmentFactory(projectManager, userResourceSet);
 	}
 

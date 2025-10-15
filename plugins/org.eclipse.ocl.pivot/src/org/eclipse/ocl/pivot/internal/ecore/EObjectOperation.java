@@ -23,9 +23,9 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -53,7 +53,7 @@ public class EObjectOperation extends AbstractOperation
 	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		if (specification.getOwnedBody() == null) {
 			try {
-				EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) executor.getEnvironmentFactory();
+				EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 				environmentFactory.parseSpecification(specification);
 			} catch (ParserException e) {
 				throw new InvalidValueException(e, "parse failure", executor.getEvaluationEnvironment(), boxedSourceAndArgumentValues[0], caller);

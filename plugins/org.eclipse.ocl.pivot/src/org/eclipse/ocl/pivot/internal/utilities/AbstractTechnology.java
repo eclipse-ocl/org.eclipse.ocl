@@ -24,29 +24,30 @@ import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public abstract class AbstractTechnology implements Technology
 {
 	@Override
-	public @NonNull LibraryProperty createBasePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
+	public @NonNull LibraryProperty createBasePropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
 		return new BaseProperty(property);
 	}
 
 	@Override
-	public @NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory,
+	public @NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactory environmentFactory,
 			@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
 		return new ExplicitNavigationProperty(property);
 	}
 
 	@Override
-	public @NonNull LibraryProperty createExtensionPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
+	public @NonNull LibraryProperty createExtensionPropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
 		return new ExtensionProperty(property);
 	}
 
 	@Override
-	public @NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
+	public @NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
 		return new StereotypeProperty(property);
 	}
 
@@ -65,7 +66,7 @@ public abstract class AbstractTechnology implements Technology
 	}
 
 	@Override
-	public @Nullable Element getParseableElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EObject eObject) throws ParserException {
+	public @Nullable Element getParseableElement(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject eObject) throws ParserException {
 		if (eObject instanceof Element) {
 			return (Element) eObject;
 		}

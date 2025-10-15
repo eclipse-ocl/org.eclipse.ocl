@@ -25,12 +25,12 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public final class EcoreASResourceFactory extends AbstractASResourceFactory
@@ -57,8 +57,11 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 		super(ASResource.ECORE_CONTENT_TYPE, null);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+	public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		// FIXME Defer to OCLinEcoreASResourceFactory
 		throw new UnsupportedOperationException("There is no direct CS for Ecore");
 	}
@@ -67,7 +70,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	public @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 		return new Ecore2AS(resource, environmentFactory);
 	}
 
@@ -84,7 +87,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 	}
 
 	@Override
-	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Class<T> pivotClass, @NonNull EObject eObject) {
+	public @Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactory environmentFactory, @NonNull Class<T> pivotClass, @NonNull EObject eObject) {
 		return environmentFactory.getMetamodelManager().getASOfEcore(pivotClass, eObject);
 	}
 
@@ -109,8 +112,11 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 		return 100;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource, @Nullable URI uri) {
+	public @Nullable Element importFromResource(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource ecoreResource, @Nullable URI uri) {
 		External2AS conversion = External2AS.getAdapter(ecoreResource, environmentFactory);
 		if (uri != null) {
 			conversion.setEcoreURI(uri.trimFragment());

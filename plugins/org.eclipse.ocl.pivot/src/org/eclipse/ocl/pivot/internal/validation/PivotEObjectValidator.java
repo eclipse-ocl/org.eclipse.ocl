@@ -39,7 +39,7 @@ import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -101,9 +101,9 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	/**
-	 * @since 1.14
+	 * @since 7.0
 	 */
-	protected boolean validate(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
+	protected boolean validate(@NonNull EnvironmentFactory environmentFactory, @NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
 			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
 		boolean allOk = true;
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -147,7 +147,7 @@ public class PivotEObjectValidator implements EValidator
 	 * Validate constraint for object using context to elaborate the validation context.
 	 * Returns null for no problem or a warning/error severity diagnostic for a problem.
 	 */
-	private @Nullable Diagnostic validate(@NonNull EnvironmentFactoryInternal environmentFactory, final @NonNull Constraint constraint, final @Nullable Object object, final @Nullable Map<Object, Object> context) {
+	private @Nullable Diagnostic validate(@NonNull EnvironmentFactory environmentFactory, final @NonNull Constraint constraint, final @Nullable Object object, final @Nullable Map<Object, Object> context) {
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		if (specification == null) {
 			return null;
@@ -253,7 +253,7 @@ public class PivotEObjectValidator implements EValidator
 	 * @since 1.14
 	 */
 	public @Nullable Diagnostic validate(@NonNull Constraint constraint, @Nullable Object object, @Nullable Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
+		EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
 		return validate(environmentFactory, constraint, object,  validationContext);
 	}
 
@@ -262,7 +262,7 @@ public class PivotEObjectValidator implements EValidator
 	 */
 	protected boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
 			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory;
+		EnvironmentFactory environmentFactory;
 		if (object instanceof Notifier) {
 			environmentFactory = ValidationContext.basicGetEnvironmentFactory(validationContext, object);
 		}
@@ -314,7 +314,7 @@ public class PivotEObjectValidator implements EValidator
 	 * Perform the additional Pivot-defined validation.
 	 */
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
-		EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
+		EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, object);
 		boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
 		return allOk || (diagnostics != null);
 	}

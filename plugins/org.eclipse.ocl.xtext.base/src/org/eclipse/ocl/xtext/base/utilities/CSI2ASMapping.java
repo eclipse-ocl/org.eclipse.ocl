@@ -29,10 +29,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -54,14 +54,14 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * Get the CSI2ASMapping owned by the environmentFactory on behalf of CS-aware consumers, or null if none in use.
 	 */
-	public static @Nullable CSI2ASMapping basicGetCSI2ASMapping(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @Nullable CSI2ASMapping basicGetCSI2ASMapping(@NonNull EnvironmentFactory environmentFactory) {
 		return (CSI2ASMapping) environmentFactory.getCSI2ASMapping();
 	}
 
 	/**
 	 * Create/reuse the CSI2ASMapping owned by the environmentFactory on behalf of CS-aware consumers.
 	 */
-	public static @NonNull CSI2ASMapping getCSI2ASMapping(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	public static @NonNull CSI2ASMapping getCSI2ASMapping(@NonNull EnvironmentFactory environmentFactory) {
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();
 		if (csi2asMapping == null) {
 			csi2asMapping = new CSI2ASMapping(environmentFactory);
@@ -351,7 +351,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		}
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 
 	/**
 	 * Mapping of each CS resource to its corresponding pivot Resource.
@@ -385,7 +385,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 */
 	//	private @Nullable List<CS2AS> cs2ases = null;
 
-	private CSI2ASMapping(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	private CSI2ASMapping(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 	}
 
@@ -549,7 +549,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		return ((modelElementCS != null) && !modelElementCS.eIsProxy()) ? modelElementCS :  null;
 	}
 
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -50,7 +51,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
@@ -831,7 +831,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (requiredType != null) {
 			Type asExpressionType = expressionInOCL.getType();
 			assert asExpressionType != null;
-			CompleteStandardLibrary standardLibrary = (CompleteStandardLibrary)environmentFactory.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			if ("let container : OclElement[?] = self.oclContainer() in container.oclIsKindOf(Class).and(container.oclAsType(Class).ownedProperties->includes(self))".equals(expressionInOCL.toString())) {
 				getClass();			// XXX
 			}

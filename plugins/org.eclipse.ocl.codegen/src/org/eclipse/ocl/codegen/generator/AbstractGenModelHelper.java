@@ -161,7 +161,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	protected AbstractGenModelHelper(@NonNull EnvironmentFactory environmentFactory) {
 		this.metamodelManager = environmentFactory.getMetamodelManager();
-	//	EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
 		this.completeModel = environmentFactory.getCompleteModel();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}

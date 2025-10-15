@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
@@ -93,7 +93,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 			CollectionTypeId collectionTypeId = (CollectionTypeId)elementId;
 			TypeId elementTypeId = collectionTypeId.getElementTypeId();
 			TypeId generalizedId = collectionTypeId.getGeneralizedId();
-			EnvironmentFactoryInternal environmentFactory = codeGenerator.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			Type type;
 			if (generalizedId == collectionTypeId) {
@@ -141,7 +141,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 			org.eclipse.ocl.pivot.Class type;
 			CollectionTypeId id = (CollectionTypeId)elementId;
 			TypeId generalizedId = id.getGeneralizedId();
-			EnvironmentFactoryInternal environmentFactory = codeGenerator.getEnvironmentFactory();
+			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			if (generalizedId == id) {
 				type = idResolver.getClass(id, null);

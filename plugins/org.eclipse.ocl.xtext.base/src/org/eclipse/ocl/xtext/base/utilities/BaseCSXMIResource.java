@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -67,12 +66,12 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 	protected static class CSXMISaveHelper extends XMIHelperImpl
 	{
 		protected final @NonNull CSResource csResource;
-		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @NonNull EnvironmentFactory environmentFactory;
 
 		public CSXMISaveHelper(@NonNull XMLResource xmiResource, @NonNull CSResource csResource) {
 			super(xmiResource);
 			this.csResource = csResource;
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			assert environmentFactory != null : "No EnvironmentFactory when CS-saving " + NameUtil.debugSimpleName(this);
 			this.environmentFactory = environmentFactory;
 		}
@@ -203,7 +202,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		return (ASResource) asResource2;
 	}
 
-	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
+	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource);
 
 	@Override
 	protected abstract @NonNull XMLSave createXMLSave();
@@ -226,15 +225,14 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		if (cs2as != null) {
 			return cs2as;
 		}
-		EnvironmentFactoryInternal environmentFactoryInternal = (EnvironmentFactoryInternal)environmentFactory;
-		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactoryInternal);
+		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
 		if (csi2asMapping != null) {
 			cs2as = csi2asMapping.getCS2AS(this);				// XXX misses for OCLstdlibCSXMIResourceImpl reload
 			if (cs2as != null) {
 				return cs2as;
 			}
 		}
-		MetamodelManager metamodelManager = environmentFactoryInternal.getMetamodelManager();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		ClassLoader classLoader = getClass().getClassLoader();
 		if (classLoader != null) {
 			metamodelManager.addClassLoader(classLoader);
@@ -243,7 +241,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		@SuppressWarnings("null")@NonNull Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
 		initializeResourceFactory(resourceFactoryRegistry);
 		ASResource asResource = createASResource(asResourceSet);
-		cs2as = createCS2AS(environmentFactoryInternal, asResource);
+		cs2as = createCS2AS(environmentFactory, asResource);
 		return cs2as;
 	}
 

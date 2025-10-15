@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public interface CompleteEnvironmentInternal extends CompleteEnvironment
 {
@@ -29,8 +29,14 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	@NonNull CompleteModelInternal getOwnedCompleteModel();
 	@Override
 	@NonNull CompleteStandardLibrary getOwnedStandardLibrary();
-	@NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactory environmentFactory);
 	boolean isCodeGeneration();
 	void setCodeGeneration(boolean isCodeGeneration);
-	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EnvironmentFactory getEnvironmentFactory();
 }

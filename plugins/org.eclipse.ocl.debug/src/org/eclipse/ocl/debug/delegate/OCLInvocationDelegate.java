@@ -32,8 +32,8 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
@@ -64,7 +64,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	@Override
 	public Object dynamicInvoke(InternalEObject target, EList<?> arguments) throws InvocationTargetException {
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(target);
+			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(target);
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			ExpressionInOCL specification2 = specification;

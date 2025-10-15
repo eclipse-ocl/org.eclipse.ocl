@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -95,7 +95,7 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	/**
 	 * @since 7.0
 	 */
-	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	@Override
 	@NonNull CompleteFlatModel getFlatModel();
@@ -120,7 +120,7 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
-	@NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactoryInternal environmentFactory);
+	@NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactory environmentFactory);
 	void installLibrary();
 	void installLibrary(@NonNull Library asLibrary);
 	boolean isLibraryLoadInProgress();

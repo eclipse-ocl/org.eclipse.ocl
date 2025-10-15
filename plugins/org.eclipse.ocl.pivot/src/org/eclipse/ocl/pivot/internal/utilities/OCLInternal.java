@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
@@ -34,20 +35,26 @@ public class OCLInternal extends OCL
 	}
 
 	public static @NonNull OCLInternal newInstance(@NonNull ProjectManager projectManager, @Nullable ResourceSet userResourceSet) {
-		EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, userResourceSet);
+		EnvironmentFactory environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, userResourceSet);
 		return newInstance(environmentFactory);
 	}
 
-	public static @NonNull OCLInternal newInstance(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull OCLInternal newInstance(@NonNull EnvironmentFactory environmentFactory) {
 		return new OCLInternal(environmentFactory);
 	}
 
-	public OCLInternal(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 7.0
+	 */
+	public OCLInternal(@NonNull EnvironmentFactory environmentFactory) {
 		super(environmentFactory);
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		assert environmentFactory != null;
 		return environmentFactory;
 	}

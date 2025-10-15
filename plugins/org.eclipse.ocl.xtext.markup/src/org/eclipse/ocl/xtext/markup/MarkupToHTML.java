@@ -27,8 +27,8 @@ import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.HTMLBuffer;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLHelper;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -63,7 +63,7 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 		}
 	}
 
-	public static String toString(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Object context, @NonNull MarkupElement element) throws Exception {
+	public static String toString(@NonNull EnvironmentFactory environmentFactory, @Nullable Object context, @NonNull MarkupElement element) throws Exception {
 		MarkupToHTML toString = new MarkupToHTML(environmentFactory, context);
 		try {
 			return String.valueOf(toString.doSwitch(element));
@@ -73,11 +73,11 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 	}
 
 	//	private @Nullable OCL ocl = null;
-	private @NonNull EnvironmentFactoryInternal environmentFactory;
+	private @NonNull EnvironmentFactory environmentFactory;
 	protected final @Nullable Object context;
 	protected final @NonNull HTMLBuffer s = new HTMLBuffer();
 
-	public MarkupToHTML(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Object context) {
+	public MarkupToHTML(@NonNull EnvironmentFactory environmentFactory, @Nullable Object context) {
 		this.environmentFactory = environmentFactory;
 		this.context = context;
 	}

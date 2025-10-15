@@ -25,13 +25,19 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
+/**
+ * @since 7.0
+ */
 public class AS2UML extends AbstractConversion
 {
-	public static @NonNull List<@NonNull EObject> createResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull List<@NonNull EObject> createResource(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource asResource) {
 		List<@NonNull EObject> pivotModels = ClassUtil.nullFree(asResource.getContents());
 		AS2UML converter = new AS2UML(environmentFactory);
 		return converter.convertAll(pivotModels);
@@ -47,23 +53,26 @@ public class AS2UML extends AbstractConversion
 	 * with respect to the corresponding CS element in pass 2.
 	 */
 	Set<Element> deferMap = new HashSet<Element>();
-	
+
 	private List<Resource.Diagnostic> errors = null;
-	
-	protected final AS2UMLDeclarationVisitor pass1 = new AS2UMLDeclarationVisitor(this);	
+
+	protected final AS2UMLDeclarationVisitor pass1 = new AS2UMLDeclarationVisitor(this);
 	protected final AS2UMLReferenceVisitor pass2 = new AS2UMLReferenceVisitor(this);
-	
+
 //	protected final ResourceSet resourceSet;
 //	protected final Resource csResource;
 //	protected final XMLResource eResource;
 
-	public AS2UML(@NonNull EnvironmentFactoryInternal environmentFactory/*ResourceSet resourceSet, Resource csResource, URI ecoreURI*/) {
+	/**
+	 * @since 7.0
+	 */
+	public AS2UML(@NonNull EnvironmentFactory environmentFactory/*ResourceSet resourceSet, Resource csResource, URI ecoreURI*/) {
 		super(environmentFactory);
 //		this.resourceSet = resourceSet;
 //		this.csResource = csResource;
 //		this.eResource = (XMLResource) new EcoreResourceFactoryImpl().createResource(ecoreURI);
 	}
-	
+
 	protected @Nullable EObject convert(@NonNull Element pivotObject) {
 		EObject eObject = pass1.safeVisit(pivotObject);
 		for (Element eKey : deferMap) {

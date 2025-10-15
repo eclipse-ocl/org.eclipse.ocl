@@ -23,7 +23,6 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -87,7 +86,7 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 					issues.addError(this, "No eResource for + ;" + fileURI + "'", null, null, null);
 					return;
 				}
-				Ecore2AS adapter = Ecore2AS.getAdapter(eResource, (EnvironmentFactoryInternal) metamodelManager.getEnvironmentFactory());
+				Ecore2AS adapter = Ecore2AS.getAdapter(eResource, metamodelManager.getEnvironmentFactory());
 				Model asModel = adapter.getASModel();
 				asPackage = asModel.getOwnedPackages().get(0);
 			}

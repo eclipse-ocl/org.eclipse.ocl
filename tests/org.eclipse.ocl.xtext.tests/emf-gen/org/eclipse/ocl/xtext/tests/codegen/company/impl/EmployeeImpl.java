@@ -290,7 +290,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			 * manager = self
 			 */
 			if (_1 == null) {
-				throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/test/Pivot/Company.ecore\'::Employee::manager\'");
+				throw new InvalidValueException("Null source for \'company::Employee::manager : company::Employee\'");
 			}
 			final /*@Thrown*/ @Nullable Employee manager_0 = _1.getManager();
 			final /*@Thrown*/ boolean eq = this.equals(manager_0);

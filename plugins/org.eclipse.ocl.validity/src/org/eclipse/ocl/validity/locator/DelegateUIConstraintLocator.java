@@ -43,8 +43,8 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -63,12 +63,12 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Shell shell;
-		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @NonNull EnvironmentFactory environmentFactory;
 		protected final @Nullable EObject contextObject;
 		protected final @NonNull String expression;
 		private @Nullable ILaunch launch = null;
 
-		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
+		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
 			this.shell = shell;
 			this.environmentFactory = environmentFactory;
 			this.contextObject = contextObject;
@@ -197,7 +197,7 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 	@Override
 	public boolean debug(@NonNull ResultConstrainingNode resultConstrainingNode, final @NonNull ValidityView validityView, @NonNull IProgressMonitor monitor) throws CoreException {
 		EObject constrainedObject = getConstrainedObject(resultConstrainingNode);
-		EnvironmentFactoryInternal environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Constraint asConstraint = null;
 		try {

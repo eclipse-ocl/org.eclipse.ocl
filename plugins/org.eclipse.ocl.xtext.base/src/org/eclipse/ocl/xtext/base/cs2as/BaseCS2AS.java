@@ -13,9 +13,9 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.scoping.JavaClassScope;
 import org.eclipse.ocl.xtext.basecs.JavaClassCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
@@ -27,7 +27,7 @@ public class BaseCS2AS extends CS2AS
 {
 	private @NonNull JavaClassScope javaClassScope;
 
-	public BaseCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+	public BaseCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 		Iterable<@NonNull ClassLoader> classLoaders = environmentFactory.getMetamodelManager().getImplementationManager().getClassLoaders();
 		javaClassScope = new JavaClassScope(classLoaders);

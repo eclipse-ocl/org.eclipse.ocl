@@ -26,10 +26,10 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -43,7 +43,7 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 	public static final @NonNull String NAME = "validationDelegates"; //$NON-NLS-1$
 
 	public Constraint getConstraint(@NonNull MetamodelManager metamodelManager, @NonNull EClassifier eClassifier, @NonNull String constraintName) throws OCLDelegateException {
-		EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = metamodelManager.getEnvironmentFactory();
 		Resource ecoreMetamodel = ClassUtil.requireNonNull(eClassifier.eResource());
 		External2AS es2as = External2AS.getAdapter(ecoreMetamodel, environmentFactory);
 		Type type = es2as.getCreated(Type.class, eClassifier);

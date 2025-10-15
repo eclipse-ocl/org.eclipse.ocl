@@ -28,11 +28,12 @@ import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Customizable;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Option;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
- * Implementation of the {@link EnvironmentFactoryInternal} for parsing OCL expressions
+ * Implementation of the {@link EnvironmentFactory} for parsing OCL expressions
  * on Ecore models.
  */
 public class PivotEnvironmentFactory extends AbstractEnvironmentFactory

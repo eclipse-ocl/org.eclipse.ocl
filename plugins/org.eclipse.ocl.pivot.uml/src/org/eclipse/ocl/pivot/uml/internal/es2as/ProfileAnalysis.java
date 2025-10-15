@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 public class ProfileAnalysis
 {
 	protected final UML2AS.@NonNull Outer converter;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 
 	/**
 	 * All metatypes that are extended by a TypeExtension.

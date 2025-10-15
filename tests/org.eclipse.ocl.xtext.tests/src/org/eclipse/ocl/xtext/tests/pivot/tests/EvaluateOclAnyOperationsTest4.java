@@ -30,9 +30,9 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -732,7 +732,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Boolean() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		org.eclipse.ocl.pivot.Class classType = standardLibrary.getClassType();
@@ -762,7 +762,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Classifier() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		@NonNull Type packageType = ClassUtil.requireNonNull(environmentFactory.getASClass("Package"));
 		ocl.assertQueryEquals(ocl.pkg1, packageType, "self.oclType()");
@@ -809,7 +809,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Enumeration() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		@NonNull Type collectionKindType = ClassUtil.requireNonNull(environmentFactory.getASClass("CollectionKind"));
 		org.eclipse.ocl.pivot.Class enumerationType = standardLibrary.getEnumerationType();
@@ -834,7 +834,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Numeric() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
@@ -859,7 +859,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_OclAny() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class anyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class anyTypeClass = environmentFactory.getASClass("AnyType");
@@ -882,7 +882,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_OclInvalid() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class invalidType = standardLibrary.getOclInvalidType();
 		org.eclipse.ocl.pivot.Class invalidTypeClass = environmentFactory.getASClass("InvalidType");
@@ -903,7 +903,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_OclVoid() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class voidTypeClass = environmentFactory.getASClass("VoidType");
 		org.eclipse.ocl.pivot.Class nullType = standardLibrary.getOclVoidType();
@@ -924,7 +924,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Tuple() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		@SuppressWarnings("unused") StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class tupleTypeClass = environmentFactory.getASClass("TupleType");
 		PartId partId = IdManager.getPartId(0, "a", TypeId.INTEGER, true);
@@ -950,7 +950,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class classType = standardLibrary.getClassType();
 		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
@@ -972,7 +972,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclTypes() {
 		MyOCL ocl = createOCL();
-		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		org.eclipse.ocl.pivot.Class classType = environmentFactory.getASClass("Class");

@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -169,7 +168,7 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	/**
 	 * @since 7.0

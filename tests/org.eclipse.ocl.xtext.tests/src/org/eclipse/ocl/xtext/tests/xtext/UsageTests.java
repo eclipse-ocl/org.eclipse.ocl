@@ -77,13 +77,13 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -1968,7 +1968,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 								@Override
 								public ResourceSet createResourceSet() {
 									if (resourceSet == null) {
-										EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+										EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 										if (environmentFactory != null) {
 											resourceSet = environmentFactory.getResourceSet();
 										}
@@ -2005,7 +2005,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						getTestFile("Issue2400.ecore", null, getTestModelURI("models/genmodel/Issue2400.ecore"));
 						//
 						IPath genModelPath = new Path(genModelFile.getFileString());
-						final EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+						final EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 						final MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 						// Reload ... Ecore Next Finish
 					//	System.out.println("\nReload ... Ecore Next Finish");

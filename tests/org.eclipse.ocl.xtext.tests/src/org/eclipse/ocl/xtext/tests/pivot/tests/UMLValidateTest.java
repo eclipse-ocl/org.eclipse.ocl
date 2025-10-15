@@ -35,7 +35,6 @@ import org.eclipse.ocl.ecore.EcorePackage;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -204,7 +203,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertValidationDiagnostics("Loading", umlResource, NO_MESSAGES);
 		URI oclURI = getTestModelURI("models/uml/ExtraUMLValidation.ocl");
 		CompleteOCLLoaderWithLog helper = new CompleteOCLLoaderWithLog(ocl.getEnvironmentFactory());
-		EnvironmentFactoryInternal environmentFactory = helper.getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = helper.getEnvironmentFactory();
 	//	environmentFactory.getMetamodelManager().addClassLoader(UMLValidator.class.getClassLoader());
 		configureProjectMap(environmentFactory, StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 		//
@@ -306,7 +305,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		Resource umlResource = ClassUtil.requireNonNull(resourceSet.getResource(uri, true));
 		assertNoResourceErrors("Loading", umlResource);
 		ValidationContext validationContext = createValidationContext(resourceSet);
-		@SuppressWarnings("unused") EnvironmentFactoryInternal environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
+		@SuppressWarnings("unused") EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(validationContext, resourceSet);			// Eager EnvironmentFactory resolution
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("Class1");

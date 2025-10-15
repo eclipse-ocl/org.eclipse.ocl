@@ -22,7 +22,6 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -50,7 +49,7 @@ public abstract class GenerateLaTeXForASModel extends GenerateLaTeXUtils
 				issues.addError(this, "No eResource for + ;" + fileURI + "'", null, null, null);
 				return;
 			}
-			Ecore2AS adapter = Ecore2AS.getAdapter(eResource, (EnvironmentFactoryInternal) ocl.getEnvironmentFactory());
+			Ecore2AS adapter = Ecore2AS.getAdapter(eResource, ocl.getEnvironmentFactory());
 			Model asModel = adapter.getASModel();
 			org.eclipse.ocl.pivot.Package asPackage = asModel.getOwnedPackages().get(0);
 			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.requireNonNull(eResource.getErrors()), "OCLstdlib parse failure", "\n");

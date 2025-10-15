@@ -54,8 +54,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -327,7 +327,7 @@ public class EnvironmentView
 		return disambiguatorMap.get(key);
 	}
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	/**
 	 * @since 7.0
 	 */
@@ -352,9 +352,12 @@ public class EnvironmentView
 
 	private List<@NonNull ScopeFilter> matchers = null;	// Prevailing filters for matching
 
-	public EnvironmentView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
+	/**
+	 * @since 7.0
+	 */
+	public EnvironmentView(@NonNull EnvironmentFactory environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
 		this.environmentFactory = environmentFactory;
-		this.completeModel = environmentFactory.getCompleteModel();
+		this.completeModel = (CompleteModelInternal) environmentFactory.getCompleteModel();
 		this.reference = reference;
 		this.requiredType = reference.getEType();
 		this.name = name;
@@ -942,7 +945,10 @@ public class EnvironmentView
 		return contentsByName.entrySet();
 	}
 
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
 	}
 

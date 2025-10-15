@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -141,7 +140,7 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = getTestFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
-		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
+		XMLResource ecoreResource = AS2Ecore.createResource(ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
 		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		ocl.dispose();
 	}
@@ -281,7 +280,7 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = getTestFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
-		AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options)
+		AS2Ecore converter = new AS2Ecore(ocl.getEnvironmentFactory(), asResource, ecoreURI, options)
 		{
 			@Override
 			protected void addContents(@NonNull List<@NonNull EObject> results) {
@@ -304,7 +303,7 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = getTestFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
-		AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options)
+		AS2Ecore converter = new AS2Ecore(ocl.getEnvironmentFactory(), asResource, ecoreURI, options)
 		{
 			@Override
 			protected void addContents(@NonNull List<@NonNull EObject> results) {
@@ -866,7 +865,7 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = URI.createURI(ecoreFileName);
 		XMLResource ecoreResource = (XMLResource) ocl2.getResourceSet().createResource(ecoreURI, null);
 		ecoreResource.load(new URIConverter.ReadableInputStream(ecoreFileA), null);
-		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, (EnvironmentFactoryInternal) ocl2.getEnvironmentFactory());
+		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, ocl2.getEnvironmentFactory());
 		Resource asResource = conversion.getASModel().eResource();
 		assertEquals(1, asResource.getContents().size());
 		Model pivotModel1 = (Model) asResource.getContents().get(0);
@@ -932,7 +931,7 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = URI.createURI(ecoreFileName);
 		XMLResource ecoreResource = (XMLResource) ocl2.getResourceSet().createResource(ecoreURI, null);
 		ecoreResource.load(new URIConverter.ReadableInputStream(ecoreFileXXX), null);
-		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, (EnvironmentFactoryInternal) ocl2.getEnvironmentFactory());
+		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, ocl2.getEnvironmentFactory());
 		Resource asResource = conversion.getASModel().eResource();
 		assertEquals(1, asResource.getContents().size());
 		Model pivotModelXXX = (Model) asResource.getContents().get(0);
@@ -1012,7 +1011,7 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = URI.createURI(ecoreFileName);
 		XMLResource ecoreResource = (XMLResource) ocl2.getResourceSet().createResource(ecoreURI, null);
 		ecoreResource.load(new URIConverter.ReadableInputStream(ecoreFileXXX), null);
-		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, (EnvironmentFactoryInternal) ocl2.getEnvironmentFactory());
+		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, ocl2.getEnvironmentFactory());
 		ASResource asResource = (ASResource) conversion.getASModel().eResource();
 		//
 		//	Save the *.oclas and cache the xmi:ids
