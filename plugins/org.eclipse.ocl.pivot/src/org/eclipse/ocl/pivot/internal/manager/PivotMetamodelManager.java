@@ -41,6 +41,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -70,7 +71,6 @@ import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
@@ -202,7 +202,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	private final @NonNull CompleteStandardLibrary standardLibrary;
-	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
+	private final @NonNull CompleteEnvironment completeEnvironment;
 
 	/**
 	 * The known packages.
@@ -264,7 +264,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		assert !asResourceSetAdapters.contains(this);
 		asResourceSetAdapters.add(this);
 		assert asResourceSetAdapters.contains(environmentFactory.getProjectManager());
-		completeEnvironment = (CompleteEnvironmentInternal) environmentFactory.getCompleteEnvironment();
+		completeEnvironment = environmentFactory.getCompleteEnvironment();
 		standardLibrary = environmentFactory.getStandardLibrary();
 		completeModel = environmentFactory.getCompleteModel();
 		//		System.out.println("ctor " + this);
@@ -612,7 +612,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull CompleteEnvironmentInternal getCompleteEnvironment() {
+	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return completeEnvironment;
 	}
 
@@ -817,7 +817,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	public @NonNull LibraryFeature getImplementation(@NonNull Operation operation) {
 		LibraryFeature implementation = operation.getImplementation();
 		if (implementation == null) {
-			boolean isCodeGeneration = getCompleteEnvironment().isCodeGeneration();
+			boolean isCodeGeneration = environmentFactory.isCodeGeneration();
 			if (isCodeGeneration) {
 				LanguageExpression specification = operation.getBodyExpression();
 				if (specification != null) {

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
  * <!-- begin-user-doc -->
@@ -82,6 +83,11 @@ public interface CompleteEnvironment extends Element
 	 */
 	void setOwnedStandardLibrary(CompleteStandardLibrary value);
 
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EnvironmentFactory getEnvironmentFactory();
+
 	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
 	Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
@@ -89,5 +95,5 @@ public interface CompleteEnvironment extends Element
 	/**
 	 * @since 7.0
 	 */
-	@NonNull StandardLibrary getStandardLibrary();
+	@NonNull CompleteStandardLibrary getStandardLibrary();
 } // CompleteEnvironment
