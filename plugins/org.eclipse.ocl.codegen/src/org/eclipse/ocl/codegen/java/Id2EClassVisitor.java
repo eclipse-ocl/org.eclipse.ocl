@@ -39,19 +39,19 @@ import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 {
-	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 
-	protected Id2EClassVisitor(@NonNull MetamodelManager metamodelManager) {
-		this.metamodelManager = metamodelManager;
+	protected Id2EClassVisitor(@NonNull EnvironmentFactory environmentFactory) {
+		this.environmentFactory = environmentFactory;
 	}
 
 	@Override
 	public @Nullable EClass visitClassId(@NonNull ClassId id) {
-		Type type = metamodelManager.getEnvironmentFactory().getIdResolver().getType(id);
+		Type type = environmentFactory.getIdResolver().getType(id);
 		return (EClass) type.getESObject();
 	}
 

@@ -449,7 +449,7 @@ public class EnvironmentView
 
 	public void addAllPackages(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		if (accepts(PivotPackage.Literals.PACKAGE)) {
-			CompletePackage parentCompletePackage = environmentFactory.getMetamodelManager().getCompletePackage(pkge);
+			CompletePackage parentCompletePackage = environmentFactory.getCompleteModel().getCompletePackage(pkge);
 			addAllPackages(parentCompletePackage);
 		/*	String name2 = name;
 			if (name2 != null) {
@@ -622,7 +622,7 @@ public class EnvironmentView
 
 	public void addAllTypes(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		if (accepts(PivotPackage.Literals.CLASS)) {
-			CompletePackage completePackage = environmentFactory.getMetamodelManager().getCompletePackage(pkge);
+			CompletePackage completePackage = environmentFactory.getCompleteModel().getCompletePackage(pkge);
 			String name2 = name;
 			if (name2 != null) {
 				org.eclipse.ocl.pivot.Class type = completePackage.getMemberType(name2);

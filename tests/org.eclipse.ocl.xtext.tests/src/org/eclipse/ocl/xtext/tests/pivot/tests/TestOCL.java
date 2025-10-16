@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.common.CodeGenHelper;
 import org.eclipse.ocl.codegen.dynamic.JavaGenModelCodeGenHelper;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -907,8 +908,8 @@ public class TestOCL extends OCLInternal
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Package getUMLMetamodel() {
-		MetamodelManager metamodelManager = getMetamodelManager();
-		return ClassUtil.requireNonNull(metamodelManager.getASmetamodel());
+		CompleteModel completeModel = getEnvironmentFactory().getCompleteModel();
+		return ClassUtil.requireNonNull(completeModel.getASmetamodel());
 	}
 
 	/**

@@ -161,7 +161,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		PackageId metapackageId = environmentFactory.getTechnology().getMetapackageId(environmentFactory, pivotPackage);
 		org.eclipse.ocl.pivot.Package metapackage = environmentFactory.getIdResolver().basicGetPackage(metapackageId);
 		if (metapackage != null) {
-			CompletePackage metaCompletePackage = environmentFactory.getMetamodelManager().getCompletePackage(metapackage);
+			CompletePackage metaCompletePackage = environmentFactory.getCompleteModel().getCompletePackage(metapackage);
 			String metatypeName = pivotClass.eClass().getName();
 			Type metatype = metaCompletePackage.getType(metatypeName);
 			if (metatype != null) {

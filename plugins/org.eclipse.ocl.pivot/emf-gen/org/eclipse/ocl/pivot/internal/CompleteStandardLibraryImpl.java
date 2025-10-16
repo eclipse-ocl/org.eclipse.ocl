@@ -607,14 +607,14 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className) {
-		assert environmentFactory != null;
-		return environmentFactory.getMetamodelManager().getASClass(className);
+		assert completeModel != null;
+		return completeModel.getASClass(className);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
-		assert environmentFactory != null;
-		return environmentFactory.getMetamodelManager().getAllCompletePackages();
+		assert completeModel != null;
+		return completeModel.getAllCompletePackages();
 	}
 
 	@Override
@@ -704,8 +704,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	@NonNull
 	public FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		assert environmentFactory != null;
-		return environmentFactory.getMetamodelManager().getFlatClass(type);
+		assert completeModel != null;
+		return completeModel.getFlatClass(type);
 	}
 
 	@Override
@@ -1267,7 +1267,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			}
 			asLibraryResource = asLibraryResource2;
 			int size = asLibraries.size();
-			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getCompleteModel().getMetamodelManager();
+			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getEnvironmentFactory().getMetamodelManager();
 			metamodelManager.installResource(asLibraryResource2);
 			for (int i = 0; i < size; i++) {
 				defineLibraryTypes(asLibraries.get(i));

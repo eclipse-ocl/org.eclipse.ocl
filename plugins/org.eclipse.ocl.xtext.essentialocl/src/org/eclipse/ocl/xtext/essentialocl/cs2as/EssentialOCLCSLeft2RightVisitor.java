@@ -486,17 +486,17 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 */
 	protected @Nullable Invocations getInvocations(@NonNull Type asType, @Nullable Type asTypeValue, @NonNull String name, int iteratorCount, int expressionCount) {
 		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getClass(asType, standardLibrary);
-		Iterable<@NonNull ? extends Operation> nonStaticOperations = metamodelManager.getAllOperations(asClass, FeatureFilter.SELECT_NON_STATIC, name);
+		Iterable<@NonNull ? extends Operation> nonStaticOperations = completeModel.getAllOperations(asClass, FeatureFilter.SELECT_NON_STATIC, name);
 		List<@NonNull NamedElement> invocations = getInvocationsInternal(null, nonStaticOperations, iteratorCount, expressionCount);
 		if (asClass instanceof ElementExtension) {				// FIXME review me
 			Type asStereotype = ((ElementExtension)asClass).getStereotype();
 			if (asStereotype != null) {
-				Iterable<@NonNull ? extends Operation> stereotypeOperations = metamodelManager.getAllOperations(asStereotype, FeatureFilter.SELECT_NON_STATIC, name);
+				Iterable<@NonNull ? extends Operation> stereotypeOperations = completeModel.getAllOperations(asStereotype, FeatureFilter.SELECT_NON_STATIC, name);
 				invocations = getInvocationsInternal(invocations, stereotypeOperations, iteratorCount, expressionCount);
 			}
 		}
 		if (asTypeValue != null) {
-			Iterable<@NonNull ? extends Operation> staticOperations = metamodelManager.getAllOperations(asTypeValue, FeatureFilter.SELECT_STATIC, name);
+			Iterable<@NonNull ? extends Operation> staticOperations = completeModel.getAllOperations(asTypeValue, FeatureFilter.SELECT_STATIC, name);
 			invocations = getInvocationsInternal(invocations, staticOperations, iteratorCount, expressionCount);
 		}
 		return invocations != null ? new UnresolvedInvocations(asClass, invocations) : null;

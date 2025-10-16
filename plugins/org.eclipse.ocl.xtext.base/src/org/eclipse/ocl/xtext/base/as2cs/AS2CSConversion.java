@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -134,7 +133,6 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		if (environmentFactory == null) {
 			throw new IllegalStateException("No EnvironmentFactory");
 		}
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		AliasAnalysis aliasAnalysis = null;
 		URI csURI = csResource.getURI();
 		List<@NonNull ImportCS> imports = new ArrayList<>();
@@ -143,7 +141,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		for (@NonNull Namespace importedNamespace : sortedImportedNamespaces) {
 			if (converter.isComplement() || (importedNamespace.eResource() != asResource)) {	// skip if importing the importing model
 				if (importedNamespace instanceof org.eclipse.ocl.pivot.Package){
-					org.eclipse.ocl.pivot.Package pivotPackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)importedNamespace).getPrimaryPackage();
+					org.eclipse.ocl.pivot.Package pivotPackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)importedNamespace).getPrimaryPackage();
 					//			ModelElementCS csElement = createMap.get(importedPackage);
 					//			if ((csElement != null) && (csElement.eResource() == xtextResource)) {
 					//				continue;		// Don't import defined packages
@@ -505,7 +503,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 					for (int i = iTargetStart; i < iScopeSize-1; i++) {
 						NamedElement intermediateScopeElement = scopePath.get(i);
 						if (intermediateScopeElement instanceof org.eclipse.ocl.pivot.Package) {
-							CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)intermediateScopeElement);
+							CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)intermediateScopeElement);
 							CompletePackage memberPackage = completePackage.basicGetOwnedCompletePackage(targetName);
 							if (memberPackage != null) {
 								noAlternatives = false;

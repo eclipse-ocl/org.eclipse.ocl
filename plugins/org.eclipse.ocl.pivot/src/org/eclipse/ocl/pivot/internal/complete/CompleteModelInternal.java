@@ -30,11 +30,7 @@ public interface CompleteModelInternal extends CompleteModel
 	void didRemoveCompletePackage(@NonNull CompletePackage completePackage);
 	void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	@Override
-	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages();
-	@Override
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type partialClass);
-	@Override
-	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage);
 	@Override
 	@NonNull OrphanCompletePackageImpl getOrphanCompletePackage();
 	@Override
@@ -69,4 +65,9 @@ public interface CompleteModelInternal extends CompleteModel
 	 * @since 7.0
 	 */
 	@NonNull CompleteModel init(@NonNull EnvironmentFactory environmentFactory);
+
+	/**
+	 * @since 7.0
+	 */
+	void setAutoLoadASmetamodel(boolean autoLoadASmetamodel);
 }

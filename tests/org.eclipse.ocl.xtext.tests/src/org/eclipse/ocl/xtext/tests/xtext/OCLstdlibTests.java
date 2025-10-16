@@ -277,7 +277,7 @@ public class OCLstdlibTests extends XtextTestCase
 		Resource asResource = doLoadASResourceFromString(ocl, "string.oclstdlib", testFile);
 		MetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResource.getResourceSet());
 		AnyType oclAnyType = metamodelManager.getStandardLibrary().getOclAnyType();
-		Iterable<Operation> ownedOperations = metamodelManager.getAllOperations(oclAnyType, FeatureFilter.SELECT_NON_STATIC);
+		Iterable<Operation> ownedOperations = metamodelManager.getCompleteModel().getAllOperations(oclAnyType, FeatureFilter.SELECT_NON_STATIC);
 		assertEquals(2, Iterables.size(ownedOperations));		// one from OclAny::=, one from OclAny::a, none from built-in OCLstdlib
 		ocl.dispose();
 	}

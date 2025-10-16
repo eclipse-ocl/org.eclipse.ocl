@@ -54,6 +54,7 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.extlibrary.EXTLibraryFactory;
 import org.eclipse.ocl.examples.extlibrary.EXTLibraryPackage;
 import org.eclipse.ocl.examples.extlibrary.Library;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -274,8 +275,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	protected @NonNull OCLInternal initModelWithErrorsAndOcl(@NonNull ResourceSet resourceSet) {
 		Resource ecoreResource = initModelWithErrors(resourceSet);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
 		if (message != null)
 			fail(message);
@@ -296,7 +297,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			fail(message);
 		DelegateInstaller pivotInstaller = new DelegateInstaller(environmentFactory, null);
 		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotModel.getOwnedPackages()) {
-			pivotInstaller.installDelegates(metamodelManager.getCompletePackage(nestedPackage));
+			pivotInstaller.installDelegates(completeModel.getCompletePackage(nestedPackage));
 		}
 		return ocl;
 	}

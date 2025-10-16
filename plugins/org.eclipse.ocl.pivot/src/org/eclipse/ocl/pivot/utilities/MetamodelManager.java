@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -37,7 +36,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
@@ -93,16 +91,6 @@ public interface MetamodelManager
 	 */
 	void dispose();
 
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
-
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();
-
 	@Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> pivotClass, @Nullable EObject eObject);
 
 	@NonNull ResourceSet getASResourceSet();
@@ -110,22 +98,7 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages();
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter, @NonNull String name);
 
 	/**
 	 * @since 7.0
@@ -136,11 +109,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	@NonNull CompleteModel getCompleteModel();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
 	 * @since 7.0
@@ -168,11 +136,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	@NonNull FinalAnalysis getFinalAnalysis();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * @since 7.0
@@ -222,32 +185,7 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Iterable<@NonNull Property> getMemberProperties(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic);
-
-	/**
-	 * @since 7.0
-	 */
-	@Nullable Type getOclType(@NonNull String typeName);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation pivotOperation);
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull Iterable<org.eclipse.ocl.pivot.Class> getPartialClasses(@NonNull Type pivotType);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg, boolean loadASmetamodelFirst);
 
 	/**
 	 * @since 7.0
@@ -342,9 +280,4 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void resetFlowAnalysis();
-
-	/**
-	 * @since 7.0
-	 */
-	void setAutoLoadASmetamodel(boolean autoLoadASmetamodel);
 }

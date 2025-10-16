@@ -369,7 +369,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		GenModel genModel = ClassUtil.requireNonNull(genPackage.getGenModel());
 		genModel.reconcile();
-		metamodelManager.addGenModel(genModel);
+		environmentFactory.getMetamodelManager().addGenModel(genModel);
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
 		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.genPackage = genPackage;
@@ -401,7 +401,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery = new HashMap<>();
 		try {
 			EPackage ecorePackage = genPackage.getEcorePackage();
-			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
+			org.eclipse.ocl.pivot.Package asPackage = environmentFactory.getMetamodelManager().getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
 			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(cgAnalyzer, globalContext);
 			CGPackage cgPackage = (CGPackage) ClassUtil.requireNonNull(asPackage.accept(as2cgVisitor));

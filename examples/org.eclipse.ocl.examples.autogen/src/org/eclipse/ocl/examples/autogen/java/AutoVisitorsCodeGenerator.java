@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.build.utilities.GenPackageHelper;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * AutoCodeGenerator supports generation of the content of a JavaClassFile to
@@ -46,6 +47,7 @@ public abstract class AutoVisitorsCodeGenerator extends AutoCodeGenerator
 	protected org.eclipse.ocl.pivot.@NonNull Class getVisitablePivotClass() {
 
 //		return ClassUtil.requireNonNull(metamodelManager.getASClass(visitableClass));
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (GenPackage genPackage : genModel.getAllGenAndUsedGenPackagesWithClassifiers()) {
 			if (getBasePrefix().equals(genPackage.getPrefix()) &&
 				getBaseVisitorPackageName().startsWith(genPackage.getQualifiedPackageName())) {

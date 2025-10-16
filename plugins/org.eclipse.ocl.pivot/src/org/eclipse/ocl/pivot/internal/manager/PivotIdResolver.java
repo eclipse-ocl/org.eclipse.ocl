@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public class PivotIdResolver extends AbstractIdResolver
@@ -43,7 +42,10 @@ public class PivotIdResolver extends AbstractIdResolver
 	private static final Logger logger = Logger.getLogger(PivotIdResolver.class);
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull MetamodelManager metamodelManager;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull CompleteModelImpl completeModel;
 
 	/**
 	 * @since 7.0
@@ -51,7 +53,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	public PivotIdResolver(@NonNull EnvironmentFactory environmentFactory) {
 		super(environmentFactory.getStandardLibrary());
 		this.environmentFactory = environmentFactory;
-		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		org.eclipse.ocl.pivot.Package asPackage = nsURI2package.get(nsURI);
 		if (asPackage == null) {
 			PackageId packageId = IdManager.getPackageId(ePackage);
-			asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ePackage);
+			asPackage = environmentFactory.getMetamodelManager().getASOfEcore(org.eclipse.ocl.pivot.Package.class, ePackage);
 			if (asPackage == null) {
 				asPackage = getPivotlessEPackage(ePackage);
 				if (asPackage == null) {
@@ -81,7 +83,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull EClassifier eClassifier) {
-		return metamodelManager.getFlatClass(getType(eClassifier));
+		return completeModel.getFlatClass(getType(eClassifier));
 	}
 
 	@Override
@@ -91,7 +93,6 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
 		Type nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			CompletePackage asParentCompletePackage = completeModel.getCompletePackage(parentPackage);
@@ -109,7 +110,6 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedDataType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
 		Type nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			nestedType = completeModel.getNestedType(parentPackage, name);
@@ -125,7 +125,6 @@ public class PivotIdResolver extends AbstractIdResolver
 	 */
 	@Override
 	protected @NonNull Type getNestedEnumeration(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
 		Type nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			nestedType = completeModel.getNestedType(parentPackage, name);
@@ -138,7 +137,6 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	protected org.eclipse.ocl.pivot.@NonNull Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		CompleteModelImpl completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
 		org.eclipse.ocl.pivot.Package nestedPackage = completeModel.getNestedPackage(parentPackage, name);
 		if (nestedPackage == null) {
 			throw new UnsupportedOperationException();
@@ -165,9 +163,9 @@ public class PivotIdResolver extends AbstractIdResolver
 		if (ePackage == PivotPackage.eINSTANCE){
 			String typeName = eClassifier.getName();
 			if (typeName != null) {
-				org.eclipse.ocl.pivot.Package asMetamodel = metamodelManager.getASmetamodel();
+				org.eclipse.ocl.pivot.Package asMetamodel = completeModel.getASmetamodel();
 				if (asMetamodel != null) {
-					CompletePackage completePackage = metamodelManager.getCompletePackage(asMetamodel);
+					CompletePackage completePackage = completeModel.getCompletePackage(asMetamodel);
 					org.eclipse.ocl.pivot.Class pivotType = completePackage.getMemberType(typeName);
 					if (pivotType != null) {
 						return pivotType;
@@ -179,7 +177,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		try {
 			pivotType = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eType);
 			if (pivotType != null) {
-				return metamodelManager.getPrimaryClass(pivotType);
+				return environmentFactory.getMetamodelManager().getPrimaryClass(pivotType);
 			}
 		} catch (ParserException e) {
 			logger.error("Failed to convert '" + eType + "'", e);
@@ -217,8 +215,8 @@ public class PivotIdResolver extends AbstractIdResolver
 		if (nsURIPackage != null) {
 			return nsURIPackage;
 		}
-		metamodelManager.setAutoLoadASmetamodel(true);
-		org.eclipse.ocl.pivot.Package asMetamodel = metamodelManager.getASmetamodel();
+		completeModel.setAutoLoadASmetamodel(true);
+		org.eclipse.ocl.pivot.Package asMetamodel = completeModel.getASmetamodel();
 		if ((asMetamodel != null) && PivotPackage.eNS_URI.equals(nsURI)) {
 			return asMetamodel;
 		}
@@ -242,7 +240,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		}
 	//	org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
 		else {
-			completePackage = getStandardLibrary().getCompleteModel().getCompletePackage(completePackageId, null, id.getName());
+			completePackage = completeModel.getCompletePackage(completePackageId, null, id.getName());
 			throw new UnsupportedOperationException();
 		//	Orphanage orphanage = environmentFactory.getOrphanage();
 		//	rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);

@@ -55,6 +55,9 @@ public class FinalAnalysis
 	 */
 	private final @NonNull Map<@NonNull Operation, @Nullable Set<@NonNull Operation>> operation2overrides = new HashMap<>();
 
+	/**
+	 * @since 7.0
+	 */
 	public FinalAnalysis(@NonNull CompleteModel completeModel) {
 		this.completeModel = completeModel;
 		MetamodelManager metamodelManager = completeModel.getMetamodelManager();

@@ -132,7 +132,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.createPackage(packageName, "viz", nsURI, IdManager.getRootPackageId(nsURI));
 		Model asRoot = PivotUtil.createModel(nsURI + ".java");
 		asRoot.getOwnedPackages().add(asPackage);
-		metamodelManager.installRoot(asRoot);
+		environmentFactory.getMetamodelManager().installRoot(asRoot);
 		return asPackage;
 	}
 

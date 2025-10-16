@@ -21,6 +21,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.codegen.analyzer.NameManager;
 import org.eclipse.ocl.codegen.java.ImportNameManager;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -32,7 +34,9 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE = "org.eclipse.jdt.annotation.Nullable";
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull CompleteModel completeModel;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
+//	protected final @NonNull MetamodelManager zmetamodelManager;
 	protected final @NonNull NameManager nameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private /*@LazyNonNull*/ Set<@NonNull Operation> constrainedOperations = null;
@@ -44,7 +48,9 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactory environmentFactory, @Nullable GenModel genModel) {
 		this.environmentFactory = environmentFactory;
-		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.completeModel = environmentFactory.getCompleteModel();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
+//		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.nameManager = createNameManager();
 		this.genModelHelper = createGenModelHelper(genModel);
 	}
@@ -52,7 +58,9 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactory environmentFactory, @NonNull NameManager nameManager,
 			@NonNull GenModelHelper genModelHelper) {
 		this.environmentFactory = environmentFactory;
-		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.completeModel = environmentFactory.getCompleteModel();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
+//		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.nameManager = nameManager;
 		this.genModelHelper = genModelHelper;
 	}
