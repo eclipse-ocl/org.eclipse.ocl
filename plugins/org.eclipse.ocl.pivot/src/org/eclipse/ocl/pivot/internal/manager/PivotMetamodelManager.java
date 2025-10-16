@@ -18,8 +18,6 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
-import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -43,7 +41,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
@@ -112,8 +109,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	 */
 	private final @NonNull Map<URI, External2AS> external2asMap = new HashMap<>();
 
-	private @Nullable Map<String, GenPackage> genPackageMap = null;
-
 	private @Nullable Map<@NonNull URI, @NonNull External2AS> uri2es2as = null;
 
 	/**
@@ -150,22 +145,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		assert (oldES2AS == null) || (es2as instanceof InverseConversion);// && !(oldES2AS instanceof InverseConversion));
 		oldES2AS = external2asMap.put(uri, es2as);
 		//		assert (oldES2AS == null) || (es2as instanceof AS2Ecore.InverseConversion); -- FIXME DelegatesTests thrashes this in the global EnvironmentFactory
-	}
-
-	@Override
-	public void addGenModel(@NonNull GenModel genModel) {
-		for (@SuppressWarnings("null")@NonNull GenPackage genPackage : genModel.getAllGenUsedAndStaticGenPackagesWithClassifiers()) {
-			addGenPackage(genPackage);
-		}
-	}
-
-	@Override
-	public void addGenPackage(@NonNull GenPackage genPackage) {
-		Map<String, GenPackage> genPackageMap2 = genPackageMap;
-		if (genPackageMap2 == null) {
-			genPackageMap = genPackageMap2 = new HashMap<>();
-		}
-		genPackageMap2.put(genPackage.getNSURI(), genPackage);
 	}
 
 	@Override
@@ -368,34 +347,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
-	}
-
-	@Override
-	public @Nullable GenPackage getGenPackage(@NonNull String nsURI) {
-		if (genPackageMap != null) {
-			GenPackage genPackage = genPackageMap.get(nsURI);
-			if (genPackage != null) {
-				return genPackage;
-			}
-		}
-		ResourceSet externalResourceSet = environmentFactory.getResourceSet();
-		URI uri = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true).get(nsURI);
-		if (uri != null) {
-			Resource resource = externalResourceSet.getResource(uri, true);
-			for (EObject eObject : resource.getContents()) {
-				if (eObject instanceof GenModel) {
-					GenModel genModel = (GenModel)eObject;
-					genModel.reconcile();
-					for (GenPackage genPackage : genModel.getGenPackages()) {
-						if (genPackage != null) {
-							addGenPackage(genPackage);
-							return genPackage;
-						}
-					}
-				}
-			}
-		}
-		return null;
 	}
 
 	@Override

@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -182,6 +183,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull FlowAnalysis createFlowAnalysis(@NonNull OCLExpression contextExpression);
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull GenPackageManager createGenPackageManager();
+
+	/**
 	 * Return a Helper that provides a variety of useful API facilities.
 	 *
 	@NonNull PivotHelper createHelper(); */	// FIXME Bug 509309 wait for major version
@@ -316,6 +322,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull GenPackageManager getGenPackageManager();
 
 	/**
 	 * Return the IdResolver that performs the resolution of the lightweight usage-independent Ids of types and packages

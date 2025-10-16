@@ -93,6 +93,7 @@ import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -157,6 +158,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final @NonNull ResourceSet externalResourceSet;
 	private final @NonNull ResourceSet asResourceSet;
 	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
+	private /*@LazyNonNull*/ GenPackageManager genPackageManager = null;
 
 	/**
 	 * The known precedences.
@@ -636,6 +638,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
+	public @NonNull GenPackageManager createGenPackageManager() {
+		return new GenPackageManager(this);
+	}
+
+	@Override
 	public  @NonNull IdResolver createIdResolver() {
 		return technology.createIdResolver(this);
 	}
@@ -1095,6 +1102,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
 		}
 		return flowAnalysis;
+	}
+
+	@Override
+	public @NonNull GenPackageManager getGenPackageManager() {
+		GenPackageManager genPackageManager2 = genPackageManager;
+		if (genPackageManager2 == null) {
+			genPackageManager = genPackageManager2 = createGenPackageManager();
+		}
+		return genPackageManager2;
 	}
 
 	@Override

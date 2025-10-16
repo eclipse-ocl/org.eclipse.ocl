@@ -30,8 +30,9 @@ import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.build.utilities.GenPackageHelper;
+import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflowComponent
@@ -250,10 +251,12 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 
 
 	private void registerGenModel(@NonNull OCL ocl, @NonNull GenModel genModel) {
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		metamodelManager.addGenModel(genModel);
-		for (@SuppressWarnings("null")@NonNull GenPackage usedGenPackage : genModel.getUsedGenPackages()) {
-			metamodelManager.addGenPackage(usedGenPackage);
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		GenPackageManager genPackageManager = environmentFactory.getGenPackageManager();
+		genPackageManager.addGenModel(genModel);
+		for (GenPackage usedGenPackage : genModel.getUsedGenPackages()) {
+			assert usedGenPackage != null;
+			genPackageManager.addGenPackage(usedGenPackage);
 		}
 	}
 

@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.AbstractTernaryOperation;
@@ -50,7 +51,6 @@ import org.eclipse.ocl.pivot.library.LibraryTernaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractGenModelHelper implements GenModelHelper
@@ -74,6 +74,15 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		}
 		else {
 			return new EcoreGenModelHelper(environmentFactory);
+		}
+	}
+
+	public static @NonNull GenModelHelper create(@NonNull GenPackageManager genPackageManager) {
+		if (genPackageManager.hasUML()) {
+			return new UMLGenModelHelper(genPackageManager.getEnvironmentFactory());
+		}
+		else {
+			return new EcoreGenModelHelper(genPackageManager.getEnvironmentFactory());
 		}
 	}
 
@@ -155,12 +164,12 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		return s.toString();
 	}
 
-	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull GenPackageManager genPackageManager;
 	protected final @NonNull CompleteModel completeModel;
 	protected final @NonNull StandardLibrary standardLibrary;
 
 	protected AbstractGenModelHelper(@NonNull EnvironmentFactory environmentFactory) {
-		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.genPackageManager = environmentFactory.getGenPackageManager();
 		this.completeModel = environmentFactory.getCompleteModel();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
@@ -346,7 +355,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		return metamodelManager.getEnvironmentFactory();
+		return genPackageManager.getEnvironmentFactory();
 	}
 
 	@Override
@@ -567,7 +576,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		if (eContainer instanceof Model) {
 			String nsURI = ((Model)eContainer).getExternalURI();
 			if (nsURI != null) {
-				GenPackage genPackage = metamodelManager.getGenPackage(nsURI);
+				GenPackage genPackage = genPackageManager.getGenPackage(nsURI);
 				if (genPackage != null) {
 					return genPackage;
 				}
@@ -577,7 +586,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		if (nsURI == null) {
 			return null;
 		}
-		return metamodelManager.getGenPackage(nsURI);
+		return genPackageManager.getGenPackage(nsURI);
 	}
 
 	@Override
@@ -632,7 +641,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		if (nsURI == null) {
 			return null;
 		}
-		return metamodelManager.getGenPackage(nsURI);
+		return genPackageManager.getGenPackage(nsURI);
 	}
 
 	@Override
@@ -685,10 +694,10 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		}
 	}
 
-	@Override
-	public @NonNull MetamodelManager getMetamodelManager() {
-		return metamodelManager;
-	}
+//	@Override
+//	public @NonNull MetamodelManager getMetamodelManager() {
+//		return metamodelManager;
+//	}
 
 	@Override
 	public @NonNull String getOperationAccessor(@NonNull Operation anOperation) throws GenModelException {
