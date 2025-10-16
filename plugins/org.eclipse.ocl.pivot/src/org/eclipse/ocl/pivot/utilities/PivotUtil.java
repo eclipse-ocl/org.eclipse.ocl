@@ -1329,10 +1329,10 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static Type findTypeOf(@NonNull MetamodelManager metamodelManager, @NonNull EClassifier eClass) {
+	public static Type findTypeOf(@NonNull EnvironmentFactory environmentFactory, @NonNull EClassifier eClass) {
 		Resource resource = eClass.eResource();
 		if (resource != null) {
-			External2AS adapter = External2AS.findAdapter(resource, metamodelManager.getEnvironmentFactory());
+			External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
 			if (adapter != null) {
 				Type type = adapter.getCreated(Type.class, eClass);
 				if (type != null) {

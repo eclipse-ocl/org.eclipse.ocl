@@ -99,7 +99,6 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
@@ -254,7 +253,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @NonNull CompleteModel completeModel;
 	/*protected final @NonNull PivotNameResolver nameResolver;*/
@@ -268,7 +266,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	public EssentialOCLCSLeft2RightVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 		this.environmentFactory = context.getEnvironmentFactory();
-		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.completeModel = environmentFactory.getCompleteModel();
 		/*this.nameResolver = new PivotNameResolver(environmentFactory); // FIXME factory method*/
@@ -343,7 +340,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					org.eclipse.ocl.pivot.Class specializedType = iteration.getOwningClass();
 					if (specializedType != null) {
 						org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(specializedType);
-						if ((bestType == null) || !metamodelManager.isSuperClassOf(unspecializedType, bestType)) {
+						if ((bestType == null) || !completeModel.isSuperClassOf(unspecializedType, bestType)) {
 							bestIteration = iteration;
 							bestType = unspecializedType;
 						}
@@ -1230,7 +1227,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		boolean hasCoIterator = false;
 		List<@NonNull Variable> pivotIterators = new ArrayList<>();
-		Type sourceElementType = rawSourceElementType != null ? metamodelManager.getPrimaryType(rawSourceElementType) : null;
+		Type sourceElementType = rawSourceElementType != null ? completeModel.getPrimaryType(rawSourceElementType) : null;
 		for (int argIndex = 0; argIndex < csRoundBracketedClause.getOwnedArguments().size(); argIndex++) {
 			NavigatingArgCS csArgument = csRoundBracketedClause.getOwnedArguments().get(argIndex);
 			if (csArgument.getRole() != NavigationRole.ITERATOR) {

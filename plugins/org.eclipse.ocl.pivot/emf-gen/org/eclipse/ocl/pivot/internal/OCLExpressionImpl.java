@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -364,8 +363,7 @@ implements OCLExpression {
 	@Override
 	public boolean isNonNull() {
 		Executor executor = PivotUtil.getExecutor(this);
-		MetamodelManager metamodelManager = executor.getMetamodelManager();
-		FlowAnalysis flowAnalysis = metamodelManager.getFlowAnalysis(this);
+		FlowAnalysis flowAnalysis = executor.getMetamodelManager().getFlowAnalysis(this);
 		return flowAnalysis.isNonNull(this);
 	}
 
@@ -383,8 +381,7 @@ implements OCLExpression {
 	@Override
 	public boolean isNull() {
 		Executor executor = PivotUtil.getExecutor(this);
-		MetamodelManager metamodelManager = executor.getMetamodelManager();
-		FlowAnalysis flowAnalysis = metamodelManager.getFlowAnalysis(this);
+		FlowAnalysis flowAnalysis = executor.getMetamodelManager().getFlowAnalysis(this);
 		return flowAnalysis.isNull(this);
 	}
 } //OCLExpressionImpl

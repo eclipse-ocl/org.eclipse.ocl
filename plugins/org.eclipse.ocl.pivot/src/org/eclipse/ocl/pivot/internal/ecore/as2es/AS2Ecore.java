@@ -441,7 +441,7 @@ public class AS2Ecore extends AbstractConversion
 		EObject eObject = createMap.get(pivotElement);
 		//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 		if (eObject == null) {
-			Element primaryElement = metamodelManager.getPrimaryElement(pivotElement);
+			Element primaryElement = completeModel.getPrimaryElement(pivotElement);
 			if (pivotElement != primaryElement) {
 				eObject = createMap.get(primaryElement);
 			}
@@ -519,7 +519,7 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	public void putCreated(@NonNull Element pivotElement, @NonNull EModelElement eModelElement) {
-		Element primaryElement = metamodelManager.getPrimaryElement(pivotElement);
+		Element primaryElement = completeModel.getPrimaryElement(pivotElement);
 		//		System.out.println("Put1 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 		EObject oldEObject = createMap.put(pivotElement, eModelElement);
 		assert oldEObject == null;

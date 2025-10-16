@@ -279,11 +279,6 @@ public class AliasAnalysis extends AdapterImpl
 			if (alias != null) {
 				return alias;
 			}
-			/*			MetamodelManager metamodelManager = ElementUtil.findMetamodelManager((Resource)getTarget());
-			if (metamodelManager != null) {
-				eObject = metamodelManager.getPrimaryElement(eObject);
-				return allAliases.get(eObject);
-			} */
 			if (hint != null) {
 				if (allNames.get(hint) != null) {
 					int counter = 0;

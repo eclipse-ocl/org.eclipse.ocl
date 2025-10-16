@@ -479,19 +479,18 @@ public class PrettyPrinter
 					return;
 				}
 				EnvironmentFactory environmentFactory = options.getGlobalOptions().getEnvironmentFactory();
-				MetamodelManager metamodelManager = environmentFactory != null ? environmentFactory.getMetamodelManager() : null;
-				if ((metamodelManager != null) && (parent instanceof Type)) {
-					parent = metamodelManager.getPrimaryType((Type) parent);
+				if ((environmentFactory != null) && (parent instanceof Type)) {
+					parent = environmentFactory.getCompleteModel().getPrimaryType((Type) parent);
 				}
 				if (parent == scope) {
 					return;
 				}
 				if (parent instanceof Visitable) {
-					List<PathElement> parentPath = PathElement.getPath(parent, metamodelManager);
+					List<PathElement> parentPath = PathElement.getPath(parent, environmentFactory);
 					int iMax = parentPath.size();
 					int i = 0;
 					if (scope != null) {
-						List<PathElement> scopePath = PathElement.getPath(scope, metamodelManager);
+						List<PathElement> scopePath = PathElement.getPath(scope, environmentFactory);
 						i = PathElement.getCommonLength(parentPath, scopePath);
 					}
 					if (i < iMax) {
@@ -520,14 +519,13 @@ public class PrettyPrinter
 		Mode savedMode = pushMode(Mode.TYPE);
 		try {
 			EnvironmentFactory environmentFactory = options.getGlobalOptions().getEnvironmentFactory();
-			MetamodelManager metamodelManager = environmentFactory != null ? environmentFactory.getMetamodelManager() : null;
 			Namespace parent = PivotUtil.getNamespace(element.eContainer());
-			List<PathElement> parentPath = PathElement.getPath(parent, metamodelManager);
+			List<PathElement> parentPath = PathElement.getPath(parent, environmentFactory);
 			int iMax = parentPath.size();
 			int i = 0;
 			Namespace scope = options.getScope();
 			if (scope != null) {
-				List<PathElement> scopePath = PathElement.getPath(scope, metamodelManager);
+				List<PathElement> scopePath = PathElement.getPath(scope, environmentFactory);
 				i = PathElement.getCommonLength(parentPath, scopePath);
 			}
 			if ((i == 0) && (i < iMax)) {

@@ -11,13 +11,13 @@
 package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -121,7 +121,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			MetamodelManager metamodelManager = context.getMetamodelManager();
+			MetamodelManager metamodelManager = context.getEnvironmentFactory().getMetamodelManager();
 			String operatorName = csElement.getName();
 			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getInfixPrecedence(operatorName) : null;
 			//			csElement.setPrecedence(precedence);
@@ -151,7 +151,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			MetamodelManager metamodelManager = context.getMetamodelManager();
+			CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 			TypedRefCS csKeyType = csElement.getOwnedKeyType();
 			TypedRefCS csValueType = csElement.getOwnedValueType();
 			Type type = null;
@@ -165,7 +165,6 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				keyType = context.getNormalizedType(keyType);
 				valueType = context.getNormalizedType(valueType);
 				if ((keyType != null) && (valueType != null)) {
-					CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 					if (keyType.eIsProxy() || valueType.eIsProxy()) {
 						type = standardLibrary.getOclInvalidType();
 					}
@@ -175,7 +174,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				}
 			}
 			if (type == null) {
-				type = metamodelManager.getStandardLibrary().basicGetLibraryClass(name);
+				type = standardLibrary.basicGetLibraryClass(name);
 			}
 			context.installPivotTypeWithMultiplicity(type, csElement);
 			return null;
@@ -190,7 +189,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			MetamodelManager metamodelManager = context.getMetamodelManager();
+			MetamodelManager metamodelManager = context.getEnvironmentFactory().getMetamodelManager();
 			String operatorName = csElement.getName();
 			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getPrefixPrecedence(operatorName) : null;
 			//			csElement.setPrecedence(precedence);

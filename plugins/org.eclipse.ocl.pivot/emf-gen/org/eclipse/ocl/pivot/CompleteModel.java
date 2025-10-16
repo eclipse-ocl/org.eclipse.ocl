@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -161,12 +162,23 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
+	@NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType);
+
+	/**
+	 * @since 7.0
+	 */
 	@NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter);
 
 	/**
 	 * @since 7.0
 	 */
 	@NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter, @NonNull String name);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type);
 
 	@Deprecated /* Use Class */
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
@@ -189,6 +201,11 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property);
+
+	/**
+	 * @since 7.0
+	 */
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	/**
 	 * Return the equivalent class to thatClass in thisModel, where equivalent is the same class/package name
@@ -206,6 +223,11 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * @since 7.0
@@ -235,7 +257,53 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@NonNull Iterable<org.eclipse.ocl.pivot.Class> getPartialClasses(@NonNull Type pivotType);
+
+	/**
+	 * @since 7.0
+	 */
 	@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg, boolean loadASmetamodelFirst);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull <T extends EObject> T getPrimaryElement(@NonNull T element);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Package getPrimaryPackage(org.eclipse.ocl.pivot.@NonNull Package eObject);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull String nsURI, String... subPackagePath);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Property getPrimaryProperty(@NonNull Property pivotProperty);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Class getPrimaryType(@NonNull String nsURI, @NonNull String path, String... extraPath);
+
+	// FIXME ASBH This should probably disappear
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Type getPrimaryType(@NonNull Type type);
 
 	@Deprecated org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
 
@@ -243,6 +311,16 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull CompleteStandardLibrary getStandardLibrary();
+
+	/**
+	 * @since 7.0
+	 */
+	boolean isSuperClassOf(org.eclipse.ocl.pivot.@NonNull Class unspecializedFirstType, org.eclipse.ocl.pivot.@NonNull Class secondType);
+
+	/**
+	 * @since 7.0
+	 */
+	boolean isTypeServeable(@NonNull Type type);
 
 	/**
 	 * @since 7.0

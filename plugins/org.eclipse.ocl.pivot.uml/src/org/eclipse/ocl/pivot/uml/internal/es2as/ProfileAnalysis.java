@@ -18,12 +18,12 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * The ProfileAnalysis captures the overall analysis of the UML M2 Profiles and Stereotypes.
@@ -346,13 +346,13 @@ public class ProfileAnalysis
 	}
 
 	private void computeMetatypeClosure() {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		for (org.eclipse.ocl.pivot.Package metapackage : allExtendedMetapackages) {
 			for (org.eclipse.ocl.pivot.Class subMetatype : metapackage.getOwnedClasses()) {
 				if (subMetatype != null) {
 					Set<Type> superMetatypeClosure = new HashSet<Type>();
 					metatype2superMetatypeClosure.put(subMetatype, superMetatypeClosure);
-					for (CompleteClass superCompleteClass : metamodelManager.getAllSuperCompleteClasses(subMetatype)) {
+					for (CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(subMetatype)) {
 						org.eclipse.ocl.pivot.Class asSuperMetatype = superCompleteClass.getPrimaryClass();
 						superMetatypeClosure.add(asSuperMetatype);
 						Set<Type> subMetatypeClosure = metatype2subMetatypeClosure.get(asSuperMetatype);
@@ -368,13 +368,12 @@ public class ProfileAnalysis
 	}
 
 	private void computeStereotypeClosure() {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		for (Stereotype subStereotype : allStereotypes) {
 			if (subStereotype != null) {
 				Set<Stereotype> superStereotypeClosure = new HashSet<Stereotype>();
 				stereotype2superStereotypeClosure.put(subStereotype, superStereotypeClosure);
-//				for (DomainClass asSuperStereotype : metamodelManager.getAllSuperClasses(subStereotype)) {
-				for (CompleteClass superCompleteClass : metamodelManager.getAllSuperCompleteClasses(subStereotype)) {
+				for (CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(subStereotype)) {
 					org.eclipse.ocl.pivot.Class asSuperStereotype = superCompleteClass.getPrimaryClass();
 					if (asSuperStereotype instanceof Stereotype) {
 						superStereotypeClosure.add((Stereotype)asSuperStereotype);

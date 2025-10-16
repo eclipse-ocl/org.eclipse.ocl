@@ -72,7 +72,7 @@ import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2ASDeclarationSwitch;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.uml2.common.util.UML2Util;
@@ -88,14 +88,17 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 
 	protected final @NonNull Ecore2ASDeclarationSwitch ecoreSwitch;
 	protected final @NonNull UML2AS converter;
-	protected final @NonNull MetamodelManager metamodelManager;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	public UML2ASDeclarationSwitch(@NonNull UML2AS converter) {
 		this.converter = converter;
 		this.ecoreSwitch = new Ecore2ASDeclarationSwitch(converter);
-		this.metamodelManager = converter.getMetamodelManager();
-		this.standardLibrary = converter.getStandardLibrary();
+		this.environmentFactory = converter.getEnvironmentFactory();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 
 	@Override
@@ -132,7 +135,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		converter.setOriginalMapping(pivotElement, umlBehavior);
 		doSwitchAll(pivotElement.getOwnedAnnotations(), umlBehavior.getOwnedElements(), null);
 		EClass umlMetaClass = umlBehavior.eClass();
-		Type metaType = metamodelManager.getASOfEcore(Type.class, umlMetaClass);
+		Type metaType = environmentFactory.getMetamodelManager().getASOfEcore(Type.class, umlMetaClass);
 		pivotElement.setMetaType(metaType);
 		return pivotElement;
 	}
@@ -899,7 +902,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		converter.setOriginalMapping(pivotElement, umlObject);
 		doSwitchAll(pivotElement.getOwnedAnnotations(), ((org.eclipse.uml2.uml.Element)umlObject).getOwnedElements(), null);
 		EClass umlMetaClass = umlObject.eClass();
-		Type metaType = metamodelManager.getASOfEcore(Type.class, umlMetaClass);
+		Type metaType = environmentFactory.getMetamodelManager().getASOfEcore(Type.class, umlMetaClass);
 		pivotElement.setMetaType(metaType);
 		if (umlObject instanceof org.eclipse.uml2.uml.Slot) {
 			converter.queueUse(umlObject);

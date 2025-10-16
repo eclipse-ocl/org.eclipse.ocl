@@ -499,7 +499,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	public void doTest_queryExecution(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
 		initModel(resourceSet, modelName);
 		OCLInternal ocl = configureMetamodelManagerForDelegate(companyPackage, resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
 				.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 
@@ -518,7 +518,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		Map<String, Object> badArguments = new HashMap<String, Object>();
 		badArguments.put(n, amy);
 		executeWithException(delegate, acme, badArguments,
-			PivotMessagesInternal.MismatchedArgumentType_ERROR_, n, getType(ocl, amy), PivotUtil.findTypeOf(metamodelManager, EcorePackage.Literals.ESTRING));
+			PivotMessagesInternal.MismatchedArgumentType_ERROR_, n, getType(ocl, amy), PivotUtil.findTypeOf(environmentFactory, EcorePackage.Literals.ESTRING));
 
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put(n, "Amy");
@@ -1271,13 +1271,13 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			public void runWithThrowable() throws ParserException {
 				ResourceSet resourceSet = createResourceSet();
 				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 				ExpressionInOCL expr = ocl.createQuery(null, "'abc'.oclAsType(String)");
 				OperationCallExp oce = (OperationCallExp) expr.getOwnedBody();
 				Operation o = oce.getReferredOperation();
 				try {
 					@SuppressWarnings({"unused", "null"})
-					ExpressionInOCL body = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, o);
+					ExpressionInOCL body = InvocationBehavior.INSTANCE.getQueryOrThrow(environmentFactory, o);
 					fail("Expected to catch OCLDelegateException");
 				}
 				catch (OCLDelegateException e) {
@@ -1285,7 +1285,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				// and again, now reading from cache
 				try {
 					@SuppressWarnings({"unused", "null"})
-					ExpressionInOCL bodyStillNull = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, o);
+					ExpressionInOCL bodyStillNull = InvocationBehavior.INSTANCE.getQueryOrThrow(environmentFactory, o);
 					fail("Expected to catch OCLDelegateException");
 				}
 				catch (OCLDelegateException e) {

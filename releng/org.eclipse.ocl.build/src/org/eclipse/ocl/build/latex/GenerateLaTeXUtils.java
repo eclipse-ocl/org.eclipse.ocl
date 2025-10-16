@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.markup.MarkupUtils;
@@ -600,7 +600,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		return precedences;
 	}
 
-	protected org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull MetamodelManager metamodelManager, @Nullable Resource oclResource) {
+	protected org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull EnvironmentFactory environmentFactory, @Nullable Resource oclResource) {
 		if (oclResource != null) {
 			for (EObject eContent : oclResource.getContents()) {
 				if (eContent instanceof RootCS) {
@@ -616,7 +616,7 @@ public abstract class GenerateLaTeXUtils extends GenerateLaTeX
 		return null;
 	}
 
-	protected org.eclipse.ocl.pivot.@Nullable Package getSecondaryPackage(@NonNull MetamodelManager metamodelManager, @Nullable Resource oclResource) {
+	protected org.eclipse.ocl.pivot.@Nullable Package getSecondaryPackage(@NonNull EnvironmentFactory environmentFactory, @Nullable Resource oclResource) {
 		if (oclResource != null) {
 			for (EObject eContent : oclResource.getContents()) {
 				if (eContent instanceof RootCS) {

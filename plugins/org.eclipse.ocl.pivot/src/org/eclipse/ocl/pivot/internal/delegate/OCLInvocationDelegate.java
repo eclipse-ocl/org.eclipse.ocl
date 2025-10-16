@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -71,19 +70,18 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(target);
 			Executor executor = PivotUtil.getExecutor(target);
 			ModelManager modelManager = executor.getModelManager();
-			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL query2 = query;
 			if ((query2 == null) || query2.eIsProxy()) {
 				Operation operation2 = operation;
 				NamedElement namedElement = delegateDomain.getPivot(NamedElement.class, ClassUtil.requireNonNull(eOperation));
 				if (namedElement instanceof Operation) {
 					operation2 = operation = (Operation) namedElement;
-					query2 = query = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, operation2);
+					query2 = query = InvocationBehavior.INSTANCE.getQueryOrThrow(environmentFactory, operation2);
 					InvocationBehavior.INSTANCE.validate(operation2);
 				}
 				else if (namedElement instanceof Constraint) {
 					Constraint constraint = (Constraint)namedElement;
-					query2 = query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, constraint);
+					query2 = query = ValidationBehavior.INSTANCE.getQueryOrThrow(environmentFactory, constraint);
 					ValidationBehavior.INSTANCE.validate(constraint);
 				}
 				else if (namedElement != null) {
@@ -157,13 +155,16 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 		return operation2;
 	}
 
-	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Constraint constraint) {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull EnvironmentFactory environmentFactory, @NonNull Constraint constraint) {
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		if ((specification == null) || specification.eIsProxy()) {
 			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, constraint.getContext(), PivotConstantsInternal.BODY_ROLE));
 		}
 		try {
-			return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
+			return environmentFactory.parseSpecification(specification);
 		} catch (ParserException e) {
 			throw new OCLDelegateException(e);
 		}

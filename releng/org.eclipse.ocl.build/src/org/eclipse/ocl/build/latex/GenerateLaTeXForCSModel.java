@@ -21,10 +21,11 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
@@ -50,7 +51,8 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 		File folder = new File(rootPath + latexFolder);
 		folder.mkdirs();
 		OCL ocl = OCL.newInstance();
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		ResourceSet resourceSet = ocl.getResourceSet();
 		ClasspathURIHandler.init(resourceSet, null);
 		try {
@@ -62,20 +64,20 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 				URI cs2asURI = ClassUtil.requireNonNull(URI.createPlatformResourceURI(cs2asSourceFile, true));
 				log.info("Loading Model '" + cs2asURI);
 				Resource oclResource = ocl.getCSResource(cs2asURI);
-				cs2asPackage = getSecondaryPackage(metamodelManager, oclResource);
+				cs2asPackage = getSecondaryPackage(environmentFactory, oclResource);
 			}
 			if ((cs2csFile != null) && (cs2csFile.length() > 0)) {
 				String cs2csSourceFile = "/" + projectName + "/" + cs2csFile;
 				URI cs2csURI = ClassUtil.requireNonNull(URI.createPlatformResourceURI(cs2csSourceFile, true));
 				log.info("Loading Model '" + cs2csURI);
 				Resource oclResource = ocl.getCSResource(cs2csURI);
-				cs2csPackage = getSecondaryPackage(metamodelManager, oclResource);
+				cs2csPackage = getSecondaryPackage(environmentFactory, oclResource);
 			}
 			if (cs2asPackage != null) {
-				asPackage = metamodelManager.getPrimaryPackage(cs2asPackage);
+				asPackage = completeModel.getPrimaryPackage(cs2asPackage);
 			}
 			else if (cs2csPackage != null) {
-				asPackage = metamodelManager.getPrimaryPackage(cs2csPackage);
+				asPackage = completeModel.getPrimaryPackage(cs2csPackage);
 			}
 			else {
 				String sourceFile = "/" + projectName + "/" + modelFile;
@@ -86,7 +88,7 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 					issues.addError(this, "No eResource for + ;" + fileURI + "'", null, null, null);
 					return;
 				}
-				Ecore2AS adapter = Ecore2AS.getAdapter(eResource, metamodelManager.getEnvironmentFactory());
+				Ecore2AS adapter = Ecore2AS.getAdapter(eResource, environmentFactory);
 				Model asModel = adapter.getASModel();
 				asPackage = asModel.getOwnedPackages().get(0);
 			}

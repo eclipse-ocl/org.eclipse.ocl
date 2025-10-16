@@ -20,7 +20,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
@@ -41,8 +40,8 @@ public class OCLVMModelManager extends AbstractModelManager
 	 * Instantiates a new OCL Domain Manager. Responsible for creating new
 	 * instances of the middle model and the middle model EFactory.
 	 */
-	public OCLVMModelManager(@NonNull MetamodelManager metamodelManager) {
-		this.environmentFactory = metamodelManager.getEnvironmentFactory();
+	public OCLVMModelManager(@NonNull EnvironmentFactory environmentFactory) {
+		this.environmentFactory = environmentFactory;
 		//	    super(metamodelManager);
 		//	    this.allInstancesTypes = transformationAnalysis.getAllInstancesTypes();
 	}

@@ -224,7 +224,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		for (Map.Entry<EObject, Collection<EStructuralFeature.Setting>> entry : EcoreUtil.CrossReferencer.find(allContents).entrySet()) {
 			EObject crossReference = entry.getKey();
 			if (crossReference instanceof Operation) {
-				Operation asOperation = environmentFactory.getMetamodelManager().getPrimaryOperation((Operation)crossReference);
+				Operation asOperation = completeModel.getPrimaryOperation((Operation)crossReference);
 				if (sameOrRedefiningOperation(asOperation, asElementEnvOperation)) {
 					for (EStructuralFeature.Setting setting : entry.getValue()) {
 						EObject eObject = setting.getEObject();

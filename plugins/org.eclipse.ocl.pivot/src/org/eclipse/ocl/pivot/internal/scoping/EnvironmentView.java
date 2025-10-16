@@ -410,7 +410,7 @@ public class EnvironmentView
 	public void addAllOperations(org.eclipse.ocl.pivot.@NonNull Class type, @Nullable FeatureFilter featureFilter) {
 		if (accepts(PivotPackage.Literals.ITERATION)		// If ITERATION is acceptable then so too is OPERATION
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want operations when looking for NAMESPACE
-			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
+			assert completeModel.isTypeServeable(type);
 			type = PivotUtil.getUnspecializedTemplateableElement(type);
 			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
@@ -481,7 +481,7 @@ public class EnvironmentView
 			else {
 				for (org.eclipse.ocl.pivot.Package pkge : root.getOwnedPackages()) {
 					if (pkge != null) {
-						addNamedElement(environmentFactory.getMetamodelManager().getPrimaryPackage(pkge));
+						addNamedElement(completeModel.getPrimaryPackage(pkge));
 					}
 				}
 			}
@@ -531,7 +531,7 @@ public class EnvironmentView
 	public void addAllProperties(org.eclipse.ocl.pivot.@NonNull Class type, @Nullable FeatureFilter featureFilter) {
 		if (accepts(PivotPackage.Literals.PROPERTY)
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
-			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
+			assert completeModel.isTypeServeable(type);
 			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
@@ -549,7 +549,7 @@ public class EnvironmentView
 
 	public void addAllStates(@NonNull Type type) {
 		if (accepts(PivotPackage.Literals.STATE)) {
-			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
+			assert completeModel.isTypeServeable(type);
 			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
@@ -698,7 +698,7 @@ public class EnvironmentView
 		//			element = ((TypeServer) element).getPrimaryType();		// FIXME lose casts
 		//		}
 		else if (element instanceof EObject) {
-			element = environmentFactory.getMetamodelManager().getPrimaryElement((EObject) element);		// FIXME lose casts
+			element = completeModel.getPrimaryElement((EObject) element);		// FIXME lose casts
 		}
 		if (element == null) {
 			return;

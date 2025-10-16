@@ -65,7 +65,6 @@ public class OperationContextCSAttribution extends AbstractAttribution
 					Element element = path.get(path.size()-2).getReferredElement();
 					if ((element instanceof org.eclipse.ocl.pivot.Class) && !element.eIsProxy()) {
 						org.eclipse.ocl.pivot.Class type = (org.eclipse.ocl.pivot.Class) element;
-//						MetamodelManager metamodelManager = environmentView.getMetamodelManager();
 						environmentView.addAllOperations(type, FeatureFilter.SELECT_NON_STATIC);
 						environmentView.addAllProperties(type, FeatureFilter.SELECT_NON_STATIC);
 //						if (!environmentView.hasFinalResult()) {

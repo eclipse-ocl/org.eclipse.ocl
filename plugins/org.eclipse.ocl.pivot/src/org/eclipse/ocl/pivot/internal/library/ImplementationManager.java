@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * ImplementationManager encapsulates the knowledge about known feature implementations.
@@ -47,7 +46,6 @@ public class ImplementationManager
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Technology technology;
-	private final @NonNull MetamodelManager metamodelManager;
 
 	/**
 	 * ClassLoaders that may be able to load a library implementation.
@@ -60,7 +58,6 @@ public class ImplementationManager
 	public ImplementationManager(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.technology = environmentFactory.getTechnology();
-		this.metamodelManager = environmentFactory.getMetamodelManager();
 	}
 
 	public void addClassLoader(@NonNull ClassLoader classLoader) {
@@ -77,7 +74,7 @@ public class ImplementationManager
 		List<@NonNull ClassLoader> classLoaders2 = classLoaders;
 		if (classLoaders2 == null) {
 			classLoaders2 = classLoaders = new ArrayList<>();
-			ClassLoader classLoader = metamodelManager.getClass().getClassLoader();
+			ClassLoader classLoader = environmentFactory.getMetamodelManager().getClass().getClassLoader();
 			assert classLoader != null;
 			classLoaders2.add(classLoader);
 		}
@@ -131,7 +128,7 @@ public class ImplementationManager
 		//		if (property.getOwningType() instanceof Stereotype) {
 		//			return new BaseProperty(property);
 		//		}
-		ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);
+		ExpressionInOCL specification = environmentFactory.getCompleteModel().getDefaultExpression(property);
 		if (property.isIsDerived() && (specification != null)) {
 			return new ConstrainedProperty(property, specification);
 		}

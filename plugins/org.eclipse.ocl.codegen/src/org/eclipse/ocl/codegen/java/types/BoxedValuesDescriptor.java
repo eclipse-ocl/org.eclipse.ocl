@@ -24,13 +24,13 @@ import org.eclipse.ocl.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * A BoxedValueDescriptor describes a type whose boxed representation differs from its unboxed representation. It has a pivot ElementId and a Java class.
@@ -72,8 +72,8 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 		return true;
 	}
 
-	protected EClassifier getEClassifier(@NonNull MetamodelManager metamodelManager, @NonNull Type type) {
-		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Class dType : metamodelManager.getPartialClasses(type)) {
+	protected EClassifier getEClassifier(@NonNull CompleteModel completeModel, @NonNull Type type) {
+		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Class dType : completeModel.getPartialClasses(type)) {
 			EClassifier eClass = (EClassifier) dType.getESObject();
 			if (eClass != null) {
 				return eClass;
@@ -150,7 +150,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 				TypeId typeId = id.getElementTypeId();
 				type = idResolver.getClass(typeId, null);
 			}
-			EClassifier eClassifier = getEClassifier(environmentFactory.getMetamodelManager(), type);
+			EClassifier eClassifier = getEClassifier(environmentFactory.getCompleteModel(), type);
 			if (eClassifier != null) {
 				GenModelHelper genModelHelper = codeGenerator.getGenModelHelper();
 				try {

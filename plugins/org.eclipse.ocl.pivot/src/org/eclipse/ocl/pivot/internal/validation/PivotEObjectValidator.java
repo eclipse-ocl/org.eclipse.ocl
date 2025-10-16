@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -41,7 +42,6 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -106,8 +106,7 @@ public class PivotEObjectValidator implements EValidator
 	protected boolean validate(@NonNull EnvironmentFactory environmentFactory, @NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
 			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
 		boolean allOk = true;
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
+		Type type = environmentFactory.getMetamodelManager().getASOfEcore(Type.class, eClassifier);
 		if (type != null) {
 			Iterable<@NonNull Object> allInvariantOrInvariants = environmentFactory.getCompleteModel().getAllCompleteInvariants(type);
 			if (allInvariantOrInvariants != null) {
@@ -188,13 +187,13 @@ public class PivotEObjectValidator implements EValidator
 				evaluationVisitor.setMonitor((Monitor) monitor);
 			}
 		}
-		final MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		final CompleteModel completeModel = environmentFactory.getCompleteModel();
 		AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluator<Diagnostic>(query)
 		{
 			@Override
 			protected String getObjectLabel() {
 				Type type = PivotUtil.getContainingType(constraint);
-				Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+				Type primaryType = type != null ? completeModel.getPrimaryType(type) : null;
 				EObject eTarget = primaryType != null ? primaryType.getESObject() : null;
 				EClassifier eClassifier = eTarget instanceof EClassifier ?  (EClassifier)eTarget : null;
 				return LabelUtil.getLabel(eClassifier, object, context);

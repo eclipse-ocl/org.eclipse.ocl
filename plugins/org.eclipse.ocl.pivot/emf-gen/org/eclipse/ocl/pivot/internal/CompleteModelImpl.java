@@ -16,11 +16,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -44,7 +46,9 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -55,7 +59,9 @@ import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
@@ -77,6 +83,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -102,6 +109,7 @@ import com.google.common.collect.Lists;
  */
 public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal
 {
+	private static final Logger logger = Logger.getLogger(CompleteModelImpl.class);
 
 	/**
 	 * @since 7.0
@@ -128,6 +136,21 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				}
 			}
 			return element;
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static class CompleteElementInvariantsIterable extends CompleteElementIterable<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Constraint>
+	{
+		public CompleteElementInvariantsIterable(@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Class> asClasses) {
+			super(asClasses);
+		}
+
+		@Override
+		protected @NonNull Iterable<@NonNull Constraint> getInnerIterable(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			return PivotUtil.getOwnedInvariants(asClass);
 		}
 	}
 
@@ -752,7 +775,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) {
 		List<@NonNull Object> knownInvariantOrInvariants = null;
-		Iterable<@NonNull CompleteClass> allSuperCompleteClasses = environmentFactory.getMetamodelManager().getAllSuperCompleteClasses(asType);
+		Iterable<@NonNull CompleteClass> allSuperCompleteClasses = getAllSuperCompleteClasses(asType);
 		for (CompleteClass superType : allSuperCompleteClasses) {
 			Map<@NonNull String, @NonNull Object> name2invariantOrInvariants = null;
 			List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = ClassUtil.nullFree(superType.getPartialClasses());
@@ -821,6 +844,26 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 //	}
 
 	/**
+	 * Return all constraints applicable to a type and its superclasses.
+	 *
+	 * @deprecated use CompleteModel.getAllCompleteInvariants()
+	 */
+	@Override @Deprecated
+	public @NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType) {
+		List<Constraint> knownInvariants = new ArrayList<>();
+		for (CompleteClass superType : getAllSuperCompleteClasses(pivotType)) {
+			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
+				org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
+				if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {
+					knownInvariants.addAll(partialSuperType.getOwnedInvariants());
+				}
+			}
+		}
+		assert new HashSet<>(knownInvariants).size() == knownInvariants.size();
+		return knownInvariants;
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	@Override
@@ -837,6 +880,59 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompleteClass completeClass = getCompleteClass(type);
 		return completeClass.getOperations(featureFilter, name);
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Iterable<? extends Property> getAllProperties(@NonNull Property pivotProperty) {
+//		FlatClass pivotClass = pivotProperty.getFlatClass(standardLibrary);
+		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();
+/*		if (owningType != null) {
+			return standardLibrary.getInheritance(owningType);
+		}
+		else {
+			return null;
+		}
+		CompleteInheritance owningInheritance = pivotProperty.getInheritance(standardLibrary); */
+		if (pivotClass == null) {
+			throw new IllegalStateException("Missing owning type");
+		}
+		CompleteClass completeClass = getCompleteClass(pivotClass/*.getPivotClass()*/);
+		Iterable<? extends Property> memberProperties = completeClass.getProperties(pivotProperty.getName());
+		if (memberProperties != null) {
+			return memberProperties;
+		}
+		return Collections.singletonList(pivotProperty);
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type) {
+		CompleteClass completeClass = getCompleteClass(type);
+		return completeClass.getSuperCompleteClasses();
+	}
+
+/*	public @Nullable ExpressionInOCL getBodyExpression(@NonNull Operation operation) {
+		ExpressionInOCL bodyExpression = null;
+		for (@SuppressWarnings("null")@NonNull Operation domainOperation : getOperationOverloads(operation)) {
+			LanguageExpression anExpression = domainOperation.getBodyExpression();
+			if (anExpression != null) {
+				if (bodyExpression != null) {
+					throw new IllegalStateException("Multiple bodies for " + operation);
+				}
+				try {
+					bodyExpression = environmentFactory.parseSpecification(anExpression);
+				} catch (ParserException e) {
+					String message = e.getMessage();
+					if (message == null) {
+						message = "";
+					}
+					logger.error(message);
+					bodyExpression = PivotUtil.createExpressionInOCLError(message);
+				}
+			}
+		}
+		return bodyExpression;
+	} */
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
@@ -1061,6 +1157,30 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
+	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property) {
+		ExpressionInOCL defaultExpression = null;
+		for (@SuppressWarnings("null")@NonNull Property domainProperty : getAllProperties(property)) {
+			LanguageExpression anExpression = domainProperty.getOwnedExpression();
+			if (anExpression != null) {
+				if (defaultExpression != null) {
+					throw new IllegalStateException("Multiple derivations for " + property);
+				}
+				try {
+					defaultExpression = environmentFactory.parseSpecification(anExpression);
+				} catch (ParserException e) {
+					String message = e.getMessage();
+					if (message == null) {
+						message = "";
+					}
+					logger.error(message);
+					defaultExpression = PivotUtil.createExpressionInOCLError(message);
+				}
+			}
+		}
+		return defaultExpression;
+	}
+
+	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ClassUtil.requireNonNull(environmentFactory);
 	}
@@ -1140,10 +1260,17 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		org.eclipse.ocl.pivot.Class type1 = getMetamodelManager().getPrimaryClass(type);
+		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
 		org.eclipse.ocl.pivot.Class unspecializedType = type1.getUnspecializedElement();
 		org.eclipse.ocl.pivot.Class theType = unspecializedType != null ? unspecializedType : type1;
 		return getCompleteClass(theType).getFlatClass();
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
+		CompleteClass completeClass = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
+		return new CompleteElementInvariantsIterable(partialClasses);
 	}
 
 	@Override
@@ -1161,6 +1288,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		assert ownedCompletePackages != null;
 		return ownedCompletePackages;
 	}
+
+/*	public @NonNull Iterable<? extends CompletePackage> getMemberPackages(org.eclipse.ocl.pivot.@NonNull Package pkg) {
+		return getCompletePackage(pkg).getOwnedCompletePackages();
+	} */
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getMemberProperties(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {
@@ -1264,6 +1395,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return ownedCompletePackages;
 	}
 
+	@Override
+	public @NonNull Iterable<org.eclipse.ocl.pivot.Class> getPartialClasses(@NonNull Type pivotType) {
+		CompleteClass completeClass = getCompleteClass(pivotType);
+		return completeClass.getPartialClasses();
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * Reference types used by the auto-generated overridden body. - Bug 543180
@@ -1286,6 +1423,193 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		CompletePackage completePackage = getCompletePackage(pkg);
 		return ClassUtil.nullFree(completePackage.getPartialPackages());
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		if (/*(type instanceof Type) &&*/ !isTypeServeable(type)) {
+			return type;
+		}
+		String instanceClassName = type.getInstanceClassName();
+		if ((instanceClassName != null) && instanceClassName.equals(java.util.Map.Entry.class.getName())) {		// FIXME a fudge to avoid UML's profile for EStringToStringMapEntry being used
+			return type;
+		}
+		return getCompleteClass(type).getPrimaryClass();
+		//		TypeTracker typeTracker = packageManager.findTypeTracker(pivotType);
+		//		if (typeTracker != null) {
+		//			return typeTracker.getPrimaryType();
+		//		}
+		//		else {
+		//			return pivotType;
+		//		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public @NonNull <T extends EObject> T getPrimaryElement(@NonNull T element) {
+		if (element instanceof Operation) {
+			return (T) getPrimaryOperation((Operation)element);
+		}
+		else if (element instanceof org.eclipse.ocl.pivot.Package) {
+			return (T) getPrimaryPackage((org.eclipse.ocl.pivot.Package)element);
+		}
+		else if (element instanceof Property) {
+			return (T) getPrimaryProperty((Property)element);
+		}
+		else if (element instanceof Type) {
+			return (T) getPrimaryType((Type)element);
+		}
+		return element;
+	}
+
+	@Override
+	public @NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
+		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
+		if (flatClass != null) {					// Null for an EAnnotation element
+			CompleteClass completeClass = getCompleteClass(flatClass.getPivotClass());		// XXX why use FlatClass at all ??
+			Operation operation = completeClass.getOperation(pivotOperation);
+			if (operation != null) {
+				return operation;
+			}
+		}
+		return pivotOperation;
+	}
+
+	/**
+	 * Lookup a primary package by its URI and optionally a sub-package path.
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull String nsURI, String... subPackagePath) {
+		CompletePackage completePackage = basicGetCompletePackageForURI(nsURI);
+		if (completePackage == null) {
+			return null;
+		}
+		if (subPackagePath != null) {
+			for (String subPackageName : subPackagePath) {
+				if (subPackageName == null) {
+					return null;
+				}
+				completePackage = completePackage.basicGetOwnedCompletePackage(subPackageName);
+				if (completePackage == null) {
+					return null;
+				}
+			}
+		}
+		return completePackage.getPrimaryPackage();
+	}
+
+	/**
+	 * Lookup a primary sub-package.
+	 *
+	public @Nullable PackageServer getPrimaryPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String subPackageName) {
+		PackageTracker packageTracker = packageManager.findPackageTracker(parentPackage);
+		if (packageTracker != null) {
+			return packageTracker.getPackageServer().getMemberPackage(subPackageName);
+		}
+		else {
+			return PivotUtil.getNamedElement(parentPackage.getNestedPackage(), subPackageName);
+		}
+	} */
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Package getPrimaryPackage(org.eclipse.ocl.pivot.@NonNull Package aPackage) {
+		return ClassUtil.requireNonNull(getCompletePackage(aPackage).getPrimaryPackage());
+	}
+
+	@Override
+	public @NonNull Property getPrimaryProperty(@NonNull Property pivotProperty) {
+		if (pivotProperty.eContainer() instanceof TupleType) {		// FIXME Find a better way
+			return pivotProperty;
+		}
+		if (pivotProperty.isIsImplicit()) {
+			Property opposite = pivotProperty.getOpposite();
+			if ((opposite != null) && !opposite.isIsImplicit()) {
+				return PivotUtil.getOpposite(getPrimaryProperty(opposite));
+			}
+		}
+//		FlatClass owningInheritance = pivotProperty.getFlatClass(standardLibrary);
+		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();
+		if (pivotClass == null) {
+			return pivotProperty;
+		}
+		String name = PivotUtil.getName(pivotProperty);
+		CompleteClass completeClass = getCompleteClass(pivotClass/*owningInheritance.getPivotClass()*/);
+		Iterable<@NonNull Property> memberProperties = completeClass.getProperties(pivotProperty.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC, name);
+		if (Iterables.size(memberProperties) <= 1) {					// No ambiguity
+			return memberProperties.iterator().next();					// use merged unambiguous result (not necessarily pivotProperty)
+		}
+		Property opposite = pivotProperty.getOpposite();
+		if (opposite == null) {											// No opposite, first one must be ok
+			return memberProperties.iterator().next();
+		}
+		String oppositeName = PivotUtil.getName(opposite);
+		CompleteClass oppositeCompleteClass = getCompleteClass(PivotUtil.getOwningClass(opposite));
+		for (@NonNull Property memberProperty : memberProperties) {
+			Property memberOpposite = memberProperty.getOpposite();
+			if (memberOpposite != null) {
+				if (oppositeName.equals(memberOpposite.getName())) {
+					CompleteClass memberOppositeCompleteClass = getCompleteClass(PivotUtil.getOwningClass(memberOpposite));
+					if (oppositeCompleteClass == memberOppositeCompleteClass) {
+						return memberProperty;							// First exact opposite is the primary
+					}
+				}
+			}
+		}
+		return memberProperties.iterator().next();						// Fallback, first one must be ok
+	}
+
+	// FIXME ASBH This should probably disappear
+	@Override
+	public @NonNull Type getPrimaryType(@NonNull Type type) {
+		if (/*(type instanceof Type) &&*/ !isTypeServeable(type)) {
+			return type;			// FIXME bad cast
+		}
+		org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.@Nullable Class)type;
+		CompleteClassInternal completeClass = getCompleteClass(asClass);
+		assert completeClass.getPartialClasses().contains(asClass);		// XXX redundant
+	//	CompleteClassInternal completeClass = completeModel.getCompleteClass(type);
+	//	assert completeClass.getPartialClasses().contains(type);
+		return completeClass.getPrimaryClass();
+		//		TypeTracker typeTracker = packageManager.findTypeTracker(pivotType);
+		//		if (typeTracker != null) {
+		//			return typeTracker.getPrimaryType();
+		//		}
+		//		else {
+		//			return pivotType;
+		//		}
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Class getPrimaryType(@NonNull String nsURI, @NonNull String path, String... extraPath) {
+		CompletePackage completePackage = basicGetCompletePackageForURI(nsURI);
+		if (completePackage == null) {
+			return null;
+		}
+		if ((extraPath == null) || (extraPath.length == 0)) {
+			return completePackage.getMemberType(path);
+		}
+		else {
+			completePackage = completePackage.basicGetOwnedCompletePackage(path);
+			if (completePackage == null) {
+				return null;
+			}
+			int iMax = extraPath.length-1;
+			for (int i = 0; i < iMax; i++) {
+				String subPackageName = extraPath[i];
+				if (subPackageName == null) {
+					return null;
+				}
+				completePackage = completePackage.basicGetOwnedCompletePackage(subPackageName);
+				if (completePackage == null) {
+					return null;
+				}
+			}
+			String subPackageName = extraPath[iMax];
+			if (subPackageName == null) {
+				return null;
+			}
+			return completePackage.getMemberType(subPackageName);
+		}
 	}
 
 	@Override
@@ -1317,6 +1641,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return standardLibrary;
 	}
 
+	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses(@NonNull CompleteClass completeClass) {
+		return completeClass.getProperSuperCompleteClasses();
+	}
+
 	@Override
 	public @NonNull CompleteModel init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -1324,6 +1652,50 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
 		return this;
+	}
+
+	@Override
+	public boolean isSuperClassOf(org.eclipse.ocl.pivot.@NonNull Class unspecializedFirstType, org.eclipse.ocl.pivot.@NonNull Class secondType) {
+		CompleteClass firstCompleteClass = getCompleteClass(unspecializedFirstType);
+		CompleteClass secondCompleteClass = getCompleteClass(secondType);
+		return isSuperCompleteClassOf(firstCompleteClass, secondCompleteClass);
+	}
+
+	public boolean isSuperCompleteClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
+		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPrimaryClass()));	// FIXME cast
+		//		org.eclipse.ocl.pivot.Class unspecializedSecondType = PivotUtil.getUnspecializedTemplateableElement(secondType);	// FIXME cast
+		if (unspecializedFirstType == unspecializedSecondType) {
+			return true;
+		}
+		for (CompleteClass superCompleteClass : getSuperCompleteClasses(unspecializedSecondType)) {
+			if (isSuperCompleteClassOf(unspecializedFirstType, superCompleteClass)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isTypeServeable(@NonNull Type type) {
+		//		if (pivotType .getUnspecializedElement() != null) {
+		//			return false;
+		//		}
+		if (type.isTemplateParameter() != null) {
+			return false;
+		}
+		//		if (pivotType instanceof UnspecifiedType) {
+		//			return false;
+		//		}
+		if (type instanceof LambdaType) {
+			return false;
+		}
+		//		if (pivotType instanceof TupleType) {
+		//			return false;
+		//		}
+		if (type.eContainer() instanceof TemplateParameterSubstitution) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -1337,7 +1709,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 7.0
 	 */
 	protected void loadASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asLibrary) {
-		PivotMetamodelManager metamodelManager = (PivotMetamodelManager) getMetamodelManager();
 		for (org.eclipse.ocl.pivot.@NonNull Package libPackage : getPartialPackages(asLibrary, false)) {
 			if (NameUtil.getNameable(libPackage.getOwnedClasses(), PivotPackage.Literals.ELEMENT.getName()) != null) {
 				setASmetamodel(libPackage);	// Custom meta-model
@@ -1368,10 +1739,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		Resource asResource = asModel.eResource();
 		assert asResource != null;
-		metamodelManager.getASResourceSet().getResources().add(asResource);
+		environmentFactory.getASResourceSet().getResources().add(asResource);
 		setASmetamodel(asPackage);		// Standard meta-model
 		//		asResourceSet.getResources().add(asResource);
-		metamodelManager.installResource(asResource);
+		((PivotMetamodelManager)getMetamodelManager()).installResource(asResource);
 	}
 
 	@Override

@@ -76,7 +76,6 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -636,7 +635,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected final @NonNull Map<@NonNull String, @NonNull String> generatedClassNameMap = new HashMap<>();
 	protected EnvironmentFactory environmentFactory;
 	protected CompleteModel completeModel;
-	protected MetamodelManager metamodelManager;
 	protected NameQueries nameQueries;
 	protected Model thisModel = null;
 	/**
@@ -727,7 +725,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			} */
 		}
 		else if (!(reference instanceof org.eclipse.ocl.pivot.Package)) {
-			reference = metamodelManager.getPrimaryElement(reference);
+			reference = completeModel.getPrimaryElement(reference);
 		}
 		if (external2name.containsKey(reference)) {
 			return;
@@ -1246,7 +1244,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 		EObject primaryElement;
 		if (!(elem instanceof org.eclipse.ocl.pivot.Package)) {
-			primaryElement = metamodelManager.getPrimaryElement(elem);
+			primaryElement = completeModel.getPrimaryElement(elem);
 		}
 		else {
 			primaryElement = elem;
@@ -1293,7 +1291,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected boolean hasComplements(@NonNull Type type) {
 		if (type instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)type;
-			org.eclipse.ocl.pivot.Class asPrimaryClass = metamodelManager.getPrimaryElement(asClass);
+			org.eclipse.ocl.pivot.Class asPrimaryClass = completeModel.getPrimaryElement(asClass);
 			if ((asClass != asPrimaryClass) && (!asClass.getOwnedOperations().isEmpty() || !asClass.getOwnedProperties().isEmpty())) {
 				return true;
 			}
@@ -1471,7 +1469,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected void setEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeModel = environmentFactory.getCompleteModel();
-		this.metamodelManager = environmentFactory.getMetamodelManager();
 		nameQueries = new NameQueries(environmentFactory);
 	}
 }

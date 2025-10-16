@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -474,10 +475,10 @@ public class OCL
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getContextType(@Nullable Object contextObject) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		IdResolver idResolver = getIdResolver();
 		org.eclipse.ocl.pivot.Class staticTypeOf = idResolver.getStaticClassOf(contextObject);
-		return metamodelManager.getPrimaryClass(staticTypeOf);
+		return completeModel.getPrimaryClass(staticTypeOf);
 	}
 
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {

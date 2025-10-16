@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Library;
@@ -54,7 +55,6 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -539,8 +539,8 @@ public class LoadTests extends AbstractLoadTests
 		assertEquals("pivot", nSpace.getName());
 		assertEquals("http://www.eclipse.org/ocl/2015/Pivot", refPackage.getURI());
 		assertNotSame(oclDocPackage, nSpace);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		assertEquals(metamodelManager.getPrimaryPackage(oclDocPackage), metamodelManager.getPrimaryPackage(refPackage));
+		CompleteModel completeModel = ocl.getEnvironmentFactory().getCompleteModel();
+		assertEquals(completeModel.getPrimaryPackage(oclDocPackage), completeModel.getPrimaryPackage(refPackage));
 		ocl.dispose();
 	}
 
@@ -562,8 +562,8 @@ public class LoadTests extends AbstractLoadTests
 		assertEquals("pivot", nSpace.getName());
 		assertEquals("http://www.eclipse.org/ocl/2015/Pivot", ((org.eclipse.ocl.pivot.Package)nSpace).getURI());
 		assertNotSame(oclDocPackage, nSpace);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		assertEquals(metamodelManager.getPrimaryPackage(oclDocPackage), metamodelManager.getPrimaryPackage(refPackage));
+		CompleteModel completeModel = ocl.getEnvironmentFactory().getCompleteModel();
+		assertEquals(completeModel.getPrimaryPackage(oclDocPackage), completeModel.getPrimaryPackage(refPackage));
 		ocl.dispose();
 	}
 

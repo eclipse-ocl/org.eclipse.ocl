@@ -144,7 +144,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				Type contextType = PivotUtil.getPivot(Type.class, csContext);
 				Type resultType = PivotUtil.getPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
-					CompleteModel completeModel = context.getMetamodelManager().getCompleteModel();
+					CompleteModel completeModel = context.getCompleteModel();
 					Orphanage orphanage = completeModel.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (ParameterCS csParameter : csElement.getOwnedParameters()) {
@@ -214,7 +214,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				Type contextType = PivotUtil.getPivot(Type.class, csContext);
 				Type resultType = PivotUtil.getPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
-					CompleteModel completeModel = context.getMetamodelManager().getCompleteModel();
+					CompleteModel completeModel = context.getCompleteModel();
 					Orphanage orphanage = completeModel.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {

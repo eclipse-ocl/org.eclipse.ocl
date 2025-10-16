@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.osgi.util.NLS;
@@ -53,15 +53,16 @@ public class SettingBehavior extends AbstractDelegatedBehavior<EStructuralFeatur
 	 * Return the feature body associated with structuralFeature, if necessary using ocl to
 	 * create the relevant parsing environment for a textual definition..
 	 * @throws OCLDelegateException
+	 * @since 7.0
 	 */
-	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Property property) throws OCLDelegateException {
+	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) throws OCLDelegateException {
 		LanguageExpression specification = property.getOwnedExpression();
 		if (specification == null) {
 			String message = NLS.bind(PivotMessagesInternal.MissingDerivationForSettingDelegate_ERROR_, property);
 			throw new OCLDelegateException(new SemanticException(message));
 		}
 		try {
-			return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
+			return environmentFactory.parseSpecification(specification);
 		} catch (ParserException e) {
 			throw new OCLDelegateException(e);
 		}

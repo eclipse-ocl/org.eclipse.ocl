@@ -295,7 +295,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		//		if (asMetamodels != null) {
 		//
 		//		}
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		conversion.pivotModel = PivotUtil.createModel(ecoreURI.toString());
 		//		conversion.installImports();
 		conversion.update(ecoreASResource, ClassUtil.requireNonNull(ecoreResource.getContents()));
@@ -312,20 +311,10 @@ public class Ecore2AS extends AbstractExternal2AS
 				pivotAliasMap.put(element, alias);
 			}
 		}
-		metamodelManager.installResource(ecoreASResource);
+		environmentFactory.getMetamodelManager().installResource(ecoreASResource);
 		conversion.installImports();
 		return conversion;
 	}
-
-	/*	public static Ecore2AS createConverter(MetamodelManager metamodelManager, Resource ecoreResource) {
-		EList<Adapter> eAdapters = ecoreResource.eAdapters();
-		Ecore2AS conversion = (Ecore2AS) EcoreUtil.getAdapter(eAdapters, Ecore2AS.class);
-		if (conversion == null) {
-			conversion = new Ecore2AS(metamodelManager);
-			eAdapters.add(conversion);
-		}
-		return conversion;
-	} */
 
 	/**
 	 * Convert an (annotated) Ecore object to a pivot element.
@@ -645,6 +634,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				return PivotUtil.getContainingModel(asLibrary);
 			}
 		}
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
 		asResource.setSaveable(false);
 		//		try {
@@ -806,7 +796,7 @@ public class Ecore2AS extends AbstractExternal2AS
 						}
 						try {
 							assert uri != null;
-							Element importedObject = metamodelManager.loadResource(uri, null, ecoreResource.getResourceSet());
+							Element importedObject = environmentFactory.getMetamodelManager().loadResource(uri, null, ecoreResource.getResourceSet());
 							if (importedObject instanceof Namespace) {
 								Import anImport = PivotFactory.eINSTANCE.createImport();
 								anImport.setName(key);
@@ -880,7 +870,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			String nsURI = eMetamodels.iterator().next().getNsURI();
 			if (nsURI != null) {
 				OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
-				metamodelManager.installResource(library);
+				environmentFactory.getMetamodelManager().installResource(library);
 			}
 		}
 	}
@@ -1360,7 +1350,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		 * Add any aliases
 		 */
 		resolveAliases(asResource);
-		metamodelManager.installResource(asResource);
+		environmentFactory.getMetamodelManager().installResource(asResource);
 		/*
 		 * Remap known Ecore EDataTypes after custom pivot types have had a chance to be declared.
 		 */

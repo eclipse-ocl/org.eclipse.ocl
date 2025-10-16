@@ -312,21 +312,21 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * - except pivot resources mapped to incoming CS resources
 	 *     this is what we're cleaning up
 	 */
-	public void garbageCollect(@NonNull Map<? extends Resource, ? extends ASResource> cs2asResourceMap) {
+	public void garbageCollect(@NonNull Map<@NonNull ? extends Resource, ? extends ASResource> cs2asResourceMap) {
 		//		org.eclipse.ocl.pivot.Class orphanClass = metamodelManager.getOrphanClass();
 		//		org.eclipse.ocl.pivot.Package orphanPackage = metamodelManager.getOrphanPackage();
 		//		Resource orphanResource = orphanPackage.eResource();
 		final Collection<Notifier> prunableResources = new ArrayList<>(cs2asResourceMap.values());
 		//		prunableResources.add(orphanResource);
-		Collection<Notifier> allPivotResources = new ArrayList<>(metamodelManager.getASResourceSet().getResources());
+		Collection<@NonNull Notifier> allPivotResources = new ArrayList<>(environmentFactory.getASResourceSet().getResources());
 		//		allPivotResources.removeAll(prunableResources);					// Dead elements in orphanage or pivot of CS can be pruned
-		EObject lockingObject = metamodelManager.getLockingObject();
+		EObject lockingObject = environmentFactory.getMetamodelManager().getLockingObject();
 		if (lockingObject != null) {
 			allPivotResources.add(lockingObject);						// Locked elements are not dead
 		}
 		allPivotResources.addAll(standardLibrary.getLibraries());			// Library elements are not dead
 		allPivotResources.addAll(cs2asResourceMap.keySet());				// Incoming elements are not dead
-		allPivotResources.remove(metamodelManager.getCompleteModel().getOrphanage().eResource());			// FIXME redundant ??
+		allPivotResources.remove(completeModel.getOrphanage().eResource());			// FIXME redundant ??
 		Map<EObject, Collection<Setting>> referencesToOrphans = new EcoreUtil.CrossReferencer(allPivotResources)
 		{
 			{ crossReference(); }
@@ -838,7 +838,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public void installRootElement(@NonNull CSResource csResource, @NonNull Element pivotElement) {
 		Resource asResource = converter.getASResource();
 		asResource.getContents().add(pivotElement);
-		metamodelManager.installResource(asResource);
+		environmentFactory.getMetamodelManager().installResource(asResource);
 	}
 
 	public boolean isInReturnTypeWithUnresolvedParameters(@NonNull ElementCS csElement) {
@@ -1105,7 +1105,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 		}
 		if (pivotType == null) {
-			pivotType = metamodelManager.getStandardLibrary().getOclVoidType();
+			pivotType = standardLibrary.getOclVoidType();
 			isRequired = false;
 		}
 		getHelper().setType(pivotElement, pivotType, isRequired);
@@ -1456,7 +1456,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//	Load the library.
 		//
-		metamodelManager.getStandardLibrary().getOclAnyType();
+		standardLibrary.getOclAnyType();
 		//
 		//	Perform the post-order traversal to create and install the bulk of non-package/class
 		//	elements.

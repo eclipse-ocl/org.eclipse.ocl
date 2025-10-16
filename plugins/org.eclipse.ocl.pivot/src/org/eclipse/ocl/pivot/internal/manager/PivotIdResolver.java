@@ -177,7 +177,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		try {
 			pivotType = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eType);
 			if (pivotType != null) {
-				return environmentFactory.getMetamodelManager().getPrimaryClass(pivotType);
+				return completeModel.getPrimaryClass(pivotType);
 			}
 		} catch (ParserException e) {
 			logger.error("Failed to convert '" + eType + "'", e);

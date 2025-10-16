@@ -209,7 +209,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (eModelElement != null) {
 			return eModelElement;
 		}
-		Element primaryElement = context.getMetamodelManager().getPrimaryElement(pivotElement);
+		Element primaryElement = context.getCompleteModel().getPrimaryElement(pivotElement);
 		if (!(primaryElement instanceof PivotObjectImpl)) {
 			return null;
 		}

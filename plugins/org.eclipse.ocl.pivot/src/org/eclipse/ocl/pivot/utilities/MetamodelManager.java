@@ -22,13 +22,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -98,22 +95,7 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type);
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull CompleteModel getCompleteModel();
-
-	/**
-	 * @since 7.0
-	 */
-	@Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property);
 
 	/**
 	 * @since 7.0
@@ -175,51 +157,12 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type);
-
-	/**
-	 * @since 7.0
-	 */
 	@Nullable EObject getLockingObject();
 
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Iterable<org.eclipse.ocl.pivot.Class> getPartialClasses(@NonNull Type pivotType);
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull PrecedenceManager getPrecedenceManager();
-
-	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull <T extends EObject> T getPrimaryElement(@NonNull T element);
-
-	@NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation);
-
-	org.eclipse.ocl.pivot.@NonNull Package getPrimaryPackage(org.eclipse.ocl.pivot.@NonNull Package eObject);
-
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull String nsURI, String... subPackagePath);
-
-	@NonNull Property getPrimaryProperty(@NonNull Property pivotProperty);
-
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@Nullable Class getPrimaryType(@NonNull String nsURI, @NonNull String path, String... extraPath);
-
-	// FIXME ASBH This should probably disappear
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Type getPrimaryType(@NonNull Type type);
 
 	/**
 	 * @since 7.0
@@ -240,16 +183,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void installRoot(@NonNull Model pivotModel);
-
-	/**
-	 * @since 7.0
-	 */
-	boolean isSuperClassOf(org.eclipse.ocl.pivot.@NonNull Class unspecializedFirstType, org.eclipse.ocl.pivot.@NonNull Class secondType);
-
-	/**
-	 * @since 7.0
-	 */
-	boolean isTypeServeable(@NonNull Type type);
 
 	/**
 	 * @since 7.0

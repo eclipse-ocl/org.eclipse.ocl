@@ -61,14 +61,12 @@ public class OCLDebugSettingDelegate extends OCLSettingDelegate
 	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Display display;
-		//	protected final @NonNull MetamodelManager metamodelManager;
 		protected final @Nullable Object contextObject;
 		protected final @NonNull ExpressionInOCL constraint;
 		private @Nullable ILaunch launch = null;
 
-		public DebugStarter(@NonNull Display display, /*@NonNull MetamodelManager metamodelManager,*/ @Nullable Object contextObject, @NonNull ExpressionInOCL constraint) {
+		public DebugStarter(@NonNull Display display, @Nullable Object contextObject, @NonNull ExpressionInOCL constraint) {
 			this.display = display;
-			//		this.metamodelManager = metamodelManager;
 			this.contextObject = contextObject;
 			this.constraint = constraint;
 		}
@@ -131,8 +129,7 @@ public class OCLDebugSettingDelegate extends OCLSettingDelegate
 	//	}
 
 	//	@Override
-	protected @Nullable Object evaluateEcore(/*@NonNull OCL ocl,*/ @NonNull ExpressionInOCL query, @Nullable Object contextObject) {
-		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
+	protected @Nullable Object evaluateEcore(@NonNull ExpressionInOCL query, @Nullable Object contextObject) {
 		@SuppressWarnings("null")@NonNull Display display = Display.getCurrent();
 		DebugStarter runnable = new DebugStarter(display, /*metamodelManager,*/ contextObject, query);
 		runnable.run(new NullProgressMonitor());
@@ -164,12 +161,8 @@ public class OCLDebugSettingDelegate extends OCLSettingDelegate
 		try {
 			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(null);
 			ExpressionInOCL query2 = getQuery(environmentFactory);
-
-
-
-			//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
 			@SuppressWarnings("null")@NonNull Display display = Display.getCurrent();
-			DebugStarter runnable = new DebugStarter(display, /*metamodelManager,*/ owner, query2);
+			DebugStarter runnable = new DebugStarter(display, owner, query2);
 			runnable.run(new NullProgressMonitor());
 			ILaunch launch = runnable.getLaunch();
 			if (launch != null) {

@@ -162,7 +162,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		ExpressionInOCL query2 = query;
 		if ((query2 == null) || query2.eIsProxy()) {
 			Property property2 = getProperty();
-			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
+			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory, property2);
 			SettingBehavior.INSTANCE.validate(property2);
 		}
 		return query2;

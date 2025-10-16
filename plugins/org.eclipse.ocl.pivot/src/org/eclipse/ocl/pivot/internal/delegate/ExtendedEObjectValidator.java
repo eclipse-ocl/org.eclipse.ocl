@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -130,8 +129,6 @@ public class ExtendedEObjectValidator extends EObjectValidator
 						validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
 						throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
 					}
-				//	MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				//	ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
 					ExpressionInOCL query = (ExpressionInOCL)asConstraint.getOwnedSpecification();
 					assert query != null;
 				//	System.out.println("validateDelegatedConstraint " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(query) + " " + query + " " + NameUtil.debugSimpleName(asConstraint) +  " " + asConstraint);
@@ -187,8 +184,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 						validationDelegate = (OCLValidationDelegate)oclValidationDelegateFactory.getValidationDelegate(eClass);			// XXX debugging
 						throw new IllegalStateException("No '" + validationDelegateURI + "' ValidationDelegate for '" + EObjectValidator.getObjectLabel(eObject, context) + "'");
 					}
-					MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-					ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, asConstraint);
+					ExpressionInOCL query = ValidationBehavior.INSTANCE.getQueryOrThrow(environmentFactory, asConstraint);
 				//	ExpressionInOCL query = (ExpressionInOCL)asConstraint.getOwnedSpecification();		// XXX trimmed testValidationTutorial is not pre-parsed
 					result = validationDelegate.validateExpressionInOCL(environmentFactory, eClass, eObject, null, context, DIAGNOSTIC_SOURCE, 0, query);
 				}

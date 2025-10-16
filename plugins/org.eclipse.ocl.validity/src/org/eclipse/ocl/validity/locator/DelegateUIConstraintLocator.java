@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -168,7 +167,7 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 				}
 				ExpressionInOCL query;
 				try {
-					query = ElementUtil.getFirstQuery(environmentFactory.getMetamodelManager(), csResource);
+					query = ElementUtil.getFirstQuery(environmentFactory, csResource);
 				} catch (ParserException e) {
 					openError(debug_FailLoad, e);
 					return;
@@ -198,10 +197,9 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 	public boolean debug(@NonNull ResultConstrainingNode resultConstrainingNode, final @NonNull ValidityView validityView, @NonNull IProgressMonitor monitor) throws CoreException {
 		EObject constrainedObject = getConstrainedObject(resultConstrainingNode);
 		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Constraint asConstraint = null;
 		try {
-			asConstraint = getConstraint(metamodelManager, resultConstrainingNode);
+			asConstraint = getConstraint(environmentFactory, resultConstrainingNode);
 		} catch (ParserException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

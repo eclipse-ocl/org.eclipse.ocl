@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -76,14 +76,15 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 	 * <code>ocl</code> to create the relevant parsing environment for a textual
 	 * definition.
 	 * @throws OCLDelegateException
+	 * @since 7.0
 	 */
-	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Operation operation) throws OCLDelegateException {
+	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull EnvironmentFactory environmentFactory, @NonNull Operation operation) throws OCLDelegateException {
 		LanguageExpression specification = operation.getBodyExpression();
 		if (specification == null) {
 			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
 		}
 		try {
-			return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
+			return environmentFactory.parseSpecification(specification);
 		} catch (ParserException e) {
 			throw new OCLDelegateException(e);
 		}

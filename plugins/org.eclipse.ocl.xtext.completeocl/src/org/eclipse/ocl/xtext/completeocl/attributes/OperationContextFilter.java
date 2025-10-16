@@ -13,12 +13,12 @@ package org.eclipse.ocl.xtext.completeocl.attributes;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.completeoclcs.OperationContextDeclCS;
@@ -37,7 +37,7 @@ public class OperationContextFilter implements ScopeFilter
 			return false;
 		}
 		Operation candidateOperation = (Operation) object;
-		MetamodelManager metamodelManager = environmentView.getEnvironmentFactory().getMetamodelManager();
+		CompleteModel completeModel = environmentView.getEnvironmentFactory().getCompleteModel();
 //		Type context = metamodelManager.getPrimaryType(candidateOperation.getOwningType());
 //		if (context != metamodelManager.getPrimaryElement(forType)) {
 //			return false;
@@ -54,10 +54,10 @@ public class OperationContextFilter implements ScopeFilter
 			Type contextType = PivotUtil.getPivot(Type.class, contextParameter.getOwnedType());
 			Type candidateType = candidateParameter.getType();
 			if (contextType != null) {
-				contextType = metamodelManager.getPrimaryType(contextType);
+				contextType = completeModel.getPrimaryType(contextType);
 			}
 			if (candidateType != null) {
-				candidateType = metamodelManager.getPrimaryType(candidateType);
+				candidateType = completeModel.getPrimaryType(candidateType);
 			}
 // FIXME Need to resolve parameter type pivots first
 //			if (contextType != candidateType) {

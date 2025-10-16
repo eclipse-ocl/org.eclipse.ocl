@@ -82,7 +82,7 @@ public class NameQueries
 		}
 		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
 			//	elem = completeModel.getCompleteClass((Type)elem);
-			elem = metamodelManager.getPrimaryClass((org.eclipse.ocl.pivot.Class)elem);
+			elem = completeModel.getPrimaryClass((org.eclipse.ocl.pivot.Class)elem);
 		}
 		return definedSymbols.get(elem);
 	}

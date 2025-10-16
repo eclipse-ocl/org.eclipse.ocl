@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -106,7 +105,6 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 	}
 
-	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	/**
@@ -116,8 +114,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	public BaseCSContainmentVisitor(@NonNull CS2ASConversion context) {
 		super(context);
-		this.metamodelManager = context.getMetamodelManager();
-		this.standardLibrary = metamodelManager.getStandardLibrary();
+		this.standardLibrary = context.getStandardLibrary();
 		this.helper = context.getHelper();
 	}
 

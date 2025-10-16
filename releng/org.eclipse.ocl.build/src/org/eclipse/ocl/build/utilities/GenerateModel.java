@@ -132,8 +132,6 @@ public class GenerateModel extends AbstractWorkflowComponent {
 		// since the proxy seems to be successfully resolved giving a double
 		// feature
 		ResourceUtils.checkResourceSet(resourceSet);
-		//		MetamodelManager metamodelManager = ElementUtil.findMetamodelManager(resourceSet);
-		//		metamodelManager.setAutoLoadPivotMetamodel(false);
 		EObject eObject = resource.getContents().get(0);
 		if (!(eObject instanceof GenModel)) {
 			throw new ConfigurationException("No GenModel found in '" + resource.getURI() + "'");

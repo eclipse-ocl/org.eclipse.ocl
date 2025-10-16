@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -51,7 +52,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
@@ -93,7 +94,8 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 
 	protected final @NonNull JavaCodeGenerator javaCodeGenerator;
 	protected final @NonNull GenModelHelper genModelHelper;
-	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull EnvironmentFactory environmentFactory;
+	protected final @NonNull CompleteModel completeModel;
 	protected final @NonNull IdResolver idResolver;
 	//	private /*@LazyNonNull*/ Id2BoxedJavaClassVisitor id2BoxedJavaClassVisitor = null;
 	//	private /*@LazyNonNull*/ Id2UnboxedJavaClassVisitor id2UnboxedJavaClassVisitor = null;
@@ -101,12 +103,13 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	public Id2BoxedDescriptorVisitor(@NonNull JavaCodeGenerator javaCodeGenerator) {
 		this.javaCodeGenerator = javaCodeGenerator;
 		this.genModelHelper = javaCodeGenerator.getGenModelHelper();
-		this.metamodelManager = javaCodeGenerator.getEnvironmentFactory().getMetamodelManager();
-		this.idResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
+		this.environmentFactory = javaCodeGenerator.getEnvironmentFactory();
+		this.completeModel = environmentFactory.getCompleteModel();
+		this.idResolver = environmentFactory.getIdResolver();
 	}
 
 	protected EClassifier getEClassifier(@NonNull Type type) {
-		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Class dType : metamodelManager.getPartialClasses(type)) {
+		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Class dType : completeModel.getPartialClasses(type)) {
 			EClassifier eClass = (EClassifier) dType.getESObject();
 			if (eClass != null) {
 				return eClass;
@@ -151,7 +154,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
 		// XXX FIXME Orphanage evolved to not-contain its Packages but Native Packages are evolving to a Native Model
 		if ((asPackage != null) && ((asPackage.eContainer() instanceof Orphanage) || (asPackage.eContainer() == null))) {
-			Orphanage orphanage = metamodelManager.getEnvironmentFactory().getOrphanage();
+			Orphanage orphanage = environmentFactory.getOrphanage();
 			boolean isOrphan = orphanage.isOrphanPackage(asPackage);
 			if (isOrphan) {
 				return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
@@ -310,7 +313,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		// FIXME this is the control path that has not been exercised
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
 		if (asPackage != null) {
-			Orphanage orphanage = metamodelManager.getEnvironmentFactory().getOrphanage();
+			Orphanage orphanage = environmentFactory.getOrphanage();
 			boolean isOrphan = orphanage.isOrphanPackage(asPackage);
 			if (isOrphan) {
 				return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
@@ -374,7 +377,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			}
 		} */
 		//		if (unboxedDescriptor == null) {
-		unboxedDescriptor = new UnboxedMapDescriptor(id, metamodelManager.getStandardLibrary(), valueType, keyType);
+		unboxedDescriptor = new UnboxedMapDescriptor(id, environmentFactory.getStandardLibrary(), valueType, keyType);
 		//		}
 		Class<?> boxedClass = MapValue.class;
 		return new BoxedMapDescriptor(id, boxedClass, unboxedDescriptor);

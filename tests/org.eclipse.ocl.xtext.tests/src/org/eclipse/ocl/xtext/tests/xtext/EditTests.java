@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -44,7 +45,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -925,6 +925,7 @@ public class EditTests extends XtextTestCase
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
 		BaseCSResource xtextResource = (BaseCSResource)ClassUtil.requireNonNull(ocl.getCSResource(outputURI, testDocument));
@@ -933,7 +934,7 @@ public class EditTests extends XtextTestCase
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
-		Type pivotTestClass1 = ClassUtil.requireNonNull(ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1"));
+		Type pivotTestClass1 = ClassUtil.requireNonNull(completeModel.getPrimaryType("TestPackage", "TestClass1"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the invariant.
 		//
@@ -947,7 +948,7 @@ public class EditTests extends XtextTestCase
 		//	Changing "Testing" back to "TestClass1" restores the type and the invariant.
 		//
 		TestUtil.assertSameModel(ecoreResource0, doRename(environmentFactory, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
-		pivotTestClass1 = ocl.getMetamodelManager().getPrimaryType("TestPackage", "TestClass1");
+		pivotTestClass1 = completeModel.getPrimaryType("TestPackage", "TestClass1");
 		//
 		//	Changing "testProperty1" to "tProperty" renames the property and breaks the invariant.
 		//
@@ -1028,9 +1029,9 @@ public class EditTests extends XtextTestCase
 			Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource0, ecoreResource1);
 		}
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		Type pivotTestClass1 = ClassUtil.requireNonNull(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
-		String testClassName2 = NameUtil.qualifiedNameFor(metamodelManager.getPrimaryType("TestPackage", "TestClass2"));
+		CompleteModel completeModel = ocl.getEnvironmentFactory().getCompleteModel();
+		Type pivotTestClass1 = ClassUtil.requireNonNull(completeModel.getPrimaryType("TestPackage", "TestClass1"));
+		String testClassName2 = NameUtil.qualifiedNameFor(completeModel.getPrimaryType("TestPackage", "TestClass2"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
 		//
@@ -1046,7 +1047,7 @@ public class EditTests extends XtextTestCase
 		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
 		//
 		TestUtil.assertSameModel(ecoreResource0, doRename(environmentFactory, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
-		pivotTestClass1 = ClassUtil.requireNonNull(metamodelManager.getPrimaryType("TestPackage", "TestClass1"));
+		pivotTestClass1 = ClassUtil.requireNonNull(completeModel.getPrimaryType("TestPackage", "TestClass1"));
 		//
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the referredProperty/referredOperation.
 		//
@@ -1057,7 +1058,7 @@ public class EditTests extends XtextTestCase
 		//	Changing "Testing" back to "TestClass1" restores the type and the referredProperty/referredOperation.
 		//
 		TestUtil.assertSameModel(ecoreResource0, doRename(environmentFactory, xtextResource, asResource, "Testing", "TestClass1", NO_MESSAGES, NO_MESSAGES));
-		pivotTestClass1 = metamodelManager.getPrimaryType("TestPackage", "TestClass1");
+		pivotTestClass1 = completeModel.getPrimaryType("TestPackage", "TestClass1");
 		//
 		ocl.dispose();
 		ocl1.activate();
@@ -1067,7 +1068,7 @@ public class EditTests extends XtextTestCase
 	public void testEdit_StaleSpecialization() throws Exception {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		String testDocument =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
@@ -1083,7 +1084,7 @@ public class EditTests extends XtextTestCase
 		assertResourceErrors("Loading input", xtextResource);
 		assertNoResourceErrors("Loading input", asResource);
 		//
-		Type myType = ClassUtil.requireNonNull(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
+		Type myType = ClassUtil.requireNonNull(completeModel.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
 		CollectionTypeArguments typeArguments = new CollectionTypeArguments(TypeId.SEQUENCE, myType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 		WeakReference<Type> sequenceMyType = new WeakReference<>(standardLibrary.basicGetCollectionType(typeArguments));
 		assertNull(sequenceMyType.get());

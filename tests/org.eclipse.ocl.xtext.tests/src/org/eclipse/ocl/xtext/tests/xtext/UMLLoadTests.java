@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
@@ -144,10 +145,11 @@ public class UMLLoadTests extends AbstractUMLLoadTests
 		doLoadUML(null, uri, new AbstractLoadCallBack(false, NO_MESSAGES, false) {
 			@Override
 			public void postLoad(@NonNull OCL ocl, @NonNull ASResource asResource) {
+				CompleteModel completeModel = ocl.getEnvironmentFactory().getCompleteModel();
 				for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 					EObject obj = tit.next();
 					if (obj instanceof Type) {
-						ocl.getMetamodelManager().getAllInvariants((Type) obj);		// This gives the Bug 422938 CCE
+						completeModel.getAllInvariants((Type) obj);		// This gives the Bug 422938 CCE
 					}
 				}
 			}
