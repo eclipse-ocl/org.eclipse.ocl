@@ -174,6 +174,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private /*@LazyNonNull*/ FinalAnalysis finalAnalysis = null;
 
 	/**
+	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
+	 */
+	private /*@LazyNonNull*/ Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
+
+	/**
 	 * Elements protected from garbage collection
 	 */
 	private @Nullable EAnnotation lockingAnnotation = null;
@@ -1074,6 +1079,24 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return finalAnalysis2;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression) {
+		OCLExpression contextExpression = FlowAnalysis.getControlExpression(oclExpression);
+		Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis2 = oclExpression2flowAnalysis;
+		if (oclExpression2flowAnalysis2 == null) {
+			oclExpression2flowAnalysis2 = oclExpression2flowAnalysis = new HashMap<>();
+		}
+		FlowAnalysis flowAnalysis = oclExpression2flowAnalysis2.get(contextExpression);
+		if (flowAnalysis == null) {
+			flowAnalysis = createFlowAnalysis(contextExpression);
+			oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
+		}
+		return flowAnalysis;
+	}
+
 	@Override
 	public @NonNull IdResolver getIdResolver() {
 		IdResolver idResolver2 = idResolver;
@@ -1556,6 +1579,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public void resetFinalAnalysis() {
 		finalAnalysis = null;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void resetFlowAnalysis() {
+		oclExpression2flowAnalysis = null;
 	}
 
 	public void resetSeverities() {

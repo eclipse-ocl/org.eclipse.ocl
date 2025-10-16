@@ -24,9 +24,7 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -90,11 +88,6 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
-
-	/**
-	 * @since 7.0
-	 */
 	@Nullable GenPackage getGenPackage(@NonNull String nsURI);
 
 	/**
@@ -136,9 +129,4 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void removeExternalResource(@NonNull Resource esResource);
-
-	/**
-	 * @since 7.0
-	 */
-	void resetFlowAnalysis();
 }

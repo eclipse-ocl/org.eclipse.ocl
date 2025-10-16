@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -125,8 +124,7 @@ public class FlowAnalysisTests extends XtextTestCase
 		}
 
 		protected FlowAnalysis getFlowAnalysis(@NonNull OCLExpression asExpression) {
-			MetamodelManager metamodelManager = getMetamodelManager();
-			return metamodelManager.getFlowAnalysis(asExpression);
+			return environmentFactory.getFlowAnalysis(asExpression);
 		}
 	}
 

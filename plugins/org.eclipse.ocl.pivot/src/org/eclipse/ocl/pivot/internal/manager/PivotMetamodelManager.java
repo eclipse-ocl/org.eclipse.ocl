@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -114,11 +113,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	private final @NonNull Map<URI, External2AS> external2asMap = new HashMap<>();
 
 	private @Nullable Map<String, GenPackage> genPackageMap = null;
-
-	/**
-	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
-	 */
-	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 
 	private @Nullable Map<@NonNull URI, @NonNull External2AS> uri2es2as = null;
 
@@ -374,24 +368,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression) {
-		OCLExpression contextExpression = FlowAnalysis.getControlExpression(oclExpression);
-		Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis2 = oclExpression2flowAnalysis;
-		if (oclExpression2flowAnalysis2 == null) {
-			oclExpression2flowAnalysis2 = oclExpression2flowAnalysis = new HashMap<>();
-		}
-		FlowAnalysis flowAnalysis = oclExpression2flowAnalysis2.get(contextExpression);
-		if (flowAnalysis == null) {
-			flowAnalysis = environmentFactory.createFlowAnalysis(contextExpression);
-			oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
-		}
-		return flowAnalysis;
 	}
 
 	@Override
@@ -685,14 +661,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				es2as.dispose();
 			}
 		}
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public void resetFlowAnalysis() {
-		oclExpression2flowAnalysis = null;
 	}
 
 	@Override
