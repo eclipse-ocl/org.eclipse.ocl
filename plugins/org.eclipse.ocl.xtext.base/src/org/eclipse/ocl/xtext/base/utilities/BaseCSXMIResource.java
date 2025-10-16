@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -232,12 +231,11 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 				return cs2as;
 			}
 		}
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		ClassLoader classLoader = getClass().getClassLoader();
 		if (classLoader != null) {
-			metamodelManager.addClassLoader(classLoader);
+			environmentFactory.addClassLoader(classLoader);
 		}
-		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
+		ResourceSet asResourceSet = environmentFactory.getASResourceSet();
 		@SuppressWarnings("null")@NonNull Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
 		initializeResourceFactory(resourceFactoryRegistry);
 		ASResource asResource = createASResource(asResourceSet);

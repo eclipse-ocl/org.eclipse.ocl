@@ -50,7 +50,7 @@ public class ImplementationManager
 	/**
 	 * ClassLoaders that may be able to load a library implementation.
 	 */
-	private List<@NonNull ClassLoader> classLoaders = null;
+	private /*@LazyNonNull*/ List<@NonNull ClassLoader> classLoaders = null;
 
 	/**
 	 * @since 7.0
@@ -70,11 +70,15 @@ public class ImplementationManager
 		}
 	}
 
+	public void dispose() {
+		classLoaders = null;
+	}
+
 	public @NonNull List<@NonNull ClassLoader> getClassLoaders() {
 		List<@NonNull ClassLoader> classLoaders2 = classLoaders;
 		if (classLoaders2 == null) {
 			classLoaders2 = classLoaders = new ArrayList<>();
-			ClassLoader classLoader = environmentFactory.getMetamodelManager().getClass().getClassLoader();
+			ClassLoader classLoader = environmentFactory.getClass().getClassLoader();
 			assert classLoader != null;
 			classLoaders2.add(classLoader);
 		}
@@ -186,10 +190,6 @@ public class ImplementationManager
 		return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
 	}
 
-	public void dispose() {
-		classLoaders = null;
-	}
-
 	/**
 	 * Return the implementation of a feature.
 	 *
@@ -209,26 +209,7 @@ public class ImplementationManager
 		if (implementation == null) {
 			String implementationClassName = feature.getImplementationClass();
 			if (implementationClassName != null) {
-				Class<?> theClass = null;
-				ClassLoader featureClassLoader = feature.getClass().getClassLoader();
-				if (featureClassLoader != null) {
-					addClassLoader(featureClassLoader);
-				}
-				ClassNotFoundException e = null;
-				for (@NonNull ClassLoader classLoader : getClassLoaders()) {
-					try {
-						theClass = classLoader.loadClass(implementationClassName);
-						e = null;
-						break;
-					} catch (ClassNotFoundException e1) {
-						if (e == null) {
-							e = e1;
-						}
-					}
-				}
-				if (e != null) {
-					throw e;
-				}
+				Class<?> theClass = loadImplementation(feature, implementationClassName);
 				if (theClass != null) {
 					Field field = theClass.getField("INSTANCE");
 					implementation = (LibraryFeature) field.get(null);
@@ -241,31 +222,27 @@ public class ImplementationManager
 	/**
 	 * @since 1.18
 	 */
-	public @Nullable Class<?> loadImplementation(@NonNull Object context, @NonNull String className) throws ClassNotFoundException {
+	public @Nullable Class<?> loadImplementation(@NonNull Object context, @NonNull String implementationClassName) throws ClassNotFoundException {
 		Class<?> theClass = null;
 		ClassLoader contextClassLoader = context.getClass().getClassLoader();
 		if (contextClassLoader != null) {
 			addClassLoader(contextClassLoader);
 		}
-		ClassNotFoundException e = null;
+		ClassNotFoundException ex = null;
 		for (@NonNull ClassLoader classLoader : getClassLoaders()) {
 			try {
-				theClass = classLoader.loadClass(className);
-				e = null;
+				theClass = classLoader.loadClass(implementationClassName);
+				ex = null;
 				break;
-			} catch (ClassNotFoundException e1) {
-				if (e == null) {
-					e = e1;
+			} catch (ClassNotFoundException e) {
+				if (ex == null) {
+					ex = e;
 				}
 			}
 		}
-		if (e != null) {
-			throw e;
+		if (ex != null) {
+			throw ex;
 		}
-	//	if (theClass != null) {
-	//		Field field = theClass.getField("INSTANCE");
-	//		implementation = (LibraryFeature) field.get(null);
-	//	}
 		return theClass;
 	}
 }

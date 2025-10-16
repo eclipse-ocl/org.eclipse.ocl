@@ -1318,17 +1318,6 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @Nullable MetamodelManager findMetamodelManager(@NonNull Resource resource) {
-		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory == null) {
-			return null;
-		}
-		return environmentFactory.getMetamodelManager();
-	}
-
-	/**
-	 * @since 7.0
-	 */
 	public static Type findTypeOf(@NonNull EnvironmentFactory environmentFactory, @NonNull EClassifier eClass) {
 		Resource resource = eClass.eResource();
 		if (resource != null) {

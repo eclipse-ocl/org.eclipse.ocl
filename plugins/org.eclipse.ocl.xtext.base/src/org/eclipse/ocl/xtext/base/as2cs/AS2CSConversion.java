@@ -344,7 +344,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public @NonNull PrecedenceManager getPrecedenceManager() {
-		return environmentFactory.getMetamodelManager().getPrecedenceManager();
+		return environmentFactory.getPrecedenceManager();
 	}
 
 	public @Nullable BaseReferenceVisitor getReferenceVisitor(@NonNull EClass eClass) {

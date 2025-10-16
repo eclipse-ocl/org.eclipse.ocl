@@ -1191,9 +1191,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(precedence);
 		Resource asResource = precedence.eResource();
 		if (asResource != null) {
-			MetamodelManager metamodelManager = PivotUtil.findMetamodelManager(asResource);
-			if (metamodelManager != null) {
-				append("(" + metamodelManager.getPrecedenceManager().getOrder(precedence) + ")");
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				append("(" + environmentFactory.getPrecedenceManager().getOrder(precedence) + ")");
 			}
 		}
 		return null;

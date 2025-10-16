@@ -23,6 +23,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -45,6 +46,7 @@ import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -57,6 +59,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
@@ -83,10 +86,13 @@ import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractCustomizable;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
+import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -100,6 +106,9 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
@@ -146,6 +155,17 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final @NonNull ResourceSet externalResourceSet;
 	private final @NonNull ResourceSet asResourceSet;
 	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
+
+	/**
+	 * The known precedences.
+	 */
+	private /*@LazyNonNull*/ PrecedenceManager precedenceManager = null;			// Lazily created
+
+	/**
+	 * The known implementation load capabilities.
+	 */
+	private /*@LazyNonNull*/ ImplementationManager implementationManager = null;			// Lazily created
+
 	/**
 	 * @since 7.0
 	 */
@@ -281,6 +301,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			ThreadLocalExecutor.resetEnvironmentFactory();
 		}
 		ThreadLocalExecutor.attachEnvironmentFactory(this);
+	}
+
+	@Override
+	public void addClassLoader(@NonNull ClassLoader classLoader) {
+		ImplementationManager implementationManager = getImplementationManager();
+		implementationManager.addClassLoader(classLoader);
 	}
 
 	@Override
@@ -738,6 +764,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 7.0
 	 */
+	protected @NonNull PrecedenceManager createPrecedenceManager() {
+		PrecedenceManager precedenceManager = new PrecedenceManager();
+		List<@NonNull String> errors = precedenceManager.compilePrecedences(standardLibrary.getLibraries());
+		for (@NonNull String error : errors) {
+			logger.error(error);
+		}
+		return precedenceManager;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	protected @NonNull CompleteStandardLibrary createStandardLibrary() {
 		return PivotFactory.eINSTANCE.createCompleteStandardLibrary();
 	}
@@ -819,6 +857,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			if (metamodelManager != null) {
 				metamodelManager.dispose();
 				metamodelManager = null;
+			}
+			if (precedenceManager != null) {
+				precedenceManager.dispose();
+				precedenceManager = null;
+			}
+			if (implementationManager != null) {
+				implementationManager.dispose();
+				implementationManager = null;
 			}
 			attachCount = -1;		// Wait in isDisposing() state while unload proxifies
 			EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
@@ -1004,6 +1050,134 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * @since 7.0
 	 */
+	public @NonNull LibraryFeature getImplementation(@NonNull Feature feature) throws ClassNotFoundException, SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+		LibraryFeature implementation = feature.getImplementation();
+		if (implementation == null) {
+			ImplementationManager implementationManager = getImplementationManager();
+			implementation = implementationManager.loadImplementation(feature);
+			if (implementation == null) {
+				implementation = UnsupportedOperation.INSTANCE;
+			}
+		}
+		return implementation;
+	}
+
+	@Override
+	public @NonNull LibraryFeature getImplementation(@NonNull Operation operation) {
+		LibraryFeature implementation = operation.getImplementation();
+		if (implementation == null) {
+			boolean isCodeGeneration = isCodeGeneration();
+			if (isCodeGeneration) {
+				LanguageExpression specification = operation.getBodyExpression();
+				if (specification != null) {
+					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
+					if (owningType != null) {
+						try {
+							ExpressionInOCL query = parseSpecification(specification);
+							implementation = new ConstrainedOperation(query);
+						} catch (ParserException e) {
+							// TODO Auto-generated catch block
+							//							e.printStackTrace();
+							implementation = UnsupportedOperation.INSTANCE;
+						}
+					}
+				}
+			}
+			if (implementation == null) {
+				EObject eTarget = operation.getESObject();
+				if (eTarget != null) {
+					EOperation eOperation = null;
+					if (eTarget instanceof EOperation) {
+						eOperation = (EOperation) eTarget;
+						while (eOperation.eContainer() instanceof EAnnotation) {
+							EAnnotation redefines = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
+							if (redefines != null) {
+								List<EObject> references = redefines.getReferences();
+								if (references.size() > 0) {
+									EObject eReference = references.get(0);
+									if (eReference instanceof EOperation) {
+										eOperation = (EOperation)eReference;
+									}
+								}
+							}
+						}
+					}
+					else {
+						Resource resource = operation.eResource();
+						if (resource instanceof ASResource) {
+							ASResource asResource = (ASResource)resource;
+							eOperation = asResource.getASResourceFactory().getEOperation(asResource, eTarget);
+						}
+					}
+					if ((eOperation != null) && (eOperation.getEType() != null)) {
+						implementation = new EInvokeOperation(eOperation);
+					}
+				}
+			}
+			if (!isCodeGeneration && (implementation == null)) {
+				LanguageExpression specification = operation.getBodyExpression();
+				if (specification != null) {
+					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
+					if (owningType != null) {
+						try {
+							ExpressionInOCL query = parseSpecification(specification);
+							implementation = new ConstrainedOperation(query);
+						} catch (ParserException e) {
+							// TODO Auto-generated catch block
+							//							e.printStackTrace();
+							implementation = UnsupportedOperation.INSTANCE;
+						}
+					}
+				}
+			}
+			if (implementation == null) {
+				try {
+					implementation = getImplementation((Feature) operation);
+				} catch (ClassNotFoundException | SecurityException
+						| NoSuchFieldException | IllegalArgumentException
+						| IllegalAccessException e) {}
+			}
+			if (implementation == null) {
+				implementation = UnsupportedOperation.INSTANCE;
+			}
+			operation.setImplementation(implementation);
+		}
+		return implementation;
+	}
+
+	@Override
+	public @NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
+		LibraryProperty implementation = (LibraryProperty) property.getImplementation();
+		if (implementation == null) {
+		//	System.out.println("getImplementation " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(property) + " " + property);
+			ImplementationManager implementationManager = getImplementationManager();
+			implementation = implementationManager.getPropertyImplementation(asNavigationExp, sourceValue, property);
+			property.setImplementation(implementation);
+		}
+		return implementation;
+	}
+
+	@Override
+	public @NonNull ImplementationManager getImplementationManager() {
+		ImplementationManager implementationManager2 = implementationManager;
+		if (implementationManager2 == null) {
+			implementationManager2 = implementationManager = createImplementationManager();
+		}
+		return implementationManager2;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable Precedence getInfixPrecedence(@NonNull String operatorName) {
+		getStandardLibrary();
+		PrecedenceManager precedenceManager = getPrecedenceManager();
+		return precedenceManager.getInfixPrecedence(operatorName);
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
 		if (asInstanceType instanceof ElementExtension) {
@@ -1049,6 +1223,33 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	protected @Nullable EnvironmentFactory getParent() {
 		return null;
+	}
+
+	/**
+	 * @since 1.5
+	 */
+	@Override
+	@SuppressWarnings("null")
+	public @NonNull PrecedenceManager getPrecedenceManager() {
+		if (precedenceManager == null) {
+			standardLibrary.getOclAnyType();		// Make sure OCL Standard Library has defined operations to be compiled with precedence
+			synchronized (this) {
+				if (precedenceManager == null) {
+					synchronized (this) {
+						precedenceManager = createPrecedenceManager();
+					}
+				}
+			}
+		}
+		return precedenceManager;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable Precedence getPrefixPrecedence(@NonNull String operatorName) {
+		PrecedenceManager precedenceManager = getPrecedenceManager();
+		return precedenceManager.getPrefixPrecedence(operatorName);
 	}
 
 	/**

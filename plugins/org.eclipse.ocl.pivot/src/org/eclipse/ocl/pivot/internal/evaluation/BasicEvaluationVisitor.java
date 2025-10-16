@@ -681,7 +681,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 					actualSourceType = standardLibrary.getCommonType(actualSourceType, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
-					LibraryBinaryOperation implementation = (LibraryBinaryOperation) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+					LibraryBinaryOperation implementation = (LibraryBinaryOperation) environmentFactory.getImplementation(actualOperation);
 					try {
 						Object result = implementation.evaluate(context, operationCallExp.getTypeId(), sourceValue, onlyArgument);
 						assert !(result instanceof NullValue);
@@ -704,7 +704,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			}
 			actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
 		}
-		LibraryOperation implementation = (LibraryOperation)environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+		LibraryOperation implementation = (LibraryOperation)environmentFactory.getImplementation(actualOperation);
 		try {
 			Object result = implementation.dispatch(context, operationCallExp, sourceValue);
 			assert !(result instanceof NullValue);

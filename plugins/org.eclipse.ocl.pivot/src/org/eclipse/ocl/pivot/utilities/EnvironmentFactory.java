@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -41,10 +42,13 @@ import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -76,6 +80,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	default void activate() {}
+
+	/**
+	 * @since 7.0
+	 */
+	void addClassLoader(@NonNull ClassLoader classLoader);
 
 	/**
 	 * @since 7.0
@@ -299,6 +308,21 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull IdResolver getIdResolver();
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryFeature getImplementation(@NonNull Operation operation);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull ImplementationManager getImplementationManager();
+
+	/**
 	 * Return the metaclass to which classType conforms.
 	 * @since 7.0
 	 */
@@ -315,6 +339,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	default @NonNull Orphanage getOrphanage() {
 		return getCompleteModel().getOrphanage();
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull PrecedenceManager getPrecedenceManager();
 
 	/**
 	 * Return the ProjectManager used to supervise the mappings and regustrations for external resource names such as those for Eclipse

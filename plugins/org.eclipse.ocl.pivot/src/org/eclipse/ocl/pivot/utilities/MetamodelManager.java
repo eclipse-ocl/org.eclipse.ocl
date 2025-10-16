@@ -29,18 +29,12 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
 /**
@@ -48,11 +42,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
  */
 public interface MetamodelManager
 {
-	/**
-	 * @since 7.0
-	 */
-	void addClassLoader(@NonNull ClassLoader classLoader);
-
 	/**
 	 * @since 7.0
 	 */
@@ -142,27 +131,7 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull LibraryFeature getImplementation(@NonNull Operation operation);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull ImplementationManager getImplementationManager();
-
-	/**
-	 * @since 7.0
-	 */
 	@Nullable EObject getLockingObject();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull PrecedenceManager getPrecedenceManager();
 
 	/**
 	 * @since 7.0
