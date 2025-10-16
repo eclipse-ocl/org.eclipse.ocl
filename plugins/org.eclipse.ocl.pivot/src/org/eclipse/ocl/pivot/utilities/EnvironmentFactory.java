@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -49,7 +50,9 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisit
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryIteration;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -303,6 +306,16 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@Nullable ICSI2ASMapping getCSI2ASMapping();
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull ClassLoader> getClassLoaders();
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Class<?> getClassImplementation(@Nullable Object context, @NonNull String instanceClassName) throws ClassNotFoundException;
+
+	/**
 	 * Return the CompleteModel that contains all the CompletePackages, which in turn contain all the CompleteClasses that
 	 * define the merge of individual Packages and Classes.
 	 */
@@ -337,17 +350,17 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * @since 7.0
 	 */
-	@NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull LibraryFeature getImplementation(@NonNull Operation operation);
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull ImplementationManager getImplementationManager();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryIteration getIterationImplementation(@NonNull Iteration iteration);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryIterationOrOperation getIterationOrOperationImplementation(@NonNull Operation operation);
 
 	/**
 	 * @since 7.0
@@ -368,6 +381,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * @since 7.0
 	 */
+	@NonNull LibraryOperation getOperationImplementation(@NonNull Operation operation);
+
+	/**
+	 * @since 7.0
+	 */
 	default @NonNull Orphanage getOrphanage() {
 		return getCompleteModel().getOrphanage();
 	}
@@ -382,6 +400,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * projects that enable those resources to be accessed and exploited.
 	 */
 	@NonNull ProjectManager getProjectManager();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LibraryProperty getPropertyImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
 
 	/**
 	 * Return the external ResourceSet used to hold External Syntax (e.g. Ecore or UML) and/or Concrete Syntax model representations.

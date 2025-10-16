@@ -29,7 +29,7 @@ public class BaseCS2AS extends CS2AS
 
 	public BaseCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
-		Iterable<@NonNull ClassLoader> classLoaders = environmentFactory.getImplementationManager().getClassLoaders();
+		Iterable<@NonNull ClassLoader> classLoaders = environmentFactory.getClassLoaders();
 		javaClassScope = new JavaClassScope(classLoaders);
 	}
 

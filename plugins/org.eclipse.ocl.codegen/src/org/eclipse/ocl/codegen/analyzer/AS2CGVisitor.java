@@ -376,7 +376,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGOperation createFinalCGOperationWithoutBody(@NonNull Operation asOperation) {
 		CGOperation cgOperation = null;
-		LibraryFeature libraryOperation = environmentFactory.getImplementation(asOperation);
+		LibraryFeature libraryOperation = environmentFactory.getOperationImplementation(asOperation);
 		if ((libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation)) {
 			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
 			cgOperation = cgNativeOperation;
@@ -511,7 +511,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Iteration asIteration = asIterateExp.getReferredIteration();
 		LibraryIteration libraryIteration = null;
 		if (asIteration != null) {
-			libraryIteration = (LibraryIteration) environmentFactory.getImplementation(asIteration);
+			libraryIteration = environmentFactory.getIterationImplementation(asIteration);
 			IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 			if (iterationHelper != null) {
 				CGBuiltInIterationCallExp cgBuiltInIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
@@ -601,7 +601,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGIterationCallExp generateIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp element) {
 		Iteration asIteration = ClassUtil.requireNonNull(element.getReferredIteration());
-		LibraryIteration libraryIteration = (LibraryIteration) environmentFactory.getImplementation(asIteration);
+		LibraryIteration libraryIteration = environmentFactory.getIterationImplementation(asIteration);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 		boolean isRequired = element.isIsRequired();
 		if (iterationHelper != null) {
@@ -676,7 +676,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Operation asOperation = ClassUtil.requireNonNull(element.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		OCLExpression pSource = element.getOwnedSource();
-		LibraryFeature libraryOperation = environmentFactory.getImplementation(asOperation);
+		LibraryFeature libraryOperation = environmentFactory.getOperationImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
@@ -845,7 +845,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Property asOppositeProperty = ClassUtil.requireNonNull(element.getReferredProperty());
 		Property asProperty = ClassUtil.requireNonNull(asOppositeProperty.getOpposite());
 		boolean isRequired = asProperty.isIsRequired();
-		LibraryProperty libraryProperty = environmentFactory.getImplementation(element, null, asProperty);
+		LibraryProperty libraryProperty = environmentFactory.getPropertyImplementation(element, null, asProperty);
 		CGOppositePropertyCallExp cgPropertyCallExp = null;
 		if (isEcoreProperty(libraryProperty)) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
@@ -884,7 +884,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generatePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull PropertyCallExp element) {
 		Property asProperty = ClassUtil.requireNonNull(element.getReferredProperty());
 		boolean isRequired = asProperty.isIsRequired();
-		LibraryProperty libraryProperty = environmentFactory.getImplementation(element, null, asProperty);
+		LibraryProperty libraryProperty = environmentFactory.getPropertyImplementation(element, null, asProperty);
 		CGPropertyCallExp cgPropertyCallExp = null;
 		if (libraryProperty instanceof NativeProperty) {
 			CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();

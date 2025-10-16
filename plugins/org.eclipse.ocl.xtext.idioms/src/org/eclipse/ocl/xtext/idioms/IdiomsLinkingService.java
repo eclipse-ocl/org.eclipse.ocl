@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
@@ -58,11 +57,10 @@ public class IdiomsLinkingService extends DefaultLinkingService
 		else if (ref == IdiomsPackage.Literals.GRAMMAR_DECLARATION__GRAMMAR) {
 			Resource idiomsResource = context.eResource();
 			ResourceSet resourceSet = idiomsResource.getResourceSet();
-			List<@NonNull ClassLoader> classLoaders = null;
+			Iterable<@NonNull ClassLoader> classLoaders = null;
 			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
-				ImplementationManager implementationManager = environmentFactory.getImplementationManager();
-				classLoaders = implementationManager.getClassLoaders();
+				classLoaders = environmentFactory.getClassLoaders();
 			}
 			ClasspathURIHandler.init(resourceSet, classLoaders);		// Ensure that the missing classpath: support is worked around - Xtext Bug 446073
 			URI baseURI = idiomsResource.getURI();
