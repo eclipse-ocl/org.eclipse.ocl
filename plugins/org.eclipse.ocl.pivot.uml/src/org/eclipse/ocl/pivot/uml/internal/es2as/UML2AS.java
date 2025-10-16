@@ -76,6 +76,7 @@ import org.eclipse.ocl.pivot.uml.internal.utilities.UMLEcoreTechnology;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -399,7 +400,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					throw new IllegalStateException("Missing containing resource");
 				}
 				//				installAliases(asResource);
-				metamodelManager.installResource(asResource);
+				environmentFactory.getMetamodelManager().installResource(asResource);
 			}
 			return pivotModel2;
 		}
@@ -618,7 +619,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			Model pivotModel2 = pivotModel;
 			if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
 				URI pivotURI = createPivotURI();
-				ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.UML_CONTENT_TYPE);
+				ASResource asResource = environmentFactory.getMetamodelManager().getResource(pivotURI, ASResource.UML_CONTENT_TYPE);
 				try {
 					pivotModel2 = installDeclarations(asResource);
 					//					Map<String, Type> resolvedSpecializations = new HashMap<>();
@@ -642,7 +643,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					}
 					installImports();
 					installAliases(asResource);
-					metamodelManager.installResource(asResource);
+					environmentFactory.getMetamodelManager().installResource(asResource);
 					installReferencers();
 					modelAnalysis.installStereotypes();
 					installProperties();
@@ -796,6 +797,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 						if (adapter == null) {
 							Inner importedAdapter = new Inner(importedResource, this);
 							URI pivotURI = importedAdapter.createPivotURI();
+							MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 							ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.UML_CONTENT_TYPE);
 							importedAdapter.installDeclarations(asResource);
 							adapter = importedAdapter;
@@ -1497,7 +1499,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		ClassUtil.requireNonNull(pivotModel);
 		EClass umlStereotypeEClass = umlStereotypeApplication.eClass();
 		if (!(umlStereotypeApplication instanceof DynamicEObjectImpl)) {					// If stereotyped element has been genmodelled
-			Stereotype asStereotype = metamodelManager.getASOfEcore(Stereotype.class, umlStereotypeEClass);
+			Stereotype asStereotype = environmentFactory.getMetamodelManager().getASOfEcore(Stereotype.class, umlStereotypeEClass);
 			return asStereotype;		// then it is already a Type rather than a Stereotype
 		}
 		//

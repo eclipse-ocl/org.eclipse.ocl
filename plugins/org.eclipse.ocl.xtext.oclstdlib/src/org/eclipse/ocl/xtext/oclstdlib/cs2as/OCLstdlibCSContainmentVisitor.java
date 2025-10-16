@@ -87,7 +87,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 		Class<?> instanceClass = null;
 		if (instanceClassName != null) {
 			try {
-				instanceClass = metamodelManager.getImplementationManager().loadImplementation(csClass, instanceClassName);
+				instanceClass = converter.getEnvironmentFactory().getMetamodelManager().getImplementationManager().loadImplementation(csClass, instanceClassName);
 			} catch (ClassNotFoundException e) {
 				context.addError(csClass, e.toString(), e);
 			}

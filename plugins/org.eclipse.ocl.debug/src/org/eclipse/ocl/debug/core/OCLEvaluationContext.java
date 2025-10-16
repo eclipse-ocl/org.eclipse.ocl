@@ -57,30 +57,6 @@ public class OCLEvaluationContext extends EvaluationContext
 		this.contextURI = contextURI;
 	}
 
-/*	protected @Nullable MetamodelManager findMetamodelManager() {
-		ExpressionInOCL expressionObject2 = expressionObject;
-		if (expressionObject2 != null) {
-			Resource eResource = expressionObject2.eResource();
-			if (eResource != null) {
-				MetamodelManager metamodelManager = PivotUtil.getMetamodelManager(eResource);
-				if (metamodelManager != null) {
-					return metamodelManager;
-				}
-			}
-		}
-		EObject contextObject2 = contextObject;
-		if (contextObject2 != null) {
-			Resource eResource = contextObject2.eResource();
-			if (eResource != null) {
-				MetamodelManager metamodelManager = PivotUtil.getMetamodelManager(eResource);
-				if (metamodelManager != null) {
-					return metamodelManager;
-				}
-			}
-		}
-		return null;
-	} */
-
 	public @NonNull URI getConstraintURI() {
 		return constraintURI;
 	}

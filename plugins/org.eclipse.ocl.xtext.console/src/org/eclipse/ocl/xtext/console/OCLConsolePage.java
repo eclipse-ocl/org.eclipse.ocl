@@ -811,7 +811,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					IdResolver idResolver = environmentFactory.getIdResolver();
 					//				DomainType staticType = idResolver.getStaticClassOf(selectedObject);
 					org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticClassOf(contextObject);
-					org.eclipse.ocl.pivot.Class contextType = environmentFactory.getMetamodelManager().getPrimaryClass(staticType);
+					org.eclipse.ocl.pivot.Class contextType = environmentFactory.getCompleteModel().getPrimaryClass(staticType);
 					Iterable<org.eclipse.ocl.pivot.@NonNull Class> savedContextModelClasses = contextModelClasses;
 					contextModelClasses = contextObject != null ? idResolver.getModelClassesOf(contextObject) : null;
 					BooleanPreference option = PivotConsoleOptions.ConsoleModeltypesInformation;

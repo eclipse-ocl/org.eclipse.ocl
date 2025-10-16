@@ -21,7 +21,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractConversion
@@ -62,7 +61,6 @@ public abstract class AbstractConversion
 	}
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull MetamodelManager metamodelManager;
 	/**
 	 * @since 7.0
 	 */
@@ -74,7 +72,6 @@ public abstract class AbstractConversion
 	 */
 	protected AbstractConversion(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
-		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.completeModel = environmentFactory.getCompleteModel();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
@@ -91,13 +88,6 @@ public abstract class AbstractConversion
 	 */
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull MetamodelManager getMetamodelManager() {
-		return metamodelManager;
 	}
 
 	/**

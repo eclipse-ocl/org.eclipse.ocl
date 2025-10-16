@@ -39,7 +39,7 @@ public class DebugUtil
 	public static @NonNull URI createDebugDocument(@NonNull EnvironmentFactory environmentFactory, @Nullable EObject contextObject, @NonNull String expression, IProgressMonitor monitor) throws CoreException, IOException {
 		IdResolver idResolver = environmentFactory.getIdResolver();
 		org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticClassOf(contextObject);
-		org.eclipse.ocl.pivot.Class contextType = environmentFactory.getMetamodelManager().getPrimaryClass(staticType);
+		org.eclipse.ocl.pivot.Class contextType = environmentFactory.getCompleteModel().getPrimaryClass(staticType);
 		//			if (contextType instanceof Metaclass) {
 		//				contextType = (org.eclipse.ocl.pivot.Class)((Metaclass<?>)contextType).getInstanceType();	// FIXME cast
 		//			}

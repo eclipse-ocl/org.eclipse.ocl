@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -430,7 +429,7 @@ public class ElementUtil
 	 * Extract the first embedded ExpressionInOCL.
 	 * @throws ParserException
 	 */
-	public static @Nullable ExpressionInOCL getFirstQuery(@NonNull MetamodelManager metamodelManager, BaseCSResource csResource) throws ParserException {
+	public static @Nullable ExpressionInOCL getFirstQuery(@NonNull EnvironmentFactory environmentFactory, BaseCSResource csResource) throws ParserException {
 		CS2AS cs2as = csResource.findCS2AS();
 		if (cs2as != null) {
 			ASResource asResource = cs2as.getASResource();
@@ -441,13 +440,13 @@ public class ElementUtil
 							for (Constraint asConstraint : asType.getOwnedInvariants()) {
 								LanguageExpression specification = asConstraint.getOwnedSpecification();
 								if (specification != null) {
-									return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
+									return environmentFactory.parseSpecification(specification);
 								}
 							}
 							for (Operation asOperation : asType.getOwnedOperations()) {
 								LanguageExpression specification = asOperation.getBodyExpression();
 								if (specification != null) {
-									return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
+									return environmentFactory.parseSpecification(specification);
 								}
 							}
 						}

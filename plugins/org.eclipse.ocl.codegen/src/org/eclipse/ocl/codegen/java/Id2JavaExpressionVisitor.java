@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NullValue;
@@ -55,11 +55,11 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 {
 	protected final @NonNull JavaStream js;
-	protected final @NonNull MetamodelManager metamodelManager;
+	protected final @NonNull EnvironmentFactory environmentFactory;
 
 	public Id2JavaExpressionVisitor(@NonNull JavaStream js) {
 		this.js = js;
-		this.metamodelManager = js.getCodeGenerator().getEnvironmentFactory().getMetamodelManager();
+		this.environmentFactory = js.getCodeGenerator().getEnvironmentFactory();
 	}
 
 	protected void appendSpecializedId(@NonNull TypeId typeId) {
@@ -215,7 +215,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	public @Nullable Object visitNsURIPackageId(@NonNull NsURIPackageId id) {
 		String nsURI = id.getNsURI();
 		String nsPrefix = id.getNsPrefix();
-		GenPackage genPackage = metamodelManager.getGenPackage(nsURI);
+		GenPackage genPackage = environmentFactory.getMetamodelManager().getGenPackage(nsURI);
 		js.appendClassReference(null, IdManager.class);
 		js.append(".getNsURIPackageId(");
 		js.appendString(nsURI);

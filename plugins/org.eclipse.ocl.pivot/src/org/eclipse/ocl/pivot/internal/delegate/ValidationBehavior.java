@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -30,7 +31,6 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -42,14 +42,17 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 	public static final @NonNull ValidationBehavior INSTANCE = new ValidationBehavior();
 	public static final @NonNull String NAME = "validationDelegates"; //$NON-NLS-1$
 
-	public Constraint getConstraint(@NonNull MetamodelManager metamodelManager, @NonNull EClassifier eClassifier, @NonNull String constraintName) throws OCLDelegateException {
-		EnvironmentFactory environmentFactory = metamodelManager.getEnvironmentFactory();
+	/**
+	 * @since 7.0
+	 */
+	public Constraint getConstraint(@NonNull EnvironmentFactory environmentFactory, @NonNull EClassifier eClassifier, @NonNull String constraintName) throws OCLDelegateException {
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		Resource ecoreMetamodel = ClassUtil.requireNonNull(eClassifier.eResource());
 		External2AS es2as = External2AS.getAdapter(ecoreMetamodel, environmentFactory);
 		Type type = es2as.getCreated(Type.class, eClassifier);
 		if (type != null) {
 			List<@NonNull Constraint> knownInvariants = new ArrayList<>();
-			for (CompleteClass superType : metamodelManager.getAllSuperCompleteClasses(type)) {
+			for (CompleteClass superType : completeModel.getAllSuperCompleteClasses(type)) {
 				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperType : ClassUtil.nullFree(superType.getPartialClasses())) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialSuperType.getOwningPackage();
 					if (!(partialPackage instanceof PackageImpl) || !((PackageImpl)partialPackage).isIgnoreInvariants()) {
@@ -95,21 +98,6 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 		return ClassUtil.requireNonNull(eClassifier.getEPackage());
 	}
 
-	/*	public ExpressionInOCL getExpressionInOCL(MetamodelManager metamodelManager, EClassifier eClassifier, String constraintName) throws OCLDelegateException {
-		Resource ecoreMetamodel = eClassifier.eResource();
-		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreMetamodel, metamodelManager);
-		Type type = ecore2as.getCreated(Type.class, eClassifier);
-		Constraint constraint = PivotUtil.getNamedElement(type.getOwnedRule(), constraintName);
-		if (constraint != null) {
-			ExpressionInOCL expressionInOCL = getExpressionInOCL(metamodelManager, type, constraint);
-			if (expressionInOCL != null) {
-				return expressionInOCL;
-			}
-		}
-		String message = NLS.bind(OCLMessages.MissingBodyForInvocationDelegate_ERROR_, type);
-		throw new OCLDelegateException(message);
-	} */
-
 	@Override
 	public ValidationDelegate.@Nullable Factory getFactory(@NonNull DelegateDomain delegateDomain, @NonNull EClassifier eClassifier) {
 		Class<EValidator.ValidationDelegate.@NonNull Registry> castClass = ValidationDelegate.Registry.class;
@@ -134,21 +122,22 @@ public class ValidationBehavior extends AbstractDelegatedBehavior<EClassifier, E
 	 * <code>ocl</code> to create the relevant parsing environment for a textual
 	 * definition.
 	 * @throws OCLDelegateException
+	 * @since 7.0
 	 */
-	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull MetamodelManager metamodelManager, @NonNull Constraint constraint) throws OCLDelegateException {
+	public @NonNull ExpressionInOCL getQueryOrThrow(@NonNull EnvironmentFactory environmentFactory, @NonNull Constraint constraint) throws OCLDelegateException {
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		if (specification == null) {
 			throw new OCLDelegateException(new SemanticException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, constraint, PivotConstantsInternal.INVARIANT_ROLE));
 		}
 		try {
-			return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
+			return environmentFactory.parseSpecification(specification);
 		} catch (ParserException e) {
 			throw new OCLDelegateException(e);
 		}
 	}
 
 	@Override
-	public @NonNull Class<ValidationDelegate.Factory.Registry> getRegistryClass() {
+	public @NonNull Class<ValidationDelegate.Factory.@NonNull Registry> getRegistryClass() {
 		return ValidationDelegate.Factory.Registry.class;
 	}
 }

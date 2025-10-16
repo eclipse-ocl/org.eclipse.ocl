@@ -90,7 +90,6 @@ import org.eclipse.ocl.pivot.types.TemplateArguments;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -661,10 +660,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType,
 			@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert environmentFactory != null;
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		genericType = (CollectionType) metamodelManager.getPrimaryClass(genericType);
-		elementType = metamodelManager.getPrimaryType(elementType);
+		assert completeModel != null;
+		genericType = (CollectionType) completeModel.getPrimaryClass(genericType);
+		elementType = completeModel.getPrimaryType(elementType);
 		assert genericType == PivotUtil.getUnspecializedTemplateableElement(genericType);
 	//	CompleteClassInternal completeClass = completeModel.getCompleteClass(genericType);
 	//	if (isUnspecializedType(completeClass, elementType)) {
@@ -968,7 +966,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public @NonNull Type getPrimaryType(@NonNull Type asType) {
-		return environmentFactory.getMetamodelManager().getPrimaryType(asType);
+		assert completeModel != null;
+		return completeModel.getPrimaryType(asType);
 	}
 
 	@Override

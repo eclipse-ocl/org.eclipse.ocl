@@ -71,11 +71,15 @@ public class PivotHelper extends PivotUtil
 {
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
-	private /*@LazyNonNull*/ MetamodelManager metamodelManager = null;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull CompleteModel completeModel;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.standardLibrary = this.environmentFactory.getStandardLibrary();
+		this.completeModel = environmentFactory.getCompleteModel();
 	}
 
 	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {
@@ -199,7 +203,7 @@ public class PivotHelper extends PivotUtil
 
 	public @NonNull OperationCallExp createOperationCallExp(@NonNull OCLExpression asSourceExpression, @NonNull String opName, @NonNull OCLExpression... asArguments) {
 		Type asType = ClassUtil.requireNonNull(asSourceExpression.getType());
-		CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(asType);
+		CompleteClass completeClass = completeModel.getCompleteClass(asType);
 		int argumentCount = asArguments != null ? asArguments.length : 0;
 		int bestMatches = -1;
 		Operation bestOperation = null;
@@ -307,7 +311,7 @@ public class PivotHelper extends PivotUtil
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
-		return ClassUtil.requireNonNull(environmentFactory.getCompleteModel().getASClass(TypeId.DATA_TYPE_NAME));
+		return ClassUtil.requireNonNull(completeModel.getASClass(TypeId.DATA_TYPE_NAME));
 	}
 
 	public @NonNull Property getDataTypeValueProperty() {
@@ -319,17 +323,6 @@ public class PivotHelper extends PivotUtil
 	 */
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return environmentFactory;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected @NonNull MetamodelManager getMetamodelManager() {
-		MetamodelManager metamodelManager2 = metamodelManager;
-		if (metamodelManager2 == null) {
-			this.metamodelManager = metamodelManager2 = environmentFactory.getMetamodelManager();
-		}
-		return metamodelManager2;
 	}
 
 	public @NonNull StandardLibrary getStandardLibrary() {
@@ -367,12 +360,11 @@ public class PivotHelper extends PivotUtil
 			for (CallExp unsafeCallExp : unsafeCallExps) {
 				OCLExpression source = unsafeCallExp.getOwnedSource();
 				assert source != null;
-				MetamodelManager metamodelManager = getMetamodelManager();
 				if (source.getType() instanceof CollectionType) {
-					rewriteUnsafeCollectionCallExp(metamodelManager, excludingOperation, unsafeCallExp);
+					rewriteUnsafeCollectionCallExp(excludingOperation, unsafeCallExp);
 				}
 				else {
-					rewriteUnsafeObjectCallExp(metamodelManager, oclEqualsOperation, unsafeCallExp);
+					rewriteUnsafeObjectCallExp(oclEqualsOperation, unsafeCallExp);
 				}
 			}
 		}
@@ -389,7 +381,7 @@ public class PivotHelper extends PivotUtil
 		return unsafeCallExps;
 	}
 
-	private void rewriteUnsafeCollectionCallExp(@NonNull MetamodelManager metamodelManager, @NonNull Operation excludingOperation, @NonNull CallExp unsafeCollectionCallExp) {
+	private void rewriteUnsafeCollectionCallExp(@NonNull Operation excludingOperation, @NonNull CallExp unsafeCollectionCallExp) {
 		unsafeCollectionCallExp.setIsSafe(false);
 		EObject eContainer = unsafeCollectionCallExp.eContainer();
 		EReference eContainmentFeature = unsafeCollectionCallExp.eContainmentFeature();
@@ -404,7 +396,7 @@ public class PivotHelper extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	private  void rewriteUnsafeObjectCallExp(@NonNull MetamodelManager metamodelManager, @NonNull Operation oclEqualsOperation, @NonNull CallExp unsafeObjectCallExp) {
+	private  void rewriteUnsafeObjectCallExp(@NonNull Operation oclEqualsOperation, @NonNull CallExp unsafeObjectCallExp) {
 		unsafeObjectCallExp.setIsSafe(false);
 		EObject eContainer = unsafeObjectCallExp.eContainer();
 		EReference eContainmentFeature = unsafeObjectCallExp.eContainmentFeature();
@@ -450,7 +442,6 @@ public class PivotHelper extends PivotUtil
 			assert contextType != null;
 			Type oldContextType = PivotUtil.getType(contextVariable);
 			if (contextType != oldContextType) {
-				CompleteModel completeModel = environmentFactory.getCompleteModel();
 				assert completeModel.getCompleteClass(contextType) == completeModel.getCompleteClass(oldContextType);
 			}
 		}
@@ -499,7 +490,7 @@ public class PivotHelper extends PivotUtil
 
 	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Type typeValue) {
 		setType(asExpression, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? getMetamodelManager().getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue != null ? completeModel.getPrimaryType(typeValue) : null;
 		if (primaryTypeValue != asExpression.getTypeValue()) {
 			asExpression.setTypeValue(primaryTypeValue);
 		}
@@ -510,14 +501,14 @@ public class PivotHelper extends PivotUtil
 	 */
 	public void setType(@NonNull VariableDeclaration asVariable, Type type, boolean isRequired, @Nullable Type typeValue) {
 		setType(asVariable, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? getMetamodelManager().getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue != null ? completeModel.getPrimaryType(typeValue) : null;
 		if (primaryTypeValue != asVariable.getTypeValue()) {
 			asVariable.setTypeValue(primaryTypeValue);
 		}
 	}
 
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
-		Type primaryType = type != null ? getMetamodelManager().getPrimaryType(type) : null;
+		Type primaryType = type != null ? completeModel.getPrimaryType(type) : null;
 		if (primaryType != asTypedElement.getType()) {
 			asTypedElement.setType(primaryType);
 		}

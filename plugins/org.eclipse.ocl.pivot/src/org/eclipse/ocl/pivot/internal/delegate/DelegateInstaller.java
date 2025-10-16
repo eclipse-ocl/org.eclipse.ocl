@@ -65,7 +65,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -327,6 +326,10 @@ public class DelegateInstaller
 	}
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull CompleteModel completeModel;
 	protected final @NonNull Map<@NonNull String, @Nullable Object> options;
 	protected final @Nullable String exportDelegateURI;
 
@@ -335,6 +338,7 @@ public class DelegateInstaller
 	 */
 	public DelegateInstaller(@NonNull EnvironmentFactory environmentFactory, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		this.environmentFactory = environmentFactory;
+		this.completeModel = environmentFactory.getCompleteModel();
 		this.options = options != null ? options : new HashMap<>();
 		this.exportDelegateURI = getExportDelegateURI(this.options);
 	}
@@ -422,7 +426,6 @@ public class DelegateInstaller
 	 */
 	private @NonNull Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> gatherEClass2Constraints(@NonNull Iterable<@NonNull Resource> asResources) {
 		Map<@NonNull EClass, @NonNull UniqueList<@NonNull Constraint>> eClass2constraints = new HashMap<>();
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		for (Resource asResource : asResources) {
 			for (EObject eObject : new TreeIterable(asResource)) {
 				if (eObject instanceof Constraint) {
@@ -561,14 +564,12 @@ public class DelegateInstaller
 	 */
 	private boolean installDelegates(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		boolean hasDelegates = false;
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		Type primaryType = metamodelManager.getPrimaryType(pivotType);
+		Type primaryType = completeModel.getPrimaryType(pivotType);
 		EObject eTarget = primaryType.getESObject();
 		if (eTarget instanceof EClassifier) {
 			@NonNull EClassifier eClassifier = (EClassifier)eTarget;
 			removeDelegateAnnotations(eClassifier, null);
-			for (Constraint constraint : metamodelManager.getLocalInvariants(pivotType)) {
+			for (Constraint constraint : completeModel.getLocalInvariants(pivotType)) {
 				EModelElement eContext = null;
 				if (constraint.isIsCallable()) {
 					@NonNull String name = PivotUtil.getName(constraint);
@@ -659,8 +660,7 @@ public class DelegateInstaller
 	public void installDelegates(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		List<@NonNull String> constraintNameSet = null;
 		StringBuilder s = null;
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		for (@NonNull Constraint pivotConstraint : metamodelManager.getLocalInvariants(pivotType)) {		// XXX metamodelManager
+		for (@NonNull Constraint pivotConstraint : completeModel.getLocalInvariants(pivotType)) {		// XXX metamodelManager
 			String constraintName = getAnnotationKey(pivotConstraint);
 			if (!pivotConstraint.isIsCallable()) {
 				if (constraintNameSet == null) {

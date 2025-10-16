@@ -207,20 +207,10 @@ public class OCLstdlibTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		//		metamodelManager = OCL.createEnvironmentFactory(getProjectMap()).getMetamodelManager();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		//		EnvironmentFactoryResourceSetAdapter adapter = EnvironmentFactoryResourceSetAdapter.findAdapter(resourceSet);
-		//		if (adapter != null) {
-		//			MetamodelManager metamodelManager = adapter.getMetamodelManager();
-		//			if (metamodelManager != null) {
-		//				metamodelManager.dispose();
-		//			}
-		//		}
-		//		metamodelManager.dispose();
-		//		metamodelManager = null;
 		super.tearDown();
 	}
 

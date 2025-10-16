@@ -77,11 +77,11 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 				if ((asResource != null) && (asResource.getResourceSet() != null)) {
 					asResource.unload();
 					environmentFactory.getCompleteModel().getPartialModels().remove(pivotModel2);		// XXX
-					metamodelManager.getASResourceSet().getResources().remove(asResource);
+					environmentFactory.getASResourceSet().getResources().remove(asResource);
 				}
 			}
 		}
-		metamodelManager.removeExternalResource(this);
+		environmentFactory.getMetamodelManager().removeExternalResource(this);
 	}
 
 	public void error(@NonNull String message) {

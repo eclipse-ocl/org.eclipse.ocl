@@ -97,7 +97,6 @@ import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -315,8 +314,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setName(newName);
 		copyDataTypeOrEnum(pivotElement, eDataType);
 		if (isPrimitive) {
-			MetamodelManager metamodelManager = converter.getMetamodelManager();
-			CompleteModel completeModel = metamodelManager.getCompleteModel();
+			CompleteModel completeModel = environmentFactory.getCompleteModel();
 			PrimitiveCompletePackageImpl primitiveCompletePackage = ((CompleteModelInternal)completeModel).getPrimitiveCompletePackage();
 			CompleteClassInternal completeClass = primitiveCompletePackage.getCompleteClass(pivotElement);
 			if (!completeClass.getPartialClasses().contains(pivotElement)) {
@@ -325,8 +323,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		else if (instanceClass != null) {
 			try {
-				MetamodelManager metamodelManager = converter.getMetamodelManager();
-				CompleteStandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
+				CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
 				if (behavioralClass == null) {
 					instanceClass.getDeclaredMethod("compareTo", instanceClass);

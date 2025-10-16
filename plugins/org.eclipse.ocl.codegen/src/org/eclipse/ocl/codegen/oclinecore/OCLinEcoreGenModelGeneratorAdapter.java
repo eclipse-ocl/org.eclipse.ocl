@@ -425,14 +425,14 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
-		protected void convertConstraintsToOperations(@NonNull MetamodelManager metamodelManager) {
+		protected void convertConstraintsToOperations(@NonNull EnvironmentFactory environmentFactory) {
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (GenPackage genPackage : genPackages) {
 				EPackage ecorePackage = genPackage.getEcorePackage();
 				removeEAnnotation(ecorePackage.getEAnnotation(PivotConstants.IMPORT_ANNOTATION_SOURCE));
 				Resource ecoreResource = ecorePackage.eResource();
 				if (ecoreResource != null) {
-					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
+					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 					for (GenClass genClass : genPackage.getGenClasses()) {
 						EClass eClass = genClass.getEcoreClass();
 						if (eClass != null) {
@@ -502,12 +502,12 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			return constantTexts;
 		}
 
-		protected @NonNull OCLinEcoreGenModelGeneratorAdapter getGenModelGeneratorAdapter() {
-			return OCLinEcoreGenModelGeneratorAdapter.this;
+		public @NonNull EnvironmentFactory getEnvironmentFactory() {
+			return ocl.getEnvironmentFactory();
 		}
 
-		public @NonNull MetamodelManager getMetamodelManager() {
-			return ocl.getMetamodelManager();
+		protected @NonNull OCLinEcoreGenModelGeneratorAdapter getGenModelGeneratorAdapter() {
+			return OCLinEcoreGenModelGeneratorAdapter.this;
 		}
 
 		@Override
@@ -515,13 +515,13 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			return genModel;
 		}
 
-		protected void installJavaBodies(@NonNull MetamodelManager metamodelManager, @NonNull GenModel genModel, @NonNull Map<String, String> results) {
+		protected void installJavaBodies(@NonNull EnvironmentFactory environmentFactory, @NonNull GenModel genModel, @NonNull Map<String, String> results) {
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (GenPackage genPackage : genPackages) {
 				EPackage ecorePackage = genPackage.getEcorePackage();
 				Resource ecoreResource = ecorePackage.eResource();
 				if (ecoreResource != null) {
-					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
+					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 					for (GenClass genClass : genPackage.getGenClasses()) {
 						EClass eClass = genClass.getEcoreClass();
 						if (eClass != null) {
@@ -701,15 +701,16 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				if (resourceSet == null) {
 					throw new NullPointerException("No ResourceSet for genmodel");
 				}
-				MetamodelManager metamodelManager = stateAdapter.getMetamodelManager();
-				metamodelManager.getStandardLibrary().getOclAnyType();
+				EnvironmentFactory environmentFactory = stateAdapter.getEnvironmentFactory();
+				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+				environmentFactory.getStandardLibrary().getOclAnyType();
 				for (GenPackage genPackage : genModel.getGenPackages()) {
 					EPackage ecorePackage = genPackage.getEcorePackage();
 					org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 					assert asPackage != null;
 				}
 				metamodelManager.installRoot(CGLibrary.getDefaultModel());
-				stateAdapter.convertConstraintsToOperations(metamodelManager);
+				stateAdapter.convertConstraintsToOperations(environmentFactory);
 				Map<@NonNull String, @NonNull String> results = stateAdapter.createFeatureBodies(genModel);
 				for (String key : results.keySet()) {
 					String oldBody = results.get(key);
@@ -717,7 +718,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					String newBody = ImportUtils.rewriteManagedImports(oldBody, null);	// FIXME transfer imports between CG sessions
 					results.put(key, newBody);
 				}
-				stateAdapter.installJavaBodies(metamodelManager, genModel, results);
+				stateAdapter.installJavaBodies(environmentFactory, genModel, results);
 				stateAdapter.pruneDelegates(genModel);
 			}
 		} catch (Exception e) {

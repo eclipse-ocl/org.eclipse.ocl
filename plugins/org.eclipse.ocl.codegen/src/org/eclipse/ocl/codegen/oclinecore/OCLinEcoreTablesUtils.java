@@ -75,7 +75,6 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.xtext.util.Strings;
@@ -237,15 +236,15 @@ public class OCLinEcoreTablesUtils
 	 */
 	public static class CodeGenString
 	{
-		protected final @NonNull MetamodelManager metamodelManager;
+		protected final @NonNull CompleteModel completeModel;
 		protected final boolean useNullAnnotations;
 		protected final @NonNull StringBuilder s = new StringBuilder();
 		protected final @NonNull JavaImportNameManager importNameManager = new JavaImportNameManager();
 		protected final @NonNull Map<@NonNull Type, @NonNull String> typeNameMap = new HashMap<>();
 		protected final @NonNull Set<@NonNull String> typeNameUse = new HashSet<>();
 
-		public CodeGenString(@NonNull MetamodelManager metamodelManager, boolean useNullAnnotations) {
-			this.metamodelManager = metamodelManager;
+		public CodeGenString(@NonNull CompleteModel completeModel, boolean useNullAnnotations) {
+			this.completeModel = completeModel;
 			this.useNullAnnotations = useNullAnnotations;
 		}
 
@@ -292,7 +291,7 @@ public class OCLinEcoreTablesUtils
 		 * Append the encoded name of a type with a suffix if disambiguation across packages is required.
 		 */
 		public void appendUnscopedTypeName(@NonNull Type theType) {
-			s.append(getTypeName(metamodelManager.getPrimaryType(theType)));
+			s.append(getTypeName(completeModel.getPrimaryType(theType)));
 		}
 
 		public @NonNull List<@NonNull String> getClassReferences() {
@@ -689,21 +688,12 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	private static @NonNull MetamodelManager getMetamodelManager(@NonNull GenPackage genPackage) {
-		Resource genModelResource = genPackage.eResource();
-		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
-		assert genModelResourceSet != null;
-		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(genModelResourceSet);
-		return environmentFactory.getMetamodelManager();
-	}
-
 	protected final boolean useNullAnnotations;
-	protected final @NonNull MetamodelManager metamodelManager;
-	protected final @NonNull CodeGenString s;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull CompleteModel completeModel;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
+	protected final @NonNull CodeGenString s;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull EmitTypeExpressionVisitor emitTypeExpression;			// emit LIBRARY.getSomething
 	protected final @NonNull EmitDeclaredNameVisitor emitDeclaredName;				// emit _ZZZ
@@ -716,11 +706,13 @@ public class OCLinEcoreTablesUtils
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
 		GenModel genModel = ClassUtil.requireNonNull(genPackage.getGenModel());
 		this.useNullAnnotations = OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
-		this.metamodelManager = getMetamodelManager(genPackage);
-		this.s = new CodeGenString(metamodelManager, useNullAnnotations);
-		this.environmentFactory = metamodelManager.getEnvironmentFactory();
+		Resource genModelResource = genPackage.eResource();
+		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
+		assert genModelResourceSet != null;
+		this.environmentFactory = PivotUtil.getEnvironmentFactory(genModelResourceSet);
 		this.completeModel = environmentFactory.getCompleteModel();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.s = new CodeGenString(completeModel, useNullAnnotations);
 		this.genPackage = genPackage;
 		this.asPackage = ClassUtil.requireNonNull(getPivotPackage(genPackage));
 		this.emitTypeExpression = new EmitTypeExpressionVisitor(s);
@@ -803,7 +795,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllProperSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
-		org.eclipse.ocl.pivot.Class theClass = metamodelManager.getPrimaryClass(pClass);
+		org.eclipse.ocl.pivot.Class theClass = completeModel.getPrimaryClass(pClass);
 		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results = new HashMap<>();
 		getAllSuperClasses(results, theClass);
 		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(results.keySet());
@@ -821,13 +813,13 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected int getAllSuperClasses(@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results, org.eclipse.ocl.pivot.@NonNull Class aClass) {
-		org.eclipse.ocl.pivot.Class theClass = metamodelManager.getPrimaryClass(aClass);
+		org.eclipse.ocl.pivot.Class theClass = completeModel.getPrimaryClass(aClass);
 		Integer depth = results.get(theClass);
 		if (depth != null) {
 			return depth;
 		}
 		int myDepth = 0;
-		for (@NonNull CompleteClass superCompleteClass : metamodelManager.getAllSuperCompleteClasses(theClass)) {
+		for (@NonNull CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(theClass)) {
 			org.eclipse.ocl.pivot.Class superClass = superCompleteClass.getPrimaryClass();
 			if (superClass != theClass) {
 				superClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
@@ -1105,11 +1097,11 @@ public class OCLinEcoreTablesUtils
 		LinkedHashSet<@NonNull Property> properties = new LinkedHashSet<>();
 		for (@NonNull Property property : completeModel.getMemberProperties(type, true)) {
 			names.add(property.getName());
-			properties.add(metamodelManager.getPrimaryProperty(property));
+			properties.add(completeModel.getPrimaryProperty(property));
 		}
 		for (@NonNull Property property : completeModel.getMemberProperties(type, false)) {
 			if (!names.contains(property.getName())) {
-				properties.add(metamodelManager.getPrimaryProperty(property));
+				properties.add(completeModel.getPrimaryProperty(property));
 			}
 		}
 		return properties;

@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
 {
@@ -137,8 +136,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	@Override
 	public @Nullable Operation isFinal(@NonNull Operation anOperation, org.eclipse.ocl.pivot.@NonNull Class staticType) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
+		FinalAnalysis finalAnalysis = environmentFactory.getMetamodelManager().getFinalAnalysis();
 		return finalAnalysis.isFinal(anOperation, environmentFactory.getCompleteModel().getCompleteClass(staticType));
 	}
 

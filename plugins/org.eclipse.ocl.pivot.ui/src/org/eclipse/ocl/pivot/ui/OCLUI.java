@@ -78,37 +78,4 @@ public class OCLUI
 		}
 		return null;
 	}
-
-	/**
-	 * this method comes from the org.eclipse.ocl.xtext.console.OCLConsolePage written by
-	 *
-	 * @param contextObject
-	 * @return the metamodelManager
-	 *
-	protected MetamodelManager getMetamodelManager(EObject contextObject) {
-		MetamodelManager metamodelManager = PivotUtil.findMetamodelManager(contextObject);
-		if (metamodelManager != null) {
-			return metamodelManager;
-		}
-		if (metamodelManager == null) {
-			metamodelManager = OCL.createEnvironmentFactory(null).getMetamodelManager();
-		}
-		return metamodelManager;
-	} */
-
-	/**
-	 * Evaluate an oclExpression using selfObject as the OCL self object. Returns a boxed value.
-	 *
-	public static Object evaluate(@Nullable EObject selfObject, @NonNull String oclExpression) throws Exception {
-		MetamodelManager metamodelManager = PivotUtil.findMetamodelManager(selfObject);
-		if (metamodelManager == null) {
-			metamodelManager = OCL.createEnvironmentFactory(null).getMetamodelManager();
-			// FIXME install
-		}
-		EnvironmentFactory envFactory = metamodelManager.getEnvironmentFactory();
-		OCL ocl = OCL.newInstance(envFactory);
-		org.eclipse.ocl.pivot.Class selfType = ocl.getContextType(selfObject);
-		ExpressionInOCL createQuery = ocl.createQuery(selfType, oclExpression);
-		return ocl.evaluate(selfObject, createQuery);
-	} */
 }

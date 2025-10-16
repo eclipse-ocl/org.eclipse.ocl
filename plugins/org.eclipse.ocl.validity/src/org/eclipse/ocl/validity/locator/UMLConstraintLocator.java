@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.uml.Constraint;
@@ -322,7 +321,6 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 			return;
 		}
 		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(umlConstraint);
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Severity severity = Severity.UNKNOWN;
 		try {
 			final org.eclipse.ocl.pivot.Constraint pivotConstraint = environmentFactory.getASOf(org.eclipse.ocl.pivot.Constraint.class, umlConstraint);
@@ -331,7 +329,7 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 			}
 			ResourceSet resourceSet = contextObject.eResource().getResourceSet();
 			if (resourceSet != null) {
-				ExpressionInOCL query = getQuery(metamodelManager, pivotConstraint);
+				ExpressionInOCL query = getQuery(environmentFactory, pivotConstraint);
 				EvaluationVisitor evaluationVisitor = createEvaluationVisitor(environmentFactory, query, contextObject, monitor);
 				AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluatorWithContext(query, contextObject)
 				{

@@ -29,7 +29,7 @@ public class ClassContext extends AbstractParserContext
 
 	public ClassContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, org.eclipse.ocl.pivot.@Nullable Class classContext, @Nullable Type instanceContext) {
 		super(environmentFactory, uri);
-		this.classContext = classContext != null ? getMetamodelManager().getPrimaryClass(classContext) : null;
+		this.classContext = classContext != null ? environmentFactory.getCompleteModel().getPrimaryClass(classContext) : null;
 		this.instanceContext = instanceContext;
 	}
 

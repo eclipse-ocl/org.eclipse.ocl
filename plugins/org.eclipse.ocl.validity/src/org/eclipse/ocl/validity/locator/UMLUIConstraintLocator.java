@@ -172,7 +172,7 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 				}
 				ExpressionInOCL query;
 				try {
-					query = ElementUtil.getFirstQuery(environmentFactory.getMetamodelManager(), csResource);
+					query = ElementUtil.getFirstQuery(environmentFactory, csResource);
 				} catch (ParserException e) {
 					openError(debug_FailLoad, e);
 					return;

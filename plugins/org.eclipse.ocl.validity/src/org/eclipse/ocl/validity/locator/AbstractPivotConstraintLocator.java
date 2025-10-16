@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -92,24 +91,6 @@ public abstract class AbstractPivotConstraintLocator extends AbstractConstraintL
 		}
 	}
 
-	@Deprecated /* @deprecated not used - confusing class name */
-	protected static abstract class AbstractConstraintLocator extends AbstractConstraintEvaluatorWithContext
-	{
-		@Deprecated /* @deprecated metamodelManager not used */
-		protected final MetamodelManager metamodelManager;
-
-		protected AbstractConstraintLocator(@NonNull ExpressionInOCL expression, @Nullable Object object) {
-			super(expression, object);
-			this.metamodelManager = null;
-		}
-
-		@Deprecated /* @deprecated metamodelManager not used */
-		protected AbstractConstraintLocator(@NonNull MetamodelManager metamodelManager, @NonNull ExpressionInOCL expression, @Nullable Object object) {
-			super(expression, object);
-			this.metamodelManager = metamodelManager;
-		}
-	}
-
 	protected @NonNull EvaluationVisitor createEvaluationVisitor(@NonNull EnvironmentFactory environmentFactory,
 			@NonNull ExpressionInOCL query, @Nullable Object contextObject, @Nullable Monitor monitor) {
 		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(contextObject, query, null);
@@ -117,10 +98,10 @@ public abstract class AbstractPivotConstraintLocator extends AbstractConstraintL
 		return evaluationVisitor;
 	}
 
-	protected @NonNull ExpressionInOCL getQuery(@NonNull MetamodelManager metamodelManager, @NonNull Constraint constraint) throws ParserException {
+	protected @NonNull ExpressionInOCL getQuery(@NonNull EnvironmentFactory environmentFactory, @NonNull Constraint constraint) throws ParserException {
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		assert specification != null;
-		return metamodelManager.getEnvironmentFactory().parseSpecification(specification);
+		return environmentFactory.parseSpecification(specification);
 	}
 
 	@Override

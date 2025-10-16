@@ -190,7 +190,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		if (aliasAnalysis != null) {
 			aliasAnalysis.dispose();
 		}
-		aliasAnalysis = AliasAnalysis.getAdapter(csResource, metamodelManager.getEnvironmentFactory());
+		aliasAnalysis = AliasAnalysis.getAdapter(csResource, environmentFactory);
 		for (@NonNull ImportCS csImport : imports) {
 			Namespace namespace = csImport.getReferredNamespace();
 			String alias = csImport.getName();
@@ -326,7 +326,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	private @NonNull List<@NonNull NamedElement> getPath(@NonNull Element element) {
 		List<@NonNull NamedElement> path = new ArrayList<>();
 		for (EObject eContainer = element/*.eContainer()*/; eContainer instanceof Element; eContainer = eContainer.eContainer()) {
-			eContainer = metamodelManager.getPrimaryElement(eContainer);
+			eContainer = completeModel.getPrimaryElement(eContainer);
 			if (eContainer instanceof Model) {
 				break;				// Skip root Model
 			}
@@ -344,7 +344,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public @NonNull PrecedenceManager getPrecedenceManager() {
-		return metamodelManager.getPrecedenceManager();
+		return environmentFactory.getMetamodelManager().getPrecedenceManager();
 	}
 
 	public @Nullable BaseReferenceVisitor getReferenceVisitor(@NonNull EClass eClass) {
@@ -386,7 +386,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public void importNamespace(@NonNull Namespace importNamespace, @Nullable String alias) {
-		Namespace primaryNamespace = metamodelManager.getPrimaryElement(importNamespace);
+		Namespace primaryNamespace = completeModel.getPrimaryElement(importNamespace);
 		assert csResource != null;
 	//	Resource asResource = converter.getASResource(csResource);
 	//	if (primaryNamespace.eResource() == asResource) {			// skip if if importing the importing model
@@ -474,7 +474,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		boolean hasFinalTarget = false;
 		List<PathElementCS> csPath = csPathName.getOwnedPathElements();
 		csPath.clear();		// FIXME re-use
-		Element primaryElement = metamodelManager.getPrimaryElement(element);
+		Element primaryElement = completeModel.getPrimaryElement(element);
 		BaseCSResource csResource2 = this.csResource;
 		if ((csResource2 != null) && (csResource2.isPathable(primaryElement) != null)) {
 			List<@NonNull NamedElement> targetPath = getPath(element);

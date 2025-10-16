@@ -231,7 +231,7 @@ public class DebuggerTests extends XtextTestCase
 
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class customerClass = ClassUtil.requireNonNull(environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eObject.eClass()));
-		Iterable<Constraint> customerInvariants = environmentFactory.getMetamodelManager().getAllInvariants(customerClass);
+		Iterable<Constraint> customerInvariants = environmentFactory.getCompleteModel().getAllInvariants(customerClass);
 		Constraint constraint = ClassUtil.requireNonNull(NameUtil.getNameable(customerInvariants, "invariant_sizesAgree"));
 
 		ThreadLocalExecutor.resetEnvironmentFactory();

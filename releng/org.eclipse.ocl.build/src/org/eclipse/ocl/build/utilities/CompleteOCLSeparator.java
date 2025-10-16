@@ -80,7 +80,7 @@ public class CompleteOCLSeparator extends WorkflowComponentWithModelSlot
 		URI uri = asResource.getURI();
 		ResourceSet asResourceSet = asResource.getResourceSet();
 		assert asResourceSet != null;
-		MetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResourceSet);
+		MetamodelManager metamodelManager = PivotMetamodelManager.getAdapter(asResourceSet);		// XXX
 		EnvironmentFactory environmentFactory = metamodelManager.getEnvironmentFactory();
 		ASResource oclResource = CompleteOCLSplitter.separate(environmentFactory, asResource);
 		URI xtextURI = oclURI != null ? URI.createPlatformResourceURI(oclURI, true) : uri.trimFileExtension().appendFileExtension("ocl");

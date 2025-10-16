@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -45,8 +44,7 @@ public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 	}
 
 	private static @NonNull ExpressionInOCL loadExpression(@NonNull EnvironmentFactory environmentFactory, @NonNull URI constraintURI, boolean keepDebug) throws IOException, ParserException {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		EObject eObject = metamodelManager.getASResourceSet().getEObject(constraintURI, true);
+		EObject eObject = environmentFactory.getASResourceSet().getEObject(constraintURI, true);
 		return loadExpression(environmentFactory, eObject, constraintURI);
 	}
 
@@ -75,7 +73,7 @@ public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 	}
 
 	public OCLVMExecutor(@NonNull IVMContext vmContext, @NonNull ExpressionInOCL expressionInOCL, @Nullable EObject context) {
-		super(vmContext.getEnvironmentFactory(), new OCLVMModelManager(vmContext.getEnvironmentFactory().getMetamodelManager()));
+		super(vmContext.getEnvironmentFactory(), new OCLVMModelManager(vmContext.getEnvironmentFactory()));
 		this.vmContext = vmContext;
 		this.expressionInOCL = expressionInOCL;
 		this.context = context;

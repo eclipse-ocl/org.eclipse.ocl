@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -62,7 +61,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
-	protected final @NonNull MetamodelManager metamodelManager;
 	/**
 	 * @since 7.0
 	 */
@@ -74,13 +72,12 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 
 	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context) {
 		super(context);
-		this.metamodelManager = context.getMetamodelManager();
 		this.completeModel = context.getCompleteModel();
 		this.standardLibrary = context.getStandardLibrary();
 	}
 
 	private <T extends EObject> @Nullable T getESObject(@NonNull Class<T> requiredClass, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		Iterable<org.eclipse.ocl.pivot.Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
+		Iterable<org.eclipse.ocl.pivot.Class> partialClasses = completeModel.getPartialClasses(pivotType);
 		for (org.eclipse.ocl.pivot.Class type : partialClasses) {
 			if (type instanceof PivotObjectImpl) {
 				EObject esObject = ((PivotObjectImpl)type).getESObject();
@@ -142,7 +139,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	@Override
 	public EObject safeVisit(@Nullable Visitable v) {
 		if (v instanceof Type) {
-			v = metamodelManager.getPrimaryType((Type)v);
+			v = completeModel.getPrimaryType((Type)v);
 		}
 		return (v == null) ? null : v.accept(this);
 	}
@@ -209,7 +206,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			if (eClassifier != null) {
 				return eClassifier;
 			}
-			if (metamodelManager.isTypeServeable(pivotType)) {
+			if (completeModel.isTypeServeable(pivotType)) {
 				eClassifier = getESObject(EClassifier.class, pivotType);
 				if (eClassifier != null) {
 					return eClassifier;
@@ -240,7 +237,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			if (eClassifier1 != null) {
 				return eClassifier1;
 			}
-			Iterable<org.eclipse.ocl.pivot.Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
+			Iterable<org.eclipse.ocl.pivot.Class> partialClasses = completeModel.getPartialClasses(pivotType);
 			for (org.eclipse.ocl.pivot.Class type : partialClasses) {
 				if (type instanceof PivotObjectImpl) {
 					EObject eTarget = ((PivotObjectImpl)type).getESObject();

@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -264,8 +264,8 @@ public class PivotTests extends XtextTestCase
 	@SuppressWarnings("null")
 	public void doPivotTestEcore(@NonNull URI inputURI) throws IOException {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		ResourceSet asResourceSet = environmentFactory.getASResourceSet();
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
 		//		String libraryName = "oclstdlib.pivot";
@@ -285,7 +285,7 @@ public class PivotTests extends XtextTestCase
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
 		assertNoUnresolvedProxies("Unresolved proxies", ecoreResource);
 		//		EcoreAliasCreator.createPackageAliases(ecoreResource);
-		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
+		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
 
 
@@ -322,7 +322,7 @@ public class PivotTests extends XtextTestCase
 		Resource csResource = csResourceSet.createResource(csURI);
 		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
 		//		cs2asResourceMap.put(csResource, asResource);
-		AS2CS as2cs = new OCLinEcoreAS2CS(cs2asResourceMap, metamodelManager.getEnvironmentFactory());
+		AS2CS as2cs = new OCLinEcoreAS2CS(cs2asResourceMap, environmentFactory);
 		as2cs.update();
 		csResource.save(XMIUtil.createSaveOptions(csResource));
 		ocl.dispose();

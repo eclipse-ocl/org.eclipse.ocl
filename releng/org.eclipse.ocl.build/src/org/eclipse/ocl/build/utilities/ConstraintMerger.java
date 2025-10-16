@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
@@ -110,8 +109,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 		OCLInternal ocl = OCLInternal.newInstance(resourceSet);
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
+		ResourceSet asResourceSet = environmentFactory.getASResourceSet();
 		//		ocl.getResourceSet().getResources().add(ecoreResource);		// Don't load another copy
 		String libraryURI2 = libraryURI;
 		if (libraryURI2 != null) {
@@ -188,7 +186,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 					if (primaryASResources.contains(primaryASResource)) {
 						modifiedPrimaryASResources.add(primaryASResource);
 						for (org.eclipse.ocl.pivot.@NonNull Class mergeType : mergeTypes) {
-							mergeType(metamodelManager, partialClass, mergeType);
+							mergeType(completeModel, partialClass, mergeType);
 						}
 						merged = true;
 						break;
@@ -236,7 +234,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 		}
 	}
 
-	protected void mergeType(@NonNull MetamodelManager metamodelManager, org.eclipse.ocl.pivot.@NonNull Class primaryType, org.eclipse.ocl.pivot.@NonNull Class mergeType) {
+	protected void mergeType(@NonNull CompleteModel completeModel, org.eclipse.ocl.pivot.@NonNull Class primaryType, org.eclipse.ocl.pivot.@NonNull Class mergeType) {
 		List<Constraint> mergeInvariants = mergeType.getOwnedInvariants();
 		List<Constraint> primaryInvariants = primaryType.getOwnedInvariants();
 		for (Constraint mergeInvariant : new ArrayList<>(mergeInvariants)) {
@@ -248,7 +246,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 		if (mergeProperties.size() > 0) {
 			List<Property> primaryProperties = primaryType.getOwnedProperties();
 			for (@SuppressWarnings("null")@NonNull Property mergeProperty : new ArrayList<>(mergeProperties)) {
-				Property primaryProperty = metamodelManager.getPrimaryProperty(mergeProperty);
+				Property primaryProperty = completeModel.getPrimaryProperty(mergeProperty);
 				if (primaryProperty != mergeProperty) {			// If merge needed
 					LanguageExpression pivotDefaultExpression = mergeProperty.getOwnedExpression();
 					LanguageExpression primaryDefaultExpression = primaryProperty.getOwnedExpression();
@@ -270,7 +268,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 		if (mergeOperations.size() > 0) {
 			List<Operation> primaryOperations = primaryType.getOwnedOperations();
 			for (@SuppressWarnings("null")@NonNull Operation mergeOperation : new ArrayList<>(mergeOperations)) {
-				Operation primaryOperation = metamodelManager.getPrimaryOperation(mergeOperation);
+				Operation primaryOperation = completeModel.getPrimaryOperation(mergeOperation);
 				if (primaryOperation != mergeOperation) {		// If merge needed
 					LanguageExpression pivotBodyExpression = mergeOperation.getBodyExpression();
 					LanguageExpression primaryBodyExpression = primaryOperation.getBodyExpression();

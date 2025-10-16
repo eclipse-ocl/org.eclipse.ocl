@@ -40,12 +40,12 @@ import org.eclipse.ocl.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.emf.validation.validity.locator.ConstraintLocator;
 import org.eclipse.ocl.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.emf.validation.validity.manager.ValidityModel;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -55,12 +55,12 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 {
 	public static @NonNull DelegateConstraintLocator INSTANCE = new DelegateConstraintLocator();
 
-	protected @Nullable Constraint getConstraint(@NonNull MetamodelManager metamodelManager, @NonNull ResultConstrainingNode resultConstrainingNode) throws ParserException {
+	protected @Nullable Constraint getConstraint(@NonNull EnvironmentFactory environmentFactory, @NonNull ResultConstrainingNode resultConstrainingNode) throws ParserException {
 		Object constrainingObject = resultConstrainingNode.getParent().getConstrainingObject();
 		if (constrainingObject instanceof EAnnotation) {
 			EObject eObject = ((EAnnotation) constrainingObject).eContainer();
 			if (eObject instanceof EOperation) {
-				return metamodelManager.getEnvironmentFactory().getASOf(Constraint.class, eObject);
+				return environmentFactory.getASOf(Constraint.class, eObject);
 			}
 		}
 		else if (constrainingObject instanceof EStringToStringMapEntryImpl) {
@@ -69,7 +69,7 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 			if (eAnnotation instanceof EAnnotation) {
 				EObject eClassifier = eAnnotation.eContainer();
 				if (eClassifier instanceof EClassifier) {
-					org.eclipse.ocl.pivot.Class asType = metamodelManager.getEnvironmentFactory().getASOf(org.eclipse.ocl.pivot.Class.class, eClassifier);
+					org.eclipse.ocl.pivot.Class asType = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eClassifier);
 					if (asType != null) {
 						return NameUtil.getNameable(asType.getOwnedInvariants(), eEntry.getKey());
 					}
@@ -185,10 +185,10 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 			return;
 		}
 		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(constrainedObject);
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		Constraint asConstraint = null;
 		try {
-			asConstraint = getConstraint(metamodelManager, resultConstrainingNode);
+			asConstraint = getConstraint(environmentFactory, resultConstrainingNode);
 		} catch (ParserException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -199,14 +199,14 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 				throw new ParserException("Failed to create pivot Constraint");
 			}
 			final Constraint finalConstraint = asConstraint;
-			ExpressionInOCL query = getQuery(metamodelManager, asConstraint);
+			ExpressionInOCL query = getQuery(environmentFactory, asConstraint);
 			EvaluationVisitor evaluationVisitor = createEvaluationVisitor(environmentFactory, query, constrainedObject, monitor);
 			AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluatorWithContext(query, constrainedObject)
 			{
 				@Override
 				protected String getObjectLabel() {
 					org.eclipse.ocl.pivot.Type type = PivotUtil.getContainingType(finalConstraint);
-					org.eclipse.ocl.pivot.Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+					org.eclipse.ocl.pivot.Type primaryType = type != null ? completeModel.getPrimaryType(type) : null;
 					EClassifier classifier = primaryType != null ?  (EClassifier)primaryType.getESObject() : null;
 					return classifier != null ? classifier.getName() : "??";
 					//								return ClassUtil.getLabel(classifier, object, context);
