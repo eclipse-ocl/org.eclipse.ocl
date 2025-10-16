@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -90,6 +91,7 @@ import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
+import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
@@ -165,6 +167,16 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * The known implementation load capabilities.
 	 */
 	private /*@LazyNonNull*/ ImplementationManager implementationManager = null;			// Lazily created
+
+	/**
+	 * Lazily computed, eagerly invalidated analysis of final classes and operations.
+	 */
+	private /*@LazyNonNull*/ FinalAnalysis finalAnalysis = null;
+
+	/**
+	 * Elements protected from garbage collection
+	 */
+	private @Nullable EAnnotation lockingAnnotation = null;
 
 	/**
 	 * @since 7.0
@@ -342,6 +354,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 						}
 					}
 				}
+			}
+		}
+	}
+
+	@Override
+	public void addLockedElement(@NonNull Object lockedElement) {
+		if (lockedElement instanceof EObject) {
+			EAnnotation lockingAnnotation2 = lockingAnnotation;
+			if (lockingAnnotation2 == null) {
+				lockingAnnotation = lockingAnnotation2 = EcoreFactory.eINSTANCE.createEAnnotation();
+			}
+			List<EObject> lockingReferences = lockingAnnotation2.getReferences();
+			if (!lockingReferences.contains(lockedElement)) {
+				lockingReferences.add((EObject) lockedElement);
 			}
 		}
 	}
@@ -866,6 +892,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				implementationManager.dispose();
 				implementationManager = null;
 			}
+			lockingAnnotation = null;
 			attachCount = -1;		// Wait in isDisposing() state while unload proxifies
 			EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
 			//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
@@ -1039,6 +1066,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
+	public @NonNull FinalAnalysis getFinalAnalysis() {
+		FinalAnalysis finalAnalysis2 = finalAnalysis;
+		if (finalAnalysis2 == null) {
+			finalAnalysis = finalAnalysis2 = new FinalAnalysis(completeModel);
+		}
+		return finalAnalysis2;
+	}
+
+	@Override
 	public @NonNull IdResolver getIdResolver() {
 		IdResolver idResolver2 = idResolver;
 		if (idResolver2 == null) {
@@ -1173,6 +1209,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		getStandardLibrary();
 		PrecedenceManager precedenceManager = getPrecedenceManager();
 		return precedenceManager.getInfixPrecedence(operatorName);
+	}
+
+	@Override
+	public @Nullable EObject getLockingObject() {
+		return lockingAnnotation;
 	}
 
 	/**
@@ -1507,6 +1548,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				Thread.sleep(100);
 			} catch (InterruptedException e) {}
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void resetFinalAnalysis() {
+		finalAnalysis = null;
 	}
 
 	public void resetSeverities() {

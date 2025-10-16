@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
@@ -51,6 +52,7 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -510,6 +512,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	private org.eclipse.ocl.pivot.Package asMetamodel = null;
 	private boolean asMetamodelLoadInProgress = false;
 
+	private final @NonNull Map<@NonNull String, @NonNull Namespace> globalNamespaces = new HashMap<>();
+	private final @NonNull Set<@NonNull Type> globalTypes = new HashSet<>();
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
@@ -542,6 +546,18 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 		completePackage.didAddPackageURI(packageURI); * /
 	} */
+
+	@Override
+	public @Nullable Namespace addGlobalNamespace(@NonNull String name, @NonNull Namespace namespace) {
+		return globalNamespaces.put(name, namespace);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean addGlobalTypes(@NonNull Collection<@NonNull Type> types) {
+		return globalTypes.addAll(types);
+	}
 
 	/**
 	 * @since 1.23
@@ -731,6 +747,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		packageURI2completePackage.clear();
 		class2completeClass.clear();
 		asMetamodel = null;
+		globalNamespaces.clear();
+		globalTypes.clear();
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 != null) {
 			orphanage2.removePackageListener(getOrphanCompletePackage().getPartialPackages());
@@ -1267,6 +1285,16 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
+	public @NonNull Set<Map.@NonNull Entry<@NonNull String, @NonNull Namespace>> getGlobalNamespaces() {
+		return globalNamespaces.entrySet();
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull Type> getGlobalTypes() {
+		return globalTypes;
+	}
+
+	@Override
 	public @NonNull Iterable<@NonNull Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
 		CompleteClass completeClass = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
@@ -1641,6 +1669,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return standardLibrary;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses(@NonNull CompleteClass completeClass) {
 		return completeClass.getProperSuperCompleteClasses();
 	}
@@ -1661,6 +1692,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return isSuperCompleteClassOf(firstCompleteClass, secondCompleteClass);
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public boolean isSuperCompleteClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
 		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPrimaryClass()));	// FIXME cast
 		//		org.eclipse.ocl.pivot.Class unspecializedSecondType = PivotUtil.getUnspecializedTemplateableElement(secondType);	// FIXME cast
