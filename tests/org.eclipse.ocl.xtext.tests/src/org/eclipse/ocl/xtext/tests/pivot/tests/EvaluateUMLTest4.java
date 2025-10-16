@@ -75,8 +75,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 			CompleteModel completeModel = getEnvironmentFactory().getCompleteModel();
 			Package asMetamodel = completeModel.getASmetamodel();
 			if (asMetamodel != null) {
-				MetamodelManager metamodelManager = getMetamodelManager();
-				metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, asMetamodel);
+				completeModel.addGlobalNamespace(PivotConstants.OCL_NAME, asMetamodel);
 			}
 		}
 
@@ -85,8 +84,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 			CompleteModel completeModel = getEnvironmentFactory().getCompleteModel();
 			Package asMetamodel = completeModel.getASmetamodel();
 			if (asMetamodel != null) {
-				MetamodelManager metamodelManager = getMetamodelManager();
-				metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, asMetamodel);
+				completeModel.addGlobalNamespace(PivotConstants.OCL_NAME, asMetamodel);
 			}
 		}
 

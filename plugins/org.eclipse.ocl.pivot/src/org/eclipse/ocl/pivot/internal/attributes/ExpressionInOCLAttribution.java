@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
@@ -26,7 +27,6 @@ import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class ExpressionInOCLAttribution extends AbstractAttribution
@@ -82,25 +82,21 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 							environmentView.addAllPackages(contextPackage);
 							if (!environmentView.hasFinalResult()) {
 								environmentView.addElementsOfScope(contextPackage, scopeView);
-								MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+								CompleteModel completeModel = environmentFactory.getCompleteModel();
 								if (environmentView.accepts(PivotPackage.Literals.TYPE)) {
 									Type typeValue = contextVariable.getTypeValue();
 									if (typeValue != null) {
 										environmentView.addNamedElement(typeValue);
 									}
-									for (Type gType : metamodelManager.getGlobalTypes()) {
-										if (gType != null) {
-											environmentView.addNamedElement(gType);
-										}
+									for (@NonNull Type gType : completeModel.getGlobalTypes()) {
+										environmentView.addNamedElement(gType);
 									}
 								}
 								if (environmentView.accepts(PivotPackage.Literals.NAMESPACE)) {
-									for (Map.Entry<String, Namespace> entry : metamodelManager.getGlobalNamespaces()) {
+									for (Map.Entry<@NonNull String, @NonNull Namespace> entry : completeModel.getGlobalNamespaces()) {
 										String key = entry.getKey();
 										Namespace value = entry.getValue();
-										if ((key != null) && (value != null)) {
-											environmentView.addElement(key, value);
-										}
+										environmentView.addElement(key, value);
 									}
 								}
 							}

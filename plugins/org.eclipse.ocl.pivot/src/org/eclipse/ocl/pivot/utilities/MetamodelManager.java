@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
-import java.util.Map;
-import java.util.Set;
-
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.URI;
@@ -27,11 +24,8 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -56,16 +50,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void addGenPackage(@NonNull GenPackage genPackage);
-
-	/**
-	 * @since 7.0
-	 */
-	@Nullable Namespace addGlobalNamespace(@NonNull String name, @NonNull Namespace namespace);
-
-	/**
-	 * @since 7.0
-	 */
-	void addLockedElement(@NonNull Object lockedElement);
 
 	/**
 	 * @since 7.0
@@ -106,32 +90,12 @@ public interface MetamodelManager
 	/**
 	 * @since 7.0
 	 */
-	@NonNull FinalAnalysis getFinalAnalysis();
-
-	/**
-	 * @since 7.0
-	 */
 	@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
 
 	/**
 	 * @since 7.0
 	 */
 	@Nullable GenPackage getGenPackage(@NonNull String nsURI);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Set<Map.@NonNull Entry<String, Namespace>> getGlobalNamespaces();
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Iterable<Type> getGlobalTypes();
-
-	/**
-	 * @since 7.0
-	 */
-	@Nullable EObject getLockingObject();
 
 	/**
 	 * @since 7.0
@@ -172,11 +136,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void removeExternalResource(@NonNull Resource esResource);
-
-	/**
-	 * @since 7.0
-	 */
-	void resetFinalAnalysis();
 
 	/**
 	 * @since 7.0

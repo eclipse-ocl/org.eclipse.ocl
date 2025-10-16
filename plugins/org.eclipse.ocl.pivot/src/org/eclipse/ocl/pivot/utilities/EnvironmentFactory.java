@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
+import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
@@ -95,6 +96,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	void addExternalResources(@NonNull ResourceSet externalResourceSet);
+
+	/**
+	 * @since 7.0
+	 */
+	void addLockedElement(@NonNull Object lockedElement);
 
 	/**
 	 * @since 7.0
@@ -301,6 +307,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@Nullable String getDoSetupName(@NonNull URI uri);
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull FinalAnalysis getFinalAnalysis();
+
+	/**
 	 * Return the IdResolver that performs the resolution of the lightweight usage-independent Ids of types and packages
 	 * into the full usage-specific equivalents.
 	 */
@@ -320,6 +331,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	@NonNull ImplementationManager getImplementationManager();
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable EObject getLockingObject();
 
 	/**
 	 * Return the metaclass to which classType conforms.
@@ -460,6 +476,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 1.17
 	 */
 	default void preDispose() {}
+
+	/**
+	 * @since 7.0
+	 */
+	void resetFinalAnalysis();
 
 	/**
 	 * @since 7.0

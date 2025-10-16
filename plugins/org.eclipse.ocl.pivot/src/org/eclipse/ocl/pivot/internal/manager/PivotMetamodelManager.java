@@ -12,12 +12,9 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
@@ -28,10 +25,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -113,25 +108,12 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	protected final @NonNull ResourceSet asResourceSet;
 
-	private final @NonNull Map<String, Namespace> globalNamespaces = new HashMap<>();
-	private final @NonNull Set<Type> globalTypes = new HashSet<>();
-
 	/**
 	 * Map of URI to external resource converter.
 	 */
 	private final @NonNull Map<URI, External2AS> external2asMap = new HashMap<>();
 
-	/**
-	 * Elements protected from garbage collection
-	 */
-	private @Nullable EAnnotation lockingAnnotation = null;
-
 	private @Nullable Map<String, GenPackage> genPackageMap = null;
-
-	/**
-	 * Lazily computed, eagerly invalidated analysis of final classes and operations.
-	 */
-	private @Nullable FinalAnalysis finalAnalysis = null;
 
 	/**
 	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
@@ -190,29 +172,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			genPackageMap = genPackageMap2 = new HashMap<>();
 		}
 		genPackageMap2.put(genPackage.getNSURI(), genPackage);
-	}
-
-	@Override
-	public @Nullable Namespace addGlobalNamespace(@NonNull String name, @NonNull Namespace namespace) {
-		return globalNamespaces.put(name, namespace);
-	}
-
-	public boolean addGlobalTypes(@NonNull Collection<Type> types) {
-		return globalTypes.addAll(types);
-	}
-
-	@Override
-	public void addLockedElement(@NonNull Object lockedElement) {
-		if (lockedElement instanceof EObject) {
-			EAnnotation lockingAnnotation2 = lockingAnnotation;
-			if (lockingAnnotation2 == null) {
-				lockingAnnotation = lockingAnnotation2 = EcoreFactory.eINSTANCE.createEAnnotation();
-			}
-			List<EObject> lockingReferences = lockingAnnotation2.getReferences();
-			if (!lockingReferences.contains(lockedElement)) {
-				lockingReferences.add((EObject) lockedElement);
-			}
-		}
 	}
 
 	@Override
@@ -277,8 +236,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			}
 			externalResourceSet = null;
 		} */
-		globalNamespaces.clear();
-		globalTypes.clear();
 		external2asMap.clear();
 		Map<@NonNull URI, @NonNull External2AS> uri2es2as2 = uri2es2as;
 		if (uri2es2as2 != null) {
@@ -287,7 +244,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			}
 			uri2es2as = null;
 		}
-		lockingAnnotation = null;
 		completeModel.dispose();
 		standardLibrary.dispose();
 	}
@@ -420,15 +376,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return environmentFactory;
 	}
 
-	@Override
-	public @NonNull FinalAnalysis getFinalAnalysis() {
-		FinalAnalysis finalAnalysis2 = finalAnalysis;
-		if (finalAnalysis2 == null) {
-			finalAnalysis = finalAnalysis2 = new FinalAnalysis(completeModel);
-		}
-		return finalAnalysis2;
-	}
-
 	/**
 	 * @since 1.3
 	 */
@@ -473,21 +420,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public @NonNull Set<Map.@NonNull Entry<String, Namespace>> getGlobalNamespaces() {
-		return globalNamespaces.entrySet();
-	}
-
-	@Override
-	public @NonNull Iterable<Type> getGlobalTypes() {
-		return globalTypes;
-	}
-
-	@Override
-	public @Nullable EObject getLockingObject() {
-		return lockingAnnotation;
 	}
 
 	@Override
@@ -753,14 +685,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 				es2as.dispose();
 			}
 		}
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public void resetFinalAnalysis() {
-		finalAnalysis = null;
 	}
 
 	/**

@@ -926,8 +926,8 @@ public class TestOCL extends OCLInternal
 
 	@SuppressWarnings("null")
 	public void loadEPackage(@NonNull String alias, /*@NonNull*/ EPackage ePackage) {
-		Element ecoreElement = Ecore2AS.importFromEcore(getEnvironmentFactory(), alias, ePackage);
-		getMetamodelManager().addGlobalNamespace(alias, (Namespace) ecoreElement);
+		Element ecoreElement = Ecore2AS.importFromEcore(environmentFactory, alias, ePackage);
+		environmentFactory.getCompleteModel().addGlobalNamespace(alias, (Namespace) ecoreElement);
 	}
 
 	/**

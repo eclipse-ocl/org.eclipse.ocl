@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -110,6 +112,11 @@ public interface CompleteModel extends NamedElement
 	 * @generated NOT
 	 */
 	@Nullable CompletePackage getOwnedCompletePackage(/*@NonNull*/ String packageName);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Namespace addGlobalNamespace(@NonNull String name, @NonNull Namespace namespace);
 
 	/**
 	 * Return the already created CompleteClass for asClass within this CompleteModel, or null if not yet created.
@@ -223,6 +230,16 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Set<Map.@NonNull Entry<@NonNull String, @NonNull Namespace>> getGlobalNamespaces();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Type> getGlobalTypes();
 
 	/**
 	 * @since 7.0

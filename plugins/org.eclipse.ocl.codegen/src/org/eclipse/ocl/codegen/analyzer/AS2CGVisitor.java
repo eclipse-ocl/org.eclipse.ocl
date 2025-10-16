@@ -763,7 +763,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 				}
 				if (currentClass2 != null) {
-					Iterable<@NonNull Operation> overrides = environmentFactory.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
+					Iterable<@NonNull Operation> overrides = environmentFactory.getFinalAnalysis().getOverrides(asOperation);
 					return cachedOperationCall(element, currentClass2, cgSource, asOperation, overrides);
 				} else {
 					Operation baseOperation = asOperation;	// FIXME
@@ -1170,7 +1170,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (prototype == null) {
 			return null;
 		}
-		FinalAnalysis finalAnalysis = environmentFactory.getMetamodelManager().getFinalAnalysis();
+		FinalAnalysis finalAnalysis = environmentFactory.getFinalAnalysis();
 		Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();
 		getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, specification);
 		if (referencedFinalOperations.contains(callExp.getReferredOperation())) {

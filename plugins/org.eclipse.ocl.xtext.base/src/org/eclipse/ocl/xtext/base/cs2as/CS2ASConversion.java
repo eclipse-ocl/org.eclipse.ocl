@@ -319,10 +319,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		final Collection<Notifier> prunableResources = new ArrayList<>(cs2asResourceMap.values());
 		//		prunableResources.add(orphanResource);
 		Collection<@NonNull Notifier> allPivotResources = new ArrayList<>(environmentFactory.getASResourceSet().getResources());
-		//		allPivotResources.removeAll(prunableResources);					// Dead elements in orphanage or pivot of CS can be pruned
-		EObject lockingObject = environmentFactory.getMetamodelManager().getLockingObject();
+		//		allPivotResources.removeAll(prunableResources);				// Dead elements in orphanage or pivot of CS can be pruned
+		EObject lockingObject = environmentFactory.getLockingObject();
 		if (lockingObject != null) {
-			allPivotResources.add(lockingObject);						// Locked elements are not dead
+			allPivotResources.add(lockingObject);							// Locked elements are not dead
 		}
 		allPivotResources.addAll(standardLibrary.getLibraries());			// Library elements are not dead
 		allPivotResources.addAll(cs2asResourceMap.keySet());				// Incoming elements are not dead

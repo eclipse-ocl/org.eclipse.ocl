@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -45,6 +46,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -481,9 +483,9 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	@Test public void test_container_navigation() throws InvocationTargetException {
 		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		IdResolver idResolver = ocl.getIdResolver();
-		metamodelManager.addGlobalNamespace("fruit", fruitPackage);
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
+		completeModel.addGlobalNamespace("fruit", fruitPackage);
 		//
 		//	Simple model: aTree contains redApple
 		//
@@ -496,7 +498,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		List<Object> treeFruits = (List<Object>) aTree.eGet(tree_fruits);
 		treeFruits.add(redApple);
 		//
-		Type pivotTree = metamodelManager.getASOfEcore(Type.class, tree);
+		Type pivotTree = environmentFactory.getMetamodelManager().getASOfEcore(Type.class, tree);
 		//
 //		ocl.assertQueryEquals(redApple, color_red, "let aFruit : fruit::Fruit = self in aFruit.color");
 //XXX		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "let aTree : fruit::Tree = self in aTree.fruits");
@@ -523,7 +525,9 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
+		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
 		org.eclipse.ocl.pivot.Class appleType = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, apple);
 		//
@@ -567,7 +571,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		EObject orphanFruit = fruitEFactory.create(apple);	// FIXME Bug 548225 comment 4 null has no metamodel and so gives UOE
 		ocl.assertQueryEquals(orphanFruit, ocl.getEmptySetValue(), "fruit::Tree.allInstances()");
 		//
-		metamodelManager.addGlobalNamespace("zz", fruitPackage);
+		completeModel.addGlobalNamespace("zz", fruitPackage);
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, appleTree), "zz::Tree.allInstances()");
 		//
 		ocl.assertQueryEquals(redApple, idResolver.createBagOfEach(TypeId.BAG, redApple), "Fruit.allInstances().oclAsType(Apple)");
