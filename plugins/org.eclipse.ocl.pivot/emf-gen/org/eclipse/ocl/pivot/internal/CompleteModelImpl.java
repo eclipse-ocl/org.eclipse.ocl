@@ -771,8 +771,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
-		try {
-			if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
+		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
+			try {
 				asMetamodelLoadInProgress = true;
 				if ((asMetamodel == null) && autoLoadASmetamodel && !environmentFactory.isDisposing() && !standardLibrary.isLibraryLoadInProgress()) {
 					AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
@@ -782,11 +782,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					}
 				}
 			}
+			finally {
+				asMetamodelLoadInProgress = false;
+			}
 		}
-		finally {
-			asMetamodelLoadInProgress = false;
-			return asMetamodel;
-		}
+		return asMetamodel;
 	}
 
 	@Override
@@ -953,6 +953,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
+		assert standardLibrary != null;
 		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getClass(pivotType, standardLibrary);
 		return getCompleteClass(asClass);
 	}
@@ -1359,6 +1360,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
+		assert standardLibrary != null;
 		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
 		if (flatClass == null) {
 			throw new IllegalStateException("Missing owning type");
@@ -1494,6 +1496,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
+		assert standardLibrary != null;
 		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
 		if (flatClass != null) {					// Null for an EAnnotation element
 			CompleteClass completeClass = getCompleteClass(flatClass.getPivotClass());		// XXX why use FlatClass at all ??
@@ -1755,7 +1758,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		Model asModel;
 		org.eclipse.ocl.pivot.Package asPackage = null;
-		Resource libraryResource = standardLibrary.getLibraryResource();
+		CompleteStandardLibrary standardLibrary2 = standardLibrary;
+		assert standardLibrary2 != null;
+		Resource libraryResource = standardLibrary2.getLibraryResource();
 		if ((libraryResource instanceof ASResourceImpl.ImmutableResource) && ((ASResourceImpl.ImmutableResource)libraryResource).isCompatibleWith(OCLmetamodel.PIVOT_URI)) {
 			asModel = OCLmetamodel.getDefaultModel();
 			for (org.eclipse.ocl.pivot.Package asPartialPackage : PivotUtil.getOwnedPackages(asModel))	// Workaround the spurious implicit ecore package (fixed on a wip branch)
@@ -1772,7 +1777,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		else {
 			String name = ClassUtil.requireNonNull(asLibrary.getName());
-			asPackage = OCLmetamodel.create(standardLibrary, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
+			asPackage = OCLmetamodel.create(standardLibrary2, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 			asModel = (Model)asPackage.eContainer();
 		}
 		Resource asResource = asModel.eResource();
@@ -1805,6 +1810,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if (packageURI != null) {
 			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 			if (semantics != null) {
+				@SuppressWarnings("unused")
 				CompletePackage completePackage = getCompletePackage3(asPackage);
 			//	completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
 			//	completeModel.registerCompletePackageContribution(completePackage, packageURI);			// XXX completePackage.add
