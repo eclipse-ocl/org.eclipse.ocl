@@ -30,7 +30,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,17 +41,11 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -61,17 +54,10 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
-import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
-import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
-import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.library.LibraryProperty;
-import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -125,16 +111,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	 */
 	private final @NonNull CompleteModel completeModel;
 
-	/**
-	 * The known precedences.
-	 */
-	private PrecedenceManager precedenceManager = null;			// Lazily created
-
-	/**
-	 * The known implementation load capabilities.
-	 */
-	private ImplementationManager implementationManager = null;			// Lazily created
-
 	protected final @NonNull ResourceSet asResourceSet;
 
 	private final @NonNull Map<String, Namespace> globalNamespaces = new HashMap<>();
@@ -185,12 +161,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 			PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this)
 			+ " " + NameUtil.debugSimpleName(asResourceSet));
 		}
-	}
-
-	@Override
-	public void addClassLoader(@NonNull ClassLoader classLoader) {
-		ImplementationManager implementationManager = getImplementationManager();
-		implementationManager.addClassLoader(classLoader);
 	}
 
 	@Override
@@ -248,15 +218,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	@Override
 	public @NonNull Orphanage createOrphanage() {
 		return Orphanage.getOrphanage(asResourceSet);
-	}
-
-	protected @NonNull PrecedenceManager createPrecedenceManager() {
-		PrecedenceManager precedenceManager = new PrecedenceManager();
-		List<@NonNull String> errors = precedenceManager.compilePrecedences(standardLibrary.getLibraries());
-		for (@NonNull String error : errors) {
-			logger.error(error);
-		}
-		return precedenceManager;
 	}
 
 	@Override
@@ -328,14 +289,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		lockingAnnotation = null;
 		completeModel.dispose();
-		if (precedenceManager != null) {
-			precedenceManager.dispose();
-			precedenceManager = null;
-		}
-		if (implementationManager != null) {
-			implementationManager.dispose();
-			implementationManager = null;
-		}
 		standardLibrary.dispose();
 	}
 
@@ -532,155 +485,9 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return globalTypes;
 	}
 
-	public @NonNull LibraryFeature getImplementation(@NonNull Feature feature) throws ClassNotFoundException, SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-		LibraryFeature implementation = feature.getImplementation();
-		if (implementation == null) {
-			ImplementationManager implementationManager = getImplementationManager();
-			implementation = implementationManager.loadImplementation(feature);
-			if (implementation == null) {
-				implementation = UnsupportedOperation.INSTANCE;
-			}
-		}
-		return implementation;
-	}
-
-	@Override
-	public @NonNull LibraryFeature getImplementation(@NonNull Operation operation) {
-		LibraryFeature implementation = operation.getImplementation();
-		if (implementation == null) {
-			boolean isCodeGeneration = environmentFactory.isCodeGeneration();
-			if (isCodeGeneration) {
-				LanguageExpression specification = operation.getBodyExpression();
-				if (specification != null) {
-					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
-					if (owningType != null) {
-						try {
-							ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-							implementation = new ConstrainedOperation(query);
-						} catch (ParserException e) {
-							// TODO Auto-generated catch block
-							//							e.printStackTrace();
-							implementation = UnsupportedOperation.INSTANCE;
-						}
-					}
-				}
-			}
-			if (implementation == null) {
-				EObject eTarget = operation.getESObject();
-				if (eTarget != null) {
-					EOperation eOperation = null;
-					if (eTarget instanceof EOperation) {
-						eOperation = (EOperation) eTarget;
-						while (eOperation.eContainer() instanceof EAnnotation) {
-							EAnnotation redefines = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
-							if (redefines != null) {
-								List<EObject> references = redefines.getReferences();
-								if (references.size() > 0) {
-									EObject eReference = references.get(0);
-									if (eReference instanceof EOperation) {
-										eOperation = (EOperation)eReference;
-									}
-								}
-							}
-						}
-					}
-					else {
-						Resource resource = operation.eResource();
-						if (resource instanceof ASResource) {
-							ASResource asResource = (ASResource)resource;
-							eOperation = asResource.getASResourceFactory().getEOperation(asResource, eTarget);
-						}
-					}
-					if ((eOperation != null) && (eOperation.getEType() != null)) {
-						implementation = new EInvokeOperation(eOperation);
-					}
-				}
-			}
-			if (!isCodeGeneration && (implementation == null)) {
-				LanguageExpression specification = operation.getBodyExpression();
-				if (specification != null) {
-					org.eclipse.ocl.pivot.Class owningType = operation.getOwningClass();
-					if (owningType != null) {
-						try {
-							ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-							implementation = new ConstrainedOperation(query);
-						} catch (ParserException e) {
-							// TODO Auto-generated catch block
-							//							e.printStackTrace();
-							implementation = UnsupportedOperation.INSTANCE;
-						}
-					}
-				}
-			}
-			if (implementation == null) {
-				try {
-					implementation = getImplementation((Feature) operation);
-				} catch (ClassNotFoundException | SecurityException
-						| NoSuchFieldException | IllegalArgumentException
-						| IllegalAccessException e) {}
-			}
-			if (implementation == null) {
-				implementation = UnsupportedOperation.INSTANCE;
-			}
-			operation.setImplementation(implementation);
-		}
-		return implementation;
-	}
-
-	@Override
-	public @NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
-		LibraryProperty implementation = (LibraryProperty) property.getImplementation();
-		if (implementation == null) {
-		//	System.out.println("getImplementation " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(property) + " " + property);
-			ImplementationManager implementationManager = getImplementationManager();
-			implementation = implementationManager.getPropertyImplementation(asNavigationExp, sourceValue, property);
-			property.setImplementation(implementation);
-		}
-		return implementation;
-	}
-
-	@Override
-	public @NonNull ImplementationManager getImplementationManager() {
-		ImplementationManager implementationManager2 = implementationManager;
-		if (implementationManager2 == null) {
-			implementationManager2 = implementationManager = environmentFactory.createImplementationManager();
-		}
-		return implementationManager2;
-	}
-
-	public @Nullable Precedence getInfixPrecedence(@NonNull String operatorName) {
-		getStandardLibrary();
-		PrecedenceManager precedenceManager = getPrecedenceManager();
-		return precedenceManager.getInfixPrecedence(operatorName);
-	}
-
 	@Override
 	public @Nullable EObject getLockingObject() {
 		return lockingAnnotation;
-	}
-
-	/**
-	 * @since 1.5
-	 */
-	@Override
-	@SuppressWarnings("null")
-	public @NonNull PrecedenceManager getPrecedenceManager() {
-		if (precedenceManager == null) {
-			standardLibrary.getOclAnyType();		// Make sure OCL Standard Library has defined operations to be compiled with precedence
-			synchronized (this) {
-				if (precedenceManager == null) {
-					synchronized (this) {
-						precedenceManager = createPrecedenceManager();
-					}
-				}
-			}
-		}
-		return precedenceManager;
-	}
-
-	public @Nullable Precedence getPrefixPrecedence(@NonNull String operatorName) {
-		PrecedenceManager precedenceManager = getPrecedenceManager();
-		return precedenceManager.getPrefixPrecedence(operatorName);
 	}
 
 	@Override
@@ -913,10 +720,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		logger.warn("Cannot load package with URI '" + uri + "'");
 		return null;
-	}
-
-	public @NonNull LibraryFeature lookupImplementation(@NonNull Operation dynamicOperation) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
-		return getImplementation(dynamicOperation);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -121,12 +121,12 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			MetamodelManager metamodelManager = context.getEnvironmentFactory().getMetamodelManager();
+			EnvironmentFactory environmentFactory = context.getEnvironmentFactory();
 			String operatorName = csElement.getName();
-			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getInfixPrecedence(operatorName) : null;
+			Precedence precedence = operatorName != null ? environmentFactory.getPrecedenceManager().getInfixPrecedence(operatorName) : null;
 			//			csElement.setPrecedence(precedence);
 			if (precedence != null) {
-				csElement.setPrecedence(precedence, metamodelManager.getPrecedenceManager().getOrder(precedence));
+				csElement.setPrecedence(precedence, environmentFactory.getPrecedenceManager().getOrder(precedence));
 			}
 			else {
 				csElement.setPrecedence(null, PrecedenceManager.NULL_PRECEDENCE_ORDER);
@@ -189,12 +189,12 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			MetamodelManager metamodelManager = context.getEnvironmentFactory().getMetamodelManager();
+			EnvironmentFactory environmentFactory = context.getEnvironmentFactory();
 			String operatorName = csElement.getName();
-			Precedence precedence = operatorName != null ? metamodelManager.getPrecedenceManager().getPrefixPrecedence(operatorName) : null;
+			Precedence precedence = operatorName != null ? environmentFactory.getPrecedenceManager().getPrefixPrecedence(operatorName) : null;
 			//			csElement.setPrecedence(precedence);
 			if (precedence != null) {
-				csElement.setPrecedence(precedence, metamodelManager.getPrecedenceManager().getOrder(precedence));
+				csElement.setPrecedence(precedence, environmentFactory.getPrecedenceManager().getOrder(precedence));
 			}
 			else {
 				csElement.setPrecedence(null, PrecedenceManager.NULL_PRECEDENCE_ORDER);

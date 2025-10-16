@@ -200,7 +200,7 @@ public class ImportTests extends XtextTestCase
 						"}";
 		ClassLoader classLoader = SpacedOut.class.getClassLoader();
 		assert classLoader != null;
-		ocl.getMetamodelManager().addClassLoader(classLoader);
+		ocl.getEnvironmentFactory().addClassLoader(classLoader);
 		doLoadFromString(ocl, "custom.oclstdlib", customLibrary);
 		ocl.assertQueryEquals(null, "42", "42.spacedOut()");
 		ocl.dispose();

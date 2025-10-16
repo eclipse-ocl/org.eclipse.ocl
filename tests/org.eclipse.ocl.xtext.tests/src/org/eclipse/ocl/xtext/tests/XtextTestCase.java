@@ -65,7 +65,6 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -345,8 +344,8 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void doBadLoadFromString(@NonNull OCLInternal ocl, @NonNull String fileName, @NonNull String testContents, @NonNull Bag<String> expectedErrorMessages) throws Exception {
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		metamodelManager.addClassLoader(ClassUtil.requireNonNull(getClass().getClassLoader()));
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		environmentFactory.addClassLoader(ClassUtil.requireNonNull(getClass().getClassLoader()));
 		InputStream inputStream = new URIConverter.ReadableInputStream(testContents, "UTF-8");
 		URI libraryURI = getTestFileURI(fileName, inputStream);
 		@SuppressWarnings("null")@NonNull BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(libraryURI);

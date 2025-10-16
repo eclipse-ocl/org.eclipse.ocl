@@ -649,7 +649,7 @@ public class MultiValidationJob extends Job
 			EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 			ClassLoader classLoader = getClassLoader(project);
 			if (classLoader != null) {
-				environmentFactory.getMetamodelManager().addClassLoader(classLoader);
+				environmentFactory.addClassLoader(classLoader);
 			}
 			monitor.worked(1);			// Work Item 1 - Initialize done
 			final @NonNull String markerType = entry.getMarkerId();

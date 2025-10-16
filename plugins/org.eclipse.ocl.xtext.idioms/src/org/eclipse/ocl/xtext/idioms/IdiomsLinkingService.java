@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.ClasspathURIHandler;
 import org.eclipse.xtext.AbstractRule;
@@ -62,8 +61,7 @@ public class IdiomsLinkingService extends DefaultLinkingService
 			List<@NonNull ClassLoader> classLoaders = null;
 			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
-				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				ImplementationManager implementationManager = metamodelManager.getImplementationManager();
+				ImplementationManager implementationManager = environmentFactory.getImplementationManager();
 				classLoaders = implementationManager.getClassLoaders();
 			}
 			ClasspathURIHandler.init(resourceSet, classLoaders);		// Ensure that the missing classpath: support is worked around - Xtext Bug 446073

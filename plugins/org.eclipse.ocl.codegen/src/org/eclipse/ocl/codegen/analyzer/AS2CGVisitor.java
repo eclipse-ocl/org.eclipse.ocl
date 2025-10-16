@@ -183,7 +183,6 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -199,7 +198,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 {
 	protected final @NonNull CodeGenerator codeGenerator;
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull MetamodelManager metamodelManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 
 	/**
@@ -290,7 +288,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		super(analyzer);
 		codeGenerator = context.getCodeGenerator();
 		environmentFactory = codeGenerator.getEnvironmentFactory();
-		metamodelManager = environmentFactory.getMetamodelManager();
 		genModelHelper = codeGenerator.getGenModelHelper();
 	}
 
@@ -379,7 +376,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGOperation createFinalCGOperationWithoutBody(@NonNull Operation asOperation) {
 		CGOperation cgOperation = null;
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		LibraryFeature libraryOperation = environmentFactory.getImplementation(asOperation);
 		if ((libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation)) {
 			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
 			cgOperation = cgNativeOperation;
@@ -514,7 +511,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Iteration asIteration = asIterateExp.getReferredIteration();
 		LibraryIteration libraryIteration = null;
 		if (asIteration != null) {
-			libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
+			libraryIteration = (LibraryIteration) environmentFactory.getImplementation(asIteration);
 			IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 			if (iterationHelper != null) {
 				CGBuiltInIterationCallExp cgBuiltInIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
@@ -604,7 +601,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGIterationCallExp generateIteratorExp(@NonNull CGValuedElement cgSource, @NonNull IteratorExp element) {
 		Iteration asIteration = ClassUtil.requireNonNull(element.getReferredIteration());
-		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
+		LibraryIteration libraryIteration = (LibraryIteration) environmentFactory.getImplementation(asIteration);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 		boolean isRequired = element.isIsRequired();
 		if (iterationHelper != null) {
@@ -679,7 +676,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Operation asOperation = ClassUtil.requireNonNull(element.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		OCLExpression pSource = element.getOwnedSource();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		LibraryFeature libraryOperation = environmentFactory.getImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
@@ -848,7 +845,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Property asOppositeProperty = ClassUtil.requireNonNull(element.getReferredProperty());
 		Property asProperty = ClassUtil.requireNonNull(asOppositeProperty.getOpposite());
 		boolean isRequired = asProperty.isIsRequired();
-		LibraryProperty libraryProperty = metamodelManager.getImplementation(element, null, asProperty);
+		LibraryProperty libraryProperty = environmentFactory.getImplementation(element, null, asProperty);
 		CGOppositePropertyCallExp cgPropertyCallExp = null;
 		if (isEcoreProperty(libraryProperty)) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
@@ -887,7 +884,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generatePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull PropertyCallExp element) {
 		Property asProperty = ClassUtil.requireNonNull(element.getReferredProperty());
 		boolean isRequired = asProperty.isIsRequired();
-		LibraryProperty libraryProperty = metamodelManager.getImplementation(element, null, asProperty);
+		LibraryProperty libraryProperty = environmentFactory.getImplementation(element, null, asProperty);
 		CGPropertyCallExp cgPropertyCallExp = null;
 		if (libraryProperty instanceof NativeProperty) {
 			CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
@@ -1173,7 +1170,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (prototype == null) {
 			return null;
 		}
-		FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
+		FinalAnalysis finalAnalysis = environmentFactory.getMetamodelManager().getFinalAnalysis();
 		Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();
 		getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, specification);
 		if (referencedFinalOperations.contains(callExp.getReferredOperation())) {

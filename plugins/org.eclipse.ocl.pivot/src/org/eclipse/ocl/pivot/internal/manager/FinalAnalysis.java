@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -60,7 +60,7 @@ public class FinalAnalysis
 	 */
 	public FinalAnalysis(@NonNull CompleteModel completeModel) {
 		this.completeModel = completeModel;
-		MetamodelManager metamodelManager = completeModel.getMetamodelManager();
+		EnvironmentFactory environmentFactory = completeModel.getEnvironmentFactory();
 		for (@NonNull CompletePackage completePackage :  completeModel.getAllCompletePackages()) {
 			for (@NonNull CompleteClass subCompleteClass :  ClassUtil.nullFree(completePackage.getOwnedCompleteClasses())) {
 				for (@NonNull CompleteClass superCompleteClass : subCompleteClass.getSuperCompleteClasses()) {
@@ -79,7 +79,7 @@ public class FinalAnalysis
 			for (@NonNull Operation domainOperation : superCompleteClass.getOperations(null)) {
 				String opName = domainOperation.getName();
 				ParametersId parametersId = domainOperation.getParametersId();
-				LibraryFeature domainImplementation = metamodelManager.getImplementation(domainOperation);
+				LibraryFeature domainImplementation = environmentFactory.getImplementation(domainOperation);
 				Set<@NonNull Operation> overrides = operation2overrides.get(domainOperation);
 				for (@NonNull CompleteClass subCompleteClass : subCompleteClasses) {
 					if (subCompleteClass != superCompleteClass) {
@@ -88,7 +88,7 @@ public class FinalAnalysis
 								CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 								CompleteClassInternal subOwningCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation));
 								if (subOwningCompleteClass.conformsTo(standardLibrary, superCompleteClass)) {
-									LibraryFeature subImplementation = metamodelManager.getImplementation(subOperation);
+									LibraryFeature subImplementation = environmentFactory.getImplementation(subOperation);
 									if ((domainImplementation != subImplementation)
 											|| (domainOperation.getBodyExpression() != subOperation.getBodyExpression())
 											|| (domainOperation.getTypeId() != subOperation.getTypeId())) {

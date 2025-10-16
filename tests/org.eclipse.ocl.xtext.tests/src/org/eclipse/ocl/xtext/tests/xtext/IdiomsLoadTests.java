@@ -77,7 +77,7 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 	public Resource doLoad_Idioms(@NonNull OCL ocl, URI inputURI) throws IOException {
-		ocl.getMetamodelManager().addClassLoader(getClass().getClassLoader());	// Ensure that the missing classpath: support is worked around - Xtext Bug 446073
+		ocl.getEnvironmentFactory().addClassLoader(getClass().getClassLoader());	// Ensure that the missing classpath: support is worked around - Xtext Bug 446073
 		ResourceSet resourceSet = doReformatInit(ocl);
 		String oldText = doReformatReference(resourceSet, inputURI);
 		String extension = inputURI.fileExtension();
