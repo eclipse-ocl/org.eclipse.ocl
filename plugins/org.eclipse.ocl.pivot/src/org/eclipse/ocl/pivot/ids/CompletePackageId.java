@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
@@ -28,4 +29,6 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  */
 public interface CompletePackageId extends ElementId, Nameable
 {
+	@Override
+	@NonNull String getName();
 }
