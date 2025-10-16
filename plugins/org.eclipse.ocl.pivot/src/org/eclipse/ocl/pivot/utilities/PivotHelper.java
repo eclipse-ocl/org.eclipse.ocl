@@ -307,7 +307,7 @@ public class PivotHelper extends PivotUtil
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
-		return ClassUtil.requireNonNull(getMetamodelManager().getASClass(TypeId.DATA_TYPE_NAME));
+		return ClassUtil.requireNonNull(environmentFactory.getCompleteModel().getASClass(TypeId.DATA_TYPE_NAME));
 	}
 
 	public @NonNull Property getDataTypeValueProperty() {

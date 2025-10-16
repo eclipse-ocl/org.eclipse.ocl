@@ -13,22 +13,22 @@ package org.eclipse.ocl.codegen.common;
 import java.util.LinkedHashSet;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public class PivotQueries
 {
 	public static @NonNull LinkedHashSet<Operation> getOperations(org.eclipse.ocl.pivot.@NonNull Class type) {
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		LinkedHashSet<Operation> operations = new LinkedHashSet<Operation>();
-		for (Operation operation : metamodelManager.getMemberOperations(type, false)) {
+		for (Operation operation : completeModel.getMemberOperations(type, false)) {
 			operations.add(operation);
 		}
-		for (Operation operation : metamodelManager.getMemberOperations(type, true)) {
+		for (Operation operation : completeModel.getMemberOperations(type, true)) {
 			operations.add(operation);
 		}
 		return operations;
@@ -36,12 +36,12 @@ public class PivotQueries
 
 	public static @NonNull LinkedHashSet<Property> getProperties(org.eclipse.ocl.pivot.@NonNull Class type) {
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		LinkedHashSet<Property> properties = new LinkedHashSet<Property>();
-		for (Property property : metamodelManager.getMemberProperties(type, false)) {
+		for (Property property : completeModel.getMemberProperties(type, false)) {
 			properties.add(property);
 		}
-		for (Property property : metamodelManager.getMemberProperties(type, true)) {
+		for (Property property : completeModel.getMemberProperties(type, true)) {
 			properties.add(property);
 		}
 		return properties;

@@ -753,8 +753,8 @@ public class OCLinEcoreTablesUtils
 
 	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
-		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
-		Type elementType = metamodelManager.getASClass("Element");
+		org.eclipse.ocl.pivot.Package pivotMetamodel = completeModel.getASmetamodel();
+		Type elementType = completeModel.getASClass("Element");
 		if (oclstdlibPackage == asPackage) {
 			VoidType oclVoidType = standardLibrary.getOclVoidType();
 			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
@@ -843,7 +843,7 @@ public class OCLinEcoreTablesUtils
 
 	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
-		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
+		org.eclipse.ocl.pivot.Package pivotMetamodel = completeModel.getASmetamodel();
 		if (oclstdlibPackage == asPackage) {
 			return null;
 		}
@@ -1061,10 +1061,10 @@ public class OCLinEcoreTablesUtils
 
 	protected @NonNull LinkedHashSet<@NonNull Operation> getOperations(org.eclipse.ocl.pivot.@NonNull Class type) {
 		LinkedHashSet<@NonNull Operation> operations = new LinkedHashSet<>();
-		for (@NonNull Operation operation : metamodelManager.getMemberOperations(type, false)) {
+		for (@NonNull Operation operation : completeModel.getMemberOperations(type, false)) {
 			operations.add(operation);
 		}
-		for (@NonNull Operation operation : metamodelManager.getMemberOperations(type, true)) {
+		for (@NonNull Operation operation : completeModel.getMemberOperations(type, true)) {
 			operations.add(operation);
 		}
 		return operations;
@@ -1103,11 +1103,11 @@ public class OCLinEcoreTablesUtils
 	protected @NonNull LinkedHashSet<@NonNull Property> getProperties(org.eclipse.ocl.pivot.@NonNull Class type) {
 		Set<String> names = new HashSet<>();
 		LinkedHashSet<@NonNull Property> properties = new LinkedHashSet<>();
-		for (@NonNull Property property : metamodelManager.getMemberProperties(type, true)) {
+		for (@NonNull Property property : completeModel.getMemberProperties(type, true)) {
 			names.add(property.getName());
 			properties.add(metamodelManager.getPrimaryProperty(property));
 		}
-		for (@NonNull Property property : metamodelManager.getMemberProperties(type, false)) {
+		for (@NonNull Property property : completeModel.getMemberProperties(type, false)) {
 			if (!names.contains(property.getName())) {
 				properties.add(metamodelManager.getPrimaryProperty(property));
 			}

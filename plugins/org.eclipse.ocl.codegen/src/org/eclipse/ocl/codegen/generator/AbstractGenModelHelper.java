@@ -588,7 +588,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			return null;
 		}
 		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
-		org.eclipse.ocl.pivot.Class elementType = metamodelManager.getASClass("Element");
+		org.eclipse.ocl.pivot.Class elementType = completeModel.getASClass("Element");
 		if ((elementType != null) && (oclstdlibPackage != null)) {
 			VoidType oclVoidType = standardLibrary.getOclVoidType();
 			org.eclipse.ocl.pivot.Package pivotMetamodel = elementType.getOwningPackage();

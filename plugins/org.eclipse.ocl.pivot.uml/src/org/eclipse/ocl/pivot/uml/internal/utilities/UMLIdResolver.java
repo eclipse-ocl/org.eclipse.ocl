@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -184,9 +185,10 @@ public class UMLIdResolver extends PivotIdResolver
 			// ?? getPivotOf to discover the pivoted type name, then getPivotType for the pivoted name
 			String typeName = eClassifier.getName();
 			if (typeName != null) {
-				org.eclipse.ocl.pivot.Package asMetamodel = metamodelManager.getASmetamodel();
+				CompleteModel completeModel = environmentFactory.getCompleteModel();
+				org.eclipse.ocl.pivot.Package asMetamodel = completeModel.getASmetamodel();
 				if (asMetamodel != null) {
-					CompletePackage completePackage = metamodelManager.getCompletePackage(asMetamodel);
+					CompletePackage completePackage = completeModel.getCompletePackage(asMetamodel);
 					org.eclipse.ocl.pivot.Class pivotType = completePackage.getMemberType(typeName);
 					if (pivotType != null) {
 						return pivotType;

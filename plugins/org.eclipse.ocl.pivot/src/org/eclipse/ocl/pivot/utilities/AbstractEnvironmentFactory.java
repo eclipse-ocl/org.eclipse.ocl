@@ -906,7 +906,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className) {
-		return getMetamodelManager().getASClass(className);
+		return getCompleteModel().getASClass(className);
 	}
 
 	/**

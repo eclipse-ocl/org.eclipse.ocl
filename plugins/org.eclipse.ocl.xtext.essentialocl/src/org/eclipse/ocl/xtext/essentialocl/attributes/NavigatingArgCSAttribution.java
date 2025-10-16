@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.essentialoclcs.AbstractNameExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
@@ -112,7 +112,7 @@ public class NavigatingArgCSAttribution extends AbstractAttribution
 						Type type = source.getType();
 						Type elementType;
 						CollectionType collectionType;
-						MetamodelManager metamodelManager = environmentView.getEnvironmentFactory().getMetamodelManager();
+						EnvironmentFactory environmentFactory = environmentView.getEnvironmentFactory();
 						if (type instanceof CollectionType) {		// collection->collection-operation(name...
 							collectionType = (CollectionType)type;
 							elementType = collectionType.getElementType();
@@ -121,9 +121,9 @@ public class NavigatingArgCSAttribution extends AbstractAttribution
 						}
 						else {
 							elementType = type;
-							collectionType = metamodelManager.getStandardLibrary().getSetType();
+							collectionType = environmentFactory.getStandardLibrary().getSetType();
 						}
-						if (NavigationUtil.isIteration(metamodelManager, csRoundBracketedClause, collectionType)) {
+						if (NavigationUtil.isIteration(environmentFactory, csRoundBracketedClause, collectionType)) {
 							if (environmentView.accepts(PivotPackage.Literals.TYPE)) {
 								EClassifier requiredType = environmentView.getRequiredType();
 								try {

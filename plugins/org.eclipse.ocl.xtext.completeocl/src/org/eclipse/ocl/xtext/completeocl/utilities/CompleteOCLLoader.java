@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
@@ -126,7 +127,7 @@ public abstract class CompleteOCLLoader
 							try {
 								org.eclipse.ocl.pivot.Package asPackage = environmentFactory.getASOf(org.eclipse.ocl.pivot.Package.class, mmPackage);
 								assert asPackage != null;
-								CompletePackage completePackage = ocl.getMetamodelManager().getCompletePackage(asPackage);
+								CompletePackage completePackage = ocl.getMetamodelManager().getCompleteModel().getCompletePackage(asPackage);
 								mmPackage2completePackage.put(mmPackage, completePackage);
 							} catch (ParserException e) {
 								// XXX Auto-generated catch block
@@ -227,11 +228,11 @@ public abstract class CompleteOCLLoader
 		//
 		//	Identify the packages which the Complete OCL document complements.
 		//
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		CompleteModel completeModel = ocl.getEnvironmentFactory().getCompleteModel();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject asElement = tit.next();
 			if (asElement instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
-				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)asElement);
+				CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)asElement);
 				org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
 			//	if (aPackage instanceof PivotObjectImpl) {
 					EObject mmPackage = aPackage.getESObject();
@@ -370,11 +371,11 @@ public abstract class CompleteOCLLoader
 		//
 		//	XXX Identify the packages which the Complete OCL document complements.
 		//
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject asElement = tit.next();
 			if (asElement instanceof org.eclipse.ocl.pivot.Package) {				// Supertypes/referenced types
-				CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)asElement);
+				CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)asElement);
 				org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
 				EObject mmPackage = aPackage.getESObject();
 				if (mmPackage instanceof EPackage) {

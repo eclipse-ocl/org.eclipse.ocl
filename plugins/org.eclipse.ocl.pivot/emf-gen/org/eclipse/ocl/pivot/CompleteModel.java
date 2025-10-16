@@ -15,10 +15,12 @@ import java.util.List;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
@@ -137,6 +139,16 @@ public interface CompleteModel extends NamedElement
 	void dispose();
 
 	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();
+
+	/**
 	 * Return all constraints applicable to asType and its superclasses. In superclass first then alphabetical order.
 	 * Multiple same-named invariants for the same CompleteClass are return as a List<Constraint> rather than just a Constraint.
 	 * The multiples are most-executable first. Returns null for none.
@@ -145,6 +157,17 @@ public interface CompleteModel extends NamedElement
 	 */
 	default @Nullable Iterable<@NonNull Object> getAllCompleteInvariants(@NonNull Type asType) { return null; }
 	@NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter, @NonNull String name);
+
 	@Deprecated /* Use Class */
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
 	/**
@@ -177,6 +200,23 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass);
+
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Property> getMemberProperties(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic);
+
 	/**
 	 * @since 7.0
 	 */
@@ -185,7 +225,17 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation pivotOperation);
+
+	/**
+	 * @since 7.0
+	 */
 	@NonNull Orphanage getOrphanage();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg, boolean loadASmetamodelFirst);
 
 	@Deprecated org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
 

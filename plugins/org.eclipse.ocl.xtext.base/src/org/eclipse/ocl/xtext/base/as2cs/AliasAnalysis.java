@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
@@ -32,7 +33,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -187,14 +187,14 @@ public class AliasAnalysis extends AdapterImpl
 	 */
 	private void computePackages(@NonNull Set<@NonNull CompletePackage> localCompletePackages,
 			@NonNull Set<@NonNull CompletePackage> otherCompletePackages) {
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		assert target != null;
 		for (EObject eObject : new TreeIterable((Resource)target)) {
 			if (eObject instanceof ImportCS) {
 				String name = ((ImportCS)eObject).getName();
 				Namespace namespace = ((ImportCS)eObject).getReferredNamespace();
 				if (namespace instanceof org.eclipse.ocl.pivot.Package) {						// XXX Model can be alias too
-					CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
+					CompletePackage completePackage = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)namespace);
 					allKnownAliases.put(completePackage, name);
 					allAliases.put(completePackage, name);
 				}
@@ -210,7 +210,7 @@ public class AliasAnalysis extends AdapterImpl
 						;
 					}
 					else if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-						domainNamedElement = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
+						domainNamedElement = completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
 					}
 					else {
 						//						domainNamedElement = metamodelManager.getPrimaryElement((NamedElement)eObject);
@@ -226,12 +226,12 @@ public class AliasAnalysis extends AdapterImpl
 					if (nsPrefix != null) {
 						addName(nsPrefix, domainNamedElement);
 					}
-					localCompletePackages.add(metamodelManager.getCompletePackage(pivotPackage));
+					localCompletePackages.add(completeModel.getCompletePackage(pivotPackage));
 				}
 				else {
 					for (EObject eContainer = eObject; eContainer != null; eContainer = eContainer.eContainer()) {
 						if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
-							otherCompletePackages.add(metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eContainer));
+							otherCompletePackages.add(completeModel.getCompletePackage((org.eclipse.ocl.pivot.Package)eContainer));
 							break;
 						}
 						if (eContainer instanceof org.eclipse.ocl.pivot.Class) {
@@ -270,7 +270,7 @@ public class AliasAnalysis extends AdapterImpl
 			eObject2 = ((Pivotable)eObject2).getPivot();
 		}
 		if (eObject2 instanceof org.eclipse.ocl.pivot.Package) {
-			CompletePackage completePackage = environmentFactory.getMetamodelManager().getCompletePackage((org.eclipse.ocl.pivot.Package)eObject2);
+			CompletePackage completePackage = environmentFactory.getCompleteModel().getCompletePackage((org.eclipse.ocl.pivot.Package)eObject2);
 			String alias = allKnownAliases.get(completePackage);
 			if (alias != null) {
 				return alias;
@@ -337,7 +337,7 @@ public class AliasAnalysis extends AdapterImpl
 	 */
 	public @Nullable String getKnownAlias(@NonNull EObject eObject) {
 		if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-			CompletePackage completePackage = environmentFactory.getMetamodelManager().getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
+			CompletePackage completePackage = environmentFactory.getCompleteModel().getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
 			return allKnownAliases.get(completePackage);
 		}
 		return null;

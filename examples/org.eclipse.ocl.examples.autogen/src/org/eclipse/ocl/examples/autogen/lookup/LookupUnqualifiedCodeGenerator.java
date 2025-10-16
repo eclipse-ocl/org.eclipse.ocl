@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
@@ -98,9 +97,8 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		this.helper = new PivotHelper(environmentFactory);
 		ParametersId emptyParametersId = IdManager.getParametersId();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class asOclElement = standardLibrary.getOclElementType();
-		CompleteClass asElementCompleteClass = metamodelManager.getCompletePackage(standardLibrary.getPackage()).getCompleteClass(asOclElement);
+		CompleteClass asElementCompleteClass = completeModel.getCompletePackage(standardLibrary.getPackage()).getCompleteClass(asOclElement);
 
 		String parentEnvOpName = ClassUtil.requireNonNull(envOperationName.replace(LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME, LookupVisitorsClassContext.PARENT_ENV_NAME));
 		OperationId parentEnvOperationId = asOclElement.getTypeId().getOperationId(0, parentEnvOpName , emptyParametersId);
@@ -129,7 +127,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 
 	@Override
 	protected List<Property> createAdditionalASProperties() {
-		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
+		Type asOclElement = standardLibrary.getOclElementType();
 		this.asChildProperty = createNativeProperty(LookupVisitorsClassContext.CHILD_NAME, asOclElement, false, true);
 		return Collections.singletonList(asChildProperty);
 	}
@@ -137,7 +135,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 	@Override
 	protected Collection<? extends Operation> createAdditionalASOperations() {
 		List<Operation> result = new ArrayList<Operation>();
-		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
+		Type asOclElement = standardLibrary.getOclElementType();
 		this.asVisitorEnvOperation = PivotUtil.createOperation(envOperationName, asEnvironmentType, null, null);
 		asVisitorEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsClassContext.ELEMENT_NAME, asOclElement, true));
 		asVisitorEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsClassContext.CHILD_NAME, asOclElement, false));
@@ -213,7 +211,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 
 		// calledOperation.getRedefinedOperations().contains(baseOperation);
 		// Note: the own operation seems to be an "overload"
-		for (Operation redefinedOp :  metamodelManager.getOperationOverloads(redefiningOperation)) {
+		for (Operation redefinedOp :  completeModel.getOperationOverloads(redefiningOperation)) {
 			if (baseOperation == redefinedOp) {
 				return true;
 			}
@@ -226,7 +224,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		for (Map.Entry<EObject, Collection<EStructuralFeature.Setting>> entry : EcoreUtil.CrossReferencer.find(allContents).entrySet()) {
 			EObject crossReference = entry.getKey();
 			if (crossReference instanceof Operation) {
-				Operation asOperation = metamodelManager.getPrimaryOperation((Operation)crossReference);
+				Operation asOperation = environmentFactory.getMetamodelManager().getPrimaryOperation((Operation)crossReference);
 				if (sameOrRedefiningOperation(asOperation, asElementEnvOperation)) {
 					for (EStructuralFeature.Setting setting : entry.getValue()) {
 						EObject eObject = setting.getEObject();

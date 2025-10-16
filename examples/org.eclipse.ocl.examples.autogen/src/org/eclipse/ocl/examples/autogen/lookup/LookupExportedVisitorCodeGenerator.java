@@ -81,7 +81,7 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 
 	@Override
 	protected List<Property> createAdditionalASProperties() {
-		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
+		Type asOclElement = standardLibrary.getOclElementType();
 		this.asImporterProperty = createNativeProperty(LookupVisitorsClassContext.INMPORTER_NAME, asOclElement, true, true);
 		return Collections.singletonList(asImporterProperty);
 	}

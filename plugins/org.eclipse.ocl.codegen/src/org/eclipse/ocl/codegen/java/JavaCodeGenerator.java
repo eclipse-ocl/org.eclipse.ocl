@@ -166,7 +166,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	protected @NonNull Id2EClassVisitor createId2EClassVisitor() {
-		return new Id2EClassVisitor(metamodelManager);
+		return new Id2EClassVisitor(environmentFactory);
 	}
 
 	protected @NonNull Id2BoxedDescriptorVisitor createId2BoxedDescriptorVisitor() {
@@ -260,7 +260,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public @Nullable Iteration2Java getIterationHelper(@NonNull Iteration asIteration) {
-		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
+		LibraryIteration libraryIteration = (LibraryIteration) environmentFactory.getMetamodelManager().getImplementation(asIteration);
 		if (asIteration.getOwnedIterators().size() != 1) {
 			return null;
 		}
