@@ -74,13 +74,13 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 			PARTIAL_MODELS.println("Do-didAdd " + partialModel + " => " + this);
 		}
 		CompleteModel completeModel = getCompleteModel();
-		((CompleteModelInternal)completeModel).didAddPartialModel(partialModel);
+		((CompleteModelImpl)completeModel).didAddPartialModel(partialModel);
 		((ModelImpl)partialModel).addRootListener(this);
 	}
 
 	@Override
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		((CompleteModelInternal)getCompleteModel()).didAddPackage(partialPackage);
+		((CompleteModelImpl)getCompleteModel()).didAddPackage(partialPackage);
 	}
 
 	private void didAddResource(@NonNull Resource resource) {
@@ -88,7 +88,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 			ASResourceFactory asResourceFactory = ((ASResource)resource).getASResourceFactory();
 			asResourceFactory.registerMetaPackages(getCompleteModel());
 		}
-		PartialModels partialModels = ((CompleteModelInternal)getCompleteModel()).getPartialModels();
+		PartialModels partialModels = ((CompleteModelImpl)getCompleteModel()).getPartialModels();
 		for (EObject eObject : resource.getContents()) {
 			if (eObject instanceof Model) {
 				partialModels.add((Model)eObject);
@@ -111,15 +111,15 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 		CompleteModel completeModel = getCompleteModel();
 		for (org.eclipse.ocl.pivot.Package pivotPackage : partialModel.getOwnedPackages()) {
 			if (pivotPackage != null) {
-				((CompleteModelInternal)completeModel).didRemoveNestedPackage(pivotPackage);
+				((CompleteModelImpl)completeModel).didRemoveNestedPackage(pivotPackage);
 			}
 		}
-		((CompleteModelInternal)completeModel).didRemovePartialModel(partialModel);
+		((CompleteModelImpl)completeModel).didRemovePartialModel(partialModel);
 	}
 
 	@Override
 	public void didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		((CompleteModelInternal)getCompleteModel()).didRemoveNestedPackage(partialPackage);
+		((CompleteModelImpl)getCompleteModel()).didRemoveNestedPackage(partialPackage);
 	}
 
 	private void didRemoveResource(@NonNull Resource resource) {
@@ -135,7 +135,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	}
 
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getNestedPartialPackages() {
-		PartialModels partialModels = ((CompleteModelInternal)getCompleteModel()).getPartialModels();
+		PartialModels partialModels = ((CompleteModelImpl)getCompleteModel()).getPartialModels();
 		Iterable<Iterable<org.eclipse.ocl.pivot.@NonNull Package>> roots_packages = Iterables.transform(partialModels, model2RootOwnedPackages);
 		@SuppressWarnings("null")
 		@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> allPackages = Iterables.concat(roots_packages);

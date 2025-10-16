@@ -109,7 +109,7 @@ import com.google.common.collect.Lists;
  *
  * @generated
  */
-public class CompleteModelImpl extends NamedElementImpl implements CompleteModel, org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal
+public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 {
 	private static final Logger logger = Logger.getLogger(CompleteModelImpl.class);
 
@@ -611,7 +611,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackage;
 	}
 
-	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
@@ -639,7 +638,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		assert (old == null) || (old == completePackage);
 	}
 
-	@Override
+	/**
+	 * @since 7.0
+	 */
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		if (asPackage instanceof Library) {
 			standardLibrary.installLibrary((Library)asPackage);
@@ -672,7 +673,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	//	getCompleteClasses(asPackage);
 	}
 
-	@Override
 	public void didAddPartialModel(@NonNull Model partialModel) {
 		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(partialModel)) {
 			didAddPackage(asPackage);
@@ -682,12 +682,13 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 	}
 
-	@Override
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		class2completeClass.remove(pivotType);
 	}
 
-	@Override
+	/**
+	 * @since 7.0
+	 */
 	public void didRemoveCompletePackage(@NonNull CompletePackage completePackage) {
 		if (completePackage == primitiveCompletePackage) {
 			primitiveCompletePackage = null;
@@ -709,7 +710,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		} */
 	}
 
-	@Override
 	public void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {				// XXX not 'Nested'
 		CompletePackage completePackage = ownedCompletePackages.didRemovePackage(asPackage);			// XXX getCompletePackage
 		String packageURI = asPackage.getURI();
@@ -722,7 +722,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 	}
 
-	@Override
 	public void didRemovePartialModel(@NonNull Model partialModel) {		// UPdates occur fia didRemovePackage etc
 	/*	for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
 			String packageURI = asPackage.getURI();
@@ -974,7 +973,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return (CompleteClassInternal)completePackage.getCompleteClass(asClass);
 	}
 
-	@Override
+	/**
+	 * @since 7.0
+	 */
 	public void getCompleteClasses(@NonNull ASResource asResource) {
 		// XXX check called just once
 		// XXX pass completePackage
@@ -987,7 +988,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 	}
 
-	@Override
+	/**
+	 * @since 7.0
+	 */
 	public void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {				// XXX migrate to lazy first getCompleteClass
 		// XXX check called just once
 		// XXX pass completePackage
@@ -1163,7 +1166,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Deprecated	// fold packageURI2completePackage.get() inline
-	@Override
 	public @Nullable String getCompleteURI(@Nullable String packageURI) {
 		CompletePackage completePackage = packageURI2completePackage.get(packageURI);
 		if (completePackage != null) {
@@ -1676,7 +1678,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completeClass.getProperSuperCompleteClasses();
 	}
 
-	@Override
+	/**
+	 * @since 7.0
+	 */
 	public @NonNull CompleteModel init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.standardLibrary = environmentFactory.getStandardLibrary();
@@ -1826,7 +1830,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 	}
 
-	@Override
+	/**
+	 * @since 7.0
+	 */
 	public void setAutoLoadASmetamodel(boolean autoLoadASmetamodel) {
 		this.autoLoadASmetamodel  = autoLoadASmetamodel;
 	}

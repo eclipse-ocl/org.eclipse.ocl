@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -97,7 +96,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				owner.classListeners.didAddPartialClass(index, partialClass);
 			}
 			if (partialClass.getUnspecializedElement() == null) {
-				((CompleteModelInternal)owner.getCompleteModel()).didAddClass(partialClass, owner);
+				((CompleteModelImpl)owner.getCompleteModel()).didAddClass(partialClass, owner);
 			}
 		}
 

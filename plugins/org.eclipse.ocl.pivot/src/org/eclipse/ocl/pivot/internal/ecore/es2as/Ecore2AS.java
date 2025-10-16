@@ -61,7 +61,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -1053,7 +1053,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		PivotUtil.refreshList(pivotModel.getOwnedPackages(), newPackages);
-		((CompleteModelInternal)completeModel).getCompleteClasses(asResource);
+		((CompleteModelImpl)completeModel).getCompleteClasses(asResource);
 	}
 
 	/**

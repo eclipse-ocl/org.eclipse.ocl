@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -110,7 +111,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			}
 		}
 		if (partialClass.getUnspecializedElement() == null) {
-			((CompleteModelInternal)getCompleteModel()).didRemoveClass(partialClass);
+			((CompleteModelImpl)getCompleteModel()).didRemoveClass(partialClass);
 		}
 	}
 
