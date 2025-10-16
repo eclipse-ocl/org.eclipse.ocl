@@ -853,7 +853,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			return null;
 		}
 		if (!oppositeProperty.isIsComposite()) {
-			LibraryProperty libraryProperty = environmentFactory.getImplementation(null, null, asProperty);
+			LibraryProperty libraryProperty = environmentFactory.getPropertyImplementation(null, null, asProperty);
 			if (!(libraryProperty instanceof OclElementOclContainerProperty)) {
 				return null;
 			}

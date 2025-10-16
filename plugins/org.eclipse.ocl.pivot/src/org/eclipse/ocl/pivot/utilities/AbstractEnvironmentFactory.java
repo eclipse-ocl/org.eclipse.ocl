@@ -110,6 +110,9 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryIteration;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -324,8 +327,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public void addClassLoader(@NonNull ClassLoader classLoader) {
-		ImplementationManager implementationManager = getImplementationManager();
-		implementationManager.addClassLoader(classLoader);
+		getImplementationManager().addClassLoader(classLoader);
 	}
 
 	@Override
@@ -1039,6 +1041,16 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return result;
 	}
 
+	@Override
+	public @NonNull Iterable<@NonNull ClassLoader> getClassLoaders() {
+		return getImplementationManager().getClassLoaders();
+	}
+
+	@Override
+	public @Nullable Class<?> getClassImplementation(@Nullable Object context, @NonNull String instanceClassName) throws ClassNotFoundException {
+		return getImplementationManager().loadImplementation(context, instanceClassName);
+	}
+
 	/**
 	 * Obtains client metamodel's classifier for the specified
 	 * <code>context</code> object, which may be an instance of a classifier
@@ -1079,6 +1091,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			return "OCLstdlibStandaloneSetup.doSetup()";
 		}
 		return null;
+	}
+
+	private @NonNull LibraryFeature getFeatureImplementation(@NonNull Feature feature) throws ClassNotFoundException, SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+		LibraryFeature implementation = feature.getImplementation();
+		if (implementation == null) {
+			ImplementationManager implementationManager = getImplementationManager();
+			implementation = implementationManager.loadImplementation(feature);
+			if (implementation == null) {
+				implementation = UnsupportedOperation.INSTANCE;
+			}
+		}
+		return implementation;
 	}
 
 	@Override
@@ -1126,24 +1150,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return idResolver2;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull LibraryFeature getImplementation(@NonNull Feature feature) throws ClassNotFoundException, SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-		LibraryFeature implementation = feature.getImplementation();
-		if (implementation == null) {
-			ImplementationManager implementationManager = getImplementationManager();
-			implementation = implementationManager.loadImplementation(feature);
-			if (implementation == null) {
-				implementation = UnsupportedOperation.INSTANCE;
-			}
-		}
-		return implementation;
-	}
-
 	@Override
-	public @NonNull LibraryFeature getImplementation(@NonNull Operation operation) {
-		LibraryFeature implementation = operation.getImplementation();
+	public @NonNull LibraryIterationOrOperation getIterationOrOperationImplementation(@NonNull Operation operation) {
+		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation) operation.getImplementation();
 		if (implementation == null) {
 			boolean isCodeGeneration = isCodeGeneration();
 			if (isCodeGeneration) {
@@ -1211,7 +1220,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 			if (implementation == null) {
 				try {
-					implementation = getImplementation((Feature) operation);
+					implementation = (LibraryIterationOrOperation) getFeatureImplementation(operation);
 				} catch (ClassNotFoundException | SecurityException
 						| NoSuchFieldException | IllegalArgumentException
 						| IllegalAccessException e) {}
@@ -1220,18 +1229,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				implementation = UnsupportedOperation.INSTANCE;
 			}
 			operation.setImplementation(implementation);
-		}
-		return implementation;
-	}
-
-	@Override
-	public @NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
-		LibraryProperty implementation = (LibraryProperty) property.getImplementation();
-		if (implementation == null) {
-		//	System.out.println("getImplementation " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(property) + " " + property);
-			ImplementationManager implementationManager = getImplementationManager();
-			implementation = implementationManager.getPropertyImplementation(asNavigationExp, sourceValue, property);
-			property.setImplementation(implementation);
 		}
 		return implementation;
 	}
@@ -1252,6 +1249,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		getStandardLibrary();
 		PrecedenceManager precedenceManager = getPrecedenceManager();
 		return precedenceManager.getInfixPrecedence(operatorName);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull LibraryIteration getIterationImplementation(@NonNull Iteration iteration) {
+		return (LibraryIteration)getIterationOrOperationImplementation(iteration);
 	}
 
 	@Override
@@ -1301,6 +1306,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return metamodelManager2;
 	}
 
+	@Override
+	public @NonNull LibraryOperation getOperationImplementation(@NonNull Operation operation) {
+		return (LibraryOperation)getIterationOrOperationImplementation(operation);
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -1342,6 +1352,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull ProjectManager getProjectManager() {
 		return projectManager;
+	}
+
+	@Override
+	public @NonNull LibraryProperty getPropertyImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
+		LibraryProperty implementation = (LibraryProperty) property.getImplementation();
+		if (implementation == null) {
+		//	System.out.println("getPropertyImplementation " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(property) + " " + property);
+			ImplementationManager implementationManager = getImplementationManager();
+			implementation = implementationManager.getPropertyImplementation(asNavigationExp, sourceValue, property);
+			property.setImplementation(implementation);
+		}
+		return implementation;
 	}
 
 	@Override

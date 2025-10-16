@@ -222,12 +222,14 @@ public class ImplementationManager
 	/**
 	 * @since 1.18
 	 */
-	public @Nullable Class<?> loadImplementation(@NonNull Object context, @NonNull String implementationClassName) throws ClassNotFoundException {
-		Class<?> theClass = null;
-		ClassLoader contextClassLoader = context.getClass().getClassLoader();
-		if (contextClassLoader != null) {
-			addClassLoader(contextClassLoader);
+	public @Nullable Class<?> loadImplementation(@Nullable Object context, @NonNull String implementationClassName) throws ClassNotFoundException {
+		if (context != null) {
+			ClassLoader contextClassLoader = context.getClass().getClassLoader();
+			if (contextClassLoader != null) {
+				addClassLoader(contextClassLoader);
+			}
 		}
+		Class<?> theClass = null;
 		ClassNotFoundException ex = null;
 		for (@NonNull ClassLoader classLoader : getClassLoaders()) {
 			try {

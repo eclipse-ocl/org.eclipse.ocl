@@ -313,7 +313,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		if (navigationCallExp.isIsSafe() && (sourceValue == null)) {
 			return null;
 		}
-		LibraryProperty implementation = environmentFactory.getImplementation(navigationCallExp, sourceValue, referredProperty);
+		LibraryProperty implementation = environmentFactory.getPropertyImplementation(navigationCallExp, sourceValue, referredProperty);
 		try {
 			return implementation.evaluate(this, navigationCallExp.getTypeId(), sourceValue);
 		}
@@ -374,7 +374,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 		else {
 			actualOperation = apparentOperation;
 		}
-		LibraryOperation implementation = (LibraryOperation) environmentFactory.getImplementation(actualOperation);
+		LibraryOperation implementation = (LibraryOperation) environmentFactory.getOperationImplementation(actualOperation);
 		//
 		//	Dispatch operation
 		//

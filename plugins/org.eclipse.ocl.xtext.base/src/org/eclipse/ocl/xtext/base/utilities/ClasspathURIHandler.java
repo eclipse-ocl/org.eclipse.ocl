@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.utilities;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -28,6 +27,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.resource.ClasspathUriUtil;
 import org.eclipse.xtext.resource.FileNotFoundOnClasspathException;
 
+import com.google.common.collect.Iterables;
+
 /**
  * ClasspathURIHandler may be installed by code such as
  * <p>
@@ -37,7 +38,7 @@ import org.eclipse.xtext.resource.FileNotFoundOnClasspathException;
  */
 public class ClasspathURIHandler extends URIHandlerImpl
 {
-	public static void init(@NonNull ResourceSet resourceSet, @Nullable List<@NonNull ClassLoader> classLoaders) {
+	public static void init(@NonNull ResourceSet resourceSet, @Nullable Iterable<@NonNull ClassLoader> classLoaders) {
 		URIConverter uriConverter = resourceSet.getURIConverter();
 		synchronized (uriConverter) {
 			EList<URIHandler> uriHandlers = uriConverter.getURIHandlers();
@@ -67,8 +68,8 @@ public class ClasspathURIHandler extends URIHandlerImpl
 		this(null);
 	}
 
-	public ClasspathURIHandler(@Nullable List<@NonNull ClassLoader> classLoaders) {
-		this.classLoaders = classLoaders != null ? classLoaders.toArray(new @NonNull ClassLoader[classLoaders.size()]) : null;
+	public ClasspathURIHandler(@Nullable Iterable<@NonNull ClassLoader> classLoaders) {
+		this.classLoaders = classLoaders != null ? Iterables.toArray(classLoaders, ClassLoader.class) : null;
 	}
 
 	@Override
