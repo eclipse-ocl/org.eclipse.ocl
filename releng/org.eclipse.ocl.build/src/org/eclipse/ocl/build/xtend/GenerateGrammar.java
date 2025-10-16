@@ -37,7 +37,7 @@ import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.codegen.generator.EcoreGenModelHelper;
+import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -279,7 +279,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		OCL ocl = OCL.newInstance();
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
-		genModelHelper = new EcoreGenModelHelper(environmentFactory);
+		genModelHelper = AbstractGenModelHelper.create(environmentFactory.getGenPackageManager());
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 //		if (rootPath == null) {
 //			rootPath = "";

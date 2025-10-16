@@ -1555,7 +1555,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (nsURI == null) {
 			throw new IllegalStateException("No EPackage NsURI for " + cgShadowExp + " in CG2JavaVisitor.visitCGEcoreDataTypeShadowExp()");
 		}
-		GenPackage genPackage = environmentFactory.getMetamodelManager().getGenPackage(nsURI);
+		GenPackage genPackage = environmentFactory.getGenPackageManager().getGenPackage(nsURI);
 		if (genPackage == null) {
 			throw new IllegalStateException("No GenPackage for " + cgShadowExp + " in CG2JavaVisitor.visitCGEcoreDataTypeShadowExp()");
 		}

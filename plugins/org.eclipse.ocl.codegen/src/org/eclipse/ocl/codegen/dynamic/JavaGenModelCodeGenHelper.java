@@ -106,7 +106,7 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 					return genPackage;
 				}
 			}
-			genPackage = environmentFactory.getMetamodelManager().getGenPackage(nsURI);
+			genPackage = environmentFactory.getGenPackageManager().getGenPackage(nsURI);
 			if (genPackage != null) {
 				install(genPackage);
 				return genPackage;

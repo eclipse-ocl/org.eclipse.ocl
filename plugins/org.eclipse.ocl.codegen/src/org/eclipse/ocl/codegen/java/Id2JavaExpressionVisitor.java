@@ -215,7 +215,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	public @Nullable Object visitNsURIPackageId(@NonNull NsURIPackageId id) {
 		String nsURI = id.getNsURI();
 		String nsPrefix = id.getNsPrefix();
-		GenPackage genPackage = environmentFactory.getMetamodelManager().getGenPackage(nsURI);
+		GenPackage genPackage = environmentFactory.getGenPackageManager().getGenPackage(nsURI);
 		js.appendClassReference(null, IdManager.class);
 		js.append(".getNsURIPackageId(");
 		js.appendString(nsURI);

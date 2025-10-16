@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
-import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -38,16 +36,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void addExternal2AS(@NonNull External2AS external2as);
-
-	/**
-	 * @since 7.0
-	 */
-	void addGenModel(@NonNull GenModel genModel);
-
-	/**
-	 * @since 7.0
-	 */
-	void addGenPackage(@NonNull GenPackage genPackage);
 
 	/**
 	 * @since 7.0
@@ -84,11 +72,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	@NonNull EnvironmentFactory getEnvironmentFactory();
-
-	/**
-	 * @since 7.0
-	 */
-	@Nullable GenPackage getGenPackage(@NonNull String nsURI);
 
 	/**
 	 * @since 7.0
