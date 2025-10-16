@@ -83,11 +83,11 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
@@ -315,7 +315,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		copyDataTypeOrEnum(pivotElement, eDataType);
 		if (isPrimitive) {
 			CompleteModel completeModel = environmentFactory.getCompleteModel();
-			PrimitiveCompletePackageImpl primitiveCompletePackage = ((CompleteModelInternal)completeModel).getPrimitiveCompletePackage();
+			PrimitiveCompletePackageImpl primitiveCompletePackage = ((CompleteModelImpl)completeModel).getPrimitiveCompletePackage();
 			CompleteClassInternal completeClass = primitiveCompletePackage.getCompleteClass(pivotElement);
 			if (!completeClass.getPartialClasses().contains(pivotElement)) {
 				completeClass.addClass(pivotElement);

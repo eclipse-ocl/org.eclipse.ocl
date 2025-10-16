@@ -41,7 +41,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore.InverseConversion;
@@ -391,7 +391,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 
 	@Override
 	public void installRoot(@NonNull Model pivotModel) {
-		PartialModels partialModels = ((CompleteModelInternal)completeModel).getPartialModels();
+		PartialModels partialModels = ((CompleteModelImpl)completeModel).getPartialModels();
 		if (partialModels.contains(pivotModel)) {
 			return;
 		}
@@ -400,7 +400,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		ASResource asResource = (ASResource) pivotModel.eResource();			// XXX cast
 		if (asResource != null) {												// XXX some test models don't bother with a Resource
-			((CompleteModelInternal)completeModel).getCompleteClasses(asResource);
+			((CompleteModelImpl)completeModel).getCompleteClasses(asResource);
 		}
 		List<org.eclipse.ocl.pivot.Package> ownedPackages = pivotModel.getOwnedPackages();
 		List<Import> ownedImports = pivotModel.getOwnedImports();

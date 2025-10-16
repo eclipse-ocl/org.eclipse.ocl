@@ -79,7 +79,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
@@ -267,7 +267,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.standardLibrary = createStandardLibrary();
 		this.completeModel = createCompleteModel();
 
-		((CompleteModelInternal)this.completeModel).init(this);
+		((CompleteModelImpl)this.completeModel).init(this);
 		this.standardLibrary.init(this);
 
 		technology.registerMetaPackages(completeModel);

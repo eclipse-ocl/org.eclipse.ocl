@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -51,7 +51,7 @@ public class EcoreTechnology extends AbstractTechnology
 		}
 		else {
 			String nsURI = ePackage.getNsURI();
-			String sharedNsURI = ((CompleteModelInternal)environmentFactory.getCompleteModel()).getCompleteURI(nsURI);
+			String sharedNsURI = ((CompleteModelImpl)environmentFactory.getCompleteModel()).getCompleteURI(nsURI);
 			if ((sharedNsURI != null) && !sharedNsURI.equals(nsURI)) {
 				metamodel = IdManager.getRootPackageId(sharedNsURI);
 			}

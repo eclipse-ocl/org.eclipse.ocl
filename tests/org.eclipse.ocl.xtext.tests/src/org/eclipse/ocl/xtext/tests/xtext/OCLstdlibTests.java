@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
@@ -193,7 +193,7 @@ public class OCLstdlibTests extends XtextTestCase
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		ResourceSet asResourceSet = environmentFactory.getASResourceSet();
 		ASResource asResource = (ASResource) asResourceSet.getResource(libraryURI, true);
-		((CompleteModelInternal)completeModel).getCompleteClasses(asResource);
+		((CompleteModelImpl)completeModel).getCompleteClasses(asResource);
 		BooleanType booleanType = environmentFactory.getStandardLibrary().getBooleanType();
 		CompletePackage completePackage = completeModel.getPrimitiveCompletePackage();
 		CompleteClass completeClass = completePackage.getOwnedCompleteClass(booleanType.getName());

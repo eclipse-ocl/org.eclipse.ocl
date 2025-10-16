@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -512,7 +511,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
 //		getOwnedCompletePackages().didAddPackage(nestedPackage);
 //		throw new UnsupportedOperationException();
-		((CompleteModelInternal)getCompleteModel()).didAddPackage(nestedPackage);
+		((CompleteModelImpl)getCompleteModel()).didAddPackage(nestedPackage);
 		if (COMPLETE_URIS.isActive()) {
 			traceURImapping();
 		}
@@ -539,7 +538,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		if ((partialClass instanceof PrimitiveType) && !(this instanceof PrimitiveCompletePackage)) {
-			((CompleteModelInternal)getCompleteModel()).getPrimitiveCompletePackage().didRemoveClass(partialClass);
+			((PrimitiveCompletePackageImpl)getCompleteModel().getPrimitiveCompletePackage()).didRemoveClass(partialClass);
 		}
 		else {
 			if (ownedCompleteClasses != null) {
