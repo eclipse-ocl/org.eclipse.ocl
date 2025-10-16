@@ -368,6 +368,11 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«ENDFOR»
 					«ELSE»
 					protected final org.eclipse.ocl.pivot.@NonNull Package «stdlib.getSymbolName()»;
+					«FOR pkge : thisModel.getSortedAllPackages()»
+					«IF Orphanage.isOrphan(pkge)»
+					protected final «getEClassReference(true, pkge)» «pkge.getSymbolName()»;
+					«ENDIF»
+					«ENDFOR»
 					«ENDIF»
 					«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
 					protected final @NonNull NormalizedTemplateParameter «normalizedTemplateParameter.getPrefixedSymbolName(normalizedTemplateParameter.getName())»;
@@ -380,6 +385,11 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«ENDFOR»
 						«ELSE»
 						«stdlib.getSymbolName()» = «stdlib.getExternalReference()»;
+						«FOR pkge : thisModel.getSortedAllPackages()»
+						«IF Orphanage.isOrphan(pkge)»
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«ENDIF»
+						«ENDFOR»
 						«ENDIF»
 						«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
 						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(«thisModel.getOrphanPackage().getSymbolName()», «normalizedTemplateParameter.getIndex()»);
@@ -394,7 +404,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«FOR pkge : thisModel.getSortedAllPackages()»
 					«IF pkge == stdlib»
 					«ELSEIF (pkge.eContainer() != thisModel) && !Orphanage.isOrphan(pkge)»
-					«ELSE»
+					«ELSEIF !Orphanage.isOrphan(pkge)»
 					private final org.eclipse.ocl.pivot.@NonNull Package «pkge.getSymbolName()»;
 					«ENDIF»
 					«ENDFOR»
@@ -407,7 +417,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«FOR pkge : thisModel.getSortedAllPackages()»
 						«IF pkge == stdlib»
 						«ELSEIF (pkge.eContainer() != thisModel) && !Orphanage.isOrphan(pkge)»
-						«ELSE»
+						«ELSEIF !Orphanage.isOrphan(pkge)»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDIF»
 						«ENDFOR»
