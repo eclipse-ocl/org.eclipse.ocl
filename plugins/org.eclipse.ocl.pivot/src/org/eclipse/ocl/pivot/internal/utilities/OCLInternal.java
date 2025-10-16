@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 public class OCLInternal extends OCL
@@ -57,12 +56,6 @@ public class OCLInternal extends OCL
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		assert environmentFactory != null;
 		return environmentFactory;
-	}
-
-	@Override
-	public @NonNull MetamodelManager getMetamodelManager() {
-		assert environmentFactory != null;
-		return environmentFactory.getMetamodelManager();
 	}
 
 	/**

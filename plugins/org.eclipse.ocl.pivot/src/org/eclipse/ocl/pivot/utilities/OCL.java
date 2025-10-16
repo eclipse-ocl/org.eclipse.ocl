@@ -491,6 +491,7 @@ public class OCL
 	}
 
 	public @NonNull MetamodelManager getMetamodelManager() {
+		assert environmentFactory != null;
 		return environmentFactory.getMetamodelManager();
 	}
 

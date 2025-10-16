@@ -363,7 +363,7 @@ implements OCLExpression {
 	@Override
 	public boolean isNonNull() {
 		Executor executor = PivotUtil.getExecutor(this);
-		FlowAnalysis flowAnalysis = executor.getMetamodelManager().getFlowAnalysis(this);
+		FlowAnalysis flowAnalysis = executor.getEnvironmentFactory().getFlowAnalysis(this);
 		return flowAnalysis.isNonNull(this);
 	}
 
@@ -381,7 +381,7 @@ implements OCLExpression {
 	@Override
 	public boolean isNull() {
 		Executor executor = PivotUtil.getExecutor(this);
-		FlowAnalysis flowAnalysis = executor.getMetamodelManager().getFlowAnalysis(this);
+		FlowAnalysis flowAnalysis = executor.getEnvironmentFactory().getFlowAnalysis(this);
 		return flowAnalysis.isNull(this);
 	}
 } //OCLExpressionImpl

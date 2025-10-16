@@ -656,7 +656,7 @@ public class FlowAnalysis
 				LetExp letExp = (LetExp)eContainer;
 				Variable letVariable = PivotUtil.getOwnedVariable(letExp);
 				OCLExpression initExpression = PivotUtil.getOwnedInit(letVariable);
-				FlowAnalysis variableAnalysis = environmentFactory.getMetamodelManager().getFlowAnalysis(initExpression);
+				FlowAnalysis variableAnalysis = environmentFactory.getFlowAnalysis(initExpression);
 				if (variableAnalysis.isNull(initExpression)) {
 					setVariable(letVariable, true);
 				}

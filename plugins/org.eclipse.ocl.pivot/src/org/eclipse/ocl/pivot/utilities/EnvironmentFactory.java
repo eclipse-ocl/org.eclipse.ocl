@@ -312,6 +312,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull FinalAnalysis getFinalAnalysis();
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
+
+	/**
 	 * Return the IdResolver that performs the resolution of the lightweight usage-independent Ids of types and packages
 	 * into the full usage-specific equivalents.
 	 */
@@ -481,6 +486,11 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	void resetFinalAnalysis();
+
+	/**
+	 * @since 7.0
+	 */
+	void resetFlowAnalysis();
 
 	/**
 	 * @since 7.0
