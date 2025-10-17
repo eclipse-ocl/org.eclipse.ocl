@@ -268,6 +268,11 @@ public interface ProjectManager extends Adapter
 
 		void initializeURIMap(@NonNull Map<URI, URI> uriMap);
 
+		/**
+		 * @since 7.0
+		 */
+		void readGenModels();
+
 		void unload(@NonNull ResourceSet resourceSet);
 	}
 

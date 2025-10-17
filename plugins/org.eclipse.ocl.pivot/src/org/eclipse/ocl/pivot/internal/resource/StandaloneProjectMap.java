@@ -2334,6 +2334,15 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		}
 
 		@Override
+		public void readGenModels() {
+			if (genModelURI2resourceDescriptor != null) {
+				for (IResourceDescriptor resourceDescriptor : genModelURI2resourceDescriptor.values()) {
+					resourceDescriptor.hasEcoreModel();
+				}
+			}
+		}
+
+		@Override
 		public void unload(@NonNull ResourceSet resourceSet) {
 			Collection<@NonNull IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
 			if (resourceDescriptors != null) {
@@ -2993,8 +3002,15 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		//		resource.eAdapters().add(this);
 		if (resourceSet instanceof ResourceSetImpl) {
 			Map<@NonNull URI, @NonNull IResourceDescriptor> uri2resource2 = uri2resource;
+			URI uri = resource.getURI();
+			if ((uri2resource2 == null) || (uri2resource2.get(uri) == null)) {			// XXX *.ecore only
+				if (uri.isPlatform()) {
+					IProjectDescriptor projectDescriptor = getProjectDescriptorInternal(uri);
+					projectDescriptor.readGenModels();
+				}
+			}
+			uri2resource2 = uri2resource;
 			if (uri2resource2 != null) {
-				URI uri = resource.getURI();
 				IResourceDescriptor resourceDescriptor = uri2resource2.get(uri);
 				if (resourceDescriptor != null) {
 					resourceDescriptor.addedDynamicResource(resourceSet, resource);
