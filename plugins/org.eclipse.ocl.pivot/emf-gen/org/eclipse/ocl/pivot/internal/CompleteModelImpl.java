@@ -95,7 +95,6 @@ import com.google.common.collect.Lists;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Complete Model</b></em>'.
- * @extends org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
