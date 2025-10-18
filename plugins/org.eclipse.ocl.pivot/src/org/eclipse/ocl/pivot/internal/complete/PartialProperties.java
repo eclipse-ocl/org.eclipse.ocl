@@ -102,8 +102,8 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		if (isResolved) {
 			return resolution;
 		}
-		List<@NonNull Property> values = new ArrayList<@NonNull Property>(partials);
-		Map<@NonNull Type, @NonNull Property> primaryProperties = new HashMap<@NonNull Type, @NonNull Property>();
+		List<@NonNull Property> values = new ArrayList<>(partials);
+		Map<@NonNull Type, @NonNull Property> primaryProperties = new HashMap<>();
 		for (@NonNull Property property : values) {
 			org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 			if (owningType != null) {
@@ -135,7 +135,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		if (resolution != null) {
 			return false;
 		}
-		List<Property> partials2 = partials;
+		List<@NonNull Property> partials2 = partials;
 		if (partials2 == null) {
 			return true;
 		}
@@ -169,7 +169,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 
 	private void resolve() {
 		assert !isResolved;
-		List<Property> partials2 = partials;
+		List<@NonNull Property> partials2 = partials;
 		if (partials2 == null) {
 			return;
 		}
@@ -181,13 +181,13 @@ public class PartialProperties implements Iterable<@NonNull Property>
 			isResolved = true;
 			resolution = partials2.get(0);
 		}
-		List<Property> values = new ArrayList<Property>(partials);
+		List<@NonNull  Property> values = new ArrayList<>(partials);
 		for (int i = 0; i < values.size()-1;) {
 			boolean iRemoved = false;
-			@SuppressWarnings("null") @NonNull Property iValue = values.get(i);
+			@NonNull Property iValue = values.get(i);
 			for (int j = i + 1; j < values.size();) {
 				Class<? extends Property> iClass = iValue.getClass();
-				@SuppressWarnings("null") @NonNull Property jValue = values.get(j);
+				@NonNull Property jValue = values.get(j);
 				Class<? extends Property> jClass = jValue.getClass();
 				int verdict = 0;
 				for (Class<?> key : EnvironmentView.getDisambiguatorKeys()) {
@@ -237,12 +237,12 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		if (resolution != null) {
 			return resolution.toString();
 		}
-		List<Property> partials2 = partials;
+		List<@NonNull Property> partials2 = partials;
 		if (partials2 == null) {
 			return "";
 		}
 		StringBuilder s = new StringBuilder();
-		for (Property dProperty : partials2) {
+		for (@NonNull Property dProperty : partials2) {
 			if (s.length() > 0) {
 				s.append(",");
 			}
