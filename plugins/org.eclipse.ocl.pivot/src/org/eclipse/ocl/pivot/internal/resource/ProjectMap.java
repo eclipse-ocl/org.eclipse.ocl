@@ -31,7 +31,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.emf.ecore.resource.impl.PlatformResourceURIHandlerImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -92,6 +94,8 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	 */
 	public static final @NonNull TracingOption PROJECT_MAP_RESOURCE_CHANGE = new TracingOption(PivotPlugin.PLUGIN_ID, "projectMap/resourceChange");
 
+	private static final @NonNull URIHandler PLATFORM_RESOURCE_URI_HANDLER = new PlatformResourceURIHandlerImpl();
+
 	public static class ProjectDescriptor extends StandaloneProjectMap.ProjectDescriptor
 	{
 		public ProjectDescriptor(@NonNull ProjectMap projectMap, @NonNull String name, @NonNull URI locationURI) {
@@ -113,11 +117,12 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 				if (locationURI.isPlatformResource()) {
 					URI resourceURI = locationURI;
 					URI pluginURI = getPlatformPluginURI();
-					uriMap.put(resourceURI, resourceURI);
-					uriMap.put(pluginURI, resourceURI);
+					URI targetURI = PLATFORM_RESOURCE_URI_HANDLER.exists(locationURI, null) ? locationURI : pluginURI;
+					uriMap.put(resourceURI, targetURI);
+					uriMap.put(pluginURI, targetURI);
 					if (PROJECT_MAP_ADD_URI_MAP.isActive()) {
-						PROJECT_MAP_ADD_URI_MAP.println(resourceURI + " => " + resourceURI);
-						PROJECT_MAP_ADD_URI_MAP.println(pluginURI + " => " + resourceURI);
+						PROJECT_MAP_ADD_URI_MAP.println(resourceURI + " => " + targetURI);
+						PROJECT_MAP_ADD_URI_MAP.println(pluginURI + " => " + targetURI);
 					}
 				}
 			}
