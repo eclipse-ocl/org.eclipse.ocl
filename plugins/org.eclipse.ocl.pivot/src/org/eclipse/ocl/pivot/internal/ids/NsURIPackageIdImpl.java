@@ -126,7 +126,7 @@ public class NsURIPackageIdImpl extends AbstractPackageIdImpl implements NsURIPa
 	@Override
 	public void setEPackage(@NonNull EPackage ePackage) {
 		assert !ePackage.eIsProxy();												// See Bug 548225, must not cache something unloadable
-		if (ePackage.getClass() != EPackageImpl.class) {							// Dynamic Ecore metamodels do not have derived EPackageImpl's
+		if (ePackage.getClass() != EPackageImpl.class) {							// Generated Ecore metamodels have derived EPackageImpl's
 			Resource eResource = ePackage.eResource();
 			if ((eResource == null) || (eResource.getResourceSet() == null)) {		// No Resource/ResourceSet inhibits unloading/proxy conversion
 				this.ePackage = ePackage;
@@ -136,6 +136,11 @@ public class NsURIPackageIdImpl extends AbstractPackageIdImpl implements NsURIPa
 
 	@Override
 	public @NonNull String toString() {
-		return "'" + nsURI + "'";
+		if (ePackage != null) {
+			return ePackage.getName();
+		}
+		else {
+			return "'" + nsURI + "'";
+		}
 	}
 }

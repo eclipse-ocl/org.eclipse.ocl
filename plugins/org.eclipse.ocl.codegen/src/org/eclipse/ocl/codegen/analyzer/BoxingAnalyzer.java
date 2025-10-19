@@ -595,9 +595,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			referredPropertyName = referredProperty.getName();
 		}
 		else {
-//			referredPropertyName = referredProperty.toString();
 			PropertyId referredPropertyId = referredProperty.getPropertyId();
-			referredPropertyName = ValueUtil.getElementIdName(referredPropertyId);		// XXX fix the poor getElementIdName qualification contributor
+			referredPropertyName = ValueUtil.getElementIdName(referredPropertyId);
 		}
 		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredPropertyName + "'");
 		return null;
