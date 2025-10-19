@@ -160,7 +160,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_safe_aggregate_navigation() {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer')", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
 		ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses?->select(name = 'Integer')");
@@ -484,6 +484,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		IdResolver idResolver = ocl.getIdResolver();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		completeModel.addGlobalNamespace("fruit", fruitPackage);
 		//
@@ -500,16 +501,16 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		//
 		Type pivotTree = environmentFactory.getMetamodelManager().getASOfEcore(Type.class, tree);
 		//
-//		ocl.assertQueryEquals(redApple, color_red, "let aFruit : fruit::Fruit = self in aFruit.color");
-//XXX		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "let aTree : fruit::Tree = self in aTree.fruits");
-//		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "self.fruits");
-//		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "fruits");
-//		ocl.assertQueryEquals(redApple, aTree, "self.oclContainer()");
-//		ocl.assertQueryEquals(redApple, aTree, "self.Tree");
+		ocl.assertQueryEquals(redApple, color_red, "let aFruit : fruit::Fruit = self in aFruit.color");
+		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "let aTree : fruit::Tree = self in aTree.fruits");
+		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "self.fruits");
+		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "fruits");
+		ocl.assertQueryEquals(redApple, aTree, "self.oclContainer()");
+		ocl.assertQueryEquals(redApple, aTree, "self.Tree");
 		//
 		//	type/property ambiguity is resolved to type.
 		//
-//		ocl.assertQueryEquals(redApple, pivotTree, "Tree");
+		ocl.assertQueryEquals(redApple, pivotTree, "Tree");
 		//
 		//	type/property ambiguity is resolved to type.
 		//
