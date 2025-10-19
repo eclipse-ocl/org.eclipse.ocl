@@ -228,6 +228,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="MODEL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="ORD_CLSSid_LambdaParameter"/>
             </message_arguments>
         </filter>
@@ -239,6 +244,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ORD_CLSSid_Parameter_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="RESOURCE"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -569,6 +579,16 @@
                 <message_argument value="CLSSid_Class"/>
             </message_arguments>
         </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="MODEL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="RESOURCE"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables$TypeParameters">
         <filter id="1143996420">
@@ -588,6 +608,18 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="create(CompleteStandardLibrary, String, String, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="MODEL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="RESOURCE"/>
             </message_arguments>
         </filter>
     </resource>

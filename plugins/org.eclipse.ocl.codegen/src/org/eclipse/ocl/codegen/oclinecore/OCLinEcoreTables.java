@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper;
@@ -1351,9 +1352,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 		s.append("\n");
 		s.append("	/**\n");
-		s.append("	 *	The library of all packages and types.\n");
+		s.append("	 *	The overall library of all packages and types.\n");
 		s.append("	 */\n");
-
 		s.append("	public static final ");
 		s.appendClassReference(true, ReadOnly.class);
 		s.append(" LIBRARY = ");
@@ -1369,11 +1369,25 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(";\n");
 		s.append("\n");
 		s.append("	/**\n");
-		s.append("	 *	The package descriptor for the package.\n");
+		s.append("	 *	The AS package for the " + getGenPackagePrefix() + "Package.eINSTANCE EPackage.\n");
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, org.eclipse.ocl.pivot.Package.class);
 		s.append(" PACKAGE = LIBRARY.createPackage(" + getGenPackagePrefix() + "Package.eINSTANCE);\n");
+		s.append("\n");
+		s.append("	/**\n");
+		s.append("	 *	The AS model for the AS package and its orphans.\n");
+		s.append("	 */\n");
+		s.append("	public static final ");
+		s.appendClassReference(true, Model.class);
+		s.append(" MODEL = LIBRARY.createModel(PACKAGE);\n");
+		s.append("\n");
+		s.append("	/**\n");
+		s.append("	 *	The EMF Resource containing the AS model, its AS package and its orphans.\n");
+		s.append("	 */\n");
+		s.append("	public static final ");
+		s.appendClassReference(true, Resource.class);
+		s.append(" RESOURCE = LIBRARY.createResource(MODEL);\n");
 
 		if (constants != null) {
 			s.append("\n");

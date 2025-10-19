@@ -667,17 +667,6 @@ public class Orphanage extends PackageImpl
 						protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Class object) {
 							return object.getTypeId();
 						}
-
-						@Override
-						public NotificationChain basicAdd(org.eclipse.ocl.pivot.Class object,
-								NotificationChain notifications) {
-							if ("Collection<$0:qvttemplate::CollectionTemplateExp,$1:false,$2:0,$3:*>".equals(object.getTypeId().toString())) {
-								getClass();			// XXX
-							}
-							// TODO Auto-generated method stub
-							return super.basicAdd(object, notifications);
-						}
-
 					};
 		}
 		return ownedClasses2;
