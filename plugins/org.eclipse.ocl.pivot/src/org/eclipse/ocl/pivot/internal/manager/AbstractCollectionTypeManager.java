@@ -127,6 +127,9 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments) {
+		if ("Bag(qvttemplate::CollectionTemplateExp,false,0,*)".equals(typeArguments.toString())) {
+			getClass();			// XXX
+		}
 		synchronized (collectionTypes) {
 			WeakReference<@Nullable CollectionType> weakReference = collectionTypes.get(typeArguments);
 			if (weakReference != null) {

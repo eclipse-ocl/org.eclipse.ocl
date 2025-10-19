@@ -595,7 +595,11 @@ implements CollectionType {
 		else {
 			CollectionTypeId collectionTypeId = ((CollectionType)unspecializedElement2).getTypeId();
 			TypeId elementTypeId = getElementType().getTypeId();
-			return collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+			CollectionTypeId specializedId = collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+			if ("Collection<$0:qvttemplate::CollectionTemplateExp,$1:false,$2:0,$3:*>".equals(specializedId.toString())) {
+				getClass();			// XXX
+			}
+			return specializedId;
 		}
 	}
 

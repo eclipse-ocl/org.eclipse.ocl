@@ -181,7 +181,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 		@Override
 		protected boolean isValid(@Nullable Type type) {
-			return (type != null) && (type.eResource() != null);
+			return (type != null) && (type.eResource() != null);		// XXX Built-in have null Resource
 		}
 	}
 

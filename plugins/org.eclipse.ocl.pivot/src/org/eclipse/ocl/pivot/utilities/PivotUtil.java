@@ -315,6 +315,7 @@ public class PivotUtil implements PivotConstants
 	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
 	 * @since 7.0
 	 */
+	@Deprecated	/* Do we really need semantiocs annotations */
 	public static @Nullable URI basicGetEPackageSemantics(@NonNull EPackage ePackage) {
 		for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
 			String source = eAnnotation.getSource();
