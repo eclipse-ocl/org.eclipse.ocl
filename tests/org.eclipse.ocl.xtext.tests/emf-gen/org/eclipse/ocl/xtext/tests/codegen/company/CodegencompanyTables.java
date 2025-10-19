@@ -85,12 +85,12 @@ public class CodegencompanyTables extends AbstractTables
 	/**
 	 *	The AS model for the AS package and its orphans.
 	 */
-	public static final @NonNull Model MODEL = LIBRARY.createModel(PACKAGE);
+	public static final @NonNull Model MODEL = LIBRARY.createModel();
 
 	/**
 	 *	The EMF Resource containing the AS model, its AS package and its orphans.
 	 */
-	public static final @NonNull Resource RESOURCE = LIBRARY.createResource(MODEL);
+	public static final @NonNull Resource RESOURCE = LIBRARY.createResource();
 
 	/**
 	 *	Constants used by auto-generated code.
@@ -186,7 +186,7 @@ public class CodegencompanyTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, types);
+			LIBRARY.initPackage(RESOURCE, MODEL, PACKAGE, types);
 			Init.initEnd();
 		}
 

@@ -76,7 +76,7 @@ public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 		}
 
 		@Override
-		public Resource createResource(URI uri) {
+		public @NonNull Resource createResource(URI uri) {
 			assert uri != null;
 			//
 			//	If it's a *.oclas suffixed standard library or metamodel, return the registered AS resource.
@@ -155,7 +155,7 @@ public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 	}
 
 	@Override
-	public Resource createResource(URI uri) {
+	public @NonNull Resource createResource(URI uri) {
 		assert uri != null;
 		//
 		//	If it's a *.oclas suffixed standard library or metamodel, return the registered AS resource.

@@ -79,7 +79,6 @@ import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
-import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
@@ -87,6 +86,9 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -98,8 +100,11 @@ import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -207,6 +212,32 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 				}
 			}
 			return null;
+		}
+	}
+
+	public static class BuiltInASResourceFactory extends AbstractASResourceFactory
+	{
+		public static @NonNull BuiltInASResourceFactory INSTANCE = new BuiltInASResourceFactory();
+
+		public BuiltInASResourceFactory() {
+			super("built-in", null);
+		}
+
+		@Override
+		public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public @NonNull Resource createResource(URI uri) {
+			Resource resource = super.createResource(uri);
+			((ASResource)resource).setSaveable(false);
+			return resource;
+		}
+
+		@Override
+		public @NonNull ASResourceFactory getASResourceFactory() {
+			return INSTANCE;
 		}
 	}
 
@@ -426,6 +457,14 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
+	public @NonNull Model createModel() {
+		return PivotFactory.eINSTANCE.createModel();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
 	public @NonNull Model createModel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		Model asModel = PivotFactory.eINSTANCE.createModel();
 		asModel.setExternalURI(asPackage.getURI());
@@ -630,9 +669,14 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return asProperty;
 	}
 
+	public @NonNull Resource createResource() {
+		return BuiltInASResourceFactory.INSTANCE.createResource(URI.createURI("built-in-temp"));
+	}
+
+	@Deprecated
 	public @NonNull Resource createResource(@NonNull Model model) {
 		URI uri = URI.createURI(model.getExternalURI());
-		Resource resource = EcoreASResourceFactory.getInstance().createResource(uri);
+		Resource resource = BuiltInASResourceFactory.INSTANCE.createResource(uri);
 		resource.getContents().add(model);
 		return resource;
 	}
@@ -992,6 +1036,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
 		Object eContainer = asPackage.eContainer();
@@ -1008,9 +1053,12 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		addPackage(asPackage, null);
 	}
 
-	public void initPackage(@NonNull Resource resource, @NonNull Model model, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
-		Object eContainer = asPackage.eContainer();
-		assert eContainer == null;
+	/**
+	 * @since 7.0
+	 */
+	public void initPackage(@NonNull Resource resource, @NonNull Model asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
+		assert asPackage.eContainer() == null;
 	//	EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
 		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
 		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
@@ -1018,6 +1066,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			ownedClasses.add(asClass);
 		}
 		addPackage(asPackage, null);
+		asModel.setExternalURI(asPackage.getURI());
+		asModel.getOwnedPackages().add(asPackage);
+		URI uri = URI.createURI(asModel.getExternalURI());
+		resource.setURI(uri);
+		resource.getContents().add(asModel);
 	}
 
 	private <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter @Nullable... templateParameters) {

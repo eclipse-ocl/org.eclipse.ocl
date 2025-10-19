@@ -62,7 +62,7 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 	 * Creates an instance of the resource, preferably by loading the AS, but if necessary and possible by
 	 * using the csResourceSet to load the CS.
 	 */
-	protected Resource createResource(@NonNull ResourceSet resourceSet, @NonNull URI uri) {
+	protected @NonNull Resource createResource(@NonNull ResourceSet resourceSet, @NonNull URI uri) {
 		if (uri.isPlatform() || uri.isFile() || uri.isArchive()) { 		// not http:
 			URIConverter uriConverter = resourceSet.getURIConverter();	// NB a (Standalone)PlatformURIHandlerImpl should be installed
 			if (!uriConverter.exists(uri, null)) {						// If AS URI is missing

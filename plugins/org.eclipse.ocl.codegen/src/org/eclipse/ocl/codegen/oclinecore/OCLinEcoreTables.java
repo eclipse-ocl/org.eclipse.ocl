@@ -1162,7 +1162,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 *	Install the type descriptors in the package descriptor.\n");
 		s.append("		 */\n");
 		s.append("		static {\n");
-		s.append("			LIBRARY.initPackage(PACKAGE, types);\n");
+		s.append("			LIBRARY.initPackage(RESOURCE, MODEL, PACKAGE, types);\n");
 		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(asPackage);
 		if (extendedPackage != null) {
 			GenPackage genPackage = genModelHelper.getGenPackage(extendedPackage);
@@ -1380,14 +1380,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, Model.class);
-		s.append(" MODEL = LIBRARY.createModel(PACKAGE);\n");
+		s.append(" MODEL = LIBRARY.createModel();\n");
 		s.append("\n");
 		s.append("	/**\n");
 		s.append("	 *	The EMF Resource containing the AS model, its AS package and its orphans.\n");
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, Resource.class);
-		s.append(" RESOURCE = LIBRARY.createResource(MODEL);\n");
+		s.append(" RESOURCE = LIBRARY.createResource();\n");
 
 		if (constants != null) {
 			s.append("\n");

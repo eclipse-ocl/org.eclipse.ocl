@@ -244,7 +244,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	 * Creates an instance of the resource.
 	 */
 	@Override
-	public Resource createResource(URI uri) {
+	public @NonNull Resource createResource(URI uri) {
 		assert uri != null;
 		ASResource result = new ASResourceImpl(uri, this);
 		configureResource(result);
