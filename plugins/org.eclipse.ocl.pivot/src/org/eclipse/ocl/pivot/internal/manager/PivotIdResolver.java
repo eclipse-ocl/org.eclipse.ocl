@@ -160,13 +160,23 @@ public class PivotIdResolver extends AbstractIdResolver
 	public org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull EClassifier eClassifier) {
 		EObject eType = eClassifier;
 		EPackage ePackage = eClassifier.getEPackage();
-		if (ePackage == PivotPackage.eINSTANCE){
-			String typeName = eClassifier.getName();
-			if (typeName != null) {
+		String typeName = eClassifier.getName();
+		if (typeName != null) {
+			String nsURI = ePackage.getNsURI();
+			PackageId packageId = IdManager.getPackageId(ePackage);
+			CompletePackageId completePackageId = IdManager.getCompletePackageId(packageId.toString());		// XXX Ugh! fold
+			CompletePackage completePackage = completeModel.getCompletePackage(completePackageId, ePackage.getNsPrefix(), nsURI);
+			org.eclipse.ocl.pivot.Class pivotType = completePackage.getMemberType(typeName);
+			if (pivotType != null) {
+				return pivotType;
+			}
+			if (ePackage == PivotPackage.eINSTANCE){
+				// A setting delegate may get here with a very naked EnvironmentFactory e.g. test_allInstances
+				// Normally a semi-lazy call to CompleteModel.getASmetamodel() ensures that the CompletePackageId above works.
 				org.eclipse.ocl.pivot.Package asMetamodel = completeModel.getASmetamodel();
 				if (asMetamodel != null) {
-					CompletePackage completePackage = completeModel.getCompletePackage(asMetamodel);
-					org.eclipse.ocl.pivot.Class pivotType = completePackage.getMemberType(typeName);
+					completePackage = completeModel.getCompletePackage(asMetamodel);
+					pivotType = completePackage.getMemberType(typeName);
 					if (pivotType != null) {
 						return pivotType;
 					}

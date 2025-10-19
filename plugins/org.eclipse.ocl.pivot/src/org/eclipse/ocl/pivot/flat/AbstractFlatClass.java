@@ -949,6 +949,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (name2propertyOrProperties2 == null) {
 			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
 			initPropertiesInternal();
+			assert name2propertyOrProperties !=	null;					// Detect bad over-reaction to change triggering resetProperties()
 		}
 	}
 

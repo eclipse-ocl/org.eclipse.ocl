@@ -476,6 +476,7 @@ public class OCL
 
 	public org.eclipse.ocl.pivot.@NonNull Class getContextType(@Nullable Object contextObject) {
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
+		completeModel.getASmetamodel();
 		IdResolver idResolver = getIdResolver();
 		org.eclipse.ocl.pivot.Class staticTypeOf = idResolver.getStaticClassOf(contextObject);
 		return completeModel.getPrimaryClass(staticTypeOf);

@@ -61,7 +61,6 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -702,10 +701,9 @@ public class TestOCL extends OCLInternal
 	}
 
 	public boolean check(Object context, @NonNull String expression) throws ParserException {
-		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class contextType = getContextType(context);
 		ExpressionInOCL constraint = createInvariant(contextType, expression);
-		if (constraint.getOwnedBody().getType() != metamodelManager.getStandardLibrary().getBooleanType()) {
+		if (constraint.getOwnedBody().getType() != getStandardLibrary().getBooleanType()) {
 			throw new IllegalArgumentException("constraint is not boolean"); //$NON-NLS-1$
 		}
 		try {
@@ -790,16 +788,16 @@ public class TestOCL extends OCLInternal
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
 		assert ThreadLocalExecutor.basicGetExecutor() == null;			// In case previous execution created it.
-		MetamodelManager metamodelManager = getMetamodelManager();
+		EnvironmentFactory environmentFactory = getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
-		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
+		ParserContext parserContext = new ClassContext(environmentFactory, null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
 		PivotTestSuite.assertNoValidationErrors(expression, query);
 		try {
 			assert ThreadLocalExecutor.basicGetExecutor() == null;			// In case previous execution created it.
 			return evaluate(query, context);
 		} finally {
-			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
+			environmentFactory.getASResourceSet().getResources().remove(query.eResource());
 		}
 	}
 
@@ -842,24 +840,22 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @Nullable Object evaluateLocal(@Nullable Object context, @NonNull String expression) throws Exception {
-		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class contextType = getContextType(context);
 		ExpressionInOCL query = createQuery(contextType, expression);
 		try {
 			return evaluate(context, query);
 		} finally {
-			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
+			getEnvironmentFactory().getASResourceSet().getResources().remove(query.eResource());
 		}
 	}
 
 	public @Nullable Object evaluateWithoutValidation(@Nullable Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
-		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class contextType = getContextType(context);
 		ExpressionInOCL query = createQuery(contextType, expression);
 		try {
 			return evaluate(query, context);
 		} finally {
-			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
+			getEnvironmentFactory().getASResourceSet().getResources().remove(query.eResource());
 		}
 	}
 

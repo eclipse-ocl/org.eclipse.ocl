@@ -1479,6 +1479,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		if (!hasNoErrors) {
 			return false;
 		}
+		completeModel.getASmetamodel();					// Ensure meta model is defined after imports but before meta-properties (e.g. extension_YYY) can be used.
 		//
 		//	Perform post-order continuations to establish complex dependencies.
 		//

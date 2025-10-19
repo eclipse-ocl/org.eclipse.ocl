@@ -161,14 +161,16 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		PackageId metapackageId = environmentFactory.getTechnology().getMetapackageId(environmentFactory, pivotPackage);
 		org.eclipse.ocl.pivot.Package metapackage = environmentFactory.getIdResolver().basicGetPackage(metapackageId);
 		if (metapackage != null) {
-			CompletePackage metaCompletePackage = environmentFactory.getCompleteModel().getCompletePackage(metapackage);
+			CompleteModel completeModel = environmentFactory.getCompleteModel();
+			CompletePackage metaCompletePackage = completeModel.getCompletePackage(metapackage);
 			String metatypeName = pivotClass.eClass().getName();
 			Type metatype = metaCompletePackage.getType(metatypeName);
 			if (metatype != null) {
-				CompleteClass metaCompleteClass = environmentFactory.getCompleteModel().getCompleteClass(metatype);
+				CompleteClass metaCompleteClass = completeModel.getCompleteClass(metatype);
 				for (@NonNull Property property : metaCompleteClass.getProperties(FeatureFilter.SELECT_EXTENSION)) {
 					if (asProperties == null) {
 						asProperties = new ArrayList<>();
+				//		completeModel.getEquivalentClass(PivotUtil.getOwningClass(property), );
 					}
 					asProperties.add(property);	// FIXME Clone the M2 property to have the correct M1 container/type
 				}
