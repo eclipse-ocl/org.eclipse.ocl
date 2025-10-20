@@ -682,6 +682,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (hasPostInit) {
 			s.append("					" + AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME + ".postInit();\n");
 		}
+		s.append("					LIBRARY.freeze(RESOURCE, MODEL, PACKAGE);\n");
 		s.append("				}\n");
 		s.append("			}\n");
 		s.append("		}\n");
@@ -1162,7 +1163,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 *	Install the type descriptors in the package descriptor.\n");
 		s.append("		 */\n");
 		s.append("		static {\n");
-		s.append("			LIBRARY.initPackage(RESOURCE, MODEL, PACKAGE, types);\n");
+		s.append("			LIBRARY.initPackage(PACKAGE, types);\n");
 		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(asPackage);
 		if (extendedPackage != null) {
 			GenPackage genPackage = genModelHelper.getGenPackage(extendedPackage);

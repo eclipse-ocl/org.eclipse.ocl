@@ -163,7 +163,7 @@ public class OCLstdlibTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(RESOURCE, MODEL, PACKAGE, types);
+			LIBRARY.initPackage(PACKAGE, types);
 			Init.initEnd();
 		}
 
@@ -2968,6 +2968,7 @@ public class OCLstdlibTables extends AbstractTables
 					initCount = -1;
 					EnumerationLiterals.init();
 					Operations.postInit();
+					LIBRARY.freeze(RESOURCE, MODEL, PACKAGE);
 				}
 			}
 		}

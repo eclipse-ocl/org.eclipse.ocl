@@ -651,7 +651,7 @@ public class PivotTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(RESOURCE, MODEL, PACKAGE, types);
+			LIBRARY.initPackage(PACKAGE, types);
 			LIBRARY.addExtension(OCLstdlibTables.PACKAGE, PACKAGE);
 			Init.initEnd();
 		}
@@ -14949,6 +14949,7 @@ public class PivotTables extends AbstractTables
 				if (--initCount == 0) {
 					initCount = -1;
 					EnumerationLiterals.init();
+					LIBRARY.freeze(RESOURCE, MODEL, PACKAGE);
 				}
 			}
 		}

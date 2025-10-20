@@ -18,10 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -101,7 +101,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 *
 	 * @since 1.18
 	 */
-	protected class ImmutabilityCheckingAdapter extends AdapterImpl
+	protected class ImmutabilityCheckingAdapter implements Adapter
 	{
 		private @NonNull String formatMutationMessage(@NonNull Notification notification) {
 			StringBuilder s = new StringBuilder();
@@ -111,6 +111,16 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			s.append(TracingAdapter.getFeatureType(notification));
 			s.append("'");
 			return s.toString();
+		}
+
+		@Override
+		public Notifier getTarget() {
+			return ASResourceImpl.this;
+		}
+
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return type == ImmutabilityCheckingAdapter.class;
 		}
 
 		@Override
@@ -244,9 +254,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 		@Override
 		public void setTarget(Notifier newTarget) {}
-
-		@Override
-		public void unsetTarget(Notifier oldTarget) {}
 	}
 
 	/**
@@ -425,7 +432,6 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		return defaultSaveOptions2;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected EObject getEObjectByID(String id) {
 		if ((unloadingContents == null) && (idToEObjectMap == null)) { // Lazy xmi:id creation needed by generated ASResources

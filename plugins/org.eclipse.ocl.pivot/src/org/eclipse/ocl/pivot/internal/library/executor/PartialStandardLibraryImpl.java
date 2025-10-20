@@ -229,13 +229,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 
 		@Override
-		public @NonNull Resource createResource(URI uri) {
-			Resource resource = super.createResource(uri);
-			((ASResource)resource).setSaveable(false);
-			return resource;
-		}
-
-		@Override
 		public @NonNull ASResourceFactory getASResourceFactory() {
 			return INSTANCE;
 		}
@@ -711,6 +704,17 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return PivotValidationOptions.createValidationKey2severityMap();
 	}
 
+	public void freeze(@NonNull Resource resource, @NonNull Model asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		assert asPackage.eContainer() == null;
+		addPackage(asPackage, null);
+		asModel.setExternalURI(asPackage.getURI());
+		asModel.getOwnedPackages().add(asPackage);
+		URI uri = URI.createURI(asModel.getExternalURI());
+		resource.setURI(uri);
+		resource.getContents().add(asModel);
+		((ASResource)resource).setSaveable(false);
+	}
+
 	@Override
 	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
 		throw new UnsupportedOperationException();
@@ -801,6 +805,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 */
 	public @NonNull Type getLambdaType(@NonNull TypedElement context, @NonNull TypedElement result, @NonNull TypedElement ... parameters) {
 		List<@NonNull TypedElement> parameterList = parameters != null ? Lists.newArrayList(parameters) : Collections.emptyList();
+		assert parameterList != null;
 		return getLambdaManager().getLambdaType(context, parameterList, result, null);
 	}
 
@@ -1036,14 +1041,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	@Deprecated
-	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
-		Object eContainer = asPackage.eContainer();
-		if (eContainer == null) {			// XXX obsolete
-			Model model = createModel(asPackage);
-			createResource(model);
-		}
 	//	EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
 		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
 		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
@@ -1056,7 +1055,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public void initPackage(@NonNull Resource resource, @NonNull Model asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+	@Deprecated
+	public void initPackage(@NonNull Resource resource, @NonNull Model asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
 		assert asPackage.eContainer() == null;
 	//	EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
@@ -1071,6 +1071,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		URI uri = URI.createURI(asModel.getExternalURI());
 		resource.setURI(uri);
 		resource.getContents().add(asModel);
+		((ASResource)resource).setSaveable(false);
 	}
 
 	private <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter @Nullable... templateParameters) {

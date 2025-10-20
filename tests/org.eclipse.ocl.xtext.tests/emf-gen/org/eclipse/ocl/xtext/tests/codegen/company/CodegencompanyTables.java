@@ -186,7 +186,7 @@ public class CodegencompanyTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(RESOURCE, MODEL, PACKAGE, types);
+			LIBRARY.initPackage(PACKAGE, types);
 			Init.initEnd();
 		}
 
@@ -700,6 +700,7 @@ public class CodegencompanyTables extends AbstractTables
 				if (--initCount == 0) {
 					initCount = -1;
 					EnumerationLiterals.init();
+					LIBRARY.freeze(RESOURCE, MODEL, PACKAGE);
 				}
 			}
 		}
