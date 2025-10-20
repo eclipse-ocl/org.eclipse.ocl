@@ -75,12 +75,12 @@ public class PivotTables extends AbstractTables
 	/**
 	 *	The AS model for the AS package and its orphans.
 	 */
-	public static final @NonNull Model MODEL = LIBRARY.createModel();
+	public static final @NonNull Model MODEL = LIBRARY.createModel(PACKAGE);
 
 	/**
 	 *	The EMF Resource containing the AS model, its AS package and its orphans.
 	 */
-	public static final @NonNull Resource RESOURCE = LIBRARY.createResource();
+	public static final @NonNull Resource RESOURCE = LIBRARY.createResource(MODEL);
 
 	/**
 	 *	Constants used by auto-generated code.
@@ -14949,7 +14949,7 @@ public class PivotTables extends AbstractTables
 				if (--initCount == 0) {
 					initCount = -1;
 					EnumerationLiterals.init();
-					LIBRARY.freeze(RESOURCE, MODEL, PACKAGE);
+					LIBRARY.freeze(RESOURCE);
 				}
 			}
 		}

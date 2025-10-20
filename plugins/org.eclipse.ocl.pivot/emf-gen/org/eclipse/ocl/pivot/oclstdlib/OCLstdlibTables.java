@@ -61,12 +61,12 @@ public class OCLstdlibTables extends AbstractTables
 	/**
 	 *	The AS model for the AS package and its orphans.
 	 */
-	public static final @NonNull Model MODEL = LIBRARY.createModel();
+	public static final @NonNull Model MODEL = LIBRARY.createModel(PACKAGE);
 
 	/**
 	 *	The EMF Resource containing the AS model, its AS package and its orphans.
 	 */
-	public static final @NonNull Resource RESOURCE = LIBRARY.createResource();
+	public static final @NonNull Resource RESOURCE = LIBRARY.createResource(MODEL);
 
 	/**
 	 *	The type parameters for templated types and operations.
@@ -2968,7 +2968,7 @@ public class OCLstdlibTables extends AbstractTables
 					initCount = -1;
 					EnumerationLiterals.init();
 					Operations.postInit();
-					LIBRARY.freeze(RESOURCE, MODEL, PACKAGE);
+					LIBRARY.freeze(RESOURCE);
 				}
 			}
 		}

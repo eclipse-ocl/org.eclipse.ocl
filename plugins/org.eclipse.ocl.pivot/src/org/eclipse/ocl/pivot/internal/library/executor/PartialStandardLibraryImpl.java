@@ -361,15 +361,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return asClass;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
-			org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
-		return createClass(eMetaClass, eClassifier, typeId, flags, typeParameters);
-	}
-
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
 		return new PartialCollectionTypeManager(this);
@@ -383,14 +374,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		EnumerationImpl asClass = (EnumerationImpl)PivotFactory.eINSTANCE.createEnumeration();
 		initClass(asClass, eEnum, null, 0);
 		return asClass;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		return createEnumeration(eEnum);
 	}
 
 	/**
@@ -450,14 +433,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Model createModel() {
-		return PivotFactory.eINSTANCE.createModel();
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
 	public @NonNull Model createModel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		Model asModel = PivotFactory.eINSTANCE.createModel();
 		asModel.setExternalURI(asPackage.getURI());
@@ -620,20 +595,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	@Deprecated
-	public @NonNull Property createProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, @NonNull LibraryProperty implementation) {
-		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
-		asProperty.setName(name);
-	//	asProperty.setType(asType);
-	//	asProperty.setIndex(propertyIndex);
-		asProperty.setImplementation(implementation);
-		asClass.getOwnedProperties().add(asProperty);
-		return asProperty;
-	}
-
-	/**
-	 * @since 7.0
-	 */
 	public @NonNull Property createProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EStructuralFeature eFeature, @NonNull Type asType, int propertyFlagsAndIndex) {
 		assert eFeature != null;
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
@@ -662,11 +623,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return asProperty;
 	}
 
-	public @NonNull Resource createResource() {
-		return BuiltInASResourceFactory.INSTANCE.createResource(URI.createURI("built-in-temp"));
-	}
-
-	@Deprecated
 	public @NonNull Resource createResource(@NonNull Model model) {
 		URI uri = URI.createURI(model.getExternalURI());
 		Resource resource = BuiltInASResourceFactory.INSTANCE.createResource(uri);
@@ -704,14 +660,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return PivotValidationOptions.createValidationKey2severityMap();
 	}
 
-	public void freeze(@NonNull Resource resource, @NonNull Model asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		assert asPackage.eContainer() == null;
-		addPackage(asPackage, null);
-		asModel.setExternalURI(asPackage.getURI());
-		asModel.getOwnedPackages().add(asPackage);
-		URI uri = URI.createURI(asModel.getExternalURI());
-		resource.setURI(uri);
-		resource.getContents().add(asModel);
+	public void freeze(@NonNull Resource resource) {
 		((ASResource)resource).setSaveable(false);
 	}
 
@@ -1050,28 +999,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			ownedClasses.add(asClass);
 		}
 		addPackage(asPackage, null);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	public void initPackage(@NonNull Resource resource, @NonNull Model asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses) {
-		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
-		assert asPackage.eContainer() == null;
-	//	EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
-		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
-		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
-			assert asClass != null;
-			ownedClasses.add(asClass);
-		}
-		addPackage(asPackage, null);
-		asModel.setExternalURI(asPackage.getURI());
-		asModel.getOwnedPackages().add(asPackage);
-		URI uri = URI.createURI(asModel.getExternalURI());
-		resource.setURI(uri);
-		resource.getContents().add(asModel);
-		((ASResource)resource).setSaveable(false);
 	}
 
 	private <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter @Nullable... templateParameters) {

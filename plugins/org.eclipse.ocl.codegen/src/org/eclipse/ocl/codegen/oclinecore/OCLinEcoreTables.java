@@ -682,7 +682,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (hasPostInit) {
 			s.append("					" + AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME + ".postInit();\n");
 		}
-		s.append("					LIBRARY.freeze(RESOURCE, MODEL, PACKAGE);\n");
+		s.append("					LIBRARY.freeze(RESOURCE);\n");
 		s.append("				}\n");
 		s.append("			}\n");
 		s.append("		}\n");
@@ -1381,14 +1381,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, Model.class);
-		s.append(" MODEL = LIBRARY.createModel();\n");
+		s.append(" MODEL = LIBRARY.createModel(PACKAGE);\n");
 		s.append("\n");
 		s.append("	/**\n");
 		s.append("	 *	The EMF Resource containing the AS model, its AS package and its orphans.\n");
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, Resource.class);
-		s.append(" RESOURCE = LIBRARY.createResource();\n");
+		s.append(" RESOURCE = LIBRARY.createResource(MODEL);\n");
 
 		if (constants != null) {
 			s.append("\n");
