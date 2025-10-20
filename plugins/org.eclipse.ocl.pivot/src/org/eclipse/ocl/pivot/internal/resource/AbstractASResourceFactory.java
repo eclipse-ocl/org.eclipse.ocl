@@ -381,6 +381,10 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
 		completeModel.registerCompletePackageContribution(PivotConstants.METAMODEL_NAME, OCLstdlibPackage.eINSTANCE);
 		completeModel.registerCompletePackageContribution(PivotConstants.METAMODEL_NAME, PivotPackage.eINSTANCE);
+		// Library/Pivot tables must be lazy to allow imports to supersede
+	//	List<Model> partialModels = completeModel.getPartialModels();
+	//	partialModels.add(OCLstdlibTables.MODEL);
+	//	partialModels.add(PivotTables.MODEL);
 	}
 
 	@Override

@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.ConnectionPointReference;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -127,7 +128,6 @@ import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StateMachine;
@@ -11879,6 +11879,6 @@ implements PivotPackage  {
 	 */
 	@Override
 	protected Resource createResource(/*@NonNull*/ String uri) {
-		return LazyXMIidAssigningResourceImpl.createResource(uri, this);
+		return LazyXMIidAssigningResourceImpl.createResource(uri, this);		// XXX could/should relate to PivotTables and OCLmetamodel
 	}
 } //PivotPackageImpl

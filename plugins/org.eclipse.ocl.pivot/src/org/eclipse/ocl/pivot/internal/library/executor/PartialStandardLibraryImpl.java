@@ -404,7 +404,14 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	@Override
 	protected @NonNull IdResolver createIdResolver() {
 		Executor executor = ThreadLocalExecutor.basicGetExecutor();
-		assert executor != null;
+		if (executor != null) {
+			return executor.getIdResolver();
+		}
+	//	EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	//	if (environmentFactory != null) {
+	//		return environmentFactory.getIdResolver();
+	//	}
+		assert executor != null;			// XXX
 		return executor.getIdResolver();
 	}
 
@@ -562,6 +569,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 * @since 7.0
 	 */
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage) {
+		// XXX ?? if ePackage.eResource() is a LazyXMIidAssigningResource configure its Tables
 		assert ePackage != null;
 		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
 		asPackage.setName(ePackage.getName());

@@ -959,7 +959,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 		@NonNull FlatFragment[] fragments2 = fragments;
 		assert fragments2 != null;
-		PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);
+		PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);		// XXX if-guard
 		for (@NonNull FlatFragment fragment : fragments2) {
 			for (@NonNull Property property : fragment.getProperties()) {
 				PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
