@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
@@ -41,6 +42,7 @@ import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
@@ -58,8 +60,11 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -827,92 +832,76 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		protected void installProperties() {
-			/*			Map<Type, List<org.eclipse.uml2.uml.Property>> typeProperties = new HashMap<>();
-			List<org.eclipse.uml2.uml.Property> sortedList = new ArrayList<>(umlProperties);
-			Collections.sort(sortedList, new Comparator<org.eclipse.uml2.uml.Property>() {
-
-				public int compare(org.eclipse.uml2.uml.Property o1, org.eclipse.uml2.uml.Property o2) {
-					String n1 = o1.getName();
-					String n2 = o2.getName();
-					return n1 == n2 ? 0 : (n1 != null) && (n2 != null) ? n1.compareTo(n2) : n2 == null ? 1 : -1;
-				}
-
-			});
-			for (org.eclipse.uml2.uml.Property umlProperty : sortedList) {
-				Property asProperty = getCreated(Property.class, umlProperty);
-				Property asOppositeProperty = asProperty != null ? asProperty.getOpposite() : null;
-//				if ("executionSpecification".equals(umlProperty.getName())) {
-//					System.out.println("Install " + umlProperty);
-//				}
-				Type pivotType = null;
-				EObject umlOwner = ClassUtil.requireNonNull(umlProperty.eContainer());
-				if (umlOwner instanceof org.eclipse.uml2.uml.Association) {
-//					String name = ((org.eclipse.uml2.uml.NamedElement)umlProperty.eContainer()).getName();
-//					if (name != null) {
-//						System.out.println("Assoc Property " + name + "::" + umlProperty.getName());
-//					}
-//					else {
-//						System.out.println("Anon Assoc Property " + name + "::" + umlProperty.getName());
-//					}
-					org.eclipse.uml2.uml.Property opposite = getOtherEnd(umlProperty);
-					if (opposite != null) {
-						pivotType = getCreated(Type.class, ClassUtil.requireNonNull(opposite.getType()));
-					}
-					else {
-//						System.out.println("*****************Missing opposite");
-					}
-				}
-				else {
-					pivotType = getCreated(Type.class, umlOwner);
-				}
-				if (pivotType != null) {
-					List<org.eclipse.uml2.uml.Property> someProperties = typeProperties.get(pivotType);
-					if (someProperties == null) {
-						someProperties = new ArrayList<>();
-						typeProperties.put(pivotType, someProperties);
-					}
-					String name = umlProperty.getName();
-					if (name == null) {
-//						System.out.println("Unnamed " + pivotType.getName() + "::" + umlProperty.getName());
-						name = umlProperty.getType().getName();
-					}
-					else {
-/*						for (org.eclipse.uml2.uml.Property aProperty : someProperties) {
-							String aName = aProperty.getName();
-							if (name.equals(aName)) {
-								System.out.println("Ambiguous " + pivotType.getName() + "::" + umlProperty.getName());
-								org.eclipse.uml2.uml.Property opp1 = umlProperty.getOtherEnd();
-								if (opp1 != null) {
-									System.out.println("  opposite " + umlProperty.getType().getName() + "::" + opp1.getName() + " " + (umlProperty.getClass_() != null));
-								}
-								org.eclipse.uml2.uml.Property opp2 = aProperty.getOtherEnd();
-								if (opp2 != null) {
-									System.out.println("  opposite " + umlProperty.getType().getName() + "::" + opp2.getName() + " " + (aProperty.getClass_() != null));
-								}
-							}
-						} * /
-						someProperties.add(umlProperty);
-					}
-				}
-				else {
-					org.eclipse.uml2.uml.Property opposite = getOtherEnd(umlProperty);
-					if (opposite != null) {
-						org.eclipse.uml2.uml.Type oppositeType = ClassUtil.requireNonNull(opposite.getType());
-						pivotType = getCreated(Type.class, oppositeType);
-					}
-//					System.out.println("*****************Missing opposite type");
-				}
-			}
-			Set<Type> allPropertiedTypes = new HashSet<>(typeProperties.keySet()); */
-			//			allPropertiedTypes.addAll(stereotypeProperties.keySet());
 			RedundantPropertyFilter umlDerivedPropertyComparator = new RedundantPropertyFilter();
-			for (org.eclipse.ocl.pivot.@NonNull Class pivotType : type2properties.keySet()) {
-				if ("Dependency".equals(pivotType.getName())) {
+			for (Entry<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> entry : type2properties.entrySet()) {
+				org.eclipse.ocl.pivot.@NonNull Class pivotClass = entry.getKey();
+				if ("Dependency".equals(pivotClass.getName())) {
 					getClass();			// XXX
 				}
-				List<@NonNull Property> asProperties = type2properties.get(pivotType);
-				Collections.sort(asProperties, NameUtil.NAMEABLE_COMPARATOR);
-				PivotUtil.refreshList(PivotUtil.getOwnedPropertiesList(pivotType), true, asProperties);
+				List<@NonNull Property> asProperties = type2properties.get(pivotClass);
+				umlDerivedPropertyComparator.resolve(asProperties);
+				PivotUtil.refreshList(PivotUtil.getOwnedPropertiesList(pivotClass), true, asProperties);
+			}
+			Model thisModel = pivotModel;
+			assert thisModel != null;
+			Technology technology = environmentFactory.getTechnology();
+			IdResolver idResolver = environmentFactory.getIdResolver();
+			for (Entry<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> entry : type2properties.entrySet()) {
+				org.eclipse.ocl.pivot.@NonNull Class pivotClass = entry.getKey();
+				List<@NonNull Property> asProperties = entry.getValue();
+				if ("Stereotype1".equals(pivotClass.getName())) {
+					getClass();
+				}
+				org.eclipse.ocl.pivot.@NonNull Package pivotPackage = PivotUtil.getOwningPackage(pivotClass); //                   rootCompletePackage.getPrimaryPackage();
+				PackageId metapackageId = technology.getMetapackageId(environmentFactory, pivotPackage);
+				org.eclipse.ocl.pivot.Package metaPackage = idResolver.basicGetPackage(metapackageId);
+				if (metaPackage != null) {
+					CompletePackage metaCompletePackage = completeModel.getCompletePackage(metaPackage);
+					String metaClassName = pivotClass.eClass().getName();
+					org.eclipse.ocl.pivot.Class  metaClass = (org.eclipse.ocl.pivot.Class)metaCompletePackage.getType(metaClassName);
+					if (metaClass != null) {
+					//	EObject eMetaClass = metaClass.getESObject();
+					//	EList<Extension> extensions = null;
+					//	if (eMetaClass instanceof org.eclipse.uml2.uml.Class) {
+					//		extensions = ((org.eclipse.uml2.uml.Class)eMetaClass).getExtensions();
+					//		getClass();
+					//	}
+						CompleteClassInternal metaCompleteClass = completeModel.getCompleteClass(metaClass);
+//						Iterable<@NonNull Property> extensionMetaProperties = metaCompleteClass.getProperties(FeatureFilter.SELECT_EXTENSION);
+					/*	for (@NonNull Property extensionMetaProperty : extensionMetaProperties) {
+							Property baseMetaProperty = extensionMetaProperty.getOpposite();
+							assert baseMetaProperty != null;
+							System.out.println("installProperties " + baseMetaProperty + " " + extensionMetaProperty);
+						//	org.eclipse.ocl.pivot.Class baseMetaClass = PivotUtil.getOwningClass(baseMetaProperty);
+						//	EObject eBaseMetaClass = metaClass.getESObject();
+						//	EList<Extension> extensions2 = null;
+						//	if (eBaseMetaClass instanceof org.eclipse.uml2.uml.Class) {
+						//		extensions2 = ((org.eclipse.uml2.uml.Class)eBaseMetaClass).getExtensions();
+						//		getClass();
+						//	}
+						//	modelAnalysis.profileAnalysis.
+
+
+
+
+
+
+
+						/*	org.eclipse.ocl.pivot.Class localExtensionClass = completeModel.getEquivalentClass(thisModel, metaClass);
+						//	CompleteClass baseMetaClass = completeModel.getCompleteClass(baseMetaProperty.getOwningClass());
+							Property baseProperty = PivotUtil.createProperty(PivotUtil.getName(baseMetaProperty), localExtensionClass);
+							Property extensionProperty = PivotUtil.createProperty(PivotUtil.getName(extensionMetaProperty), pivotClass);
+							baseProperty.setIsImplicit(true);
+							extensionProperty.setIsImplicit(true);
+							baseProperty.setOpposite(extensionProperty);
+							extensionProperty.setOpposite(baseProperty);
+							asProperties.add(baseProperty);
+							localExtensionClass.getOwnedProperties().add(extensionProperty); * /
+						} */
+					//	umlDerivedPropertyComparator.resolve(asProperties);
+					//	refreshList(PivotUtil.getOwnedPropertiesList(pivotClass), asProperties);
+					}
+				}
 			}
 		}
 
