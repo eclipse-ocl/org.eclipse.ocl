@@ -1054,8 +1054,8 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 
 		PivotUtil.refreshList(pivotModel.getOwnedPackages(), true, newPackages);
-		((CompleteModelImpl)completeModel).getCompleteClasses(asResource);
-	}
+		((CompleteModelImpl)completeModel).getCompleteClasses(asResource);					// XXX ?? do we need this so soon only to be trashed later ??
+	}																						// XXX ?? getOclAnyType first to resolve stdlib in timely fashion ??
 
 	/**
 	 * @since 1.7

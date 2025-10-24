@@ -307,13 +307,13 @@ public class UMLOCLEValidator implements EValidator
 		else if (eObject instanceof InstanceSpecification) {
 			allOk = validateInstanceSpecification((InstanceSpecification)eObject, diagnostics, context);
 		}
-		try {
-			if (eObject instanceof org.eclipse.uml2.uml.Element) {
-				List<EObject> umlStereotypeApplications = ((org.eclipse.uml2.uml.Element)eObject).getStereotypeApplications();
-				if (umlStereotypeApplications.size() > 0) {
-					Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
-					if (umlResource != null) {
-						EnvironmentFactory environmentFactory = getEnvironmentFactory(context, (org.eclipse.uml2.uml.Element)eObject);
+		if (eObject instanceof org.eclipse.uml2.uml.Element) {
+			List<EObject> umlStereotypeApplications = ((org.eclipse.uml2.uml.Element)eObject).getStereotypeApplications();
+			if (umlStereotypeApplications.size() > 0) {
+				Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
+				if (umlResource != null) {
+					EnvironmentFactory environmentFactory = getEnvironmentFactory(context, (org.eclipse.uml2.uml.Element)eObject);
+					try {
 						UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
 						uml2as.getASModel();
 						Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements = UML2ASUtil.computeAppliedStereotypes(umlStereotypeApplications);
@@ -322,7 +322,7 @@ public class UMLOCLEValidator implements EValidator
 							assert umlStereotypedElements != null;
 							org.eclipse.ocl.pivot.Stereotype stereotype = uml2as.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);
 							if (stereotype != null) {
-								HashSet<org.eclipse.ocl.pivot.Constraint> allConstraints = new HashSet<org.eclipse.ocl.pivot.Constraint>();
+								HashSet<org.eclipse.ocl.pivot.Constraint> allConstraints = new HashSet<>();
 								CompleteClass completeStereotype = environmentFactory.getCompleteModel().getCompleteClass(stereotype);
 								for (CompleteClass completeClass : completeStereotype.getSuperCompleteClasses()) {
 									for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
@@ -363,12 +363,22 @@ public class UMLOCLEValidator implements EValidator
 							}
 						}
 					}
+					catch (ParserException e) {
+						if (diagnostics != null) {
+							String message = e.toString();
+							if (!mayUseNewLines) {
+								message = message.replace("\n", "");
+							}
+							diagnostics.add(new BasicDiagnostic(PivotUtil.getSeverity(environmentFactory), UMLValidator.DIAGNOSTIC_SOURCE,
+								0, message,  new Object[] { eObject }));
+						}
+						else {
+							allOk = false;
+						}
+					}
 				}
 				return allOk;
 			}
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return true;
 	}
@@ -453,8 +463,8 @@ public class UMLOCLEValidator implements EValidator
 		}
 		boolean allOk = true;
 		if  (validationEnabled == Boolean.TRUE) {
-			HashSet<Classifier> allClassifiers = new HashSet<Classifier>();
-			HashSet<Constraint> allConstraints = new HashSet<Constraint>();
+			HashSet<Classifier> allClassifiers = new HashSet<>();
+			HashSet<Constraint> allConstraints = new HashSet<>();
 			for (Classifier classifier : instanceSpecification.getClassifiers()) {
 				if (classifier != null) {
 					gatherClassifiers(allClassifiers, allConstraints, classifier);
