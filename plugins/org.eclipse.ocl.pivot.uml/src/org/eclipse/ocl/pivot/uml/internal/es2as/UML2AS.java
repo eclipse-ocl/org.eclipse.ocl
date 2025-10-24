@@ -878,24 +878,32 @@ public abstract class UML2AS extends AbstractExternal2AS
 							if (metaClass != null) {
 								CompleteClassInternal metaCompleteClass = completeModel.getCompleteClass(metaClass);
 								Iterable<@NonNull Property> metaExtensionProperties = getExtensionProperties(metaCompleteClass2extensionProperties, metaCompleteClass);
-								for (Property metaExtensionProperty : metaExtensionProperties) {
+								for (@NonNull Property metaExtensionProperty : metaExtensionProperties) {
 									Property metaBaseProperty = metaExtensionProperty.getOpposite();
 									System.out.println("installProperties " + pivotClass + " " + metaBaseProperty + " " + metaExtensionProperty);
-								}
 
 
 
-								/*	org.eclipse.ocl.pivot.Class localExtensionClass = completeModel.getEquivalentClass(thisModel, metaClass);
-								//	CompleteClass baseMetaClass = completeModel.getCompleteClass(baseMetaProperty.getOwningClass());
-									Property baseProperty = PivotUtil.createProperty(PivotUtil.getName(baseMetaProperty), localExtensionClass);
-									Property extensionProperty = PivotUtil.createProperty(PivotUtil.getName(extensionMetaProperty), pivotClass);
+									org.eclipse.ocl.pivot.Class localExtensionClass = completeModel.getEquivalentClass(thisModel, metaClass);
+									Property baseProperty = PivotUtil.createProperty(PivotUtil.getName(metaBaseProperty), localExtensionClass);
+									Property extensionProperty = PivotUtil.createProperty(PivotUtil.getName(metaExtensionProperty), pivotClass);
 									baseProperty.setIsImplicit(true);
 									extensionProperty.setIsImplicit(true);
 									baseProperty.setOpposite(extensionProperty);
 									extensionProperty.setOpposite(baseProperty);
-									asProperties.add(baseProperty);
-									localExtensionClass.getOwnedProperties().add(extensionProperty); * /
-								} */
+									List<@NonNull Property> baseProperties = type2properties.get(pivotClass);
+									if (baseProperties == null) {
+										baseProperties = new ArrayList<>();
+										type2properties.put(pivotClass, baseProperties);
+									}
+								//	baseProperties.add(baseProperty);
+									List<@NonNull Property> extensionProperties = type2properties.get(localExtensionClass);
+									if (extensionProperties == null) {
+										extensionProperties = new ArrayList<>();
+										type2properties.put(localExtensionClass, extensionProperties);
+									}
+								//	extensionProperties.add(extensionProperty);
+								}
 							}
 						}
 					}

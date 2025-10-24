@@ -68,11 +68,9 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	protected void addProperty(@NonNull Property property) {
-		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.basicGetContainingPackage(property);
-		assert (asPackage != null) || PivotUtil.getName(property).startsWith("extension_");		// XXX fudge for bad UML stereotypes
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(property);
 		CompleteModel completeModel = completeClass.getCompleteModel();
-		CompletePackage completePackage = completeModel.basicGetCompletePackage(asPackage);
-		assert (completePackage != null) || PivotUtil.getName(property).startsWith("extension_");		// XXX fudge for bad UML stereotypes
+		CompletePackage completePackage = completeModel.getCompletePackage(asPackage);	// XXX redundant
 		super.addProperty(property);
 	}
 
@@ -99,7 +97,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
 			asProperties = gatherDirectProperties(unspecializedType, asProperties);
 		}
-		asProperties = gatherMetaExtensions(asProperties);			// XXX Is this an obsolete misunderstanding of Sterotype meta-levels ??
+	//	asProperties = gatherMetaExtensions(asProperties);			// XXX Is this an obsolete misunderstanding of Sterotype meta-levels ??
 		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
 
@@ -162,7 +160,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	 *
 	 * FIXME surely these should be cloned to have the correct containment as part of UML2AS.
 	 * @param asProperties
-	 */
+	 *
 	protected @Nullable List<@NonNull Property> gatherMetaExtensions(@Nullable List<@NonNull Property> asProperties) {
 		CompletePackage rootCompletePackage = completeClass.getOwningCompletePackage().getRootCompletePackage();
 		org.eclipse.ocl.pivot.@NonNull Package pivotPackage = rootCompletePackage.getPrimaryPackage();
@@ -187,7 +185,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			}
 		}
 		return asProperties;
-	}
+	} */
 
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
