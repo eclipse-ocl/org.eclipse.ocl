@@ -371,16 +371,18 @@ public class ModelAnalysis
 						Element asElement = (Element)eObject;
 						EClass eClass = asElement.eClass();
 						Type metatype = eClass2metatype.get(eClass);
-						if ((metatype == null) && !eClass2metatype.containsKey(eClass)) {
-							EPackage ePackage = eClass.getEPackage();
-							String ePackageName = ePackage.getName();
-							String eClassName = eClass.getName();
-							if ((ePackageName != null) && (eClassName != null)) {
-								metatype = profileAnalysis.getMetatype(ePackageName, eClassName);
+						if (metatype == null) {
+							if (!eClass2metatype.containsKey(eClass)) {
+								EPackage ePackage = eClass.getEPackage();
+								String ePackageName = ePackage.getName();
+								String eClassName = eClass.getName();
+								if ((ePackageName != null) && (eClassName != null)) {
+									metatype = profileAnalysis.getMetatype(ePackageName, eClassName);
+								}
 								eClass2metatype.put(eClass, metatype);
 							}
 						}
-						if (metatype != null) {
+						else {
 							Set<@NonNull StereotypeExtender> typeExtensions = metatype2typeExtensions.get(metatype);
 							if (typeExtensions != null) {
 								Map<@NonNull Stereotype, @NonNull ElementExtension> stereotype2extension = installExtensions(asElement, typeExtensions);

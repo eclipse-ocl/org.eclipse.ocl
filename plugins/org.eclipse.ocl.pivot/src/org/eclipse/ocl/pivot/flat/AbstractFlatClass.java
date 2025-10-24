@@ -696,9 +696,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		else {
 			List<@NonNull Property> asProperties = new ArrayList<>();
 			assert name2propertyOrProperties != null;
-			for (@NonNull String key : name2propertyOrProperties.keySet()) {
-				Property asProperty = resolvePropertyOrProperties(featureFilter, key);
-				if (asProperty != null) {
+			for (Object asPropertyOrProperties : name2propertyOrProperties.values()) {
+				Property asProperty;
+				if (asPropertyOrProperties instanceof PartialProperties) {
+					asProperty = ((PartialProperties)asPropertyOrProperties).get();
+				}
+				else {
+					asProperty = (Property)asPropertyOrProperties;
+				}
+				if ((asProperty != null) && ((featureFilter == null) || featureFilter.accept(asProperty))) {
 					asProperties.add(asProperty);
 				}
 			}
@@ -964,6 +970,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			for (@NonNull Property property : fragment.getProperties()) {
 				PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
 				addProperty(property);
+				if (property.getName().contains("extension")) {
+					getClass();				// XXX
+				}
 			}
 		}
 	}
@@ -1197,22 +1206,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 		}
 		return asProperties;
-	}
-
-	private @Nullable Property resolvePropertyOrProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
-		assert name2propertyOrProperties != null;
-		Object asPropertyOrProperties = name2propertyOrProperties.get(name);
-		Property asProperty;
-		if (asPropertyOrProperties instanceof PartialProperties) {
-			asProperty = ((PartialProperties)asPropertyOrProperties).get();
-		}
-		else {
-			asProperty = (Property)asPropertyOrProperties;
-		}
-		if ((asProperty != null) && (featureFilter != null) && !featureFilter.accept(asProperty)) {
-			asProperty = null;
-		}
-		return asProperty;
 	}
 
 //	@Override

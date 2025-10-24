@@ -1007,7 +1007,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	public void getCompleteClasses(@NonNull ASResource asResource) {
+	public void getCompleteClasses(@NonNull ASResource asResource) {		// XXX bad name for side-effect method
 		// XXX check called just once
 		// XXX pass completePackage
 		for (EObject eObject : asResource.getContents()) {
