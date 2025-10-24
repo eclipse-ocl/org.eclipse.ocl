@@ -20,6 +20,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -1578,5 +1579,13 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {
+		if ("http://www.eclipse.org/uml2/5.0.0/UML#//Class".equals(uri.toString())) {
+			getClass();			// XXX
+		}
+		super.eSetProxyURI(uri);
 	}
 } //ClassImpl

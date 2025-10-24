@@ -422,6 +422,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		assert !partialClass.eIsProxy();				// XXX
 		getPartialClasses().add(partialClass);
 	}
 
@@ -458,6 +459,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		assert !partialClass.eIsProxy();				// XXX
 		if (PARTIAL_CLASSES.isActive()) {
 			PARTIAL_CLASSES.println("Do-didAddClass " + partialClass + " => " + this);
 		}

@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -608,7 +609,8 @@ public class Orphanage extends PackageImpl
 	 * @since 1.18
 	 */
 	public static boolean isOrphan(@NonNull Element asElement) {
-		for (EObject eObject = asElement, eContainer; (eContainer = eObject.eContainer()) != null; eObject = eContainer) {
+//		for (EObject eObject = asElement, eContainer; (eContainer = eObject.eContainer()) != null; eObject = eContainer) {
+		for (EObject eObject = asElement, eContainer; (eContainer = ((InternalEObject)eObject).eInternalContainer()) != null; eObject = eContainer) {
 			if (eContainer instanceof Model) {
 				return (eObject instanceof org.eclipse.ocl.pivot.Package) && isOrphanage((org.eclipse.ocl.pivot.Package)eObject);
 			}

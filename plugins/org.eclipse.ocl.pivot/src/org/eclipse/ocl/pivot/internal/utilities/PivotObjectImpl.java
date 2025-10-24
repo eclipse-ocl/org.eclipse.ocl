@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -78,7 +79,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 				Resource resolvedResource = resolvedProxy.eResource();
 				if (resolvedResource != null) {
 					ResourceSet resolvedResourceSet = resolvedResource.getResourceSet();
-					assert resolvedResourceSet == externalResourceSet;
+					assert (resolvedResourceSet == externalResourceSet) || Orphanage.isOrphan((Element)proxy);
 					try {
 						resolvedProxy = environmentFactory.getASOf(Element.class, resolvedProxy);
 					} catch (ParserException e) {

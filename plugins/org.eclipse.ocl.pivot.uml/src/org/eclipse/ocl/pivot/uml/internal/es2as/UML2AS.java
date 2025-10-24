@@ -799,7 +799,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 				}
 				knownExtensionProperties = extensionProperties != null ? extensionProperties : NO_EXTENSION_PROPERTIES;
 				metaCompleteClass2extensionProperties.put(metaCompleteClass, knownExtensionProperties);
-				System.out.println("getExtensionProperties " + NameUtil.debugSimpleName(metaCompleteClass) + " " + metaCompleteClass + " " + knownExtensionProperties);
+			//	System.out.println("getExtensionProperties " + NameUtil.debugSimpleName(metaCompleteClass) + " " + metaCompleteClass + " " + knownExtensionProperties);
 			}
 			return knownExtensionProperties;
 		}
@@ -880,7 +880,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 								Iterable<@NonNull Property> metaExtensionProperties = getExtensionProperties(metaCompleteClass2extensionProperties, metaCompleteClass);
 								for (@NonNull Property metaExtensionProperty : metaExtensionProperties) {
 									Property metaBaseProperty = metaExtensionProperty.getOpposite();
-									System.out.println("installProperties " + pivotClass + " " + metaBaseProperty + " " + metaExtensionProperty);
+								//	System.out.println("installExtensionProperties " + pivotClass + " " + metaBaseProperty + " " + metaExtensionProperty);
 
 
 
