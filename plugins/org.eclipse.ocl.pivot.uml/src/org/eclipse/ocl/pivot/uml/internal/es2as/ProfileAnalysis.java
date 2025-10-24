@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * The ProfileAnalysis captures the overall analysis of the UML M2 Profiles and Stereotypes.
@@ -36,36 +37,36 @@ public class ProfileAnalysis
 	/**
 	 * All metatypes that are extended by a TypeExtension.
 	 */
-	private final @NonNull Set<Type> allExtendedMetatypes = new HashSet<Type>();
+	private final @NonNull Set<@NonNull Type> allExtendedMetatypes = new HashSet<>();
 
 	/**
 	 * All metatypes that are extended by a TypeExtension.
 	 */
-	private final @NonNull Set<org.eclipse.ocl.pivot.Package> allExtendedMetapackages = new HashSet<org.eclipse.ocl.pivot.Package>();
+	private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> allExtendedMetapackages = new HashSet<>();
 
 	/**
 	 * All stereotypes that extend a metatype via a TypeExtension.
 	 */
-	private final @NonNull Set<Stereotype> allExtendingStereotypes = new HashSet<Stereotype>();
+	private final @NonNull Set<@NonNull Stereotype> allExtendingStereotypes = new HashSet<>();
 
 	/**
 	 * All stereotypes.
 	 */
-	private final @NonNull Set<Stereotype> allStereotypes = new HashSet<Stereotype>();
+	private final @NonNull Set<@NonNull Stereotype> allStereotypes = new HashSet<>();
 
 	/**
 	 * All profiles.
 	 */
-//	private final @NonNull Set<Profile> allProfiles = new HashSet<Profile>();
+//	private final @NonNull Set<@NonNull Profile> allProfiles = new HashSet<>();
 
-	private final @NonNull Map<Profile, Set<Stereotype>> profile2ownedStereotypes = new HashMap<Profile, Set<Stereotype>>();
-	private final @NonNull Map<String, Type> metatypeName2metatype = new HashMap<String, Type>();
-	private final @NonNull Map<Type, Set<Type>> metatype2superMetatypeClosure = new HashMap<Type, Set<Type>>();
-	private final @NonNull Map<Type, Set<Type>> metatype2subMetatypeClosure = new HashMap<Type, Set<Type>>();
-	private final @NonNull Map<Stereotype, Set<Stereotype>> stereotype2superStereotypeClosure = new HashMap<Stereotype, Set<Stereotype>>();
-	private final @NonNull Map<Stereotype, Set<Stereotype>> stereotype2subStereotypeClosure = new HashMap<Stereotype, Set<Stereotype>>();
-//	private final @NonNull Map<Type, Set<Stereotype>> metatype2stereotypeClosure = new HashMap<Type, Set<Stereotype>>();
-//	private final @NonNull Map<Type, Set<Stereotype>> metatype2stereotypeClosureClosure = new HashMap<Type, Set<Stereotype>>();
+	private final @NonNull Map<@NonNull Profile, @NonNull Set<@NonNull Stereotype>> profile2ownedStereotypes = new HashMap<>();
+	private final @NonNull Map<@NonNull String, @NonNull Type> metatypeName2metatype = new HashMap<>();
+	private final @NonNull Map<@NonNull Type, @NonNull Set<@NonNull Type>> metatype2superMetatypeClosure = new HashMap<>();
+	private final @NonNull Map<@NonNull Type, @NonNull Set<@NonNull Type>> metatype2subMetatypeClosure = new HashMap<>();
+	private final @NonNull Map<@NonNull Stereotype, @NonNull Set<@NonNull Stereotype>> stereotype2superStereotypeClosure = new HashMap<>();
+	private final @NonNull Map<@NonNull Stereotype, @NonNull Set<@NonNull Stereotype>> stereotype2subStereotypeClosure = new HashMap<>();
+//	private final @NonNull Map<Type, Set<Stereotype>> metatype2stereotypeClosure = new HashMap<>();
+//	private final @NonNull Map<Type, Set<Stereotype>> metatype2stereotypeClosureClosure = new HashMap<>();
 
 	public ProfileAnalysis(UML2AS.@NonNull Outer converter) {
 		this.converter = converter;
@@ -77,9 +78,9 @@ public class ProfileAnalysis
 		org.eclipse.ocl.pivot.Package asPackage = asStereotype.getOwningPackage();
 		if (asPackage instanceof Profile) {
 			Profile asProfile = (Profile) asPackage;
-			Set<Stereotype> ownedStereotypes = profile2ownedStereotypes.get(asProfile);
+			Set<@NonNull Stereotype> ownedStereotypes = profile2ownedStereotypes.get(asProfile);
 			if (ownedStereotypes == null) {
-				ownedStereotypes = new HashSet<Stereotype>();
+				ownedStereotypes = new HashSet<>();
 				profile2ownedStereotypes.put(asProfile, ownedStereotypes);
 			}
 			ownedStereotypes.add(asStereotype);
@@ -103,7 +104,7 @@ public class ProfileAnalysis
 		public void addTypeExtension(@NonNull TypeExtension asTypeExtension) {
 			List<TypeExtension> asTypeExtensions2 = asTypeExtensions;
 			if (asTypeExtensions2 == null) {
-				asTypeExtensions = asTypeExtensions2 = new ArrayList<TypeExtension>();
+				asTypeExtensions = asTypeExtensions2 = new ArrayList<>();
 			}
 			asTypeExtensions2.add(asTypeExtension);
 / *			org.eclipse.uml2.uml.Association umlExtension = umlExtensionEnd.getAssociation();
@@ -112,11 +113,11 @@ public class ProfileAnalysis
 				if (umlProfile instanceof org.eclipse.uml2.uml.Profile) {
 					Map<org.eclipse.uml2.uml.Profile, List<org.eclipse.uml2.uml.ExtensionEnd>> profile2requiredExtensionEnds2 = profile2requiredExtensionEnds;
 					if (profile2requiredExtensionEnds2 == null) {
-						profile2requiredExtensionEnds = profile2requiredExtensionEnds2 = new HashMap<org.eclipse.uml2.uml.Profile, List<org.eclipse.uml2.uml.ExtensionEnd>>();
+						profile2requiredExtensionEnds = profile2requiredExtensionEnds2 = new HashMap<>();
 					}
 					List<org.eclipse.uml2.uml.ExtensionEnd> umlRequiredExtensionEnds = profile2requiredExtensionEnds2.get(umlProfile);
 					if (umlRequiredExtensionEnds == null) {
-						umlRequiredExtensionEnds = new ArrayList<org.eclipse.uml2.uml.ExtensionEnd>();
+						umlRequiredExtensionEnds = new ArrayList<>();
 						profile2requiredExtensionEnds2.put((org.eclipse.uml2.uml.Profile) umlProfile, umlRequiredExtensionEnds);
 					}
 					umlRequiredExtensionEnds.add(umlExtensionEnd);
@@ -132,7 +133,7 @@ public class ProfileAnalysis
 //		computeMetatype2StereotypeClosureClosure();
 /*		if (UML2AS.APPLICABLE_STEREOTYPES.isActive()) {
 			StringBuffer s = new StringBuffer();
-			List<Type> asMetatypes = new ArrayList<Type>(metatype2stereotypeClosureClosure.keySet());
+			List<Type> asMetatypes = new ArrayList<>(metatype2stereotypeClosureClosure.keySet());
 			Collections.sort(asMetatypes, PivotUtil.NAMEABLE_COMPARATOR);
 			for (@SuppressWarnings("null")@NonNull Type asMetatype : asMetatypes) {
 				s.append("\n\t" + EcoreUtils.qualifiedNameFor(asMetatype));
@@ -142,7 +143,7 @@ public class ProfileAnalysis
 					s.append(" - " + asPackage.getNsURI());
 				}
 				s.append("\n\t\t");
-				List<Stereotype> stereotypes = new ArrayList<Stereotype>(metatype2stereotypeClosureClosure.get(asMetatype));
+				List<Stereotype> stereotypes = new ArrayList<>(metatype2stereotypeClosureClosure.get(asMetatype));
 				Collections.sort(stereotypes, PivotUtil.NAMEABLE_COMPARATOR);
 				for (Stereotype asStereotype : stereotypes) {
 					s.append(asStereotype + ", ");
@@ -170,7 +171,7 @@ public class ProfileAnalysis
 		//
 		//	Create the closure of all profiles to each package for which any profile is applied
 		//
-		Map<org.eclipse.ocl.pivot.Package, Map<Type, Set<Stereotype>>> package2metatype2applicableStereotypes = new HashMap<org.eclipse.ocl.pivot.Package, Map<Type, Set<Stereotype>>>();
+		Map<org.eclipse.ocl.pivot.Package, Map<Type, Set<Stereotype>>> package2metatype2applicableStereotypes = new HashMap<>();
 		for (ProfileApplication asProfileApplication : asProfileApplications) {
 			org.eclipse.ocl.pivot.Package asPackage = asProfileApplication.getApplyingPackage();
 			if (asPackage != null) {
@@ -180,7 +181,7 @@ public class ProfileAnalysis
 					if (asProfileProfiles != null) {
 						Map<Type, Set<Stereotype>> metatype2applicableStereotypes = package2metatype2applicableStereotypes.get(asPackage);
 						if (metatype2applicableStereotypes == null) {
-							metatype2applicableStereotypes = new HashMap<Type, Set<Stereotype>>();
+							metatype2applicableStereotypes = new HashMap<>();
 							package2metatype2applicableStereotypes.put(asPackage, metatype2applicableStereotypes);
 						}
 						for (Profile asProfile2 : asProfileProfiles) {
@@ -196,7 +197,7 @@ public class ProfileAnalysis
 														if (metatype != null) {
 															Set<Stereotype> applicableStereotypes = metatype2applicableStereotypes.get(metatype);
 															if (applicableStereotypes == null) {
-																applicableStereotypes = new HashSet<Stereotype>();
+																applicableStereotypes = new HashSet<>();
 																metatype2applicableStereotypes.put(metatype, applicableStereotypes);
 															}
 															applicableStereotypes.add(applicableStereotype);
@@ -242,7 +243,7 @@ public class ProfileAnalysis
 		//
 		//	Determine all the profiles that are actually applied somewhere.
 		//
-		Set<Profile> appliedProfiles = new HashSet<Profile>();
+		Set<Profile> appliedProfiles = new HashSet<>();
 		for (ProfileApplication asProfileApplication : asProfileApplications) {
 			Profile asProfile = asProfileApplication.getAppliedProfile();
 			if (asProfile != null) {
@@ -252,16 +253,16 @@ public class ProfileAnalysis
 		//
 		//	Determine the closure of all profiles for each actually applied profile.
 		//
-		Map<Profile, Set<Profile>> appliedProfile2allProfiles = new HashMap<Profile, Set<Profile>>();
+		Map<Profile, Set<Profile>> appliedProfile2allProfiles = new HashMap<>();
 		for (@SuppressWarnings("null")@NonNull Profile asProfile : appliedProfiles) {
-			Set<Profile> asProfiles = new HashSet<Profile>();
+			Set<Profile> asProfiles = new HashSet<>();
 			computeProfileClosure(asProfiles, asProfile);
 			appliedProfile2allProfiles.put(asProfile, asProfiles);
 		}
 		//
 		//	Create the closure of all profiles to each package for which any profile is applied
 		//
-		Map<org.eclipse.ocl.pivot.Package, Set<Profile>> package2allAppliedProfiles = new HashMap<org.eclipse.ocl.pivot.Package, Set<Profile>>();
+		Map<org.eclipse.ocl.pivot.Package, Set<Profile>> package2allAppliedProfiles = new HashMap<>();
 		for (ProfileApplication asProfileApplication : asProfileApplications) {
 			org.eclipse.ocl.pivot.Package asPackage = asProfileApplication.getApplyingPackage();
 			if (asPackage != null) {
@@ -271,7 +272,7 @@ public class ProfileAnalysis
 					if (asProfileProfiles != null) {
 						Set<Profile> asPackageProfiles = package2allAppliedProfiles.get(asPackage);
 						if (asPackageProfiles == null) {
-							asPackageProfiles = new HashSet<Profile>();
+							asPackageProfiles = new HashSet<>();
 							package2allAppliedProfiles.put(asPackage, asPackageProfiles);
 						}
 						asPackageProfiles.addAll(asProfileProfiles);
@@ -298,7 +299,7 @@ public class ProfileAnalysis
 /*	private void computeMetatype2StereotypeClosure() {
 		for (Type asMetatype : allExtendedMetatypes) {
 			if (asMetatype != null) {
-				Set<Stereotype> asMetatypeClosure = new HashSet<Stereotype>();
+				Set<Stereotype> asMetatypeClosure = new HashSet<>();
 				metatype2stereotypeClosure.put(asMetatype, asMetatypeClosure);
 				for (TypeExtension asTypeExtension : asMetatype.getExtendedBys()) {
 					Stereotype asStereotype = asTypeExtension.getStereotype();
@@ -318,7 +319,7 @@ public class ProfileAnalysis
 /*	private void computeMetatype2StereotypeClosureClosure() {
 		for (Type asMetatype : metatype2stereotypeClosure.keySet()) {
 			if (asMetatype != null) {
-				Set<Stereotype> asMetatypeClosure = new HashSet<Stereotype>();
+				Set<Stereotype> asMetatypeClosure = new HashSet<>();
 				metatype2stereotypeClosureClosure.put(asMetatype, asMetatypeClosure);
 				for (DomainType asSuperMetatype : metamodelManager.getAllSuperClasses(asMetatype)) {
 					if (asSuperMetatype instanceof TypeServer) {
@@ -336,28 +337,28 @@ public class ProfileAnalysis
 	} */
 
 	private void computeMetatypeName2metatype() {
-		for (org.eclipse.ocl.pivot.Package metapackage : allExtendedMetapackages) {
-			for (org.eclipse.ocl.pivot.Class metatype : metapackage.getOwnedClasses()) {
-				if (metatype != null) {
-					metatypeName2metatype.put(metatype.getName(), metatype);
-				}
+		for (org.eclipse.ocl.pivot.@NonNull Package metapackage : allExtendedMetapackages) {
+			for (org.eclipse.ocl.pivot.Class metatype : PivotUtil.getOwnedClasses(metapackage)) {
+				String name = metatype.getName();
+				assert name != null;
+				metatypeName2metatype.put(name, metatype);
 			}
 		}
 	}
 
 	private void computeMetatypeClosure() {
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		for (org.eclipse.ocl.pivot.Package metapackage : allExtendedMetapackages) {
+		for (org.eclipse.ocl.pivot.@NonNull Package metapackage : allExtendedMetapackages) {
 			for (org.eclipse.ocl.pivot.Class subMetatype : metapackage.getOwnedClasses()) {
 				if (subMetatype != null) {
-					Set<Type> superMetatypeClosure = new HashSet<Type>();
+					Set<Type> superMetatypeClosure = new HashSet<>();
 					metatype2superMetatypeClosure.put(subMetatype, superMetatypeClosure);
 					for (CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(subMetatype)) {
 						org.eclipse.ocl.pivot.Class asSuperMetatype = superCompleteClass.getPrimaryClass();
 						superMetatypeClosure.add(asSuperMetatype);
-						Set<Type> subMetatypeClosure = metatype2subMetatypeClosure.get(asSuperMetatype);
+						Set<@NonNull Type> subMetatypeClosure = metatype2subMetatypeClosure.get(asSuperMetatype);
 						if (subMetatypeClosure == null) {
-							subMetatypeClosure = new HashSet<Type>();
+							subMetatypeClosure = new HashSet<>();
 							metatype2subMetatypeClosure.put(asSuperMetatype, subMetatypeClosure);
 						}
 						subMetatypeClosure.add(subMetatype);
@@ -369,36 +370,34 @@ public class ProfileAnalysis
 
 	private void computeStereotypeClosure() {
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		for (Stereotype subStereotype : allStereotypes) {
-			if (subStereotype != null) {
-				Set<Stereotype> superStereotypeClosure = new HashSet<Stereotype>();
-				stereotype2superStereotypeClosure.put(subStereotype, superStereotypeClosure);
-				for (CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(subStereotype)) {
-					org.eclipse.ocl.pivot.Class asSuperStereotype = superCompleteClass.getPrimaryClass();
-					if (asSuperStereotype instanceof Stereotype) {
-						superStereotypeClosure.add((Stereotype)asSuperStereotype);
-						Set<Stereotype> subStereotypeClosure = stereotype2subStereotypeClosure.get(asSuperStereotype);
-						if (subStereotypeClosure == null) {
-							subStereotypeClosure = new HashSet<Stereotype>();
-							stereotype2subStereotypeClosure.put((Stereotype)asSuperStereotype, subStereotypeClosure);
-						}
-						subStereotypeClosure.add(subStereotype);
+		for (@NonNull Stereotype subStereotype : allStereotypes) {
+			Set<@NonNull Stereotype> superStereotypeClosure = new HashSet<>();
+			stereotype2superStereotypeClosure.put(subStereotype, superStereotypeClosure);
+			for (CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(subStereotype)) {
+				org.eclipse.ocl.pivot.Class asSuperStereotype = superCompleteClass.getPrimaryClass();
+				if (asSuperStereotype instanceof Stereotype) {
+					superStereotypeClosure.add((Stereotype)asSuperStereotype);
+					Set<@NonNull Stereotype> subStereotypeClosure = stereotype2subStereotypeClosure.get(asSuperStereotype);
+					if (subStereotypeClosure == null) {
+						subStereotypeClosure = new HashSet<>();
+						stereotype2subStereotypeClosure.put((Stereotype)asSuperStereotype, subStereotypeClosure);
 					}
+					subStereotypeClosure.add(subStereotype);
 				}
 			}
 		}
 	}
 
-	public @NonNull Map<Type, Set<StereotypeExtender>> computeMetatypes2typeExtensions() {
-		Set<Stereotype> applicableStereotypes = allStereotypes; //getOwnedStereotypes(appliedProfileClosure);
-		Map<Type, Set<StereotypeExtender>> extensibleMetatype2typeExtensions = getExtensibleMetatype2typeExtensions(applicableStereotypes);
-/*		Map<Type, Set<TypeExtension>> metatype2typeExtensions = new HashMap<Type, Set<TypeExtension>>();
+	public @NonNull Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> computeMetatypes2typeExtensions() {
+		Set<@NonNull Stereotype> applicableStereotypes = allStereotypes; //getOwnedStereotypes(appliedProfileClosure);
+		Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> extensibleMetatype2typeExtensions = getExtensibleMetatype2typeExtensions(applicableStereotypes);
+/*		Map<Type, Set<TypeExtension>> metatype2typeExtensions = new HashMap<>();
 		for (Type metatype : extensibleMetatype2extendingStereotypes.keySet()) {
 //			@SuppressWarnings("null")@NonNull Set<Stereotype> extendingStereotypes = extensibleMetatype2extendingStereotypes.get(metatype);
 //			Set<Stereotype> extendingStereotypeClosure = getStereotypeSubSuperClosure(extendingStereotypes);
 //			extensibleMetatypesClosure.put(metatype, extendingStereotypeClosure);
 		}
-//		Map<Type, Set<TypeExtension>> metatype2typeExtensions = new HashMap<Type, Set<TypeExtension>>();
+//		Map<Type, Set<TypeExtension>> metatype2typeExtensions = new HashMap<>();
 		for (@SuppressWarnings("null")@NonNull Type metatype : extensibleMetatype2typeExtensions.keySet()) {
 			Set<TypeExtension> someTypeExtensions = metatype2typeExtensions.get(metatype);
 			if (someTypeExtensions != null) {
@@ -407,7 +406,7 @@ public class ProfileAnalysis
 					for (Type subMetatype : metatypeSubClosure) {
 						Set<TypeExtension> allTypeExtensions = metatype2typeExtensions.get(subMetatype);
 						if (allTypeExtensions == null) {
-							allTypeExtensions = new HashSet<TypeExtension>();
+							allTypeExtensions = new HashSet<>();
 							metatype2typeExtensions.put(subMetatype, allTypeExtensions);
 						}
 						allTypeExtensions.addAll(someTypeExtensions);
@@ -419,25 +418,25 @@ public class ProfileAnalysis
 		return extensibleMetatype2typeExtensions;
 	}
 
-	public @NonNull Map<Type, Set<StereotypeExtender>> computeMetatypes2typeExtensions(@NonNull Set<Profile> appliedProfileClosure) {
-		Set<Stereotype> applicableStereotypes = getOwnedStereotypes(appliedProfileClosure);
-		Map<Type, Set<StereotypeExtender>> extensibleMetatype2typeExtensions = getExtensibleMetatype2typeExtensions(applicableStereotypes);
-//		Map<Type, Set<TypeExtension>> metatype2typeExtensions = new HashMap<Type, Set<TypeExtension>>();
+	public @NonNull Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> computeMetatypes2typeExtensions(@NonNull Set<@NonNull Profile> appliedProfileClosure) {
+		Set<@NonNull Stereotype> applicableStereotypes = getOwnedStereotypes(appliedProfileClosure);
+		Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> extensibleMetatype2typeExtensions = getExtensibleMetatype2typeExtensions(applicableStereotypes);
+//		Map<Type, Set<TypeExtension>> metatype2typeExtensions = new HashMap<>();
 //		for (Type metatype : extensibleMetatype2extendingStereotypes.keySet()) {
 //			@SuppressWarnings("null")@NonNull Set<Stereotype> extendingStereotypes = extensibleMetatype2extendingStereotypes.get(metatype);
 //			Set<Stereotype> extendingStereotypeClosure = getStereotypeSubSuperClosure(extendingStereotypes);
 //			extensibleMetatypesClosure.put(metatype, extendingStereotypeClosure);
 //		}
-		Map<Type, Set<StereotypeExtender>> metatype2typeExtensions = new HashMap<Type, Set<StereotypeExtender>>();
-		for (@SuppressWarnings("null")@NonNull Type metatype : extensibleMetatype2typeExtensions.keySet()) {
-			Set<StereotypeExtender> someTypeExtensions = metatype2typeExtensions.get(metatype);
+		Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> metatype2typeExtensions = new HashMap<>();
+		for (@NonNull Type metatype : extensibleMetatype2typeExtensions.keySet()) {
+			Set<@NonNull StereotypeExtender> someTypeExtensions = metatype2typeExtensions.get(metatype);
 			if (someTypeExtensions != null) {
-				Set<Type> metatypeSubClosure = getSubMetatypeClosure(metatype);
+				Set<@NonNull Type> metatypeSubClosure = getSubMetatypeClosure(metatype);
 				if (metatypeSubClosure != null) {
-					for (Type subMetatype : metatypeSubClosure) {
-						Set<StereotypeExtender> allTypeExtensions = metatype2typeExtensions.get(subMetatype);
+					for (@NonNull Type subMetatype : metatypeSubClosure) {
+						Set<@NonNull StereotypeExtender> allTypeExtensions = metatype2typeExtensions.get(subMetatype);
 						if (allTypeExtensions == null) {
-							allTypeExtensions = new HashSet<StereotypeExtender>();
+							allTypeExtensions = new HashSet<>();
 							metatype2typeExtensions.put(subMetatype, allTypeExtensions);
 						}
 						allTypeExtensions.addAll(someTypeExtensions);
@@ -457,7 +456,7 @@ public class ProfileAnalysis
 						for (org.eclipse.ocl.pivot.Package asNestedPackage : ((Root)eRoot).getNestedPackage()) {
 							if (asNestedPackage instanceof Profile) {
 								if (allProfiles == null) {
-									allProfiles = new HashSet<Profile>();
+									allProfiles = new HashSet<>();
 								}
 								computeProfileClosure(allProfiles, (Profile) asNestedPackage);
 							}
@@ -470,14 +469,14 @@ public class ProfileAnalysis
 	} */
 
 /*	private @NonNull Map<Type, Set<Stereotype>> getExtensibleMetatype2extendingStereotypes(@NonNull Iterable<Stereotype> applicableStereotypes) {
-		Map<Type, Set<Stereotype>> extensibleMetatype2extendingStereotypes = new HashMap<Type, Set<Stereotype>>();
+		Map<Type, Set<Stereotype>> extensibleMetatype2extendingStereotypes = new HashMap<>();
 		for (Stereotype applicableStereotype : applicableStereotypes) {
 			for (TypeExtension typeExtension : applicableStereotype.getExtensionOfs()) {
 				Type extensibleMetatype = typeExtension.getType();
 				if (extensibleMetatype != null) {
 					Set<Stereotype> extendingStereotypes = extensibleMetatype2extendingStereotypes.get(extensibleMetatype);
 					if (extendingStereotypes == null) {
-						extendingStereotypes = new HashSet<Stereotype>();
+						extendingStereotypes = new HashSet<>();
 						extensibleMetatype2extendingStereotypes.put(extensibleMetatype, extendingStereotypes);
 					}
 					extendingStereotypes.add(applicableStereotype);
@@ -487,18 +486,18 @@ public class ProfileAnalysis
 		return extensibleMetatype2extendingStereotypes;
 	} */
 
-	private @NonNull Map<Type, Set<StereotypeExtender>> getExtensibleMetatype2typeExtensions(@NonNull Iterable<Stereotype> applicableStereotypes) {
-		Map<Type, Set<StereotypeExtender>> extensibleMetatype2typeExtensions = new HashMap<Type, Set<StereotypeExtender>>();
-		for (Stereotype applicableStereotype : applicableStereotypes) {
+	private @NonNull Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> getExtensibleMetatype2typeExtensions(@NonNull Iterable<@NonNull Stereotype> applicableStereotypes) {
+		Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> extensibleMetatype2typeExtensions = new HashMap<>();
+		for (@NonNull Stereotype applicableStereotype : applicableStereotypes) {
 //			if (applicableStereotype.getName().contains("Parent")) {
 //				System.out.println("Got it");
 //			}
 			for (StereotypeExtender typeExtension : applicableStereotype.getOwnedExtenders()) {
 				Type extensibleMetatype = typeExtension.getClass_();
 				if (extensibleMetatype != null) {
-					Set<StereotypeExtender> typeExtensions = extensibleMetatype2typeExtensions.get(extensibleMetatype);
+					Set<@NonNull StereotypeExtender> typeExtensions = extensibleMetatype2typeExtensions.get(extensibleMetatype);
 					if (typeExtensions == null) {
-						typeExtensions = new HashSet<StereotypeExtender>();
+						typeExtensions = new HashSet<>();
 						extensibleMetatype2typeExtensions.put(extensibleMetatype, typeExtensions);
 					}
 					typeExtensions.add(typeExtension);
@@ -516,7 +515,7 @@ public class ProfileAnalysis
 		//
 		//	Create the closure of all profiles to each package for which any profile is applied
 		//
-		Map<Type, Set<Stereotype>> metatype2applicableStereotypes = new HashMap<Type, Set<Stereotype>>();
+		Map<Type, Set<Stereotype>> metatype2applicableStereotypes = new HashMap<>();
 		for (Profile asProfile2 : asProfiles) {
 			for (Type type : asProfile2.getOwnedType()) {
 				if (type instanceof Stereotype) {
@@ -530,7 +529,7 @@ public class ProfileAnalysis
 										if (metatype != null) {
 											Set<Stereotype> applicableStereotypes = metatype2applicableStereotypes.get(metatype);
 											if (applicableStereotypes == null) {
-												applicableStereotypes = new HashSet<Stereotype>();
+												applicableStereotypes = new HashSet<>();
 												metatype2applicableStereotypes.put(metatype, applicableStereotypes);
 											}
 											applicableStereotypes.add(applicableStereotype);
@@ -546,10 +545,10 @@ public class ProfileAnalysis
 		return metatype2applicableStereotypes;
 	} */
 
-	private @NonNull Set<Stereotype> getOwnedStereotypes(@NonNull Iterable<Profile> asProfiles) {
-		Set<Stereotype> allOwnedStereotypes = new HashSet<Stereotype>();
-		for (Profile asProfile : asProfiles) {
-			Set<Stereotype> ownedStereotypes = profile2ownedStereotypes.get(asProfile);
+	private @NonNull Set<@NonNull Stereotype> getOwnedStereotypes(@NonNull Iterable<@NonNull Profile> asProfiles) {
+		Set<@NonNull Stereotype> allOwnedStereotypes = new HashSet<>();
+		for (@NonNull Profile asProfile : asProfiles) {
+			Set<@NonNull Stereotype> ownedStereotypes = profile2ownedStereotypes.get(asProfile);
 			if (ownedStereotypes != null) {
 				allOwnedStereotypes.addAll(ownedStereotypes);
 			}
@@ -558,7 +557,7 @@ public class ProfileAnalysis
 	}
 
 /*	private @NonNull Set<Stereotype> getStereotypeSubSuperClosure(@NonNull Iterable<Stereotype> asStereotypes) {
-		Set<Stereotype> stereotypeClosure = new HashSet<Stereotype>();
+		Set<Stereotype> stereotypeClosure = new HashSet<>();
 		for (Stereotype asStereotype : asStereotypes) {
 			Set<Stereotype> subStereotypeClosure = stereotype2subStereotypeClosure.get(asStereotype);
 			if (subStereotypeClosure != null) {
@@ -572,7 +571,7 @@ public class ProfileAnalysis
 		return stereotypeClosure;
 	} */
 
-	private @Nullable Set<Type> getSubMetatypeClosure(@NonNull Type metatype) {
+	private @Nullable Set<@NonNull Type> getSubMetatypeClosure(@NonNull Type metatype) {
 		return metatype2subMetatypeClosure.get(metatype);
 	}
 }

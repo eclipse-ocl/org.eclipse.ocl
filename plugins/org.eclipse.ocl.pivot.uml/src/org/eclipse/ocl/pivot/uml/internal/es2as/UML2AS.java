@@ -286,8 +286,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	public static boolean isUML(@NonNull Resource resource) {
-		List<EObject> contents = resource.getContents();
-		for (EObject content : contents) {
+		List<@NonNull EObject> contents = resource.getContents();
+		for (@NonNull EObject content : contents) {
 			if (content instanceof org.eclipse.uml2.uml.Package) {
 				return true;
 			}
@@ -716,7 +716,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 				if (resource == umlResource) {
 					return null;
 				}
-				List<Resource> importedResources2 = importedResources;
+				List<@NonNull Resource> importedResources2 = importedResources;
 				if ((importedResources2 != null) && importedResources2.contains(resource)) {
 					return null;
 				}
@@ -776,12 +776,13 @@ public abstract class UML2AS extends AbstractExternal2AS
 		protected void installAliases(@NonNull Resource asResource) {
 			MonikerAliasAdapter umlAdapter = MonikerAliasAdapter.findAdapter(umlResource);
 			if (umlAdapter != null) {
-				Map<EObject, String> umlAliasMap = umlAdapter.getAliasMap();
+				Map<@NonNull EObject, @Nullable String> umlAliasMap = umlAdapter.getAliasMap();
 				MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(asResource);
-				Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+				Map<@NonNull EObject, @Nullable String> pivotAliasMap = pivotAdapter.getAliasMap();
 				for (EObject eObject : umlAliasMap.keySet()) {
 					String alias = umlAliasMap.get(eObject);
 					Element element = createMap.get(eObject);
+					assert element != null;
 					pivotAliasMap.put(element, alias);
 				}
 			}
@@ -1241,7 +1242,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	/**
 	 * @since 7.0
 	 */
-	public Type getNormalizedType(Type asType) {
+	public @NonNull Type getNormalizedType(@NonNull Type asType) {
 		if (asType instanceof NormalizedTemplateParameter) {
 			return asType;
 		}

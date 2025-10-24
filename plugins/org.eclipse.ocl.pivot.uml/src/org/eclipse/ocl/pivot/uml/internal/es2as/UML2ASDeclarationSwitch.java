@@ -700,7 +700,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		String nsURI = umlPackage.getURI();
 		Object nsPrefix = null;
 		Object asURI = null;
-		String packageName = umlPackage.getName();
+	//	String packageName = umlPackage.getName();
 		for (org.eclipse.uml2.uml.Package uriPackage = umlPackage; uriPackage != null; uriPackage = uriPackage.getNestingPackage()) {
 			asURI = uriPackage.getURI();
 			org.eclipse.uml2.uml.Stereotype ecoreStereotype = getEcoreStereotype(uriPackage, UMLUtil.STEREOTYPE__E_PACKAGE);
@@ -711,7 +711,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				}
 			}
 			if (asURI != null) {
-				packageName = uriPackage.getName();
+			//	packageName = uriPackage.getName();
 				break;
 			}
 		}
