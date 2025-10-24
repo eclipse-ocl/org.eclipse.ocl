@@ -308,7 +308,7 @@ public class UMLOCLEValidator implements EValidator
 			allOk = validateInstanceSpecification((InstanceSpecification)eObject, diagnostics, context);
 		}
 		if (eObject instanceof org.eclipse.uml2.uml.Element) {
-			List<EObject> umlStereotypeApplications = ((org.eclipse.uml2.uml.Element)eObject).getStereotypeApplications();
+			@SuppressWarnings("null") List<@NonNull EObject> umlStereotypeApplications = ((org.eclipse.uml2.uml.@NonNull Element)eObject).getStereotypeApplications();
 			if (umlStereotypeApplications.size() > 0) {
 				Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
 				if (umlResource != null) {
@@ -316,9 +316,9 @@ public class UMLOCLEValidator implements EValidator
 					try {
 						UML2AS uml2as = UML2AS.getAdapter(umlResource, environmentFactory);
 						uml2as.getASModel();
-						Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements = UML2ASUtil.computeAppliedStereotypes(umlStereotypeApplications);
-						for (@SuppressWarnings("null")@NonNull EObject umlStereotypeApplication : umlStereotypeApplications) {
-							List<Element> umlStereotypedElements = umlStereotypeApplication2umlStereotypedElements.get(umlStereotypeApplication);
+						Map<@NonNull EObject, @NonNull List<org.eclipse.uml2.uml.@NonNull Element>> umlStereotypeApplication2umlStereotypedElements = UML2ASUtil.computeAppliedStereotypes(umlStereotypeApplications);
+						for (@NonNull EObject umlStereotypeApplication : umlStereotypeApplications) {
+							List<@NonNull Element> umlStereotypedElements = umlStereotypeApplication2umlStereotypedElements.get(umlStereotypeApplication);
 							assert umlStereotypedElements != null;
 							org.eclipse.ocl.pivot.Stereotype stereotype = uml2as.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);
 							if (stereotype != null) {

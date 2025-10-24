@@ -270,13 +270,13 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			//	sortedExternalPackages.addAll(thisModel.getOwnedPackages());
 			for (Import asImport : thisModel.getOwnedImports()) {
 				Namespace importedNamespace = asImport.getImportedNamespace();
-				org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.getContainingPackage(importedNamespace);
+				org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.basicGetContainingPackage(importedNamespace);
 				if (externalPackage != null) {
 					sortedExternalPackages.add(externalPackage);
 				}
 			}
 			for (Element element : context.getNamedValues()) {
-				org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.getContainingPackage(element);
+				org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.basicGetContainingPackage(element);
 				if ((externalPackage != null) /*&& !LibraryConstants.STDLIB_URI.equals(externalPackage.getURI())*/)  {
 					sortedExternalPackages.add(externalPackage);
 				}

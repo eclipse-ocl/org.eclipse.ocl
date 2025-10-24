@@ -68,7 +68,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	protected void addProperty(@NonNull Property property) {
-		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(property);
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.basicGetContainingPackage(property);
 		assert (asPackage != null) || PivotUtil.getName(property).startsWith("extension_");		// XXX fudge for bad UML stereotypes
 		CompleteModel completeModel = completeClass.getCompleteModel();
 		CompletePackage completePackage = completeModel.basicGetCompletePackage(asPackage);

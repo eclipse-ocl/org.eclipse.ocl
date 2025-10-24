@@ -160,8 +160,8 @@ public class EnvironmentView
 		@Override
 		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Feature match1, @NonNull Feature match2) {
 		//	assert Objects.equals(match1.getName(), match2.getName());
-			org.eclipse.ocl.pivot.Package p1 = PivotUtil.getContainingPackage(match1);
-			org.eclipse.ocl.pivot.Package p2 = PivotUtil.getContainingPackage(match2);
+			org.eclipse.ocl.pivot.Package p1 = PivotUtil.basicGetContainingPackage(match1);
+			org.eclipse.ocl.pivot.Package p2 = PivotUtil.basicGetContainingPackage(match2);
 			if (p1 == null) {
 				return MATCHES_INDEPENDENT;
 			}

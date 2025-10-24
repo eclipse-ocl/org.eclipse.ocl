@@ -302,6 +302,18 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static org.eclipse.ocl.pivot.@Nullable Package basicGetContainingPackage(@Nullable EObject element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
+				return (org.eclipse.ocl.pivot.Package)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static @Nullable TemplateableElement basicGetContainingTemplateableElement(@NonNull EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof TemplateableElement) {
@@ -1659,13 +1671,8 @@ public class PivotUtil implements PivotConstants
 		return null;
 	}
 
-	public static org.eclipse.ocl.pivot.@Nullable Package getContainingPackage(@Nullable EObject element) {
-		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-				return (org.eclipse.ocl.pivot.Package)eObject;
-			}
-		}
-		return null;
+	public static org.eclipse.ocl.pivot.@NonNull Package getContainingPackage(@Nullable EObject element) {
+		return ClassUtil.requireNonNull(basicGetContainingPackage(element));
 	}
 
 	/**
@@ -2551,6 +2558,7 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* use getContainingPackage to ensure StateMachine does not fail */
 	public static org.eclipse.ocl.pivot.@NonNull Package getOwningPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.requireNonNull(asClass.getOwningPackage());
 	}

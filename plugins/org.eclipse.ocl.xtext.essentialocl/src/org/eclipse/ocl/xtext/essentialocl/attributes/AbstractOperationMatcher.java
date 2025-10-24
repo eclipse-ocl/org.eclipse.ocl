@@ -194,8 +194,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		if (isRedefinitionOf(candidate, reference)) {
 			return -1;				// match1 inferior
 		}
-		org.eclipse.ocl.pivot.Package p1 = PivotUtil.getContainingPackage(reference);
-		org.eclipse.ocl.pivot.Package p2 = PivotUtil.getContainingPackage(candidate);
+		org.eclipse.ocl.pivot.Package p1 = PivotUtil.basicGetContainingPackage(reference);
+		org.eclipse.ocl.pivot.Package p2 = PivotUtil.basicGetContainingPackage(candidate);
 		if (p1 == null) {
 			return 0;
 		}

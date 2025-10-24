@@ -83,7 +83,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	public @NonNull LibraryProperty createExplicitNavigationPropertyImplementation(@NonNull EnvironmentFactory environmentFactory,
 			@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
 		if (sourceValue instanceof org.eclipse.uml2.uml.InstanceSpecification) {
-			org.eclipse.ocl.pivot.Package owningPackage = PivotUtil.getContainingPackage(asNavigationExp);
+			org.eclipse.ocl.pivot.Package owningPackage = PivotUtil.basicGetContainingPackage(asNavigationExp);
 			if (!(owningPackage instanceof Profile)) {	// FIXME see Bug 458326/458394
 				EObject eTarget = property.getESObject();
 				if  (eTarget instanceof org.eclipse.uml2.uml.Property) {

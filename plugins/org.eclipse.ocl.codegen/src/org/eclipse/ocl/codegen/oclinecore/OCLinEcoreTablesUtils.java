@@ -610,7 +610,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public Object visitDataType(@NonNull DataType type) {
-			org.eclipse.ocl.pivot.Package dataTypePackage = PivotUtil.getContainingPackage(type);
+			org.eclipse.ocl.pivot.Package dataTypePackage = PivotUtil.basicGetContainingPackage(type);
 			if (dataTypePackage != asPackage) {
 				Type behavioralClass = type.getBehavioralClass();
 				if (behavioralClass != null) {
