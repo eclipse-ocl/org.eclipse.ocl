@@ -3162,8 +3162,12 @@ public class PivotUtil implements PivotConstants
 		}
 		for (int k = newElements.size(); k-- > 0; ) {
 			T newElement = newElements.get(k);
-			if ((newElement != null) && newElement.eIsProxy()) {
-				oldElements.remove(newElement);			// Lose oldContent before adding possible 'duplicates'
+			if (newElement != null) {
+				EObject newElementContainer = newElement.eContainer();
+				assert !(newElementContainer instanceof EObjectContainmentEList) || (newElementContainer == ((EObjectContainmentEList<?>)oldElements).getNotifier()) : "Child stealing attempted";
+				if (newElement.eIsProxy()) {
+					oldElements.remove(newElement);			// Lose oldContent before adding possible 'duplicates'
+				}
 			}
 		}
 		for (int k = oldElements.size(); k-- > 0; ) {

@@ -189,7 +189,8 @@ public /*final*/ class FlatFragment
 	public @NonNull Property @NonNull [] getProperties() {
 		@NonNull Property [] properties2 = this.properties;
 		if (properties2 == null) {
-			this.properties = properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
+			properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
+			initProperties(properties2);
 		//	System.out.println("getProperties " + this + " " + NameUtil.debugSimpleName(properties2) + " " + properties2.length);
 		}
 		return properties2;
@@ -201,8 +202,14 @@ public /*final*/ class FlatFragment
 	}
 
 	public void initProperties(@NonNull Property @NonNull [] properties) {
+		if ("ParentsProfile::Parent__ParentsProfile::Parent".equals(toString()) ) {
+			getClass();			// XXX
+		}
 		assert this.properties == null;
 		this.properties = properties;
+		for (@NonNull Property property : properties) {
+			assert property.eResource() != null;				// XXX
+		}
 	}
 
 	/**
