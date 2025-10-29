@@ -117,6 +117,7 @@ import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -2772,9 +2773,11 @@ public class PivotUtil implements PivotConstants
 		return statusPart.getTypeId() == TypeId.BOOLEAN ? statusPart : null;
 	}
 
+
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated /* @deprecated rename to avoid legacy overload of 'stereotype' */
 	public static String getStereotype(@NonNull Constraint object) {
 		EStructuralFeature eContainingFeature = object.eContainingFeature();
 		if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
@@ -2793,6 +2796,12 @@ public class PivotUtil implements PivotConstants
 			return DERIVATION_NAME;
 		}
 		return "";
+	}
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Stereotype getStereotype(@NonNull ElementExtension elementExtension) {
+		return ClassUtil.requireNonNull(elementExtension.getStereotype());
 	}
 
 	/**
