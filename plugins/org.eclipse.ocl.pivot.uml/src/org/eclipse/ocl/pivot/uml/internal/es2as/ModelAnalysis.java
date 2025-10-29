@@ -28,12 +28,15 @@ import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.ProfileApplication;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
@@ -402,12 +405,54 @@ public class ModelAnalysis
 		//
 		//	Install all the metaclass properties.
 		//
+		installExtensionProperties(element2stereotype2extension);
 		//			for (Metaclass<?> metaclass : metaclass2properties.keySet()) {
 		//				List<Property> newProperties = metaclass2properties.get(metaclass);
 		//				List<Property> oldProperties = metaclass.getOwnedAttribute();
 		//				assert oldProperties != null;
 		//				refreshList(oldProperties, newProperties);
 		//			}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected void installExtensionProperties(@NonNull Map<@NonNull Element, @NonNull Map<@NonNull Stereotype, @NonNull ElementExtension>> element2stereotype2extension) {
+		Model thisModel = converter.basicGetPivotModel();
+		assert thisModel != null;
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
+		for (@NonNull Entry<@NonNull Element, @NonNull Map<@NonNull Stereotype, @NonNull ElementExtension>> entry1 : element2stereotype2extension.entrySet()) {
+			@NonNull Element element = entry1.getKey();
+			if (element instanceof org.eclipse.ocl.pivot.Class) {
+				Map<@NonNull Stereotype, @NonNull ElementExtension> stereotype2extension = entry1.getValue();
+				for (@NonNull Stereotype stereotype : stereotype2extension.keySet()) {
+					for (@NonNull Property property : PivotUtil.getOwnedProperties(stereotype)) {
+						String name = PivotUtil.getName(property);
+						if (name.startsWith(UML2AS.STEREOTYPE_BASE_PREFIX)) {
+							Property metaBaseProperty = property;
+							Property metaExtensionProperty = metaBaseProperty.getOpposite();
+							assert metaExtensionProperty != null;
+							org.eclipse.ocl.pivot.@NonNull Class metaBaseClass = (org.eclipse.ocl.pivot.Class)element;
+							org.eclipse.ocl.pivot.@NonNull Class metaExtensionClass = stereotype;
+							org.eclipse.ocl.pivot.@NonNull Class localBaseClass = completeModel.getEquivalentClass(thisModel, metaBaseClass);
+							org.eclipse.ocl.pivot.@NonNull Class localExtensionClass = completeModel.getEquivalentClass(thisModel, metaExtensionClass);
+							Property localBaseProperty = PivotUtil.createProperty(UML2AS.STEREOTYPE_BASE_PREFIX + metaBaseClass.getName(), metaBaseClass);
+							Property localExtensionProperty = PivotUtil.createProperty(UML2AS.STEREOTYPE_EXTENSION_PREFIX + metaExtensionClass.getName(), metaExtensionClass);
+							localBaseProperty.setIsImplicit(true);
+							localExtensionProperty.setIsImplicit(true);
+							localBaseProperty.setOpposite(localExtensionProperty);
+							localExtensionProperty.setOpposite(localBaseProperty);
+							System.out.println("installExtensionProperties " + localBaseClass.toString() + "::" + localExtensionProperty + " ~ " + localExtensionClass.toString() + "::" + localBaseProperty);
+							converter.addProperty(localBaseClass, localBaseProperty);
+							converter.addProperty(localExtensionClass, localExtensionProperty);
+						}
+				//		else {
+				//			System.out.println("installExtensionProperties unexpected Stereotype property " + stereotype + "::" + property);
+				//		}
+					}
+				}
+			}
+		}
 	}
 
 	private @NonNull Map<@NonNull Stereotype, @NonNull ElementExtension> installExtensions(@NonNull Element asElement, @NonNull Set<@NonNull StereotypeExtender> typeExtensions) {

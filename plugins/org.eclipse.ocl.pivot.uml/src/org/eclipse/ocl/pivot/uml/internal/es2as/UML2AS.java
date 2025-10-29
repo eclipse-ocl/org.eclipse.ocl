@@ -42,9 +42,7 @@ import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -61,7 +59,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
@@ -652,7 +649,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					environmentFactory.getMetamodelManager().installResource(asResource);
 					installReferencers();
 					modelAnalysis.installStereotypes();
-					installExtensionProperties();
+				//	installExtensionProperties();
 					installProperties();
 					installUsers();
 				}
@@ -755,7 +752,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		/**
 		 * Return the extension properties of metaCompleteClass and its superclasses updating the metaCompleteClass2extensionProperties
 		 * cache of previous invocations with the result. This avoids use of FlatClass caches that have yet to be initialized.
-		 */
+		 *
 		private @NonNull Collection<@NonNull Property> getExtensionProperties(@NonNull Map<@NonNull CompleteClass, @Nullable Collection<@NonNull Property>> metaCompleteClass2extensionProperties, @NonNull CompleteClass metaCompleteClass) {
 			if ("Class".equals(metaCompleteClass.getName())) {
 				getClass();			// XXX
@@ -800,7 +797,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			//	System.out.println("getExtensionProperties " + NameUtil.debugSimpleName(metaCompleteClass) + " " + metaCompleteClass + " " + knownExtensionProperties);
 			}
 			return knownExtensionProperties;
-		}
+		} */
 
 		public @Nullable List<@NonNull Resource> getImportedResources() {
 			return importedResources;
@@ -844,127 +841,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 					Element element = createMap.get(eObject);
 					assert element != null;
 					pivotAliasMap.put(element, alias);
-				}
-			}
-		}
-
-		/**
-		 * @since 7.0
-		 */
-		protected void installExtensionProperties() {
-			Model thisModel = pivotModel;
-			assert thisModel != null;
-			Technology technology = environmentFactory.getTechnology();
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			Map<@NonNull CompleteClass, @Nullable Collection<@NonNull Property>> metaCompleteClass2extensionProperties = new HashMap<>();
-			Map<@NonNull EObject, @NonNull Element> createdMap = getCreatedMap();
-			if (createdMap != null) {
-				for (@NonNull Entry<@NonNull EObject, @NonNull Element> entry : createdMap.entrySet()) {
-					@NonNull EObject eObject = entry.getKey();
-					if (eObject instanceof org.eclipse.uml2.uml.Class) {
-						org.eclipse.ocl.pivot.@NonNull Class pivotClass = (org.eclipse.ocl.pivot.Class)entry.getValue();
-						if ("ActivityFinalNode".equals(pivotClass.getName())) {
-							getClass();			// XXX
-						}
-
-
-						for (@NonNull ElementExtension elementExtension : PivotUtil.getOwnedExtensions(pivotClass)) {
-							Stereotype stereotype = PivotUtil.getStereotype(elementExtension);
-							getClass();
-							for (@NonNull Property property : PivotUtil.getOwnedProperties(stereotype)) {
-								String name = PivotUtil.getName(property);
-								if (name.startsWith(STEREOTYPE_BASE_PREFIX)) {
-									Property metaBaseProperty = property;
-									Property metaExtensionProperty = metaBaseProperty.getOpposite();
-									assert metaExtensionProperty != null;
-									org.eclipse.ocl.pivot.@NonNull Class metaBaseClass = pivotClass;
-									org.eclipse.ocl.pivot.@NonNull Class metaExtensionClass = stereotype;
-									org.eclipse.ocl.pivot.@NonNull Class localBaseClass = completeModel.getEquivalentClass(thisModel, metaBaseClass);
-									org.eclipse.ocl.pivot.@NonNull Class localExtensionClass = completeModel.getEquivalentClass(thisModel, metaExtensionClass);
-									Property localBaseProperty = PivotUtil.createProperty(STEREOTYPE_BASE_PREFIX + metaBaseClass.getName(), metaBaseClass);
-									Property localExtensionProperty = PivotUtil.createProperty(STEREOTYPE_EXTENSION_PREFIX + metaExtensionClass.getName(), metaExtensionClass);
-									localBaseProperty.setIsImplicit(true);
-									localExtensionProperty.setIsImplicit(true);
-									localBaseProperty.setOpposite(localExtensionProperty);
-									localExtensionProperty.setOpposite(localBaseProperty);
-									System.out.println("installExtensionProperties2 " + /*umlEClass + " " +*/ localBaseClass.toString() + "::" + localExtensionProperty + " ~ " + localExtensionClass.toString() + "::" + localBaseProperty);
-									List<@NonNull Property> baseProperties = type2properties.get(pivotClass);
-									if (baseProperties == null) {
-										baseProperties = new ArrayList<>();
-										type2properties.put(pivotClass, baseProperties);
-									}
-								//	baseProperties.add(baseProperty);
-									List<@NonNull Property> extensionProperties = type2properties.get(localExtensionClass);
-									if (extensionProperties == null) {
-										extensionProperties = new ArrayList<>();
-										type2properties.put(localExtensionClass, extensionProperties);
-									}
-								}
-							}
-						}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					/*	org.eclipse.ocl.pivot.@NonNull Package pivotPackage = PivotUtil.getContainingPackage(pivotClass); //                   rootCompletePackage.getPrimaryPackage();
-						PackageId metapackageId = technology.getMetapackageId(environmentFactory, pivotPackage);
-						org.eclipse.ocl.pivot.Package metaPackage = idResolver.basicGetPackage(metapackageId);
-						if (metaPackage != null) {
-							CompletePackage metaCompletePackage = completeModel.getCompletePackage(metaPackage);
-							String metaClassName = pivotClass.eClass().getName();
-							org.eclipse.ocl.pivot.Class metaBaseClass = (org.eclipse.ocl.pivot.Class)metaCompletePackage.getType(metaClassName);
-							if (metaBaseClass != null) {
-								CompleteClassInternal metaBaseCompleteClass = completeModel.getCompleteClass(metaBaseClass);
-								Iterable<@NonNull Property> metaExtensionProperties = getExtensionProperties(metaCompleteClass2extensionProperties, metaBaseCompleteClass);
-								for (@NonNull Property metaExtensionProperty : metaExtensionProperties) {
-									org.eclipse.ocl.pivot.Class metaExtensionClass = PivotUtil.getClass(metaExtensionProperty);
-									Property metaBaseProperty = metaExtensionProperty.getOpposite();
-									assert metaBaseProperty != null;
-								//	System.out.println("installExtensionProperties " + pivotClass + " " + metaBaseProperty + " " + metaExtensionProperty);
-
-									if ("extension_Stereotype2".equals(metaExtensionProperty.getName())) {
-										getClass();			// XXX
-									}
-
-									org.eclipse.ocl.pivot.Class localBaseClass = completeModel.getEquivalentClass(thisModel, metaBaseClass);
-									org.eclipse.ocl.pivot.Class localExtensionClass = completeModel.getEquivalentClass(thisModel, metaExtensionClass);
-									Property localBaseProperty = PivotUtil.createProperty(PivotUtil.getName(metaBaseProperty), localExtensionClass);
-									Property localExtensionProperty = PivotUtil.createProperty(PivotUtil.getName(metaExtensionProperty), pivotClass);
-									localBaseProperty.setIsImplicit(true);
-									localExtensionProperty.setIsImplicit(true);
-									localBaseProperty.setOpposite(localExtensionProperty);
-									localExtensionProperty.setOpposite(localBaseProperty);
-									System.out.println("installExtensionProperties1 " + / *umlEClass + " " +* / localBaseClass.toString() + "::" + localExtensionProperty + " ~ " + localExtensionClass.toString() + "::" + localBaseProperty);
-					//				List<@NonNull Property> baseProperties = type2properties.get(pivotClass);
-					//				if (baseProperties == null) {
-					//					baseProperties = new ArrayList<>();
-					//					type2properties.put(pivotClass, baseProperties);
-					//				}
-								//	baseProperties.add(baseProperty);
-					//				List<@NonNull Property> extensionProperties = type2properties.get(localExtensionClass);
-					//				if (extensionProperties == null) {
-					//					extensionProperties = new ArrayList<>();
-					//					type2properties.put(localExtensionClass, extensionProperties);
-					//				}
-								//	extensionProperties.add(extensionProperty);
-								}
-							}
-						} */
-					}
 				}
 			}
 		}
