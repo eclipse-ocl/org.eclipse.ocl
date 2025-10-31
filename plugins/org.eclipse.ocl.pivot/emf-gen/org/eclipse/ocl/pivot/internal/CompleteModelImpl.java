@@ -1187,10 +1187,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			completePackage = getOrphanCompletePackage();
 		}
 		else {
-			org.eclipse.ocl.pivot.Package pivotPackage = asClass.getOwningPackage();
-			if (pivotPackage == null) {
-				throw new IllegalStateException("type has no package");
-			}
+			org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);
 			completePackage = getCompletePackage3(pivotPackage);
 		}
 		return completePackage;
@@ -1291,17 +1288,19 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		List<org.eclipse.ocl.pivot.@NonNull Package> thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
 		String packageName = PivotUtil.getName(thatPackage);
 		String packageURI = thatPackage.getURI();
+		if (packageURI != null) {
+			for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
+				if (packageURI.equals(thisPackage.getURI())) {
+					return thisPackage;
+				}
+			}
+		}
 		for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
-			if (packageURI.equals(thisPackage.getURI())) {
+			if (packageName.equals(thisPackage.getName())) {
 				return thisPackage;
 			}
 		}
 		if (packageURI == null) {
-			for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
-				if (packageName.equals(thisPackage.getName())) {
-					return thisPackage;
-				}
-			}
 			packageURI = "";
 		}
 		org.eclipse.ocl.pivot.Package thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), packageURI, thatPackage.getPackageId());

@@ -653,7 +653,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 					environmentFactory.getMetamodelManager().installResource(asResource);
 					installReferencers();
 					modelAnalysis.installStereotypes();
-				//	installExtensionProperties();
 					installProperties();
 					installUsers();
 				}

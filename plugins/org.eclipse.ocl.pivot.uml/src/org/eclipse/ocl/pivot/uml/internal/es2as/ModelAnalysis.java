@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.uml.internal.es2as.ModelAnalysis.ElementComparator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -273,7 +272,7 @@ public class ModelAnalysis
 		//
 		for (@NonNull ProfileApplication asProfileApplication : asProfileApplications) {
 			org.eclipse.ocl.pivot.Package asPackage = asProfileApplication.getOwningPackage();
-			System.out.println("computePackage2AppliedProfileClosure " + asProfileApplication + " " + asPackage);
+		//	System.out.println("computePackage2AppliedProfileClosure " + asProfileApplication + " " + asPackage);
 			if (asPackage != null) {
 				Profile asProfile = asProfileApplication.getAppliedProfile();
 				if (asProfile != null) {
@@ -385,7 +384,7 @@ public class ModelAnalysis
 		Map<@NonNull Element, @NonNull Map<@NonNull Stereotype, @NonNull ElementExtension>> element2stereotype2extension = new HashMap<>();
 		for (Entry<@NonNull Package, @NonNull Set<@NonNull Profile>> entry : package2appliedProfileClosure.entrySet()) {
 			org.eclipse.ocl.pivot.@NonNull Package asPackage = entry.getKey();
-			System.out.println("installStereotypes1 " + asPackage);
+		//	System.out.println("installStereotypes1 " + asPackage);
 			if (!(asPackage instanceof Profile)) {		// XXX why can't profiles be applied to profiles ??
 				@NonNull Set<@NonNull Profile> appliedProfileClosure = entry.getValue();
 				Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> metatype2typeExtensions = profileAnalysis.computeMetatypes2typeExtensions(appliedProfileClosure);
@@ -395,7 +394,7 @@ public class ModelAnalysis
 					if (eObject instanceof Element) {
 						Element asElement = (Element)eObject;
 						EClass eClass = asElement.eClass();
-						System.out.println("installStereotypes2 <" + NameUtil.qualifiedNameFor(eClass) + "> " + NameUtil.qualifiedNameFor(asElement));
+					//	System.out.println("installStereotypes2 <" + NameUtil.qualifiedNameFor(eClass) + "> " + NameUtil.qualifiedNameFor(asElement));
 						Type metatype = eClass2metatype.get(eClass);
 						if (metatype == null) {
 							if (!eClass2metatype.containsKey(eClass)) {
