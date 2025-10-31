@@ -197,15 +197,15 @@ public class ModelAnalysis
 				//					asStereotype = converter.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);		// FIXME debugging
 				//				}
 				if (asStereotype != null) {
-					for (@NonNull Stereotype stereotype : getStereotypeClosure(new ArrayList<@NonNull Stereotype>(), asStereotype)) {
-						ElementExtension elementExtension = environmentFactory.getElementExtension(asStereotypedElement, stereotype);
+				//	for (@NonNull Stereotype stereotype : getStereotypeClosure(new ArrayList<@NonNull Stereotype>(), asStereotype)) {
+						ElementExtension elementExtension = environmentFactory.getElementExtension(asStereotypedElement, asStereotype);
 						converter.setOriginalMapping(elementExtension, umlStereotypeApplication);
 						elementExtension.setIsApplied(true);
-						stereotype2extension.put(stereotype, elementExtension);
+						stereotype2extension.put(asStereotype, elementExtension);
 						if (UML2AS.ADD_ELEMENT_EXTENSION.isActive()) {
 							UML2AS.ADD_ELEMENT_EXTENSION.println(elementExtension.toString());
 						}
-					}
+				//	}
 				}
 			}
 		}
@@ -428,14 +428,14 @@ public class ModelAnalysis
 		//
 		//	Install all the metaclass properties.
 		//
-		List<@NonNull Element> elements = new ArrayList<>(element2stereotype2extension.keySet());
+	/*	List<@NonNull Element> elements = new ArrayList<>(element2stereotype2extension.keySet());
 		Collections.sort(elements, ElementComparator.INSTANCE);
 		for (@NonNull Element element : elements) {
 			if (element.toString().startsWith("Model::")) {
 				Map<@NonNull Stereotype, @NonNull ElementExtension> map = element2stereotype2extension.get(element);
 				System.out.println("installExtensionProperties1 " + element);
 			}
-		}
+		} */
 		installExtensionProperties(element2stereotype2extension);
 		//			for (Metaclass<?> metaclass : metaclass2properties.keySet()) {
 		//				List<Property> newProperties = metaclass2properties.get(metaclass);
@@ -456,10 +456,10 @@ public class ModelAnalysis
 		Collections.sort(elements, ElementComparator.INSTANCE);
 		for (@NonNull Element element : elements) {
 		//	System.out.println("installExtensionProperties " + element);
-			if (element.toString().startsWith("Model::")) {
-				Map<@NonNull Stereotype, @NonNull ElementExtension> map = element2stereotype2extension.get(element);
-				System.out.println("installExtensionProperties2 " + element);
-			}
+		//	if (element.toString().startsWith("Model::")) {
+		//		Map<@NonNull Stereotype, @NonNull ElementExtension> map = element2stereotype2extension.get(element);
+		//		System.out.println("installExtensionProperties2 " + element);
+		//	}
 			if (element instanceof org.eclipse.ocl.pivot.Class) {
 				Map<@NonNull Stereotype, @NonNull ElementExtension> stereotype2extension = element2stereotype2extension.get(element);
 				assert stereotype2extension != null;

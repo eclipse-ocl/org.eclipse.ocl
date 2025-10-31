@@ -709,4 +709,12 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		return stereotype.getFlatClass(standardLibrary);
 	}
+
+	@Override
+	public void setName(String newName) {
+		if ("EnglishClass$Internationalized".equals(newName)) {
+			getClass();			// XXX
+		}
+		super.setName(newName);
+	}
 } //ElementExtensionImpl
