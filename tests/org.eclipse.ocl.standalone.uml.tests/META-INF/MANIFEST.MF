@@ -9,7 +9,8 @@ Bundle-Localization: plugin
 Export-Package: org.eclipse.ocl.standalone.uml.tests;x-internal:=true,
  org.eclipse.osgi;x-internal:=true,
  org.eclipse.osgi.util;x-internal:=true,
- org.osgi.framework;version="1.7.0";x-internal:=true
+ org.osgi.framework;version="1.7.0";x-internal:=true,
+ org.osgi.util.tracker;version="1.7.0";x-internal:=true
 Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.ocl.uml.tests,
  org.eclipse.uml2.uml
