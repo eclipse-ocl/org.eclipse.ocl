@@ -163,6 +163,18 @@ public class ModelAnalysis
 	//	}
 	}
 
+	// XXX Migrate to ProfileAnalysis once CompleteClass in use.
+	private void addStereotypeClosure(@NonNull List<@NonNull Stereotype> asStereotypes) {
+		for (int i = 0; i < asStereotypes.size(); i++) {
+			Stereotype asStereotype = asStereotypes.get(i);
+			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : PivotUtil.getSuperClasses(asStereotype)) {
+				if ((asSuperClass instanceof Stereotype) && !asStereotypes.contains(asSuperClass)) {
+					asStereotypes.add((Stereotype)asSuperClass);
+				}
+			}
+		}
+	}
+
 	private void computeAppliedProfile2profileClosure() {
 		//
 		//	Determine the closure of all profiles for each actually applied profile.
@@ -303,19 +315,6 @@ public class ModelAnalysis
 				}
 			}
 		}
-	}
-
-	// XXX Migrate to ProfileAnalysis once CompleteClass in use.
-	private @NonNull Iterable<@NonNull Stereotype> getStereotypeClosure(@NonNull ArrayList<@NonNull Stereotype> asStereotypes, @NonNull Stereotype asStereotype) {
-		if (!asStereotypes.contains(asStereotype)) {
-			asStereotypes.add(asStereotype);
-			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : PivotUtil.getSuperClasses(asStereotype)) {
-				if (asSuperClass instanceof Stereotype) {
-					getStereotypeClosure(asStereotypes, (Stereotype)asSuperClass);
-				}
-			}
-		}
-		return asStereotypes;
 	}
 
 	/**
@@ -464,6 +463,7 @@ public class ModelAnalysis
 				Map<@NonNull Stereotype, @NonNull ElementExtension> stereotype2extension = element2stereotype2extension.get(element);
 				assert stereotype2extension != null;
 				List<@NonNull Stereotype> stereotypes = new ArrayList<>(stereotype2extension.keySet());
+				addStereotypeClosure(stereotypes);
 				Collections.sort(stereotypes, NameUtil.NAMEABLE_COMPARATOR);
 				for (@NonNull Stereotype stereotype : stereotypes) {
 				//	for (@NonNull Property property : PivotUtil.getOwnedProperties(stereotype)) {
