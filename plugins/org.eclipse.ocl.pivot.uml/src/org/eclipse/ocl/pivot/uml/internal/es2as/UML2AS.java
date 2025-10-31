@@ -96,12 +96,16 @@ import org.eclipse.uml2.uml.util.UMLUtil;
 
 public abstract class UML2AS extends AbstractExternal2AS
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull TracingOption ADD_BASE_EXTENSION_PROPERTY_PAIR = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/addBaseExtensionPropertyPair");
 	public static final @NonNull TracingOption ADD_ELEMENT_EXTENSION = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/addElementExtension");
 	public static final @NonNull TracingOption ADD_IMPORTED_RESOURCE = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/addImportedResource");
-	public static final @NonNull TracingOption ADD_PROFILE_APPLICATION = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/addProfileApplication");
+	//public static final @NonNull TracingOption ADD_PROFILE_APPLICATION = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/addProfileApplication");
 	public static final @NonNull TracingOption ADD_STEREOTYPE_APPLICATION = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/addStereotypeApplication");
 	public static final @NonNull TracingOption ADD_TYPE_EXTENSION = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/addTypeExtension");
-	public static final @NonNull TracingOption APPLICABLE_STEREOTYPES = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/applicableStereotypes");
+	//public static final @NonNull TracingOption APPLICABLE_STEREOTYPES = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/applicableStereotypes");
 	public static final @NonNull TracingOption CONVERT_RESOURCE = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/convertResource");
 	public static final @NonNull TracingOption TYPE_EXTENSIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "uml2as/typeExtensions");
 

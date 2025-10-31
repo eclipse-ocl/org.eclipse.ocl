@@ -20,9 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -62,11 +60,6 @@ public interface MetamodelManager
 	@Nullable External2AS getES2AS(@NonNull Resource esResource);
 
 	@Nullable <T extends EObject> T getEcoreOfPivot(@NonNull Class<T> ecoreClass, @NonNull Element element);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull ElementExtension getElementExtension(@NonNull Element asStereotypedElement, @NonNull Stereotype asStereotype);
 
 	/**
 	 * @since 7.0

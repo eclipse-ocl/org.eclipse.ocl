@@ -11,11 +11,11 @@
 package org.eclipse.ocl.pivot.uml.internal.es2as;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 //import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
@@ -24,15 +24,47 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
  * UML2ASUtil provides a variety of helpful routines for dealing with UML models in conjunction with the Pivot-based OCL.
  */
 public class UML2ASUtil
 {
+	/**
+	 * @since 7.0
+	 */
+	public static class UMLElementComparator implements Comparator<org.eclipse.uml2.uml.Element>
+	{
+		public static final @NonNull UMLElementComparator INSTANCE = new UMLElementComparator();
+
+		@Override
+		public int compare(org.eclipse.uml2.uml.Element o1, org.eclipse.uml2.uml.Element o2) {
+			if (o1 instanceof org.eclipse.uml2.uml.NamedElement) {
+				if (o1 instanceof org.eclipse.uml2.uml.NamedElement) {
+					String n1 = ((org.eclipse.uml2.uml.NamedElement)o1).getName();
+					String n2 = ((org.eclipse.uml2.uml.NamedElement)o2).getName();
+					return ClassUtil.safeCompareTo(n1, n2);
+				}
+				else {
+					return 1;
+				}
+			}
+			else {
+				if (o1 instanceof org.eclipse.uml2.uml.NamedElement) {
+					return -1;
+				}
+				else {
+					return o1.hashCode() - o2.hashCode();
+				}
+			}
+		}
+	}
+
 	//	private static final Logger logger = Logger.getLogger(UML2ASUtil.class);
 
 	public static @NonNull Map<@NonNull EObject, @NonNull List<org.eclipse.uml2.uml.@NonNull Element>> computeAppliedStereotypes(@NonNull Iterable<@NonNull EObject> umlStereotypeApplications) {
@@ -48,14 +80,14 @@ public class UML2ASUtil
 			umlStereotypeApplication2umlStereotypedElements.put(umlStereotypeApplication, umlStereotypedElements);
 		}
 		if (UML2AS.ADD_STEREOTYPE_APPLICATION.isActive()) {
-			Map<@NonNull EClass, @NonNull Set<org.eclipse.uml2.uml.@NonNull Element>> umlStereotypeEClass2umlStereotypedElements = new HashMap<>();
+			Map<@NonNull EClass, @NonNull UniqueList<org.eclipse.uml2.uml.@NonNull Element>> umlStereotypeEClass2umlStereotypedElements = new HashMap<>();
 			for (@NonNull EObject umlStereotypeApplication : umlStereotypeApplications) {
 				List<org.eclipse.uml2.uml.@NonNull Element> umlStereotypedElements = umlStereotypeApplication2umlStereotypedElements.get(umlStereotypeApplication);
 				EClass eClass = umlStereotypeApplication.eClass();
 				assert eClass != null;
-				Set<org.eclipse.uml2.uml.@NonNull Element> perEClassUMLStereotypedElements = umlStereotypeEClass2umlStereotypedElements.get(eClass);
+				UniqueList<org.eclipse.uml2.uml.@NonNull Element> perEClassUMLStereotypedElements = umlStereotypeEClass2umlStereotypedElements.get(eClass);
 				if (perEClassUMLStereotypedElements == null) {
-					perEClassUMLStereotypedElements = new HashSet<>();
+					perEClassUMLStereotypedElements = new UniqueList<>();
 					umlStereotypeEClass2umlStereotypedElements.put(eClass, perEClassUMLStereotypedElements);
 				}
 				if (umlStereotypedElements != null) {
@@ -63,10 +95,13 @@ public class UML2ASUtil
 				}
 			}
 			StringBuffer s = new StringBuffer();
-			for (@NonNull EClass umlStereotypeEClass : umlStereotypeEClass2umlStereotypedElements.keySet()) {
-				s.append("\n\t" + NameUtil.qualifiedNameFor(umlStereotypeEClass));
+			List<@NonNull EClass> umlStereotypeEClasses = new ArrayList<>(umlStereotypeEClass2umlStereotypedElements.keySet());
+			Collections.sort(umlStereotypeEClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+			for (@NonNull EClass umlStereotypeEClass : umlStereotypeEClasses) {
+				s.append("\n\t<" + NameUtil.qualifiedNameFor(umlStereotypeEClass) + ">");
 				@Nullable
-				Set<org.eclipse.uml2.uml.@NonNull Element> umlStereotypedElements = umlStereotypeEClass2umlStereotypedElements.get(umlStereotypeEClass);
+				List<org.eclipse.uml2.uml.@NonNull Element> umlStereotypedElements = umlStereotypeEClass2umlStereotypedElements.get(umlStereotypeEClass);
+				Collections.sort(umlStereotypedElements, UMLElementComparator.INSTANCE);
 				assert umlStereotypedElements != null;
 				for (org.eclipse.uml2.uml.@NonNull Element umlStereotypedElement : umlStereotypedElements) {
 					s.append("\n\t\t" + NameUtil.qualifiedNameFor(umlStereotypedElement));

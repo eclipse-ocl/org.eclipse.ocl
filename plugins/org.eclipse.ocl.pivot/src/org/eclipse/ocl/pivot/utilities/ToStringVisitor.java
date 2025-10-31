@@ -1294,9 +1294,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public String visitStereotypeExtender(@NonNull StereotypeExtender object) {
-		appendQualifiedName(object.getClass_());
-		append(" extended-by ");
+		append("<");
 		appendQualifiedName(object.getOwningStereotype());
+		append("> ");
+		appendQualifiedName(object.getClass_());
 		return null;
 	}
 

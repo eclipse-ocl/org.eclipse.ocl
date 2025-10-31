@@ -17,9 +17,9 @@ import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 public final class EAnnotationLabelGenerator extends AbstractLabelGenerator<EAnnotation>
 {
 	public static void initialize(@NonNull Registry registry) {
-		registry.install(EAnnotation.class, new EAnnotationLabelGenerator());		
+		registry.install(EAnnotation.class, new EAnnotationLabelGenerator());
 	}
-	
+
 	public EAnnotationLabelGenerator() {
 		super(EAnnotation.class);
 	}
@@ -27,8 +27,12 @@ public final class EAnnotationLabelGenerator extends AbstractLabelGenerator<EAnn
 	@Override
 	public void buildLabelFor(@NonNull Builder labelBuilder, @NonNull EAnnotation object) {
 		String name = object.getSource();
-		if (name != null)
+		labelBuilder.appendString("@");
+		if (name != null) {
+			labelBuilder.appendString("\"");
 			labelBuilder.appendString(name);
+			labelBuilder.appendString("\"");
+		}
 		else {
 			labelBuilder.appendString("<null-sourced-");
 			labelBuilder.appendString(object.getClass().getSimpleName());

@@ -24,6 +24,8 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator.Registry;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.uml.internal.labels.ClassifierLabelGenerator;
+import org.eclipse.ocl.pivot.uml.internal.labels.ClassifierTemplateParameterLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.labels.CommentLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.labels.LiteralBooleanLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.labels.LiteralIntegerLabelGenerator;
@@ -35,6 +37,7 @@ import org.eclipse.ocl.pivot.uml.internal.labels.NamedElementLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.labels.OpaqueExpressionLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.labels.PackageImportLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.labels.SlotLabelGenerator;
+import org.eclipse.ocl.pivot.uml.internal.labels.TemplateSignatureLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.labels.UMLElementExtensionLabelGenerator;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
 import org.eclipse.ocl.pivot.uml.internal.resource.UMLASResourceFactory;
@@ -122,6 +125,8 @@ public class UMLStandaloneSetup //implements ISetup
 	 * Initialize labelRegistry with the UML-specific lable generators.
 	 */
 	public static void initializeLabelGenerators(@NonNull Registry labelRegistry) {
+		ClassifierLabelGenerator.initialize(labelRegistry);
+		ClassifierTemplateParameterLabelGenerator.initialize(labelRegistry);
 		CommentLabelGenerator.initialize(labelRegistry);
 		LiteralBooleanLabelGenerator.initialize(labelRegistry);
 		LiteralIntegerLabelGenerator.initialize(labelRegistry);
@@ -133,6 +138,7 @@ public class UMLStandaloneSetup //implements ISetup
 		OpaqueExpressionLabelGenerator.initialize(labelRegistry);
 		PackageImportLabelGenerator.initialize(labelRegistry);
 		SlotLabelGenerator.initialize(labelRegistry);
+		TemplateSignatureLabelGenerator.initialize(labelRegistry);
 		UMLElementExtensionLabelGenerator.initialize(labelRegistry);
 	}
 

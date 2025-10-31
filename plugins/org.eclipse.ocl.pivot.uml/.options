@@ -1,0 +1,28 @@
+# Debugging options for the org.eclipse.ocl.pivot.uml plug-in
+
+# Turn on tracing of the addition of base and extension properties to mutable partial classes
+org.eclipse.ocl.pivot.uml/uml2as/addBaseExtensionPropertyPair=false
+
+# Turn on tracing of the extension of an element by a stereotype.
+org.eclipse.ocl.pivot.uml/uml2as/addElementExtension=false
+
+# Turn on tracing of the identification of each UML resource import.
+org.eclipse.ocl.pivot.uml/uml2as/addImportedResource=false
+
+# Turn on tracing of the addition of each StereotypeApplication and the summary of all StereotypeApplications.
+org.eclipse.ocl.pivot.uml/uml2as/addStereotypeApplication=false
+
+# Turn on tracing of the addition of a (stereo)type extension.
+org.eclipse.ocl.pivot.uml/uml2as/addTypeExtension=false
+
+# Turn on tracing of the start of UML2AS conversion of a UML resource.
+org.eclipse.ocl.pivot.uml/uml2as/convertResource=false
+
+# Turn on the summary trace of all (stereo)type extensions
+org.eclipse.ocl.pivot.uml/uml2as/typeExtensions=false
+
+# Turn on tracing of the language and body when validating a UML Instance
+org.eclipse.ocl.pivot.uml/validate/instance
+
+# Turn on tracing of the language and body when validating a UML OpaqueElement
+org.eclipse.ocl.pivot.uml/validate/opaqueElement

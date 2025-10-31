@@ -1093,6 +1093,26 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return null;
 	}
 
+	/**
+	 * Return an ElementExtension for asStereotype reusing any that already exist in asElementExtensions.
+	 */
+	@Override
+	public @NonNull ElementExtension getElementExtension(@NonNull Element asStereotypedElement, @NonNull Stereotype asStereotype) {
+		List<ElementExtension> extensions = asStereotypedElement.getOwnedExtensions();
+		for (ElementExtension asElementExtension : extensions) {
+			if (asElementExtension.getStereotype() == asStereotype) {
+				return asElementExtension;
+			}
+		}
+		@NonNull ElementExtension asElementExtension = PivotFactory.eINSTANCE.createElementExtension();
+		asElementExtension.setStereotype(asStereotype);
+		String name = getTechnology().getExtensionName(asStereotypedElement);
+		asElementExtension.setName(name + "$" + asStereotype.getName());
+		//		asElementExtension.getSuperClass().add(getOclAnyType());
+		extensions.add(asElementExtension);
+		return asElementExtension;
+	}
+
 	private @NonNull LibraryFeature getFeatureImplementation(@NonNull Feature feature) throws ClassNotFoundException, SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		LibraryFeature implementation = feature.getImplementation();
 		if (implementation == null) {

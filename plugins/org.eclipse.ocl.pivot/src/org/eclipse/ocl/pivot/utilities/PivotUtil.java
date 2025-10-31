@@ -118,6 +118,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -2569,6 +2570,13 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull TemplateSignature getOwningSignature(@NonNull TemplateParameter asTemplateParameter) {
 		return ClassUtil.requireNonNull(asTemplateParameter.getOwningSignature());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Stereotype getOwningStereotype(@NonNull StereotypeExtender asStereotypeExtender) {
+		return ClassUtil.requireNonNull(asStereotypeExtender.getOwningStereotype());
 	}
 
 	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {

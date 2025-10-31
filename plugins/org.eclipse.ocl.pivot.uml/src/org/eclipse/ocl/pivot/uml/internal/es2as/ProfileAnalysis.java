@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * The ProfileAnalysis captures the overall analysis of the UML M2 Profiles and Stereotypes.
  */
-public class ProfileAnalysis
+public class ProfileAnalysis	// XXX Of dubious utility since it does not use CompleteClass
 {
 	protected final UML2AS.@NonNull Outer converter;
 	protected final @NonNull EnvironmentFactory environmentFactory;
@@ -373,7 +373,7 @@ public class ProfileAnalysis
 		for (@NonNull Stereotype subStereotype : allStereotypes) {
 			Set<@NonNull Stereotype> superStereotypeClosure = new HashSet<>();
 			stereotype2superStereotypeClosure.put(subStereotype, superStereotypeClosure);
-			for (CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(subStereotype)) {
+			for (@NonNull CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(subStereotype)) {
 				org.eclipse.ocl.pivot.Class asSuperStereotype = superCompleteClass.getPrimaryClass();
 				if (asSuperStereotype instanceof Stereotype) {
 					superStereotypeClosure.add((Stereotype)asSuperStereotype);
@@ -391,6 +391,9 @@ public class ProfileAnalysis
 	public @NonNull Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> computeMetatypes2typeExtensions() {
 		Set<@NonNull Stereotype> applicableStereotypes = allStereotypes; //getOwnedStereotypes(appliedProfileClosure);
 		Map<@NonNull Type, @NonNull Set<@NonNull StereotypeExtender>> extensibleMetatype2typeExtensions = getExtensibleMetatype2typeExtensions(applicableStereotypes);
+	//	for (@NonNull Set<@NonNull StereotypeExtender> typeExtensions : extensibleMetatype2typeExtensions.values()) {
+	//		Collections.sort(typeExtensions, NameUtil.TO_STRING_COMPARATOR);
+	//	}
 /*		Map<Type, Set<TypeExtension>> metatype2typeExtensions = new HashMap<>();
 		for (Type metatype : extensibleMetatype2extendingStereotypes.keySet()) {
 //			@SuppressWarnings("null")@NonNull Set<Stereotype> extendingStereotypes = extensibleMetatype2extendingStereotypes.get(metatype);

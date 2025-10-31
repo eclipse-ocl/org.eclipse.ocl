@@ -183,8 +183,9 @@ public class LabelGeneratorRegistry implements ILabelGenerator.Registry
 			if (eContainer != null) {
 				String showQualifier = s.getOption(ILabelGenerator.Builder.SHOW_QUALIFIER);
 				if (showQualifier != null) {
+					int oldSize = s.toString().length();
 					buildLabelFor(s, eContainer);
-					if (s.toString().length() > 0) {
+					if (s.toString().length() > oldSize) {
 						s.appendString(showQualifier);
 					}
 				}

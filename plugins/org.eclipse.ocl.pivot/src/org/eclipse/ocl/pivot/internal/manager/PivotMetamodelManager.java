@@ -33,12 +33,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
@@ -322,26 +319,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		AS2Ecore converter = new AS2Ecore(environmentFactory, asResource, ecoreURI, null);
 		return converter.getCreated(ecoreClass, element);
-	}
-
-	/**
-	 * Return an ElementExtension for asStereotype reusing any that already exist in asElementExtensions.
-	 */
-	@Override
-	public @NonNull ElementExtension getElementExtension(@NonNull Element asStereotypedElement, @NonNull Stereotype asStereotype) {
-		List<ElementExtension> extensions = asStereotypedElement.getOwnedExtensions();
-		for (ElementExtension asElementExtension : extensions) {
-			if (asElementExtension.getStereotype() == asStereotype) {
-				return asElementExtension;
-			}
-		}
-		@NonNull ElementExtension asElementExtension = PivotFactory.eINSTANCE.createElementExtension();
-		asElementExtension.setStereotype(asStereotype);
-		String name = environmentFactory.getTechnology().getExtensionName(asStereotypedElement);
-		asElementExtension.setName(name + "$" + asStereotype.getName());
-		//		asElementExtension.getSuperClass().add(getOclAnyType());
-		extensions.add(asElementExtension);
-		return asElementExtension;
 	}
 
 	@Override

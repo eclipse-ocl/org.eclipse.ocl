@@ -18,13 +18,15 @@ public final class StringLabelGenerator extends AbstractLabelGenerator<String>
 	public static void initialize(@NonNull Registry registry) {
 		registry.install(String.class, new StringLabelGenerator());
 	}
-	
+
 	public StringLabelGenerator() {
 		super(String.class);
 	}
 
 	@Override
 	public void buildLabelFor(@NonNull Builder labelBuilder, @NonNull String object) {
+		labelBuilder.appendString("\"");
 		labelBuilder.appendString(object);
+		labelBuilder.appendString("\"");
 	}
 }

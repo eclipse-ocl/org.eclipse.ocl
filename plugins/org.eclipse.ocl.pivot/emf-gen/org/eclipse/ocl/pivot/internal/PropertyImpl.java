@@ -1793,7 +1793,7 @@ implements Property {
 
 	@Override
 	public void setName(String newName) {
-		if ("extension_Realization".equals(newName)) {
+		if ("extension_Internationalized".equals(newName)) {
 			getClass();		// XXX
 		}
 		super.setName(newName);
