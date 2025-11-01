@@ -180,14 +180,16 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull CompletePackage didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		CompletePackage completePackage = getCompletePackage(partialPackage);
-		List<Package> partialPackages = completePackage.getPartialPackages();
-		partialPackages.remove(partialPackage);
-		if (partialPackages.size() <= 0) {
-			getCompleteModel().didRemoveCompletePackage(completePackage);
-//			name2completePackage.remove(completePackage.getName());
-			remove(completePackage);
+	public @Nullable CompletePackage didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+		CompletePackage completePackage = basicGetCompletePackage(partialPackage);
+		if (completePackage != null) {
+			List<Package> partialPackages = completePackage.getPartialPackages();
+			partialPackages.remove(partialPackage);
+			if (partialPackages.size() <= 0) {
+				getCompleteModel().didRemoveCompletePackage(completePackage);
+	//			name2completePackage.remove(completePackage.getName());
+				remove(completePackage);
+			}
 		}
 		return completePackage;
 	}

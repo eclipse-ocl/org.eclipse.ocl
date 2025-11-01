@@ -269,10 +269,29 @@ public class StereotypesTest extends PivotTestSuite
 	//	UML2AS.CONVERT_RESOURCE.setState(true);
 	//	UML2AS.TYPE_EXTENSIONS.setState(true);
 		MyOCL ocl = createOCL();
-		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.extension_Internationalized");				// M1 - navigate reification of Extension
-		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.oclType().extension_Internationalized");		// M2 - navigate Extension
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InEnglish",					// M1 - there is no derived reification
-			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InEnglish");
+		// M1 EnglishClass'type forced to UML::Class
+		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.oclType().oclAsType(UML::Class).extension_Internationalized");							// M1 - navigate UML::Class Extension
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclType().oclAsType(UML::Class).extension_InEnglish",								// M1 - fail to navigate UML::Class non-Extension
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "UML::Class", "extension_InEnglish");
+		// M1 EnglishClass'type forced to ocl::Class
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclType().oclAsType(ocl::Class).extension_Internationalized",						// M1 - fail to navigate ocl::Class Extension
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Class", "extension_Internationalized");
+		// M1 EnglishClass'type as UML::Class statically known to be an EnglishClass
+		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.oclType().extension_Internationalized");													// M1 - navigate EnglishClass Extension
+		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.oclType().extension_InEnglish");															// M1 - navigate EnglishClass Extension
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclType().extension_InFrench",													// M1 - fail to navigate EnglishClass non-Extension
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InFrench");
+
+		// M2 EnglishClass typing an instance expression
+		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.extension_InEnglish");																	// M2 - navigate application
+		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.extension_Internationalized");															// M2 - navigate application inheritance
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclAsType(Model::LanguageClass).extension_InEnglish",								// M2 - fail to navigate wrong application
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::LanguageClass", "extension_InEnglish");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InFrench",																// M2 - fail to navigate wrong application
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InFrench");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclAsType(Model::LanguageClass).extension_Internationalized",						// M2 - fail to navigate non-application
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::LanguageClass", "extension_Internationalized");
+
 		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.extension_Internationalized.base_Class");
 		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InGerman", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InGerman");
 		//xx		ocl.assertValidQuery(ocl.mm.englishClassInEnglish, "self.base_Class");
@@ -292,7 +311,7 @@ public class StereotypesTest extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, "EnglishClass", "self.name");
 		//    	ocl.assertQueryEquals(ocl.mm.asEnglishClass, "EnglishClass", "self.NamedElement::name");	// FIXME fails because wrong NamedElement::name chosen
 		//    	ocl.assertQueryEquals(ocl.mm.asEnglishClass, "EnglishClass", "self.name");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InEnglish", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InEnglish");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, ocl.mm.asEnglishClassInEnglish, "self.extension_InEnglish");
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish, "self.extension_Internationalized");
 		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mmm.umlFace.getOwnedLiteral("NORMAL"), "self.extension_Internationalized.face");
 		ocl.assertQueryEquals(ocl.mm.umlGermanClass, ocl.mmm.umlFace.getOwnedLiteral("BOLD"), "self.extension_Internationalized.face");

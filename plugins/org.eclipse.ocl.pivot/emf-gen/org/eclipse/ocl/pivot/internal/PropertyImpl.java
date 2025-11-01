@@ -1793,7 +1793,7 @@ implements Property {
 
 	@Override
 	public void setName(String newName) {
-		if ("TestClass2".equals(newName)) {
+		if ("extension_Internationalized".equals(newName)) {
 			getClass();		// XXX
 		}
 		super.setName(newName);
@@ -1801,9 +1801,9 @@ implements Property {
 
 	@Override
 	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
-		if ("TestClass2".equals(name)) {
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+		if ("extension_Internationalized".equals(name)) {
 			getClass();		// XXX
 		}
-		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //PropertyImpl

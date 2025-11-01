@@ -734,12 +734,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	public void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {				// XXX not 'Nested'
 		CompletePackage completePackage = ownedCompletePackages.didRemovePackage(asPackage);			// XXX getCompletePackage
-		String packageURI = asPackage.getURI();
-		if (packageURI != null) {
-			packageURI2completePackage.remove(packageURI);
-			for (@NonNull String packageURI2 : completePackage.getPackageURIs()) {
-				packageURI2completePackage.put(packageURI2, completePackage);		// Restore any duplicate residues
-				completePackageId2completePackage.put(completePackage.getCompletePackageId(), completePackage);
+		if (completePackage != null) {
+			String packageURI = asPackage.getURI();
+			if (packageURI != null) {
+				packageURI2completePackage.remove(packageURI);
+				for (@NonNull String packageURI2 : completePackage.getPackageURIs()) {
+					packageURI2completePackage.put(packageURI2, completePackage);		// Restore any duplicate residues
+					completePackageId2completePackage.put(completePackage.getCompletePackageId(), completePackage);
+				}
 			}
 		}
 	}
