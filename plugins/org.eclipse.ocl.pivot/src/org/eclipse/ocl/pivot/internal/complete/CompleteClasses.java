@@ -123,7 +123,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 					didRemoveClass(partialClass);
 				}
 			}
-		}
+		}// XXX ownedPackges
 	}
 
 	protected void doRefreshPartialClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {

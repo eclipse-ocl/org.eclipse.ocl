@@ -3192,6 +3192,8 @@ public class PivotUtil implements PivotConstants
 			if (!newElements.contains(oldElement)) {
 				if (isContainment && (oldElement instanceof Namespace)) {
 					((Namespace)oldElement).eraseContents();
+//				if (oldElement instanceof NamespaceImpl) {
+//					((NamespaceImpl)oldElement).eraseContents();
 				}
 				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'
 			}

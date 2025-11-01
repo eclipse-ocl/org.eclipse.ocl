@@ -1409,7 +1409,7 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	@Override
 	public void eraseContents() {

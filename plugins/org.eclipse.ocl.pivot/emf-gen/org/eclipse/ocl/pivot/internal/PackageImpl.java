@@ -849,4 +849,12 @@ implements org.eclipse.ocl.pivot.Package {
 	public String toString() {
 		return super.toString();
 	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
+		if ("ocl".equals(name)) {
+			getClass();		// XXX
+		}
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+	}
 } //PackageImpl

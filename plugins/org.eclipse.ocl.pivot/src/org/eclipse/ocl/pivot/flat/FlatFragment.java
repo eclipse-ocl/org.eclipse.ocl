@@ -189,6 +189,9 @@ public /*final*/ class FlatFragment
 	public @NonNull Property @NonNull [] getProperties() {
 		@NonNull Property [] properties2 = this.properties;
 		if (properties2 == null) {
+			if ("ocl::OclInvalid__ocl::OclInvalid".equals(toString()) ) {
+				getClass();			// XXX
+			}
 			properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
 			initProperties(properties2);
 		//	System.out.println("getProperties " + this + " " + NameUtil.debugSimpleName(properties2) + " " + properties2.length);
@@ -202,9 +205,6 @@ public /*final*/ class FlatFragment
 	}
 
 	public void initProperties(@NonNull Property @NonNull [] properties) {
-		if ("ParentsProfile::Parent__ParentsProfile::Parent".equals(toString()) ) {
-			getClass();			// XXX
-		}
 		assert this.properties == null;
 		this.properties = properties;
 		for (@NonNull Property property : properties) {

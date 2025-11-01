@@ -1793,9 +1793,17 @@ implements Property {
 
 	@Override
 	public void setName(String newName) {
-		if ("extension_Internationalized".equals(newName)) {
+		if ("TestClass2".equals(newName)) {
 			getClass();		// XXX
 		}
 		super.setName(newName);
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
+		if ("TestClass2".equals(name)) {
+			getClass();		// XXX
+		}
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //PropertyImpl
