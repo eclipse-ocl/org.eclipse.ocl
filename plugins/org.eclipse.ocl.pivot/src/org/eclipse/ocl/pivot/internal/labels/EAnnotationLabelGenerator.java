@@ -27,11 +27,11 @@ public final class EAnnotationLabelGenerator extends AbstractLabelGenerator<EAnn
 	@Override
 	public void buildLabelFor(@NonNull Builder labelBuilder, @NonNull EAnnotation object) {
 		String name = object.getSource();
-		labelBuilder.appendString("@");
+	//	labelBuilder.appendString("@");	// More readable but breaks testStandaloneExecution_validate_modelExportedFile ordering
 		if (name != null) {
-			labelBuilder.appendString("\"");
+	//		labelBuilder.appendString("\"");
 			labelBuilder.appendString(name);
-			labelBuilder.appendString("\"");
+	//		labelBuilder.appendString("\"");
 		}
 		else {
 			labelBuilder.appendString("<null-sourced-");

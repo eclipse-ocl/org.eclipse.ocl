@@ -261,7 +261,7 @@ public class StereotypesTest extends PivotTestSuite
 	 * Tests M1 parsing using base_XXX and extension_YYY.
 	 */
 	public void test_stereotypeM1Navigation() throws Exception {
-		UML2AS.ADD_BASE_EXTENSION_PROPERTY_PAIR.setState(true);
+	//	UML2AS.ADD_BASE_EXTENSION_PROPERTY_PAIR.setState(true);
 	//	UML2AS.ADD_ELEMENT_EXTENSION.setState(true);
 	//	UML2AS.ADD_IMPORTED_RESOURCE.setState(true);
 	//	UML2AS.ADD_STEREOTYPE_APPLICATION.setState(true);
