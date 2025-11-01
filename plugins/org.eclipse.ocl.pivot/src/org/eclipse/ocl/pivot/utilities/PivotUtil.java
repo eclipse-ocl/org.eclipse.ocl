@@ -15,6 +15,7 @@ package org.eclipse.ocl.pivot.utilities;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -114,6 +116,8 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.NamespaceImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
@@ -2080,6 +2084,155 @@ public class PivotUtil
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Return true if the testNameSuffix system property has been set to indicate tests are
+	 * running under the supervision of the tycho-surefire-plugin..
+	 * @since 7.0
+	 */
+	public static boolean isTychoSurefire() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return (testNameSuffix != null) && testNameSuffix.startsWith("tycho");
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static boolean isValidIdentifier(@Nullable String value) {
+		if (value == null) {
+			return false;
+		}
+		int iMax = value.length();
+		if (iMax <= 0) {
+			return false;
+		}
+		for (int i = 0; i < iMax; i++) {
+			char c = value.charAt(i);
+			if (('A' <= c) && (c <= 'Z')) {
+			}
+			else if (('a' <= c) && (c <= 'z')) {
+			}
+			else if (c == '_') {
+			}
+			else if (('0' <= c) && (c <= '9') && (i > 0)) {
+			}
+			else {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
+		if (oldElements == null) {
+			return;			// Never happens but avoids need for null validation in caller
+		}
+		if (newElements == null) {
+			if (oldElements.size() > 0) {
+				oldElements.clear();
+			}
+			return;
+		}
+		for (int k = newElements.size(); k-- > 0; ) {
+			T newElement = newElements.get(k);
+			if (newElement != null) {
+				EObject newElementContainer = newElement.eContainer();
+				assert !(newElementContainer instanceof EObjectContainmentEList) || (newElementContainer == ((EObjectContainmentEList<?>)oldElements).getNotifier()) : "Child stealing attempted";
+				if (newElement.eIsProxy()) {
+					oldElements.remove(newElement);			// Lose oldContent before adding possible 'duplicates'
+				}
+			}
+		}
+		for (int k = oldElements.size(); k-- > 0; ) {
+			Object oldElement = oldElements.get(k);
+			if (!newElements.contains(oldElement)) {
+				if (oldElement instanceof NamespaceImpl) {
+					((NamespaceImpl)oldElement).eraseContents();
+				}
+				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'
+			}
+		}
+		boolean hasDuplicates = false;
+		int newMax = newElements.size();
+		for (int i = 0; i < newMax; i++) {					// Invariant: lists are equal up to index i
+			T newElement = newElements.get(i);
+			int oldMax = oldElements.size();
+			boolean reused = false;;
+			for (int j = i; j < oldMax; j++) {
+				Object oldElement = oldElements.get(j);
+				if (oldElement == newElement) {
+					if (j != i) {
+						oldElements.remove(j);
+						oldElements.add(i, newElement);
+					}
+					reused = true;
+					break;
+				}
+			}
+			if (!reused) {
+				if (i < oldMax) {
+					oldElements.add(i, newElement);
+				}
+				else {
+					if (!oldElements.add(newElement)) {
+						hasDuplicates = true;
+					}
+				}
+			}
+			assert hasDuplicates || (newElements.get(i) == oldElements.get(i));
+		}
+		for (int k = oldElements.size(); k > newMax; ) {
+			oldElements.remove(--k);
+		}
+		assert hasDuplicates || (newElements.size() == oldElements.size());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
+		String oldName = pivotNamedElement.getName();
+		if ((newName != oldName) && ((newName == null) || !newName.equals(oldName))) {
+			pivotNamedElement.setName(newName);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
+		String oldNsURI = pivotPackage.getURI();
+		if ((newNsURI != oldNsURI) && ((newNsURI == null) || !newNsURI.equals(oldNsURI))) {
+			pivotPackage.setURI(newNsURI);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
+		if (oldElements == null) {
+			return;			// Never happens but avoids need for null validation in caller
+		}
+		if (newElements == null) {
+			oldElements.clear();
+			return;
+		}
+		for (int i = oldElements.size(); i-- > 0;) {	// Remove any oldElements not in newElements
+			Object oldElement = oldElements.get(i);
+			if (!newElements.contains(oldElement)) {
+				oldElements.remove(i);
+			}
+		}
+		for (T newElement : newElements) {				// Add any newElements not in oldElements
+			if ((newElement != null) && !newElement.eIsProxy() && !oldElements.contains(newElement)) {
+				oldElements.add(newElement);
+			}
+		}
 	}
 
 	/**

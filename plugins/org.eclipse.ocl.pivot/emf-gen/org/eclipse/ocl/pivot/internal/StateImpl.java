@@ -1165,4 +1165,15 @@ public class StateImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitState(this);
 	}
+
+	@Override
+	public void eraseContents() {
+		List<Region> ownedRegions2 = ownedRegions;
+		if (ownedRegions2 != null) {
+			for (Region asRegion : ownedRegions2) {
+				asRegion.eraseContents();
+			}
+			ownedRegions2.clear();
+		}
+	}
 } //StateImpl

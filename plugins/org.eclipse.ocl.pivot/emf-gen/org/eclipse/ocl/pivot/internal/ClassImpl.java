@@ -1340,6 +1340,22 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 1.18
 	 */
 	@Override
+	public void eraseContents() {
+		List<Operation> ownedOperations2 = ownedOperations;
+		if (ownedOperations2 != null) {
+			for (Operation asOperation : ownedOperations2) {
+				asOperation.eraseContents();
+			}
+			ownedOperations2.clear();
+		}
+	//	Namespace thisNamespace = this;
+	//	thisNamespace.eraseContents();
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
 	public @NonNull TypeId getNormalizedTypeId() {
 		TypeId normalizedTypeId2 = normalizedTypeId;
 		if (normalizedTypeId2 == null) {

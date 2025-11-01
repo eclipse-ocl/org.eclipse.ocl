@@ -827,4 +827,7 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTransition(this);
 	}
+
+	@Override
+	public void eraseContents() {}
 } //TransitionImpl

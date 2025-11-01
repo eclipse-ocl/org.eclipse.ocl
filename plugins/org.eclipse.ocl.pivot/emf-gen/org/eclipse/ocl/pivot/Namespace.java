@@ -53,4 +53,10 @@ public interface Namespace extends NamedElement {
 	 * @generated
 	 */
 	@NonNull List<Constraint> getOwnedConstraints();
+
+	/**
+	 * Eliminate all transitive contents of this partial namespace. Other partial namespaces are unaffected.
+	 * @since 1.24
+	 */
+	default void eraseContents() {}
 } // Namespace

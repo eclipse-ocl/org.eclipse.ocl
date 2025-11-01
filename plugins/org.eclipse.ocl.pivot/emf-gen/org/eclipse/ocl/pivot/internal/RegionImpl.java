@@ -554,4 +554,15 @@ public class RegionImpl extends NamespaceImpl implements Region
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitRegion(this);
 	}
+
+	@Override
+	public void eraseContents() {
+		List<Transition> ownedTransitions2 = ownedTransitions;
+		if (ownedTransitions2 != null) {
+			for (Transition asTransition : ownedTransitions2) {
+				asTransition.eraseContents();
+			}
+			ownedTransitions2.clear();
+		}
+	}
 } //RegionImpl

@@ -443,6 +443,20 @@ public class ModelImpl extends NamespaceImpl implements Model
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void eraseContents() {
+		List<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
+		if (ownedPackages2 != null) {
+			for (org.eclipse.ocl.pivot.Package asPackage : ownedPackages2) {
+				asPackage.eraseContents();
+			}
+			ownedPackages2.clear();
+		}
+	}
+
 	public synchronized void removeRootListener(ModelListeners.@NonNull IModelListener rootListener) {
 		ModelListeners<ModelListeners.IModelListener> rootListeners2 = rootListeners;
 		if ((rootListeners2 != null) && rootListeners2.removeListener(rootListener)) {
