@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.idioms.Idiom;
 import org.eclipse.ocl.xtext.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.idioms.Locator;
@@ -406,7 +407,7 @@ public class SubIdiomImpl
 			: "each ");
 		s.append(ownedLocator != null
 			? ownedLocator.toString()
-			: "«null»");
+			: StringUtil.NULL_PLACEHOLDER);
 		s.append(" do ");
 		boolean isFirst = true;
 		if (ownedSegments != null) {

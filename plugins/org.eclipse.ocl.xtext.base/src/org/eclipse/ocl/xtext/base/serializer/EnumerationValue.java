@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.xtext.util.Strings;
 
 /**
@@ -169,7 +170,7 @@ public abstract class EnumerationValue implements Nameable
 
 		@Override
 		public @NonNull String getName() {
-			return "«null»";
+			return StringUtil.NULL_PLACEHOLDER;
 		}
 
 		@Override

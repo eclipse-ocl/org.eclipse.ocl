@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass.EcoreFlatProperty;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -208,7 +209,7 @@ public /*final*/ class FlatFragment
 		assert this.properties == null;
 		this.properties = properties;
 		for (@NonNull Property property : properties) {
-			assert property.eResource() != null;				// XXX
+			assert (property instanceof EcoreFlatProperty) || (property.eResource() != null);				// XXX regularize EcoreFlatProperty once FlatClass is-a Class etc
 		}
 	}
 

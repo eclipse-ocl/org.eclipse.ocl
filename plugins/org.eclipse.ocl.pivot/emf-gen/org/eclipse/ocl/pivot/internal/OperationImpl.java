@@ -1566,6 +1566,12 @@ implements Operation {
 		return visitor.visitOperation(this);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void eraseContents() {}
+
 	@Override
 	public @Nullable FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class owningType = getOwningClass();

@@ -860,7 +860,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	@Override
 	public @NonNull String getURI() {
-		return nsURI != null ? nsURI : "«null»";
+		return nsURI != null ? nsURI : StringUtil.NULL_PLACEHOLDER;
 	}
 
 	/**
@@ -892,8 +892,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		for (@NonNull String pURI : packageURIs) {
 			s.append(" ");
 			int count = 0;
-			for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
-				if (pURI.equals(partialPackage.getURI())) {
+			for (int i = 0; i < partialPackages.size(); i++) {
+				org.eclipse.ocl.pivot.Package partialPackage = partialPackages.basicGet(i);
+				if ((partialPackage != null) && !partialPackage.eIsProxy() && pURI.equals(partialPackage.getURI())) {
 					count++;
 				}
 			}
@@ -901,15 +902,26 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			s.append("*");
 			StringUtil.appendName(s, pURI);
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
-			String packageURI = partialPackage.getURI();
-			if (packageURI == null) {
+		for (int i = 0; i < partialPackages.size(); i++) {
+			org.eclipse.ocl.pivot.Package partialPackage = partialPackages.basicGet(i);
+			if (partialPackage == null) {						// null never happens
 				s.append(" ");
-				StringUtil.appendName(s, partialPackage.getName());
+				s.append(StringUtil.NULL_PLACEHOLDER);
 			}
-			else if (!packageURIs.contains(packageURI)) {
+			else if (partialPackage.eIsProxy()) {				// proxy only happens as an unloading bug
 				s.append(" ");
-				StringUtil.appendName(s, packageURI);
+				s.append(partialPackage);
+			}
+			else {
+				String packageURI = partialPackage.getURI();
+				if (packageURI == null) {
+					s.append(" ");
+					StringUtil.appendName(s, partialPackage.getName());
+				}
+				else if (!packageURIs.contains(packageURI)) {
+					s.append(" ");
+					StringUtil.appendName(s, packageURI);
+				}
 			}
 		}
 	}

@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
@@ -39,6 +38,8 @@ import com.google.common.collect.Lists;
  */
 public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable metamodels
 {
+	/*public*/ static class EcoreFlatProperty extends PropertyImpl {}
+
 	protected final @NonNull EClassifier eClassifier;
 
 	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass, int flags) {
@@ -82,7 +83,7 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 			EStructuralFeature eFeature = eStructuralFeatures.get(i);
 			assert eFeature != null;
 		//	EcoreExecutorProperty asProperty = new EcoreExecutorProperty(eFeature, asClass, i);
-			PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+			PropertyImpl asProperty = new EcoreFlatProperty();
 			asProperty.setName(eFeature.getName());
 			asProperty.setESObject(eFeature);
 		//	asProperty.setIndex(propertyIndex);

@@ -63,7 +63,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	 */
 	public @Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		CompletePackage completePackage = null;
-		if (pivotPackage instanceof CompletePackage) {
+		if (pivotPackage instanceof CompletePackage) {						// Not currently possible - Package isn't a superclass
 			completePackage = (CompletePackage)pivotPackage;
 		}
 		else {
@@ -181,7 +181,10 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	 * @since 7.0
 	 */
 	public @Nullable CompletePackage didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		CompletePackage completePackage = basicGetCompletePackage(partialPackage);
+		CompletePackage completePackage = getCompleteModel().basicGetCompletePackage(partialPackage);
+	//	if (completePackage == null) {
+	//		completePackage = getCompletePackage(partialPackage);			// XXX testLoad_Fruit_ocl
+	//	}
 		if (completePackage != null) {
 			List<Package> partialPackages = completePackage.getPartialPackages();
 			partialPackages.remove(partialPackage);

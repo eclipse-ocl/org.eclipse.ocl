@@ -223,6 +223,7 @@ implements org.eclipse.ocl.pivot.Package {
 	 * @generated
 	 */
 	public void setURIGen(String newURI) {
+//		System.out.println("setURIGen " + NameUtil.debugSimpleName(this) + " " + newURI);	// XXX
 		String oldURI = uri;
 		uri = newURI;
 		if (eNotificationRequired())
@@ -647,6 +648,9 @@ implements org.eclipse.ocl.pivot.Package {
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public void eraseContents() {
 		List<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
@@ -848,13 +852,5 @@ implements org.eclipse.ocl.pivot.Package {
 	@Override
 	public String toString() {
 		return super.toString();
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
-		if ("ocl".equals(name)) {
-			getClass();		// XXX
-		}
-		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //PackageImpl

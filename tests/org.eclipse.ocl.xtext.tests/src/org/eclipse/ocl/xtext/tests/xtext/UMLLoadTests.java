@@ -35,6 +35,22 @@ import org.eclipse.uml2.uml.UMLPackage;
  */
 public class UMLLoadTests extends AbstractUMLLoadTests
 {
+	/**
+	 * The Fruit.uml model exhibits a typical ill-formedness - a null URI.
+	 * Check that this has not been 'fixed' during maintenance.
+	 */
+	private boolean checkHasNullFruitURI(OCL ocl) {
+		for (Model asModel : ocl.getEnvironmentFactory().getCompleteModel().getPartialModels()) {
+			for (org.eclipse.ocl.pivot.Package asPackage : asModel.getOwnedPackages()) {
+				if ("fruit".equals(asPackage.getName())) {
+					assertNull(asPackage.getURI());
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 /*	@Override
 	public @NonNull TestOCL createOCL() {
 		UMLStandaloneSetup.init();
@@ -90,6 +106,7 @@ public class UMLLoadTests extends AbstractUMLLoadTests
 		UMLPackage.eINSTANCE.getClass();
 		URI inputURI = getTestModelURI("models/uml/Fruit.ocl");
 		doLoadOCL(ocl, inputURI);
+		assert checkHasNullFruitURI(ocl);
 		ocl.dispose();
 		URI oclOutputURI = getOCLoutputURI(inputURI);
 		checkLoadable(oclOutputURI);

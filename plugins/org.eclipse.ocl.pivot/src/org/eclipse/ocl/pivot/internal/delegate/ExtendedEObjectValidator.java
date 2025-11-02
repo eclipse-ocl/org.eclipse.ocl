@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.validation.ValidationContext;
 
@@ -296,7 +297,7 @@ public class ExtendedEObjectValidator extends EObjectValidator
 			if (eAnnotation != null) {												// OCL-defined invariant
 				String bodyText = eAnnotation.getDetails().get("body");
 				assert bodyText != null;
-				assert !"«null»".equals(String.valueOf(asConstraint.getOwnedSpecification()));		// XXX
+				assert !StringUtil.NULL_PLACEHOLDER.equals(String.valueOf(asConstraint.getOwnedSpecification()));		// XXX
 
 				URI reloadableURI = asConstraint.getReloadableURI(environmentFactory);
 				assert reloadableURI != null;

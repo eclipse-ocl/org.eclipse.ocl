@@ -744,6 +744,16 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 				}
 			}
 		}
+		else {
+			String packageURI = asPackage.getURI();
+			if (packageURI != null) {
+				packageURI2completePackage.remove(packageURI);
+			//	for (@NonNull String packageURI2 : completePackage.getPackageURIs()) {
+			//		packageURI2completePackage.put(packageURI2, completePackage);		// Restore any duplicate residues
+			//		completePackageId2completePackage.put(completePackage.getCompletePackageId(), completePackage);
+			//	}
+			}
+		}
 	}
 
 	public void didRemovePartialModel(@NonNull Model partialModel) {		// UPdates occur fia didRemovePackage etc
@@ -1064,7 +1074,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		String packageURI = pivotPackage.getURI();
-		if (packageURI == null) {
+		if (packageURI == null) {				// XXX Fails for testLoad_Fruit_ocl
 			return null;
 		}
 		URI semantics = PivotUtil.basicGetPackageSemantics(pivotPackage);
@@ -1086,6 +1096,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 7.0
 	 */
 	public @NonNull CompletePackage getCompletePackage3(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+//		System.out.println("getCompletePackage3 " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
+		assert !asPackage.eIsProxy(); // && (asPackage.eResource() != null); -- happens before inverse added
 		boolean packageAdded = false;
 		CompletePackage completePackage = package2completePackage.get(asPackage);
 		if (completePackage == null) {
@@ -1155,9 +1167,25 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			}
 		}
 	//	completePackage.getPartialPackages().add(asPackage);
+/*		for (Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull CompletePackage> entry : package2completePackage.entrySet()) {
+			org.eclipse.ocl.pivot.@NonNull Package key = entry.getKey();
+			@NonNull CompletePackage value = entry.getValue();
+			System.out.println("\t " + NameUtil.debugSimpleName(key) + " " + key);	// XXX
+			System.out.println("\t " + NameUtil.debugSimpleName(value) + " " + value);	// XXX
+			PartialPackages partialPackages = (PartialPackages)value.getPartialPackages();
+			for (int i = 0; i < partialPackages.size(); i++) {
+				org.eclipse.ocl.pivot.@NonNull Package pPackage = partialPackages.basicGet(i);
+				System.out.println("\t\t " + NameUtil.debugSimpleName(pPackage) + " " + pPackage);	// XXX
+			}
+		} */
 		if (!packageAdded) {								// Maybe folding an additional package into a CompletePackage found by name/URI.
+			assert !asPackage.eIsProxy();
 			completePackage.getPartialPackages().add(asPackage);						// UML 2.5 recurses for nested packages mapping to a parent
-			assert package2completePackage.get(asPackage) == completePackage;
+			completePackage.toString();
+			CompletePackage completePackage2 = package2completePackage.get(asPackage);
+//			System.out.println("assert " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
+//			System.out.println("assert " + NameUtil.debugSimpleName(completePackage) + " " + completePackage);	// XXX
+			assert completePackage2 == completePackage;
 		}
 		if (!(completePackage instanceof PrimitiveCompletePackage)) {
 			assert completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.build.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.xtext.base.serializer.GrammarCardinality;
 import org.eclipse.xtext.Alternatives;
@@ -53,6 +54,6 @@ public class NullSerializationNode extends AbstractSerializationElement
 
 	@Override
 	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
-		s.append("«null»");
+		s.append(StringUtil.NULL_PLACEHOLDER);
 	}
 }
