@@ -58,7 +58,7 @@ public class ModelAnalysis
 		@Override
 		public int compare(Element o1, Element o2) {
 			if (o1 instanceof NamedElement) {
-				if (o1 instanceof NamedElement) {
+				if (o2 instanceof NamedElement) {
 					String n1 = ((NamedElement)o1).getName();
 					String n2 = ((NamedElement)o2).getName();
 					return ClassUtil.safeCompareTo(n1, n2);
