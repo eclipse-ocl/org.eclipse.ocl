@@ -246,6 +246,7 @@ public class Orphanage extends PackageImpl
 		@Override
 		public NotificationChain basicAdd(T object, NotificationChain notifications) {
 			assert object != null;
+			assert !(object instanceof org.eclipse.ocl.pivot.Package);		// XXX orphan packages are an obsolete AutoCodeGenerator approach
 			synchronized (weakMap) {
 				if (!weakMap.containsKey(object)) {
 					weakMap.put(object, Integer.valueOf(counter++));

@@ -821,9 +821,6 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setURI(String newURI) {
-		if ("http://www.eclipse.org/qvt/2015/QVTtemplate".equals(newURI)) {
-			getClass();			// XXX
-		}
 		String oldURI = uri;
 		EObject eContainer = eContainer();
 		if ((oldURI != null) && !oldURI.equals(newURI)) {

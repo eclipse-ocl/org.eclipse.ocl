@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -43,10 +44,8 @@ public class JavaType extends ClassImpl
 	}
 
 	@Override
-	@NonNull
-	public TypeId getTypeId() {
-		throw new UnsupportedOperationException();
-//		return TypeId.OCL_VOID;
+	public @NonNull TypeId getTypeId() {
+		return IdManager.getJavaTypeId(javaClass);
 	}
 
 	@Override

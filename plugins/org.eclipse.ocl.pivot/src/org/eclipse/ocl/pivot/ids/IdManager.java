@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl.Collec
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl.LambdaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedMapTypeIdImpl.MapTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl.TupleTypeIdSingletonScope;
+import org.eclipse.ocl.pivot.internal.ids.JavaTypeId.JavaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.NsURIPackageIdImpl.NsURIPackageIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl.ParametersIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.PartIdImpl.PartIdSingletonScope;
@@ -101,6 +102,11 @@ public final class IdManager
 	 * Map from an nsURI to the corresponding NsURITypeId.
 	 */
 	private static final @NonNull NsURIPackageIdSingletonScope nsURIs = new NsURIPackageIdSingletonScope();
+
+	/**
+	 * Map from a Java class to the corresponding JavaTypeId singleton.
+	 */
+	private static @NonNull JavaTypeIdSingletonScope javaTypes = new JavaTypeIdSingletonScope();
 
 	/**
 	 * Map from the Lambda hashCode to the lambda typeIds with the same hash.
@@ -324,6 +330,21 @@ public final class IdManager
 		org.eclipse.ocl.pivot.Package parentPackage = anEnumeration.getOwningPackage();
 		assert parentPackage != null;
 		return parentPackage.getPackageId().getEnumerationId(name);
+	}
+
+	/**
+	 * Return the named Java typeId.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull TypeId getJavaTypeId(@NonNull Class<?> javaClass) {
+		if (javaClass == Boolean.class) {
+			return TypeId.BOOLEAN;
+		}
+		else if (javaClass == String.class) {
+			return TypeId.STRING;
+		}
+		return javaTypes.getSingleton(javaClass);
 	}
 
 	/**

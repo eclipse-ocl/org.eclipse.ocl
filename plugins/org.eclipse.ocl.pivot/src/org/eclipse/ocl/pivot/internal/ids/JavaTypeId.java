@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.codegen.java.types;
+package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -16,10 +16,11 @@ import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
-import org.eclipse.ocl.pivot.internal.ids.UnscopedId;
 
 /**
  * A JavaTypeId enables a Java class to be represented as a typeid singleton.
+ *
+ * @since 7.0
  */
 public class JavaTypeId extends UnscopedId implements PrimitiveTypeId
 {

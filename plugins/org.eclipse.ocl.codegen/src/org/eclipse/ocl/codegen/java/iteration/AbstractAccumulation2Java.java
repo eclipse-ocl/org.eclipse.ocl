@@ -18,10 +18,10 @@ import org.eclipse.ocl.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.codegen.java.JavaConstants;
 import org.eclipse.ocl.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 public abstract class AbstractAccumulation2Java extends AbstractIteration2Java
@@ -65,6 +65,6 @@ public abstract class AbstractAccumulation2Java extends AbstractIteration2Java
 		CGTypeId cgAccumulatorId = cgIterationCallExp.getTypeId();
 		ElementId elementId = cgAccumulatorId.getElementId();
 		Class<?> accumulatorClass = elementId instanceof CollectionTypeId ? getAccumulatorClass(analyzer, (CollectionTypeId) elementId) : Object.class;
-		return analyzer.getTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
+		return analyzer.getTypeId(IdManager.getJavaTypeId(accumulatorClass));
 	}
 }

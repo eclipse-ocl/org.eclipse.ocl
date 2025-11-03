@@ -18,8 +18,8 @@ import org.eclipse.ocl.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.codegen.java.JavaStream;
-import org.eclipse.ocl.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.internal.ids.JavaTypeId;
 
 public class SearchIteration2Java extends AbstractAccumulation2Java
 {

@@ -17,9 +17,9 @@ import org.eclipse.ocl.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.codegen.java.JavaConstants;
 import org.eclipse.ocl.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -76,6 +76,6 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 	@Override
 	public @Nullable CGTypeId getAccumulatorTypeId(@NonNull CodeGenAnalyzer analyzer, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		Class<?> accumulatorClass = getAccumulatorClass(analyzer, TypeId.SET);
-		return analyzer.getTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
+		return analyzer.getTypeId(IdManager.getJavaTypeId(accumulatorClass));
 	}
 }
