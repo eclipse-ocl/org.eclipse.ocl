@@ -45,8 +45,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -287,24 +285,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 
 	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Class<?> javaClass,
 			boolean isReadOnly, boolean isRequired) {
-		Package javaPackage = javaClass.getPackage();
-		String packageName = javaPackage.getName();
-		assert packageName != null;
-		String className = javaClass.getSimpleName();
-		assert className != null;
-		RootPackageId javaPackageId = IdManager.getRootPackageId(packageName);
-		Orphanage orphanage = environmentFactory.getOrphanage();
-		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), packageName);
-		if (asPackage == null) {
-			asPackage = PivotUtil.createPackage(packageName, packageName, packageName, javaPackageId);
-			orphanage.getOwnedPackages().add(asPackage);
-		}
-		org.eclipse.ocl.pivot.Class asType = NameUtil.getNameable(asPackage.getOwnedClasses(), className);
-		if (asType == null) {
-			asType = PivotUtil.createClass(className);
-			asPackage.getOwnedClasses().add(asType);
-		}
-		return createNativeProperty(name, asType, isReadOnly, isRequired);
+		org.eclipse.ocl.pivot.Class asClass = standardLibrary.getJavaType(javaClass);
+		return createNativeProperty(name, asClass, isReadOnly, isRequired);
 	}
 }
-
