@@ -37,7 +37,7 @@ public class ClassifierAllInstancesOperation extends AbstractAllInstancesOperati
 	public static @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId, org.eclipse.ocl.pivot.@NonNull Class type) {
 		ModelManager modelManager = executor.getModelManager();
 		Iterable<?> instances = modelManager.getInstances(type);
-		Set<Object> results = new HashSet<Object>();
+		Set<Object> results = new HashSet<>();
 		if (instances != null) {
 			IdResolver idResolver = executor.getIdResolver();
 			for (Object instance : instances) {

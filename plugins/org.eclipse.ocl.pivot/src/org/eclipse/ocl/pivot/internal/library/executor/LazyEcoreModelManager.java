@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.evaluation.EcoreModelManager;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
@@ -481,10 +482,15 @@ public class LazyEcoreModelManager extends AbstractModelManager implements Ecore
 			for (TreeIterator<EObject> tit = EcoreUtil.getAllContents(extentRoots); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				assert eObject != null;
-				EClass eClass = eObject.eClass();
-				assert eClass != null;
-				EClassAnalysis eClassAnalysis = getEClassAnalysis(eClass);
-				eClassAnalysis.analyzeEObject(eObject);
+				if ((eObject instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanage((org.eclipse.ocl.pivot.Package)eObject)) {
+					tit.prune();			// Additional objects in the local orphanage are not instances.
+				}
+				else {
+					EClass eClass = eObject.eClass();
+					assert eClass != null;
+					EClassAnalysis eClassAnalysis = getEClassAnalysis(eClass);
+					eClassAnalysis.analyzeEObject(eObject);
+				}
 			}
 		}
 	//	if (eClass2eClassAnalysis == null) {
