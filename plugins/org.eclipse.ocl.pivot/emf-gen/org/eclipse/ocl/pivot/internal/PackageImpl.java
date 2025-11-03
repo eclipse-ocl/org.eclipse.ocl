@@ -223,7 +223,6 @@ implements org.eclipse.ocl.pivot.Package {
 	 * @generated
 	 */
 	public void setURIGen(String newURI) {
-//		System.out.println("setURIGen " + NameUtil.debugSimpleName(this) + " " + newURI);	// XXX
 		String oldURI = uri;
 		uri = newURI;
 		if (eNotificationRequired())

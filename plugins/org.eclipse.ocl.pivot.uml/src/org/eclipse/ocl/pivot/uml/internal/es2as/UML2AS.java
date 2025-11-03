@@ -491,7 +491,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		//		private @NonNull Set<org.eclipse.uml2.uml.Property> umlProperties = new HashSet<>();
 		private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> type2properties = new HashMap<>();
 		//		private @NonNull Map<Type, List<Property>> stereotypeProperties = new HashMap<Type, List<>>();
-		private final @NonNull Map<org.eclipse.uml2.uml.@NonNull NamedElement, Boolean> namedElement2isNullFree = new HashMap<>();
+		private final @NonNull Map<org.eclipse.uml2.uml.@NonNull NamedElement, @Nullable Boolean> namedElement2isNullFree = new HashMap<>();
 
 		/**
 		 * @since 7.0
