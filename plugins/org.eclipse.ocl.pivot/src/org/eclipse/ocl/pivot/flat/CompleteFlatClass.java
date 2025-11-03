@@ -82,18 +82,11 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
-		if ("Class".equals(name)) {
-			getClass();			// XXX
-		}
-		if ("StructuredClassifier".equals(name)) {
-			getClass();			// XXX
-		}
 		List<@NonNull Property> asProperties = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
 			asProperties = gatherDirectProperties(unspecializedType, asProperties);
 		}
-	//	asProperties = gatherMetaExtensions(asProperties);			// XXX Is this an obsolete misunderstanding of Sterotype meta-levels ??
 		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
 
@@ -150,38 +143,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 		return extendingStereotypes;
 	}
-
-	/**
-	 * Copy the extension_XXX properties from MetaClass for use from the instance.
-	 *
-	 * FIXME surely these should be cloned to have the correct containment as part of UML2AS.
-	 * @param asProperties
-	 *
-	protected @Nullable List<@NonNull Property> gatherMetaExtensions(@Nullable List<@NonNull Property> asProperties) {
-		CompletePackage rootCompletePackage = completeClass.getOwningCompletePackage().getRootCompletePackage();
-		org.eclipse.ocl.pivot.@NonNull Package pivotPackage = rootCompletePackage.getPrimaryPackage();
-		org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
-		EnvironmentFactory environmentFactory = completeClass.getEnvironmentFactory();
-		PackageId metapackageId = environmentFactory.getTechnology().getMetapackageId(environmentFactory, pivotPackage);
-		org.eclipse.ocl.pivot.Package metapackage = environmentFactory.getIdResolver().basicGetPackage(metapackageId);
-		if (metapackage != null) {
-			CompleteModel completeModel = environmentFactory.getCompleteModel();
-			CompletePackage metaCompletePackage = completeModel.getCompletePackage(metapackage);
-			String metatypeName = pivotClass.eClass().getName();
-			Type metatype = metaCompletePackage.getType(metatypeName);
-			if (metatype != null) {
-				CompleteClass metaCompleteClass = completeModel.getCompleteClass(metatype);
-				for (@NonNull Property property : metaCompleteClass.getProperties(FeatureFilter.SELECT_EXTENSION)) {
-					if (asProperties == null) {
-						asProperties = new ArrayList<>();
-				//		completeModel.getEquivalentClass(PivotUtil.getOwningClass(property), );
-					}
-					asProperties.add(property);	// FIXME Clone the M2 property to have the correct M1 container/type
-				}
-			}
-		}
-		return asProperties;
-	} */
 
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
