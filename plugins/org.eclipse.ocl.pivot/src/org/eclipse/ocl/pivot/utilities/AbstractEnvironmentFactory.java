@@ -117,6 +117,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -874,7 +875,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		//	attachCount = -1;
 		isDisposing = true;
 		try {
+			// standardLibrary.getOclAnyType();				// XXX Eager OCL Standard Library installation
+			Map<URI, Resource> uriResourceMap = ((ResourceSetImpl)asResourceSet).getURIResourceMap();
+			Resource stdlibResource = uriResourceMap.get(OCLstdlib.STDLIB_AS_URI);
+			if (stdlibResource == null) {
+				uriResourceMap.put(OCLstdlib.STDLIB_AS_URI, OCLstdlib.getDefault());
+			}
 			List<@NonNull Resource> asResources = asResourceSet.getResources();
+			List<@NonNull Resource> asResources2 = new ArrayList<>(asResources);			// XXX debugging
 			int savedSize = asResources.size();
 			for (int i = 0; i < asResources.size(); i++) {
 				@NonNull Resource asResource = asResources.get(i);

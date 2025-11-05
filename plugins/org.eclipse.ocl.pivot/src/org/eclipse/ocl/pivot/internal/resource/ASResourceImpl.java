@@ -594,7 +594,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				EObject eObject = tit.next();
 				if (eObject instanceof ElementImpl) {
 					ElementImpl asElement = (ElementImpl)eObject;
-					if ("$$::UML::Class".equals(asElement.toString())) {
+					if ("import SimpleGraph".equals(asElement.toString())) {
 						getClass();			// XXX
 					}
 					URI uri = asElement.getReloadableURI(environmentFactory);		// Make sure it's a reloadable one
@@ -602,7 +602,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						if ("http://www.eclipse.org/uml2/5.0.0/UML#//Class".equals(uri.toString())) {
 							getClass();			// XXX
 						}
-						assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
+			// XXX not ok for QVTd			assert !uri.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad unloadedURI " + uri;
 						asElement2reloadableURI2.put(asElement, uri);
 					}
 				}

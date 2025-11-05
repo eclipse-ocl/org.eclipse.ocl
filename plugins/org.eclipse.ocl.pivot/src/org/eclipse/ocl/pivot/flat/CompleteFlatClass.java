@@ -57,9 +57,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		super(flatModel, PivotUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = (CompleteClassImpl)completeClass;
 		this.completeClass.addClassListener(this);
-		if ("OclElement".equals(completeClass.getName())) {
-			getClass();		// XXX
-		}
 	}
 
 	@Override
