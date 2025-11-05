@@ -1479,7 +1479,21 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
-		getFlatClass().initFragments(fragments, depthCounts);;
+		getFlatClass().initFragments(fragments, depthCounts);
+		if (depthCounts.length >= 2) {
+			List<org.eclipse.ocl.pivot.Class> superClasses2 = getSuperClasses();
+			assert superClasses2.isEmpty();
+			int allFragments = fragments.length;
+			int selfFragments = depthCounts[depthCounts.length-1];
+			int directSuperFragments = depthCounts[depthCounts.length-2];
+			int iMax = allFragments - selfFragments;
+			for (int i = iMax - directSuperFragments; i < iMax; i++) {
+				FlatFragment directSuperFragment = fragments[i];
+				FlatClass directSuperFlatClass = directSuperFragment.getBaseFlatClass();
+				org.eclipse.ocl.pivot.Class directSuperPivotClass = directSuperFlatClass.getPivotClass();
+				superClasses2.add(directSuperPivotClass);
+			}
+		}
 	}
 
 	@Override
@@ -1536,6 +1550,9 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
+		if ("Class".equals(newName)) {
+			getClass();			// XXX
+		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {

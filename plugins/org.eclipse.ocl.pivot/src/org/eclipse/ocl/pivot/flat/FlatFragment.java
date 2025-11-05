@@ -52,6 +52,9 @@ public /*final*/ class FlatFragment
 	public FlatFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		this.derivedFlatClass = derivedFlatClass;
 		this.baseFlatClass = baseFlatClass;
+		if ((derivedFlatClass == baseFlatClass) && "qvtruntimelibrary::Class".equals(baseFlatClass.toString())) {
+			getClass();
+		}
 	}
 
 	public @NonNull Operation @Nullable [] basicGetOperations() {

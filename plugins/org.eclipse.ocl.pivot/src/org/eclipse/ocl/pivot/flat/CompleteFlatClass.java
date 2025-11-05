@@ -24,10 +24,10 @@ import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Region;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -57,7 +57,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		super(flatModel, PivotUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = (CompleteClassImpl)completeClass;
 		this.completeClass.addClassListener(this);
-		if ("Link".equals(completeClass.getName())) {
+		if ("OclElement".equals(completeClass.getName())) {
 			getClass();		// XXX
 		}
 	}
@@ -94,8 +94,8 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
 		assert !isOclAny();
 		List<@NonNull FlatClass> superFlatClasses = null;
-		StandardLibrary standardLibrary = getStandardLibrary();
 		CompleteModel completeModel = completeClass.getCompleteModel();
+		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : PivotUtil.getSuperClasses(partialClass)) {			// XXX getUnspecializedElement
 				if (superFlatClasses == null) {
@@ -276,6 +276,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	public @NonNull String toString() {
 //		return NameUtil.qualifiedNameFor(completeClass);
 //		return completeClass.getPrimaryClass().toString();
-		return completeClass.getOwningCompletePackage().getPackageName() + "::" + name;
+		return completeClass.getOwningCompletePackage().getName() + "::" + name;
 	}
 }

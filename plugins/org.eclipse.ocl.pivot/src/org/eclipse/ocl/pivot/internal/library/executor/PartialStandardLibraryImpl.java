@@ -407,10 +407,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		if (executor != null) {
 			return executor.getIdResolver();
 		}
-	//	EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-	//	if (environmentFactory != null) {
-	//		return environmentFactory.getIdResolver();
-	//	}
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			return environmentFactory.getIdResolver();
+		}
 		assert executor != null;			// XXX
 		return executor.getIdResolver();
 	}

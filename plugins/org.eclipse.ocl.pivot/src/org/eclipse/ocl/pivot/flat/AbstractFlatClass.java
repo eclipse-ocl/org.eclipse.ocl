@@ -497,6 +497,14 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 */
 	protected abstract @Nullable Operation getFragmentOperation(@NonNull FlatFragment flatFragment, @NonNull Operation asOperation);
 
+	/*package*/ @NonNull FlatFragment @NonNull [] getFragments() {
+		if (fragments == null) {
+			initFragments();
+		}
+		assert fragments != null;
+		return fragments;
+	}
+
 	private @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
 		int index = apparentOperation.getIndex();
 		assert index < 0;
@@ -763,8 +771,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	/**
 	 * Initialize the super-fragment hierarchy by reflective analysis.
 	 */
-	private synchronized void initFragments() {			// XXX Bypass fro PartialFlatClass
+	private synchronized void initFragments() {			// XXX Bypass for PartialFlatClass
 		assert mutable != Boolean.FALSE;
+	//	toString();			// XXX
 	//	this.mutable = Boolean.TRUE;
 	//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this);
 		Map<@NonNull FlatClass, @NonNull Iterable<@NonNull FlatClass>> flatClass2superFlatClasses = new HashMap<>();
@@ -786,7 +795,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 					}
 				}
 				if (allSuperFlatClassesHaveFragments) {
-		//			System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " init: " + NameUtil.debugSimpleName(candidateFlatClass) + " : " + candidateFlatClass);
+	//				System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " init: " + NameUtil.debugSimpleName(candidateFlatClass) + " : " + candidateFlatClass);
 					((AbstractFlatClass)candidateFlatClass).initFragments(candidateSuperFlatClasses);
 					flatClass2superFlatClasses.remove(candidateFlatClass);
 				}
@@ -849,9 +858,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		List<@NonNull List<@NonNull FlatClass>> depth2superFlatClasses = new ArrayList<>();
 		for (@NonNull FlatClass directSuperFlatClass : directSuperFlatClasses) {
 			AbstractFlatClass abstractDirectSuperFlatClass = (AbstractFlatClass)directSuperFlatClass;
-			final @NonNull FlatFragment [] superFragments = abstractDirectSuperFlatClass.fragments;
+			final @NonNull FlatFragment[] superFragments = abstractDirectSuperFlatClass.getFragments();
 			final int [] superIndexes = abstractDirectSuperFlatClass.indexes;
-			assert superFragments != null;
 			assert superIndexes != null;
 			final int superDepths = superIndexes.length-1;
 			for (int i = 0; i < superDepths; i++) {

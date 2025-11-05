@@ -627,6 +627,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Operation exampleOperation = getExampleOperation(invocations, sourceExp, csRoundBracketedClause);
 		if (exampleOperation != null) {
+			if ("oclIsKindOf".equals(exampleOperation.getName())) {
+				getClass();			// XXX
+			}
 			InfixExpCS csNavigationOperator = NavigationUtil.getNavigationInfixExp(csNameExp);
 			if (sourceExp == null) {
 				sourceExp = createImplicitSourceVariableExp(csNameExp, exampleOperation.getOwningClass());
