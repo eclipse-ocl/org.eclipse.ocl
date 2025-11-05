@@ -529,7 +529,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	//	EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
 	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
 		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
-		asProperty.setName(eFeature.getName());
+		asProperty.setName(name);
 		asProperty.setType(asType);
 		asProperty.setESObject(eFeature);
 	//	asProperty.setIndex(propertyIndex);
