@@ -632,7 +632,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	public @NonNull Resource createResource(@NonNull Model model) {
-		URI uri = URI.createURI(model.getExternalURI());
+		URI uri = URI.createURI(model.getExternalURI() + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 		Resource resource = BuiltInASResourceFactory.INSTANCE.createResource(uri);
 		resource.getContents().add(model);
 		return resource;
