@@ -244,7 +244,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		StringBuilder s = new StringBuilder();
 		for (@NonNull Property dProperty : partials2) {
 			if (s.length() > 0) {
-				s.append(",");
+				s.append(", ");
 			}
 			s.append(dProperty.toString());
 		}

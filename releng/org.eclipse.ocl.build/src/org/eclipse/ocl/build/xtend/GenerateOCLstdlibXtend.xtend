@@ -169,7 +169,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				/**
 				 *	The URI of the AS representation of this Standard Library.
 				 */
-				public static final @NonNull URI STDLIB_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+				public static final @NonNull URI STDLIB_AS_URI = URI.createURI(STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 			
 				/**
 				 * Return the default «uri» standard Library Resource

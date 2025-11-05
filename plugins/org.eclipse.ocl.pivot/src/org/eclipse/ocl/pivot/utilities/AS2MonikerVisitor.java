@@ -580,7 +580,7 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visitOppositePropertyCallExp(@NonNull OppositePropertyCallExp object) {
 		appendExpPrefix(object);
-		context.append("~");
+		context.append("#");
 		context.appendName(object.getReferredProperty());
 		return true;
 	}

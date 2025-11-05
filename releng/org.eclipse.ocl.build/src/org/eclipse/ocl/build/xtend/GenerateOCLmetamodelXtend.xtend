@@ -145,7 +145,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				/**
 				 *	The URI of the AS representation of this Metamodel.
 				 */
-				public static final @NonNull URI PIVOT_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+				public static final @NonNull URI PIVOT_AS_URI = URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
 				public static org.eclipse.ocl.pivot.@NonNull Package create(@NonNull CompleteStandardLibrary standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);

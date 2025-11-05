@@ -452,7 +452,7 @@ public class ModelAnalysis
 					localBaseProperty.setOpposite(localExtensionProperty);
 					localExtensionProperty.setOpposite(localBaseProperty);
 					if (UML2AS.ADD_BASE_EXTENSION_PROPERTY_PAIR.isActive()) {
-						UML2AS.ADD_BASE_EXTENSION_PROPERTY_PAIR.println(localExtensionClass.toString() + "::" + localBaseProperty + " ~ " + localBaseClass.toString() + "::" + localExtensionProperty);
+						UML2AS.ADD_BASE_EXTENSION_PROPERTY_PAIR.println(localExtensionClass.toString() + "::" + localBaseProperty + " # " + localBaseClass.toString() + "::" + localExtensionProperty);
 					}
 					converter.addProperty(localExtensionClass, localBaseProperty);
 					converter.addProperty(localBaseClass, localExtensionProperty);
