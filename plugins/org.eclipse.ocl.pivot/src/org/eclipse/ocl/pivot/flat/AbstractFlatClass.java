@@ -207,9 +207,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	@Override
 	public @Nullable Property basicGetProperty(@NonNull String propertyName) {
 		if (name2propertyOrProperties == null) {
-			if (fragments == null) {
-				initFragments();
-			}
+			getFragments();
 			initProperties();
 		}
 		assert name2propertyOrProperties != null;
@@ -341,18 +339,13 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 */
 	@Override
 	public @NonNull FragmentIterable getAllProperSuperFragments() {
-		if (fragments == null) {
-			initFragments();
-		}
-		@NonNull FlatFragment @NonNull [] fragments2 = ClassUtil.requireNonNull(fragments);
-		return new FragmentIterable(fragments2, 0, fragments2.length-1);
+		@NonNull FlatFragment @NonNull [] fragments = getFragments();
+		return new FragmentIterable(fragments, 0, fragments.length-1);
 	}
 
 	@Override
 	public @NonNull FragmentIterable getAllSuperFragments() {
-		if (fragments == null) {
-			initFragments();
-		}
+		@NonNull FlatFragment @NonNull [] fragments = getFragments();
 		return new FragmentIterable(ClassUtil.requireNonNull(fragments));
 	}
 
@@ -457,9 +450,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public int getDepth() {
-		if (indexes == null) {
-			initFragments();
-		}
+		getFragments();
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
 		return indexes2.length-2;
@@ -692,19 +683,16 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 //	}
 
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		if (name2propertyOrProperties == null) {
-			if (fragments == null) {
-				initFragments();
-			}
-			initProperties();
+		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		if (name2propertyOrProperties2 == null) {
+			name2propertyOrProperties2 = initProperties();
 		}
 		if (name != null) {
 			return resolveProperties(featureFilter, name);
 		}
 		else {
 			List<@NonNull Property> asProperties = new ArrayList<>();
-			assert name2propertyOrProperties != null;
-			for (Object asPropertyOrProperties : name2propertyOrProperties.values()) {
+			for (Object asPropertyOrProperties : name2propertyOrProperties2.values()) {
 				Property asProperty;
 				if (asPropertyOrProperties instanceof PartialProperties) {
 					asProperty = ((PartialProperties)asPropertyOrProperties).get();
@@ -722,9 +710,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public @NonNull FlatFragment getSelfFragment() {
-		if (indexes == null) {
-			initFragments();
-		}
+		@NonNull FlatFragment @NonNull [] fragments = getFragments();
 	/*	@NonNull FlatFragment @Nullable [] fragments2 = fragments;
 		assert fragments2 != null;
 		FlatFragment fragment = getFragment(fragments2.length-1);
@@ -944,13 +930,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				}
 			}
 		} */
-		if (fragments == null) {
-			initFragments();
-		}
-		@NonNull FlatFragment[] fragments2 = fragments;
-		assert fragments2 != null;
+		@NonNull FlatFragment @NonNull [] fragments = getFragments();
 		OPERATIONS.println(NameUtil.debugSimpleName(flatModel) + " " + this);
-		for (@NonNull FlatFragment fragment : fragments2) {
+		for (@NonNull FlatFragment fragment : fragments) {
 			for (@NonNull Operation operation : fragment.getOperations()) {
 				OPERATIONS.println("\t" + NameUtil.debugSimpleName(operation) + " " + operation);
 				addOperation(operation);
@@ -958,23 +940,20 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
-	private synchronized void initProperties() {
+	private synchronized @NonNull Map<@NonNull String, @Nullable Object> initProperties() {
 		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
 		if (name2propertyOrProperties2 == null) {
 			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
 			initPropertiesInternal();
 			assert name2propertyOrProperties !=	null;					// Detect bad over-reaction to change triggering resetProperties()
 		}
+		return name2propertyOrProperties2;
 	}
 
 	private void initPropertiesInternal() {
-		if (fragments == null) {
-			initFragments();
-		}
-		@NonNull FlatFragment[] fragments2 = fragments;
-		assert fragments2 != null;
+		@NonNull FlatFragment @NonNull [] fragments = getFragments();
 		PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);		// XXX if-guard
-		for (@NonNull FlatFragment fragment : fragments2) {
+		for (@NonNull FlatFragment fragment : fragments) {
 			for (@NonNull Property property : fragment.getProperties()) {
 				PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
 				addProperty(property);
@@ -1091,9 +1070,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);		// Base of the operation hierarchy
 		if (apparentFlatClass != null) {
-			if (indexes == null) {
-				initFragments();
-			}
+			getFragments();
 			assert indexes != null;
 			int depths = indexes.length-1;
 			int apparentDepth = apparentFlatClass.getDepth();
@@ -1202,7 +1179,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			if (asPartialProperties != null) {
 				for (Property asProperty : asPartialProperties) {
 					if ((featureFilter == null) || featureFilter.accept(asProperty)) {
-						asProperties.add(asProperty);
+						resolveUniqueProperty(asProperties, asProperty);
 					}
 				}
 			}
@@ -1210,10 +1187,33 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		else if (asPropertyOrProperties != null) {
 			Property asProperty = (Property)asPropertyOrProperties;
 			if ((featureFilter == null) || featureFilter.accept(asProperty)) {
-				asProperties.add(asProperty);
+				resolveUniqueProperty(asProperties, asProperty);
 			}
 		}
 		return asProperties;
+	}
+
+	protected void resolveUniqueProperty(@NonNull List<@NonNull Property> asProperties, @NonNull Property asProperty) {
+		if (asProperties.size() >= 1) {
+			Property asOpposite = asProperty.getOpposite();
+			if (asOpposite == null) {
+				return;			// Ignore non-opposite (all proper properties have opposites)
+			}
+			String name = asProperty.getName();
+			String oppositeName = asOpposite.getName();
+			for (Property oldProperty : asProperties) {
+				assert name.equals(oldProperty.getName());
+				Property oldOpposite = oldProperty.getOpposite();
+				if (oldOpposite == null) {
+					return;			// Ignore non-opposite (all proper properties have opposites)
+				}
+				String oldOppositeName = oldOpposite.getName();
+				if (oldOppositeName.equals(oppositeName)) {
+					return;			// Ignore duplicate (?? check complete type too ??)
+				}
+			}
+		}
+		asProperties.add(asProperty);
 	}
 
 //	@Override
