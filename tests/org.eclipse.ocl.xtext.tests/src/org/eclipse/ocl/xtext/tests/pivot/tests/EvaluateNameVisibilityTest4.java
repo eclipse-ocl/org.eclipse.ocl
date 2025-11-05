@@ -638,7 +638,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		}
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
-				"package Bug411154 : pfx = 'Bug411154.ecore'\n" +
+				"package Bug411154 : pfx = 'Bug411154'\n" +
 						"{\n" +
 						"	class Domain {\n" +
 						"		property types : T1[*] { ordered composes };\n" +
