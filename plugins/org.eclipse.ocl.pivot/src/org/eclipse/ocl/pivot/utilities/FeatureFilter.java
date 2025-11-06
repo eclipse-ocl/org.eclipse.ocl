@@ -15,7 +15,9 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 
-public interface FeatureFilter
+import com.google.common.base.Predicate;
+
+public interface FeatureFilter extends Predicate<@NonNull Feature>
 {
 	/**
 	 * @since 1.4
@@ -53,9 +55,24 @@ public interface FeatureFilter
 	boolean accept(@NonNull Feature asFeature);
 
 	/**
+	 * @since 7.0
+	 */
+	@Override
+	default boolean apply(@NonNull Feature asFeature) {
+		return accept(asFeature);
+	}
+
+	/**
 	 * @since 1.18
 	 */
 	public static final @NonNull FeatureFilter SELECT_EXTENSION = new ExtensionFeatureFilter();
 	public static final @NonNull FeatureFilter SELECT_NON_STATIC = new NonStaticFeatureFilter();
 	public static final @NonNull FeatureFilter SELECT_STATIC = new StaticFeatureFilter();
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull FeatureFilter getStaticFilter(boolean isStatic) {
+		return isStatic ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC;
+	}
 }

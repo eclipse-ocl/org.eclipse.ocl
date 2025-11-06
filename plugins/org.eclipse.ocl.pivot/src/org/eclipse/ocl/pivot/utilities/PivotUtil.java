@@ -1107,9 +1107,9 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull OCLExpression createShadowExp(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Iterable<ShadowPart> asParts) {
+	public static @NonNull OCLExpression createShadowExp(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Iterable<@NonNull ShadowPart> asParts) {
 		ShadowExp shadowExp = PivotFactory.eINSTANCE.createShadowExp();
-		Iterables.addAll(shadowExp.getOwnedParts(), asParts);
+		Iterables.addAll(getOwnedPartsList(shadowExp), asParts);
 		shadowExp.setType(asClass);
 		shadowExp.setIsRequired(true);
 		return shadowExp;
@@ -2397,6 +2397,13 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull Iterable<@NonNull CollectionLiteralPart> getOwnedParts(@NonNull CollectionLiteralExp asCollectionLiteralExp) {
 		return ClassUtil.nullFree(asCollectionLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Iterable<@NonNull ShadowPart> getOwnedParts(@NonNull ShadowExp shadowExp) {
+		return ClassUtil.nullFree(shadowExp.getOwnedParts());
 	}
 
 	/**

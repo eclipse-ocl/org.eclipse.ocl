@@ -535,12 +535,12 @@ public class EnvironmentView
 			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
-				for (@NonNull Property property : completeClass.getProperties(featureFilter, name2)) {
+				for (@NonNull Property property : completeClass.getPrimaryProperties(featureFilter, name2)) {
 					addNamedElement(property);
 				}
 			}
 			else {
-				for (@NonNull Property property : completeClass.getProperties(featureFilter)) {
+				for (@NonNull Property property : completeClass.getPrimaryProperties(featureFilter)) {
 					addNamedElement(property);
 				}
 			}

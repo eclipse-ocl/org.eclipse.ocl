@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
  * <!-- begin-user-doc -->
@@ -81,6 +82,14 @@ public interface CompleteClass extends NamedElement
 	@NonNull List<org.eclipse.ocl.pivot.Class> getPartialClasses();
 
 	/**
+	 * Return the primary Property for the propertyName property or null if none.
+	 * Conflicting static and non-static properties throw a SemanticException.
+	 *
+	 * @since 7.0
+	 */
+	@Nullable Property basicGetPrimaryProperty(@NonNull String propertyName) throws SemanticException;
+
+	/**
 	 * @since 7.0
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass thatCompleteClass);
@@ -107,11 +116,32 @@ public interface CompleteClass extends NamedElement
 	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name);
 	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass();
+	/**
+	 * Return an iterable over each primary Property for each property that satisfies featureFilter.
+	 * Conflicting static and non-static properties are both returned.
+	 *
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Property> getPrimaryProperties(final @Nullable FeatureFilter featureFilter);
+	/**
+	 * Return a singleton iterable comprising the primary Property for the name property if it satisfies featureFilter.
+	 * Conflicting static and non-static properties are returned as a two element list.
+	 *
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Property> getPrimaryProperties(final @Nullable FeatureFilter featureFilter, @NonNull String name);
+	/**
+	 * Return the primary Property for the name property if it satisfies featureFilter.
+	 * Conflicting static and non-static properties throw a SemanticException.
+	 *
+	 * @since 7.0
+	 */
+	@NonNull Property getPrimaryProperty(final @Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
-	@Nullable Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty);
-	@Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName);
-	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
-	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
+	@Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty);
+//	@Nullable Iterable<@NonNull Property> getProperties(@NonNull String propertyName);
+//	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
+//	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
 	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);

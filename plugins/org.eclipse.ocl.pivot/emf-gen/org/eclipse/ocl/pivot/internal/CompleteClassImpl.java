@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -438,6 +439,12 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
+	public final @Nullable Property basicGetPrimaryProperty(@NonNull String propertyName) throws SemanticException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull CompleteClass thatCompleteClass) {
 		FlatClass thisFlatClass = getFlatClass();
 		FlatClass thatFlatClass = thatCompleteClass.getFlatClass();
@@ -600,6 +607,23 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
+	public final @NonNull Property getPrimaryProperty(final @Nullable FeatureFilter featureFilter, @NonNull String name) {
+	//	return getFlatClass().getPrimaryProperty(featureFilter, name);
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public final @NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public final @NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+		return getFlatClass().getPrimaryProperties(featureFilter, name);
+	}
+
+	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses() {
 		FlatClass flatClass = getFlatClass();
 		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
@@ -624,28 +648,29 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty) {
-		return getFlatClass().getProperties(null, PivotUtil.getName(pivotProperty));		// XXX surely the property we first thought of
+	public final @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
+		return getFlatClass().getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), PivotUtil.getName(asProperty));
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
-		return getFlatClass().getProperties(featureFilter, null);
-	}
+//	@Override
+//	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
+//		return getFlatClass().getProperties(featureFilter, null);
+//	}
+
+//	@Override
+//	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+//		return getFlatClass().getProperties(featureFilter, name);
+//	}
+
+//	@Override
+//	public final @Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName) {
+//		return getFlatClass().getProperties(null, propertyName);
+//	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		return getFlatClass().getProperties(featureFilter, name);
-	}
-
-	@Override
-	public @Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName) {
-		return getFlatClass().getProperties(null, propertyName);
-	}
-
-	@Override
-	public @Nullable Property getProperty(@NonNull String propertyName) {
-		return getFlatClass().basicGetProperty(propertyName);
+	public final @Nullable Property getProperty(@NonNull String propertyName) {
+//		return getFlatClass().basicGetProperty(propertyName);
+		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull CompleteStandardLibrary getStandardLibrary() {

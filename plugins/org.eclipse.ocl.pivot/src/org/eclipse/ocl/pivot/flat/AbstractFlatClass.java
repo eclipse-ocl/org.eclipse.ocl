@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -205,14 +206,18 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public @Nullable Property basicGetProperty(@NonNull String propertyName) {
-		if (name2propertyOrProperties == null) {
-			getFragments();
-			initProperties();
+	public @Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException {
+		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
+		Object propertyOrProperties = name2propertyOrProperties2.get(name);
+		if (propertyOrProperties == null) {
+			return null;
 		}
-		assert name2propertyOrProperties != null;
-		Object propertyOrProperties = name2propertyOrProperties.get(propertyName);
-		return propertyOrProperties instanceof Property ? (Property)propertyOrProperties : null;
+		if (propertyOrProperties instanceof Property) {
+			return (Property)propertyOrProperties;
+		}
+		@SuppressWarnings("unchecked")
+		Iterable<@NonNull Property> asProperties = (Iterable<@NonNull Property>)propertyOrProperties;
+		return selectPrimaryProperty(asProperties);
 	}
 
 	/**
@@ -582,6 +587,23 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name;
 	}
 
+	protected @NonNull Map<@NonNull String, @Nullable Object> getName2PropertyOrProperties() {
+		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		if (name2propertyOrProperties2 == null) {
+			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
+			@NonNull FlatFragment @NonNull [] fragments = getFragments();
+			PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);		// XXX if-guard
+			for (@NonNull FlatFragment fragment : fragments) {
+				for (@NonNull Property property : fragment.getProperties()) {
+					PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
+					addProperty(property);
+				}
+			}
+			assert name2propertyOrProperties != null;					// Detect bad over-reaction to change triggering resetProperties()
+		}
+		return name2propertyOrProperties2;
+	}
+
 	public @Nullable Operation getOperation(@NonNull Operation pivotOperation) {
 		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
@@ -592,7 +614,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (partialOperations == null) {
 			return null;
 		}
-		return partialOperations.getOperation(pivotOperation.getParametersId(), pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
+		return partialOperations.getOperation(pivotOperation.getParametersId(), FeatureFilter.getStaticFilter(pivotOperation.isIsStatic()));
 	}
 
 	@Override
@@ -620,7 +642,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			return null;
 		}
 		ParametersId parametersId = pivotOperation.getParametersId();
-		return partialOperations.getOperationOverloads(parametersId, pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
+		return partialOperations.getOperationOverloads(parametersId, FeatureFilter.getStaticFilter(pivotOperation.isIsStatic()));
 	}
 
 	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
@@ -682,11 +704,34 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 //		return getCompleteClass().getPrimaryClass();
 //	}
 
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
-		if (name2propertyOrProperties2 == null) {
-			name2propertyOrProperties2 = initProperties();
+	@Override
+	public @NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
+		Object propertyOrProperties = name2propertyOrProperties2.get(name);
+		if (propertyOrProperties == null) {
+			return Collections.emptyList();
 		}
+		else if (propertyOrProperties instanceof Property) {
+			return Collections.singletonList((Property)propertyOrProperties);
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			Iterable<@NonNull Property> asProperties = (Iterable<@NonNull Property>)propertyOrProperties;
+			return selectPrimaryProperties(featureFilter, asProperties);
+		}
+	}
+
+	@Override
+	public @NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException {
+		Property property = basicGetPrimaryProperty(featureFilter, name);
+		if (property == null) {
+			throw new SemanticException("No such property '" + name + "' in '" + this + "'");
+		}
+		return property;
+	}
+
+	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
 		if (name != null) {
 			return resolveProperties(featureFilter, name);
 		}
@@ -940,30 +985,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
-	private synchronized @NonNull Map<@NonNull String, @Nullable Object> initProperties() {
-		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
-		if (name2propertyOrProperties2 == null) {
-			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
-			initPropertiesInternal();
-			assert name2propertyOrProperties !=	null;					// Detect bad over-reaction to change triggering resetProperties()
-		}
-		return name2propertyOrProperties2;
-	}
-
-	private void initPropertiesInternal() {
-		@NonNull FlatFragment @NonNull [] fragments = getFragments();
-		PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);		// XXX if-guard
-		for (@NonNull FlatFragment fragment : fragments) {
-			for (@NonNull Property property : fragment.getProperties()) {
-				PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
-				addProperty(property);
-				if (property.getName().contains("extension")) {
-					getClass();				// XXX
-				}
-			}
-		}
-	}
-
 	protected abstract void installClassListeners();
 
 	@Override
@@ -1195,8 +1216,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	protected void resolveUniqueProperty(@NonNull List<@NonNull Property> asProperties, @NonNull Property asProperty) {
 		if (asProperties.size() >= 1) {
+			getClass();		// XXX
 			Property asOpposite = asProperty.getOpposite();
-			if (asOpposite == null) {
+		/*	if (asOpposite == null) {
 				return;			// Ignore non-opposite (all proper properties have opposites)
 			}
 			String name = asProperty.getName();
@@ -1209,11 +1231,26 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				}
 				String oldOppositeName = oldOpposite.getName();
 				if (oldOppositeName.equals(oppositeName)) {
-					return;			// Ignore duplicate (?? check complete type too ??)
+			//		return;			// Ignore duplicate (?? check complete type too ??)
 				}
-			}
+			} */
 		}
 		asProperties.add(asProperty);
+	}
+
+	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull Iterable<@NonNull Property> asProperties) {
+		int size = Iterables.size(asProperties);
+		assert size > 0;
+		return asProperties;
+	}
+
+	protected @Nullable Property selectPrimaryProperty(@NonNull Iterable<@NonNull Property> asProperties) throws SemanticException {
+		int size = Iterables.size(asProperties);
+		assert size > 0;
+		if (size == 1) {
+			return Iterables.get(asProperties, 0);
+		}
+		throw new SemanticException("Ambiguous property '" + name + "' in '" + this + "'");
 	}
 
 //	@Override

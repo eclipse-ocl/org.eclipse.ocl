@@ -38,8 +38,12 @@ import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * @since 7.0
@@ -268,6 +272,91 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	} */
 
 	// XXX resetStates
+
+	@Override
+	protected void resolveUniqueProperty(@NonNull List<@NonNull Property> asProperties, @NonNull Property asProperty) {
+		// TODO Auto-generated method stub
+		super.resolveUniqueProperty(asProperties, asProperty);
+	}
+
+	@Override
+	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull Iterable<@NonNull Property> asProperties) {
+		if (featureFilter != null) {
+			Property asProperty = selectPrimaryProperty(asProperties);
+			return asProperty != null ? Collections.singletonList(asProperty) : Collections.emptyList();
+		}
+		else {
+			@SuppressWarnings("null")
+			@NonNull Iterable<@NonNull Property> asStaticProperties = Iterables.filter(asProperties, FeatureFilter.SELECT_STATIC);
+			@SuppressWarnings("null")
+			@NonNull Iterable<@NonNull Property> asNonStaticProperties = Iterables.filter(asProperties, FeatureFilter.SELECT_NON_STATIC);
+			Property asStaticProperty = selectPrimaryProperty(asStaticProperties);
+			Property asNonStaticProperty = selectPrimaryProperty(asNonStaticProperties);
+			if (asStaticProperty != null) {
+				if (asNonStaticProperty != null) {
+					@SuppressWarnings("null")
+					@NonNull List<@NonNull Property> asPrimaryProperties = Lists.newArrayList(asStaticProperty, asNonStaticProperty);
+					return asPrimaryProperties;
+				}
+				else {
+					return Collections.singletonList(asStaticProperty);
+				}
+			}
+			else {
+				if (asNonStaticProperty != null) {
+					return Collections.singletonList(asNonStaticProperty);
+				}
+				else {
+					return Collections.emptyList();
+				}
+			}
+		}
+	}
+
+	@Override
+	protected @Nullable Property selectPrimaryProperty(@NonNull Iterable<@NonNull Property> asProperties) {
+		Property asPrimaryProperty = null;
+		Property asPrimaryOpposite = null;
+		FlatClass asPrimaryFlatClass = null;
+		CompleteModel completeModel = getFlatModel().getCompleteModel();
+		for (@NonNull Property asProperty : asProperties) {
+		//	assert name.equals(asProperty.getName());
+			Property asOpposite = asProperty.getOpposite();
+			org.eclipse.ocl.pivot.Class asType = PivotUtil.getClass(asProperty);
+			completeModel.getCompleteClass(asType);
+			FlatClass flatClass = completeModel.getFlatClass(asType);
+			if (asPrimaryProperty == null) {
+				asPrimaryProperty = asProperty;
+				asPrimaryOpposite = asOpposite;
+				asPrimaryFlatClass = flatClass;
+			}
+			else {
+				assert asPrimaryFlatClass == flatClass;
+				assert (asOpposite != null) == (asPrimaryOpposite == null);
+				assert (asPrimaryOpposite == null) || (asOpposite == null) || (asOpposite.getName().equals(asPrimaryOpposite.getName()));
+				throw new UnsupportedOperationException();			// XXX
+				/*	if (asOpposite == null) {
+						return;			// Ignore non-opposite (all proper properties have opposites)
+					}
+					String name = asProperty.getName();
+					String oppositeName = asOpposite.getName();
+					for (Property oldProperty : asProperties) {
+						assert name.equals(oldProperty.getName());
+						Property oldOpposite = oldProperty.getOpposite();
+						if (oldOpposite == null) {
+							return;			// Ignore non-opposite (all proper properties have opposites)
+						}
+						String oldOppositeName = oldOpposite.getName();
+						if (oldOppositeName.equals(oppositeName)) {
+					//		return;			// Ignore duplicate (?? check complete type too ??)
+						}
+					} */
+			}
+		}
+
+
+		return asPrimaryProperty;
+	}
 
 	@Override
 	public @NonNull String toString() {
