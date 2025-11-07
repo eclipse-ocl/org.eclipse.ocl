@@ -337,7 +337,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			Set<@NonNull Property> allProperties = new HashSet<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSupertypesSortedByName(pClass)) {
-				for (/*@NonNull*/ Property prop : getLocalPropertiesSortedByName(pSuperClass)) {
+				for (/*@NonNull*/ Property prop : getMemberPropertiesSortedByName(pSuperClass)) {
 					assert prop != null;
 					if (isProperty(prop) && !prop.isIsImplicit()) {			// FIXME maybe implicits too
 						allProperties.add(prop);
@@ -906,7 +906,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		boolean isFirstClass = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			boolean isFirstProperty = true;
-			List<@NonNull Property> sortedProperties = getLocalPropertiesSortedByName(pClass);
+			List<@NonNull Property> sortedProperties = getMemberPropertiesSortedByName(pClass);
 			for (int i = 0; i < sortedProperties.size(); i++) {
 				Property prop = ClassUtil.requireNonNull(sortedProperties.get(i));
 				if (isProperty(prop)) {
@@ -1012,7 +1012,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		isFirstClass = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			boolean isFirstProperty = true;
-			List<@NonNull Property> sortedProperties = getLocalPropertiesSortedByName(pClass);
+			List<@NonNull Property> sortedProperties = getMemberPropertiesSortedByName(pClass);
 			for (int i = 0; i < sortedProperties.size(); i++) {
 				Property prop = ClassUtil.requireNonNull(sortedProperties.get(i));
 				if (isProperty(prop)) {
@@ -1267,7 +1267,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			if (asTemplateSignature != null) {
 				declareTypeParameters(name2templateParameter, asTemplateSignature);
 			}
-			for (@NonNull Operation operation : getLocalOperationsSortedBySignature(asClass)) {
+			for (@NonNull Operation operation : getMemberOperationsSortedBySignature(asClass)) {
 				asTemplateSignature = operation.getOwnedSignature();
 				if (asTemplateSignature != null) {
 					declareTypeParameters(name2templateParameter, asTemplateSignature);

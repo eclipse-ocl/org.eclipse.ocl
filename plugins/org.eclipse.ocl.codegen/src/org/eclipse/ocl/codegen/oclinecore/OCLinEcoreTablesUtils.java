@@ -702,6 +702,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull Map<@NonNull ParameterTypes, String> legacyTemplateBindingsNames = new HashMap<>();
 	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
 	protected final @NonNull GenModelHelper genModelHelper;
+	protected final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> class2sortedMemberProperties = new HashMap<>();
 
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
 		GenModel genModel = ClassUtil.requireNonNull(genPackage.getGenModel());
@@ -1032,23 +1033,41 @@ public class OCLinEcoreTablesUtils
 		return s.toString();
 	}
 
-	protected @NonNull Iterable<@NonNull Operation> getLocalOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+	protected @NonNull Iterable<@NonNull Operation> getMemberOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
 		// cls.getOperations()->sortedBy(op2 : Operation | op2.getSignature())
 		List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
 		Collections.sort(sortedOperations, signatureComparator);
 		return sortedOperations;
 	}
 
-	protected @NonNull List<@NonNull Property> getLocalPropertiesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
-		List<@NonNull Property> sortedProperties = new ArrayList<>();
-		for (/*@NonNull*/ Property property : getProperties(pClass)) {
-			assert property != null;
-			if (isProperty(property)) {
-				sortedProperties.add(property);
+	protected @NonNull List<@NonNull Property> getMemberPropertiesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+		List<@NonNull Property> sortedMemberProperties = class2sortedMemberProperties.get(pClass);
+		if (sortedMemberProperties == null) {
+			sortedMemberProperties = new ArrayList<>();
+			for (/*@NonNull*/ Property property : getPropertiesInternal(pClass)) {
+				assert property != null;
+				if (isProperty(property)) {
+					sortedMemberProperties.add(property);
+				}
+			}
+			Collections.sort(sortedMemberProperties, propertyComparator);
+			class2sortedMemberProperties.put(pClass, sortedMemberProperties);
+		}
+		return sortedMemberProperties;
+	}
+	private @NonNull LinkedHashSet<@NonNull Property> getPropertiesInternal(org.eclipse.ocl.pivot.@NonNull Class type) {
+		Set<@NonNull String> names = new HashSet<>();
+		LinkedHashSet<@NonNull Property> properties = new LinkedHashSet<>();
+		for (@NonNull Property property : completeModel.getMemberProperties(type, true)) {
+			names.add(PivotUtil.getName(property));
+			properties.add(completeModel.getPrimaryProperty(property));
+		}
+		for (@NonNull Property property : completeModel.getMemberProperties(type, false)) {
+			if (!names.contains(property.getName())) {
+				properties.add(completeModel.getPrimaryProperty(property));
 			}
 		}
-		Collections.sort(sortedProperties, propertyComparator);
-		return sortedProperties;
+		return properties;
 	}
 
 	protected @NonNull LinkedHashSet<@NonNull Operation> getOperations(org.eclipse.ocl.pivot.@NonNull Class type) {
@@ -1090,21 +1109,6 @@ public class OCLinEcoreTablesUtils
 		}
 		External2AS ecore2as = External2AS.getAdapter(ecoreResource, environmentFactory);
 		return ecore2as.getCreated(org.eclipse.ocl.pivot.Package.class, ePackage);
-	}
-
-	protected @NonNull LinkedHashSet<@NonNull Property> getProperties(org.eclipse.ocl.pivot.@NonNull Class type) {
-		Set<String> names = new HashSet<>();
-		LinkedHashSet<@NonNull Property> properties = new LinkedHashSet<>();
-		for (@NonNull Property property : completeModel.getMemberProperties(type, true)) {
-			names.add(property.getName());
-			properties.add(completeModel.getPrimaryProperty(property));
-		}
-		for (@NonNull Property property : completeModel.getMemberProperties(type, false)) {
-			if (!names.contains(property.getName())) {
-				properties.add(completeModel.getPrimaryProperty(property));
-			}
-		}
-		return properties;
 	}
 
 	protected @NonNull String getQualifiedTablesClassName(@Nullable GenPackage genPackage) {

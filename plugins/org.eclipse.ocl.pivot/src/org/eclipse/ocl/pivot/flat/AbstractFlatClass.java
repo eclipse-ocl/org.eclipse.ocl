@@ -166,32 +166,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
-	protected void addProperty(@NonNull Property property) {
-		String name = PivotUtil.getName(property);
-		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
-		assert name2propertyOrProperties2 != null;
-		Object old = name2propertyOrProperties2.get(name);
-		if (old == null) {
-			name2propertyOrProperties2.put(name, property);
-		}
-		else if (old == property) {
-			;																	// XXX FIXME should not have inherited legacy duplicates
-		}
-		else {
-			PartialProperties partialProperties;
-			if (old instanceof PartialProperties) {
-				partialProperties = (PartialProperties)old;
-			}
-			else {
-				partialProperties = new PartialProperties(getStandardLibrary());
-				assert name2propertyOrProperties2 != null;
-				name2propertyOrProperties2.put(name, partialProperties);
-				partialProperties.didAddProperty((Property)old);
-			}
-			partialProperties.didAddProperty(property);
-		}
-	}
-
 	private void addSubFlatClass(@NonNull FlatClass subFlatClass) {
 		Set<@NonNull FlatClass> subFlatClasses2 = subFlatClasses;
 		if (subFlatClasses2 == null) {
@@ -340,7 +314,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	/**
-	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
+	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-fragments excluding this one.
 	 */
 	@Override
 	public @NonNull FragmentIterable getAllProperSuperFragments() {
@@ -459,6 +433,16 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
 		return indexes2.length-2;
+	}
+
+	/**
+	 * Return the direct super-fragments.
+	 */
+	@Override
+	public @NonNull FragmentIterable getDirectSuperFragments() {
+		@NonNull FlatFragment @NonNull [] fragments = getFragments();
+		int length = indexes.length;
+		return length >= 3 ? new FragmentIterable(fragments, indexes[length-3], indexes[length-2]) : FragmentIterable.EMPTY;
 	}
 
 	@Override
@@ -590,13 +574,46 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected @NonNull Map<@NonNull String, @Nullable Object> getName2PropertyOrProperties() {
 		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
 		if (name2propertyOrProperties2 == null) {
-			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
-			@NonNull FlatFragment @NonNull [] fragments = getFragments();
-			PROPERTIES.println(NameUtil.debugSimpleName(flatModel) + " " + this);		// XXX if-guard
-			for (@NonNull FlatFragment fragment : fragments) {
-				for (@NonNull Property property : fragment.getProperties()) {
-					PROPERTIES.println("\t" + NameUtil.debugSimpleName(property) + " " + property);
-					addProperty(property);
+			synchronized(this) {
+				name2propertyOrProperties2 = name2propertyOrProperties;
+				if (name2propertyOrProperties2 == null) {
+					StringBuilder s = PROPERTIES.isActive() ? new StringBuilder() : null;
+					name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
+					@NonNull FlatFragment @NonNull [] fragments = getFragments();
+					if (s != null) {
+						s.append(NameUtil.debugSimpleName(flatModel) + " " + this);
+					}
+					for (@NonNull FlatFragment fragment : fragments) {
+						for (@NonNull Property property : fragment.getProperties()) {
+							if (s != null) {
+								s.append ("\n\t" + NameUtil.debugSimpleName(property) + " " + property);
+								Property opposite = property.getOpposite();
+								if (opposite != null) {
+									s.append (" # " + opposite);
+								}
+							}
+							String name = PivotUtil.getName(property);
+							Object old = name2propertyOrProperties2.get(name);
+							if (old == null) {
+								name2propertyOrProperties2.put(name, property);
+							}
+							else {
+								assert old != property;
+								PartialProperties partialProperties;
+								if (old instanceof PartialProperties) {
+									partialProperties = (PartialProperties)old;
+								}
+								else {
+									partialProperties = new PartialProperties(getStandardLibrary(), (Property)old);
+									name2propertyOrProperties2.put(name, partialProperties);
+								}
+								partialProperties.addProperty(property, fragment);
+							}
+						}
+					}
+					if (s != null) {
+						PROPERTIES.println(s.toString());
+					}
 				}
 			}
 			assert name2propertyOrProperties != null;					// Detect bad over-reaction to change triggering resetProperties()
@@ -711,13 +728,17 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (propertyOrProperties == null) {
 			return Collections.emptyList();
 		}
-		else if (propertyOrProperties instanceof Property) {
+		else if (propertyOrProperties instanceof Property) {		// No need for featureFilter since the filter already selected one
 			return Collections.singletonList((Property)propertyOrProperties);
 		}
 		else {
-			@SuppressWarnings("unchecked")
-			Iterable<@NonNull Property> asProperties = (Iterable<@NonNull Property>)propertyOrProperties;
-			return selectPrimaryProperties(featureFilter, asProperties);
+			List<@NonNull Property> asProperties = ((PartialProperties)propertyOrProperties).getPartials();
+			if (asProperties.size() == 1) {
+				return Collections.singletonList(asProperties.get(0));
+			}
+			else {
+				return selectPrimaryProperties(featureFilter, asProperties);
+			}
 		}
 	}
 
@@ -1192,7 +1213,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	private @NonNull Iterable<@NonNull Property> resolveProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+	//	assert false;
 		assert name2propertyOrProperties != null;
+
 		Object asPropertyOrProperties = name2propertyOrProperties.get(name);
 		List<@NonNull Property> asProperties = new ArrayList<>();
 		if (asPropertyOrProperties instanceof PartialProperties) {
@@ -1238,7 +1261,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		asProperties.add(asProperty);
 	}
 
-	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull Iterable<@NonNull Property> asProperties) {
+	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull List<@NonNull Property> asProperties) {
 		int size = Iterables.size(asProperties);
 		assert size > 0;
 		return asProperties;

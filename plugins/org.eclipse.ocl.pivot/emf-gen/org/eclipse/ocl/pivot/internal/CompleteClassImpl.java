@@ -647,24 +647,29 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		});
 	}
 
-	@Override
-	public final @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
-		return getFlatClass().getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), PivotUtil.getName(asProperty));
-	}
+//	@Override
+//	public final @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
+//		return getFlatClass().getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), PivotUtil.getName(asProperty));
+//	}
 
 //	@Override
 //	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
 //		return getFlatClass().getProperties(featureFilter, null);
 //	}
 
-//	@Override
-//	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-//		return getFlatClass().getProperties(featureFilter, name);
-//	}
+	@Override
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name) {
+		return getFlatClass().getProperties(featureFilter, name);
+	}
 
 //	@Override
 //	public final @Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName) {
 //		return getFlatClass().getProperties(null, propertyName);
+//	}
+
+//	@Override
+//	public final @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property property) {
+//		return getFlatClass().getProperties(property);
 //	}
 
 	@Override

@@ -170,7 +170,7 @@ public /*final*/ class FlatFragment
 	 * Return the operations within this fragment in operation index order.
 	 */
 	@Deprecated
-	public @NonNull Iterable<@NonNull ? extends Operation> getLocalOperations() {
+	public @NonNull Iterable<@NonNull Operation> getLocalOperations() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -178,7 +178,7 @@ public /*final*/ class FlatFragment
 	 * Return the properties within this fragment in property index order.
 	 */
 	@Deprecated
-	public  @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
+	public  @NonNull Iterable<@NonNull Property> getLocalProperties() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -22,76 +22,57 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 import com.google.common.collect.Iterators;
 
-public class PartialProperties implements Iterable<@NonNull Property>
+public class PartialProperties //implements Iterable<@NonNull Property>
 {
 	//resolution = null, partials = null or empty => empty
 	// resolution = X, partials = null or empty or [X} => X
 	// resolution = null, partials not empty => lazy unresolved 'ambiguity'
 	private boolean isResolved = false;
 	private @Nullable Property resolution = null;
-	private @Nullable List<@NonNull Property> partials = null;
+	private @NonNull List<@NonNull Property> partials = new ArrayList<>();
 	/**
 	 * @since 7.0
 	 */
 	protected final @NonNull StandardLibrary standardLibrary;
 
 	/**
+	 * @param old
 	 * @since 7.0
 	 */
-	public PartialProperties(@NonNull StandardLibrary standardLibrary) {
+	public PartialProperties(@NonNull StandardLibrary standardLibrary, @NonNull Property asProperty) {
 		this.standardLibrary = standardLibrary;
+		partials.add(asProperty);
+		resolution = asProperty;
 	}
 
-	public synchronized void didAddProperty(@NonNull Property pivotProperty) {
-		List<@NonNull Property> partials2 = partials;
-		@Nullable Property resolution2 = resolution;
-		if (partials2 == null) {
-			if (resolution2 == null) {
-				resolution2 = resolution = pivotProperty;
-				isResolved = true;
-			}
-			else {
-				partials = partials2 = new ArrayList<>();
-				partials2.add(resolution2);
-				if (resolution2 != pivotProperty) {
-					partials2.add(pivotProperty);
+	/**
+	 * @since 7.0
+	 */
+	public void addProperty(@NonNull Property asProperty, @NonNull FlatFragment fragment) {
+		assert !partials.contains(asProperty);
+		FlatClass baseFlatClass = fragment.getBaseFlatClass();
+		String name = PivotUtil.getName(asProperty);
+		for (FlatFragment superFlatFragment : baseFlatClass.getDirectSuperFragments()) {
+			for (@NonNull Property asSuperProperty : superFlatFragment.getProperties()) {
+				if (name.equals(asSuperProperty.getName()) && !asSuperProperty.isIsImplicit()) {
+				//	getClass();
+					partials.remove(asSuperProperty);			/// XXX ?? implicits with different opposites
+					System.out.println("Occluded " + asSuperProperty);
 				}
-				resolution2 = resolution = null;
-				isResolved = false;
 			}
+		//	Iterable<@NonNull Property> localProperties = superFlatFragment.getProperties();
 		}
-		else if (partials2.isEmpty()) {
-			if (resolution2 == null) {
-				resolution2 = resolution = pivotProperty;
-				isResolved = true;
-			}
-			else {
-				partials2.add(resolution2);
-				if (resolution2 != pivotProperty) {
-					partials2.add(pivotProperty);
-				}
-				resolution2 = resolution = null;
-				isResolved = false;
-			}
-		}
-		else {
-			if (!partials2.contains(pivotProperty)) {
-				partials2.add(pivotProperty);
-			}
-			resolution2 = resolution = null;
-			isResolved = false;
-		}
-	}
-
-	public boolean didRemoveProperty(@NonNull Property pivotProperty) {
-		remove(pivotProperty);
-		return isEmpty();
+		partials.add(asProperty);
+		resolution = null;
+		isResolved = false;
 	}
 
 	public synchronized @Nullable Property get() {
@@ -125,24 +106,13 @@ public class PartialProperties implements Iterable<@NonNull Property>
 	}
 
 	/**
-	 * @since 1.5
+	 * @since 7.0
 	 */
-	public @Nullable Iterable<@NonNull Property> getPartials() {
-		return partials != null ? partials : null;
+	public @NonNull List<@NonNull Property> getPartials() {
+		return partials;
 	}
 
-	public synchronized boolean isEmpty() {
-		if (resolution != null) {
-			return false;
-		}
-		List<@NonNull Property> partials2 = partials;
-		if (partials2 == null) {
-			return true;
-		}
-		return partials2.size() <= 0;
-	}
-
-	@Override
+//	@Override
 	public @NonNull Iterator<@NonNull Property> iterator() {
 		if (!isResolved) {
 			resolve();
@@ -150,36 +120,20 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		if (resolution != null) {
 			return Iterators.singletonIterator(resolution);
 		}
-		else if (partials != null) {
-			return partials.iterator();
-		}
 		else {
-			return ClassUtil.emptyIterator();
-		}
-	}
-
-	public synchronized void remove(@NonNull Property pivotProperty) {
-		if (pivotProperty == resolution) {
-			resolution = null;
-		}
-		if (partials != null) {
-			partials.remove(pivotProperty);
+			return partials.iterator();
 		}
 	}
 
 	private void resolve() {
 		assert !isResolved;
-		List<@NonNull Property> partials2 = partials;
-		if (partials2 == null) {
-			return;
-		}
-		int size = partials2.size();
+		int size = partials.size();
 		if (size <= 0) {
 			return;
 		}
 		if (size == 1) {
 			isResolved = true;
-			resolution = partials2.get(0);
+			resolution = partials.get(0);
 		}
 		List<@NonNull  Property> values = new ArrayList<>(partials);
 		for (int i = 0; i < values.size()-1;) {
@@ -237,16 +191,12 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		if (resolution != null) {
 			return resolution.toString();
 		}
-		List<@NonNull Property> partials2 = partials;
-		if (partials2 == null) {
-			return "";
-		}
 		StringBuilder s = new StringBuilder();
-		for (@NonNull Property dProperty : partials2) {
+		for (@NonNull Property asProperty : partials) {
 			if (s.length() > 0) {
 				s.append(", ");
 			}
-			s.append(dProperty.toString());
+			s.append(asProperty.toString());
 		}
 		return s.toString();
 	}

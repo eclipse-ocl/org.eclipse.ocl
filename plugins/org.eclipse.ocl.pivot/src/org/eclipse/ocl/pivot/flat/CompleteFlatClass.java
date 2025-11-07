@@ -18,12 +18,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -61,14 +62,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		super(flatModel, PivotUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = (CompleteClassImpl)completeClass;
 		this.completeClass.addClassListener(this);
-	}
-
-	@Override
-	protected void addProperty(@NonNull Property property) {
-		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(property);
-		CompleteModel completeModel = completeClass.getCompleteModel();
-		CompletePackage completePackage = completeModel.getCompletePackage(asPackage);	// XXX redundant
-		super.addProperty(property);
 	}
 
 	@Override
@@ -173,6 +166,14 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 		return bestOperation;					// null if not known locally, caller must try superfragments.
 	}
+
+/*	@Override
+	protected void getName2PropertyOrProperties_addProperty(@NonNull Property property) {
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(property);
+		CompleteModel completeModel = completeClass.getCompleteModel();
+		CompletePackage completePackage = completeModel.getCompletePackage(asPackage);	// XXX redundant
+		super.getName2PropertyOrProperties_addProperty(property);
+	} */
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
@@ -280,12 +281,12 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	@Override
-	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull Iterable<@NonNull Property> asProperties) {
-		if (featureFilter != null) {
+	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull List<@NonNull Property> asProperties) {
+		if (featureFilter != null) {			// Already filtered one way
 			Property asProperty = selectPrimaryProperty(asProperties);
 			return asProperty != null ? Collections.singletonList(asProperty) : Collections.emptyList();
 		}
-		else {
+		else {									// Need to refilter to find two possible selections
 			@SuppressWarnings("null")
 			@NonNull Iterable<@NonNull Property> asStaticProperties = Iterables.filter(asProperties, FeatureFilter.SELECT_STATIC);
 			@SuppressWarnings("null")
@@ -316,6 +317,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	@Override
 	protected @Nullable Property selectPrimaryProperty(@NonNull Iterable<@NonNull Property> asProperties) {
 		Property asPrimaryProperty = null;
+		EObject asPrimaryEObject = null;
 		Property asPrimaryOpposite = null;
 		FlatClass asPrimaryFlatClass = null;
 		CompleteModel completeModel = getFlatModel().getCompleteModel();
@@ -327,14 +329,47 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			FlatClass flatClass = completeModel.getFlatClass(asType);
 			if (asPrimaryProperty == null) {
 				asPrimaryProperty = asProperty;
+				asPrimaryEObject = asProperty.getESObject();
 				asPrimaryOpposite = asOpposite;
 				asPrimaryFlatClass = flatClass;
 			}
 			else {
 				assert asPrimaryFlatClass == flatClass;
-				assert (asOpposite != null) == (asPrimaryOpposite == null);
+				assert (asOpposite != null) == (asPrimaryOpposite != null);
 				assert (asPrimaryOpposite == null) || (asOpposite == null) || (asOpposite.getName().equals(asPrimaryOpposite.getName()));
-				throw new UnsupportedOperationException();			// XXX
+
+				EObject esObject = asProperty.getESObject();
+				if (asPrimaryEObject == null) {
+					asPrimaryProperty = asProperty;
+					asPrimaryEObject = esObject;
+					asPrimaryOpposite = asOpposite;
+					asPrimaryFlatClass = flatClass;
+				}
+				else if ((esObject instanceof EStructuralFeature) && !(asPrimaryEObject instanceof EStructuralFeature)) { // UML has a secondary non-EStructuralFeature
+					asPrimaryProperty = asProperty;
+					asPrimaryEObject = esObject;
+					asPrimaryOpposite = asOpposite;
+					asPrimaryFlatClass = flatClass;
+				}
+				else if (esObject != null) {
+					assert false;
+				}
+			/*	Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
+				if (partials != null) {
+					for (Property partialProperty : partials) {
+						EObject esObject = partialProperty.getESObject();
+						if (esObject instanceof EStructuralFeature) {
+							eFeature2 = (EStructuralFeature) esObject;
+							break;
+						}
+					}
+				}
+		//	} */
+
+
+
+
+			//	throw new UnsupportedOperationException();			// XXX
 				/*	if (asOpposite == null) {
 						return;			// Ignore non-opposite (all proper properties have opposites)
 					}

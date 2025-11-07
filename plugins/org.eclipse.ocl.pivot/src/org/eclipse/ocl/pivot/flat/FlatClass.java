@@ -53,6 +53,9 @@ public interface FlatClass extends Nameable
 			}
 		}
 
+		private static @NonNull FlatFragment @NonNull [] NO_FRAGMENTS = new @NonNull FlatFragment @NonNull [0];
+		public static final @NonNull FragmentIterable EMPTY = new FragmentIterable(NO_FRAGMENTS);
+
 		private final @NonNull FlatFragment @NonNull [] array;
 		private final int firstIndex;
 		private final int lastIndex;
@@ -144,12 +147,12 @@ public interface FlatClass extends Nameable
 //	@Nullable Property basicGetProperty(@NonNull String name);
 
 	/**
-	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
+	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-fragments excluding this one.
 	 */
 	@NonNull FragmentIterable getAllProperSuperFragments();
 
 	/**
-	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters including this one.
+	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-fragments including this one.
 	 */
 	@NonNull FragmentIterable getAllSuperFragments();
 	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
@@ -157,6 +160,10 @@ public interface FlatClass extends Nameable
 
 	@Deprecated // XXX eliminate unsound inheritance
 	@NonNull CompleteClass getCompleteClass();
+	/**
+	 * Return the direct super-fragments.
+	 */
+	public @NonNull FragmentIterable getDirectSuperFragments();
 
 	/**
 	 * Return the inheritance depth of the target type: OclAny is at depth 0.

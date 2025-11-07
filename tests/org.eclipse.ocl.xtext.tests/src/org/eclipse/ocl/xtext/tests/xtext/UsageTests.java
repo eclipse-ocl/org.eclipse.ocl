@@ -69,6 +69,7 @@ import org.eclipse.ocl.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.internal.dynamic.ExplicitClassLoader;
 import org.eclipse.ocl.pivot.internal.dynamic.JavaClasspath;
 import org.eclipse.ocl.pivot.internal.dynamic.JavaFileUtil;
@@ -1282,6 +1283,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570891.uml model can be generated and compiled.
 	 */
 	public void testBug570891_uml() throws Throwable {
+		AbstractFlatClass.PROPERTIES.setState(true);
 		setupUMLusage();
 		if (OCLGenModelUtil.INSTANCE.hasDoubleOverrideBug547424()) {				// Avoid UML BUG 547424
 			System.err.println(getName() + " has been disabled -see UML Bug 547424");

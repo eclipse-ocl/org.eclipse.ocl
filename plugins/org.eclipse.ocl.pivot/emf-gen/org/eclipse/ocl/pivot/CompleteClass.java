@@ -138,10 +138,17 @@ public interface CompleteClass extends NamedElement
 	 */
 	@NonNull Property getPrimaryProperty(final @Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
-	@Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty);
+	default @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
+		return getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), asProperty.getName());
+	}
 //	@Nullable Iterable<@NonNull Property> getProperties(@NonNull String propertyName);
-//	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
-//	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
+//	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter);
+	/**
+	 * Return the all Property for the name property satisfying featureFilter leaving the caller to resolve ambiguities..
+	 *
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);

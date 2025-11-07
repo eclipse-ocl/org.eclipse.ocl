@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -117,7 +116,7 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 
 	@Override
 	public java.util.@NonNull Iterator<I> iterator() {
-		if (iterables instanceof List<?>) {
+	/*	if (iterables instanceof List<?>) {					// XXX List optimization below ignores selectStatic
 			@SuppressWarnings("unchecked")
 			List<O> list = (List<O>)iterables;
 			if (list.size() == 0) {
@@ -136,7 +135,7 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 				java.util.@NonNull Iterator<I> result = ClassUtil.<I>emptyIterator();
 				return result;
 			}
-		}
+		} */
 		return new Iterator(iterables);
 	}
 }
