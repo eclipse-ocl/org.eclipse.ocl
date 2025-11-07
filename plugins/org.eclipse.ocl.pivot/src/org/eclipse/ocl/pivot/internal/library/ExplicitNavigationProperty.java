@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -53,32 +52,27 @@ public class ExplicitNavigationProperty extends AbstractProperty
 			EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(property));
 			// For UML, the OMG and UML2 models complement and the UML2 one has an EStructuralFeature
-		//	 primaryProperty;
-			try {
-				Property primaryProperty = completeClass.getPrimaryProperty(property.getName());
-				EObject esObject = primaryProperty.getESObject();
-				assert esObject instanceof EStructuralFeature;
-				eFeature2 = (EStructuralFeature) esObject;
-			//	if (properties instanceof PartialProperties) {
-			/*		Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
-					if (partials != null) {
-						for (Property partialProperty : partials) {
-							EObject esObject = partialProperty.getESObject();
-							if (esObject instanceof EStructuralFeature) {
-								eFeature2 = (EStructuralFeature) esObject;
-								break;
-							}
+			//	 primaryProperty;
+			Property primaryProperty = completeClass.getPrimaryProperty(property.getName());
+			EObject esObject = primaryProperty.getESObject();
+			assert esObject instanceof EStructuralFeature;
+			eFeature2 = (EStructuralFeature) esObject;
+		//	if (properties instanceof PartialProperties) {
+		/*		Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
+				if (partials != null) {
+					for (Property partialProperty : partials) {
+						EObject esObject = partialProperty.getESObject();
+						if (esObject instanceof EStructuralFeature) {
+							eFeature2 = (EStructuralFeature) esObject;
+							break;
 						}
-					} */
-			//	}
-			//	if (eFeature2 == null) {
-			//		return null;
-			//	}
-				eFeature = (EStructuralFeature)esObject;
-			} catch (SemanticException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+					}
+				} */
+		//	}
+		//	if (eFeature2 == null) {
+		//		return null;
+		//	}
+			eFeature = (EStructuralFeature)esObject;
 		}
 		// A specialized property such as CollectionType.elementType is returned from the specialized type
 		// An unspecialized property such as CollectionType.ownedOperation is returned from the unspecialized type
@@ -99,9 +93,9 @@ public class ExplicitNavigationProperty extends AbstractProperty
 			@SuppressWarnings("unused") ResourceSet resourceSet0 = environmentFactory.getResourceSet();
 			EClass eClass1 = eObject.eClass();
 			Resource eResource1 = eClass1.eResource();
-			Resource eResource2 = eFeature2 != null ? eFeature2.eResource() : null;
+			Resource eResource2 = eFeature2.eResource();
 			@SuppressWarnings("unused") ResourceSet resourceSet1 = eResource1.getResourceSet();
-			@SuppressWarnings("unused") ResourceSet resourceSet2 = eResource2 != null ? eResource2.getResourceSet() : null;
+			@SuppressWarnings("unused") ResourceSet resourceSet2 = eResource2.getResourceSet();
 			throw new InvalidValueException(e, e.getMessage());
 		}
 		return null;

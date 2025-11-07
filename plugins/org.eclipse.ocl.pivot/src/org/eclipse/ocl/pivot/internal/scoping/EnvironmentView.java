@@ -141,12 +141,12 @@ public class EnvironmentView
 	}
 
 	/**
-	 * Disambiguate an implicit/non-implicit Property pair by declaring the implicit property INFERIOR.
+	 * Disambiguate an implicit  Property/non-implicit Element pair by declaring the implicit property INFERIOR.
 	 */
-	private static final class ImplicitDisambiguator extends Disambiguator<@NonNull Object>
+	private static final class ImplicitDisambiguator extends Disambiguator<@NonNull Element>
 	{
 		@Override
-		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Object match1, @NonNull Object match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Element match1, @NonNull Element match2) {
 			boolean match1IsImplicit = (match1 instanceof Property) && ((Property)match1).isIsImplicit();
 			boolean match2IsImplicit = (match2 instanceof Property) && ((Property)match2).isIsImplicit();
 			if (!match1IsImplicit) {
@@ -292,6 +292,24 @@ public class EnvironmentView
 		}
 	}
 
+	/**
+	 * Disambiguate a static/non-static Property pair by declaring the static property INFERIOR.
+	 */
+	private static final class StaticDisambiguator extends Disambiguator<@NonNull Property>
+	{
+		@Override
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Property match1, @NonNull Property match2) {
+			boolean match1IsStatic = match1.isIsStatic();
+			boolean match2IsStatic = match2.isIsStatic();
+			if (!match1IsStatic) {
+				return match2IsStatic ? MATCH2_INFERIOR : MATCHES_INDEPENDENT;				// match2 inferior
+			}
+			else {
+				return match2IsStatic ? MATCHES_INDEPENDENT : MATCH1_INFERIOR;				// match1 inferior
+			}
+		}
+	}
+
 	@SuppressWarnings("serial")
 	private static final class MyList extends ArrayList<Object> {}
 
@@ -301,7 +319,8 @@ public class EnvironmentView
 			new LinkedHashMap<>();
 
 	static {
-		addDisambiguator(Object.class, new ImplicitDisambiguator());
+		addDisambiguator(Element.class, new ImplicitDisambiguator());
+		addDisambiguator(Property.class, new StaticDisambiguator());
 		addDisambiguator(Feature.class, new MetamodelMergeDisambiguator());
 		addDisambiguator(Operation.class, new OperationDisambiguator());
 		addDisambiguator(org.eclipse.ocl.pivot.Package.class, new MergedPackageDisambiguator());

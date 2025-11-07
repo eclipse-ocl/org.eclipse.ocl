@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.SemanticException;
+//import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
  * A FlatClass caches the diverse vertical (supertype) and, for CompleteFlatClass, horizontal (partial) classes
@@ -137,7 +137,7 @@ public interface FlatClass extends Nameable
 
 	@Nullable Operation basicGetOperation(@NonNull OperationId id);
 
-	@Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
+	@Nullable Property basicGetPrimaryProperty(@NonNull String name);
 
 	/**
 	 * Return
@@ -182,9 +182,9 @@ public interface FlatClass extends Nameable
 	@Nullable Operation getOperation(@NonNull OperationId id);
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
-	@NonNull Property getPrimaryProperty(@NonNull String name) throws SemanticException;
+	@NonNull Property getPrimaryProperty(@NonNull String name);
 
-	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
+	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name);
 
 	@NonNull FlatFragment getSelfFragment();
 	@NonNull StandardLibrary getStandardLibrary();

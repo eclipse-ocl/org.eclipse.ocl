@@ -58,9 +58,8 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 		for (FlatFragment superFlatFragment : baseFlatClass.getDirectSuperFragments()) {
 			for (@NonNull Property asSuperProperty : superFlatFragment.getProperties()) {
 				if (name.equals(asSuperProperty.getName()) && !asSuperProperty.isIsImplicit()) {
-				//	getClass();
-					partials.remove(asSuperProperty);			/// XXX ?? implicits with different opposites
-					System.out.println("Occluded " + asSuperProperty);
+					partials.remove(asSuperProperty);
+				//	System.out.println("Occluded " + asSuperProperty);
 				}
 			}
 		//	Iterable<@NonNull Property> localProperties = superFlatFragment.getProperties();
@@ -69,36 +68,6 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 		resolution = null;
 //		isResolved = false;
 	}
-
-/*	public synchronized @Nullable Property zzget() {
-		if (isResolved) {
-			return resolution;
-		}
-		resolve();
-		if (isResolved) {
-			return resolution;
-		}
-		List<@NonNull Property> values = new ArrayList<>(partials);
-		Map<@NonNull Type, @NonNull Property> primaryProperties = new HashMap<>();
-		for (@NonNull Property property : values) {
-			org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
-			if (owningType != null) {
-				//	Type domainType = environmentFactory.getMetamodelManager().getPrimaryType(owningType);
-				Type domainType = standardLibrary.getFlatModel().getPrimaryType(owningType);
-				if (!primaryProperties.containsKey(domainType)) {
-					primaryProperties.put(domainType, property);	// FIXME something more deterministic than first
-				}
-			}
-		}
-		if (primaryProperties.size() == 1) {
-			resolution = primaryProperties.values().iterator().next();
-			isResolved = true;
-			return resolution;
-		}
-		isResolved = true;
-		resolution = null;
-		return resolution;
-	} */
 
 	/**
 	 * @since 7.0
@@ -113,12 +82,6 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 	public @NonNull Property getPrimaryProperty(@NonNull CompleteModel completeModel) {
 		Property resolution2 = resolution;
 		if (resolution2 == null) {
-
-
-
-
-
-
 			resolution = resolution2 = selectPrimaryProperty(completeModel, partials);
 		}
 		return resolution2;

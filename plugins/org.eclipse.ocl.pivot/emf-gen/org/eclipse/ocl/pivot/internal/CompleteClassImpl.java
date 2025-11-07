@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -440,9 +439,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @Nullable Property basicGetPrimaryProperty(@NonNull String propertyName) throws SemanticException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+	public final @Nullable Property basicGetPrimaryProperty(@NonNull String propertyName) {
+		return getFlatClass().basicGetPrimaryProperty(name);
 	}
 
 	@Override
@@ -619,7 +617,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @NonNull Property getPrimaryProperty(@NonNull String name) throws SemanticException {
+	public final @NonNull Property getPrimaryProperty(@NonNull String name) {
 		return getFlatClass().getPrimaryProperty(name);
 	}
 
@@ -703,11 +701,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 //		return getFlatClass().getProperties(property);
 //	}
 
-	@Override
-	public final @Nullable Property getProperty(@NonNull String propertyName) {
-//		return getFlatClass().basicGetProperty(propertyName);
-		throw new UnsupportedOperationException();
-	}
+//	@Override
+//	public final @Nullable Property getProperty(@NonNull String name) {
+//		return getFlatClass().getProperty(name);
+//	}
 
 	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return getCompleteModel().getStandardLibrary();

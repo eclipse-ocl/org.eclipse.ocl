@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.SemanticException;
 
 /**
  * <!-- begin-user-doc -->
@@ -87,7 +86,7 @@ public interface CompleteClass extends NamedElement
 	 *
 	 * @since 7.0
 	 */
-	@Nullable Property basicGetPrimaryProperty(@NonNull String propertyName) throws SemanticException;
+	@Nullable Property basicGetPrimaryProperty(@NonNull String propertyName);
 
 	/**
 	 * @since 7.0
@@ -113,8 +112,8 @@ public interface CompleteClass extends NamedElement
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
 	@Nullable Operation getOperation(@NonNull Operation operationId);
 	@Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation);
-	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter);
-	@NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name);
+	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter);
+	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass();
 	/**
 	 * Return an iterable over each primary Property for each property that satisfies featureFilter.
@@ -122,21 +121,20 @@ public interface CompleteClass extends NamedElement
 	 *
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull Property> getPrimaryProperties(final @Nullable FeatureFilter featureFilter);
+	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter);
 	/**
 	 * Return a singleton iterable comprising the primary Property for the name property if it satisfies featureFilter.
 	 * Conflicting static and non-static properties are returned as a two element list.
 	 *
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull Property> getPrimaryProperties(final @Nullable FeatureFilter featureFilter, @NonNull String name);
+	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name);
 	/**
-	 * Return the primary Property for the name property if it satisfies featureFilter.
-	 * Conflicting static and non-static properties throw a SemanticException.
+	 * Return the primary Property for the name property.
 	 *
 	 * @since 7.0
 	 */
-	@NonNull Property getPrimaryProperty(@NonNull String name) throws SemanticException;
+	@NonNull Property getPrimaryProperty(@NonNull String name);
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
 	/**
 	 * Return all partial Property's with the same name and isStatic as asProperty leaving the caller to resolve ambiguities.
@@ -144,8 +142,6 @@ public interface CompleteClass extends NamedElement
 	 * @since 7.0
 	 */
 	@Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty);
-//	@Nullable Iterable<@NonNull Property> getProperties(@NonNull String propertyName);
-//	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter);
 	/**
 	 * Return all partial Property's satisfying featureFilter leaving the caller to resolve ambiguities.
 	 *
@@ -158,7 +154,7 @@ public interface CompleteClass extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull Iterable<@NonNull Property> getProperties(@NonNull String name);
-	@Nullable Property getProperty(@NonNull String propertyName);
+//	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
 	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();

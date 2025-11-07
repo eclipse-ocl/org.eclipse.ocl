@@ -144,30 +144,22 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		ParametersId baseParametersId = asOperation.getParametersId();
 		Operation bestOperation = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
-			for (@NonNull Operation localOperation : PivotUtil.getOwnedOperations(partialClass)) {
-				if (localOperation.getName().equals(baseOperationName) && (localOperation.getParametersId() == baseParametersId)) {
-					if (localOperation.getESObject() != null) {
-						return localOperation;
+			for (@NonNull Operation memberOperation : PivotUtil.getOwnedOperations(partialClass)) {
+				if (memberOperation.getName().equals(baseOperationName) && (memberOperation.getParametersId() == baseParametersId)) {
+					if (memberOperation.getESObject() != null) {
+						return memberOperation;
 					}
 					if (bestOperation == null) {
-						bestOperation = localOperation;
+						bestOperation = memberOperation;
 					}
-					else if ((localOperation.getBodyExpression() != null) && (bestOperation.getBodyExpression() == null)) {
-						bestOperation = localOperation;
+					else if ((memberOperation.getBodyExpression() != null) && (bestOperation.getBodyExpression() == null)) {
+						bestOperation = memberOperation;
 					}
 				}
 			}
 		}
 		return bestOperation;					// null if not known locally, caller must try superfragments.
 	}
-
-/*	@Override
-	protected void getName2PropertyOrProperties_addProperty(@NonNull Property property) {
-		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(property);
-		CompleteModel completeModel = completeClass.getCompleteModel();
-		CompletePackage completePackage = completeModel.getCompletePackage(asPackage);	// XXX redundant
-		super.getName2PropertyOrProperties_addProperty(property);
-	} */
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
@@ -195,30 +187,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			return Collections.singletonList(state);
 		}
 	}
-
-/*	@Override
-	protected void initOperationsInternal() {
-		initFragments();
-		super.initOperationsInternal();
-	/ *	for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
-			for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
-				org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
-				CompleteClass unspecializedCompleteClass = completeClass.getCompleteModel().getCompleteClass(unspecializedType);
-				for (org.eclipse.ocl.pivot.@NonNull Class unspecializedPartialType : ClassUtil.nullFree(unspecializedCompleteClass.getPartialClasses())) {
-					assert unspecializedPartialType != null;
-				//	initMemberOperationsFrom(unspecializedPartialType);
-					//	if (INIT_MEMBER_OPERATIONS.isActive()) {
-					//		INIT_MEMBER_OPERATIONS.println(this + " from " + unspecializedPartialType);
-					//	}
-					for (@SuppressWarnings("null")@NonNull Operation pivotOperation : unspecializedPartialType.getOwnedOperations()) {
-						if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
-							addOperation(pivotOperation);
-						}
-					}
-				}
-			}
-		}
-	} */
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
@@ -267,125 +235,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	} */
 
 	// XXX resetStates
-
-	@Override
-	protected void resolveUniqueProperty(@NonNull List<@NonNull Property> asProperties, @NonNull Property asProperty) {
-		// TODO Auto-generated method stub
-		super.resolveUniqueProperty(asProperties, asProperty);
-	}
-
-/*	@Override
-	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull List<@NonNull Property> asProperties) {
-		if (featureFilter != null) {			// Already filtered one way
-			Property asProperty = selectPrimaryProperty(asProperties);
-			return asProperty != null ? Collections.singletonList(asProperty) : Collections.emptyList();
-		}
-		else {									// Need to refilter to find two possible selections
-			@SuppressWarnings("null")
-			@NonNull Iterable<@NonNull Property> asStaticProperties = Iterables.filter(asProperties, FeatureFilter.SELECT_STATIC);
-			@SuppressWarnings("null")
-			@NonNull Iterable<@NonNull Property> asNonStaticProperties = Iterables.filter(asProperties, FeatureFilter.SELECT_NON_STATIC);
-			Property asStaticProperty = selectPrimaryProperty(asStaticProperties);
-			Property asNonStaticProperty = selectPrimaryProperty(asNonStaticProperties);
-			if (asStaticProperty != null) {
-				if (asNonStaticProperty != null) {
-					@SuppressWarnings("null")
-					@NonNull List<@NonNull Property> asPrimaryProperties = Lists.newArrayList(asStaticProperty, asNonStaticProperty);
-					return asPrimaryProperties;
-				}
-				else {
-					return Collections.singletonList(asStaticProperty);
-				}
-			}
-			else {
-				if (asNonStaticProperty != null) {
-					return Collections.singletonList(asNonStaticProperty);
-				}
-				else {
-					return Collections.emptyList();
-				}
-			}
-		}
-	} */
-
-/*	@Override
-	protected @Nullable Property selectPrimaryProperty(@NonNull Iterable<@NonNull Property> asProperties) {
-		Property asPrimaryProperty = null;
-		EObject asPrimaryEObject = null;
-		Property asPrimaryOpposite = null;
-		FlatClass asPrimaryFlatClass = null;
-		CompleteModel completeModel = getFlatModel().getCompleteModel();
-		for (@NonNull Property asProperty : asProperties) {
-		//	assert name.equals(asProperty.getName());
-			Property asOpposite = asProperty.getOpposite();
-			org.eclipse.ocl.pivot.Class asType = PivotUtil.getClass(asProperty);
-			completeModel.getCompleteClass(asType);
-			FlatClass flatClass = completeModel.getFlatClass(asType);
-			if (asPrimaryProperty == null) {
-				asPrimaryProperty = asProperty;
-				asPrimaryEObject = asProperty.getESObject();
-				asPrimaryOpposite = asOpposite;
-				asPrimaryFlatClass = flatClass;
-			}
-			else {
-				assert asPrimaryFlatClass == flatClass;
-				assert (asOpposite != null) == (asPrimaryOpposite != null);
-				assert (asPrimaryOpposite == null) || (asOpposite == null) || (asOpposite.getName().equals(asPrimaryOpposite.getName()));
-
-				EObject esObject = asProperty.getESObject();
-				if (asPrimaryEObject == null) {
-					asPrimaryProperty = asProperty;
-					asPrimaryEObject = esObject;
-					asPrimaryOpposite = asOpposite;
-					asPrimaryFlatClass = flatClass;
-				}
-				else if ((esObject instanceof EStructuralFeature) && !(asPrimaryEObject instanceof EStructuralFeature)) { // UML has a secondary non-EStructuralFeature
-					asPrimaryProperty = asProperty;
-					asPrimaryEObject = esObject;
-					asPrimaryOpposite = asOpposite;
-					asPrimaryFlatClass = flatClass;
-				}
-				else if (esObject != null) {
-					assert false;
-				}
-			/*	Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
-				if (partials != null) {
-					for (Property partialProperty : partials) {
-						EObject esObject = partialProperty.getESObject();
-						if (esObject instanceof EStructuralFeature) {
-							eFeature2 = (EStructuralFeature) esObject;
-							break;
-						}
-					}
-				}
-		//	} */
-
-
-
-
-			//	throw new UnsupportedOperationException();			// XXX
-				/*	if (asOpposite == null) {
-						return;			// Ignore non-opposite (all proper properties have opposites)
-					}
-					String name = asProperty.getName();
-					String oppositeName = asOpposite.getName();
-					for (Property oldProperty : asProperties) {
-						assert name.equals(oldProperty.getName());
-						Property oldOpposite = oldProperty.getOpposite();
-						if (oldOpposite == null) {
-							return;			// Ignore non-opposite (all proper properties have opposites)
-						}
-						String oldOppositeName = oldOpposite.getName();
-						if (oldOppositeName.equals(oppositeName)) {
-					//		return;			// Ignore duplicate (?? check complete type too ??)
-						}
-					} * /
-			}
-		}
-
-
-		return asPrimaryProperty;
-	} */
 
 	@Override
 	public @NonNull String toString() {
