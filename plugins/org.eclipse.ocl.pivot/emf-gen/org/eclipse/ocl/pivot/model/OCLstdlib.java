@@ -92,7 +92,7 @@ public class OCLstdlib extends ASResourceImpl
 	/**
 	 *	The URI of the AS representation of this Standard Library.
 	 */
-	public static final @NonNull URI STDLIB_AS_URI = URI.createURI("http://www.eclipse.org/ocl/2015/Library" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+	public static final @NonNull URI STDLIB_AS_URI = URI.createURI(STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
 	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/Library standard Library Resource
