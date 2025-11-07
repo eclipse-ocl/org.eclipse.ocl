@@ -109,7 +109,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 * the FlatClass hierarchy. The PartialProperties holds the ambiguity until a lazy resolution replaces it
 	 * by a Property or null
 	 */				// XXX Use binary search of array rather than map
-	private @Nullable Map<@NonNull String, @Nullable Object> name2propertyOrProperties = null;	// Property or PartialProperties
+	private @Nullable Map<@NonNull String, @NonNull Object> name2propertyOrProperties = null;	// Property or PartialProperties
 
 
 	/**
@@ -181,17 +181,18 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public @Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException {
-		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
 		Object propertyOrProperties = name2propertyOrProperties2.get(name);
 		if (propertyOrProperties == null) {
 			return null;
 		}
-		if (propertyOrProperties instanceof Property) {
+		else if (propertyOrProperties instanceof Property) {
 			return (Property)propertyOrProperties;
 		}
-		@SuppressWarnings("unchecked")
-		Iterable<@NonNull Property> asProperties = (Iterable<@NonNull Property>)propertyOrProperties;
-		return selectPrimaryProperty(asProperties);
+		else {
+			PartialProperties partialProperties = (PartialProperties)propertyOrProperties;
+			return partialProperties.getPrimaryProperty(getFlatModel().getCompleteModel());
+		}
 	}
 
 	/**
@@ -571,8 +572,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name;
 	}
 
-	protected @NonNull Map<@NonNull String, @Nullable Object> getName2PropertyOrProperties() {
-		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
+	protected @NonNull Map<@NonNull String, @NonNull Object> getName2PropertyOrProperties() {
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = name2propertyOrProperties;
 		if (name2propertyOrProperties2 == null) {
 			synchronized(this) {
 				name2propertyOrProperties2 = name2propertyOrProperties;
@@ -723,7 +724,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
-		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
 		Object propertyOrProperties = name2propertyOrProperties2.get(name);
 		if (propertyOrProperties == null) {
 			return Collections.emptyList();
@@ -751,26 +752,38 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return property;
 	}
 
-	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
-		if (name != null) {
-			return resolveProperties(featureFilter, name);
-		}
-		else {
-			List<@NonNull Property> asProperties = new ArrayList<>();
-			for (Object asPropertyOrProperties : name2propertyOrProperties2.values()) {
-				Property asProperty;
-				if (asPropertyOrProperties instanceof PartialProperties) {
-					asProperty = ((PartialProperties)asPropertyOrProperties).get();
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter) {
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
+		List<@NonNull Property> asProperties = new ArrayList<>();
+		for (Object asPropertyOrProperties : name2propertyOrProperties2.values()) {
+			if (asPropertyOrProperties instanceof PartialProperties) {
+				for (Property asProperty : ((PartialProperties)asPropertyOrProperties).getPartials()) {
+					if ((featureFilter == null) || featureFilter.accept(asProperty)) {
+						asProperties.add(asProperty);
+					}
 				}
-				else {
-					asProperty = (Property)asPropertyOrProperties;
-				}
-				if ((asProperty != null) && ((featureFilter == null) || featureFilter.accept(asProperty))) {
+			}
+			else {
+				Property asProperty = (Property)asPropertyOrProperties;
+				if ((featureFilter == null) || featureFilter.accept(asProperty)) {
 					asProperties.add(asProperty);
 				}
 			}
-			return asProperties;
+		}
+		return asProperties;
+	}
+
+	public @NonNull Iterable<@NonNull Property> getProperties(@NonNull String name) {
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
+		Object asPropertyOrProperties = name2propertyOrProperties2.get(name);
+		if (asPropertyOrProperties instanceof PartialProperties) {
+			return ((PartialProperties)asPropertyOrProperties).getPartials();
+		}
+		else if (asPropertyOrProperties instanceof Property) {
+			return Collections.singletonList((Property)asPropertyOrProperties);
+		}
+		else {
+			throw new IllegalStateException();			// Impossible
 		}
 	}
 
@@ -1212,30 +1225,31 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		name2propertyOrProperties = null;
 	}
 
-	private @NonNull Iterable<@NonNull Property> resolveProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
-	//	assert false;
+/*	private @NonNull Property resolveProperty(@NonNull String name) throws SemanticException {
 		assert name2propertyOrProperties != null;
-
 		Object asPropertyOrProperties = name2propertyOrProperties.get(name);
-		List<@NonNull Property> asProperties = new ArrayList<>();
+	//	List<@NonNull Property> asProperties = new ArrayList<>();
 		if (asPropertyOrProperties instanceof PartialProperties) {
-			Iterable<@NonNull Property> asPartialProperties = ((PartialProperties)asPropertyOrProperties).getPartials();
+			return ((PartialProperties)asPropertyOrProperties).resolveProperty();
+		/*	Iterable<@NonNull Property> asPartialProperties = ((PartialProperties)asPropertyOrProperties).getPartials();
 			if (asPartialProperties != null) {
 				for (Property asProperty : asPartialProperties) {
 					if ((featureFilter == null) || featureFilter.accept(asProperty)) {
 						resolveUniqueProperty(asProperties, asProperty);
 					}
 				}
-			}
+			} * /
 		}
-		else if (asPropertyOrProperties != null) {
-			Property asProperty = (Property)asPropertyOrProperties;
-			if ((featureFilter == null) || featureFilter.accept(asProperty)) {
+		else if (asPropertyOrProperties instanceof Property) {
+			return (Property)asPropertyOrProperties;
+		/*	if ((featureFilter == null) || featureFilter.accept(asProperty)) {
 				resolveUniqueProperty(asProperties, asProperty);
-			}
+			} * /
 		}
-		return asProperties;
-	}
+		else {
+			throw new SemanticException("No such property '" + this + "::" + name + "'");
+		}
+	} */
 
 	protected void resolveUniqueProperty(@NonNull List<@NonNull Property> asProperties, @NonNull Property asProperty) {
 		if (asProperties.size() >= 1) {
@@ -1267,14 +1281,14 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return asProperties;
 	}
 
-	protected @Nullable Property selectPrimaryProperty(@NonNull Iterable<@NonNull Property> asProperties) throws SemanticException {
+/*	protected @Nullable Property selectPrimaryProperty(@NonNull Iterable<@NonNull Property> asProperties) throws SemanticException {
 		int size = Iterables.size(asProperties);
 		assert size > 0;
 		if (size == 1) {
 			return Iterables.get(asProperties, 0);
 		}
 		throw new SemanticException("Ambiguous property '" + name + "' in '" + this + "'");
-	}
+	} */
 
 //	@Override
 //	public String toString() {

@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
@@ -39,12 +37,8 @@ import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 /**
  * @since 7.0
@@ -280,7 +274,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		super.resolveUniqueProperty(asProperties, asProperty);
 	}
 
-	@Override
+/*	@Override
 	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull List<@NonNull Property> asProperties) {
 		if (featureFilter != null) {			// Already filtered one way
 			Property asProperty = selectPrimaryProperty(asProperties);
@@ -312,9 +306,9 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 				}
 			}
 		}
-	}
+	} */
 
-	@Override
+/*	@Override
 	protected @Nullable Property selectPrimaryProperty(@NonNull Iterable<@NonNull Property> asProperties) {
 		Property asPrimaryProperty = null;
 		EObject asPrimaryEObject = null;
@@ -385,13 +379,13 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 						if (oldOppositeName.equals(oppositeName)) {
 					//		return;			// Ignore duplicate (?? check complete type too ??)
 						}
-					} */
+					} * /
 			}
 		}
 
 
 		return asPrimaryProperty;
-	}
+	} */
 
 	@Override
 	public @NonNull String toString() {

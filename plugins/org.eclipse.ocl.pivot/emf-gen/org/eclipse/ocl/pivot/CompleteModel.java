@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -343,4 +344,11 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull CompletePackageId registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage);
+
+	/**
+	 * Return the primary Property from a non-empty list of candidates.
+	 *
+	 * @since 7.0
+	 */
+	@NonNull Property selectPrimaryProperty(@NonNull Collection<@NonNull Property> asProperties);
 } // CompleteModel

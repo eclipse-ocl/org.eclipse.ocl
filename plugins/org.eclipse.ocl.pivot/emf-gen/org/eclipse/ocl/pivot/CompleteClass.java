@@ -138,17 +138,26 @@ public interface CompleteClass extends NamedElement
 	 */
 	@NonNull Property getPrimaryProperty(final @Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
-	default @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
-		return getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), asProperty.getName());
-	}
-//	@Nullable Iterable<@NonNull Property> getProperties(@NonNull String propertyName);
-//	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter);
 	/**
-	 * Return the all Property for the name property satisfying featureFilter leaving the caller to resolve ambiguities..
+	 * Return all partial Property's with the same name and isStatic as asProperty leaving the caller to resolve ambiguities.
 	 *
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name);
+	@Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty);
+//	@Nullable Iterable<@NonNull Property> getProperties(@NonNull String propertyName);
+//	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter);
+	/**
+	 * Return all partial Property's satisfying featureFilter leaving the caller to resolve ambiguities.
+	 *
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter);
+	/**
+	 * Return all partial Property's for name property leaving the caller to resolve ambiguities..
+	 *
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Property> getProperties(@NonNull String name);
 	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);

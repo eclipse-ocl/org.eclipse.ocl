@@ -11,31 +11,23 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
-import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
-import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
-import com.google.common.collect.Iterators;
 
 public class PartialProperties //implements Iterable<@NonNull Property>
 {
 	//resolution = null, partials = null or empty => empty
 	// resolution = X, partials = null or empty or [X} => X
 	// resolution = null, partials not empty => lazy unresolved 'ambiguity'
-	private boolean isResolved = false;
+//	private boolean isResolved = false;
 	private @Nullable Property resolution = null;
 	private @NonNull List<@NonNull Property> partials = new ArrayList<>();
 	/**
@@ -72,10 +64,10 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 		}
 		partials.add(asProperty);
 		resolution = null;
-		isResolved = false;
+//		isResolved = false;
 	}
 
-	public synchronized @Nullable Property get() {
+/*	public synchronized @Nullable Property zzget() {
 		if (isResolved) {
 			return resolution;
 		}
@@ -103,7 +95,7 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 		isResolved = true;
 		resolution = null;
 		return resolution;
-	}
+	} */
 
 	/**
 	 * @since 7.0
@@ -112,9 +104,20 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 		return partials;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Property getPrimaryProperty(@NonNull CompleteModel completeModel) {
+		Property resolution2 = resolution;
+		if (resolution2 == null) {
+			resolution = resolution2 = completeModel.selectPrimaryProperty(partials);
+		}
+		return resolution2;
+	}
+
 //	@Override
-	public @NonNull Iterator<@NonNull Property> iterator() {
-		if (!isResolved) {
+/*	public @NonNull Iterator<@NonNull Property> iterator() {
+		if (resolution == null) {
 			resolve();
 		}
 		if (resolution != null) {
@@ -123,16 +126,16 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 		else {
 			return partials.iterator();
 		}
-	}
+	} */
 
-	private void resolve() {
-		assert !isResolved;
+/*	private void resolve() {
+		assert resolution == null;
 		int size = partials.size();
 		if (size <= 0) {
 			return;
 		}
 		if (size == 1) {
-			isResolved = true;
+		//	isResolved = true;
 			resolution = partials.get(0);
 		}
 		List<@NonNull  Property> values = new ArrayList<>(partials);
@@ -181,10 +184,10 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 		}
 		if (values.size() == 1) {
 			resolution = values.get(0);
-			isResolved = true;
+		//	isResolved = true;
 			return;
 		}
-	}
+	} */
 
 	@Override
 	public String toString() {

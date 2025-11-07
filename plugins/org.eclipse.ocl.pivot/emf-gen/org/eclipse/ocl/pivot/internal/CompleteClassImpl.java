@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -652,14 +653,45 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 //		return getFlatClass().getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), PivotUtil.getName(asProperty));
 //	}
 
+	@Override
+	public @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
+		boolean isStatic = asProperty.isIsStatic();
+		String name = PivotUtil.getName(asProperty);
+		Iterable<@NonNull Property> asProperties = getProperties(name);
+		boolean needsFiltering = false;
+		for (Property property : asProperties) {
+			if (property.isIsStatic() != isStatic) {
+				needsFiltering = true;
+			}
+		}
+		if (needsFiltering) {
+			System.out.println("Inconsistent static for '" + this + "::" + name + "'");
+			List<@NonNull Property> filteredProperties = new ArrayList<>();
+			for (Property property : asProperties) {
+				if (property.isIsStatic() == isStatic) {
+					filteredProperties.add(property);
+				}
+			}
+			return filteredProperties;
+		}
+		else {
+			return asProperties;
+		}
+	}
+
 //	@Override
 //	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
 //		return getFlatClass().getProperties(featureFilter, null);
 //	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @Nullable String name) {
-		return getFlatClass().getProperties(featureFilter, name);
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter) {
+		return getFlatClass().getProperties(featureFilter);
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull Property> getProperties(@NonNull String name) {
+		return getFlatClass().getProperties(name);
 	}
 
 //	@Override

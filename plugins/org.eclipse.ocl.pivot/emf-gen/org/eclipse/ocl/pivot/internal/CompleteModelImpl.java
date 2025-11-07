@@ -30,6 +30,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
@@ -1859,6 +1860,68 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompletePackage old = packageURI2completePackage.put(packageURI, completePackage);
 		assert (old == null) || (old == completePackage);
 		return completePackageId;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull Property selectPrimaryProperty(@NonNull Collection<@NonNull Property> asProperties) {
+		assert !asProperties.isEmpty();
+		Property asPrimaryProperty = null;
+		EObject asPrimaryEObject = null;
+		Property asPrimaryOpposite = null;
+		FlatClass asPrimaryFlatClass = null;
+		for (@NonNull Property asProperty : asProperties) {
+		//	assert name.equals(asProperty.getName());
+			Property asOpposite = asProperty.getOpposite();
+			org.eclipse.ocl.pivot.Class asType = PivotUtil.getClass(asProperty);
+			getCompleteClass(asType);
+			FlatClass flatClass = getFlatClass(asType);
+			if (asPrimaryProperty == null) {
+				asPrimaryProperty = asProperty;
+				asPrimaryEObject = asProperty.getESObject();
+				asPrimaryOpposite = asOpposite;
+				asPrimaryFlatClass = flatClass;
+			}
+			else {
+				assert asPrimaryFlatClass == flatClass;
+				assert (asOpposite != null) == (asPrimaryOpposite != null);
+				assert (asPrimaryOpposite == null) || (asOpposite == null) || (asOpposite.getName().equals(asPrimaryOpposite.getName()));
+
+				EObject esObject = asProperty.getESObject();
+				if (asPrimaryEObject == null) {
+					asPrimaryProperty = asProperty;
+					asPrimaryEObject = esObject;
+					asPrimaryOpposite = asOpposite;
+					asPrimaryFlatClass = flatClass;
+				}
+				else if ((esObject instanceof EStructuralFeature) && !(asPrimaryEObject instanceof EStructuralFeature)) { // UML has a secondary non-EStructuralFeature
+					asPrimaryProperty = asProperty;
+					asPrimaryEObject = esObject;
+					asPrimaryOpposite = asOpposite;
+					asPrimaryFlatClass = flatClass;
+				}
+				else if (esObject != null) {
+					assert false;
+				}
+			/*	Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
+				if (partials != null) {
+					for (Property partialProperty : partials) {
+						EObject esObject = partialProperty.getESObject();
+						if (esObject instanceof EStructuralFeature) {
+							eFeature2 = (EStructuralFeature) esObject;
+							break;
+						}
+					}
+				}
+		//	} */
+
+				//}
+			}
+		}
+
+		return asPrimaryProperty;
 	}
 
 	/**
