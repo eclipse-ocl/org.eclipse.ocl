@@ -140,6 +140,9 @@ public class EnvironmentView
 		public abstract int compare(@NonNull StandardLibrary standardLibrary, @NonNull T o1, @NonNull T o2);
 	}
 
+	/**
+	 * Disambiguate an implicit/non-implicit Property pair by declaring the implicit property INFERIOR.
+	 */
 	private static final class ImplicitDisambiguator extends Disambiguator<@NonNull Object>
 	{
 		@Override
@@ -294,7 +297,7 @@ public class EnvironmentView
 
 	private static final Logger logger = Logger.getLogger(EnvironmentView.class);
 
-	private static @NonNull LinkedHashMap<@NonNull Class<?>, @NonNull List<@NonNull Comparator<@NonNull Object>>> disambiguatorMap =	// FIXME narrow API to Disambiguator
+	private static @NonNull LinkedHashMap<@NonNull Class<?>, @NonNull List<@NonNull Disambiguator<@NonNull Object>>> disambiguatorMap =	// FIXME narrow API to Disambiguator
 			new LinkedHashMap<>();
 
 	static {
@@ -305,15 +308,18 @@ public class EnvironmentView
 		addDisambiguator(Property.class, new PropertyDisambiguator());
 	}
 
-	public static synchronized <T> void addDisambiguator(/*@NonNull*/ Class<T> targetClass, @NonNull Comparator<T> disambiguator) {
+	/**
+	 * @since 7.0
+	 */
+	public static synchronized <T> void addDisambiguator(/*@NonNull*/ Class<T> targetClass, @NonNull Disambiguator<T> disambiguator) {
 		assert targetClass != null;
-		List<@NonNull Comparator<@NonNull Object>> disambiguators = disambiguatorMap.get(targetClass);
+		List<@NonNull Disambiguator<@NonNull Object>> disambiguators = disambiguatorMap.get(targetClass);
 		if (disambiguators == null) {
 			disambiguators = new ArrayList<>();
 			disambiguatorMap.put(targetClass, disambiguators);
 		}
 		@SuppressWarnings("unchecked")
-		Comparator<@NonNull Object> castDisambiguator = (Comparator<@NonNull Object>) disambiguator;
+		Disambiguator<@NonNull Object> castDisambiguator = (Disambiguator<@NonNull Object>) disambiguator;
 		disambiguators.add(castDisambiguator);
 	}
 
@@ -321,7 +327,7 @@ public class EnvironmentView
 		return disambiguatorMap.keySet();
 	}
 
-	public static @Nullable List<@NonNull Comparator<@NonNull Object>> getDisambiguators(@NonNull Class<?> key) {
+	public static @Nullable List<@NonNull Disambiguator<@NonNull Object>> getDisambiguators(@NonNull Class<?> key) {
 		return disambiguatorMap.get(key);
 	}
 
@@ -344,7 +350,7 @@ public class EnvironmentView
 	private boolean isQualifier = false;
 	protected final @Nullable String name;
 
-	private final @NonNull Map<@NonNull String, Object> contentsByName = new HashMap<>(); // Single Object or MyList
+	private final @NonNull Map<@NonNull String, @NonNull Object> contentsByName = new HashMap<>(); // Single Object or MyList
 
 	private int contentsSize = 0; // Deep size of contentsByName;
 
@@ -926,7 +932,7 @@ public class EnvironmentView
 		if (contentsSize != 1) {
 			logger.warn("Unhandled ambiguous content for '" + name + "'");
 		}
-		for (Map.Entry<@NonNull String, Object> entry : contentsByName.entrySet()) {
+		for (Map.Entry<@NonNull String, @NonNull Object> entry : contentsByName.entrySet()) {
 			Object value = entry.getValue();
 			if (value instanceof MyList) {
 				MyList values = (MyList) value;
@@ -939,7 +945,7 @@ public class EnvironmentView
 		return null;
 	}
 
-	public @NonNull Set<Map.@NonNull Entry<@NonNull String, Object>> getEntries() {
+	public @NonNull Set<Map.@NonNull Entry<@NonNull String, @NonNull Object>> getEntries() {
 		return contentsByName.entrySet();
 	}
 
@@ -989,7 +995,7 @@ public class EnvironmentView
 		if (getName() == null) {
 			return false; // No name means search full hierarchy
 		}
-		for (Object object : contentsByName.values()) {
+		for (@NonNull Object object : contentsByName.values()) {
 			if (!(object instanceof Property) || !((Property)object).isIsImplicit()) { // See Bug 580139 - generalize to isExplicit
 				return true;
 			}
@@ -1021,7 +1027,7 @@ public class EnvironmentView
 		if ((contentsSize > 1) && (getName() != null)) {
 			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			int newSize = 0;
-			for (Map.Entry<@NonNull String, Object> entry : contentsByName.entrySet()) {
+			for (Map.Entry<@NonNull String, @NonNull Object> entry : contentsByName.entrySet()) {
 				Object listOrValue = entry.getValue();
 				if (listOrValue instanceof MyList) {
 					MyList values = (MyList) listOrValue;
@@ -1035,15 +1041,10 @@ public class EnvironmentView
 							int verdict = 0;
 							for (Class<?> key : disambiguatorMap.keySet()) {
 								if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
-									List<@NonNull Comparator<@NonNull Object>> comparators = disambiguatorMap.get(key);
-									assert comparators != null;
-									for (@NonNull Comparator<@NonNull Object> comparator : comparators) {
-										if (comparator instanceof Disambiguator<?>) {
-											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(standardLibrary, iValue, jValue);
-										}
-										else {
-											verdict = comparator.compare(iValue, jValue);
-										}
+									List<@NonNull Disambiguator<@NonNull Object>> disambiguators = disambiguatorMap.get(key);
+									assert disambiguators != null;
+									for (@NonNull Disambiguator<@NonNull Object> disambiguator : disambiguators) {
+										verdict = disambiguator.compare(standardLibrary, iValue, jValue);
 										if (verdict != 0) {
 											break;
 										}

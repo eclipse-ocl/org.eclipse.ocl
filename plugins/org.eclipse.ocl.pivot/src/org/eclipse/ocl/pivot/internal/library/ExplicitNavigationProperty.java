@@ -55,9 +55,10 @@ public class ExplicitNavigationProperty extends AbstractProperty
 			// For UML, the OMG and UML2 models complement and the UML2 one has an EStructuralFeature
 		//	 primaryProperty;
 			try {
-				Property primaryProperty = completeClass.getPrimaryProperty(null, property.getName());
+				Property primaryProperty = completeClass.getPrimaryProperty(property.getName());
 				EObject esObject = primaryProperty.getESObject();
 				assert esObject instanceof EStructuralFeature;
+				eFeature2 = (EStructuralFeature) esObject;
 			//	if (properties instanceof PartialProperties) {
 			/*		Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
 					if (partials != null) {
@@ -98,9 +99,9 @@ public class ExplicitNavigationProperty extends AbstractProperty
 			@SuppressWarnings("unused") ResourceSet resourceSet0 = environmentFactory.getResourceSet();
 			EClass eClass1 = eObject.eClass();
 			Resource eResource1 = eClass1.eResource();
-			Resource eResource2 = eFeature.eResource();			// XXX eFeature2
+			Resource eResource2 = eFeature2 != null ? eFeature2.eResource() : null;
 			@SuppressWarnings("unused") ResourceSet resourceSet1 = eResource1.getResourceSet();
-			@SuppressWarnings("unused") ResourceSet resourceSet2 = eResource2.getResourceSet();
+			@SuppressWarnings("unused") ResourceSet resourceSet2 = eResource2 != null ? eResource2.getResourceSet() : null;
 			throw new InvalidValueException(e, e.getMessage());
 		}
 		return null;

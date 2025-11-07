@@ -1593,7 +1593,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
 		try {
-			return flatClass.getPrimaryProperty(null, id.getName());
+			return flatClass.getPrimaryProperty(id.getName());
 		} catch (SemanticException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

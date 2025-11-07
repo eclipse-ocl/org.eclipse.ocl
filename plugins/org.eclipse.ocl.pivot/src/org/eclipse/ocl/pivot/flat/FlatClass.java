@@ -182,7 +182,7 @@ public interface FlatClass extends Nameable
 	@Nullable Operation getOperation(@NonNull OperationId id);
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
-	@NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
+	@NonNull Property getPrimaryProperty(@NonNull String name) throws SemanticException;
 
 	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
 

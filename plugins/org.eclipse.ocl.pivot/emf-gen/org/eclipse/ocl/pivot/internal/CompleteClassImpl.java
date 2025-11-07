@@ -608,12 +608,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @NonNull Property getPrimaryProperty(final @Nullable FeatureFilter featureFilter, @NonNull String name) {
-	//	return getFlatClass().getPrimaryProperty(featureFilter, name);
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public final @NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
@@ -622,6 +616,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public final @NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
 		return getFlatClass().getPrimaryProperties(featureFilter, name);
+	}
+
+	@Override
+	public final @NonNull Property getPrimaryProperty(@NonNull String name) throws SemanticException {
+		return getFlatClass().getPrimaryProperty(name);
 	}
 
 	@Override

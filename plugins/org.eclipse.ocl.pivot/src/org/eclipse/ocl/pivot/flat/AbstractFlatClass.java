@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -191,7 +192,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 		else {
 			PartialProperties partialProperties = (PartialProperties)propertyOrProperties;
-			return partialProperties.getPrimaryProperty(getFlatModel().getCompleteModel());
+			return partialProperties.getPrimaryProperty(getCompleteModel());
 		}
 	}
 
@@ -427,6 +428,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public abstract @NonNull CompleteClass getCompleteClass();
+
+	public @NonNull CompleteModel getCompleteModel() {
+		return getFlatModel().getCompleteModel();
+	}
 
 	@Override
 	public int getDepth() {
@@ -744,13 +749,29 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
+	public @NonNull Property getPrimaryProperty(@NonNull String name) throws SemanticException {
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
+		Object propertyOrProperties = name2propertyOrProperties2.get(name);
+		if (propertyOrProperties == null) {
+			throw new SemanticException("No such property '" + name + "' in '" + this + "'");
+		}
+		else if (propertyOrProperties instanceof Property) {
+			return (Property)propertyOrProperties;
+		}
+		else {
+			PartialProperties partialProperties = (PartialProperties)propertyOrProperties;
+			return partialProperties.getPrimaryProperty(getCompleteModel());
+		}
+	}
+
+/*	@Override
 	public @NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException {
 		Property property = basicGetPrimaryProperty(featureFilter, name);
 		if (property == null) {
 			throw new SemanticException("No such property '" + name + "' in '" + this + "'");
 		}
 		return property;
-	}
+	} */
 
 	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter) {
 		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = getName2PropertyOrProperties();

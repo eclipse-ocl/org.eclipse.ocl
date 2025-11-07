@@ -136,7 +136,7 @@ public interface CompleteClass extends NamedElement
 	 *
 	 * @since 7.0
 	 */
-	@NonNull Property getPrimaryProperty(final @Nullable FeatureFilter featureFilter, @NonNull String name) throws SemanticException;
+	@NonNull Property getPrimaryProperty(@NonNull String name) throws SemanticException;
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
 	/**
 	 * Return all partial Property's with the same name and isStatic as asProperty leaving the caller to resolve ambiguities.

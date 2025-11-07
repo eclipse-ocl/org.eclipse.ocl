@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -20,6 +21,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class PartialProperties //implements Iterable<@NonNull Property>
@@ -110,9 +113,124 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 	public @NonNull Property getPrimaryProperty(@NonNull CompleteModel completeModel) {
 		Property resolution2 = resolution;
 		if (resolution2 == null) {
-			resolution = resolution2 = completeModel.selectPrimaryProperty(partials);
+
+
+
+
+
+
+			resolution = resolution2 = selectPrimaryProperty(completeModel, partials);
 		}
 		return resolution2;
+	}
+
+	private @NonNull Property selectPrimaryProperty(@NonNull CompleteModel completeModel, @NonNull Collection<@NonNull Property> asProperties) {
+		assert !asProperties.isEmpty();
+
+
+		List<@NonNull  Property> values = new ArrayList<>(asProperties);
+		for (int i = 0; i < values.size()-1;) {
+			boolean iRemoved = false;
+			@NonNull Property iValue = values.get(i);
+			for (int j = i + 1; j < values.size();) {
+				Class<? extends Property> iClass = iValue.getClass();
+				@NonNull Property jValue = values.get(j);
+				Class<? extends Property> jClass = jValue.getClass();
+				int verdict = 0;
+				for (Class<?> key : EnvironmentView.getDisambiguatorKeys()) {
+					if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
+						List<@NonNull Disambiguator<@NonNull Object>> disambiguators = EnvironmentView.getDisambiguators(key);
+						if (disambiguators != null) {
+							for (Disambiguator<@NonNull Object> disambiguator : disambiguators) {
+								assert standardLibrary != null;
+								verdict = disambiguator.compare(standardLibrary, iValue, jValue);
+								if (verdict != 0) {
+									break;
+								}
+							}
+						}
+						if (verdict != 0) {
+							break;
+						}
+					}
+				}
+				if (verdict == 0) {
+					j++;
+				} else if (verdict < 0) {
+					values.remove(i);
+					iRemoved = true;
+					break;
+				} else {
+					values.remove(j);
+				}
+			}
+			if (!iRemoved) {
+				i++;
+			}
+		}
+		if (values.size() == 1) {
+			return values.get(0);
+		//	isResolved = true;
+		//	return;
+		}
+		throw new IllegalStateException("Ambiguous");
+	//	throw new SemanticException("Ambiguous");
+
+
+	/*	Property asPrimaryProperty = null;
+		EObject asPrimaryEObject = null;
+		Property asPrimaryOpposite = null;
+		FlatClass asPrimaryFlatClass = null;
+		for (@NonNull Property asProperty : asProperties) {
+		//	assert name.equals(asProperty.getName());
+			Property asOpposite = asProperty.getOpposite();
+			org.eclipse.ocl.pivot.Class asType = PivotUtil.getClass(asProperty);
+			completeModel.getCompleteClass(asType);
+			FlatClass flatClass = completeModel.getFlatClass(asType);
+			if (asPrimaryProperty == null) {
+				asPrimaryProperty = asProperty;
+				asPrimaryEObject = asProperty.getESObject();
+				asPrimaryOpposite = asOpposite;
+				asPrimaryFlatClass = flatClass;
+			}
+			else {
+				assert asPrimaryFlatClass == flatClass;
+				assert (asOpposite != null) == (asPrimaryOpposite != null);
+				assert (asPrimaryOpposite == null) || (asOpposite == null) || (asOpposite.getName().equals(asPrimaryOpposite.getName()));
+
+				EObject esObject = asProperty.getESObject();
+				if (asPrimaryEObject == null) {
+					asPrimaryProperty = asProperty;
+					asPrimaryEObject = esObject;
+					asPrimaryOpposite = asOpposite;
+					asPrimaryFlatClass = flatClass;
+				}
+				else if ((esObject instanceof EStructuralFeature) && !(asPrimaryEObject instanceof EStructuralFeature)) { // UML has a secondary non-EStructuralFeature
+					asPrimaryProperty = asProperty;
+					asPrimaryEObject = esObject;
+					asPrimaryOpposite = asOpposite;
+					asPrimaryFlatClass = flatClass;
+				}
+				else if (esObject != null) {
+					assert false;
+				}
+			/*	Iterable<@NonNull Property> partials = properties; //((PartialProperties)properties).getPartials();
+				if (partials != null) {
+					for (Property partialProperty : partials) {
+						EObject esObject = partialProperty.getESObject();
+						if (esObject instanceof EStructuralFeature) {
+							eFeature2 = (EStructuralFeature) esObject;
+							break;
+						}
+					}
+				}
+		//	} * /
+
+				//}
+			}
+		}
+
+		return asPrimaryProperty; */
 	}
 
 //	@Override
