@@ -569,7 +569,7 @@ public class DelegateInstaller
 		if (eTarget instanceof EClassifier) {
 			@NonNull EClassifier eClassifier = (EClassifier)eTarget;
 			removeDelegateAnnotations(eClassifier, null);
-			for (Constraint constraint : completeModel.getLocalInvariants(pivotType)) {
+			for (Constraint constraint : completeModel.getMemberInvariants(pivotType)) {
 				EModelElement eContext = null;
 				if (constraint.isIsCallable()) {
 					@NonNull String name = PivotUtil.getName(constraint);
@@ -660,7 +660,7 @@ public class DelegateInstaller
 	public void installDelegates(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		List<@NonNull String> constraintNameSet = null;
 		StringBuilder s = null;
-		for (@NonNull Constraint pivotConstraint : completeModel.getLocalInvariants(pivotType)) {		// XXX metamodelManager
+		for (@NonNull Constraint pivotConstraint : completeModel.getMemberInvariants(pivotType)) {		// XXX metamodelManager
 			String constraintName = getAnnotationKey(pivotConstraint);
 			if (!pivotConstraint.isIsCallable()) {
 				if (constraintNameSet == null) {

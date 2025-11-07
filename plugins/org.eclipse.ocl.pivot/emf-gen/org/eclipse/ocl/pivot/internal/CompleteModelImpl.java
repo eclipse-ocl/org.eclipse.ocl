@@ -1333,7 +1333,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
+	public @NonNull Iterable<@NonNull Constraint> getMemberInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
 		CompleteClass completeClass = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
 		return new CompleteElementInvariantsIterable(partialClasses);

@@ -244,7 +244,7 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type);
+	@NonNull Iterable<@NonNull Constraint> getMemberInvariants(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * @since 7.0
