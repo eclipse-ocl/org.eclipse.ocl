@@ -53,7 +53,7 @@ public class ExplicitNavigationProperty extends AbstractProperty
 			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(property));
 			// For UML, the OMG and UML2 models complement and the UML2 one has an EStructuralFeature
 			//	 primaryProperty;
-			Property primaryProperty = completeClass.getPrimaryProperty(property.getName());
+			Property primaryProperty = completeClass.getPrimaryProperty(null, property.getName());
 			EObject esObject = primaryProperty.getESObject();
 			assert esObject instanceof EStructuralFeature;
 			eFeature2 = (EStructuralFeature) esObject;

@@ -137,14 +137,7 @@ public interface FlatClass extends Nameable
 
 	@Nullable Operation basicGetOperation(@NonNull OperationId id);
 
-	@Nullable Property basicGetPrimaryProperty(@NonNull String name);
-
-	/**
-	 * Return
-	 * @param name
-	 * @return
-	 */
-//	@Nullable Property basicGetProperty(@NonNull String name);
+	@Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name);
 
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-fragments excluding this one.
@@ -182,8 +175,9 @@ public interface FlatClass extends Nameable
 	@Nullable Operation getOperation(@NonNull OperationId id);
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
-	@NonNull Property getPrimaryProperty(@NonNull String name);
+	@NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name);
 
+	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name);
 
 	@NonNull FlatFragment getSelfFragment();

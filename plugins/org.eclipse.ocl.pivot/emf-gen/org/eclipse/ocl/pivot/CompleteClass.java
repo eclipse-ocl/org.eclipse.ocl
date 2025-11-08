@@ -86,7 +86,7 @@ public interface CompleteClass extends NamedElement
 	 *
 	 * @since 7.0
 	 */
-	@Nullable Property basicGetPrimaryProperty(@NonNull String propertyName);
+	@Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String propertyName);
 
 	/**
 	 * @since 7.0
@@ -130,11 +130,11 @@ public interface CompleteClass extends NamedElement
 	 */
 	@NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull String name);
 	/**
-	 * Return the primary Property for the name property.
+	 * Return the primary Property for the name property that satisfies featureFilter.
 	 *
 	 * @since 7.0
 	 */
-	@NonNull Property getPrimaryProperty(@NonNull String name);
+	@NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name);
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
 	/**
 	 * Return all partial Property's with the same name and isStatic as asProperty leaving the caller to resolve ambiguities.
@@ -153,8 +153,7 @@ public interface CompleteClass extends NamedElement
 	 *
 	 * @since 7.0
 	 */
-	@NonNull Iterable<@NonNull Property> getProperties(@NonNull String name);
-//	@Nullable Property getProperty(@NonNull String propertyName);
+	@NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @NonNull String name);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
 	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();

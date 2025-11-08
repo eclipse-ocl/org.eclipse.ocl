@@ -10,7 +10,6 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -439,8 +438,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @Nullable Property basicGetPrimaryProperty(@NonNull String propertyName) {
-		return getFlatClass().basicGetPrimaryProperty(name);
+	public final @Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String propertyName) {
+		return getFlatClass().basicGetPrimaryProperty(featureFilter, name);
 	}
 
 	@Override
@@ -607,8 +606,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public final @NonNull Iterable<@NonNull Property> getPrimaryProperties(@Nullable FeatureFilter featureFilter) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return getFlatClass().getPrimaryProperties(featureFilter);
 	}
 
 	@Override
@@ -617,8 +615,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @NonNull Property getPrimaryProperty(@NonNull String name) {
-		return getFlatClass().getPrimaryProperty(name);
+	public final @NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+		return getFlatClass().getPrimaryProperty(featureFilter, name);
 	}
 
 	@Override
@@ -645,16 +643,16 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		});
 	}
 
-//	@Override
-//	public final @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
-//		return getFlatClass().getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), PivotUtil.getName(asProperty));
-//	}
-
 	@Override
+	public final @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
+		return getFlatClass().getProperties(FeatureFilter.getStaticFilter(asProperty.isIsStatic()), PivotUtil.getName(asProperty));
+	}
+
+/*	@Override
 	public @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property asProperty) {
 		boolean isStatic = asProperty.isIsStatic();
 		String name = PivotUtil.getName(asProperty);
-		Iterable<@NonNull Property> asProperties = getProperties(name);
+		Iterable<@NonNull Property> asProperties = getProperties(FeatureFilter.getStaticFilter(isStatic), name);
 		boolean needsFiltering = false;
 		for (Property property : asProperties) {
 			if (property.isIsStatic() != isStatic) {
@@ -674,7 +672,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		else {
 			return asProperties;
 		}
-	}
+	} */
 
 //	@Override
 //	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
@@ -687,8 +685,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Property> getProperties(@NonNull String name) {
-		return getFlatClass().getProperties(name);
+	public @NonNull Iterable<@NonNull Property> getProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+		return getFlatClass().getProperties(featureFilter, name);
 	}
 
 //	@Override

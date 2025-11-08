@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -79,19 +78,19 @@ public class PartialProperties //implements Iterable<@NonNull Property>
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Property getPrimaryProperty(@NonNull CompleteModel completeModel) {
+	public @NonNull Property getPrimaryProperty() {
 		Property resolution2 = resolution;
 		if (resolution2 == null) {
-			resolution = resolution2 = selectPrimaryProperty(completeModel, partials);
+			resolution = resolution2 = selectPrimaryProperty(partials);
 		}
 		return resolution2;
 	}
 
-	private @NonNull Property selectPrimaryProperty(@NonNull CompleteModel completeModel, @NonNull Collection<@NonNull Property> asProperties) {
-		assert !asProperties.isEmpty();
+	private @NonNull Property selectPrimaryProperty(@NonNull Collection<@NonNull Property> partials) {
+		assert !partials.isEmpty();
 
 
-		List<@NonNull  Property> values = new ArrayList<>(asProperties);
+		List<@NonNull  Property> values = new ArrayList<>(partials);
 		for (int i = 0; i < values.size()-1;) {
 			boolean iRemoved = false;
 			@NonNull Property iValue = values.get(i);
