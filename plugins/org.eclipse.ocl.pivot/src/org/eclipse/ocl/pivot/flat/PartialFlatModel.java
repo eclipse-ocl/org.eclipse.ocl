@@ -38,12 +38,12 @@ public class PartialFlatModel extends AbstractFlatModel
 
 	@Override
 	public @NonNull CompleteModel getCompleteModel() {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();			// XXX WIP
 	}
 
 	@Override
 	public @NonNull PartialFlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		throw new UnsupportedOperationException();			// XXX
+		throw new UnsupportedOperationException();			// XXX WIP
 	/*	PartialFlatClass flatClass = asClass2flatClass.get(asClass);		// Used by Ecore specializations
 		if (flatClass == null) {
 			flatClass = new PartialFlatClass(this, asClass);
@@ -62,7 +62,7 @@ public class PartialFlatModel extends AbstractFlatModel
 
 	@Override
 	public @NonNull Type getPrimaryType(org.eclipse.ocl.pivot.@NonNull Class owningType) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();					// XXX DEPRECATED
 	}
 
 	@Override

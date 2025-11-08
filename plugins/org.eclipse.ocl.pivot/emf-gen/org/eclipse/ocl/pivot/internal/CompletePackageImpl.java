@@ -509,8 +509,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
-//		getOwnedCompletePackages().didAddPackage(nestedPackage);
-//		throw new UnsupportedOperationException();
 		((CompleteModelImpl)getCompleteModel()).didAddPackage(nestedPackage);
 		if (COMPLETE_URIS.isActive()) {
 			traceURImapping();

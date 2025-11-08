@@ -15,9 +15,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass.EcoreFlatProperty;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * A FlatFragment provides the description of the properties and operations defined by some class when accessed by the same
@@ -52,9 +49,6 @@ public /*final*/ class FlatFragment
 	public FlatFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		this.derivedFlatClass = derivedFlatClass;
 		this.baseFlatClass = baseFlatClass;
-		if ((derivedFlatClass == baseFlatClass) && "qvtruntimelibrary::Class".equals(baseFlatClass.toString())) {
-			getClass();
-		}
 	}
 
 	public @NonNull Operation @Nullable [] basicGetOperations() {
@@ -88,7 +82,7 @@ public /*final*/ class FlatFragment
 
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.
-	 */
+	 *
 	@Deprecated
 	public @NonNull Operation getActualOperation(@NonNull Operation apparentOperation) {
 		Operation localOperation = getLocalOperation(apparentOperation);
@@ -133,7 +127,7 @@ public /*final*/ class FlatFragment
 				localOperation = bestOverload;
 			}
 			else if (bestFlatClass == null) {
-				localOperation = apparentOperation;		// FIXME Missing operation
+				localOperation = apparentOperation;		// F I X M E Missing operation
 			}
 			else {
 				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedFlatClass);
@@ -146,41 +140,7 @@ public /*final*/ class FlatFragment
 		//			localOperation = apparentOperation;
 		//		}
 		return localOperation;
-	}
-
-	/**
-	 * Return the implementation of the actualOperation within this fragment that has the same signature as apparentOperation.
-	 * If there is no local overload, returns an inherited operation if unambiguous or OclAnyUnsupportedOperation.AMBIGUOUS
-	 * if ambiguous.
-	 */
-	@Deprecated
-	public @NonNull LibraryFeature getImplementation(@NonNull Operation apparentOperation) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Return the operation within this fragment that has the same signature as apparentOperation. Returns null if none.
-	 */
-	@Deprecated
-	public @Nullable Operation getLocalOperation(@NonNull Operation apparentOperation) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Return the operations within this fragment in operation index order.
-	 */
-	@Deprecated
-	public @NonNull Iterable<@NonNull Operation> getLocalOperations() {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Return the properties within this fragment in property index order.
-	 */
-	@Deprecated
-	public  @NonNull Iterable<@NonNull Property> getLocalProperties() {
-		throw new UnsupportedOperationException();
-	}
+	} */
 
 	public @NonNull Operation @NonNull [] getOperations() {
 		@NonNull Operation [] operations2 = this.operations;
@@ -193,12 +153,8 @@ public /*final*/ class FlatFragment
 	public @NonNull Property @NonNull [] getProperties() {
 		@NonNull Property [] properties2 = this.properties;
 		if (properties2 == null) {
-			if ("ocl::OclInvalid__ocl::OclInvalid".equals(toString()) ) {
-				getClass();			// XXX
-			}
 			properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
 			initProperties(properties2);
-		//	System.out.println("getProperties " + this + " " + NameUtil.debugSimpleName(properties2) + " " + properties2.length);
 		}
 		return properties2;
 	}
@@ -259,7 +215,7 @@ public /*final*/ class FlatFragment
 
 	//					}
 	//					else {
-	//						// FIXME
+	//						// F I X M E
 	//					}
 					}
 				}

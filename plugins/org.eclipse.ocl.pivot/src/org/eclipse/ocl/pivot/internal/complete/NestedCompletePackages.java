@@ -62,7 +62,7 @@ public class NestedCompletePackages extends AbstractCompletePackages
 
 	@Override
 	public @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();					// XXX DEPRECATED
 	/*	CompletePackage completePackage = null;
 		String packageURI = partialPackage.getURI();
 		if (packageURI != null) {

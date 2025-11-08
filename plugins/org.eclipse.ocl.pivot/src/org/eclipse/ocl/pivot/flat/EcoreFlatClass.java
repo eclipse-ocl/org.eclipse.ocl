@@ -66,7 +66,7 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		//	ParameterTypes parameterTypes = TypeUtil.createParameterTypes(CodegencompanyTables.Types._Employee);
 
 		//	array[i] = new ExecutorOperation(eOperation, asClass, i);
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException();					// XXX TODO WIP
 		}
 		return array;
 	}

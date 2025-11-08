@@ -33,7 +33,8 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.internal.complete.PartialOperations;
-import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
@@ -64,6 +65,118 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
+
+	/**
+	 * PartialProperties maintains the aggregate of properties forming a 'Complete' Property.
+	 */
+	private class PartialProperties
+	{
+		/**
+		 * The many partial Property contributions flattgened and merged to form a 'Complete' property.
+		 * Never empty, never shrinking.
+		 */
+		private @NonNull List<@NonNull Property> partials = new ArrayList<>();
+
+		/**
+		 * Lazily computed partials element representing the complete property.
+		 */
+		private @Nullable Property primaryProperty = null;
+
+		public PartialProperties(@NonNull Property asProperty) {
+			partials.add(asProperty);
+			primaryProperty = asProperty;
+		}
+
+		/**
+		 * Add an additional partial property, displacing any occluded super property.
+		 */
+		public void addProperty(@NonNull Property asProperty, @NonNull FlatFragment fragment) {
+			assert !partials.contains(asProperty);
+			FlatClass baseFlatClass = fragment.getBaseFlatClass();
+			String name = PivotUtil.getName(asProperty);
+			for (FlatFragment superFlatFragment : baseFlatClass.getDirectSuperFragments()) {
+				for (@NonNull Property asSuperProperty : superFlatFragment.getProperties()) {
+					if (name.equals(asSuperProperty.getName()) && !asSuperProperty.isIsImplicit()) {
+						partials.remove(asSuperProperty);
+					//	System.out.println("Occluded " + asSuperProperty);
+					}
+				}
+			}
+			partials.add(asProperty);
+			primaryProperty = null;
+		}
+
+		public @NonNull Iterable<@NonNull Property> getPartials() {
+			return partials;
+		}
+
+		public @NonNull Property getPrimaryProperty() {
+			Property resolution2 = primaryProperty;
+			if (resolution2 == null) {
+				assert !partials.isEmpty();
+				StandardLibrary standardLibrary = getStandardLibrary();
+				List<@NonNull  Property> values = new ArrayList<>(partials);
+				for (int i = 0; i < values.size()-1;) {
+					boolean iRemoved = false;
+					@NonNull Property iValue = values.get(i);
+					for (int j = i + 1; j < values.size();) {
+						Class<? extends Property> iClass = iValue.getClass();
+						@NonNull Property jValue = values.get(j);
+						Class<? extends Property> jClass = jValue.getClass();
+						int verdict = 0;
+						for (Class<?> key : EnvironmentView.getDisambiguatorKeys()) {
+							if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
+								List<@NonNull Disambiguator<@NonNull Object>> disambiguators = EnvironmentView.getDisambiguators(key);
+								if (disambiguators != null) {
+									for (Disambiguator<@NonNull Object> disambiguator : disambiguators) {
+										verdict = disambiguator.compare(standardLibrary, iValue, jValue);
+										if (verdict != 0) {
+											break;
+										}
+									}
+								}
+								if (verdict != 0) {
+									break;
+								}
+							}
+						}
+						if (verdict == 0) {
+							j++;
+						} else if (verdict < 0) {
+							values.remove(i);
+							iRemoved = true;
+							break;
+						} else {
+							values.remove(j);
+						}
+					}
+					if (!iRemoved) {
+						i++;
+					}
+				}
+				if (values.size() != 1) {
+					throw new IllegalStateException("Ambiguous");
+				}
+				primaryProperty = resolution2 = values.get(0);
+			}
+			return resolution2;
+		}
+
+		@Override
+		public String toString() {
+			if (primaryProperty != null) {
+				return primaryProperty.toString();
+			}
+			StringBuilder s = new StringBuilder();
+			for (@NonNull Property asProperty : partials) {
+				if (s.length() > 0) {
+					s.append(", ");
+				}
+				s.append(asProperty.toString());
+			}
+			return s.toString();
+		}
+	}
 
 	public static int computeFlags(@NonNull Type asType) {
 //		assert !(asType instanceof JavaType);
@@ -628,7 +741,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 									partialProperties = (PartialProperties)old;
 								}
 								else {
-									partialProperties = new PartialProperties(getStandardLibrary(), (Property)old);
+									partialProperties = new PartialProperties((Property)old);
 									name2propertyOrProperties2.put(name, partialProperties);
 								}
 								partialProperties.addProperty(property, fragment);
@@ -744,9 +857,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			return Collections.singletonList((Property)propertyOrProperties);
 		}
 		else {
-			List<@NonNull Property> asProperties = ((PartialProperties)propertyOrProperties).getPartials();
-			if (asProperties.size() == 1) {
-				return Collections.singletonList(asProperties.get(0));
+			Iterable<@NonNull Property> asProperties = ((PartialProperties)propertyOrProperties).getPartials();
+			if (Iterables.size(asProperties) == 1) {
+				return Collections.singletonList(Iterables.get(asProperties, 0));
 			}
 			else {
 				return selectPrimaryProperties(featureFilter, asProperties);
@@ -784,7 +897,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = getName2PropertyOrProperties();
 		Object asPropertyOrProperties = name2propertyOrProperties2.get(name);
 		if (asPropertyOrProperties instanceof PartialProperties) {
-			List<@NonNull Property> asProperties = ((PartialProperties)asPropertyOrProperties).getPartials();
+			Iterable<@NonNull Property> asProperties = ((PartialProperties)asPropertyOrProperties).getPartials();
 			for (Property asProperty : asProperties) {
 				if ((featureFilter != null) && !featureFilter.accept(asProperty)) {		// pruning needed
 					List<@NonNull Property> asPrunedProperties = new ArrayList<>();
@@ -1176,7 +1289,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		name2propertyOrProperties = null;
 	}
 
-	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull List<@NonNull Property> asProperties) {
+	protected @NonNull Iterable<@NonNull Property> selectPrimaryProperties(@Nullable FeatureFilter featureFilter, @NonNull Iterable<@NonNull Property> asProperties) {
 		int size = Iterables.size(asProperties);
 		assert size > 0;
 		return asProperties;
