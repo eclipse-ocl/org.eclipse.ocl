@@ -110,53 +110,58 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			return partials;
 		}
 
+		protected @NonNull List<@NonNull Property> getPrimaryProperties() {
+			assert !partials.isEmpty();
+			StandardLibrary standardLibrary = getStandardLibrary();
+			List<@NonNull  Property> values = new ArrayList<>(partials);
+			for (int i = 0; i < values.size()-1;) {
+				boolean iRemoved = false;
+				@NonNull Property iValue = values.get(i);
+				for (int j = i + 1; j < values.size();) {
+					Class<? extends Property> iClass = iValue.getClass();
+					@NonNull Property jValue = values.get(j);
+					Class<? extends Property> jClass = jValue.getClass();
+					int verdict = 0;
+					for (Class<?> key : EnvironmentView.getDisambiguatorKeys()) {
+						if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
+							List<@NonNull Disambiguator<@NonNull Object>> disambiguators = EnvironmentView.getDisambiguators(key);
+							if (disambiguators != null) {
+								for (Disambiguator<@NonNull Object> disambiguator : disambiguators) {
+									verdict = disambiguator.compare(standardLibrary, iValue, jValue);
+									if (verdict != 0) {
+										break;
+									}
+								}
+							}
+							if (verdict != 0) {
+								break;
+							}
+						}
+					}
+					if (verdict == 0) {
+						j++;
+					} else if (verdict < 0) {
+						values.remove(i);
+						iRemoved = true;
+						break;
+					} else {
+						values.remove(j);
+					}
+				}
+				if (!iRemoved) {
+					i++;
+				}
+			}
+			return values;
+		}
+
 		public @NonNull Property getPrimaryProperty() {
 			Property resolution2 = primaryProperty;
 			if (resolution2 == null) {
-				assert !partials.isEmpty();
-				StandardLibrary standardLibrary = getStandardLibrary();
-				List<@NonNull  Property> values = new ArrayList<>(partials);
-				for (int i = 0; i < values.size()-1;) {
-					boolean iRemoved = false;
-					@NonNull Property iValue = values.get(i);
-					for (int j = i + 1; j < values.size();) {
-						Class<? extends Property> iClass = iValue.getClass();
-						@NonNull Property jValue = values.get(j);
-						Class<? extends Property> jClass = jValue.getClass();
-						int verdict = 0;
-						for (Class<?> key : EnvironmentView.getDisambiguatorKeys()) {
-							if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
-								List<@NonNull Disambiguator<@NonNull Object>> disambiguators = EnvironmentView.getDisambiguators(key);
-								if (disambiguators != null) {
-									for (Disambiguator<@NonNull Object> disambiguator : disambiguators) {
-										verdict = disambiguator.compare(standardLibrary, iValue, jValue);
-										if (verdict != 0) {
-											break;
-										}
-									}
-								}
-								if (verdict != 0) {
-									break;
-								}
-							}
-						}
-						if (verdict == 0) {
-							j++;
-						} else if (verdict < 0) {
-							values.remove(i);
-							iRemoved = true;
-							break;
-						} else {
-							values.remove(j);
-						}
-					}
-					if (!iRemoved) {
-						i++;
-					}
-				}
-				if (values.size() != 1) {
-					throw new IllegalStateException("Ambiguous");
-				}
+				List<@NonNull Property> values = getPrimaryProperties();
+//				if (values.size() != 1) {		// XXX perhaps a remove absolute duplicate disambiguator
+//					throw new IllegalStateException("Ambiguous");
+//				}
 				primaryProperty = resolution2 = values.get(0);
 			}
 			return resolution2;
@@ -285,6 +290,21 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			subFlatClasses = subFlatClasses2 = new HashSet<>();
 		}
 		subFlatClasses2.add(subFlatClass);
+	}
+
+	private @NonNull Iterable<@NonNull Property> applyFilter(@NonNull Iterable<@NonNull Property> asProperties, @NonNull FeatureFilter featureFilter) {
+		for (@NonNull Property asProperty : asProperties) {
+			if (!featureFilter.accept(asProperty)) {		// pruning needed
+				List<@NonNull Property> asPrunedProperties = new ArrayList<>();
+				for (Property asProperty2 : asProperties) {
+					if (!featureFilter.accept(asProperty2)) {
+						asPrunedProperties.add(asProperty);
+					}
+				}
+				return asPrunedProperties;
+			}
+		}
+		return asProperties;
 	}
 
 	@Override
@@ -709,7 +729,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	protected @NonNull Map<@NonNull String, @NonNull Object> getName2PropertyOrProperties() {
-		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = name2propertyOrProperties;		// XXX Use binary search.
 		if (name2propertyOrProperties2 == null) {
 			@NonNull FlatFragment @NonNull [] fragments = getFragments();
 			synchronized(this) {
@@ -854,16 +874,17 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			return Collections.emptyList();
 		}
 		else if (propertyOrProperties instanceof Property) {		// No need for featureFilter since the filter already selected one
-			return Collections.singletonList((Property)propertyOrProperties);
-		}
-		else {
-			Iterable<@NonNull Property> asProperties = ((PartialProperties)propertyOrProperties).getPartials();
-			if (Iterables.size(asProperties) == 1) {
-				return Collections.singletonList(Iterables.get(asProperties, 0));
+			Property asProperty = (Property)propertyOrProperties;
+			if ((featureFilter == null) || featureFilter.accept(asProperty)) {
+				return Collections.singletonList((Property)propertyOrProperties);
 			}
 			else {
-				return selectPrimaryProperties(featureFilter, asProperties);
+				return Collections.emptyList();
 			}
+		}
+		else {
+			Iterable<@NonNull Property> asProperties = ((PartialProperties)propertyOrProperties).getPrimaryProperties();
+			return featureFilter != null ? applyFilter(asProperties, featureFilter) : asProperties;
 		}
 	}
 
@@ -898,18 +919,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		Object asPropertyOrProperties = name2propertyOrProperties2.get(name);
 		if (asPropertyOrProperties instanceof PartialProperties) {
 			Iterable<@NonNull Property> asProperties = ((PartialProperties)asPropertyOrProperties).getPartials();
-			for (Property asProperty : asProperties) {
-				if ((featureFilter != null) && !featureFilter.accept(asProperty)) {		// pruning needed
-					List<@NonNull Property> asPrunedProperties = new ArrayList<>();
-					for (Property asProperty2 : asProperties) {
-						if (!featureFilter.accept(asProperty2)) {
-							asPrunedProperties.add(asProperty);
-						}
-					}
-					return asPrunedProperties;
-				}
-			}
-			return asProperties;
+			return featureFilter != null ? applyFilter(asProperties, featureFilter) : asProperties;
 		}
 		else if (asPropertyOrProperties instanceof Property) {
 			Property asProperty = (Property)asPropertyOrProperties;

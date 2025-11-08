@@ -764,7 +764,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 				if ("oclContainer".equals(name)) {
 					getClass();		// XXX
 				}
-				Iterable<@NonNull Property> properties = completeClass.getProperties(asProperty);
+				Iterable<@NonNull Property> properties = completeClass.getPrimaryProperties(null, PivotUtil.getName(asProperty));
 				if ((properties != null) && Iterables.size(properties) > 1) {
 					NameExpCS csOppositeNameExp = createNameExpCS(asOpposite, null);
 					SquareBracketedClauseCS csSquareBracketedClause = createSquareBracketedClauseCS(csOppositeNameExp);
