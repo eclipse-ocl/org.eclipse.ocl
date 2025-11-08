@@ -645,10 +645,10 @@ public class Ecore2AS extends AbstractExternal2AS
 			else if (isPivot(ecoreContents)) {
 				String nsURI = ((EPackage)ecoreContents.iterator().next()).getNsURI();
 				if (nsURI != null) {
-					Resource libraryResource = standardLibrary.loadLibraryResource(LibraryConstants.STDLIB_URI);
-				//	String stdlibASUri = LibraryConstants.STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-				//	OCLstdlib library = OCLstdlib.create(stdlibASUri, LibraryConstants.STDLIB_URI);
-				//	metamodelManager.installResource(library);
+				//	Resource libraryResource = standardLibrary.loadLibraryResource(LibraryConstants.STDLIB_URI); -- bad doubly-defines library types
+					String stdlibASUri = LibraryConstants.STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+					OCLstdlib library = OCLstdlib.create(stdlibASUri, LibraryConstants.STDLIB_URI);
+					metamodelManager.installResource(library);
 				}
 			}
 		}
