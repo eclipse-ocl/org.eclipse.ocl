@@ -174,7 +174,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	protected org.eclipse.ocl.pivot.@NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+	protected org.eclipse.ocl.pivot.@NonNull Class getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
 		org.eclipse.ocl.pivot.Class nestedType = NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
 		if (nestedType == null) {
 			nestedType = getStandardLibrary().basicGetLibraryClass(name);

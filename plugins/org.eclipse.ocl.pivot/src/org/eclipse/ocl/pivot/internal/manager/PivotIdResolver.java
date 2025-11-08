@@ -92,8 +92,8 @@ public class PivotIdResolver extends AbstractIdResolver
 	}
 
 	@Override
-	protected @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
-		Type nestedType = completeModel.getNestedType(parentPackage, name);
+	protected org.eclipse.ocl.pivot.@NonNull Class getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
+		org.eclipse.ocl.pivot.Class nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			CompletePackage asParentCompletePackage = completeModel.getCompletePackage(parentPackage);
 			CompleteClass nestedCompleteType = (CompleteClass) asParentCompletePackage.getType(name);
@@ -164,7 +164,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		if (typeName != null) {
 			String nsURI = ePackage.getNsURI();
 			PackageId packageId = IdManager.getPackageId(ePackage);
-			CompletePackageId completePackageId = IdManager.getCompletePackageId(packageId.toString());		// XXX Ugh! fold
+			CompletePackageId completePackageId = IdManager.getCompletePackageId(nsURI); //packageId.toString());		// XXX Ugh! fold
 			CompletePackage completePackage = completeModel.getCompletePackage(completePackageId, ePackage.getNsPrefix(), nsURI);
 			org.eclipse.ocl.pivot.Class pivotType = completePackage.getMemberType(typeName);
 			if (pivotType != null) {

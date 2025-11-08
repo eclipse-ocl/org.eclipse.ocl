@@ -32,6 +32,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -1846,6 +1848,17 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		setASmetamodel(asPackage);		// Standard meta-model
 		//		asResourceSet.getResources().add(asResource);
 		((PivotMetamodelManager)getMetamodelManager()).installResource(asResource);
+	}
+
+	@Override
+	public void registerCompleteModelContribution(@NonNull Model model) {
+		getPartialModels().add(model);
+		Resource asResource1 = model.eResource();
+		ResourceSet asResourceSet = getEnvironmentFactory().getASResourceSet();
+		URI asURI = asResource1.getURI();
+		((ResourceSetImpl)asResourceSet).getURIResourceMap().put(asURI, asResource1);
+		Resource asResource2 = asResourceSet.getResource(asURI, false);
+		assert asResource1 == asResource2;
 	}
 
 	@Override

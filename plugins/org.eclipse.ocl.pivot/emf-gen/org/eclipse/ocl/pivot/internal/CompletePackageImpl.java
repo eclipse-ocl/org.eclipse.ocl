@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -799,8 +800,8 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	@Override
 	public final org.eclipse.ocl.pivot.@Nullable Package basicGetPrimaryPackage() {
-		for (org.eclipse.ocl.pivot.Package partialPackage : getPartialPackages()) {
-			if (partialPackage != null) {
+		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : getPartialPackages()) {
+			if (!Orphanage.isOrphanage(partialPackage)) {
 				return partialPackage;
 			}
 		}

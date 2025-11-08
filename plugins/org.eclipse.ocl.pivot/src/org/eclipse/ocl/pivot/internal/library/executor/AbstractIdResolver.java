@@ -887,7 +887,7 @@ public abstract class AbstractIdResolver implements IdResolver
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @NonNull Type getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
+	protected abstract org.eclipse.ocl.pivot.@NonNull Class getNestedClass(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
 	/**
 	 * @since 7.0
@@ -1396,11 +1396,11 @@ public abstract class AbstractIdResolver implements IdResolver
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull Type visitClassId(@NonNull ClassId id) {
+	public org.eclipse.ocl.pivot.@NonNull Class visitClassId(@NonNull ClassId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = getNestedClass(parentPackage, id.getName());
-		return nestedType;
+		org.eclipse.ocl.pivot.Class nestedClass = getNestedClass(parentPackage, id.getName());
+		return nestedClass;
 	}
 
 	public @NonNull Type visitCollectedId(@NonNull CollectionTypeId id) {

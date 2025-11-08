@@ -1593,4 +1593,11 @@ implements org.eclipse.ocl.pivot.Class {
 	public String toString() {
 		return super.toString();
 	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer,
+			int newContainerFeatureID) {
+		// TODO XXX Auto-generated method stub
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+	}
 } //ClassImpl
