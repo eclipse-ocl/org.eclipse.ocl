@@ -438,7 +438,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String propertyName) {
+	public final @Nullable Property basicGetPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name) {
 		return getFlatClass().basicGetPrimaryProperty(featureFilter, name);
 	}
 

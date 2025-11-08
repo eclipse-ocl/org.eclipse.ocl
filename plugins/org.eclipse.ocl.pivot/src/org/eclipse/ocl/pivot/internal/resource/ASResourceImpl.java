@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
@@ -314,7 +313,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
 	//	assert PivotUtil.isASURI(uri);				// Disabled since some standalone tests use *.xml
-		PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
+	//	PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
 	}
 
 	/**
