@@ -85,7 +85,6 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LetVariable;
-import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -384,9 +383,6 @@ public class PivotUtil implements PivotConstants
 					return PivotConstants.METAMODEL_METAMODEL_URI;
 				}
 			}
-		}
-		if (asPackage instanceof Library) {
-			return PivotConstants.METAMODEL_COMPLEMENT_URI;
 		}
 		return null;
 	}

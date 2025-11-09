@@ -83,12 +83,6 @@ public interface PivotConstants
 	static final @NonNull URI METAMODEL_URI = URI.createURI(METAMODEL_NAME);
 
 	/**
-	 * Sub URI used to identify that a Package complements the prevailing OCL AS Standard Library or Metamodel.
-	 * @since 7.0
-	 */
-	static final @NonNull URI METAMODEL_COMPLEMENT_URI = METAMODEL_URI.appendFragment("Complement");
-
-	/**
 	 * Sub URI used to identify that a Package defines the OCL AS Standard Library.
 	 * @since 7.0
 	 */
