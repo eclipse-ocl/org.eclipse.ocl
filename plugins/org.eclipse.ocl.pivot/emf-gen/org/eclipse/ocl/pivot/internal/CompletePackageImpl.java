@@ -805,10 +805,31 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	@Override
 	public final org.eclipse.ocl.pivot.@Nullable Package basicGetPrimaryPackage() {
+		org.eclipse.ocl.pivot.@Nullable Package asPackage1 = basicGetPrimaryPackage1();
+		org.eclipse.ocl.pivot.@Nullable Package asPackage2 = basicGetPrimaryPackage2();
+	//	assert asPackage1 == asPackage2;
+		return asPackage2;
+	}
+
+	private final org.eclipse.ocl.pivot.@Nullable Package basicGetPrimaryPackage1() {
 		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : getPartialPackages()) {
 			if (!Orphanage.isOrphanage(partialPackage)) {
 				return partialPackage;
 			}
+		}
+		return null;
+	}
+
+	private final org.eclipse.ocl.pivot.@Nullable Package basicGetPrimaryPackage2() {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Package> partialPackages = PivotUtil.getPartialPackages(this);
+		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
+			if (partialPackage.getESObject() != null) {
+				return partialPackage;
+			}
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
+//			if (!Orphanage.isOrphanage(partialPackage)) {
+			return partialPackage;
 		}
 		return null;
 	}
