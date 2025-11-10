@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
@@ -49,6 +50,7 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
@@ -569,13 +571,16 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllClasses() {
-		return Iterables.transform(ClassUtil.<CompleteClass>nullFree(getOwnedCompleteClasses()), new Function<@NonNull CompleteClass, org.eclipse.ocl.pivot.@NonNull Class>()
+		@NonNull List<@NonNull CompleteClass> completeClasses = ClassUtil.nullFree(getOwnedCompleteClasses());
+		Iterable<@NonNull Class> transform = Iterables.transform(completeClasses, new Function<@NonNull CompleteClass, org.eclipse.ocl.pivot.@NonNull Class>()
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull CompleteClass input) {
 				return input.getPrimaryClass();
 			}
 		});
+		assert transform != null;
+		return transform;
 	}
 
 	@Override
@@ -810,7 +815,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	@Override
 	public String getPackageName() {
-		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
+		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(this)) {
 			String packageName = partialPackage.getName();
 			if (packageName != null) {
 				return packageName;
