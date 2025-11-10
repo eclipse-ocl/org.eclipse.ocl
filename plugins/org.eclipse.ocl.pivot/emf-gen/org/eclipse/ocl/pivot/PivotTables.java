@@ -2055,10 +2055,10 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _CollectionRange__ownedFirst = LIBRARY.createProperty(Types._CollectionRange, PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST, Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _CollectionRange__ownedLast = LIBRARY.createProperty(Types._CollectionRange, PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST, Types._OCLExpression, 1 | IsComposite | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _CollectionType__elementType = LIBRARY.createProperty(Types._CollectionType, "elementType", Types._Type, 0 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
+		public static final @NonNull Property _CollectionType__elementType = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__ELEMENT_TYPE, Types._Type, 0 | IsDerived | IsRequired | IsTransient | IsVolatile);
 		public static final @NonNull Property _CollectionType__isNullFree = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CollectionType__lower = LIBRARY.createProperty(Types._CollectionType, "lower", OCLstdlibTables.Types._Integer, 2 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
-		public static final @NonNull Property _CollectionType__upper = LIBRARY.createProperty(Types._CollectionType, "upper", OCLstdlibTables.Types._Integer, 3 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
+		public static final @NonNull Property _CollectionType__lower = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__LOWER, OCLstdlibTables.Types._Integer, 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CollectionType__upper = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__UPPER, OCLstdlibTables.Types._UnlimitedNatural, 3 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _Comment__annotatedElements = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__ANNOTATED_ELEMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Element), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Comment__body = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__BODY, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
@@ -2205,9 +2205,9 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _MapLiteralPart__MapLiteralExp__ownedParts = LIBRARY.createOppositeProperty(Types._MapLiteralPart, "MapLiteralExp", Types._MapLiteralExp, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS);
 
 		public static final @NonNull Property _MapType__entryClass = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, Types._Class, 0 | IsResolveProxies);
-		public static final @NonNull Property _MapType__keyType = LIBRARY.createProperty(Types._MapType, "keyType", Types._Type, 1 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
+		public static final @NonNull Property _MapType__keyType = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__KEY_TYPE, Types._Type, 1 | IsDerived | IsRequired | IsTransient | IsVolatile);
 		public static final @NonNull Property _MapType__keysAreNullFree = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _MapType__valueType = LIBRARY.createProperty(Types._MapType, "valueType", Types._Type, 3 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
+		public static final @NonNull Property _MapType__valueType = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__VALUE_TYPE, Types._Type, 3 | IsDerived | IsRequired | IsTransient | IsVolatile);
 		public static final @NonNull Property _MapType__valuesAreNullFree = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _MessageExp__ownedArguments = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression), 0 | IsComposite | IsRequired | IsResolveProxies);
@@ -2553,6 +2553,8 @@ public class PivotTables extends AbstractTables
 
 			_CollectionType__elementType.setOpposite(_Type__CollectionType__elementType);
 			_CollectionType__isNullFree.setDefaultValueString("false");
+			_CollectionType__lower.setDefaultValueString("0");
+			_CollectionType__upper.setDefaultValueString("*");
 
 			_Comment__annotatedElements.setOpposite(_Element__annotatingComments);
 			_Comment__owningElement.setOpposite(_Element__ownedComments);
