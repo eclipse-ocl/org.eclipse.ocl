@@ -71,6 +71,10 @@ public abstract class LUSSIDs
 	/**
 	 * @since 7.0
 	 */
+	protected static final int PARAMETER_TYPE_MULTIPLIER = 107;
+	/**
+	 * @since 7.0
+	 */
 	protected static final int PARAMETER_IS_OPTIONAL_MULTIPLIER = 73;
 	protected static final int MAP_KEYS_ARE_NULL_FREE_MULTIPLIER = 101;
 	protected static final int MAP_VALUES_ARE_NULL_FREE_MULTIPLIER = 103;
@@ -325,6 +329,7 @@ public abstract class LUSSIDs
 				idObject = internalElement2lussid.get(element);
 				if (idObject != null) {
 					if (isReferenced) {
+					//	System.out.println("assignLUSSID1 : " + idObject + " " + NameUtil.debugSimpleName(element) + " " + element);
 						identifiedElement2lussid.put(element, idObject);
 					}
 					return idObject.intValue();
@@ -356,6 +361,7 @@ public abstract class LUSSIDs
 				normalizedElement2lussid.put(element, idObject);
 			}
 			else if (isReferenced) {
+			//	System.out.println("assignLUSSID2 : " + idObject + " " + NameUtil.debugSimpleName(element) + " " + element);
 				identifiedElement2lussid.put(element, idObject);
 			}
 			else {

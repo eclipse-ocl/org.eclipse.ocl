@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.utilities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class XMIUtil
 		}
 
 		private Map<String, String> value2name = new HashMap<>();
-		private Map<String, String> name2value = new HashMap<>();
+		private Map<String, String> name2value = new LinkedHashMap<>();	// Retain order for getNameToValueMap() to XMI file.
 
 		public IdResourceEntityHandler() {
 			super();

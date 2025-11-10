@@ -1647,4 +1647,12 @@ implements Operation {
 		}
 		return null;
 	}
+
+	@Override
+	public void setName(String newName) {
+		if ("forAll".equals(newName)) {
+			getClass();				// XXX
+		}
+		super.setName(newName);
+	}
 } //OperationImpl

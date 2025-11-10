@@ -12,23 +12,23 @@
           name="getSeverity" type="pivot:PrimitiveType &_0;#tYtCd"/>
       <ownedOperations xmi:id="fsh7B" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation" isRequired="true"
           isValidating="true" name="logDiagnostic" type="pivot:BooleanType &_0;#XEMMs">
-        <ownedParameters xmi:id="N4iO," isRequired="true" name="object" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="6RCGQ" name="diagnostics" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="9BM80" name="context" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="L3pVU" isRequired="true" name="severity" type="pivot:PrimitiveType &_0;#tYtCd"/>
-        <ownedParameters xmi:id="Ar1BH" name="status" type="pivot:BooleanType &_0;#XEMMs"/>
-        <ownedParameters xmi:id="7iDa8" isRequired="true" name="code" type="pivot:PrimitiveType &_0;#tYtCd"/>
+        <ownedParameters xmi:id="u7UvW" isRequired="true" name="object" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="bV0mn" name="diagnostics" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="eF+cM" name="context" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="aKi33" isRequired="true" name="severity" type="pivot:PrimitiveType &_0;#tYtCd"/>
+        <ownedParameters xmi:id="d9Aa," name="status" type="pivot:BooleanType &_0;#XEMMs"/>
+        <ownedParameters xmi:id="K277f" isRequired="true" name="code" type="pivot:PrimitiveType &_0;#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="oqCYC" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation" isRequired="true"
           isValidating="true" name="logDiagnostic" type="pivot:BooleanType &_0;#XEMMs">
-        <ownedParameters xmi:id="yNiIG" isRequired="true" name="object" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="ps,wI" name="feature" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="fnBAX" name="diagnostics" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="iXL27" name="context" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="6AID8" name="message" type="pivot:PrimitiveType &_0;#AlwVZ"/>
-        <ownedParameters xmi:id="wMpPb" isRequired="true" name="severity" type="pivot:PrimitiveType &_0;#tYtCd"/>
-        <ownedParameters xmi:id="lA17N" name="status" type="pivot:AnyType &_0;#jbMkR"/>
-        <ownedParameters xmi:id="g4CUD" isRequired="true" name="code" type="pivot:PrimitiveType &_0;#tYtCd"/>
+        <ownedParameters xmi:id="TRUpd" isRequired="true" name="object" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="KwxRg" name="feature" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="Arzgu" name="diagnostics" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="Db9WT" name="context" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="63VbT" name="message" type="pivot:PrimitiveType &_0;#AlwVZ"/>
+        <ownedParameters xmi:id=",fhx+" isRequired="true" name="severity" type="pivot:PrimitiveType &_0;#tYtCd"/>
+        <ownedParameters xmi:id="GEncl" name="status" type="pivot:AnyType &_0;#jbMkR"/>
+        <ownedParameters xmi:id="vL71m" isRequired="true" name="code" type="pivot:PrimitiveType &_0;#tYtCd"/>
       </ownedOperations>
     </ownedClasses>
   </ownedPackages>

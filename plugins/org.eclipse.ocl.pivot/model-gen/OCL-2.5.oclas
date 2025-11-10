@@ -24,18 +24,18 @@
       <ownedOperations xmi:id="zqz,+" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="lDEmm" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="2P4eo" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="uNz,+" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] and bag contain the same elements, the same number of times.&#xA;"/>
-        <ownedParameters xmi:id="0K0em" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="FXoXo" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="l3dcd" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           isRequired="true" name="closure" type="#3IkED">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="anMEW" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="D5qj2" name="lambda" type="#bF2V1"/>
+        <ownedIterators xmi:id="lJPEW" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="M9FFC" name="lambda" type="#bF2V1"/>
         <ownedSignature>
           <ownedParameters xmi:id="gfSd9" name="E"/>
         </ownedSignature>
@@ -43,7 +43,7 @@
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="zRrYi" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           isRequired="true" name="collect" type="#YIgED">
         <ownedIterators xmi:id="w4HmK" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="ZKmFr" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="RXU+k" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="eL2r+" name="E"/>
         </ownedSignature>
@@ -52,7 +52,7 @@
           isRequired="true" name="collectNested" type="#YIgED">
         <ownedComments body="&#xA;The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
         <ownedIterators xmi:id="rlgJ0" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="U3+oU" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="MEthO" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="t06M4" name="E"/>
         </ownedSignature>
@@ -65,7 +65,7 @@
       <ownedOperations xmi:id="ZMZWD" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" isRequired="true"
           name="excludingAll" type="#,GgED">
         <ownedComments body="&#xA;The bag containing all elements of oclText[self] apart from all occurrences of all objects.&#xA;"/>
-        <ownedParameters xmi:id="0,s6C" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="kHzSq" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="jS7X7" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation" isRequired="true"
           name="flatten" type="#YIgED">
@@ -82,24 +82,24 @@
       <ownedOperations xmi:id="L0SMR" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" isRequired="true"
           name="includingAll" type="#,GgED">
         <ownedComments body="&#xA;The bag containing all elements of oclText[self] and objects.&#xA;"/>
-        <ownedParameters xmi:id="eo8y3" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="OwCLf" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="obMFy" implementationClass="org.eclipse.ocl.pivot.library.iterator.RejectIteration"
           isRequired="true" name="reject" type="#,GgED">
         <ownedComments body="&#xA;The sub-bag of the source bag for which body is oclText[false].&#xA;&#xA;oclCode[self->reject(iterator | body) = self->select(iterator | not body)].&#xA;"/>
         <ownedIterators xmi:id="RrBzj" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="68fSE" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="OES4M" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="Fhoyz" implementationClass="org.eclipse.ocl.pivot.library.iterator.SelectIteration"
           isRequired="true" name="select" type="#,GgED">
         <ownedComments body="&#xA;The sub-bag of the source bag for which body is oclText[true].&#xA;&#xA;oclCode[self->select(iterator | body) =&#xA;self->iterate(iterator; result : Bag(T) = Bag{} |&#xA;if body then result->including(iterator)&#xA;else result&#xA;endif)]&#xA;"/>
         <ownedIterators xmi:id="6qEs1" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="j8iLW" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="3DVxe" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="IAooG" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation" isRequired="true"
           name="selectByKind" type="#dHgED">
         <ownedComments body="&#xA;The bag containing all elements of oclText[self] whose type conforms to oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="N9o5," isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="Yfr5," isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="W15JD" name="TT"/>
         </ownedSignature>
@@ -107,7 +107,7 @@
       <ownedOperations xmi:id="uOtpG" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" isRequired="true"
           name="selectByType" type="#dHgED">
         <ownedComments body="&#xA;The bag containing all elements of oclText[self] whose type is oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="bxCKR" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="mTFKR" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="s4v1V" name="TT"/>
         </ownedSignature>
@@ -116,7 +116,7 @@
           isRequired="true" name="sortedBy" type="#4m9WX">
         <ownedComments body="&#xA;Results in the Sequence containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="SnaGD" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="744lj" name="lambda" type="#Kzb3k"/>
+        <ownedParameters xmi:id="paXRM" name="lambda" type="#Kzb3k"/>
       </ownedOperations>
       <ownedSignature>
         <ownedParameters xmi:id="k2OA6" name="T"/>
@@ -132,12 +132,12 @@
       <ownedOperations xmi:id="E8cxV" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Returns oclText[true] if the logical value of oclText[self] is the not same as the numeric value of object2, oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="yfcl8" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="DsQe+" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id=",ecxV" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="BnMe8" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="SzAX+" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="FufYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isInvalidating="true"
           isValidating="true" name="and" precedence="#VT87C" type="#XEMMs">
@@ -198,7 +198,7 @@
             </ownedThen>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="ZRze7" name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="0BvIH" name="b" representedParameter="#+H4XU" type="#XEMMs"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="0BvIH" name="b" representedParameter="#baDwM" type="#XEMMs"/>
         </bodyExpression>
         <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
           <ownedDetails name="ClassGroup">
@@ -206,7 +206,7 @@
           </ownedDetails>
         </ownedAnnotations>
         <ownedComments body="&#xA;oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[true].&#xA;"/>
-        <ownedParameters xmi:id="+H4XU" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="baDwM" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="gKkjU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2" isRequired="true"
           isValidating="true" name="and2" precedence="#VT87C" type="#XEMMs">
@@ -228,11 +228,11 @@
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" isRequired="true" type="#XEMMs"/>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="MxyDI" name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="nhutT" isRequired="true" name="b" representedParameter="#tix9E"
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="nhutT" isRequired="true" name="b" representedParameter="#K18V9"
               type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[true].&#xA;"/>
-        <ownedParameters xmi:id="tix9E" isRequired="true" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="K18V9" isRequired="true" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="lJALH" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation" isInvalidating="true"
           isValidating="true" name="implies" precedence="#1Odhg" type="#XEMMs">
@@ -293,10 +293,10 @@
             </ownedThen>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="5IH8B" name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="U5CmN" name="b" representedParameter="#e1OHk" type="#XEMMs"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="U5CmN" name="b" representedParameter="#7Hafc" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
-        <ownedParameters xmi:id="e1OHk" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="7Hafc" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="AfRB7" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2" isRequired="true"
           isValidating="true" name="implies2" precedence="#1Odhg" type="#XEMMs">
@@ -318,11 +318,11 @@
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" isRequired="true" type="#XEMMs"/>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="spaQQ" name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="HaW6b" isRequired="true" name="b" representedParameter="#Nlx5s"
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="HaW6b" isRequired="true" name="b" representedParameter="#q38Rl"
               type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
-        <ownedParameters xmi:id="Nlx5s" isRequired="true" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="q38Rl" isRequired="true" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="DH5kA" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isInvalidating="true"
           isValidating="true" name="not" precedence="#tgQwH" type="#XEMMs">
@@ -420,10 +420,10 @@
             </ownedThen>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="FjUTe" name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="gTQ9p" name="b" representedParameter="#aX,sO" type="#XEMMs"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="gTQ9p" name="b" representedParameter="#3pKFH" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
-        <ownedParameters xmi:id="aX,sO" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="3pKFH" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="UAjYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2" isRequired="true"
           isValidating="true" name="or2" precedence="#BEt7C" type="#XEMMs">
@@ -445,11 +445,11 @@
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" isRequired="true" type="#XEMMs"/>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="gV6f," name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="7F2JL" isRequired="true" name="b" representedParameter="#RBSMV"
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="7F2JL" isRequired="true" name="b" representedParameter="#uTdkN"
               type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
-        <ownedParameters xmi:id="RBSMV" isRequired="true" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="uTdkN" isRequired="true" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="clDqW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isRequired="true"
           name="toString" type="#AlwVZ">
@@ -490,10 +490,10 @@
             <ownedThen xsi:type="pivot:VariableExp" isRequired="true" name="self" referredVariable="#97dob" type="#XEMMs"/>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="97dob" isRequired="true" name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="YsZSn" name="b" representedParameter="#y5IuV" type="#XEMMs"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="YsZSn" name="b" representedParameter="#PMUGO" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].&#xA;oclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null].&#xA;"/>
-        <ownedParameters xmi:id="y5IuV" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="PMUGO" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="cyLmU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2" isRequired="true"
           name="xor2" precedence="#ZtB8C" type="#XEMMs">
@@ -503,11 +503,11 @@
             <ownedSource xsi:type="pivot:VariableExp" isRequired="true" name="self" referredVariable="#oYdvs" type="#XEMMs"/>
           </ownedBody>
           <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="oYdvs" isRequired="true" name="self" type="#XEMMs"/>
-          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="DJZZ4" isRequired="true" name="b" representedParameter="#5q5vu"
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="DJZZ4" isRequired="true" name="b" representedParameter="#W9EIn"
               type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="&#xA;oclText[true] if oclText[self] &lt;> oclText[b]&#xA;Otherwise oclText[false].&#xA;"/>
-        <ownedParameters xmi:id="5q5vu" isRequired="true" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="W9EIn" isRequired="true" name="b" type="#XEMMs"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xmi:id="xB4J7" name="BooleanType" superClasses="#zfDWR">
@@ -534,18 +534,18 @@
       <ownedOperations xmi:id="x4vBs" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;True if c is not equal to oclText[self].&#xA;"/>
-        <ownedParameters xmi:id="r5uj+" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="8FjcA" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="sbvBs" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,&#xA;in the case of an ordered collection type.&#xA;"/>
-        <ownedParameters xmi:id="6Afc+" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="LNTVA" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="qBJ1W" implementationClass="org.eclipse.ocl.pivot.library.iterator.AnyIteration"
           name="any" type="#NxGT6">
         <ownedComments body="&#xA;Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].&#xA;Returns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any element,&#xA;otherwise if there are one or more elements for which the e[body] is oclText[true],&#xA;an indeterminate choice of one of them is returned, otherwise the result is oclText[null].&#xA;&#xA;let source : Collection(T) = ..., body : Lambda T() : Boolean = ... in&#xA;source->any(iterator | body) = source->select(iterator | body)->asSequence()->first()&#xA;"/>
         <ownedIterators xmi:id="LZss0" isRequired="true" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="0qKMV" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="Iy8xd" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="Ti0Xc" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation" isRequired="true"
           name="asBag" type="#,GgED">
@@ -567,7 +567,7 @@
           isRequired="true" name="collect" type="#ujIGS">
         <ownedComments body="&#xA;The Collection of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
         <ownedIterators xmi:id="2uyji" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="fARDD" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="XN,78" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="MJXgR" name="E"/>
         </ownedSignature>
@@ -576,7 +576,7 @@
           isRequired="true" name="collectBy" type="#yAyxQ">
         <ownedComments body="&#xA;The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.&#xA;The result is not flattened.&#xA;"/>
         <ownedIterators xmi:id="RXdIt" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="6o7nN" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="y1pgH" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="7,dc8" name="E"/>
         </ownedSignature>
@@ -585,7 +585,7 @@
           isRequired="true" name="collectNested" type="#ujIGS">
         <ownedComments body="&#xA;The Collection of elements which results from applying body to every member of the source collection.&#xA;"/>
         <ownedIterators xmi:id="xbLHM" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="atpms" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="S6Xfm" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="bybBL" name="E"/>
         </ownedSignature>
@@ -603,7 +603,7 @@
       <ownedOperations xmi:id="QSOWB" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation" isRequired="true"
           name="excludesAll" type="#XEMMs">
         <ownedComments body="&#xA;Does oclText[self] contain none of the elements of c2 ?&#xA;"/>
-        <ownedParameters xmi:id="q6vHp" isRequired="true" name="c2" type="#ujIGS"/>
+        <ownedParameters xmi:id="tjXjQ" isRequired="true" name="c2" type="#ujIGS"/>
         <ownedSignature>
           <ownedParameters xmi:id="8XGpC" name="T2"/>
         </ownedSignature>
@@ -616,20 +616,20 @@
       <ownedOperations xmi:id="XaVYw" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" isRequired="true"
           name="excludingAll" type="#ViIGS">
         <ownedComments body="&#xA;The collection containing all elements of oclText[self] apart from all occurrences of all objects.&#xA;"/>
-        <ownedParameters xmi:id="61X4a" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="q9dQC" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="jsQ+J" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isValidating="true" name="exists" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.&#xA;"/>
         <ownedIterators xmi:id="goDMt" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="J6hrN" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="j1XRW" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="3xQ+J" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isValidating="true" name="exists" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j] in the source collection.&#xA;"/>
         <ownedIterators xmi:id="kYYNt" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="lYYNt" name="j" type="#NxGT6"/>
-        <ownedParameters xmi:id="Nq2sN" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="nlsSW" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="15Q+J" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isValidating="true" name="exists" type="#XEMMs">
@@ -637,7 +637,7 @@
         <ownedIterators xmi:id="qgXPt" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="rgXPt" name="j" type="#NxGT6"/>
         <ownedIterators xmi:id="sgXPt" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="Ty1uN" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="ttrUW" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="hg3Zo" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation" isRequired="true"
           name="flatten" type="#ujIGS">
@@ -650,14 +650,14 @@
           isInvalidating="true" isValidating="true" name="forAll" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each element oclText[i] in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="srwAP" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="V9Ogv" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="v4EG4" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="zwmML" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isValidating="true" name="forAll" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j], oclText[k] in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="wbFCP" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="xbFCP" name="j" type="#NxGT6"/>
-        <ownedParameters xmi:id="Ztjhv" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="zoZH4" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="x4mML" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isValidating="true" name="forAll" type="#XEMMs">
@@ -665,13 +665,13 @@
         <ownedIterators xmi:id="2jEEP" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="3jEEP" name="j" type="#NxGT6"/>
         <ownedIterators xmi:id="4jEEP" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="f1ijv" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="5wYJ4" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="CT3IM" implementationClass="org.eclipse.ocl.pivot.library.iterator.GatherIteration"
           isRequired="true" name="gather" type="#YIgED">
         <ownedComments body="&#xA;The bag of elements which results from applying oclText[lambda] to every member of the source collection.&#xA;"/>
         <ownedIterators xmi:id="Dl3VQ" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="s2V1w" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="kDEuq" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="22rXp" name="V"/>
         </ownedSignature>
@@ -684,7 +684,7 @@
       <ownedOperations xmi:id="eRUDK" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation" isRequired="true"
           name="includesAll" type="#XEMMs">
         <ownedComments body="&#xA;Does oclText[self] contain all the elements of c2 ?&#xA;"/>
-        <ownedParameters xmi:id="AdRgg" isRequired="true" name="c2" type="#ujIGS"/>
+        <ownedParameters xmi:id="DG57H" isRequired="true" name="c2" type="#ujIGS"/>
         <ownedSignature>
           <ownedParameters xmi:id="6QH4k" name="T2"/>
         </ownedSignature>
@@ -697,17 +697,17 @@
       <ownedOperations xmi:id="JCPO+" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" isRequired="true"
           name="includingAll" type="#ViIGS">
         <ownedComments body="&#xA;The collection containing all elements of oclText[self] and objects.&#xA;"/>
-        <ownedParameters xmi:id="kenwP" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="UmtI3" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="WcHrD" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" isRequired="true"
           name="intersection" type="#,GgED">
         <ownedComments body="&#xA;The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.&#xA;"/>
-        <ownedParameters xmi:id="MNlbw" isRequired="true" name="c" type="#ViIGS"/>
+        <ownedParameters xmi:id="8UrzX" isRequired="true" name="c" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="5pQKO" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" isRequired="true"
           name="intersection" type="#ZIkED">
         <ownedComments body="&#xA;The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.&#xA;"/>
-        <ownedParameters xmi:id="1UiRD" isRequired="true" name="u" type="#Gd4BC"/>
+        <ownedParameters xmi:id="gsviz" isRequired="true" name="u" type="#Gd4BC"/>
       </ownedOperations>
       <ownedOperations xmi:id="ghkfR" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation" isRequired="true"
           name="isEmpty" type="#XEMMs">
@@ -718,14 +718,14 @@
         <ownedComments body="&#xA;The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.&#xA;The result is not flattened.&#xA;"/>
         <ownedComments body="&#xA;Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="jpJja" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="M7nC7" name="lambda" type="#W1ArT"/>
+        <ownedParameters xmi:id="+GB9z" name="lambda" type="#W1ArT"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="XFC+U" implementationClass="org.eclipse.ocl.pivot.library.iterator.IterateIteration"
           name="iterate" type="#OxGT6">
         <ownedAccumulator xmi:id="g87,g" name="acc" type="#OxGT6"/>
         <ownedComments body="&#xA;Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source collection.&#xA;"/>
         <ownedIterators xmi:id="Ee8iI" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="tvaCp" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="l8I7i" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="K5nIS" name="Tacc"/>
         </ownedSignature>
@@ -746,12 +746,12 @@
           isRequired="true" name="one" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if there is exactly one element in the source collection for which body is oclText[true].&#xA;"/>
         <ownedIterators xmi:id="CQTh1" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="rhxAW" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id=",ojme" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="3hwJn" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionProductOperation" isRequired="true"
           name="product" type="#AVIYn">
         <ownedComments body="&#xA;The cartesian product operation of oclText[self] and c2.&#xA;"/>
-        <ownedParameters xmi:id="17CRw" isRequired="true" name="c2" type="#ujIGS"/>
+        <ownedParameters xmi:id="4kqsX" isRequired="true" name="c2" type="#ujIGS"/>
         <ownedSignature>
           <ownedParameters xmi:id="bEg9B" name="T2"/>
         </ownedSignature>
@@ -760,16 +760,16 @@
           isRequired="true" name="reject" type="#ViIGS">
         <ownedComments body="&#xA;The sub-collection of the source collection for which body is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="Xhsw7" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="AzKQc" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="U681k" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="F6Xzg" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
           name="search" type="#PxGT6">
         <ownedAccumulator xmi:id="W+F9S" name="acc" type="#OxGT6"/>
         <ownedComments body="&#xA;Search the source elements one-dimensionally using each element in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i)].&#xA;For an empty collection the final result is determined by oclText[source.return(nextAcc,null)].&#xA;"/>
         <ownedIterators xmi:id="6fGg6" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="qUKQL" name="nextAcc" type="#kF3yv"/>
-        <ownedParameters xmi:id="bG1wi" name="break" type="#KTKaX"/>
-        <ownedParameters xmi:id="MXzdl" name="return" type="#mI3yv"/>
+        <ownedParameters xmi:id="2nQSF" name="nextAcc" type="#kF3yv"/>
+        <ownedParameters xmi:id="JIDgr" name="break" type="#KTKaX"/>
+        <ownedParameters xmi:id="uu+ff" name="return" type="#mI3yv"/>
         <ownedSignature>
           <ownedParameters xmi:id="M2snO" name="Q"/>
           <ownedParameters xmi:id="N2snO" name="R"/>
@@ -781,9 +781,9 @@
         <ownedComments body="&#xA;Search the source elements two-dimensionally using each element pair in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i,j)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j)].&#xA;For an empty collection the final result is determined by oclText[source.return(nextAcc,null,null)].&#xA;"/>
         <ownedIterators xmi:id="dzdi6" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="ezdi6" name="j" type="#NxGT6"/>
-        <ownedParameters xmi:id="NohSL" name="nextAcc" type="#km+yv"/>
-        <ownedParameters xmi:id="+ZMzi" name="break" type="#K0RaX"/>
-        <ownedParameters xmi:id="vqKgl" name="return" type="#mp+yv"/>
+        <ownedParameters xmi:id="ZGMhF" name="nextAcc" type="#km+yv"/>
+        <ownedParameters xmi:id="sm+ur" name="break" type="#K0RaX"/>
+        <ownedParameters xmi:id="RN6uf" name="return" type="#mp+yv"/>
         <ownedSignature>
           <ownedParameters xmi:id="jrfV0" name="Q"/>
           <ownedParameters xmi:id="krfV0" name="R"/>
@@ -796,9 +796,9 @@
         <ownedIterators xmi:id="Cffl6" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="Dffl6" name="j" type="#NxGT6"/>
         <ownedIterators xmi:id="Effl6" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="yTjVL" name="nextAcc" type="#XFIzv"/>
-        <ownedParameters xmi:id="jFO2i" name="break" type="#9SbaX"/>
-        <ownedParameters xmi:id="UWMjl" name="return" type="#ZIIzv"/>
+        <ownedParameters xmi:id="PRE0F" name="nextAcc" type="#XFIzv"/>
+        <ownedParameters xmi:id="ix2Bs" name="break" type="#9SbaX"/>
+        <ownedParameters xmi:id="HYyBg" name="return" type="#ZIIzv"/>
         <ownedSignature>
           <ownedParameters xmi:id="04Tnk" name="Q"/>
           <ownedParameters xmi:id="14Tnk" name="R"/>
@@ -808,12 +808,12 @@
           isRequired="true" name="select" type="#ViIGS">
         <ownedComments body="&#xA;The sub-collection of the source collection for which body is oclText[true].&#xA;"/>
         <ownedIterators xmi:id="AhvpN" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="pyNJu" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="95,u2" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="GOkqz" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation" isRequired="true"
           name="selectByKind" type="#ziIGS">
         <ownedComments body="&#xA;The collection containing all elements of oclText[self] whose type conforms to oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="TzT3X" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="eVW3X" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="Eza+V" name="TT"/>
         </ownedSignature>
@@ -821,7 +821,7 @@
       <ownedOperations xmi:id="scprz" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" isRequired="true"
           name="selectByType" type="#ziIGS">
         <ownedComments body="&#xA;The collection containing all elements of oclText[self] whose type is oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="hntHp" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="sJwHp" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="a2Qqo" name="TT"/>
         </ownedSignature>
@@ -834,7 +834,7 @@
           isRequired="true" name="sortedBy" type="#4m9WX">
         <ownedComments body="&#xA;Results in the Collection containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="YdFEb" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="Bvjj7" name="lambda" type="#Kzb3k"/>
+        <ownedParameters xmi:id="vQCPk" name="lambda" type="#Kzb3k"/>
       </ownedOperations>
       <ownedOperations xmi:id="oRN1W" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSumOperation" isRequired="true"
           name="sum" type="#NxGT6">
@@ -843,7 +843,7 @@
       <ownedOperations xmi:id="cNqMA" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation" isRequired="true"
           name="union" type="#,GgED">
         <ownedComments body="&#xA;The bag consisting of all elements in oclText[self] and all elements in c.&#xA;"/>
-        <ownedParameters xmi:id="6ZOjT" isRequired="true" name="c" type="#ViIGS"/>
+        <ownedParameters xmi:id="qhU76" isRequired="true" name="c" type="#ViIGS"/>
       </ownedOperations>
       <ownedSignature>
         <ownedParameters xmi:id="qs59R" name="T"/>
@@ -899,12 +899,12 @@
       <ownedOperations xmi:id="hA+ir" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation" isRequired="true"
           name="*" precedence="#0NX0o" type="#tYtCd">
         <ownedComments body="&#xA;The value of the multiplication of oclText[self] and i.&#xA;"/>
-        <ownedParameters xmi:id="xQEd2" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id="Cd4V4" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="iA+ir" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation" isRequired="true"
           name="+" precedence="#qLHeo" type="#tYtCd">
         <ownedComments body="&#xA;The value of the addition of oclText[self] and i.&#xA;"/>
-        <ownedParameters xmi:id="ugEd2" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id=",s4V4" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="b,,VW" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation" isRequired="true"
           name="-" precedence="#tgQwH" type="#tYtCd">
@@ -913,12 +913,12 @@
       <ownedOperations xmi:id="kA+ir" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation" isRequired="true"
           name="-" precedence="#qLHeo" type="#tYtCd">
         <ownedComments body="&#xA;The value of the subtraction of i from oclText[self].&#xA;"/>
-        <ownedParameters xmi:id="oAFd2" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id="5M5V4" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="mA+ir" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation" isInvalidating="true"
           isRequired="true" name="/" precedence="#0NX0o" type="#Nr4QF">
         <ownedComments body="&#xA;The value of oclText[self] divided by i.&#xA;Evaluates to oclText[invalid] if r is equal to zero.&#xA;"/>
-        <ownedParameters xmi:id="igFd2" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id="zs5V4" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="ggXWW" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation" isRequired="true"
           name="abs" type="#tYtCd">
@@ -927,22 +927,22 @@
       <ownedOperations xmi:id="WTP3A" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericDivOperation" isRequired="true"
           name="div" type="#tYtCd">
         <ownedComments body="&#xA;The number of times that i fits completely within oclText[self].&#xA;"/>
-        <ownedParameters xmi:id="So906" isRequired="true" name="i" type="#tYtCd"/>
+        <ownedParameters xmi:id="h71We" isRequired="true" name="i" type="#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="bVYjr" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation" isRequired="true"
           name="max" type="#tYtCd">
         <ownedComments body="&#xA;The maximum of oclText[self] an i.&#xA;"/>
-        <ownedParameters xmi:id="DyDB9" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id="U+35+" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="JZYjr" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMinOperation" isRequired="true"
           name="min" type="#tYtCd">
         <ownedComments body="&#xA;The minimum of oclText[self] an i.&#xA;"/>
-        <ownedParameters xmi:id="5G,B9" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id="KTz6+" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="HdR3A" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericModOperation" isRequired="true"
           name="mod" type="#tYtCd">
         <ownedComments body="&#xA;The result is oclText[self] modulo i.&#xA;"/>
-        <ownedParameters xmi:id=",aTX7" isRequired="true" name="i" type="#tYtCd"/>
+        <ownedParameters xmi:id="OuL5e" isRequired="true" name="i" type="#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="aIlbs" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isRequired="true"
           name="toString" type="#AlwVZ">
@@ -969,18 +969,18 @@
       <ownedOperations xmi:id="oNyo," implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="Gr1T0" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="X3pM2" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="jwxo," implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="VylM0" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="m+ZF2" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="hWLcq" implementationClass="org.eclipse.ocl.pivot.library.iterator.AnyIteration"
           name="any" type="#NxGT6">
         <ownedComments body="&#xA;Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].&#xA;Returns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,&#xA;otherwise if there are one or more kets for which the e[body] is oclText[true],&#xA;an indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].&#xA;&#xA;let source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in&#xA;source->any(key &lt;- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()&#xA;"/>
         <ownedIterators xmi:id="oKzcq" isRequired="true" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="PcR8K" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="jjDiT" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="xg0bq" implementationClass="org.eclipse.ocl.pivot.library.map.MapAtOperation" isInvalidating="true" name="at"
           type="#OxGT6">
@@ -991,7 +991,7 @@
           isRequired="true" name="collect" type="#xJgED">
         <ownedComments body="&#xA;The Collection of results from applying body to every key-value of the source map.&#xA;The result is flattened.&#xA;"/>
         <ownedIterators xmi:id="Tg5TY" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="6xXz4" name="lambda" type="#qhxyv"/>
+        <ownedParameters xmi:id="IDLsy" name="lambda" type="#qhxyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="7kZ8x" name="E"/>
         </ownedSignature>
@@ -1000,7 +1000,7 @@
           isRequired="true" name="collectBy" type="#9EyxQ">
         <ownedComments body="&#xA;The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.&#xA;The result is not flattened.&#xA;"/>
         <ownedIterators xmi:id="uIk4i" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="VaCYD" name="lambda" type="#qhxyv"/>
+        <ownedParameters xmi:id="jr1Q9" name="lambda" type="#qhxyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="qbg4c" name="E"/>
         </ownedSignature>
@@ -1009,7 +1009,7 @@
           isRequired="true" name="collectNested" type="#xJgED">
         <ownedComments body="&#xA;The Collection of results from applying body to every key-value of the source map.&#xA;"/>
         <ownedIterators xmi:id="ONS3B" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="1ewWi" name="lambda" type="#qhxyv"/>
+        <ownedParameters xmi:id="DwjPc" name="lambda" type="#qhxyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="KOedr" name="E"/>
         </ownedSignature>
@@ -1023,12 +1023,12 @@
           name="excludes" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[key] and oclText[value] are not a key-value pair of oclText[self], oclText[false] otherwise.&#xA;"/>
         <ownedParameters xmi:id="D7lKO" name="key" type="#NxGT6"/>
-        <ownedParameters xmi:id="VHV1U" name="value" type="#OxGT6"/>
+        <ownedParameters xmi:id="gpX1U" name="value" type="#OxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="Cj,,U" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation" isRequired="true"
           name="excludesAll" type="#XEMMs">
         <ownedComments body="&#xA;True if none of the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="RzSqK" isRequired="true" name="coll" type="#HlIGS"/>
+        <ownedParameters xmi:id="n9bJy" isRequired="true" name="coll" type="#HlIGS"/>
         <ownedSignature>
           <ownedParameters xmi:id="nq2vM" name="K2"/>
         </ownedSignature>
@@ -1036,7 +1036,7 @@
       <ownedOperations xmi:id="SdiU2" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation" isRequired="true"
           name="excludesMap" type="#XEMMs">
         <ownedComments body="&#xA;True if none of the key-value pairs of oclText[map] are also key-value pairs of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="Re9Pv" name="map" type="#6LyxQ"/>
+        <ownedParameters xmi:id="TchkP" name="map" type="#6LyxQ"/>
         <ownedSignature>
           <ownedParameters xmi:id="32YRt" name="K2"/>
           <ownedParameters xmi:id="M8YRt" name="V2"/>
@@ -1045,7 +1045,7 @@
       <ownedOperations xmi:id="397CC" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation" isRequired="true"
           name="excludesValue" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[value] is not one of the values of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="38oH5" name="value" type="#OxGT6"/>
+        <ownedParameters xmi:id="CfrH5" name="value" type="#OxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="VgC8O" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingOperation" name="excluding" type="#yAyxQ">
         <ownedComments body="&#xA;The map containing all key-value pairs of oclText[self] except any whose key is oclText[key].&#xA;"/>
@@ -1055,17 +1055,17 @@
           type="#yAyxQ">
         <ownedComments body="&#xA;The map containing all key-value pairs of oclText[self] except any whose key is oclText[key] and whose value is oclText[key].&#xA;"/>
         <ownedParameters xmi:id="JwScd" name="key" type="#NxGT6"/>
-        <ownedParameters xmi:id="b8BHk" name="value" type="#OxGT6"/>
+        <ownedParameters xmi:id="meEHk" name="value" type="#OxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="OvX,D" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation" name="excludingAll"
           type="#yAyxQ">
         <ownedComments body="&#xA;The map containing all key-value pairs of oclText[self] except any whose key is included in oclText[keys].&#xA;"/>
-        <ownedParameters xmi:id="1KFwz" isRequired="true" name="keys" type="#ViIGS"/>
+        <ownedParameters xmi:id="lSLIb" isRequired="true" name="keys" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="UhYZl" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation" name="excludingMap"
           type="#yAyxQ">
         <ownedComments body="&#xA;The map containing all key-value pairs of oclText[self] except any which is also included in oclText[map].&#xA;"/>
-        <ownedParameters xmi:id="Lybiv" name="map" type="#6LyxQ"/>
+        <ownedParameters xmi:id="Nw,2P" name="map" type="#6LyxQ"/>
         <ownedSignature>
           <ownedParameters xmi:id="Jb8+T" name="K2"/>
           <ownedParameters xmi:id="eg8+T" name="V2"/>
@@ -1075,14 +1075,14 @@
           isInvalidating="true" isValidating="true" name="exists" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.&#xA;"/>
         <ownedIterators xmi:id="9ZK8i" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="krobD" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="+meBM" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="uGTld" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isValidating="true" name="exists" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2] in the source map.&#xA;"/>
         <ownedIterators xmi:id="88f9i" name="k1" type="#NxGT6"/>
         <ownedIterators xmi:id="98f9i" name="k2" type="#NxGT6"/>
-        <ownedParameters xmi:id="ob9cD" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="CXzCM" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="sOTld" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isValidating="true" name="exists" type="#XEMMs">
@@ -1090,20 +1090,20 @@
         <ownedIterators xmi:id="CFf,i" name="k1" type="#NxGT6"/>
         <ownedIterators xmi:id="DFf,i" name="k2" type="#NxGT6"/>
         <ownedIterators xmi:id="EFf,i" name="k3" type="#NxGT6"/>
-        <ownedParameters xmi:id="uj8eD" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="IfyEM" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="WApze" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isValidating="true" name="forAll" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="Jd3wE" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="wuVQl" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="KqL2t" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="qFpze" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isValidating="true" name="forAll" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2] in the source map; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="IANyE" name="k1" type="#NxGT6"/>
         <ownedIterators xmi:id="JANyE" name="k2" type="#NxGT6"/>
-        <ownedParameters xmi:id="0eqRl" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="Oag3t" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="oNpze" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isValidating="true" name="forAll" type="#XEMMs">
@@ -1111,13 +1111,13 @@
         <ownedIterators xmi:id="OIM0E" name="k1" type="#NxGT6"/>
         <ownedIterators xmi:id="PIM0E" name="k2" type="#NxGT6"/>
         <ownedIterators xmi:id="QIM0E" name="k3" type="#NxGT6"/>
-        <ownedParameters xmi:id="6mpTl" name="lambda" type="#OsEaX"/>
+        <ownedParameters xmi:id="Uif5t" name="lambda" type="#OsEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="5n5vf" implementationClass="org.eclipse.ocl.pivot.library.iterator.GatherIteration"
           isRequired="true" name="gather" type="#xJgED">
         <ownedComments body="&#xA;The bag of elements which results from applying oclText[lambda] to every member of the source collection.&#xA;"/>
         <ownedIterators xmi:id="eW+FG" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="Hoclm" name="lambda" type="#qhxyv"/>
+        <ownedParameters xmi:id="V5Peg" name="lambda" type="#qhxyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="USuzJ" name="E"/>
         </ownedSignature>
@@ -1131,12 +1131,12 @@
           name="includes" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[key] and oclText[value] are a key-value pair of oclText[self], oclText[false] otherwise.&#xA;"/>
         <ownedParameters xmi:id="t3vI8" name="key" type="#NxGT6"/>
-        <ownedParameters xmi:id=",DfzC" name="value" type="#OxGT6"/>
+        <ownedParameters xmi:id="KmhzC" name="value" type="#OxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="QiFtd" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation" isRequired="true"
           name="includesAll" type="#XEMMs">
         <ownedComments body="&#xA;True if all the elements of oclText[coll] are keys of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="nV0CC" isRequired="true" name="coll" type="#HlIGS"/>
+        <ownedParameters xmi:id="9f9hp" isRequired="true" name="coll" type="#HlIGS"/>
         <ownedSignature>
           <ownedParameters xmi:id="lj3+u" name="K2"/>
         </ownedSignature>
@@ -1144,7 +1144,7 @@
       <ownedOperations xmi:id="gcoB," implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation" isRequired="true"
           name="includesMap" type="#XEMMs">
         <ownedComments body="&#xA;True if all of the key-value pairs of oclText[map] are also key-value pairs of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="nAfom" name="map" type="#6LyxQ"/>
+        <ownedParameters xmi:id="p+C9G" name="map" type="#6LyxQ"/>
         <ownedSignature>
           <ownedParameters xmi:id="1vZgP" name="K2"/>
           <ownedParameters xmi:id="K1ZgP" name="V2"/>
@@ -1153,18 +1153,18 @@
       <ownedOperations xmi:id="FP2Jv" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation" isRequired="true"
           name="includesValue" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[value] is one of the values of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="NpNXg" name="value" type="#OxGT6"/>
+        <ownedParameters xmi:id="YLQXg" name="value" type="#OxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="5ViNR" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation" name="including"
           type="#yAyxQ">
         <ownedComments body="&#xA;The map containing all of the key-value pairs of oclText[self] and an additional key-value pair for oclText[key] and oclText[value].&#xA;If oclText[key] is already a key of oclText[self], the old value pair is replaced by oclText[value].&#xA;"/>
         <ownedParameters xmi:id="fIHju" name="key" type="#NxGT6"/>
-        <ownedParameters xmi:id="xU2N1" name="value" type="#OxGT6"/>
+        <ownedParameters xmi:id="824N1" name="value" type="#OxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="GJSPz" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation" name="includingMap"
           type="#yAyxQ">
         <ownedComments body="&#xA;The map containing all of the key-value pairs of oclText[self] and oclText[map].&#xA;The values associated with key-value pairs in oclText[map] replace those in oclText[self] where the same key is used by both maps.&#xA;"/>
-        <ownedParameters xmi:id="1arak" name="map" type="#6LyxQ"/>
+        <ownedParameters xmi:id="3YPvE" name="map" type="#6LyxQ"/>
         <ownedSignature>
           <ownedParameters xmi:id="LBYQ5" name="K2"/>
           <ownedParameters xmi:id="gGYQ5" name="V2"/>
@@ -1178,14 +1178,14 @@
           isRequired="true" name="isUnique" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="+aQTQ" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="nsuyw" name="lambda" type="#W1ArT"/>
+        <ownedParameters xmi:id="Z4Htp" name="lambda" type="#W1ArT"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="QdElo" implementationClass="org.eclipse.ocl.pivot.library.iterator.IterateIteration"
           name="iterate" type="#PxGT6">
         <ownedAccumulator xmi:id="1EzwW" name="acc" type="#PxGT6"/>
         <ownedComments body="&#xA;Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.&#xA;"/>
         <ownedIterators xmi:id="ZmzT+" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="C4Rze" name="lambda" type="#qhxyv"/>
+        <ownedParameters xmi:id="QJFsY" name="lambda" type="#qhxyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="LwHo+" name="Tacc"/>
         </ownedSignature>
@@ -1202,22 +1202,22 @@
           isRequired="true" name="one" type="#XEMMs">
         <ownedComments body="&#xA;Results in oclText[true] if there is exactly one element in the source map for which body is oclText[true].&#xA;"/>
         <ownedIterators xmi:id="dBaRr" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="GT4wL" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="aaqWU" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="d+Kuy" implementationClass="org.eclipse.ocl.pivot.library.iterator.MapRejectIteration"
           isRequired="true" name="reject" type="#yAyxQ">
         <ownedComments body="&#xA;The subset of the source set for which body is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="ySzgx" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="bkRAS" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="vrDma" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="+Raa0" implementationClass="org.eclipse.ocl.pivot.library.iterator.SearchIteration"
           name="search" type="#QxGT6">
         <ownedAccumulator xmi:id="rG9tI" name="acc" type="#PxGT6"/>
         <ownedComments body="&#xA;Search the source keys one-dimensionally using each key in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i)].&#xA;For an empty map the final result is determined by oclText[source.return(nextAcc,null)].&#xA;"/>
         <ownedIterators xmi:id="Po9Qw" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id=",cBBB" name="nextAcc" type="#HK3yv"/>
-        <ownedParameters xmi:id="wOshY" name="break" type="#rUKaX"/>
-        <ownedParameters xmi:id="hfqOb" name="return" type="#JN3yv"/>
+        <ownedParameters xmi:id="sWPD7" name="nextAcc" type="#HK3yv"/>
+        <ownedParameters xmi:id="py8Qh" name="break" type="#rUKaX"/>
+        <ownedParameters xmi:id="kd9QV" name="return" type="#JN3yv"/>
         <ownedSignature>
           <ownedParameters xmi:id="NtMH7" name="Q"/>
           <ownedParameters xmi:id="OtMH7" name="R"/>
@@ -1229,9 +1229,9 @@
         <ownedComments body="&#xA;Search the source keys two-dimensionally using each key pair in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i,j)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j)].&#xA;For an empty map the final result is determined by oclText[source.return(nextAcc,null,null)].&#xA;"/>
         <ownedIterators xmi:id="PHtTw" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="QHtTw" name="j" type="#NxGT6"/>
-        <ownedParameters xmi:id=",7wDB" name="nextAcc" type="#Hr+yv"/>
-        <ownedParameters xmi:id="wtbkY" name="break" type="#r1RaX"/>
-        <ownedParameters xmi:id="h+ZRb" name="return" type="#Ju+yv"/>
+        <ownedParameters xmi:id="sAjS7" name="nextAcc" type="#Hr+yv"/>
+        <ownedParameters xmi:id="pcQgh" name="break" type="#r1RaX"/>
+        <ownedParameters xmi:id="kHRgV" name="return" type="#Ju+yv"/>
         <ownedSignature>
           <ownedParameters xmi:id="NQu2m" name="Q"/>
           <ownedParameters xmi:id="OQu2m" name="R"/>
@@ -1244,9 +1244,9 @@
         <ownedIterators xmi:id="R+GXw" name="i" type="#NxGT6"/>
         <ownedIterators xmi:id="S+GXw" name="j" type="#NxGT6"/>
         <ownedIterators xmi:id="T+GXw" name="k" type="#NxGT6"/>
-        <ownedParameters xmi:id="BzKHB" name="nextAcc" type="#6JIzv"/>
-        <ownedParameters xmi:id="yk1nY" name="break" type="#eUbaX"/>
-        <ownedParameters xmi:id="j1zUb" name="return" type="#8MIzv"/>
+        <ownedParameters xmi:id=",Wzl7" name="nextAcc" type="#6JIzv"/>
+        <ownedParameters xmi:id="8ygzh" name="break" type="#eUbaX"/>
+        <ownedParameters xmi:id="3dhzV" name="return" type="#8MIzv"/>
         <ownedSignature>
           <ownedParameters xmi:id="HLRKd" name="Q"/>
           <ownedParameters xmi:id="ILRKd" name="R"/>
@@ -1256,7 +1256,7 @@
           isRequired="true" name="select" type="#yAyxQ">
         <ownedComments body="&#xA;The subset of set for which expr is oclText[true].&#xA;"/>
         <ownedIterators xmi:id="bS2ZD" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="EkU5j" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="YrGfs" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="VtRpq" implementationClass="org.eclipse.ocl.pivot.library.map.MapSizeOperation" isRequired="true" name="size"
           type="#tYtCd">
@@ -1296,7 +1296,7 @@
       <ownedOperations xmi:id="g2Ovl" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is a different object from object2. Infix operator.&#xA;"/>
-        <ownedParameters xmi:id="ewtKp" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="v8hDr" name="object2" type="#zlfMH"/>
         <ownedPostconditions xmi:id="x3fhR">
           <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = not (self = object2)" isRequired="true" type="#XEMMs">
             <ownedBody xsi:type="pivot:OperationCallExp" isRequired="true" name="=" referredOperation="#,ecxV" type="#XEMMs">
@@ -1309,7 +1309,7 @@
               <ownedSource xsi:type="pivot:VariableExp" isRequired="true" name="result" referredVariable="#h2+Tq" type="#XEMMs"/>
             </ownedBody>
             <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="p5NX1" isRequired="true" name="self" type="#jbMkR"/>
-            <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="17FGe" name="object2" representedParameter="#ewtKp" type="#jbMkR"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="17FGe" name="object2" representedParameter="#v8hDr" type="#jbMkR"/>
             <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="h2+Tq" isRequired="true" name="result" type="#XEMMs"/>
           </ownedSpecification>
         </ownedPostconditions>
@@ -1317,7 +1317,7 @@
       <ownedOperations xmi:id="bZOvl" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is the same object as object2. Infix operator.&#xA;"/>
-        <ownedParameters xmi:id="t3dDp" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="+DS8q" name="object2" type="#zlfMH"/>
         <ownedPostconditions xmi:id="A,PaR">
           <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = (self = object2)" isRequired="true" type="#XEMMs">
             <ownedBody xsi:type="pivot:OperationCallExp" isRequired="true" name="=" referredOperation="#,ecxV" type="#XEMMs">
@@ -1328,7 +1328,7 @@
               <ownedSource xsi:type="pivot:VariableExp" isRequired="true" name="result" referredVariable="#oX5D+" type="#XEMMs"/>
             </ownedBody>
             <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="waIHJ" isRequired="true" name="self" type="#jbMkR"/>
-            <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="8cA2x" name="object2" representedParameter="#t3dDp" type="#jbMkR"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="8cA2x" name="object2" representedParameter="#+DS8q" type="#jbMkR"/>
             <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="oX5D+" isRequired="true" name="result" type="#XEMMs"/>
           </ownedSpecification>
         </ownedPostconditions>
@@ -1359,7 +1359,7 @@
       <ownedOperations xmi:id="XKbtr" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation" isRequired="true"
           name="oclIsInState" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] if the oclText[self] is in the state identified by statespec.&#xA;"/>
-        <ownedParameters xmi:id="yAr+g" name="statespec" type="#IebtF"/>
+        <ownedParameters xmi:id="KYm7D" name="statespec" type="#IebtF"/>
       </ownedOperations>
       <ownedOperations xmi:id="Bz+rT" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation" isRequired="true"
           isValidating="true" name="oclIsInvalid" type="#XEMMs">
@@ -1368,7 +1368,7 @@
       <ownedOperations xmi:id="MuzAj" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation" isRequired="true"
           name="oclIsKindOf" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] if the type of oclText[self] conforms to oclText[type].&#xA;That is, oclText[self] is of type oclText[type] or a subtype of oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="Bzmst" isRequired="true" name="type" type="#hlrMH"/>
+        <ownedParameters xmi:id="Mhe5v" isRequired="true" name="type" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="qNfuM" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isRequired="true"
           name="oclIsNew" type="#XEMMs">
@@ -1377,7 +1377,7 @@
       <ownedOperations xmi:id="y2TQz" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation" isRequired="true"
           name="oclIsTypeOf" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] if oclText[self] is of the type oclText[type] but not a subtype of oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="P5PA1" isRequired="true" name="type" type="#hlrMH"/>
+        <ownedParameters xmi:id="anHN3" isRequired="true" name="type" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="aSwFn" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation" isRequired="true"
           isValidating="true" name="oclIsUndefined" type="#XEMMs">
@@ -1390,7 +1390,7 @@
       <ownedOperations xmi:id="YxE0K" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation" isRequired="true"
           name="oclLog" type="#zlfMH">
         <ownedComments body="&#xA;Evaluates to the self, with the side effect of generating a log message comprising message followed by self.&#xA;"/>
-        <ownedParameters xmi:id="qstQj" isRequired="true" name="message" type="#AlwVZ"/>
+        <ownedParameters xmi:id="qj7o6" isRequired="true" name="message" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="+nmZv" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation" isRequired="true"
           isTypeof="true" name="oclType" type="#zlfMH">
@@ -1416,27 +1416,27 @@
       <ownedOperations xmi:id="3+qvY" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation" isRequired="true"
           name="&lt;" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is less than oclText[that].&#xA;"/>
-        <ownedParameters xmi:id="tqHU6" isRequired="true" name="that" type="#zlfMH"/>
+        <ownedParameters xmi:id="+27M8" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="8brvY" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation" isRequired="true"
           name="&lt;=" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is less than or equal to oclText[that].&#xA;"/>
-        <ownedParameters xmi:id="ejXb6" isRequired="true" name="that" type="#zlfMH"/>
+        <ownedParameters xmi:id="vvLU8" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="5+qvY" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation" isRequired="true"
           name=">" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is greater than oclText[that].&#xA;"/>
-        <ownedParameters xmi:id="nKIU6" isRequired="true" name="that" type="#zlfMH"/>
+        <ownedParameters xmi:id="4W8M8" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="6crvY" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation"
           isRequired="true" name=">=" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is greater than or equal to oclText[that].&#xA;"/>
-        <ownedParameters xmi:id="kAnb6" isRequired="true" name="that" type="#zlfMH"/>
+        <ownedParameters xmi:id="1MbU8" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="7GliE" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation" isRequired="true"
           name="compareTo" type="#tYtCd">
         <ownedComments body="&#xA;Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.&#xA;&#xA;The compareTo operation should be commutative.&#xA;"/>
-        <ownedParameters xmi:id="hSadl" isRequired="true" name="that" type="#zlfMH"/>
+        <ownedParameters xmi:id="yeOWn" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xmi:id="zfDWR" isAbstract="true" name="OclElement" superClasses="#jbMkR">
@@ -1472,7 +1472,7 @@
       <ownedOperations xmi:id="YjePj" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation" name="oclBase"
           type="#hlrMH">
         <ownedComments body="&#xA;Returns the application class conforming to base extended by this extension element. Returns null if no such class.&#xA;"/>
-        <ownedParameters xmi:id="0xwrX" isRequired="true" name="base" type="#hlrMH"/>
+        <ownedParameters xmi:id=",fo4Z" isRequired="true" name="base" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="lyeXH" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation" name="oclContainer"
           type="#zfDWR">
@@ -1485,12 +1485,12 @@
       <ownedOperations xmi:id="+IPyW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation" isInvalidating="true"
           name="oclExtension" type="#zfDWR">
         <ownedComments body="&#xA;Returns the application instance of the Stereotype that conforms to stereotype applied to this element. Returns invalid if more than one.&#xA;"/>
-        <ownedParameters xmi:id="jyuDS" isRequired="true" name="stereotype" type="#ZNWlJ"/>
+        <ownedParameters xmi:id="WL3fT" isRequired="true" name="stereotype" type="#ZNWlJ"/>
       </ownedOperations>
       <ownedOperations xmi:id="D+JXK" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" isRequired="true"
           name="oclExtensions" type="#U6ALG">
         <ownedComments body="&#xA;Returns the application instances of the Stereotypes that conform to stereotype applied to this element.&#xA;"/>
-        <ownedParameters xmi:id="UjPCG" isRequired="true" name="stereotype" type="#ZNWlJ"/>
+        <ownedParameters xmi:id="H8XeH" isRequired="true" name="stereotype" type="#ZNWlJ"/>
       </ownedOperations>
       <ownedOperations xmi:id="omW7u" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" isRequired="true"
           name="oclExtensions" type="#U6ALG">
@@ -1499,7 +1499,7 @@
       <ownedOperations xmi:id="hgQiG" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation" isRequired="true"
           name="oclIsModelKindOf" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] if the type of oclText[self] conforms to the model type oclText[type].&#xA;That is, oclText[self] is of type oclText[type] or a subtype of oclText[type].&#xA;&#xA;The return is normally oclText[false] since few model elements have model types. UML's InstanceSpecification::classifier provides&#xA;a multiple classification for a model type.&#xA;"/>
-        <ownedParameters xmi:id="Cs1Ua" isRequired="true" name="type" type="#hlrMH"/>
+        <ownedParameters xmi:id="Nathc" isRequired="true" name="type" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="nIOBo" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation" isRequired="true"
           isTypeof="true" name="oclModelType" type="#zlfMH">
@@ -1539,20 +1539,20 @@
       <ownedOperations xmi:id=",1Esv" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Returns oclText[invalid].&#xA;"/>
-        <ownedParameters xmi:id="BiD0Y" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="Su3sa" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="6YEsv" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Returns oclText[invalid].&#xA;"/>
-        <ownedParameters xmi:id="QpzsY" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="h1nla" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="AoHTu" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isValidating="true"
           name="and" precedence="#VT87C" type="#XEMMs">
-        <ownedParameters xmi:id="NKfmw" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="qcq+o" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="gDoFh" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation" isValidating="true"
           name="implies" precedence="#1Odhg" type="#XEMMs">
-        <ownedParameters xmi:id="t31VA" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="KKBu4" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="DoKPW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation" isRequired="true"
           name="oclAsSet" type="#UQF4+"/>
@@ -1570,11 +1570,11 @@
           isValidating="true" name="oclIsInvalid" type="#XEMMs"/>
       <ownedOperations xmi:id="rtp9s" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation" isRequired="true"
           name="oclIsKindOf" type="#XEMMs">
-        <ownedParameters xmi:id="kk8Vd" isRequired="true" name="type" type="#hlrMH"/>
+        <ownedParameters xmi:id="vS0if" isRequired="true" name="type" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="R2JN9" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation" isRequired="true"
           name="oclIsTypeOf" type="#XEMMs">
-        <ownedParameters xmi:id="yqlpk" isRequired="true" name="type" type="#hlrMH"/>
+        <ownedParameters xmi:id="9Yd2m" isRequired="true" name="type" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="5RmCx" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation" isRequired="true"
           isValidating="true" name="oclIsUndefined" type="#XEMMs"/>
@@ -1582,7 +1582,7 @@
           isTypeof="true" name="oclType" type="#zlfMH"/>
       <ownedOperations xmi:id="M4wSu" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isValidating="true"
           name="or" precedence="#BEt7C" type="#XEMMs">
-        <ownedParameters xmi:id="pZm7q" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="GsxTj" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="Xfrkw" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isRequired="true"
           name="toString" type="#AlwVZ">
@@ -1657,7 +1657,7 @@
       <ownedComments body="&#xA;The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived&#xA;sum and zero implementations may be summed.&#xA;"/>
       <ownedOperations xmi:id="A768F" isRequired="true" name="sum" type="#zlfMH">
         <ownedComments body="&#xA;Return the sum of self and that.&#xA;&#xA;The sum operation should be associative.&#xA;"/>
-        <ownedParameters xmi:id="SGarG" isRequired="true" name="that" type="#zlfMH"/>
+        <ownedParameters xmi:id="jSOkI" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="U7w9w" isRequired="true" name="zero" type="#zlfMH">
         <ownedComments body="&#xA;Return the 'zero' value of self to initialize a summation.&#xA;&#xA;zero().sum(self) = self.&#xA;"/>
@@ -1672,11 +1672,11 @@
       <ownedComments body="&#xA;The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
       <ownedOperations xmi:id="MIU8X" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
-        <ownedParameters xmi:id="a743j" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="rHtwl" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="HrT8X" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
-        <ownedParameters xmi:id="pCpwj" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="6Odpl" name="object2" type="#zlfMH"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xmi:id="hlrMH" isAbstract="true" name="OclType" superClasses="#zfDWR">
@@ -1689,7 +1689,7 @@
       <ownedOperations xmi:id="WArUJ" implementationClass="org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation" isRequired="true"
           name="conformsTo" type="#XEMMs">
         <ownedComments body="&#xA;Returns true if type2 conforms to self.&#xA;"/>
-        <ownedParameters xmi:id="hAw++" name="type2" type="#hlrMH"/>
+        <ownedParameters xmi:id="sunLB" name="type2" type="#hlrMH"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:VoidType" xmi:id="7u3MH" instanceClassName="org.eclipse.ocl.pivot.VoidType" isAbstract="true" name="OclVoid"
@@ -1703,29 +1703,29 @@
       <ownedOperations xmi:id="4cErx" implementationClass="org.eclipse.ocl.pivot.library.string.StringConcatOperation" isRequired="true"
           name="+" precedence="#qLHeo" type="#AlwVZ">
         <ownedComments body="&#xA;The concatenation of oclText[null] and s.&#xA;"/>
-        <ownedParameters xmi:id="2r2rl" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="2iEE9" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="Y8CqP" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
-        <ownedParameters xmi:id="2evbY" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="HrjUa" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="TfCqP" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]&#xA;if object is oclText[invalid], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="FmfUY" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="WyTNa" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="ZuFRO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation" isInvalidating="true"
           isValidating="true" name="and" precedence="#VT87C" type="#XEMMs">
-        <ownedParameters xmi:id="CHLOw" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="fZWmo" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="h476g" implementationClass="org.eclipse.ocl.pivot.library.string.StringConcatOperation" isRequired="true"
           name="concat" type="#AlwVZ">
         <ownedComments body="&#xA;The concatenation of oclText[null] and s.&#xA;"/>
-        <ownedParameters xmi:id="7oKzV" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="7fYLt" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="5JmDB" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation" isInvalidating="true"
           isValidating="true" name="implies" precedence="#1Odhg" type="#XEMMs">
-        <ownedParameters xmi:id="i0h9," name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id=",GtV4" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="XHfd6" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isInvalidating="true"
           isValidating="true" name="not" precedence="#tgQwH" type="#XEMMs"/>
@@ -1742,11 +1742,11 @@
           isValidating="true" name="oclIsInvalid" type="#XEMMs"/>
       <ownedOperations xmi:id="E0n7M" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation" isRequired="true"
           name="oclIsKindOf" type="#XEMMs">
-        <ownedParameters xmi:id="Zho9c" isRequired="true" name="type" type="#hlrMH"/>
+        <ownedParameters xmi:id="kPgKf" isRequired="true" name="type" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="q8HLd" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation" isRequired="true"
           name="oclIsTypeOf" type="#XEMMs">
-        <ownedParameters xmi:id="nnRRk" isRequired="true" name="type" type="#hlrMH"/>
+        <ownedParameters xmi:id="yVJem" isRequired="true" name="type" type="#hlrMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="SYkAR" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation" isRequired="true"
           isValidating="true" name="oclIsUndefined" type="#XEMMs"/>
@@ -1756,7 +1756,7 @@
           name="oclTypes" type="#SUF4+"/>
       <ownedOperations xmi:id="l+uQO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation" isInvalidating="true"
           isValidating="true" name="or" precedence="#BEt7C" type="#XEMMs">
-        <ownedParameters xmi:id="eWSjq" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="7od7i" name="b" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="wlpiQ" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isRequired="true"
           name="toString" type="#AlwVZ">
@@ -1764,7 +1764,7 @@
       </ownedOperations>
       <ownedOperations xmi:id="dILRO" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation" name="xor" precedence="#ZtB8C"
           type="#XEMMs">
-        <ownedParameters xmi:id="24bkx" name="b" type="#XEMMs"/>
+        <ownedParameters xmi:id="TLn8p" name="b" type="#XEMMs"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Vw5fK" instanceClassName="java.util.Collection" isAbstract="true" name="OrderedCollection"
@@ -1778,7 +1778,7 @@
       <ownedOperations xmi:id="ArMlL" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation" isInvalidating="true"
           name="at" type="#NxGT6">
         <ownedComments body="&#xA;The i-th element of ordered collection.&#xA;"/>
-        <ownedParameters xmi:id="9iy,," isRequired="true" name="index" type="#tYtCd"/>
+        <ownedParameters xmi:id="M2qhj" isRequired="true" name="index" type="#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="mCC4m" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation" isInvalidating="true"
           name="first" type="#NxGT6">
@@ -1788,7 +1788,7 @@
           isRequired="true" name="gather" type="#Ro9WX">
         <ownedComments body="&#xA;The sequence of elements which results from applying oclText[lambda] to every member of the source collection.&#xA;"/>
         <ownedIterators xmi:id="4WDfq" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="hoh+K" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="Z1P3E" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="Gxl4t" name="E"/>
         </ownedSignature>
@@ -1817,17 +1817,17 @@
       <ownedOperations xmi:id="JYrxV" implementationClass="org.eclipse.ocl.pivot.library.collection.SetMinusOperation" isRequired="true"
           name="-" precedence="#qLHeo" type="#sKbRn">
         <ownedComments body="&#xA;The elements of oclText[self], which are not in s.&#xA;"/>
-        <ownedParameters xmi:id="DK2Gj" isRequired="true" name="s" type="#sVwyY"/>
+        <ownedParameters xmi:id="naq9," isRequired="true" name="s" type="#sVwyY"/>
       </ownedOperations>
       <ownedOperations xmi:id="sv9Jh" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="6E0oi" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="LRohk" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="nS9Jh" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="JMkhi" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="aYYak" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="cOM23" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation"
           isRequired="true" name="append" type="#sKbRn">
@@ -1837,13 +1837,13 @@
       <ownedOperations xmi:id="m6QDG" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation"
           isRequired="true" name="appendAll" type="#sKbRn">
         <ownedComments body="&#xA;The set of elements, consisting of all elements of oclText[self], followed by objects.&#xA;"/>
-        <ownedParameters xmi:id="NFpvI" isRequired="true" name="objects" type="#iy9cI"/>
+        <ownedParameters xmi:id="sSxSo" isRequired="true" name="objects" type="#iy9cI"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="e8nm," implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           isRequired="true" name="closure" type="#KLbRn">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="vo8GS" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="Y6amy" name="lambda" type="#JH+j0"/>
+        <ownedIterators xmi:id="6K,GS" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="b2Qvq" name="lambda" type="#JH+j0"/>
         <ownedSignature>
           <ownedParameters xmi:id="hrXV1" name="E"/>
         </ownedSignature>
@@ -1852,7 +1852,7 @@
           isRequired="true" name="collect" type="#Ro9WX">
         <ownedComments body="&#xA;The Sequence of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
         <ownedIterators xmi:id="F63oG" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="uLWIn" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="mYEBh" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="fX7j2" name="E"/>
         </ownedSignature>
@@ -1861,7 +1861,7 @@
           isRequired="true" name="collectNested" type="#Ro9WX">
         <ownedComments body="&#xA;The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
         <ownedIterators xmi:id="AnQMw" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="p4urQ" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="hFdkK" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="uAAFw" name="E"/>
         </ownedSignature>
@@ -1874,7 +1874,7 @@
       <ownedOperations xmi:id="SRjgl" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" isRequired="true"
           name="excludingAll" type="#sKbRn">
         <ownedComments body="&#xA;The ordered set containing all elements of oclText[self] apart from all occurrences of all objects.&#xA;"/>
-        <ownedParameters xmi:id="JBd9+" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="5IjVm" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="cXFid" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation" isRequired="true"
           name="flatten" type="#FMbRn">
@@ -1890,12 +1890,12 @@
       <ownedOperations xmi:id="E5cWz" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" isRequired="true"
           name="includingAll" type="#sKbRn">
         <ownedComments body="&#xA;The ordered set containing all elements of oclText[self] plus objects added as the last elements.&#xA;"/>
-        <ownedParameters xmi:id="zps1z" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="jxyNb" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="PamwW" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation"
           isInvalidating="true" isRequired="true" name="insertAt" type="#sKbRn">
         <ownedComments body="&#xA;The ordered set consisting of oclText[self] with object present at position index.&#xA;"/>
-        <ownedParameters xmi:id="QFZ5U" isRequired="true" name="index" type="#tYtCd"/>
+        <ownedParameters xmi:id="fYRb4" isRequired="true" name="index" type="#tYtCd"/>
         <ownedParameters xmi:id="9uw6R" name="object" type="#NxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="QAh+4" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation"
@@ -1971,13 +1971,13 @@
       <ownedOperations xmi:id="y2PDI" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation"
           isRequired="true" name="prependAll" type="#sKbRn">
         <ownedComments body="&#xA;The sequence consisting of objects, followed by all elements in oclText[self].&#xA;"/>
-        <ownedParameters xmi:id="pQveC" isRequired="true" name="objects" type="#iy9cI"/>
+        <ownedParameters xmi:id="Ie3Bi" isRequired="true" name="objects" type="#iy9cI"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="hgWPU" implementationClass="org.eclipse.ocl.pivot.library.iterator.RejectIteration"
           isRequired="true" name="reject" type="#sKbRn">
         <ownedComments body="&#xA;The ordered set of the source ordered set for which body is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="msx1f" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="P+PVA" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="jFC7I" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="6akgN" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation"
           isRequired="true" name="reverse" type="#sKbRn">
@@ -1987,12 +1987,12 @@
           isRequired="true" name="select" type="#sKbRn">
         <ownedComments body="&#xA;The ordered set of the source ordered set for which body is oclText[true]&#xA;"/>
         <ownedIterators xmi:id="Ps0ux" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="49SOS" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="MFF0a" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="BFyyo" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation" isRequired="true"
           name="selectByKind" type="#KLbRn">
         <ownedComments body="&#xA;The ordered set containing all elements of oclText[self] whose type conforms to oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="i+Y87" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="tgb87" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="XB,B7" name="TT"/>
         </ownedSignature>
@@ -2000,7 +2000,7 @@
       <ownedOperations xmi:id="nT3zo" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" isRequired="true"
           name="selectByType" type="#KLbRn">
         <ownedComments body="&#xA;The ordered set containing all elements of oclText[self] whose type is oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="wyyMN" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="7U1MN" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="tE1tN" name="TT"/>
         </ownedSignature>
@@ -2009,13 +2009,13 @@
           isRequired="true" name="sortedBy" type="#sKbRn">
         <ownedComments body="&#xA;Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="noKJ," name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="Q6oof" name="lambda" type="#Kzb3k"/>
+        <ownedParameters xmi:id="+bHUI" name="lambda" type="#Kzb3k"/>
       </ownedOperations>
       <ownedOperations xmi:id="yi+SY" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation"
           isInvalidating="true" isRequired="true" name="subOrderedSet" type="#sKbRn">
         <ownedComments body="&#xA;The sub-set of oclText[self] starting at number lower, up to and including element number upper.&#xA;"/>
-        <ownedParameters xmi:id="WkJf2" isRequired="true" name="lower" type="#tYtCd"/>
-        <ownedParameters xmi:id="3a8+2" isRequired="true" name="upper" type="#tYtCd"/>
+        <ownedParameters xmi:id="l3BBa" isRequired="true" name="lower" type="#tYtCd"/>
+        <ownedParameters xmi:id="Gu0ga" isRequired="true" name="upper" type="#tYtCd"/>
       </ownedOperations>
       <ownedSignature>
         <ownedParameters xmi:id="53+C2" name="T"/>
@@ -2032,17 +2032,17 @@
       <ownedOperations xmi:id="BJEtV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation" isRequired="true"
           name="*" precedence="#0NX0o" type="#Nr4QF">
         <ownedComments body="&#xA;The value of the multiplication of oclText[self] and r.&#xA;"/>
-        <ownedParameters xmi:id="a35gZ" isRequired="true" name="r" type="#zlfMH"/>
+        <ownedParameters xmi:id="rDuZb" isRequired="true" name="r" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="CJEtV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation" isRequired="true"
           name="+" precedence="#qLHeo" type="#Nr4QF">
         <ownedComments body="&#xA;The value of the addition of oclText[self] and r.&#xA;"/>
-        <ownedParameters xmi:id="XH6gZ" isRequired="true" name="r" type="#zlfMH"/>
+        <ownedParameters xmi:id="oTuZb" isRequired="true" name="r" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="EJEtV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation" isRequired="true"
           name="-" precedence="#qLHeo" type="#Nr4QF">
         <ownedComments body="&#xA;The value of the subtraction of r from oclText[self].&#xA;"/>
-        <ownedParameters xmi:id="Rn6gZ" isRequired="true" name="r" type="#zlfMH"/>
+        <ownedParameters xmi:id="izuZb" isRequired="true" name="r" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="7HGgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation" isRequired="true"
           name="-" precedence="#tgQwH" type="#Nr4QF">
@@ -2051,17 +2051,17 @@
       <ownedOperations xmi:id="GJEtV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation" isInvalidating="true"
           isRequired="true" name="/" precedence="#0NX0o" type="#Nr4QF">
         <ownedComments body="&#xA;The value of oclText[self] divided by r. Evaluates to oclText[invalid] if r is equal to zero.&#xA;"/>
-        <ownedParameters xmi:id="LH7gZ" isRequired="true" name="r" type="#zlfMH"/>
+        <ownedParameters xmi:id="cTvZb" isRequired="true" name="r" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="inEtV" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Returns oclText[true] if the numeric value of oclText[self] is the not the same as the numeric value of object2, oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="Y9ct2" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="pJRm4" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="dKEtV" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Returns oclText[true] if the numeric value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="nENm2" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="4QBf4" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="ApdgA" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation" isRequired="true"
           name="abs" type="#Nr4QF">
@@ -2074,12 +2074,12 @@
       <ownedOperations xmi:id="7detV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation" isRequired="true"
           name="max" type="#Nr4QF">
         <ownedComments body="&#xA;The maximum of oclText[self] and r.&#xA;"/>
-        <ownedParameters xmi:id="sY5Eg" isRequired="true" name="r" type="#zlfMH"/>
+        <ownedParameters xmi:id="9kt9h" isRequired="true" name="r" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="phetV" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericMinOperation" isRequired="true"
           name="min" type="#Nr4QF">
         <ownedComments body="&#xA;The minimum of oclText[self] and r.&#xA;"/>
-        <ownedParameters xmi:id="it0Fg" isRequired="true" name="r" type="#zlfMH"/>
+        <ownedParameters xmi:id="z5o+h" isRequired="true" name="r" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="cNx+G" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation" isRequired="true"
           name="round" type="#tYtCd">
@@ -2100,12 +2100,12 @@
       <ownedOperations xmi:id="IbZgp" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="mCYgw" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="3OMZy" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="D+Ygp" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] contains the same elements as s in the same order.&#xA;"/>
-        <ownedParameters xmi:id="1JIZw" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="GW8Ry" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="45nMA" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation"
           isRequired="true" name="append" type="#4m9WX">
@@ -2115,13 +2115,13 @@
       <ownedOperations xmi:id="CmsZO" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation"
           isRequired="true" name="appendAll" type="#4m9WX">
         <ownedComments body="&#xA;The sequence of elements, consisting of all elements of oclText[self], followed by objects.&#xA;"/>
-        <ownedParameters xmi:id="5CNnW" isRequired="true" name="objects" type="#iy9cI"/>
+        <ownedParameters xmi:id="YQVK2" isRequired="true" name="objects" type="#iy9cI"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="6nD9H" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           isRequired="true" name="closure" type="#KLbRn">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="bmg+f" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="E4+dA" name="lambda" type="#JH+j0"/>
+        <ownedIterators xmi:id="mIj+f" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="H00m4" name="lambda" type="#JH+j0"/>
         <ownedSignature>
           <ownedParameters xmi:id="dyGuE" name="E"/>
         </ownedSignature>
@@ -2130,7 +2130,7 @@
           isRequired="true" name="collect" type="#Ro9WX">
         <ownedComments body="&#xA;The Bag of elements that results from applying body to every member of the source sequence.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
         <ownedIterators xmi:id="x3bgU" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="aJ6,0" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="SWo4u" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="beq8F" name="E"/>
         </ownedSignature>
@@ -2139,7 +2139,7 @@
           isRequired="true" name="collectNested" type="#Ro9WX">
         <ownedComments body="&#xA;The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
         <ownedIterators xmi:id="sk0D+" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="V2Sje" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="NDBcY" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="qHvd," name="E"/>
         </ownedSignature>
@@ -2152,7 +2152,7 @@
       <ownedOperations xmi:id="u8+2t" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" isRequired="true"
           name="excludingAll" type="#4m9WX">
         <ownedComments body="&#xA;The sequence containing all elements of oclText[self] apart from all occurrences of all objects.&#xA;"/>
-        <ownedParameters xmi:id="1+A1M" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="lGHN0" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="4Ch4l" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation" isRequired="true"
           name="flatten" type="#Ro9WX">
@@ -2169,12 +2169,12 @@
       <ownedOperations xmi:id="gk4s7" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" isRequired="true"
           name="includingAll" type="#4m9WX">
         <ownedComments body="&#xA;The sequence containing all elements of oclText[self] plus objects added as the last elements.&#xA;"/>
-        <ownedParameters xmi:id="fnQtB" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="PvWFp" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="rFCHf" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation"
           isInvalidating="true" isRequired="true" name="insertAt" type="#4m9WX">
         <ownedComments body="&#xA;The sequence consisting of oclText[self] with object inserted at position index.&#xA;"/>
-        <ownedParameters xmi:id="8C9wi" isRequired="true" name="index" type="#tYtCd"/>
+        <ownedParameters xmi:id="LW1SG" isRequired="true" name="index" type="#tYtCd"/>
         <ownedParameters xmi:id="psUyf" name="object" type="#NxGT6"/>
       </ownedOperations>
       <ownedOperations xmi:id="sr8UB" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation"
@@ -2185,13 +2185,13 @@
       <ownedOperations xmi:id="OirZQ" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation"
           isRequired="true" name="prependAll" type="#4m9WX">
         <ownedComments body="&#xA;The sequence consisting of objects, followed by all elements in oclText[self].&#xA;"/>
-        <ownedParameters xmi:id="VOTWQ" isRequired="true" name="objects" type="#iy9cI"/>
+        <ownedParameters xmi:id="0bb5v" isRequired="true" name="objects" type="#iy9cI"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="9Lylc" implementationClass="org.eclipse.ocl.pivot.library.iterator.RejectIteration"
           isRequired="true" name="reject" type="#4m9WX">
         <ownedComments body="&#xA;The subsequence of the source sequence for which body is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="SqVtt" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="77zMO" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="PDmyW" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="WGA3V" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation"
           isRequired="true" name="reverse" type="#4m9WX">
@@ -2201,12 +2201,12 @@
           isRequired="true" name="select" type="#4m9WX">
         <ownedComments body="&#xA;The subsequence of the source sequence for which body is oclText[true].&#xA;"/>
         <ownedIterators xmi:id="7pYm," name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="k72Fg" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="4Cpro" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="dwNJx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation" isRequired="true"
           name="selectByKind" type="#Wn9WX">
         <ownedComments body="&#xA;The sequence containing all elements of oclText[self] whose type conforms to oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="O88zJ" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="Ze,zJ" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="TIuaK" name="TT"/>
         </ownedSignature>
@@ -2214,7 +2214,7 @@
       <ownedOperations xmi:id="D,SKx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" isRequired="true"
           name="selectByType" type="#Wn9WX">
         <ownedComments body="&#xA;The sequence containing all elements of oclText[self] whose type is oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="cwWEb" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="nSZEb" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="pLkGd" name="TT"/>
         </ownedSignature>
@@ -2223,13 +2223,13 @@
           isRequired="true" name="sortedBy" type="#4m9WX">
         <ownedComments body="&#xA;Results in the Sequence containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="TmuAN" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="83Mgt" name="lambda" type="#Kzb3k"/>
+        <ownedParameters xmi:id="qZrLW" name="lambda" type="#Kzb3k"/>
       </ownedOperations>
       <ownedOperations xmi:id="aqloy" implementationClass="org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation" isInvalidating="true"
           isRequired="true" name="subSequence" type="#4m9WX">
         <ownedComments body="&#xA;The sub-sequence of oclText[self] starting at number lower, up to and including element number upper.&#xA;"/>
-        <ownedParameters xmi:id="eNOQB" isRequired="true" name="lower" type="#tYtCd"/>
-        <ownedParameters xmi:id=",DBwB" isRequired="true" name="upper" type="#tYtCd"/>
+        <ownedParameters xmi:id="tgGyk" isRequired="true" name="lower" type="#tYtCd"/>
+        <ownedParameters xmi:id="OX5Rl" isRequired="true" name="upper" type="#tYtCd"/>
       </ownedOperations>
       <ownedSignature>
         <ownedParameters xmi:id="l1i6D" name="T"/>
@@ -2244,23 +2244,23 @@
       <ownedOperations xmi:id="Cvrn0" implementationClass="org.eclipse.ocl.pivot.library.collection.SetMinusOperation" isRequired="true"
           name="-" precedence="#qLHeo" type="#ZIkED">
         <ownedComments body="&#xA;The elements of oclText[self], which are not in s.&#xA;"/>
-        <ownedParameters xmi:id="YVjqm" isRequired="true" name="s" type="#sVwyY"/>
+        <ownedParameters xmi:id="8lXhD" isRequired="true" name="s" type="#sVwyY"/>
       </ownedOperations>
       <ownedOperations xmi:id="lG+,," implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="PQhMm" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="gcVFo" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="gp9,," implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
         <ownedComments body="&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
-        <ownedParameters xmi:id="eXRFm" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="vjF+n" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="XToce" implementationClass="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"
           isRequired="true" name="closure" type="#3IkED">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-        <ownedIterators xmi:id="E0pqV" name="i" type="#OxGT6"/>
-        <ownedParameters xmi:id="tFIK2" name="lambda" type="#bF2V1"/>
+        <ownedIterators xmi:id="PWsqV" name="i" type="#OxGT6"/>
+        <ownedParameters xmi:id="2JjrB" name="lambda" type="#bF2V1"/>
         <ownedSignature>
           <ownedParameters xmi:id="iZF9l" name="E"/>
         </ownedSignature>
@@ -2269,7 +2269,7 @@
           isRequired="true" name="collect" type="#YIgED">
         <ownedComments body="&#xA;The Bag of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
         <ownedIterators xmi:id="aFlMK" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="DXDsq" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="7jxkk" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="gFpLn" name="E"/>
         </ownedSignature>
@@ -2278,7 +2278,7 @@
           isRequired="true" name="collectNested" type="#YIgED">
         <ownedComments body="&#xA;The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
         <ownedIterators xmi:id="Vy9vz" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="+DcPU" name="lambda" type="#oexyv"/>
+        <ownedParameters xmi:id="2QKIO" name="lambda" type="#oexyv"/>
         <ownedSignature>
           <ownedParameters xmi:id="vutsg" name="E"/>
         </ownedSignature>
@@ -2291,7 +2291,7 @@
       <ownedOperations xmi:id="LojWE" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" isRequired="true"
           name="excludingAll" type="#ZIkED">
         <ownedComments body="&#xA;The set containing all elements of oclText[self] apart from all occurrences of all objects.&#xA;"/>
-        <ownedParameters xmi:id="eMKhC" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="OUQ5p" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xmi:id="VuFY8" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation" isRequired="true"
           name="flatten" type="#yJkED">
@@ -2308,24 +2308,24 @@
       <ownedOperations xmi:id="9PdMS" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" isRequired="true"
           name="includingAll" type="#ZIkED">
         <ownedComments body="&#xA;The set containing all elements of oclText[self] and objects.&#xA;"/>
-        <ownedParameters xmi:id="I1ZZ3" isRequired="true" name="objects" type="#ViIGS"/>
+        <ownedParameters xmi:id="48fxe" isRequired="true" name="objects" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="a3WFz" implementationClass="org.eclipse.ocl.pivot.library.iterator.RejectIteration"
           isRequired="true" name="reject" type="#ZIkED">
         <ownedComments body="&#xA;The subset of the source set for which body is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="73eZj" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="kJ94D" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="4QveM" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="38yy0" implementationClass="org.eclipse.ocl.pivot.library.iterator.SelectIteration"
           isRequired="true" name="select" type="#ZIkED">
         <ownedComments body="&#xA;The subset of set for which expr is oclText[true].&#xA;"/>
         <ownedIterators xmi:id="k3hS1" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="NJAyV" name="lambda" type="#8pEaX"/>
+        <ownedParameters xmi:id="hQyXe" name="lambda" type="#8pEaX"/>
       </ownedOperations>
       <ownedOperations xmi:id="6byoH" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation" isRequired="true"
           name="selectByKind" type="#3IkED">
         <ownedComments body="&#xA;The set containing all elements of oclText[self] whose type conforms to oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="3JGg," isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="CsIg," isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="Yvspr" name="TT"/>
         </ownedSignature>
@@ -2333,7 +2333,7 @@
       <ownedOperations xmi:id="gq3pH" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" isRequired="true"
           name="selectByType" type="#3IkED">
         <ownedComments body="&#xA;The set containing all elements of oclText[self] whose type is oclText[type].&#xA;"/>
-        <ownedParameters xmi:id="F+fwQ" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
+        <ownedParameters xmi:id="QgiwQ" isRequired="true" isTypeof="true" name="type" type="#OxGT6"/>
         <ownedSignature>
           <ownedParameters xmi:id="uyiV+" name="TT"/>
         </ownedSignature>
@@ -2342,7 +2342,7 @@
           isRequired="true" name="sortedBy" type="#sKbRn">
         <ownedComments body="&#xA;Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="8z3sC" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="lFWMj" name="lambda" type="#Kzb3k"/>
+        <ownedParameters xmi:id="Tn03L" name="lambda" type="#Kzb3k"/>
       </ownedOperations>
       <ownedSignature>
         <ownedParameters xmi:id="ODsm5" name="T"/>
@@ -2371,40 +2371,40 @@
       <ownedOperations xmi:id="pK7dJ" implementationClass="org.eclipse.ocl.pivot.library.string.StringConcatOperation" isRequired="true"
           name="+" precedence="#qLHeo" type="#AlwVZ">
         <ownedComments body="&#xA;The concatenation of oclText[self] and s.&#xA;"/>
-        <ownedParameters xmi:id="jyu+L" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="jp8Wj" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="6L5cn" implementationClass="org.eclipse.ocl.pivot.library.string.StringLessThanOperation" isRequired="true"
           name="&lt;" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is less than s, using the locale defined by looking up oclLocale in the current environment.&#xA;"/>
-        <ownedParameters xmi:id="w+Iih" isRequired="true" name="s" type="#zlfMH"/>
+        <ownedParameters xmi:id="BL9aj" isRequired="true" name="s" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id=",o5cn" implementationClass="org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation" isRequired="true"
           name="&lt;=" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is less than or equal to s, using the locale defined by looking up oclLocale in the current environment.&#xA;"/>
-        <ownedParameters xmi:id="h3Yph" isRequired="true" name="s" type="#zlfMH"/>
+        <ownedParameters xmi:id="yDNij" isRequired="true" name="s" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="Jq5cn" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" isRequired="true"
           name="&lt;>" precedence="#YwCPU" type="#XEMMs">
-        <ownedParameters xmi:id="jlnu+" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="0xbnA" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="EN5cn" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" isRequired="true"
           name="=" precedence="#YwCPU" type="#XEMMs">
-        <ownedParameters xmi:id="ysXn+" name="object2" type="#zlfMH"/>
+        <ownedParameters xmi:id="D5LgA" name="object2" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="8L5cn" implementationClass="org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation" isRequired="true"
           name=">" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is greater than s, using the locale defined by looking up oclLocale in the current environment.&#xA;"/>
-        <ownedParameters xmi:id="qeJih" isRequired="true" name="s" type="#zlfMH"/>
+        <ownedParameters xmi:id="7q9aj" isRequired="true" name="s" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="9p5cn" implementationClass="org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation" isRequired="true"
           name=">=" precedence="#FpitR" type="#XEMMs">
         <ownedComments body="&#xA;True if oclText[self] is greater than or equal to s, using the locale defined by looking up oclLocale in the current environment.&#xA;"/>
-        <ownedParameters xmi:id="nUoph" isRequired="true" name="s" type="#zlfMH"/>
+        <ownedParameters xmi:id="4gcij" isRequired="true" name="s" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id=",8yw8" implementationClass="org.eclipse.ocl.pivot.library.string.StringAtOperation" isInvalidating="true"
           isRequired="true" name="at" type="#AlwVZ">
         <ownedComments body="&#xA;Queries the character at position i in oclText[self].&#xA;"/>
-        <ownedParameters xmi:id="X7sCg" isRequired="true" name="i" type="#tYtCd"/>
+        <ownedParameters xmi:id="mOlkD" isRequired="true" name="i" type="#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="fz1ec" implementationClass="org.eclipse.ocl.pivot.library.string.StringCharactersOperation" isRequired="true"
           name="characters" type="#4nGDi">
@@ -2413,49 +2413,49 @@
       <ownedOperations xmi:id="+TzPT" implementationClass="org.eclipse.ocl.pivot.library.string.StringCompareToOperation" isRequired="true"
           name="compareTo" type="#tYtCd">
         <ownedComments body="&#xA;The comparison of oclText[self] with oclText[that]. -ve if less than, 0 if equal, +ve if greater than.&#xA;"/>
-        <ownedParameters xmi:id="YbA5M" isRequired="true" name="that" type="#zlfMH"/>
+        <ownedParameters xmi:id="pn0xO" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="Smyt4" implementationClass="org.eclipse.ocl.pivot.library.string.StringConcatOperation" isRequired="true"
           name="concat" type="#AlwVZ">
         <ownedComments body="&#xA;The concatenation of oclText[self] and s.&#xA;"/>
-        <ownedParameters xmi:id="ovCG8" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="omQeT" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="T4iXx" implementationClass="org.eclipse.ocl.pivot.library.string.StringEndsWithOperation" isRequired="true"
           name="endsWith" type="#XEMMs">
         <ownedComments body="&#xA;Returns true if oclText[self] ends with the string s.&#xA;Every string ends with the empty string.&#xA;"/>
-        <ownedParameters xmi:id="lJSNu" isRequired="true" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="lAglF" isRequired="true" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="29V1Y" implementationClass="org.eclipse.ocl.pivot.library.string.StringEqualsIgnoreCaseOperation" isRequired="true"
           name="equalsIgnoreCase" type="#XEMMs">
         <ownedComments body="&#xA;Queries whether s and oclText[self] are equivalent under case-insensitive collation.&#xA;"/>
-        <ownedParameters xmi:id="8oRlU" isRequired="true" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="8ff9r" isRequired="true" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="+h,S9" implementationClass="org.eclipse.ocl.pivot.library.string.StringIndexOfOperation" isRequired="true"
           name="indexOf" type="#tYtCd">
         <ownedComments body="&#xA;Queries the first index in oclText[self] at which s is a substring of oclText[self], or zero if s is not a substring of oclText[self].&#xA;The empty string is a substring of every string at index 1 (and also at all other indexes).&#xA;"/>
-        <ownedParameters xmi:id="k8WlB" isRequired="true" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="kzk9Y" isRequired="true" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="Ikgmt" implementationClass="org.eclipse.ocl.pivot.library.string.StringLastIndexOfOperation" isRequired="true"
           name="lastIndexOf" type="#tYtCd">
         <ownedComments body="&#xA;Queries the last in oclText[self] at which s is a substring of oclText[self], or zero if s is not a substring of oclText[self].&#xA;The empty string is a substring of every string at index oclText[self]-size()+1 (and also at all other indexes).&#xA;"/>
-        <ownedParameters xmi:id="GWW7o" isRequired="true" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="GNkTA" isRequired="true" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="otjl7" implementationClass="org.eclipse.ocl.pivot.library.string.StringMatchesOperation" isRequired="true"
           name="matches" type="#XEMMs">
         <ownedComments body="&#xA;Use a regular expression match and return true if self matches regex, false otherwise.&#xA;"/>
-        <ownedParameters xmi:id="64DO2" isRequired="true" name="regex" type="#AlwVZ"/>
+        <ownedParameters xmi:id="6vRmN" isRequired="true" name="regex" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="CQJau" implementationClass="org.eclipse.ocl.pivot.library.string.StringReplaceAllOperation" isRequired="true"
           name="replaceAll" type="#AlwVZ">
         <ownedComments body="&#xA;Return a string derived from self by replacing all matches of regex by replacement.&#xA;"/>
-        <ownedParameters xmi:id="sx5In" isRequired="true" name="regex" type="#AlwVZ"/>
-        <ownedParameters xmi:id="3oPX6" isRequired="true" name="replacement" type="#AlwVZ"/>
+        <ownedParameters xmi:id="soHh+" isRequired="true" name="regex" type="#AlwVZ"/>
+        <ownedParameters xmi:id="3fdvR" isRequired="true" name="replacement" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="RIn,R" implementationClass="org.eclipse.ocl.pivot.library.string.StringReplaceFirstOperation" isRequired="true"
           name="replaceFirst" type="#AlwVZ">
         <ownedComments body="&#xA;Return a string derived from self by replacing the first match of regex by replacement.&#xA;"/>
-        <ownedParameters xmi:id=",4j2T" isRequired="true" name="regex" type="#AlwVZ"/>
-        <ownedParameters xmi:id="Kw5En" isRequired="true" name="replacement" type="#AlwVZ"/>
+        <ownedParameters xmi:id=",vxOr" isRequired="true" name="regex" type="#AlwVZ"/>
+        <ownedParameters xmi:id="KnHd+" isRequired="true" name="replacement" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="2JZdS" implementationClass="org.eclipse.ocl.pivot.library.string.StringSizeOperation" isRequired="true"
           name="size" type="#tYtCd">
@@ -2464,25 +2464,25 @@
       <ownedOperations xmi:id="s7Aws" implementationClass="org.eclipse.ocl.pivot.library.string.StringStartsWithOperation" isRequired="true"
           name="startsWith" type="#XEMMs">
         <ownedComments body="&#xA;Returns true if oclText[self] starts with the string s.&#xA;Every string starts with the empty string.&#xA;"/>
-        <ownedParameters xmi:id="aPukD" isRequired="true" name="s" type="#AlwVZ"/>
+        <ownedParameters xmi:id="aG88a" isRequired="true" name="s" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="cB5Zu" implementationClass="org.eclipse.ocl.pivot.library.string.StringSubstituteAllOperation" isRequired="true"
           name="substituteAll" type="#AlwVZ">
         <ownedComments body="&#xA;Return a string derived from self by replacing all occurrences of oldSubstring by newSubstring.&#xA;"/>
-        <ownedParameters xmi:id="Bsf5G" isRequired="true" name="oldSubstring" type="#AlwVZ"/>
-        <ownedParameters xmi:id="oetZO" isRequired="true" name="newSubstring" type="#AlwVZ"/>
+        <ownedParameters xmi:id="BjtRe" isRequired="true" name="oldSubstring" type="#AlwVZ"/>
+        <ownedParameters xmi:id="oV7xl" isRequired="true" name="newSubstring" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="r,7LO" implementationClass="org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation" isRequired="true"
           name="substituteFirst" type="#AlwVZ">
         <ownedComments body="&#xA;Return a string derived from self by replacing the first occurrence of oldSubstring by newSubstring.&#xA;Returns invalid if there is no first occurrence.&#xA;"/>
-        <ownedParameters xmi:id="Uh6SI" isRequired="true" name="oldSubstring" type="#AlwVZ"/>
-        <ownedParameters xmi:id="7TIzP" isRequired="true" name="newSubstring" type="#AlwVZ"/>
+        <ownedParameters xmi:id="UYIrf" isRequired="true" name="oldSubstring" type="#AlwVZ"/>
+        <ownedParameters xmi:id="7KWLn" isRequired="true" name="newSubstring" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="LKXax" implementationClass="org.eclipse.ocl.pivot.library.string.StringSubstringOperation" isInvalidating="true"
           isRequired="true" name="substring" type="#AlwVZ">
         <ownedComments body="&#xA;The sub-string of oclText[self] starting at character number lower, up to and including character number upper. Character numbers run from 1 to self.size().&#xA;"/>
-        <ownedParameters xmi:id="L+1Sh" isRequired="true" name="lower" type="#tYtCd"/>
-        <ownedParameters xmi:id="s0oyh" isRequired="true" name="upper" type="#tYtCd"/>
+        <ownedParameters xmi:id="aRu0E" isRequired="true" name="lower" type="#tYtCd"/>
+        <ownedParameters xmi:id="7HhUF" isRequired="true" name="upper" type="#tYtCd"/>
       </ownedOperations>
       <ownedOperations xmi:id="ieH+y" implementationClass="org.eclipse.ocl.pivot.library.string.StringToBooleanOperation" name="toBoolean"
           type="#XEMMs">
@@ -2522,13 +2522,13 @@
       <ownedOperations xmi:id="wLSrH" implementationClass="org.eclipse.ocl.pivot.library.string.StringTokenizeOperation" isRequired="true"
           name="tokenize" type="#4nGDi">
         <ownedComments body="&#xA;Partition oclText[self] into a sequence substrings separated by characters in the delimiters. The delimiters are omitted from the return.&#xA;"/>
-        <ownedParameters xmi:id="nKxNY" isRequired="true" name="delimiters" type="#AlwVZ"/>
+        <ownedParameters xmi:id="nB,lv" isRequired="true" name="delimiters" type="#AlwVZ"/>
       </ownedOperations>
       <ownedOperations xmi:id="aflSv" implementationClass="org.eclipse.ocl.pivot.library.string.StringTokenizeOperation" isRequired="true"
           name="tokenize" type="#4nGDi">
         <ownedComments body="&#xA;Partition oclText[self] into a sequence substrings separated by characters in the delimiters. If returnDelimeters is&#xA;true the returned sequence includes the delimiters, otherwise the delimiters are omitted.&#xA;"/>
-        <ownedParameters xmi:id="pvxMW" isRequired="true" name="delimiters" type="#AlwVZ"/>
-        <ownedParameters xmi:id="5kHT1" isRequired="true" name="returnDelimiters" type="#XEMMs"/>
+        <ownedParameters xmi:id="pm,kt" isRequired="true" name="delimiters" type="#AlwVZ"/>
+        <ownedParameters xmi:id="W3Srt" isRequired="true" name="returnDelimiters" type="#XEMMs"/>
       </ownedOperations>
       <ownedOperations xmi:id="XaidS" implementationClass="org.eclipse.ocl.pivot.library.string.StringTrimOperation" isRequired="true"
           name="trim" type="#AlwVZ">
@@ -2545,7 +2545,7 @@
       <ownedOperations xmi:id="WKQE3" implementationClass="org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation" isRequired="true"
           name="conformsTo" type="#XEMMs">
         <ownedComments body="&#xA;Returns true if type2 conforms to self.&#xA;"/>
-        <ownedParameters xmi:id="higCv" name="type2" type="#pBMRF"/>
+        <ownedParameters xmi:id="ESnxi" name="type2" type="#pBMRF"/>
       </ownedOperations>
       <ownedProperties xmi:id="PjpFg" isImplicit="true" isRequired="true" name="CollectionType" opposite="#5RgO0" type="#JSczz"/>
       <ownedProperties xmi:id="CWW9w" isImplicit="true" isRequired="true" name="MapType" opposite="#ifXaB" type="#Xt65a"/>
@@ -2562,28 +2562,28 @@
       <ownedOperations xmi:id="7A60M" implementationClass="org.eclipse.ocl.pivot.library.collection.SetMinusOperation" isRequired="true"
           name="-" precedence="#qLHeo" type="#Gd4BC">
         <ownedComments body="&#xA;The elements of oclText[self], which are not in s.&#xA;"/>
-        <ownedParameters xmi:id="tvWnx" isRequired="true" name="s" type="#sVwyY"/>
+        <ownedParameters xmi:id="RALeO" isRequired="true" name="s" type="#sVwyY"/>
       </ownedOperations>
       <ownedOperations xmi:id="D8j2v" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" isRequired="true"
           name="intersection" type="#ZIkED">
         <ownedComments body="&#xA;The intersection of oclText[self] and c (i.e., the set of all elements that are in both oclText[self] and c).&#xA;"/>
-        <ownedParameters xmi:id="F+KBj" isRequired="true" name="c" type="#ViIGS"/>
+        <ownedParameters xmi:id="1FRZK" isRequired="true" name="c" type="#ViIGS"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="o6jFm" implementationClass="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"
           isRequired="true" name="sortedBy" type="#sKbRn">
         <ownedComments body="&#xA;Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="ROrpN" name="i" type="#NxGT6"/>
-        <ownedParameters xmi:id="6fJJu" name="lambda" type="#Kzb3k"/>
+        <ownedParameters xmi:id="oBo0W" name="lambda" type="#Kzb3k"/>
       </ownedOperations>
       <ownedOperations xmi:id="ivhTZ" implementationClass="org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation" isRequired="true"
           name="symmetricDifference" type="#ZIkED">
         <ownedComments body="&#xA;The set containing all the elements that are in oclText[self] or s, but not in both.&#xA;"/>
-        <ownedParameters xmi:id="4TJH2" isRequired="true" name="s" type="#sVwyY"/>
+        <ownedParameters xmi:id="ck99S" isRequired="true" name="s" type="#sVwyY"/>
       </ownedOperations>
       <ownedOperations xmi:id="s6P32" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation" isRequired="true"
           name="union" type="#ZIkED">
         <ownedComments body="&#xA;The set consisting of all elements in oclText[self] and all elements in s.&#xA;"/>
-        <ownedParameters xmi:id="aSx+Y" isRequired="true" name="s" type="#Gd4BC"/>
+        <ownedParameters xmi:id="Fq+PJ" isRequired="true" name="s" type="#Gd4BC"/>
       </ownedOperations>
       <ownedSignature>
         <ownedParameters xmi:id="jdfjE" name="T"/>
@@ -2600,12 +2600,12 @@
       <ownedOperations xmi:id="9Q9OJ" implementationClass="org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMaxOperation" isRequired="true"
           name="max" type="#3kMFL">
         <ownedComments body="&#xA;The maximum of oclText[self] an i.&#xA;"/>
-        <ownedParameters xmi:id="dfNNd" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id="urBGf" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="rU9OJ" implementationClass="org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation" isRequired="true"
           name="min" type="#3kMFL">
         <ownedComments body="&#xA;The minimum of oclText[self] an i.&#xA;"/>
-        <ownedParameters xmi:id="T0IOd" isRequired="true" name="i" type="#zlfMH"/>
+        <ownedParameters xmi:id="kA9Gf" isRequired="true" name="i" type="#zlfMH"/>
       </ownedOperations>
       <ownedOperations xmi:id="1y1Tw" implementationClass="org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation" isInvalidating="true"
           isRequired="true" name="oclAsType" type="#NxGT6">

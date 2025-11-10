@@ -28,6 +28,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -293,14 +296,14 @@ public class ASSaver
 		while (moreObjects != null) {
 			Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(moreObjects);
 			moreObjects = null;
-			for (EObject eObject : references.keySet()) {
-				assert eObject != null;
-				for (EObject eContainer = eObject; eContainer != null; eContainer = eContainer.eContainer()) {
+			for (EObject eReferencedObject : references.keySet()) {
+				assert eReferencedObject != null;
+				for (EObject eContainer = eReferencedObject; eContainer != null; eContainer = eContainer.eContainer()) {
 					if (eContainer == sharedOrphanage) {
 						if (localOrphanPackage == null) {
 							localOrphanPackage = Orphanage.createLocalOrphanPackage(asModel);
 						}
-						EObject eSource = eObject;
+						EObject eSource = eReferencedObject;
 						if (eSource instanceof Property) {				// If Tuple Property referenced (before Tuple)
 							eSource = eSource.eContainer();				//  copy the whole Tuple.
 						}
@@ -327,6 +330,41 @@ public class ASSaver
 						break;
 					}
 					else if (eContainer == localOrphanPackage) {
+						break;
+					}
+					else if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
+						break;
+					}
+					else if (eContainer instanceof Model) {
+						break;
+					}
+					else if (eReferencedObject instanceof CompleteClass) {
+						break;
+					}
+					else if (eContainer instanceof CompletePackage) {
+						break;
+					}
+					else if (eContainer instanceof CompleteModel) {
+						break;
+					}
+					else if (eContainer == null) {			// XXX Built-in orphans are containerless
+						if (localOrphanPackage == null) {
+							localOrphanPackage = Orphanage.createLocalOrphanPackage(asModel);
+						}
+						EObject eTarget = eReferencedObject;
+						assert !(eTarget instanceof Property);
+						assert !(eTarget instanceof NormalizedTemplateParameter);
+						if (!copier.containsKey(eTarget)) {
+							assert eTarget != null;
+							assert eTarget.eContainer() == null;
+							EObject localizedETarget = copier.copy(eTarget);
+							if (moreObjects == null) {
+								moreObjects = new ArrayList<>();
+							}
+							moreObjects.add(eTarget);
+							assert localizedETarget instanceof org.eclipse.ocl.pivot.Class;
+							localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localizedETarget);
+						}
 						break;
 					}
 				}

@@ -169,7 +169,7 @@
     <ownedClasses xmi:id="LqaWx" name="CompleteEnvironment" superClasses="#t5rpa"/>
     <ownedClasses xmi:id="hzOMU" name="CompleteModel" superClasses="#0kVqz">
       <ownedOperations xmi:id="f+Wm," name="getOwnedCompletePackage" type="#+gDEJ">
-        <ownedParameters xmi:id="ZfQvw" name="name" type="#CPVxu"/>
+        <ownedParameters xmi:id="vnwN9" name="name" type="#CPVxu"/>
       </ownedOperations>
       <ownedProperties xmi:id="aU0xR" isDerived="true" isReadOnly="true" isResolveProxies="false" isTransient="true" name="orphanCompletePackage"
           opposite="#pwEaB" type="#WaoLl"/>
@@ -180,7 +180,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="+gDEJ" name="CompletePackage" superClasses="#0kVqz">
       <ownedOperations xmi:id="6ynVz" name="getOwnedCompleteClass" type="#wspoT">
-        <ownedParameters xmi:id="IykuJ" name="name" type="#CPVxu"/>
+        <ownedParameters xmi:id="e6ENW" name="name" type="#CPVxu"/>
       </ownedOperations>
       <ownedProperties xmi:id="ms6IU" isComposite="true" isRequired="true" name="ownedCompleteClasses" opposite="#ZmPN3" type="#J7ICS"/>
       <ownedProperties xmi:id="pXZYG" isComposite="true" isRequired="true" name="ownedCompletePackages" opposite="#vpFYN" type="#niCJl"/>
@@ -276,8 +276,8 @@
       </ownedOperations>
       <ownedOperations xmi:id="miFc+" name="getValue" type="#t5rpa">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="null"/>
-        <ownedParameters xmi:id="rlls4" isRequired="true" name="stereotype" type="#rrwsa"/>
-        <ownedParameters xmi:id="5gsHc" isRequired="true" name="propertyName" type="#CPVxu"/>
+        <ownedParameters xmi:id="km+hh" isRequired="true" name="stereotype" type="#rrwsa"/>
+        <ownedParameters xmi:id="PpMmo" isRequired="true" name="propertyName" type="#CPVxu"/>
       </ownedOperations>
       <ownedProperties xmi:id="uVOeE" isRequired="true" name="annotatingComments" opposite="#XTzu8" type="#phuMp"/>
       <ownedProperties xmi:id="QiVod" isComposite="true" isRequired="true" name="ownedAnnotations" opposite="#mrjCA" type="#R+Drm"/>
@@ -877,7 +877,7 @@
       </ownedInvariants>
       <ownedOperations xmi:id="nycUW" isRequired="true" name="isAttribute" type="#ZuwnB">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))&#xA;let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)&#xA;&#xA;"/>
-        <ownedParameters xmi:id="maJ1N" isRequired="true" name="p" type="#Gm0Mj"/>
+        <ownedParameters xmi:id="oGFRE" isRequired="true" name="p" type="#Gm0Mj"/>
       </ownedOperations>
       <ownedProperties xmi:id="9lR1c" name="associationClass" opposite="#D9XUa" type="#oE9s0"/>
       <ownedProperties xmi:id="2+xJp" isDerived="true" isTransient="true" name="defaultValue" type="#wbJ8m"/>
@@ -1021,8 +1021,8 @@
     <ownedClasses xmi:id="Xhrcl" name="SelfType" superClasses="#pDcbe">
       <ownedOperations xmi:id="C4cbC" isRequired="true" name="specializeIn" type="#rrwsa">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="selfType"/>
-        <ownedParameters xmi:id="agbt5" isRequired="true" name="expr" type="#QJrde"/>
-        <ownedParameters xmi:id="Lr0kA" isRequired="true" name="selfType" type="#rrwsa"/>
+        <ownedParameters xmi:id="K+jU1" isRequired="true" name="expr" type="#QJrde"/>
+        <ownedParameters xmi:id="EsNap" isRequired="true" name="selfType" type="#rrwsa"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xmi:id="X55Qa" name="SendSignalAction" superClasses="#0kVqz">
@@ -1298,8 +1298,8 @@
       <ownedOperations xmi:id="5WLf+" name="isTemplateParameter" type="#Afray"/>
       <ownedOperations xmi:id="GZy9j" isRequired="true" name="specializeIn" type="#rrwsa">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self"/>
-        <ownedParameters xmi:id="O9re6" isRequired="true" name="expr" type="#QJrde"/>
-        <ownedParameters xmi:id=",HFWB" isRequired="true" name="selfType" type="#rrwsa"/>
+        <ownedParameters xmi:id="+a0F2" isRequired="true" name="expr" type="#QJrde"/>
+        <ownedParameters xmi:id="4IeLq" isRequired="true" name="selfType" type="#rrwsa"/>
       </ownedOperations>
       <ownedProperties xmi:id="JFc9Y" isImplicit="true" isRequired="true" name="CollectionType" opposite="#zzSGt" type="#7uaJn"/>
       <ownedProperties xmi:id="Nn,Xg" isImplicit="true" isRequired="true" name="DynamicElement" opposite="#t8fLB" type="#44OiT"/>
@@ -1321,7 +1321,7 @@
       <ownedComments body="A TypedElement is a NamedElement that may have a Type specified for it."/>
       <ownedOperations xmi:id="71tyJ" isRequired="true" name="CompatibleBody" type="#ZuwnB">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="bodySpecification.type?.conformsTo(self.type)"/>
-        <ownedParameters xmi:id="7IiBg" isRequired="true" name="bodySpecification" type="#DLUxI"/>
+        <ownedParameters xmi:id="8mQeK" isRequired="true" name="bodySpecification" type="#DLUxI"/>
       </ownedOperations>
       <ownedProperties xmi:id="YqNZL" isDerived="true" isReadOnly="true" isRequired="true" isTransient="true" isVolatile="true" name="isMany"
           type="#ZuwnB"/>

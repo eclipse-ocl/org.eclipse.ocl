@@ -154,6 +154,7 @@ public class PivotLUSSIDs extends LUSSIDs
 				lambdaParameters.add(PivotUtil.getOwnedResult(lambdaType));
 				lambdaParameters.addAll(PivotUtil.getOwnedParametersList(lambdaType));
 				localId += computeParametersLUSSID(as2id, lambdaParameters);
+//				System.out.println("computeLocalLUSSID : " + localId + " " + NameUtil.debugSimpleName(element) + " " + element);
 			}
 			else if (element instanceof Iteration) {
 				Iterable<@NonNull Parameter> asIterators = PivotUtil.getOwnedIterators((Iteration)element);
@@ -185,6 +186,13 @@ public class PivotLUSSIDs extends LUSSIDs
 				else {				// Never happens
 					System.out.println("No opposite for " + element);
 				}
+			}
+		}
+		else if (element instanceof Parameter) {
+			Parameter parameter = (Parameter)element;
+			Type type = parameter.getType();
+			if (type != null) {
+				localId += PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, type, true);
 			}
 		}
 		return Integer.valueOf(localId);

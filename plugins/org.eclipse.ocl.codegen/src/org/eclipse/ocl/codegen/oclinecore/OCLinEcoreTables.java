@@ -708,6 +708,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append("\n");
 				}
 				Operation op = sortedOperations.get(i);
+				if ("forAll".equals(op.getName())) {
+					getClass();		// XXX
+				}
 				TemplateSignature ownedTemplateSignature = op.getOwnedSignature();
 				StringBuilder sFlags = new StringBuilder();
 				sFlags.append(i);
