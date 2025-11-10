@@ -324,6 +324,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	 * Return the qualifying NamedElement path from global to element (inclusive if a NamedElement).
 	 */
 	private @NonNull List<@NonNull NamedElement> getPath(@NonNull Element element) {
+		if ((element instanceof NamedElement) && "OclElement".equals(((NamedElement)element).getName())) {
+			getClass();		// XXX
+		}
 		List<@NonNull NamedElement> path = new ArrayList<>();
 		for (EObject eContainer = element/*.eContainer()*/; eContainer instanceof Element; eContainer = eContainer.eContainer()) {
 			eContainer = completeModel.getPrimaryElement(eContainer);
