@@ -372,7 +372,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("null")
 	@Override
 	public boolean eIsSet(int featureID)
 	{
@@ -622,25 +621,29 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses() {
 		FlatClass flatClass = getFlatClass();
-		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> transform = Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
 				return input.getBaseFlatClass().getPivotClass();
 			}
 		});
+		assert transform != null;
+		return transform;
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses() {
 		FlatClass flatClass = getFlatClass();
-		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, @NonNull CompleteClass>()
+		Iterable<@NonNull CompleteClass> transform = Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, @NonNull CompleteClass>()
 		{
 			@Override
 			public @NonNull CompleteClass apply(@NonNull FlatFragment input) {
 				return ((AbstractFlatClass)input.getBaseFlatClass()).getCompleteClass();		// FIXME cast
 			}
 		});
+		assert transform != null;
+		return transform;
 	}
 
 	@Override
@@ -721,13 +724,15 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
 		FlatClass flatClass = getFlatClass();
-		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<FlatFragment, @NonNull CompleteClass>()
+		Iterable<@NonNull CompleteClass> transform = Iterables.transform(flatClass.getAllSuperFragments(), new Function<@NonNull FlatFragment, @NonNull CompleteClass>()
 		{
 			@Override
-			public @NonNull CompleteClass apply(FlatFragment input) {
+			public @NonNull CompleteClass apply(@NonNull FlatFragment input) {
 				return input.getBaseFlatClass().getCompleteClass();
 			}
 		});
+		assert transform != null;
+		return transform;
 	}
 
 	/**
