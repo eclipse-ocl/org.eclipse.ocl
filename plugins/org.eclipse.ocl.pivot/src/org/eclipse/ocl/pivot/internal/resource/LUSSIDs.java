@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -353,7 +352,7 @@ public abstract class LUSSIDs
 							if (localId.equals(-1490642940)) {
 								getClass();			// XXX
 							}
-							System.out.println("computeLocalLUSSID " + localId + " " + NameUtil.debugSimpleName(element) + " " + element);
+						//	System.out.println("computeLocalLUSSID " + localId + " " + NameUtil.debugSimpleName(element) + " " + element);
 						}
 					}
 					if (localId != null) {

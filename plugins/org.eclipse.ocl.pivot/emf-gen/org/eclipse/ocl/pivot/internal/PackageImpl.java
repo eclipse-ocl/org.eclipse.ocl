@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -40,6 +39,7 @@ import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.PackageListeners;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -852,8 +852,11 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	@Override
-	public void eSetProxyURI(URI uri) {
-		// XXX TODO Auto-generated method stub
-		super.eSetProxyURI(uri);
+	protected void eBasicSetContainer(InternalEObject newContainer,
+			int newContainerFeatureID) {
+		if ((newContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)newContainer)) {
+			assert getESObject() == null;
+		}
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //PackageImpl

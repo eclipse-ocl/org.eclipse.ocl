@@ -324,7 +324,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	 * Return the qualifying NamedElement path from global to element (inclusive if a NamedElement).
 	 */
 	private @NonNull List<@NonNull NamedElement> getPath(@NonNull Element element) {
-		if ((element instanceof NamedElement) && "OclElement".equals(((NamedElement)element).getName())) {
+		if ((element instanceof NamedElement) && "Annotation".equals(((NamedElement)element).getName())) {
 			getClass();		// XXX
 		}
 		List<@NonNull NamedElement> path = new ArrayList<>();
@@ -340,7 +340,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				continue;			// Skip signature
 			}
 			if (eContainer instanceof NamedElement) {
-				path.add(0, (NamedElement)eContainer);
+				NamedElement namedElement = (NamedElement)eContainer;
+				path.add(0, namedElement);
+				assert !Orphanage.isOrphan(namedElement);
 			}
 		}
 		return path;
@@ -545,6 +547,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				PathElementCS csSimpleRef = BaseCSFactory.eINSTANCE.createPathElementCS();
 				NamedElement pathElement = targetPath.get(i);
 				csSimpleRef.setReferredElement(pathElement);
+				assert !Orphanage.isOrphan(pathElement);
 				csPath.add(csSimpleRef);
 				if (pathElement == primaryElement) {
 					hasFinalTarget = true;
@@ -556,6 +559,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		if (!hasFinalTarget) {
 			PathElementCS csSimpleRef = BaseCSFactory.eINSTANCE.createPathElementCS();
 			csSimpleRef.setReferredElement(primaryElement);
+			assert !Orphanage.isOrphan(primaryElement);
 			csPath.add(csSimpleRef);
 		}
 	}
