@@ -37,7 +37,7 @@ public class UnlimitedNaturalObjectDescriptor extends UnboxedValueDescriptor
 			js.append(" == null ? null : ");
 		}
 		js.appendClassReference(null, ValueUtil.class);
-		js.append(".integerValueOf(");
+		js.append(".unlimitedNaturalValueOf(");
 		js.appendReferenceTo(unboxedValue);
 		js.append(")");
 		js.append(";\n");
