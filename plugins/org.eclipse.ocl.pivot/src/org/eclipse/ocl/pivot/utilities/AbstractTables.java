@@ -84,6 +84,10 @@ public abstract class AbstractTables
 	/**
 	 * @since 7.0
 	 */
+	public static final int HasAccumulator = IsVolatile << 1;
+	/**
+	 * @since 7.0
+	 */
 	public static final int IndexMask = IsComposite - 1;
 
 	public static final @NonNull Map<@NonNull String, @NonNull AbstractTables> nsURI2tables = new HashMap<>();

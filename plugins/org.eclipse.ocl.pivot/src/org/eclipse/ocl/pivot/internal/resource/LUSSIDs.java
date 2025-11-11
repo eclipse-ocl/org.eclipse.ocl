@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -309,6 +310,9 @@ public abstract class LUSSIDs
 	 * and if necessary from the local context.
 	 */
 	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
+		if ("Collection($$0).exists( | Lambda $$0() : Boolean) : Boolean".equals(element.toString())) {
+			getClass();
+		}
 		assert asResource == element.eResource();
 		int savedDepth = debugDepth;
 		assert debugDepth < 30;
@@ -345,6 +349,12 @@ public abstract class LUSSIDs
 					Integer localId = null;
 					if (eContainmentFeature.isUnique() || !eContainmentFeature.isOrdered()) {
 						localId = computeLocalLUSSID(as2id, element, normalizeTemplateParameters);
+						if (localId != null) {
+							if (localId.equals(-1490642940)) {
+								getClass();			// XXX
+							}
+							System.out.println("computeLocalLUSSID " + localId + " " + NameUtil.debugSimpleName(element) + " " + element);
+						}
 					}
 					if (localId != null) {
 						id += localId.intValue();
@@ -383,6 +393,9 @@ public abstract class LUSSIDs
 						List<@NonNull Element> collisions = debugLUSSID2collisions2.get(idObject);
 						if (collisions == null) {
 							collisions = new ArrayList<>();
+							if (idObject.equals(-1490642940)) {
+								getClass();		// XXX
+							}
 							debugLUSSID2collisions2.put(idObject, collisions);
 							collisions.add(oldElement);
 						}

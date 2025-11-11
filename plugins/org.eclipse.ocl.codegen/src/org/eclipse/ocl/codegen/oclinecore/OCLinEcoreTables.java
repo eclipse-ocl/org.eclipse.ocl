@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterableType;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
@@ -75,6 +76,8 @@ import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import com.google.common.collect.Lists;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
@@ -708,6 +711,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append("\n");
 				}
 				Operation op = sortedOperations.get(i);
+				Iteration it = op instanceof Iteration ? (Iteration)op : null;
+				boolean hasAccumulator = (it != null) && (it.getOwnedAccumulator() != null);
 				if ("forAll".equals(op.getName())) {
 					getClass();		// XXX
 				}
@@ -732,16 +737,26 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				if (op.isIsValidating()) {
 					sFlags.append(" | IsValidating");
 				}
+				if (hasAccumulator) {
+					sFlags.append(" | HasAccumulator");
+				}
 				s.append("		public static final ");
-				s.appendClassReference(true, Operation.class);
+				s.appendClassReference(true, it != null ? Iteration.class : Operation.class);
 				s.append(" ");
 				op.accept(emitDeclaredName);
-				s.append(" = LIBRARY.createOperation(");
+				s.append(" = LIBRARY.create");
+				s.append(it != null ? "Iteration" : "Operation");
+				s.append("(");
 				op.getOwningClass().accept(emitReferencedElement);
 				s.append(", ");
 				s.appendString(PivotUtil.getName(op));
 				s.append(", ");
-				appendParameterTypesName(op.getParameterTypes());
+				if (it != null) {
+					ParameterTypes iteratorTypes = new ParameterTypes(getIteratorsAndAccumulator(it));
+					appendParameterTypesName(iteratorTypes);
+					s.append(", ");
+				}
+				appendParameterTypesName(new ParameterTypes(PivotUtil.getOwnedParameters(op)));
 				s.append(", ");
 				Type resultType = op.getType();
 				if ((resultType instanceof TemplateableElement) && isNestedSpecialization((TemplateableElement)resultType)) {
@@ -817,24 +832,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		Set<@NonNull ParameterTypes> allParameterTypes = new HashSet<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			for (Operation operation : getOperations(pClass)) {
-				ParameterTypes parameterTypes = operation.getParameterTypes();
-				allParameterTypes.add(parameterTypes);
-				if (parameterTypes.size() > 0) {
-					String name = getTemplateBindingsName(parameterTypes);
-					name2parameterTypes.put(name, parameterTypes);
-				}
-				for (Parameter parameter : operation.getOwnedParameters()) {
-					Type parameterType = parameter.getType();
-					if (parameterType instanceof LambdaType) {
-						LambdaType lambdaType = (LambdaType)parameterType;
-						LambdaParameter contextParameter = PivotUtil.getOwnedContext(lambdaType);
-						name2lambdaParameter.put(getLambdaParameterName(contextParameter), contextParameter);		// Any one of a multiple is ok
-						for (LambdaParameter lambdaParameter : PivotUtil.getOwnedParameters(lambdaType)) {
-							name2lambdaParameter.put(getLambdaParameterName(lambdaParameter), lambdaParameter);		// Any one of a multiple is ok
-						}
-						LambdaParameter resultParameter = PivotUtil.getOwnedResult(lambdaType);
-						name2lambdaParameter.put(getLambdaParameterName(resultParameter), resultParameter);		// Any one of a multiple is ok
-					}
+				declareParameterLists_ParameterTypes(name2parameterTypes, name2lambdaParameter, allParameterTypes, PivotUtil.getOwnedParameters(operation));
+				if (operation instanceof Iteration) {
+					declareParameterLists_ParameterTypes(name2parameterTypes, name2lambdaParameter, allParameterTypes, getIteratorsAndAccumulator((Iteration)operation));
 				}
 			}
 		}
@@ -894,6 +894,30 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		appendInitializationEnd(false);
 		s.append("	}\n");
+	}
+
+	private void declareParameterLists_ParameterTypes(@NonNull Map<@NonNull String, @NonNull ParameterTypes> name2parameterTypes,
+			@NonNull Map<@NonNull String, @NonNull LambdaParameter> name2lambdaParameter,
+			@NonNull Set<@NonNull ParameterTypes> allParameterTypes, @NonNull Iterable<@NonNull Parameter> parameters) {
+		ParameterTypes parameterTypes = new ParameterTypes(parameters);
+		allParameterTypes.add(parameterTypes);
+		if (parameterTypes.size() > 0) {
+			String name = getTemplateBindingsName(parameterTypes);
+			name2parameterTypes.put(name, parameterTypes);
+		}
+		for (Parameter parameter : parameters) {
+			Type parameterType = parameter.getType();
+			if (parameterType instanceof LambdaType) {
+				LambdaType lambdaType = (LambdaType)parameterType;
+				LambdaParameter contextParameter = PivotUtil.getOwnedContext(lambdaType);
+				name2lambdaParameter.put(getLambdaParameterName(contextParameter), contextParameter);		// Any one of a multiple is ok
+				for (LambdaParameter lambdaParameter : PivotUtil.getOwnedParameters(lambdaType)) {
+					name2lambdaParameter.put(getLambdaParameterName(lambdaParameter), lambdaParameter);		// Any one of a multiple is ok
+				}
+				LambdaParameter resultParameter = PivotUtil.getOwnedResult(lambdaType);
+				name2lambdaParameter.put(getLambdaParameterName(resultParameter), resultParameter);		// Any one of a multiple is ok
+			}
+		}
 	}
 
 	protected void declareProperties() {
@@ -1494,6 +1518,19 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			return PivotPackage.Literals.VOID_TYPE;
 		}
 		return PivotPackage.Literals.CLASS;
+	}
+
+	private @NonNull Iterable<@NonNull Parameter> getIteratorsAndAccumulator(@NonNull Iteration iteration) {
+		Iterable<@NonNull Parameter> ownedIterators = PivotUtil.getOwnedIterators(iteration);
+		Parameter ownedAccumulator = iteration.getOwnedAccumulator();
+		if (ownedAccumulator == null) {
+			return ownedIterators;
+		}
+		else {
+			List<@NonNull Parameter> list = Lists.newArrayList(ownedIterators);
+			list.add(ownedAccumulator);
+			return list;
+		}
 	}
 
 	public @NonNull String getTablesClassName() {

@@ -17,6 +17,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
+import com.google.common.collect.Iterables;
+
 /**
  * ParameterTypes provides a hashable list of operation
  * parameter types suitable for use when indexing operation overloads.
@@ -28,7 +30,22 @@ public class ParameterTypes
 	private final @NonNull ParametersId parametersId;
 	private final @NonNull Type @NonNull [] parameterTypes;
 	private final int hashCode;
-	private /*@LazyNonNull*/ List<@NonNull Parameter> parameters = null;
+	private /*@LazyNonNull*/ List<@NonNull Parameter> parameters = null;  // XXX init from ctor
+
+	public ParameterTypes(@NonNull Iterable<@NonNull Parameter> parameters) {
+		int iMax = Iterables.size(parameters);
+		@NonNull Type @NonNull [] types = new @NonNull Type[iMax];
+		int i = 0;
+		for (@NonNull Parameter parameter : parameters) {
+			Type type = parameter.getType();
+			assert type != null;
+			types[i] = type;
+			i++;
+		}
+		this.parametersId = IdManager.getParametersId(types);
+		this.parameterTypes = types;
+		hashCode = parametersId.hashCode() + 0x999;
+	}
 
 	public ParameterTypes(@NonNull Type @NonNull ... parameterTypes) {
 		this.parametersId = IdManager.getParametersId(parameterTypes);

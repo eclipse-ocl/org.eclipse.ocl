@@ -581,5 +581,4 @@ public class IterationImpl extends OperationImpl implements Iteration
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitIteration(this);
 	}
-
 } //IterationImpl

@@ -381,11 +381,6 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	@NonNull ParametersId getParametersId();
 
 	/**
-	 * Return the ordered list of parameters of this operation.
-	 */
-	@NonNull ParameterTypes getParameterTypes();
-
-	/**
 	 * Return the template arguments of this operation.
 	 *
 	 * @since 7.0

@@ -71,5 +71,4 @@ public interface Iteration extends Operation
 	 * @generated
 	 */
 	@NonNull List<Parameter> getOwnedIterators();
-
 } // Iteration

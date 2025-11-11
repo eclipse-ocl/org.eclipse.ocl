@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Precedence;
@@ -1593,19 +1592,6 @@ implements Operation {
 		return getOperationId().getParametersId();
 	}
 
-	@Override
-	public @NonNull ParameterTypes getParameterTypes() {
-		List<Parameter> ownedParameter = getOwnedParameters();
-		int iMax = ownedParameter.size();
-		@NonNull Type @NonNull [] types = new @NonNull Type[iMax];
-		for (int i = 0; i < iMax; i++) {
-			Type parameterType = ownedParameter.get(i).getType();
-			assert parameterType != null;
-			types[i] = parameterType;
-		}
-		return new ParameterTypes(types);
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -1646,13 +1632,5 @@ implements Operation {
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public void setName(String newName) {
-		if ("forAll".equals(newName)) {
-			getClass();				// XXX
-		}
-		super.setName(newName);
 	}
 } //OperationImpl
