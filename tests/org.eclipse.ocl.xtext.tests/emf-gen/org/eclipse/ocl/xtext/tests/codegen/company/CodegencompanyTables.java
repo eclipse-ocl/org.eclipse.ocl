@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -85,7 +84,7 @@ public class CodegencompanyTables extends AbstractTables
 	/**
 	 *	The AS model for the AS package and its orphans.
 	 */
-	public static final @NonNull Model MODEL = LIBRARY.createModel(PACKAGE);
+	public static final AbstractTables.@NonNull BuiltInModel MODEL = LIBRARY.createModel(PACKAGE);
 
 	/**
 	 *	The EMF Resource containing the AS model, its AS package and its orphans.
@@ -302,21 +301,21 @@ public class CodegencompanyTables extends AbstractTables
 		public static final @NonNull Property _Bug418716__AttributeWithInitital = LIBRARY.createProperty(Types._Bug418716, CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITH_INITITAL, OCLstdlibTables.Types._Integer, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Bug418716__AttributeWithoutInitital = LIBRARY.createProperty(Types._Bug418716, CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITHOUT_INITITAL, OCLstdlibTables.Types._Integer, 1 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Company__employees = LIBRARY.createProperty(Types._Company, CodegencompanyPackage.Literals.COMPANY__EMPLOYEES, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Company__employees = LIBRARY.createProperty(Types._Company, CodegencompanyPackage.Literals.COMPANY__EMPLOYEES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Company__name = LIBRARY.createProperty(Types._Company, CodegencompanyPackage.Literals.COMPANY__NAME, OCLstdlibTables.Types._String, 1 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Company__size = LIBRARY.createProperty(Types._Company, CodegencompanyPackage.Literals.COMPANY__SIZE, Types._CompanySizeKind, 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 
-		public static final @NonNull Property _Employee__allReports = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._Set, Types._Employee), 0 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _Employee__allReports = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Employee), 0 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _Employee__company = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__COMPANY, Types._Company, 1 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Employee__directReports = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _Employee__directReports = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _Employee__hasNameAsAttribute = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__HAS_NAME_AS_ATTRIBUTE, OCLstdlibTables.Types._Boolean, 3 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _Employee__manager = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__MANAGER, Types._Employee, 4 | IsResolveProxies);
 		public static final @NonNull Property _Employee__name = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__NAME, OCLstdlibTables.Types._String, 5 | IsResolveProxies);
-		public static final @NonNull Property _Employee__reportingChain = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN, LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 6 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
-		public static final @NonNull Property _Employee__Employee__allReports = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 7 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS);
-		public static final @NonNull Property _Employee__Employee__directReports = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 8 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS);
-		public static final @NonNull Property _Employee__Employee__manager = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 9 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__MANAGER);
-		public static final @NonNull Property _Employee__Employee__reportingChain = LIBRARY.createOppositeProperty(Types._Employee, "Employee", LIBRARY.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 10 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN);
+		public static final @NonNull Property _Employee__reportingChain = LIBRARY.createProperty(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Employee), 6 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
+		public static final @NonNull Property _Employee__Employee__allReports = LIBRARY.createOppositeProperty(Types._Employee, "Employee", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 7 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS);
+		public static final @NonNull Property _Employee__Employee__directReports = LIBRARY.createOppositeProperty(Types._Employee, "Employee", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 8 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS);
+		public static final @NonNull Property _Employee__Employee__manager = LIBRARY.createOppositeProperty(Types._Employee, "Employee", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 9 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__MANAGER);
+		public static final @NonNull Property _Employee__Employee__reportingChain = LIBRARY.createOppositeProperty(Types._Employee, "Employee", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Employee), 10 | IsImplicit | IsRequired | IsResolveProxies, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN);
 
 		static {
 

@@ -309,7 +309,7 @@ public abstract class LUSSIDs
 	 * and if necessary from the local context.
 	 */
 	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
-		if ("Collection($$0).exists( | Lambda $$0() : Boolean) : Boolean".equals(element.toString())) {
+		if ("Collection($$0)::intersection(UniqueCollection($$0)) : Set($$0)".equals(element.toString())) {
 			getClass();
 		}
 		assert asResource == element.eResource();

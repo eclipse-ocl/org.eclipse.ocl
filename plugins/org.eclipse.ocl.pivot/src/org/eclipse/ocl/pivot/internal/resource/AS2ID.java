@@ -126,6 +126,7 @@ public class AS2ID
 			return lussids.assignLUSSID(this, element, isReferenced, normalizeTemplateParameters);
 		}
 		else {
+			assert false;
 			String fragment = EcoreUtil.getURI(element).fragment();
 			return fragment != null ? fragment.hashCode() : 0;
 		}
@@ -151,7 +152,7 @@ public class AS2ID
 			//			}
 		}
 		else {
-		//	System.out.println("assignLUSSIDs to "  + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
+			System.out.println("assignLUSSIDs to "  + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
 			lussids = asResource.getLUSSIDs(options);
 			if (newLUSSIDs.contains(lussids)) {
 				return;

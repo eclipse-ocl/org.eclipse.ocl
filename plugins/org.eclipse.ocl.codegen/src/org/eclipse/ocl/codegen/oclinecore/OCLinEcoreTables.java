@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImp
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
+import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -1404,14 +1405,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(" PACKAGE = LIBRARY.createPackage(" + getGenPackagePrefix() + "Package.eINSTANCE);\n");
 		s.append("\n");
 		s.append("	/**\n");
-		s.append("	 *	The AS model for the AS package and its orphans.\n");
+		s.append("	 *	The AS model for the AS package and its additional orphans.\n");
 		s.append("	 */\n");
 		s.append("	public static final ");
-		s.appendClassReference(true, Model.class);
+		s.appendClassReference(true, BuiltInModel.class);
 		s.append(" MODEL = LIBRARY.createModel(PACKAGE);\n");
 		s.append("\n");
 		s.append("	/**\n");
-		s.append("	 *	The EMF Resource containing the AS model, its AS package and its orphans.\n");
+		s.append("	 *	The EMF Resource containing the AS model, its AS package and its additional orphans.\n");
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, Resource.class);

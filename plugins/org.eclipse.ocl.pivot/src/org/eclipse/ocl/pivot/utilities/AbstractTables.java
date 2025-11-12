@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -18,7 +21,21 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.PartId;
+import org.eclipse.ocl.pivot.internal.ModelImpl;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+
+import com.google.common.collect.Lists;
 
 /**
  * @since 1.14
@@ -114,6 +131,62 @@ public abstract class AbstractTables
 		return asClass;
 	}
 
+	/**
+	 * The BuiltInModel is a Model with support for obtaining orphan types. Creation is managed by the static PartialStandardLibraryImpl.
+	 * Ownership is provided by the first BuiltInModel that obtains the orphan type.
+	 *
+	 * @since 7.0
+	 */
+	public static class BuiltInModel extends ModelImpl
+	{
+		private final @NonNull PartialStandardLibraryImpl library;
+		private final @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses;
+
+		public BuiltInModel(@NonNull PartialStandardLibraryImpl library, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+			this.library = library;
+			setExternalURI(asPackage.getURI());
+			getOwnedPackages().add(asPackage);
+			org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.getLocalOrphanPackage(this);
+			this.orphanClasses = PivotUtil.getOwnedClassesList(localOrphanPackage);
+		}
+
+		private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
+			if (orphanClass.eContainer() == null) {
+				orphanClasses.add(orphanClass);
+			}
+		}
+
+		public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
+			CollectionType collectionType = library.getCollectionType((CollectionType)genericType, elementType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+			addOrphanClass(collectionType);
+			return collectionType;
+		}
+
+		public @NonNull Type getLambdaType(@NonNull TypedElement context, @NonNull TypedElement result, @NonNull TypedElement ... parameters) {
+			List<@NonNull TypedElement> parameterList = parameters != null ? Lists.newArrayList(parameters) : Collections.emptyList();
+			assert parameterList != null;
+			LambdaType lambdaType = library.getLambdaManager().getLambdaType(context, parameterList, result, null);
+			addOrphanClass(lambdaType);
+			return lambdaType;
+		}
+
+		public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
+			MapType mapType = library.getMapType(keyType, PivotConstants.DEFAULT_IS_NULL_FREE, valueType, PivotConstants.DEFAULT_IS_NULL_FREE);
+			addOrphanClass(mapType);
+			return mapType;
+		}
+
+		public @NonNull Type getTupleType(@NonNull TuplePart @NonNull... tupleParts) {
+			List<@NonNull PartId> partIds = new ArrayList<>();
+			for (@NonNull TuplePart tuplePart : tupleParts) {
+				partIds.add(IdManager.getPartId(partIds.size(), PivotUtil.getName(tuplePart), tuplePart.getTypeId(), tuplePart.isIsRequired()));
+			}
+			TupleType tupleType = library.getTupleType(partIds);
+			addOrphanClass(tupleType);
+			return tupleType;
+		}
+	}
+
 	protected AbstractTables(@NonNull String nsURI) {
 		nsURI2tables.put(nsURI, this);
 	}
@@ -121,6 +194,7 @@ public abstract class AbstractTables
 	/**
 	 * Return the EClasses for which there are known invocations of the OCL allInstances() library operation.
 	 */
+	@Deprecated		// XXX is this really necessary - seems to be just CodegencompanyTables -- NB not QVTd
 	public @NonNull EClass @Nullable [] basicGetAllInstancesClasses() {
 		return null;
 	}
@@ -128,6 +202,7 @@ public abstract class AbstractTables
 	/**
 	 * Return the EReferences whose implicit opposite is used in an OCL Expression.
 	 */
+	@Deprecated		// XXX is this really necessary - seems to be just CodegencompanyTables -- NB not QVTd
 	public @NonNull EReference @Nullable [] basicGetImplicitOpposites() {
 		return null;
 	}

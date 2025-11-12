@@ -600,7 +600,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
-			s.append("LIBRARY.getCollectionType(");
+			s.append("MODEL.getCollectionType(");
 			type.accept(emitReferencedElement);
 			s.append(", ");
 			type.getElementType().accept(this);
@@ -628,7 +628,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitLambdaType(@NonNull LambdaType lambdaType) {
-			s.append("LIBRARY.getLambdaType(");
+			s.append("MODEL.getLambdaType(");
 			lambdaType.getOwnedContext().accept(this);
 			for (LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
 				s.append(", ");
@@ -642,7 +642,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType type) {
-			s.append("LIBRARY.getMapType(");
+			s.append("MODEL.getMapType(");
 			type.accept(emitReferencedElement);
 			s.append(", ");
 			type.getKeyType().accept(this);
@@ -668,7 +668,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
-			s.append("LIBRARY.getTupleType(");
+			s.append("MODEL.getTupleType(");
 			boolean isFirst = true;
 			for (@NonNull Property part : PivotUtil.getOwnedProperties(tupleType)) {
 				if (!isFirst) {

@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +64,8 @@ import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.flat.FlatModel;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
@@ -106,14 +103,13 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
+import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-
-import com.google.common.collect.Lists;
 
 /**
  * @since 7.0
@@ -494,11 +490,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Model createModel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		Model asModel = PivotFactory.eINSTANCE.createModel();
-		asModel.setExternalURI(asPackage.getURI());
-		asModel.getOwnedPackages().add(asPackage);
-		return asModel;
+	public @NonNull BuiltInModel createModel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return new BuiltInModel(this, asPackage);
 	}
 
 	/**
@@ -730,13 +723,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return (CollectionType) OCLstdlibTables.Types._Collection;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
-		return getCollectionType((CollectionType)genericType, elementType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
-	}
-
 	protected org.eclipse.ocl.pivot.@NonNull Class getCommonTupleType(@NonNull TupleType thisType, @NonNull Type thatType) {
 		if (thisType != thatType) {
 			return getOclAnyType();
@@ -776,22 +762,9 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return lambdaTypeManager;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull Type getLambdaType(@NonNull TypedElement context, @NonNull TypedElement result, @NonNull TypedElement ... parameters) {
-		List<@NonNull TypedElement> parameterList = parameters != null ? Lists.newArrayList(parameters) : Collections.emptyList();
-		assert parameterList != null;
-		return getLambdaManager().getLambdaType(context, parameterList, result, null);
-	}
-
 	@Override
 	public @NonNull MapType getMapType() {
 		return (MapType) OCLstdlibTables.Types._Map;
-	}
-
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(keyType, PivotConstants.DEFAULT_IS_NULL_FREE, valueType, PivotConstants.DEFAULT_IS_NULL_FREE);
 	}
 
 /*	@Override
@@ -971,14 +944,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	public @NonNull TuplePart getTuplePart(@NonNull String name, @NonNull Type type, boolean isRequired) {
 		return new TuplePart(name, type, isRequired);
-	}
-
-	public @NonNull Type getTupleType(@NonNull TuplePart @NonNull... tupleParts) {
-		List<@NonNull PartId> partIds = new ArrayList<>();
-		for (@NonNull TuplePart tuplePart : tupleParts) {
-			partIds.add(IdManager.getPartId(partIds.size(), PivotUtil.getName(tuplePart), tuplePart.getTypeId(), tuplePart.isIsRequired()));
-		}
-		return getTupleType(partIds);
 	}
 
 	@Override

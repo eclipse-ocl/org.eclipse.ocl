@@ -144,6 +144,7 @@ implements CollectionType {
 	 */
 	protected CollectionTypeImpl() {
 		super();
+// XXX		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
@@ -45,6 +46,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
@@ -204,6 +206,10 @@ public class PivotLUSSIDs extends LUSSIDs
 		for (@NonNull Parameter parameter :  parameters) {
 			int index = -1;
 			Type parameterType = parameter.getType();
+			if (!((parameterType instanceof NormalizedTemplateParameter) || (parameterType.eResource() != null))) {
+				System.out.println("computeParametersLUSSID " + NameUtil.debugSimpleName(parameterType));
+			}
+			assert (parameterType instanceof NormalizedTemplateParameter) || (parameterType.eResource() != null);
 			if (parameterType instanceof TemplateParameter) {
 				TemplateSignature templateSignature = ((TemplateParameter)parameterType).getOwningSignature();
 				if (templateSignature != null) {
