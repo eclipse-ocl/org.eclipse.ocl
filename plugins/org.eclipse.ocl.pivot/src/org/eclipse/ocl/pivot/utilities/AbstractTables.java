@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -174,6 +175,10 @@ public abstract class AbstractTables
 			MapType mapType = library.getMapType(keyType, PivotConstants.DEFAULT_IS_NULL_FREE, valueType, PivotConstants.DEFAULT_IS_NULL_FREE);
 			addOrphanClass(mapType);
 			return mapType;
+		}
+
+		public @NonNull TemplateParameter getTemplateParameter(int i) {
+			return Orphanage.getNormalizedTemplateParameter(Orphanage.getLocalOrphanPackage(this), i);
 		}
 
 		public @NonNull Type getTupleType(@NonNull TuplePart @NonNull... tupleParts) {

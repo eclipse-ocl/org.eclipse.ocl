@@ -309,7 +309,7 @@ public abstract class LUSSIDs
 	 * and if necessary from the local context.
 	 */
 	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
-		if ("Collection($$0)::intersection(UniqueCollection($$0)) : Set($$0)".equals(element.toString())) {
+		if ("Bag($$0)".equals(element.toString())) {
 			getClass();
 		}
 		assert asResource == element.eResource();
@@ -396,12 +396,14 @@ public abstract class LUSSIDs
 								getClass();		// XXX
 							}
 							debugLUSSID2collisions2.put(idObject, collisions);
+						//	System.out.println("assignLUSSID1 : " + idObject + " " + NameUtil.debugSimpleName(element) + " " + element);
 							collisions.add(oldElement);
 						}
 						collisions.add(element);
 					}
 					else {
 						debugLUSSID2element2.put(idObject, element);
+					//	System.out.println("assignLUSSID2 : " + idObject + " " + NameUtil.debugSimpleName(element) + " " + element);
 					}
 				}
 			}

@@ -135,6 +135,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	protected CompleteStandardLibraryImpl()
 	{
 		super();
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -583,6 +584,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		for (org.eclipse.ocl.pivot.@NonNull Class pivotType : pivotTypes) {
 			String name = pivotType.getName();
 			if (name != null) {
+				if ("Model".equals(name) || "UnlimitedNatural".equals(name)) {
+					getClass();		// XXX
+				}
 				org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
 				if ((oldType != null) && (oldType != pivotType)) {
 					if (!(oldType instanceof PrimitiveType) || !(pivotType instanceof PrimitiveType)) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
@@ -1170,6 +1174,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 					}
 				}
 			}
+			System.out.println("installLibrary " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(asLibrary) + " " + asLibrary);
 			asLibraries.add(asLibrary);
 			if (asLibraryResource != null) {
 				defineLibraryTypes(asLibrary);

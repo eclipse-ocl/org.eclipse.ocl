@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -126,7 +127,7 @@ public class AS2ID
 			return lussids.assignLUSSID(this, element, isReferenced, normalizeTemplateParameters);
 		}
 		else {
-			assert false;
+			assert element instanceof NormalizedTemplateParameter; //false;			// XXX
 			String fragment = EcoreUtil.getURI(element).fragment();
 			return fragment != null ? fragment.hashCode() : 0;
 		}
@@ -152,7 +153,7 @@ public class AS2ID
 			//			}
 		}
 		else {
-			System.out.println("assignLUSSIDs to "  + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
+		//	System.out.println("assignLUSSIDs to "  + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());
 			lussids = asResource.getLUSSIDs(options);
 			if (newLUSSIDs.contains(lussids)) {
 				return;
