@@ -329,8 +329,10 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«FOR pkge : root.getSortedAllPackages()»
 						«IF pkge instanceof Library»
 						«ELSEIF (pkge.eContainer() != root) && !Orphanage.isOrphan(pkge)»
-						«ELSE»
+						«ELSEIF !Orphanage.isOrphan(pkge)»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«ELSE»
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», null);
 						«ENDIF»
 						«ENDFOR»
 						«root.installPackages()»

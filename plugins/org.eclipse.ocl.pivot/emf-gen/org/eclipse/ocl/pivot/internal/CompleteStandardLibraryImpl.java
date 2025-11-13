@@ -135,7 +135,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	protected CompleteStandardLibraryImpl()
 	{
 		super();
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

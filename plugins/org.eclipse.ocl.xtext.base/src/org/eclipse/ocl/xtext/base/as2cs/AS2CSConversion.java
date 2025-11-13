@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -342,7 +343,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if (eContainer instanceof NamedElement) {
 				NamedElement namedElement = (NamedElement)eContainer;
 				path.add(0, namedElement);
-				assert !Orphanage.isOrphan(namedElement);
+				assert (namedElement instanceof Feature) || !Orphanage.isOrphan(namedElement);
 			}
 		}
 		return path;
@@ -547,7 +548,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				PathElementCS csSimpleRef = BaseCSFactory.eINSTANCE.createPathElementCS();
 				NamedElement pathElement = targetPath.get(i);
 				csSimpleRef.setReferredElement(pathElement);
-				assert !Orphanage.isOrphan(pathElement);
+				assert (pathElement instanceof Feature) || !Orphanage.isOrphan(pathElement);
 				csPath.add(csSimpleRef);
 				if (pathElement == primaryElement) {
 					hasFinalTarget = true;

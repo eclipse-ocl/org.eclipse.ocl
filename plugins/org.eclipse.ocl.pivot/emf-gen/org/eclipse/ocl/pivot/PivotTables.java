@@ -72,12 +72,12 @@ public class PivotTables extends AbstractTables
 	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(PivotPackage.eINSTANCE);
 
 	/**
-	 *	The AS model for the AS package and its orphans.
+	 *	The AS model for the AS package and its additional orphans.
 	 */
 	public static final AbstractTables.@NonNull BuiltInModel MODEL = LIBRARY.createModel(PACKAGE);
 
 	/**
-	 *	The EMF Resource containing the AS model, its AS package and its orphans.
+	 *	The EMF Resource containing the AS model, its AS package and its additional orphans.
 	 */
 	public static final @NonNull Resource RESOURCE = LIBRARY.createResource(MODEL);
 

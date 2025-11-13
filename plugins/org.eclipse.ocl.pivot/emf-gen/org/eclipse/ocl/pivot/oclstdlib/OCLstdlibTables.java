@@ -59,12 +59,12 @@ public class OCLstdlibTables extends AbstractTables
 	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(OCLstdlibPackage.eINSTANCE);
 
 	/**
-	 *	The AS model for the AS package and its orphans.
+	 *	The AS model for the AS package and its additional orphans.
 	 */
 	public static final AbstractTables.@NonNull BuiltInModel MODEL = LIBRARY.createModel(PACKAGE);
 
 	/**
-	 *	The EMF Resource containing the AS model, its AS package and its orphans.
+	 *	The EMF Resource containing the AS model, its AS package and its additional orphans.
 	 */
 	public static final @NonNull Resource RESOURCE = LIBRARY.createResource(MODEL);
 
@@ -77,10 +77,10 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.init();
 		}
 
-		public static final @NonNull TemplateParameter $$0 = MODEL.getTemplateParameter(0);
-		public static final @NonNull TemplateParameter $$1 = MODEL.getTemplateParameter(1);
-		public static final @NonNull TemplateParameter $$2 = MODEL.getTemplateParameter(2);
-		public static final @NonNull TemplateParameter $$3 = MODEL.getTemplateParameter(3);
+		public static final @NonNull TemplateParameter $$0 = LIBRARY.createTemplateParameter(0, "$$0");
+		public static final @NonNull TemplateParameter $$1 = LIBRARY.createTemplateParameter(1, "$$1");
+		public static final @NonNull TemplateParameter $$2 = LIBRARY.createTemplateParameter(2, "$$2");
+		public static final @NonNull TemplateParameter $$3 = LIBRARY.createTemplateParameter(3, "$$3");
 
 		static {
 			Init.initEnd();
