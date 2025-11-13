@@ -784,6 +784,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		asMetamodel = null;
 		globalNamespaces.clear();
 		globalTypes.clear();
+		partialModels.clear();
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 != null) {
 			orphanage2.removePackageListener(getOrphanCompletePackage().getPartialPackages());
