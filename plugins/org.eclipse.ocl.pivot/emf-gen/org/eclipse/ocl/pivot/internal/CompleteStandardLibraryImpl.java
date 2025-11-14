@@ -586,11 +586,17 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				if ("Model".equals(name) || "UnlimitedNatural".equals(name)) {
 					getClass();		// XXX
 				}
-				org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
-				if ((oldType != null) && (oldType != pivotType)) {
-					if (!(oldType instanceof PrimitiveType) || !(pivotType instanceof PrimitiveType)) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
-						logger.warn("Conflicting pivot type '" + name + "'");
-					}
+				//
+				// Multiple libraries may exploit CompleteClasses, so nameToLibraryTypeMap caches just the first.
+				if (!nameToLibraryTypeMap2.containsKey(name)) {
+					org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
+				/*	if ((oldType != null) && (oldType != pivotType)) {
+						if (!(oldType instanceof PrimitiveType) || !(pivotType instanceof PrimitiveType)) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
+						//	logger.warn("Conflicting pivot type '" + name + "'");
+							System.err.println("Conflicting pivot type '" + name + "'");
+							// qvtruntimelibrary has two an extra definition of Model from QVTimperativeLibrary
+						}
+					} */
 				}
 			}
 		}
