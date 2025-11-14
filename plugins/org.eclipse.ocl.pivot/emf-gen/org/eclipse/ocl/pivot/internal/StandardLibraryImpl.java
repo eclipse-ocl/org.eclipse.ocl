@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
@@ -89,6 +90,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		this.mapTypeManager = createMapTypeManager();
 		this.specializedTypeManager = createSpecializedTypeManager();
 		this.tupleTypeManager = createTupleTypeManager();
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

@@ -248,6 +248,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet) {
 //		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " ctor " + NameUtil.debugSimpleName(this));
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
@@ -866,6 +867,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public void dispose() {
+		System.out.println("dispose " + NameUtil.debugSimpleName(this));
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 			ENVIRONMENT_FACTORY_ATTACH.println(ThreadLocalExecutor.getBracketedThreadName() + " Dispose(" + attachCount + ") " + toDebugString());
 		}

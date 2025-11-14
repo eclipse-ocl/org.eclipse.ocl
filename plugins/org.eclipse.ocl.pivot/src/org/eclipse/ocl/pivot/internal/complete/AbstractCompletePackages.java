@@ -191,6 +191,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		for (CompletePackage completePackage : this) {
 			completePackage.dispose();
 		}
+		clear();
 	}
 
 	/**

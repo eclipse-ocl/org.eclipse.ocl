@@ -136,6 +136,12 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		return completeClass;
 	}
 
+	@Override
+	public void dispose() {
+		super.dispose();
+		class2orphanCompleteClass.clear();
+	}
+
 /*	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
 		TemplateSignature templateSignature = containerType.getOwnedSignature();
