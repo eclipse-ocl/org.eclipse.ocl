@@ -131,6 +131,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 			return ((ClassImpl)type).getFlatClass();
 		}
+
+		public void createOpposite(@NonNull String name, @NonNull Property asProperty) {
+			installImplicitOppositeProperty(asProperty, name);
+		}
 	}
 
 	public static class Mutable extends PartialStandardLibraryImpl

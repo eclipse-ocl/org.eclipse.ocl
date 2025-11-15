@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.oclstdlib.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -45,6 +46,7 @@ public class OCLstdlibCSPostOrderVisitor extends AbstractOCLstdlibCSPostOrderVis
 		Property pivotElement = PivotUtil.getPivot(Property.class, csElement);
 		if (pivotElement != null) {
 			LibOppositeCS csOpposite = csElement.getOwnedOpposite();
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			if (csOpposite != null) {
 				String oppositeName = csOpposite.getName();
 				if (oppositeName != null) {
@@ -70,12 +72,12 @@ public class OCLstdlibCSPostOrderVisitor extends AbstractOCLstdlibCSPostOrderVis
 					//	logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
 						upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
 					}
-					environmentFactory.getStandardLibrary().installOppositeProperty(pivotElement, oppositeName, isOrdered, isUnique, lower, upper);
+					standardLibrary.installOppositeProperty(pivotElement, oppositeName, isOrdered, isUnique, lower, upper);
 				}
 			}
 			else {
 				pivotElement.setOpposite(null);
-				environmentFactory.installImplicitOppositePropertyDeclaration(pivotElement);
+				standardLibrary.installImplicitOppositeProperty(pivotElement);
 			}
 		}
 		return continuation;

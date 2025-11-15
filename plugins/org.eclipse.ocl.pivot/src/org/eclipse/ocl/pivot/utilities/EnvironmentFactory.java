@@ -443,26 +443,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull ResourceSet getUserResourceSet();
 
 	/**
-	 * Create and install the implicit opposite of asProperty with the default name.
-	 * @since 7.0
-	 */
-	void installImplicitOppositePropertyDeclaration(@NonNull Property asProperty);
-
-	/**
-	 * Create and install the implicit opposite of asProperty with an explicit name.
-	 * @since 7.0
-	 */
-	void installImplicitOppositePropertyDeclaration(@NonNull Property asProperty, @NonNull String oppositeName);
-
-	/**
-	 * Create and install the opposite of asProperty from the modelled paramerization; perhaps from an explicit model element
-	 * or from a fall-back annotation.
-	 * @since 7.0
-	 */
-//	void installOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
-//			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
-
-	/**
 	 * @since 7.0
 	 */
 	boolean isCodeGeneration();

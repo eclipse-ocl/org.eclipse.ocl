@@ -1152,6 +1152,19 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return this;
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void installImplicitOppositeProperty(@NonNull Property thisProperty) {
+		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
+		String oppositeName = thisClass.getName();
+		if (oppositeName == null) {
+			return;
+		}
+		installImplicitOppositeProperty(thisProperty, oppositeName);
+	}
+
 	@Override
 	public void installLibrary() {
 		if (!libraryLoadInProgress && (asLibraryResource == null) && (asLibraries.size() > 0)) {

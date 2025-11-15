@@ -202,7 +202,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					oppositePropertyDetails.getLower(), oppositePropertyDetails.getUpper());
 			}
 			else {
-				environmentFactory.installImplicitOppositePropertyDeclaration(asProperty);
+				standardLibrary.installImplicitOppositeProperty(asProperty);
 			}
 		}
 		return asProperty;

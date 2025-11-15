@@ -89,6 +89,12 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
 	@NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactory environmentFactory);
+
+	/**
+	 * Create and install the implicit opposite of asProperty with the default name.
+	 * @since 7.0
+	 */
+	void installImplicitOppositeProperty(@NonNull Property asProperty);
 	void installLibrary();
 	void installLibrary(@NonNull Library asLibrary);
 	boolean isLibraryLoadInProgress();

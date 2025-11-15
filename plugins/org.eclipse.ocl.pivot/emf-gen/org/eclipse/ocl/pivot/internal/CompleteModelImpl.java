@@ -479,7 +479,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	protected CompleteModelImpl()
 	{
 		super();
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

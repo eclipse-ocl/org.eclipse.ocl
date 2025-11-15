@@ -541,6 +541,13 @@ public interface StandardLibrary extends Element
 	@NonNull PrimitiveType getUnlimitedNaturalType();
 
 	/**
+	 * Create and install the opposite of asProperty from the modelled paramerization; perhaps from an explicit model element
+	 * or from a fall-back annotation.
+	 * @since 7.0
+	 */
+	void installImplicitOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName);
+
+	/**
 	 * Create and install the opposite of asProperty from the modeled parameterization; perhaps from an explicit model element
 	 * or from a fall-back annotation.
 	 * @since 7.0

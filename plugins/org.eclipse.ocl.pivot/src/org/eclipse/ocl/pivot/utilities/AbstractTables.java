@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -112,14 +111,6 @@ public abstract class AbstractTables
 
 	public static final @Nullable AbstractTables basicGet(@NonNull String nsURI) {
 		return nsURI2tables.get(nsURI);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected static void createOpposite(/*@NonNull*/ EClass eClass, @NonNull String name, @NonNull Property asProperty) {
-		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(eClass);
-		environmentFactory.installImplicitOppositePropertyDeclaration(asProperty, name);
 	}
 
 	/**

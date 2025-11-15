@@ -121,10 +121,8 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * Partial implementation of the {@link EnvironmentFactory} interface, useful
@@ -1423,39 +1421,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull ResourceSet getUserResourceSet() {
 		return userResourceSet != null ? userResourceSet : externalResourceSet;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public void installImplicitOppositePropertyDeclaration(@NonNull Property thisProperty) {
-		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
-		String oppositeName = thisClass.getName();
-		if (oppositeName == null) {
-			return;
-		}
-		installImplicitOppositePropertyDeclaration(thisProperty, oppositeName);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public void installImplicitOppositePropertyDeclaration(@NonNull Property thisProperty, @NonNull String oppositeName) {
-		boolean isOrdered = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED;
-		boolean isUnique = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE;
-		IntegerValue lower;
-		UnlimitedNaturalValue upper;
-		if (thisProperty.isIsComposite()) {
-			lower = ValueUtil.ZERO_VALUE;
-			upper = ValueUtil.UNLIMITED_ONE_VALUE;
-		}
-		else {
-			lower = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE;
-			upper = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE;
-		}
-		standardLibrary.installOppositeProperty(thisProperty, oppositeName, isOrdered, isUnique, lower, upper);
 	}
 
 	@Override

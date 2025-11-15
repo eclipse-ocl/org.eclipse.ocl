@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
@@ -312,6 +313,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 				}
 			}
 			else {
+				CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 				if ((csOwnedImplicitOpposites != null) && !csOwnedImplicitOpposites.isEmpty()) {
 					if (csOwnedImplicitOpposites.size() > 1) {
 						context.addWarning(csReference, "Extra implict opposites ignored");
@@ -343,11 +345,11 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 						//	logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
 							upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
 						}
-						environmentFactory.getStandardLibrary().installOppositeProperty(pivotElement, oppositeName, isOrdered, isUnique, lower, upper);
+						standardLibrary.installOppositeProperty(pivotElement, oppositeName, isOrdered, isUnique, lower, upper);
 					}
 				}
 				else {
-					environmentFactory.installImplicitOppositePropertyDeclaration(pivotElement);
+					standardLibrary.installImplicitOppositeProperty(pivotElement);
 				}
 			}
 		}

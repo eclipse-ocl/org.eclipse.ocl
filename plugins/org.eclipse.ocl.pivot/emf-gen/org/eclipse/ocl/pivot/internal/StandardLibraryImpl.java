@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -698,6 +699,26 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	public @NonNull TupleTypeManager getTupleTypeManager() {
 		assert tupleTypeManager != null;
 		return tupleTypeManager;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void installImplicitOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName) {
+		boolean isOrdered = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED;
+		boolean isUnique = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE;
+		IntegerValue lower;
+		UnlimitedNaturalValue upper;
+		if (thisProperty.isIsComposite()) {
+			lower = ValueUtil.ZERO_VALUE;
+			upper = ValueUtil.UNLIMITED_ONE_VALUE;
+		}
+		else {
+			lower = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE;
+			upper = PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE;
+		}
+		installOppositeProperty(thisProperty, oppositeName, isOrdered, isUnique, lower, upper);
 	}
 
 	@Override

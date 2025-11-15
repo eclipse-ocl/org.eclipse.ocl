@@ -523,9 +523,7 @@ public class OCLinEcoreTablesUtils
 		//	GenFeature genFeature2 = genModelHelper.basicGetGenFeature(asProperty.getOpposite());
 		//	GenAnnotation genAnnotation = null; //genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
 		//	if ((genFeature == null) || (genAnnotation == null)) {
-				s.append("createOpposite(");
-				emitASClass(genClassifier);
-				s.append(", ");
+				s.append("LIBRARY.createOpposite(");
 				s.appendString(PivotUtil.getName(asProperty));
 				s.append(", ");
 				asProperty.getOpposite().accept(this);
