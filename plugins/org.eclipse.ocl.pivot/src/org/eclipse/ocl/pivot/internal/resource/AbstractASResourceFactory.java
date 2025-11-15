@@ -30,8 +30,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.EssentialOCLPrettyPrintVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
@@ -40,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EcoreTechnology;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -378,12 +380,8 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 
 	@Override
 	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
-//		completeModel.registerCompletePackageContribution(PivotConstants.METAMODEL_NAME, OCLstdlibPackage.eINSTANCE);
-		completeModel.registerCompletePackageContribution(PivotConstants.METAMODEL_NAME, PivotPackage.eINSTANCE);		// XXX needed by testQVTcSerialize_platformResource_BaseCS2AS
-		// Library/Pivot tables must be lazy to allow imports to supersede
-	//	List<Model> partialModels = completeModel.getPartialModels();
-	//	partialModels.add(OCLstdlibTables.MODEL);
-	//	partialModels.add(PivotTables.MODEL);
+		CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
+		completeModel.getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 	}
 
 	@Override

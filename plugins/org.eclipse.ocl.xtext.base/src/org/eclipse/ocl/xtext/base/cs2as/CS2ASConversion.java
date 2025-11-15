@@ -1387,8 +1387,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		oldPackagesByName = new HashMap<>();
 		oldPackagesByQualifiedName = new HashMap<>();
 		ASResource asResource = converter.csi2asMapping.getASResource(csResource);
+		assert asResource != null;
 		boolean wasUpdating = false;
-		if (asResource != null) {
+	//	if (asResource != null) {
 			asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
 			for (EObject eObject : asResource.getContents()) {
 				if (eObject instanceof Model) {
@@ -1396,7 +1397,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					gatherOldPackages(nestedPackage);
 				}
 			}
-		}
+	//	}
 		List<@NonNull BasicContinuation<?>> continuations = new ArrayList<>();
 		//
 		//	Perform the post-order containment traversal to:
@@ -1465,7 +1466,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//	Load the library.
 		//
-		standardLibrary.getOclAnyType();
+	//	standardLibrary.getOclAnyType();
+		asResource.getASResourceFactory().registerMetaPackages(completeModel);
 		//
 		//	Perform the post-order traversal to create and install the bulk of non-package/class
 		//	elements.
