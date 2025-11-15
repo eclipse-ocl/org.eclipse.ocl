@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -546,9 +545,6 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public NotificationChain eSetResource(Internal resource, NotificationChain notifications) {
 		assert (resource == null) || (eInternalResource() == null);				// Detect child stealing
-		if ("http://www.eclipse.org/ocl/2015/Library".equals(externalURI)) {
-			System.out.println("eSetResource " + NameUtil.debugSimpleName(this) + " " + this + " " + NameUtil.debugSimpleName(resource));
-		}
 		return super.eSetResource(resource, notifications);
 	}
 } //RootImpl

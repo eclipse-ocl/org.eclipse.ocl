@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -427,7 +426,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	protected CompletePackageImpl()
 	{
 		partialPackages = new PartialPackages(this);
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -710,7 +708,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		NestedCompletePackages ownedCompletePackages2 = ownedCompletePackages;
 		if (ownedCompletePackages2 == null)
 		{
-			System.out.println("getOwnedCompletePackages " + NameUtil.debugSimpleName(this));
 			assert !getCompleteModel().getEnvironmentFactory().isDisposed() && !getCompleteModel().getEnvironmentFactory().isDisposing();
 			ownedCompletePackages = ownedCompletePackages2 = new NestedCompletePackages(this);
 		}

@@ -100,7 +100,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		this.mapTypeManager = createMapTypeManager();
 		this.specializedTypeManager = createSpecializedTypeManager();
 		this.tupleTypeManager = createTupleTypeManager();
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

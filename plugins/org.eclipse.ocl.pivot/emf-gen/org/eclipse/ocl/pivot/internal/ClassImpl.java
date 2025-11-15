@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1551,10 +1550,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	public void setName(String newName) {
-		if ("Pattern".equals(newName)) {
-			System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + newName);
-			getClass();			// XXX
-		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {
@@ -1594,14 +1589,5 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public String toString() {
 		return super.toString();
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer,
-			int newContainerFeatureID) {
-		if ("Pattern".equals(name)) {
-			getClass();			// XXX
-		}
-		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //ClassImpl

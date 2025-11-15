@@ -1192,7 +1192,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 					}
 				}
 			}
-			System.out.println("installLibrary " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(asLibrary) + " " + asLibrary);
 			asLibraries.add(asLibrary);
 			if (asLibraryResource != null) {
 				defineLibraryTypes(asLibrary);
