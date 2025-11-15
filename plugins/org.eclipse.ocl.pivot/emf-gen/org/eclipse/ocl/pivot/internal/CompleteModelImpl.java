@@ -558,6 +558,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return globalTypes.addAll(types);
 	}
 
+	@Override
+	public boolean addPartialModel(@NonNull Model model) {
+		assert partialModels != null;
+		return partialModels.add(model);
+	}
+
 	/**
 	 * @since 1.23
 	 */
@@ -1777,13 +1783,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public void registerCompleteModelContribution(@NonNull Model model) {
-		getPartialModels().add(model);
-		Resource asResource1 = model.eResource();
-		ResourceSet asResourceSet = getEnvironmentFactory().getASResourceSet();
-		URI asURI = asResource1.getURI();
-		((ResourceSetImpl)asResourceSet).getURIResourceMap().put(asURI, asResource1);
-		Resource asResource2 = asResourceSet.getResource(asURI, false);
-		assert asResource1 == asResource2;
+		if (addPartialModel(model)) {
+			Resource asResource1 = model.eResource();
+			ResourceSet asResourceSet = getEnvironmentFactory().getASResourceSet();
+			URI asURI = asResource1.getURI();
+			((ResourceSetImpl)asResourceSet).getURIResourceMap().put(asURI, asResource1);
+			Resource asResource2 = asResourceSet.getResource(asURI, false);
+			assert asResource1 == asResource2;
+		}
 	}
 
 	@Override
@@ -1797,6 +1804,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompletePackage old = packageURI2completePackage.put(packageURI, completePackage);
 		assert (old == null) || (old == completePackage);
 		return completePackageId;
+	}
+
+	@Override
+	public void removePartialModel(@NonNull Model model) {
+		assert partialModels != null;
+		partialModels.remove(model);
 	}
 
 	/**

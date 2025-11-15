@@ -88,10 +88,10 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 			ASResourceFactory asResourceFactory = ((ASResource)resource).getASResourceFactory();
 			asResourceFactory.registerMetaPackages(getCompleteModel());
 		}
-		PartialModels partialModels = ((CompleteModelImpl)getCompleteModel()).getPartialModels();
+		CompleteModel completeModel = getCompleteModel();
 		for (EObject eObject : resource.getContents()) {
 			if (eObject instanceof Model) {
-				partialModels.add((Model)eObject);
+				completeModel.addPartialModel((Model)eObject);
 			}
 		}
 		resource.eAdapters().add(this);

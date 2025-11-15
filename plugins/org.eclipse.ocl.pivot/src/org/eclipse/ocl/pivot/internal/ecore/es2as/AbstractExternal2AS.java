@@ -76,7 +76,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 				Resource asResource = pivotModel2.eResource();
 				if ((asResource != null) && (asResource.getResourceSet() != null)) {
 					asResource.unload();
-					environmentFactory.getCompleteModel().getPartialModels().remove(pivotModel2);		// XXX
+					environmentFactory.getCompleteModel().removePartialModel(pivotModel2);		// XXX
 					environmentFactory.getASResourceSet().getResources().remove(asResource);
 				}
 			}

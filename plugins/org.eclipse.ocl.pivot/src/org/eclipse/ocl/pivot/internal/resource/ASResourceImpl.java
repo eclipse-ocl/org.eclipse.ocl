@@ -716,7 +716,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		if ((internalEObject instanceof ModelImpl)) {
 			ModelImpl asModel = (ModelImpl)internalEObject;
 //			asModel.eraseContents();		-- prevents reloading and testing thereof
-			environmentFactory.getCompleteModel().getPartialModels().remove(asModel);
+			environmentFactory.getCompleteModel().removePartialModel(asModel);
 		}
 		Map<@NonNull Element, @NonNull URI> asElement2reloadableURI2 = asElement2reloadableURI;
 		if (asElement2reloadableURI2 != null) {

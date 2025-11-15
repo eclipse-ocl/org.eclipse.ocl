@@ -1305,7 +1305,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		CompletePackage completePackage = completeModel.basicGetCompletePackage(PivotConstants.METAMODEL_ID);
 		if ((completePackage == null) || (completePackage.getPartialPackages().size() < 2)) {
 			Model asMetamodel = getMetamodel(ePackage);			// Avoid loading metamodel if one already available
-			completeModel.getPartialModels().add(asMetamodel);
+			completeModel.addPartialModel(asMetamodel);
 			completePackage = completeModel.basicGetCompletePackage(PivotConstants.METAMODEL_ID);
 		}
 		if (completePackage != null) {
@@ -1654,7 +1654,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ASResource asResource = csi2asMapping2.getASResource(csResource);
 		assert asResource != null;
 		Model asModel = PivotUtil.getModel(asResource);
-		completeModel.getPartialModels().remove(asModel);
+		completeModel.removePartialModel(asModel);
 		asResource.unload();
 		asResourceSet.getResources().remove(asResource);
 		csi2asMapping2.removeCSResource(csResource);

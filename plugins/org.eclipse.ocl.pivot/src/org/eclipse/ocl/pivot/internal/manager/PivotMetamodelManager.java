@@ -384,7 +384,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (ownedPackages.isEmpty() && ownedImports.isEmpty()) {
 			return;				// Don't install "/* Please wait */" in case we're editing a pivot MM
 		}
-		partialModels.add(pivotModel);
+		completeModel.addPartialModel(pivotModel);
 		for (Import asImport : ownedImports) {
 			Namespace asNamespace = asImport.getImportedNamespace();
 			if (asNamespace != null) {

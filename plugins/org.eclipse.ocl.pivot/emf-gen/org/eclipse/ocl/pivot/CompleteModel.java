@@ -119,6 +119,11 @@ public interface CompleteModel extends NamedElement
 	@Nullable Namespace addGlobalNamespace(@NonNull String name, @NonNull Namespace namespace);
 
 	/**
+	 * @since 7.0
+	 */
+	boolean addPartialModel(@NonNull Model model);
+
+	/**
 	 * Return the already created CompleteClass for asClass within this CompleteModel, or null if not yet created.
 	 * <br>
 	 * This is for test purposes only since a CompleteClass is normally created lazily on demand.
@@ -337,4 +342,9 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull CompletePackageId registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage);
+
+	/**
+	 * @since 7.0
+	 */
+	void removePartialModel(@NonNull Model model);
 } // CompleteModel
