@@ -1247,7 +1247,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
-		CompleteClass completeClass = getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
+		// NB This may be called for an isolated xxxTables and so there are no CompleteClasses.
+	//	CompleteClass completeClass = getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if ((thisModel == thatModel) || Orphanage.isOrphanage(thatModel)) {
 			return thatClass;
@@ -1261,7 +1262,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if (thisClass != null) {
 			return thisClass;
 		}
-		org.eclipse.ocl.pivot.Class asClass = completeClass.getPrimaryClass();
+		org.eclipse.ocl.pivot.Class asClass = thatClass; //completeClass.getPrimaryClass();
 		thisClass = PivotUtil.createNamedElement(asClass);			// XXX what about template parameter??
 		TemplateSignature thatSignature = asClass.getOwnedSignature();
 		if (thatSignature != null) {
@@ -1269,7 +1270,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			thisClass.setOwnedSignature(thisSignature);
 		}
 		theseClasses.add(thisClass);
-		completeClass.getPartialClasses().add(thisClass);			// XXX fudge why no package
 		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
 		return thisClass;
 	}
@@ -1282,7 +1282,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * i.e the equivalent of A::B::thatPackage in thatModel is $$::A::B::thatPackage in thisModel.
 	 */
 	private org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
-		getCompletePackage(thatPackage);					// Ensure thatPackage has a complete representation
+		// NB This may be called for an isolated xxxTables and so there are no CompletePackages.
 		Model thatModel = PivotUtil.basicGetContainingModel(thatPackage);
 		if (thisModel == thatModel) {
 			return thatPackage;
@@ -1315,7 +1315,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if (packageURI == null) {
 			packageURI = "";
 		}
-		org.eclipse.ocl.pivot.Package thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), packageURI, thatPackage.getPackageId());
+		org.eclipse.ocl.pivot.Package thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), packageURI, thatPackage.getPackageId());		// XXX
 		thesePackages.add(thisPackage);
 		return thisPackage;
 	}

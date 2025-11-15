@@ -794,10 +794,11 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
+		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + newName);
 		String oldName = name;
 		EObject eContainer = eContainer();
 		if ((oldName != null) && !oldName.equals(newName)) {
-			if (eContainer instanceof ModelImpl) {
+			if (eContainer instanceof ModelImpl) {						// Extract shared interface
 				((ModelImpl)eContainer).didRemovePackage(this);
 			}
 			else if (eContainer instanceof PackageImpl) {

@@ -82,6 +82,7 @@ public class NestedCompletePackages extends AbstractCompletePackages
 
 	@Override
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages() {
-		return ((CompletePackageImpl)getCompletePackage()).getPartialPackages().getNestedPartialPackages();
+		PartialPackages partialPackages = ((CompletePackageImpl)getCompletePackage()).getPartialPackages();
+		return partialPackages.getNestedPartialPackages();
 	}
 }

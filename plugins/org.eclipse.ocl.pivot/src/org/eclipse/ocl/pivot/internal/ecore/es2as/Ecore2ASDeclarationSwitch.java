@@ -207,7 +207,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				parentPackage.getOwnedClasses().remove(pivotElement);
 			}
 		}
-		pivotElement.setName(newName);
 		EAnnotation duplicatesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
 		@SuppressWarnings("unused") EAnnotation redefinesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 		copyClassifier(pivotElement, eClass);
@@ -410,11 +409,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEPackage(EPackage ePackage) {
 		assert ePackage != null;;
-		if ("standard".equals(ePackage.getName())) {
+		if ("qvtbase".equals(ePackage.getName())) {
 			getClass();		// XXX
 		}
 		org.eclipse.ocl.pivot.Package pivotElement;
-		if (converter.isLibrary(ePackage)) {
+		if (converter.isLibrary(ePackage)) {				// has http://www.eclipse.org/OCL/ASLibrary EAnnotation
 			pivotElement = converter.refreshElement(Library.class, PivotPackage.Literals.LIBRARY, ePackage);
 		}
 		else {
@@ -667,10 +666,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 
 	public Object doInPackageSwitch(EObject eObject) {
 		EClass eClass = eObject.eClass();
-		if (eClass.getEPackage() != EcorePackage.eINSTANCE) {
-			converter.error("Non Ecore " + eClass.getName() + " for Ecore2ASDeclarationSwitch");
-			return null;
-		}
+		assert eClass.getEPackage() == EcorePackage.eINSTANCE;				// redundant since error detected in caller
 		int classifierID = eClass.getClassifierID();
 		return doSwitch(classifierID, eObject);
 	}

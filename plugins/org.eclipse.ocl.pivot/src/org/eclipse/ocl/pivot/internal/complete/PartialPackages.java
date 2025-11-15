@@ -34,10 +34,10 @@ import com.google.common.collect.Iterables;
 
 public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl.pivot.Package> implements PackageListeners.IPackageListener
 {
-	private static class Package2PackageOwnedPackages implements Function<org.eclipse.ocl.pivot.@NonNull Package, Iterable<org.eclipse.ocl.pivot.@NonNull Package>>
+	private static class Package2PackageOwnedPackages implements Function<org.eclipse.ocl.pivot.@NonNull Package, @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package>>
 	{
 		@Override
-		public Iterable<org.eclipse.ocl.pivot.@NonNull Package> apply(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
+		public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> apply(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 			return PivotUtil.getOwnedPackages(partialPackage);
 		}
 	}
@@ -176,7 +176,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	 * @since 7.0
 	 */
 	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass) {
-		String name = completeClass.getName();
+		String name = PivotUtil.getName(completeClass);
 		AbstractFlatClass completeFlatClass = name2flatClass.get(name);
 		if (completeFlatClass == null) {
 			CompleteFlatModel flatModel = getCompleteModel().getStandardLibrary().getFlatModel();
@@ -199,10 +199,12 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		return (CompletePackageImpl) owner;
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.Package> getNestedPartialPackages() {
-		PartialPackages partialPackages = getCompletePackage().getPartialPackages();
-		Iterable<Iterable<org.eclipse.ocl.pivot.Package>> roots_packages = Iterables.transform(partialPackages, package2PackageOwnedPackages);
-		@NonNull Iterable<Package> allPackages = Iterables.concat(roots_packages);
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getNestedPartialPackages() {
+		@SuppressWarnings("null")
+		Iterable<org.eclipse.ocl.pivot.@NonNull Package> partialPackages = getCompletePackage().getPartialPackages();
+		Iterable<@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package>> roots_packages = Iterables.transform(partialPackages, package2PackageOwnedPackages);
+		@SuppressWarnings("null")
+		@NonNull Iterable<@NonNull Package> allPackages = Iterables.concat(roots_packages);
 		return allPackages;
 	}
 

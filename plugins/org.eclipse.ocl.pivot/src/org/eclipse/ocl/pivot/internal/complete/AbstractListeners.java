@@ -23,6 +23,10 @@ public abstract class AbstractListeners<L extends AbstractListeners.IAbstractLis
 
 	protected final @NonNull List<@NonNull WeakReference<L>> listeners = new ArrayList<@NonNull WeakReference<L>>();
 
+	protected AbstractListeners() {
+		super();
+	}
+
 	public synchronized void addListener(@NonNull L aListener) {
 		for (@NonNull WeakReference<L> ref : listeners) {
 			@Nullable L listener = ref.get();
