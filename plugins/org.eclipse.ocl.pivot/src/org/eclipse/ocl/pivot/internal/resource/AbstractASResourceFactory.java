@@ -382,6 +382,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	public void registerMetaPackages(@NonNull CompleteModel completeModel) {
 		CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
 		completeModel.getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
+		completeModel.getStandardLibrary().getOclAnyType();		// Ensure library loaded before xxxTables.postInit side effects
 	}
 
 	@Override
