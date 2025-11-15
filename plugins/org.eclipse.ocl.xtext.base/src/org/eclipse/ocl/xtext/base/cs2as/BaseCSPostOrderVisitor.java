@@ -343,7 +343,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 						//	logger.error("Invalid " + PROPERTY_OPPOSITE_ROLE_UPPER_KEY + " " + upper);
 							upper = PivotConstantsInternal.ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE;
 						}
-						environmentFactory.installOppositeProperty(pivotElement, oppositeName, isOrdered, isUnique, lower, upper);
+						environmentFactory.getStandardLibrary().installOppositeProperty(pivotElement, oppositeName, isOrdered, isUnique, lower, upper);
 					}
 				}
 				else {

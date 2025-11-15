@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -21,9 +22,13 @@ import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -31,11 +36,13 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -44,6 +51,8 @@ import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
@@ -459,6 +468,75 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return leftIsRequired && rightIsRequired;
 	}
 
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
+		// NB This may be called for an isolated xxxTables and so there are no CompleteClasses.
+	//	CompleteClass completeClass = getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
+		Model thatModel = PivotUtil.getContainingModel(thatClass);
+		if ((thisModel == thatModel) || Orphanage.isOrphanage(thatModel)) {
+			return thatClass;
+		}
+		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);
+		org.eclipse.ocl.pivot.Package thisPackage = getEquivalentPackage(thisModel, thatPackage);
+		List<org.eclipse.ocl.pivot.Class> theseClasses = thisPackage.getOwnedClasses();
+		String className = thatClass.getName();
+	//	assert className != null;							// XXX Nameless classes such as UML Association cannot be opposites
+		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
+		if (thisClass != null) {
+			return thisClass;
+		}
+		org.eclipse.ocl.pivot.Class asClass = thatClass; //completeClass.getPrimaryClass();
+		thisClass = PivotUtil.createNamedElement(asClass);			// XXX what about template parameter??
+		TemplateSignature thatSignature = asClass.getOwnedSignature();
+		if (thatSignature != null) {
+			TemplateSignature thisSignature = EcoreUtil.copy(thatSignature);
+			thisClass.setOwnedSignature(thisSignature);
+		}
+		theseClasses.add(thisClass);
+		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
+		return thisClass;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
+		// NB This may be called for an isolated xxxTables and so there are no CompletePackages.
+		Model thatModel = PivotUtil.basicGetContainingModel(thatPackage);
+		if (thisModel == thatModel) {
+			return thatPackage;
+		}
+		org.eclipse.ocl.pivot.Package thisParentPackage;
+		org.eclipse.ocl.pivot.Package thatParentPackage = thatPackage.getOwningPackage();
+		if (thatParentPackage == null) {
+			thisParentPackage = Orphanage.getLocalOrphanPackage(thisModel);
+		//	assert thisParentPackage.eResource().getResourceSet() != null; // xxxTables models have no Resource and so no ResourceSet
+		}
+		else {
+			thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
+			assert thisParentPackage.eResource().getResourceSet() != null;
+		}
+		List<org.eclipse.ocl.pivot.@NonNull Package> thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
+		String packageName = PivotUtil.getName(thatPackage);
+		String packageURI = thatPackage.getURI();
+		if (packageURI != null) {
+			for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
+				if (packageURI.equals(thisPackage.getURI())) {
+					return thisPackage;
+				}
+			}
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
+			if (packageName.equals(thisPackage.getName())) {
+				return thisPackage;
+			}
+		}
+		if (packageURI == null) {
+			packageURI = "";
+		}
+		org.eclipse.ocl.pivot.Package thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), packageURI, thatPackage.getPackageId());		// XXX
+		thesePackages.add(thisPackage);
+		return thisPackage;
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -622,6 +700,46 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return tupleTypeManager;
 	}
 
+	@Override
+	public void installOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName,
+			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
+		// A new CollectionType may be synthesized for the opposite so this method must access a StandardLibrary.
+		//	It might as well be a StandardLibrary method. getEquivalentClass/Package sensibly are here too.
+		assert thisProperty.getOpposite() == null;
+		Type thatType = PivotUtil.getType(thisProperty);
+		if (thatType instanceof CollectionType) {				// opposite can only be one collection deep
+			thatType = PivotUtil.getElementType((CollectionType)thatType);
+		}
+		org.eclipse.ocl.pivot.Class thatClass = PivotUtil.getClass(thatType, this);
+		if (thatClass instanceof DataType) {
+			return;
+		}
+		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
+		assert thisClass == PivotUtil.getUnspecializedTemplateableElement(thisClass); //	thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
+		Model thisModel = PivotUtil.getContainingModel(thisClass);
+		org.eclipse.ocl.pivot.Class mutableThatClass = getEquivalentClass(thisModel, thatClass);
+		Property newOpposite = PivotFactory.eINSTANCE.createProperty();
+		newOpposite.setName(oppositeName);
+		newOpposite.setIsImplicit(true);
+		Type oppositeType;
+		boolean isRequired;
+		if (upper.equals(ValueUtil.UNLIMITED_ONE_VALUE)) {
+			oppositeType = thisClass;
+			isRequired = lower.equals(ValueUtil.ONE_VALUE);
+		}
+		else {
+			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, thisClass, false, lower, upper);
+			oppositeType = getCollectionType(typeArguments);
+			isRequired = true;
+		}
+		newOpposite.setType(oppositeType);
+		newOpposite.setIsRequired(isRequired);
+		mutableThatClass.getOwnedProperties().add(newOpposite);
+		newOpposite.setOpposite(thisProperty);
+		thisProperty.setOpposite(newOpposite);
+	//	System.out.println("installOppositeProperty: " + thisProperty + " # " + newOpposite);
+	}
 
 	@Override
 	public boolean isEqualTo(@NonNull Type leftType, @NonNull Type rightType) {

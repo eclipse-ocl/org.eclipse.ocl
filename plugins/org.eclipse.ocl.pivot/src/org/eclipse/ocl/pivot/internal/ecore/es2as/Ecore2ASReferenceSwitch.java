@@ -197,7 +197,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		else {
 			OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromEReference(eReference);
 			if (oppositePropertyDetails != null) {
-				environmentFactory.installOppositeProperty(asProperty, oppositePropertyDetails.getName(),
+				standardLibrary.installOppositeProperty(asProperty, oppositePropertyDetails.getName(),
 					oppositePropertyDetails.isOrdered(), oppositePropertyDetails.isUnique(),
 					oppositePropertyDetails.getLower(), oppositePropertyDetails.getUpper());
 			}

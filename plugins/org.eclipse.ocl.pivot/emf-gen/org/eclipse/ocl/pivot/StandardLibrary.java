@@ -195,6 +195,28 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getEnumerationType();
 
 	/**
+	 * Return the equivalent class to thatClass in thisModel, where equivalent is the same class/package name
+	 * hierarchy wrt the orphan package in thisModel. This is typically used to create a merge contribution
+	 * for thatClass in thisModel avoiding the need to modify thatClass.
+	 * <br>
+	 * i.e the equivalent of A::B::thatClass in thatModel is $$::A::B::thatClass in thisModel.
+	 *
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass);
+
+	/**
+	 * Return the equivalent package to thatPackage in thisModel, where equivalent is the same package name
+	 * hierarchy wrt the orphan package in thisModel. This is typically used to create a merge contribution
+	 * for thatClass in thisModel avoiding the need to modify thatClass.
+	 * <br>
+	 * i.e the equivalent of A::B::thatPackage in thatModel is $$::A::B::thatPackage in thisModel.
+	 *
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage);
+
+	/**
 	 * Return the FlatClass for a given type.
 	 * @since 7.0
 	 */
@@ -517,6 +539,14 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull PrimitiveType getUnlimitedNaturalType();
+
+	/**
+	 * Create and install the opposite of asProperty from the modeled parameterization; perhaps from an explicit model element
+	 * or from a fall-back annotation.
+	 * @since 7.0
+	 */
+	void installOppositeProperty(@NonNull Property thisProperty, @NonNull String oppositeName,
+			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 
 	/**
 	 * Return true if leftType is the same type as rightType within this standardLibrary.

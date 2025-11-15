@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Model;
@@ -430,7 +430,7 @@ public class ModelAnalysis
 	protected void installExtensionProperties(@NonNull Map<@NonNull Element, @NonNull Map<@NonNull Stereotype, @NonNull ElementExtension>> element2stereotype2extension) {
 		Model thisModel = converter.basicGetPivotModel();
 		assert thisModel != null;
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		List<@NonNull Element> elements = new ArrayList<>(element2stereotype2extension.keySet());
 		Collections.sort(elements, ElementComparator.INSTANCE);
 		for (@NonNull Element element : elements) {
@@ -443,8 +443,8 @@ public class ModelAnalysis
 				for (@NonNull Stereotype stereotype : stereotypes) {
 					org.eclipse.ocl.pivot.@NonNull Class metaBaseClass = (org.eclipse.ocl.pivot.Class)element;
 					org.eclipse.ocl.pivot.@NonNull Class metaExtensionClass = stereotype;
-					org.eclipse.ocl.pivot.@NonNull Class localBaseClass = completeModel.getEquivalentClass(thisModel, metaBaseClass);
-					org.eclipse.ocl.pivot.@NonNull Class localExtensionClass = completeModel.getEquivalentClass(thisModel, metaExtensionClass);
+					org.eclipse.ocl.pivot.@NonNull Class localBaseClass = standardLibrary.getEquivalentClass(thisModel, metaBaseClass);
+					org.eclipse.ocl.pivot.@NonNull Class localExtensionClass = standardLibrary.getEquivalentClass(thisModel, metaExtensionClass);
 					Property localBaseProperty = PivotUtil.createProperty(UML2AS.STEREOTYPE_BASE_PREFIX + metaBaseClass.getName(), metaBaseClass);
 					Property localExtensionProperty = PivotUtil.createProperty(UML2AS.STEREOTYPE_EXTENSION_PREFIX + metaExtensionClass.getName(), metaExtensionClass);
 					localBaseProperty.setIsImplicit(true);

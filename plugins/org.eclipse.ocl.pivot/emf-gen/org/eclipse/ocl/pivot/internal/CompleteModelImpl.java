@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -64,7 +63,6 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -1246,81 +1244,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
-		// NB This may be called for an isolated xxxTables and so there are no CompleteClasses.
-	//	CompleteClass completeClass = getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
-		Model thatModel = PivotUtil.getContainingModel(thatClass);
-		if ((thisModel == thatModel) || Orphanage.isOrphanage(thatModel)) {
-			return thatClass;
-		}
-		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);
-		org.eclipse.ocl.pivot.Package thisPackage = getEquivalentPackage(thisModel, thatPackage);
-		List<org.eclipse.ocl.pivot.Class> theseClasses = thisPackage.getOwnedClasses();
-		String className = thatClass.getName();
-	//	assert className != null;							// XXX Nameless classes such as UML Association cannot be opposites
-		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
-		if (thisClass != null) {
-			return thisClass;
-		}
-		org.eclipse.ocl.pivot.Class asClass = thatClass; //completeClass.getPrimaryClass();
-		thisClass = PivotUtil.createNamedElement(asClass);			// XXX what about template parameter??
-		TemplateSignature thatSignature = asClass.getOwnedSignature();
-		if (thatSignature != null) {
-			TemplateSignature thisSignature = EcoreUtil.copy(thatSignature);
-			thisClass.setOwnedSignature(thisSignature);
-		}
-		theseClasses.add(thisClass);
-		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
-		return thisClass;
-	}
-
-	/**
-	 * Return the equivalent package to thatPackage in thisModel, where equivalent is the same package name
-	 * hierarchy wrt the orphan package in thisModel. This is typically used to create a merge contribution
-	 * for thatClass in thisModel avoiding the need to modify thatClass.
-	 * <br>
-	 * i.e the equivalent of A::B::thatPackage in thatModel is $$::A::B::thatPackage in thisModel.
-	 */
-	private org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
-		// NB This may be called for an isolated xxxTables and so there are no CompletePackages.
-		Model thatModel = PivotUtil.basicGetContainingModel(thatPackage);
-		if (thisModel == thatModel) {
-			return thatPackage;
-		}
-		org.eclipse.ocl.pivot.Package thisParentPackage;
-		org.eclipse.ocl.pivot.Package thatParentPackage = thatPackage.getOwningPackage();
-		if (thatParentPackage == null) {
-			thisParentPackage = Orphanage.getLocalOrphanPackage(thisModel);
-		//	assert thisParentPackage.eResource().getResourceSet() != null; // xxxTables models have no Resource and so no ResourceSet
-		}
-		else {
-			thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
-			assert thisParentPackage.eResource().getResourceSet() != null;
-		}
-		List<org.eclipse.ocl.pivot.@NonNull Package> thesePackages = PivotUtil.getOwnedPackagesList(thisParentPackage);
-		String packageName = PivotUtil.getName(thatPackage);
-		String packageURI = thatPackage.getURI();
-		if (packageURI != null) {
-			for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
-				if (packageURI.equals(thisPackage.getURI())) {
-					return thisPackage;
-				}
-			}
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Package thisPackage : thesePackages) {
-			if (packageName.equals(thisPackage.getName())) {
-				return thisPackage;
-			}
-		}
-		if (packageURI == null) {
-			packageURI = "";
-		}
-		org.eclipse.ocl.pivot.Package thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), packageURI, thatPackage.getPackageId());		// XXX
-		thesePackages.add(thisPackage);
-		return thisPackage;
-	}
-
-	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
 		org.eclipse.ocl.pivot.Class unspecializedType = type1.getUnspecializedElement();
@@ -1380,7 +1303,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return environmentFactory.getMetamodelManager();
 	}
 
-//	@Override
 	/**
 	 * @since 7.0
 	 */

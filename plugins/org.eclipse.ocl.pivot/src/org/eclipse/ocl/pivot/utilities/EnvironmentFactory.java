@@ -59,8 +59,6 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * A factory for creating OCL parser and evaluation artefacts.  Clients of the OCL
@@ -461,8 +459,8 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * or from a fall-back annotation.
 	 * @since 7.0
 	 */
-	void installOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
-			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
+//	void installOppositeProperty(@NonNull Property asProperty, @NonNull String oppositeName,
+//			boolean isOrdered, boolean isUnique, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper);
 
 	/**
 	 * @since 7.0
