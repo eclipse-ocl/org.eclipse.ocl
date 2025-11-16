@@ -61,12 +61,14 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -1464,10 +1466,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			return false;
 		}
 		//
-		//	Load the library.
+		//	Ensure that the $metamodel$ CompletePackage exists perhaps with imported custom metamodels.
 		//
-	//	standardLibrary.getOclAnyType();
-		asResource.getASResourceFactory().registerMetaPackages(completeModel);
+		CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
+		completeModel.getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 		//
 		//	Perform the post-order traversal to create and install the bulk of non-package/class
 		//	elements.

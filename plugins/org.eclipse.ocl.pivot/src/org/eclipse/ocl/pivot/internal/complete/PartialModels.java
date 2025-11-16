@@ -23,11 +23,14 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -85,8 +88,8 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 
 	private void didAddResource(@NonNull Resource resource) {
 		if (resource instanceof ASResource) {
-			ASResourceFactory asResourceFactory = ((ASResource)resource).getASResourceFactory();
-			asResourceFactory.registerMetaPackages(getCompleteModel());
+			CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
+			getCompleteModel().getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 		}
 		CompleteModel completeModel = getCompleteModel();
 		for (EObject eObject : resource.getContents()) {
