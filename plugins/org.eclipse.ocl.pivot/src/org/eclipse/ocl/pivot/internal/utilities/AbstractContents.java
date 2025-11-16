@@ -12,14 +12,12 @@ package	org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
@@ -223,11 +221,11 @@ public abstract class AbstractContents extends PivotUtil
 	//	}
 		if (ePackage != null) {
 			asLibrary.setESObject(ePackage);
-			URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
-			if (semantics != null) {
-				Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
-				asLibrary.getOwnedAnnotations().add(asAnnotation);
-			}
+		//	URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
+		//	if (semantics != null) {
+		//		Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
+		//		asLibrary.getOwnedAnnotations().add(asAnnotation);
+		//	}
 		}
 		asLibrary.setURI(nsURI);				// last since a non-trivial setXXX
 		return asLibrary;
@@ -299,11 +297,11 @@ public abstract class AbstractContents extends PivotUtil
 	//	}
 		if (ePackage != null) {
 			pivotPackage.setESObject(ePackage);
-			URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
-			if (semantics != null) {
-				Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
-				pivotPackage.getOwnedAnnotations().add(asAnnotation);
-			}
+		//	URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
+		//	if (semantics != null) {
+		//		Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
+		//		pivotPackage.getOwnedAnnotations().add(asAnnotation);
+		//	}
 		}
 		pivotPackage.setURI(nsURI);
 		return pivotPackage;

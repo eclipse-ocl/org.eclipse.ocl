@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -49,7 +48,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
@@ -295,7 +293,7 @@ public class PivotUtil implements PivotConstants
 	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
 	 * @since 7.0
 	 */
-	@Deprecated	/* Do we really need semantiocs annotations */
+	@Deprecated	/* Do we really need semantiics annotations */
 	public static @Nullable URI basicGetEPackageSemantics(@NonNull EPackage ePackage) {
 		for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
 			String source = eAnnotation.getSource();
@@ -340,15 +338,6 @@ public class PivotUtil implements PivotConstants
 	 * @since 7.0
 	 */
 	public static @Nullable URI basicGetPackageSemantics(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		URI uri1 = basicGetPackageSemantics1(asPackage);
-		URI uri2 = basicGetPackageSemantics2(asPackage);
-	//	assert Objects.equals(uri1, uri2);
-		if (!Objects.equals(uri1, uri2)) {
-			asPackage.getClass();			// XXX
-		}
-		return uri1;
-	}
-	private static @Nullable URI basicGetPackageSemantics1(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String packageURI = asPackage.getURI();
 		if (packageURI != null) {			// QVT roots may be blank
 			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
@@ -356,30 +345,12 @@ public class PivotUtil implements PivotConstants
 				if (asPackage.getOwnedClass("Collection") != null) {
 					return PivotConstants.METAMODEL_LIBRARY_URI;
 				}
-				else if (asPackage.getOwnedClass("Class") != null) {
+				else { //if (asPackage.getOwnedClass("Class") != null) {
 					return PivotConstants.METAMODEL_METAMODEL_URI;
 				}
-				else {
-					return PivotConstants.METAMODEL_URI;
-				}
-			}
-		//	else if (completePackageId != null) {
-		//		String source = completePackageId.getName();
-		//		return URI.createURI(source);
-		//	}
-		}
-		return null;
-	}
-	private static @Nullable URI basicGetPackageSemantics2(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		for (Element asAnnotation : asPackage.getOwnedAnnotations()) {
-			if (asAnnotation instanceof Annotation) {
-				String source = ((Annotation)asAnnotation).getName();
-				if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
-					return PivotConstants.METAMODEL_LIBRARY_URI;
-				}
-				else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-					return PivotConstants.METAMODEL_METAMODEL_URI;
-				}
+			//	else {
+			//		return PivotConstants.METAMODEL_URI;
+			//	}
 			}
 		}
 		return null;
@@ -1083,7 +1054,7 @@ public class PivotUtil implements PivotConstants
 
 	/**
 	 * @since 7.0
-	 */
+	 *
 	public static @NonNull Annotation createSemanticsAnnotation(@NonNull URI semantics) {
 		Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
 		if (PivotConstants.METAMODEL_LIBRARY_URI.equals(semantics)) {
@@ -1096,7 +1067,7 @@ public class PivotUtil implements PivotConstants
 			asAnnotation.setName(semantics.toString());
 		}
 		return asAnnotation;
-	}
+	} */
 
 	/**
 	 * @since 7.0
