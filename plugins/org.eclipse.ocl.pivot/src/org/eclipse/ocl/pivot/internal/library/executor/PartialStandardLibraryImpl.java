@@ -597,11 +597,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		asPackage.setURI(ePackage.getNsURI());
 	//	asPackage.setPackageId(packageId != null ? packageId : IdManager.getPackageId(ePackage));
 		asPackage.setESObject(ePackage);
-	//	URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
-	//	if (semantics != null) {
-	//		Annotation semanticsAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
-	//		asPackage.getOwnedAnnotations().add(semanticsAnnotation);
-	//	}
 		asPackage.getPackageId();			// XXX
 		return asPackage;
 	}

@@ -133,14 +133,12 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
-import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
@@ -289,36 +287,6 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
-	 * @since 7.0
-	 *
-	@Deprecated	/ * Do we really need semantics annotations * /
-	public static @Nullable URI basicGetEPackageSemantics(@NonNull EPackage ePackage) {
-		String packageURI = ePackage.getNsURI();
-		if (packageURI != null) {			// QVT roots may be blank
-			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
-			if (completePackageId == PivotConstants.METAMODEL_ID) {
-				if (ePackage.getEClassifier("Collection") != null) {
-					return PivotConstants.METAMODEL_LIBRARY_URI;
-				}
-				else {
-					return PivotConstants.METAMODEL_METAMODEL_URI;
-				}
-			}
-		}
-	/ *	for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
-			String source = eAnnotation.getSource();
-			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.METAMODEL_LIBRARY_URI;
-			}
-			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.METAMODEL_METAMODEL_URI;
-			}
-		} * /
-		return null;
-	} */
-
-	/**
 	 * @since 7.0
 	 */
 	public static @Nullable EnvironmentFactory basicGetEnvironmentFactory(@Nullable Object object) {
@@ -340,26 +308,6 @@ public class PivotUtil implements PivotConstants
 				return pivotType;
 			}
 			templateParameter = (TemplateParameter) pivotType;
-		}
-		return null;
-	}
-
-	/**
-	 * Return the semantics of Package as defined by an Annotation, null if none defined.
-	 * @since 7.0
-	 */
-	public static @Nullable URI basicGetPackageSemantics(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		String packageURI = asPackage.getURI();
-		if (packageURI != null) {			// QVT roots may be blank
-			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
-			if (completePackageId == PivotConstants.METAMODEL_ID) {
-				if (asPackage.getOwnedClass("Collection") != null) {
-					return PivotConstants.METAMODEL_LIBRARY_URI;
-				}
-				else {
-					return PivotConstants.METAMODEL_METAMODEL_URI;
-				}
-			}
 		}
 		return null;
 	}
@@ -1059,23 +1007,6 @@ public class PivotUtil implements PivotConstants
 		((PivotObjectImpl)pivotType).setESObject(eClass);
 		return pivotType;
 	}
-
-	/**
-	 * @since 7.0
-	 *
-	public static @NonNull Annotation createSemanticsAnnotation(@NonNull URI semantics) {
-		Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();
-		if (PivotConstants.METAMODEL_LIBRARY_URI.equals(semantics)) {
-			asAnnotation.setName(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
-		}
-		else if (PivotConstants.METAMODEL_METAMODEL_URI.equals(semantics)) {
-			asAnnotation.setName(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
-		}
-		else {
-			asAnnotation.setName(semantics.toString());
-		}
-		return asAnnotation;
-	} */
 
 	/**
 	 * @since 7.0

@@ -26,7 +26,6 @@ import java.util.WeakHashMap;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -1084,11 +1083,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			if (completePackage == null) {
 				CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
 				if (completePackageId == null) {
-					URI semantics = null; //PivotUtil.basicGetPackageSemantics(asPackage);
-					if (semantics != null) {
-						completePackageId = IdManager.getCompletePackageId(String.valueOf(semantics.trimFragment()));
-					}
-					else if (Orphanage.isOrphanage(asPackage)) {
+					if (Orphanage.isOrphanage(asPackage)) {
 						completePackageId = PivotConstants.ORPHANAGE_ID;
 					}
 					else if (packageURI != null) {			// QVT roots may be blank

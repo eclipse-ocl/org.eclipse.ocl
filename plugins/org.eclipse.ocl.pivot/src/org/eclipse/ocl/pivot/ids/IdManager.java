@@ -448,17 +448,6 @@ public final class IdManager
 		if (completePackageId != null) {				// If nsURI configured to an explicit (overlaid) CompletePackage
 			return getRootPackageId(completePackageId.toString());
 		}
-/*		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
-// XXX		assert semantics == null;			// XXX
-		if (semantics != null) {
-			URI trimFragment = semantics.trimFragment();
-			if (trimFragment == PivotConstants.METAMODEL_URI) {
-				return IdManager.METAMODEL_ID;
-			}
-			String nsURI2 = trimFragment.toString();
-			assert nsURI2 != null;
-			return getNsURIPackageId(nsURI2, asPackage.getNsPrefix(), null);
-		} */
 		EPackage ePackage = asPackage.getEPackage();
 		if (ePackage != null) {
 			return getPackageId(ePackage);

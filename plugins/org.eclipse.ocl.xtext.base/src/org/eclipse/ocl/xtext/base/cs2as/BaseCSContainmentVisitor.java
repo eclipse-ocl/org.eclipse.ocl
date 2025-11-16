@@ -195,11 +195,6 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		T pivotElement;
 		if (pivotObject == null) {
 			pivotElement = PivotUtil.createPackage(pivotClass, pivotEClass, name, csElement.getNsURI(), csElement.getNsPrefix(), getPackageId(csElement));
-		//	URI semantics = ElementUtil.basicGetPackageSemantics(csElement);
-		//	if (semantics != null) {
-		//		Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
-		//		pivotElement.getOwnedAnnotations().add(asAnnotation);
-		//	}
 		}
 		else {
 			if (!pivotClass.isAssignableFrom(pivotObject.getClass())) {

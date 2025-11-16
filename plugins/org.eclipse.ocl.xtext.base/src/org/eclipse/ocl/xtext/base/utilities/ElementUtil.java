@@ -126,35 +126,6 @@ public class ElementUtil
         return null;
 	}
 
-	/**
-	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
-	 * @since 7.0
-	 *
-	public static @Nullable URI basicGetPackageSemantics(@NonNull PackageCS csPackage) {
-		String packageURI = csPackage.getNsURI();
-		if (packageURI != null) {			// QVT roots may be blank
-			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
-			if (completePackageId == PivotConstants.METAMODEL_ID) {
-				for (ClassCS csClass : csPackage.getOwnedClasses()) {
-					if ("Collection".equals(csClass.getName())) {
-						return PivotConstants.METAMODEL_LIBRARY_URI;
-					}
-				}
-				return PivotConstants.METAMODEL_METAMODEL_URI;
-			}
-		}
-	/ *	for (AnnotationElementCS csAnnotation : csElement.getOwnedAnnotations()) {
-			String source = csAnnotation.getName();
-			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.METAMODEL_LIBRARY_URI;
-			}
-			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
-				return PivotConstants.METAMODEL_METAMODEL_URI;
-			}
-		} * /
-		return null;
-	} */
-
 	public static @Nullable ParserContext basicGetParserContext(@NonNull EObject csElement) {
 		Resource eResource = csElement.eResource();
 		ParserContext parserContext = eResource instanceof BaseCSResource ? ((BaseCSResource)eResource).getParserContext() : null;

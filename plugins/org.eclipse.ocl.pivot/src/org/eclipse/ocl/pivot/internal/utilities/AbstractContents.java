@@ -221,11 +221,6 @@ public abstract class AbstractContents extends PivotUtil
 	//	}
 		if (ePackage != null) {
 			asLibrary.setESObject(ePackage);
-		//	URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
-		//	if (semantics != null) {
-		//		Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
-		//		asLibrary.getOwnedAnnotations().add(asAnnotation);
-		//	}
 		}
 		asLibrary.setURI(nsURI);				// last since a non-trivial setXXX
 		return asLibrary;
@@ -297,11 +292,6 @@ public abstract class AbstractContents extends PivotUtil
 	//	}
 		if (ePackage != null) {
 			pivotPackage.setESObject(ePackage);
-		//	URI semantics = PivotUtil.basicGetEPackageSemantics(ePackage);
-		//	if (semantics != null) {
-		//		Annotation asAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
-		//		pivotPackage.getOwnedAnnotations().add(asAnnotation);
-		//	}
 		}
 		pivotPackage.setURI(nsURI);
 		return pivotPackage;

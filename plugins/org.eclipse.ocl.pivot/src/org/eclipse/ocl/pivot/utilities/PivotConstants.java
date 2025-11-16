@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.utilities;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
@@ -74,25 +73,6 @@ public interface PivotConstants
 	 * @since 7.0
 	 */
 	public static final @NonNull CompletePackageId PRIMITIVES_ID = IdManager.getCompletePackageId(PRIMITIVES_NAME);
-
-	/**
-	 * URI used to identify that a Package contributes to the OCL AS.
-	 * Fragments may be appended tio identify a particular aspect of the AS.
-	 * @since 7.0
-	 */
-	static final @NonNull URI METAMODEL_URI = URI.createURI(METAMODEL_NAME);
-
-	/**
-	 * Sub URI used to identify that a Package defines the OCL AS Standard Library.
-	 * @since 7.0
-	 */
-	static final @NonNull URI METAMODEL_LIBRARY_URI = METAMODEL_URI.appendFragment("Library");
-
-	/**
-	 * Sub URI used to identify that a Package defines the OCL AS Metamodel.
-	 * @since 7.0
-	 */
-	static final @NonNull URI METAMODEL_METAMODEL_URI = METAMODEL_URI.appendFragment("Metamodel");
 
 	/**
 	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
