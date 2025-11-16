@@ -1681,8 +1681,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
-		CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
-		getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
+		// Ensure that the $metamodel$ CompletePackage is ready for partials
+		getCompletePackage(PivotConstants.METAMODEL_ID, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 		return this;
 	}
 

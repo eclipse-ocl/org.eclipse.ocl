@@ -1464,11 +1464,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			return false;
 		}
 		//
-		//	Ensure that the $metamodel$ CompletePackage exists perhaps with imported custom metamodels.
-		//
-	//	CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
-	//	completeModel.getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
-		//
 		//	Perform the post-order traversal to create and install the bulk of non-package/class
 		//	elements.
 		//
