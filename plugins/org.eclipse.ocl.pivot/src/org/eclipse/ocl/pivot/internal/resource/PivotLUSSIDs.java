@@ -94,9 +94,6 @@ public class PivotLUSSIDs extends LUSSIDs
 	 */
 	@Override
 	protected @Nullable Integer computeLocalLUSSID(@NonNull AS2ID as2id, @NonNull EObject element, boolean normalizeTemplateParameters) {
-	//	if ("Bag($$0)".equals(element.toString())) {
-	//		getClass();
-	//	}
 		assert asResource == element.eResource();
 		int localId = 0;
 		if (!(element instanceof NamedElement)) {
@@ -137,7 +134,6 @@ public class PivotLUSSIDs extends LUSSIDs
 				if (!(upper instanceof Unlimited)) {
 					localId += COLLECTION_UPPER_BOUND_MULTIPLIER * (upper.intValue() + 1);
 				}
-			//	System.out.println("computeLocalLUSSID : " + localId + " " + NameUtil.debugSimpleName(element) + " " + element);
 			}
 			else if (element instanceof MapType) {
 				MapType mapType = (MapType)element;

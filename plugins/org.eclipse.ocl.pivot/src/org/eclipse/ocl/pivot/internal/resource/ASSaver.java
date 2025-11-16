@@ -303,26 +303,26 @@ public class ASSaver
 						if (localOrphanPackage == null) {
 							localOrphanPackage = Orphanage.createLocalOrphanPackage(asModel);
 						}
-						EObject eSource = eReferencedObject;
-						if (eSource instanceof Property) {				// If Tuple Property referenced (before Tuple)
-							eSource = eSource.eContainer();				//  copy the whole Tuple.
+						EObject eTarget = eReferencedObject;
+						if (eTarget instanceof Property) {				// If Tuple Property referenced (before Tuple)
+							eTarget = eTarget.eContainer();				//  copy the whole Tuple.
 						}
-						if (eSource instanceof NormalizedTemplateParameter) {
-							int index = ((NormalizedTemplateParameter)eSource).getIndex();
+						if (eTarget instanceof NormalizedTemplateParameter) {
+							int index = ((NormalizedTemplateParameter)eTarget).getIndex();
 							EObject localEObject = Orphanage.getNormalizedTemplateParameter(localOrphanPackage, index);
-							copier.put(eSource, localEObject);
+							copier.put(eTarget, localEObject);
 						}
-						else if (!copier.containsKey(eSource)) {
-							assert eSource != null;
-							EObject localEObject = copier.copy(eSource);
+						else if (!copier.containsKey(eTarget)) {
+							assert eTarget != null;
+							EObject localizedETarget = copier.copy(eTarget);
 							if (moreObjects == null) {
 								moreObjects = new ArrayList<>();
 							}
-							moreObjects.add(eSource);
-							if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
-								localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
+							moreObjects.add(eTarget);
+							if (localizedETarget instanceof org.eclipse.ocl.pivot.Class) {
+								localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localizedETarget);
 							}
-							else if (eSource instanceof Operation) {
+							else if (eTarget instanceof Operation) {
 								throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
 					//			resolveOperation((Operation)eObject);
 								}
