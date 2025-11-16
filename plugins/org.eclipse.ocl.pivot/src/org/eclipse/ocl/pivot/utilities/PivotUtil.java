@@ -291,8 +291,8 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
 	 * @since 7.0
-	 */
-	@Deprecated	/* Do we really need semantics annotations */
+	 *
+	@Deprecated	/ * Do we really need semantics annotations * /
 	public static @Nullable URI basicGetEPackageSemantics(@NonNull EPackage ePackage) {
 		String packageURI = ePackage.getNsURI();
 		if (packageURI != null) {			// QVT roots may be blank
@@ -306,7 +306,7 @@ public class PivotUtil implements PivotConstants
 				}
 			}
 		}
-	/*	for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
+	/ *	for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
 			String source = eAnnotation.getSource();
 			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
 				return PivotConstants.METAMODEL_LIBRARY_URI;
@@ -314,9 +314,9 @@ public class PivotUtil implements PivotConstants
 			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
 				return PivotConstants.METAMODEL_METAMODEL_URI;
 			}
-		} */
+		} * /
 		return null;
-	}
+	} */
 
 	/**
 	 * @since 7.0

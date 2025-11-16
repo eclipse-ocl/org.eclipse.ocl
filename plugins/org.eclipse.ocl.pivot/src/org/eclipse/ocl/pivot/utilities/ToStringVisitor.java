@@ -101,9 +101,11 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -364,8 +366,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			if (container instanceof org.eclipse.ocl.pivot.Package) {
 				boolean needsQualification = true;
 				EObject eContainer = ((org.eclipse.ocl.pivot.Package)container).getESObject();
-				if ((eContainer instanceof EPackage) && (PivotUtil.basicGetEPackageSemantics((EPackage)eContainer) != null)) {
-					needsQualification = false;
+				if (eContainer instanceof EPackage) {
+					String packageURI = ((EPackage)eContainer).getNsURI();
+					if (packageURI != null) {			// QVT roots may be blank
+						CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+						if (completePackageId == PivotConstants.METAMODEL_ID) {
+							needsQualification = false;
+						}
+					}
 				}
 				if (needsQualification) {
 					appendQualifiedName((NamedElement) container);

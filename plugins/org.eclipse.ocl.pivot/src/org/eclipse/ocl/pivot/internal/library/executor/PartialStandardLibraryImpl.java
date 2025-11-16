@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.flat.FlatModel;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -84,6 +85,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
@@ -201,15 +203,18 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 
 		private org.eclipse.ocl.pivot.@Nullable Class getImmutableClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
-			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
-			if (semantics != null) {
-				String className = asClass.getName();
-				if (PivotConstants.METAMODEL_LIBRARY_URI.equals(semantics)) {
-					return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
-				}
-				else if (PivotConstants.METAMODEL_METAMODEL_URI.equals(semantics)) {
-					return NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), className);
+			org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(asClass);
+			String packageURI = asPackage.getURI();
+			if (packageURI != null) {			// QVT roots may be blank
+				CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+				if (completePackageId == PivotConstants.METAMODEL_ID) {
+					String className = asClass.getName();
+					if (asPackage.getOwnedClass("Collection") != null) {
+						return NameUtil.getNameable(OCLstdlibTables.PACKAGE.getOwnedClasses(), className);
+					}
+					else {
+						return NameUtil.getNameable(PivotTables.PACKAGE.getOwnedClasses(), className);
+					}
 				}
 			}
 			return null;
