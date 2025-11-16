@@ -1056,23 +1056,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		String packageURI = pivotPackage.getURI();
+	public @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		String packageURI = asPackage.getURI();
 		if (packageURI == null) {				// XXX Fails for testLoad_Fruit_ocl
 			return null;
 		}
-		URI semantics = PivotUtil.basicGetPackageSemantics(pivotPackage);
-		String completePackageName;
-		if (semantics != null) {
-			completePackageName = semantics.trimFragment().toString();
-		}
-		else {
-			completePackageName = getCompleteURI(packageURI);
-		}
-		if (completePackageName == null) {
+		CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+		if (completePackageId != PivotConstants.METAMODEL_ID) {
 			return null;
 		}
-		CompletePackageId completePackageId = IdManager.getCompletePackageId(completePackageName);
 		return completePackageId2completePackage.get(completePackageId);
 	}
 

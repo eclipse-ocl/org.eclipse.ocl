@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -449,7 +448,7 @@ public final class IdManager
 		if (completePackageId != null) {				// If nsURI configured to an explicit (overlaid) CompletePackage
 			return getRootPackageId(completePackageId.toString());
 		}
-		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+/*		URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
 // XXX		assert semantics == null;			// XXX
 		if (semantics != null) {
 			URI trimFragment = semantics.trimFragment();
@@ -459,7 +458,7 @@ public final class IdManager
 			String nsURI2 = trimFragment.toString();
 			assert nsURI2 != null;
 			return getNsURIPackageId(nsURI2, asPackage.getNsPrefix(), null);
-		}
+		} */
 		EPackage ePackage = asPackage.getEPackage();
 		if (ePackage != null) {
 			return getPackageId(ePackage);
