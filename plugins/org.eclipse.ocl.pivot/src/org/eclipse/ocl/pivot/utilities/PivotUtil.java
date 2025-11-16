@@ -143,7 +143,6 @@ import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
-import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
@@ -218,41 +217,6 @@ public class PivotUtil implements PivotConstants
 			int i1 = f1.getOwningSignature().getOwnedParameters().indexOf(f1);
 			int i2 = f2.getOwningSignature().getOwnedParameters().indexOf(f2);
 			return i1 - i2;
-		}
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	public static void addAllClasses(@NonNull EnvironmentView environmentView, org.eclipse.ocl.pivot.@NonNull Package pPackage) {
-		String packageName = pPackage.getName();
-		if ((packageName == null) || "".equals(packageName)) {
-			environmentView.addNamedElements(pPackage.getOwnedClasses());
-		}
-		else {
-			CompletePackage completePackage = environmentView.getEnvironmentFactory().getCompleteModel().getCompletePackage(pPackage);
-			environmentView.addNamedElements(completePackage.getAllClasses());
-		}
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	public static <T extends NamedElement> void addAllNamedElements(@NonNull EnvironmentView environmentView, @NonNull Iterable<T> namedElements) {
-		String name = environmentView.getName();
-		if (name != null) {
-			for (T namedElement : namedElements) {
-				if ((namedElement != null) && name.equals(namedElement.getName())) {
-					environmentView.addElement(name, namedElement);
-				}
-			}
-		}
-		else {
-			for (T namedElement : namedElements) {
-				if (namedElement != null) {
-					environmentView.addNamedElement(namedElement);
-				}
-			}
 		}
 	}
 

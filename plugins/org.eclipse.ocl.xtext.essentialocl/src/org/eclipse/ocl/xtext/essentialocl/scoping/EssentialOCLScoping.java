@@ -139,10 +139,13 @@ public class EssentialOCLScoping
 				else {
 					EClassifier elementType = CS2AS.getElementType(pathName);
 					if (elementType == PivotPackage.Literals.PROPERTY) {
+						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedType_ERROR_;
+					}
+					else if (elementType == PivotPackage.Literals.TYPE) {
 						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedProperty_ERROR_;
 					}
 					else {
-						assert (elementType == null) || (elementType == PivotPackage.Literals.ELEMENT): "expected a " + String.valueOf(elementType);		// May be null during transient edit
+						assert (elementType == null) || (elementType == PivotPackage.Literals.ELEMENT): "expected a " + elementType.getName();		// May be null during transient edit
 						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticElement_ERROR_ :*/ PivotMessagesInternal.UnresolvedElement_ERROR_;
 					}
 				}
