@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -135,12 +136,14 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
@@ -337,6 +340,37 @@ public class PivotUtil implements PivotConstants
 	 * @since 7.0
 	 */
 	public static @Nullable URI basicGetPackageSemantics(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		URI uri1 = basicGetPackageSemantics1(asPackage);
+		URI uri2 = basicGetPackageSemantics2(asPackage);
+	//	assert Objects.equals(uri1, uri2);
+		if (!Objects.equals(uri1, uri2)) {
+			asPackage.getClass();			// XXX
+		}
+		return uri1;
+	}
+	private static @Nullable URI basicGetPackageSemantics1(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		String packageURI = asPackage.getURI();
+		if (packageURI != null) {			// QVT roots may be blank
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+			if (completePackageId == PivotConstants.METAMODEL_ID) {
+				if (asPackage.getOwnedClass("Collection") != null) {
+					return PivotConstants.METAMODEL_LIBRARY_URI;
+				}
+				else if (asPackage.getOwnedClass("Class") != null) {
+					return PivotConstants.METAMODEL_METAMODEL_URI;
+				}
+				else {
+					return PivotConstants.METAMODEL_URI;
+				}
+			}
+		//	else if (completePackageId != null) {
+		//		String source = completePackageId.getName();
+		//		return URI.createURI(source);
+		//	}
+		}
+		return null;
+	}
+	private static @Nullable URI basicGetPackageSemantics2(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		for (Element asAnnotation : asPackage.getOwnedAnnotations()) {
 			if (asAnnotation instanceof Annotation) {
 				String source = ((Annotation)asAnnotation).getName();

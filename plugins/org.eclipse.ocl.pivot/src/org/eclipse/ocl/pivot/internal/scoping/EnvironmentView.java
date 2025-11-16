@@ -731,9 +731,6 @@ public class EnvironmentView
 			assert !(element instanceof Property) &&  !(element instanceof Operation);
 			return;
 		}
-		if ("Property".equals(elementName)) {
-			getClass();		// XXX
-		}
 		if (element instanceof CompletePackage) {
 			element = ((CompletePackage)element).getPrimaryPackage();
 		}
