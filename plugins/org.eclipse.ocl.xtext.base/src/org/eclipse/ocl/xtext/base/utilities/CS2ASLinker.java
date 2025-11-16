@@ -17,9 +17,13 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -47,6 +51,8 @@ public class CS2ASLinker extends LazyLinker
 				try {
 					EnvironmentFactory environmentFactory = csResource.getEnvironmentFactory();
 					CS2AS cs2as = csResource.getCS2AS(environmentFactory);
+		//			CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
+		//			environmentFactory.getCompleteModel().getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 					ParserContext parserContext = ElementUtil.basicGetParserContext(model);
 					if (parserContext != null) {
 						Element rootElement = parserContext.getRootElement();
@@ -54,6 +60,8 @@ public class CS2ASLinker extends LazyLinker
 							cs2as.installPivotDefinition((ModelElementCS) model, rootElement);
 						}
 					}
+					CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
+					environmentFactory.getCompleteModel().getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 					cs2as.update(diagnosticsConsumer);
 					/*					Resource asResource = resourceAdapter.getPivotResource(csResource);
 					ResourceSet resourceSet = csResource.getResourceSet();
