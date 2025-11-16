@@ -289,6 +289,9 @@ public class TypeNameExpCSImpl
 		if (ownedPathName == null) {
 			return null;
 		}
+		if ("ocl::Class".equals(toString())) {
+			getClass();		// XXX
+		}
 		return (Type) ownedPathName.getReferredElement();
 	}
 

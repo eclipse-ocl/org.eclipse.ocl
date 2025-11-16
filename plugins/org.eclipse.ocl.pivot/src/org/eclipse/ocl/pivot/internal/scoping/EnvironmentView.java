@@ -394,23 +394,6 @@ public class EnvironmentView
 		return (name == null) || PivotUtil.conformsTo(requiredType, eClass) || ((requiredType != null) && PivotUtil.conformsTo(eClass, requiredType));
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public void zzaddAllClasses(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
-		if ("Property".equals(name)) {
-			getClass();		// XXX
-		}
-		String packageName = pPackage.getName();
-		if ((packageName == null) || "".equals(packageName)) {
-			addNamedElements(pPackage.getOwnedClasses());
-		}
-		else {
-			CompletePackage completePackage = completeModel.getCompletePackage(pPackage);
-			addNamedElements(completePackage.getAllClasses());
-		}
-	}
-
 	public void addAllElements(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull ScopeView scopeView) {
 		Attribution attribution = Attribution.REGISTRY.getAttribution(asClass);
 		attribution.computeLookup(asClass, this, scopeView);

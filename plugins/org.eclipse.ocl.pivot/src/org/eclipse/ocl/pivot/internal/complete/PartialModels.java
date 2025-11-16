@@ -82,10 +82,6 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	}
 
 	private void didAddResource(@NonNull Resource resource) {
-	//	if (resource instanceof ASResource) {
-	//		CompletePackageId completePackageId = IdManager.getCompletePackageId(PivotConstants.METAMODEL_NAME);
-	//		getCompleteModel().getCompletePackage(completePackageId, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
-	//	}
 		CompleteModel completeModel = getCompleteModel();
 		for (EObject eObject : resource.getContents()) {
 			if (eObject instanceof Model) {

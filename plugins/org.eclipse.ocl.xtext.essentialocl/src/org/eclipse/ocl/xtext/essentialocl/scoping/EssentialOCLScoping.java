@@ -87,7 +87,7 @@ public class EssentialOCLScoping
 			PathElementCS csPathElement = (PathElementCS) eObject;
 			PathNameCS pathName = csPathElement.getOwningPathName();
 			List<@NonNull PathElementCS> pathElements = ClassUtil.nullFree(pathName.getOwnedPathElements());
-			List<PathElementCS> path = pathElements;
+			List<@NonNull PathElementCS> path = pathElements;
 			int index = path.indexOf(csPathElement);
 			for (int i = 0; i < index; i++) {
 				PathElementCS csElement = path.get(i);
@@ -139,10 +139,10 @@ public class EssentialOCLScoping
 				else {
 					EClassifier elementType = CS2AS.getElementType(pathName);
 					if (elementType == PivotPackage.Literals.PROPERTY) {
-						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedType_ERROR_;
+						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedProperty_ERROR_;
 					}
 					else if (elementType == PivotPackage.Literals.TYPE) {
-						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedProperty_ERROR_;
+						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedType_ERROR_;
 					}
 					else {
 						assert (elementType == null) || (elementType == PivotPackage.Literals.ELEMENT): "expected a " + elementType.getName();		// May be null during transient edit
