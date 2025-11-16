@@ -27,7 +27,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -293,9 +292,21 @@ public class PivotUtil implements PivotConstants
 	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
 	 * @since 7.0
 	 */
-	@Deprecated	/* Do we really need semantiics annotations */
+	@Deprecated	/* Do we really need semantics annotations */
 	public static @Nullable URI basicGetEPackageSemantics(@NonNull EPackage ePackage) {
-		for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
+		String packageURI = ePackage.getNsURI();
+		if (packageURI != null) {			// QVT roots may be blank
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+			if (completePackageId == PivotConstants.METAMODEL_ID) {
+				if (ePackage.getEClassifier("Collection") != null) {
+					return PivotConstants.METAMODEL_LIBRARY_URI;
+				}
+				else {
+					return PivotConstants.METAMODEL_METAMODEL_URI;
+				}
+			}
+		}
+	/*	for (EAnnotation eAnnotation : ePackage.getEAnnotations()) {
 			String source = eAnnotation.getSource();
 			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
 				return PivotConstants.METAMODEL_LIBRARY_URI;
@@ -303,7 +314,7 @@ public class PivotUtil implements PivotConstants
 			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
 				return PivotConstants.METAMODEL_METAMODEL_URI;
 			}
-		}
+		} */
 		return null;
 	}
 
@@ -345,12 +356,9 @@ public class PivotUtil implements PivotConstants
 				if (asPackage.getOwnedClass("Collection") != null) {
 					return PivotConstants.METAMODEL_LIBRARY_URI;
 				}
-				else { //if (asPackage.getOwnedClass("Class") != null) {
+				else {
 					return PivotConstants.METAMODEL_METAMODEL_URI;
 				}
-			//	else {
-			//		return PivotConstants.METAMODEL_URI;
-			//	}
 			}
 		}
 		return null;

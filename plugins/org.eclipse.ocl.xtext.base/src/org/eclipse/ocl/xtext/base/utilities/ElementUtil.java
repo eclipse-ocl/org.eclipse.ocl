@@ -44,7 +44,9 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -57,7 +59,7 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
-import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
+import org.eclipse.ocl.xtext.basecs.ClassCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
@@ -134,8 +136,20 @@ public class ElementUtil
 	 * Return the semantics of EPackage as defined by an EAnnotation, null if none defined.
 	 * @since 7.0
 	 */
-	public static @Nullable URI basicGetPackageSemantics(@NonNull PackageCS csElement) {
-		for (AnnotationElementCS csAnnotation : csElement.getOwnedAnnotations()) {
+	public static @Nullable URI basicGetPackageSemantics(@NonNull PackageCS csPackage) {
+		String packageURI = csPackage.getNsURI();
+		if (packageURI != null) {			// QVT roots may be blank
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+			if (completePackageId == PivotConstants.METAMODEL_ID) {
+				for (ClassCS csClass : csPackage.getOwnedClasses()) {
+					if ("Collection".equals(csClass.getName())) {
+						return PivotConstants.METAMODEL_LIBRARY_URI;
+					}
+				}
+				return PivotConstants.METAMODEL_METAMODEL_URI;
+			}
+		}
+	/*	for (AnnotationElementCS csAnnotation : csElement.getOwnedAnnotations()) {
 			String source = csAnnotation.getName();
 			if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(source)) {
 				return PivotConstants.METAMODEL_LIBRARY_URI;
@@ -143,7 +157,7 @@ public class ElementUtil
 			else if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(source)) {
 				return PivotConstants.METAMODEL_METAMODEL_URI;
 			}
-		}
+		} */
 		return null;
 	}
 
