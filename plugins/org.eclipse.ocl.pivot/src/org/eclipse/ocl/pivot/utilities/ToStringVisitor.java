@@ -558,20 +558,25 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	@Override
-	public String visitClass(org.eclipse.ocl.pivot.@NonNull Class cls) {
-		org.eclipse.ocl.pivot.Package pkg = cls.getOwningPackage();
-		if (pkg == null) {
+	public String visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
+		String packageURI;
+		if (asPackage == null) {
 			append("null::");
-			appendName(cls);
+			appendName(asClass);
 		}
-		else if (!(pkg.eContainer() instanceof Model) || (PivotUtil.basicGetPackageSemantics(pkg) == null)) {
-			appendQualifiedName(pkg, "::", cls);
+		else if (!(asPackage.eContainer() instanceof Model)) {
+			appendQualifiedName(asPackage, "::", asClass);
+		}
+		else if (((packageURI = asPackage.getURI()) != null)
+			  && (CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI) == PivotConstants.METAMODEL_ID)) {
+			appendName(asClass);
 		}
 		else {
-			appendName(cls);
+			appendQualifiedName(asPackage, "::", asClass);
 		}
-		appendTemplateBindings(PivotUtil.getOwnedBindingsList(cls), null);
-		appendTemplateSignature(cls.getOwnedSignature());
+		appendTemplateBindings(PivotUtil.getOwnedBindingsList(asClass), null);
+		appendTemplateSignature(asClass.getOwnedSignature());
 		return null;
 	}
 

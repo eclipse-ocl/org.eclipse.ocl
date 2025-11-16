@@ -1084,7 +1084,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			if (completePackage == null) {
 				CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
 				if (completePackageId == null) {
-					URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
+					URI semantics = null; //PivotUtil.basicGetPackageSemantics(asPackage);
 					if (semantics != null) {
 						completePackageId = IdManager.getCompletePackageId(String.valueOf(semantics.trimFragment()));
 					}
@@ -1800,8 +1800,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		asMetamodel = asPackage;
 		String packageURI = asMetamodel.getURI();
 		if (packageURI != null) {
-			URI semantics = PivotUtil.basicGetPackageSemantics(asPackage);
-			if (semantics != null) {
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+			if (completePackageId == PivotConstants.METAMODEL_ID) {		// XXX ??? redundant
 				@SuppressWarnings("unused")
 				CompletePackage completePackage = getCompletePackage3(asPackage);
 			//	completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());

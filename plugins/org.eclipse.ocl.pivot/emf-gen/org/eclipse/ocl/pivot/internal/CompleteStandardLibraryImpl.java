@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
@@ -410,10 +411,15 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			boolean gotLibrary = false;
 			for (Library asLibrary : asLibraries) {
 				defineLibraryTypes(asLibrary);				// XXX ?? use installRootContents instead
-				URI packageSemantics = PivotUtil.basicGetPackageSemantics(asLibrary);
-				if (packageSemantics == PivotConstants.METAMODEL_LIBRARY_URI) {
-					gotLibrary = true;
-				//	break;
+				String packageURI = asLibrary.getURI();
+				if (packageURI != null) {			// QVT roots may be blank
+					CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
+					if (completePackageId == PivotConstants.METAMODEL_ID) {
+						if (asLibrary.getOwnedClass("Collection") != null) {
+							gotLibrary = true;
+							//	break;
+						}
+					}
 				}
 			}
 			if (!gotLibrary) {
