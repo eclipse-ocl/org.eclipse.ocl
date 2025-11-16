@@ -314,6 +314,7 @@ public class ASSaver
 						}
 						else if (!copier.containsKey(eTarget)) {
 							assert eTarget != null;
+							assert eTarget.eContainer() != null;
 							EObject localizedETarget = copier.copy(eTarget);
 							if (moreObjects == null) {
 								moreObjects = new ArrayList<>();
@@ -322,7 +323,7 @@ public class ASSaver
 							if (localizedETarget instanceof org.eclipse.ocl.pivot.Class) {
 								localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localizedETarget);
 							}
-							else if (eTarget instanceof Operation) {
+							else {//if (eTarget instanceof Operation) {
 								throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
 					//			resolveOperation((Operation)eObject);
 								}

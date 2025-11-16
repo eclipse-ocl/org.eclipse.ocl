@@ -714,9 +714,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				Operation op = sortedOperations.get(i);
 				Iteration it = op instanceof Iteration ? (Iteration)op : null;
 				boolean hasAccumulator = (it != null) && (it.getOwnedAccumulator() != null);
-				if ("forAll".equals(op.getName())) {
-					getClass();		// XXX
-				}
 				TemplateSignature ownedTemplateSignature = op.getOwnedSignature();
 				StringBuilder sFlags = new StringBuilder();
 				sFlags.append(i);

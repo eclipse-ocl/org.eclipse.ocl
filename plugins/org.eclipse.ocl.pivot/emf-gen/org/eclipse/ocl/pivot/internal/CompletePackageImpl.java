@@ -812,12 +812,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	 */
 	@Override
 	public final org.eclipse.ocl.pivot.@Nullable Package basicGetPrimaryPackage() {
-	//	for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(this)) {
-	//		if (partialPackage.getESObject() != null) { -- fails for GenerateOCLstdlib since the CS-derived package has no esObject
-	//			assert !Orphanage.isOrphanage(partialPackage) && !Orphanage.isOrphan(partialPackage);
-	//			return partialPackage;
-	//		}
-	//	}
 		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(this)) {
 			if (!Orphanage.isOrphanage(partialPackage) && !Orphanage.isOrphan(partialPackage)) {
 				return partialPackage;
