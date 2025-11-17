@@ -576,17 +576,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return class2completeClass.get(asClass);
 	}
 
-	/**
-	 * @since 7.0
-	 */
 	@Override
 	public @Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		return package2completePackage.get(asPackage);
 	}
 
-	/**
-	 * @since 7.0
-	 */
 	@Override
 	public @Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId) {
 		return completePackageId2completePackage.get(completePackageId);
@@ -987,15 +981,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if (completeClass != null) {
 			return completeClass;
 		}
-		completeClass = (CompleteClassInternal) basicGetSharedCompleteClass(asClass);
-		if (completeClass != null) {
-			return completeClass;
-		}
-		org.eclipse.ocl.pivot.Package pivotPackage = asClass.getOwningPackage();
-		if (pivotPackage == null) {
-			throw new IllegalStateException("type has no package");
-		}
-		CompletePackage completePackage = getCompletePackage3(pivotPackage);
+		CompletePackage completePackage = getCompletePackage(asClass);
 		return (CompleteClassInternal)completePackage.getCompleteClass(asClass);
 	}
 
@@ -1028,6 +1014,26 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 	}
 
+	/**
+	 * Return the CompletePackage for the Package copntaining asClass, creating it if necessary.
+	 */
+	private @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
+			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
+		}
+		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
+			return getOrphanCompletePackage();
+		}
+		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
+			return getOrphanCompletePackage();
+		}
+		else if ((asClass instanceof LambdaType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
+			return getOrphanCompletePackage();
+		}
+		org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);
+		return getCompletePackage3(pivotPackage);
+	}
+
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
@@ -1052,19 +1058,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	//	CompletePackage old = packageURI2completePackage.put(uri, completePackage);			// XXX remove
 	//	assert (old == null) || (old == completePackage);
 		return completePackage;
-	}
-
-	@Override
-	public @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		String packageURI = asPackage.getURI();
-		if (packageURI == null) {				// XXX Fails for testLoad_Fruit_ocl
-			return null;
-		}
-		CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
-		if (completePackageId != PivotConstants.METAMODEL_ID) {
-			return null;
-		}
-		return completePackageId2completePackage.get(completePackageId);
 	}
 
 	/**
@@ -1170,27 +1163,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	//	assert (asPackage.getURI() == null) || (packageURI2completePackage.get(asPackage.getURI()) == completePackage);		in didAddPackage caller
 		CompletePackage completePackage2 = completePackageId2completePackage.get(completePackage.getCompletePackageId());
 		assert (completePackage2 == completePackage) || (completePackage2 == null);
-		return completePackage;
-	}
-
-	private @NonNull CompletePackage getCompletePackage4(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CompletePackage completePackage;
-		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
-			completePackage = getPrimitiveCompletePackage();			// namespacelessCompletePackage
-		}
-		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
-			completePackage = getOrphanCompletePackage();
-		}
-		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
-			completePackage = getOrphanCompletePackage();
-		}
-		else if ((asClass instanceof LambdaType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
-			completePackage = getOrphanCompletePackage();
-		}
-		else {
-			org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);
-			completePackage = getCompletePackage3(pivotPackage);
-		}
 		return completePackage;
 	}
 

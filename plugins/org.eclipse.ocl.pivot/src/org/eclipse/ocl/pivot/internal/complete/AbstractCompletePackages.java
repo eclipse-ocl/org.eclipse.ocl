@@ -67,7 +67,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 			completePackage = (CompletePackage)pivotPackage;
 		}
 		else {
-			completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
+			completePackage = getCompleteModel().basicGetCompletePackage(pivotPackage);
 			if (completePackage == null) {
 				org.eclipse.ocl.pivot.Package pivotPackageParent = pivotPackage.getOwningPackage();
 				if (pivotPackageParent == null) {
@@ -209,7 +209,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 			completePackage.assertSamePackage(pivotPackage);
 		}
 		else {
-			completePackage = getCompleteModel().getCompletePackage2(pivotPackage);
+			completePackage = getCompleteModel().basicGetCompletePackage(pivotPackage);
 			if (completePackage == null) {
 				org.eclipse.ocl.pivot.Package pivotPackageParent = pivotPackage.getOwningPackage();
 				if (pivotPackageParent == null) {

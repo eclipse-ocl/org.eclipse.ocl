@@ -132,16 +132,23 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
+	 * Return the CompletePackage known to be associated with completePackageId, or null if not known.
+	 *
 	 * @since 7.0
 	 */
 	@Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId);
 
 	/**
+	 * Return the CompletePackage known for the partial asPackage, or null if not known.
+	 *
 	 * @since 7.0
 	 */
 	@Nullable CompletePackage basicGetCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
+	 * Return the CompletePackage known to support packageURI, or null if not known.
+	 * Any fragment in packageURI is ignored.
+	 *
 	 * @since 7.0
 	 */
 	@Nullable CompletePackage basicGetCompletePackageForURI(@NonNull String packageURI);
@@ -204,11 +211,6 @@ public interface CompleteModel extends NamedElement
 	 */
 	@NonNull CompletePackage getCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @NonNull String uri);
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated @Nullable CompletePackage getCompletePackage2(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
 	 * @since 7.0
