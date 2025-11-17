@@ -1216,7 +1216,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	protected boolean isEcoreProperty(@NonNull LibraryProperty libraryProperty) {
 		return (libraryProperty instanceof ExplicitNavigationProperty)
 				|| (libraryProperty instanceof CompositionProperty)

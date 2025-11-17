@@ -36,6 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -59,7 +60,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
@@ -1428,7 +1428,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactory environmentFactory) {
-		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
+		CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(this);
 		for (org.eclipse.ocl.pivot.Class asClass : completeClass.getPartialClasses()) {
 			EObject esObject = asClass.getESObject();
 			if (esObject != null) {

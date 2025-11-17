@@ -38,7 +38,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	//	static { COMPLETE_CLASSES.setState(true); }
 	private static final long serialVersionUID = 1L;
 
-	protected @Nullable Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass = null;
+	protected @Nullable Map<@NonNull String, @NonNull CompleteClass> name2completeClass = null;
 
 	public CompleteClasses(@NonNull CompletePackageImpl owner) {
 		super(CompleteClass.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES.getFeatureID(), PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE.getFeatureID());
@@ -51,11 +51,14 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	protected void didAdd(int index, CompleteClass completeClass) {
 		assert completeClass != null;
 		super.didAdd(index, completeClass);
-		didAdd((CompleteClassInternal) completeClass);
+		didAdd(completeClass);
 	}
 
-	public void didAdd(@NonNull CompleteClassInternal completeClass) {
-		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
+	/**
+	 * @since 7.0
+	 */
+	public void didAdd(@NonNull CompleteClass completeClass) {
+		Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
 		if (name2completeClass2 != null) {
 			String name = completeClass.getName();
 			if (name != null) {
@@ -68,7 +71,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 	//	System.out.println("didAddClass " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(partialClass) +  " " + partialClass.getName());
 		if (name2completeClass != null) {
-			CompleteClassInternal completeClass = name2completeClass.get(partialClass.getName());
+			CompleteClass completeClass = name2completeClass.get(partialClass.getName());
 			if (completeClass == null) {
 				doRefreshPartialClass(partialClass);
 			}
@@ -92,11 +95,11 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	}
 
 	protected void didRemove(@NonNull CompleteClass completeClass) {
-		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
+		Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
 		if (name2completeClass2 != null) {
 			String name = completeClass.getName();
 			if (name != null) {
-				CompleteClassInternal oldCompleteClass = name2completeClass2.remove(name);
+				CompleteClass oldCompleteClass = name2completeClass2.remove(name);
 				assert oldCompleteClass == completeClass;
 			}
 		}
@@ -104,7 +107,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		if (name2completeClass != null) {
-			CompleteClassInternal completeClass = name2completeClass.get(partialClass.getName());
+			CompleteClass completeClass = name2completeClass.get(partialClass.getName());
 			if ((completeClass != null) && completeClass.didRemoveClass(partialClass)) {
 				remove(completeClass);
 				completeClass.dispose();
@@ -116,7 +119,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	}
 
 	public void didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
-		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
+		Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
 		if (name2completeClass2 != null) {
 			for (org.eclipse.ocl.pivot.Class partialClass : partialPackage.getOwnedClasses()) {
 				if (partialClass != null) {
@@ -130,13 +133,14 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		if (partialClass instanceof TupleType) {
 			getClass();
 		}
-		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
+		Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
 		assert name2completeClass2 != null;
 		String name = partialClass.getName();
 		if (name == null) {
 			return;				// XXX ignore nameless classes
 		}
 		CompleteModel completeModel = getCompleteModel();
+		CompletePackage completePackage2 = completeModel.basicGetSharedCompletePackage(partialClass);
 		//
 		//	If a OCLstdlib / Complete OCL has explicitly declared a PrimitveType.
 		//
@@ -154,7 +158,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			PrimitiveCompletePackage primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 			CompleteClass completeClass = primitiveCompletePackage.getOwnedCompleteClass(name);
 			if (completeClass != null) {														// If name is a primitive
-				((CompleteClassInternal)completeClass).addClass(partialClass);
+				completeClass.addClass(partialClass);
 				return;
 			}
 		}
@@ -165,8 +169,8 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		assert completeClass.getPartialClasses().contains(partialClass);		// XXX redundant
 	}
 
-	protected @NonNull Map<@NonNull String, @NonNull CompleteClassInternal> doRefreshPartialClasses() {
-		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
+	protected @NonNull Map<@NonNull String, @NonNull CompleteClass> doRefreshPartialClasses() {
+		Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
 		if (name2completeClass2 == null) {
 			name2completeClass2 = name2completeClass = new HashMap<>();
 		}
@@ -198,8 +202,11 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		return (CompletePackage)owner;
 	}
 
-	public @Nullable CompleteClassInternal getOwnedCompleteClass(String name) {
-		Map<@NonNull String, @NonNull CompleteClassInternal> name2completeClass2 = name2completeClass;
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable CompleteClass getOwnedCompleteClass(String name) {
+		Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
 		if (name2completeClass2 == null) {
 			name2completeClass2 = doRefreshPartialClasses();
 		}

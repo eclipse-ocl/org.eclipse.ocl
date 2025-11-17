@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -86,7 +85,7 @@ public class FinalAnalysis
 						for (@NonNull Operation subOperation : subCompleteClass.getOperations(null)) {
 							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId())) {
 								CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
-								CompleteClassInternal subOwningCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation));
+								CompleteClass subOwningCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation));
 								if (subOwningCompleteClass.conformsTo(standardLibrary, superCompleteClass)) {
 									LibraryIterationOrOperation subImplementation = environmentFactory.getIterationOrOperationImplementation(subOperation);
 									if ((domainImplementation != subImplementation)

@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
@@ -87,7 +88,6 @@ import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
@@ -315,7 +315,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (isPrimitive) {
 			CompleteModel completeModel = environmentFactory.getCompleteModel();
 			PrimitiveCompletePackageImpl primitiveCompletePackage = ((CompleteModelImpl)completeModel).getPrimitiveCompletePackage();
-			CompleteClassInternal completeClass = primitiveCompletePackage.getCompleteClass(pivotElement);
+			CompleteClass completeClass = primitiveCompletePackage.getCompleteClass(pivotElement);
 			if (!completeClass.getPartialClasses().contains(pivotElement)) {
 				completeClass.addClass(pivotElement);
 			}

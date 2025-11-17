@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -129,7 +128,7 @@ public interface CompleteModel extends NamedElement
 	 * This is for test purposes only since a CompleteClass is normally created lazily on demand.
 	 * @since 7.0
 	 */
-	@Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
+	@Nullable CompleteClass basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
 	 * Return the CompletePackage known to be associated with completePackageId, or null if not known.
@@ -152,6 +151,13 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@Nullable CompletePackage basicGetCompletePackageForURI(@NonNull String packageURI);
+
+	/**
+	 * Return the Orphan or Primitive CompletePackage for the Package containing the irregular asClass. Return null for a regular Class.
+	 *
+	 * @since 7.0
+	 */
+	@Nullable CompletePackage basicGetSharedCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
 	 * @since 7.0
@@ -204,7 +210,14 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
-	@NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
+	@NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
+
+	/**
+	 * Return the CompletePackage for the Package containing asClass, creating it if necessary.
+	 *
+	 * @since 7.0
+	 */
+//	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
 	 * @since 7.0

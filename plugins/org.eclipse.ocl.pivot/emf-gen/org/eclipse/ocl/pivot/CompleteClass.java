@@ -81,6 +81,11 @@ public interface CompleteClass extends NamedElement
 	@NonNull List<org.eclipse.ocl.pivot.Class> getPartialClasses();
 
 	/**
+	 * @since 7.0
+	 */
+	void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
+
+	/**
 	 * Return the primary Property for the propertyName property or null if none.
 	 * Conflicting static and non-static properties throw a SemanticException.
 	 *
@@ -96,7 +101,24 @@ public interface CompleteClass extends NamedElement
 	 * @since 7.0
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
+	/**
+	 * Track the addition of a partialClass to a CompleteClass.
+	 */
+//	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);	// XXX didRemoveClass asymmetry
+	/**
+	 * Track the removal of a partialClass from a CompleteClass returning true if the CompleteClass is empty.
+	 * @since 7.0
+	 */
+	boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
+	/**
+	 * @since 7.0
+	 */
+	void dispose();
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompleteModel getCompleteModel();
 	/**
 	 * @since 7.0
 	 */
@@ -136,6 +158,7 @@ public interface CompleteClass extends NamedElement
 	 */
 	@NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name);
 	@NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses();
+//	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();
 	/**
 	 * Return all partial Property's with the same name and isStatic as asProperty leaving the caller to resolve ambiguities.
 	 *
@@ -161,4 +184,5 @@ public interface CompleteClass extends NamedElement
 	 * @since 7.0
 	 */
 	boolean isElementType(@NonNull StandardLibrary standardLibrary, @NonNull Type elementType, @NonNull VoidType oclVoidType);
+	// void uninstall();
 } // CompleteClass

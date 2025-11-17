@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
@@ -246,7 +245,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		protected void analyze(@NonNull Model thisModel) {
 			for (NamedElement asElement : context.external2name.keySet()) {
 				if (asElement instanceof org.eclipse.ocl.pivot.Class) {
-					CompleteClassInternal completeClass = context.completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
+					CompleteClass completeClass = context.completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
 					for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
 						externalClasses.add(asPartialClass);
 					}
@@ -400,7 +399,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				sortedParameterTypes.add(asClass);
 			}
 			else if (!externalClasses.contains(asClass)){
-				CompleteClassInternal completeClass = context.completeModel.getCompleteClass(asClass);
+				CompleteClass completeClass = context.completeModel.getCompleteClass(asClass);
 				for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
 					internalClasses.add(asPartialClass);
 				}

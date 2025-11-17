@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -89,7 +88,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 				if (superFlatClasses == null) {
 					superFlatClasses = new ArrayList<>();
 				}
-				CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
+				CompleteClass superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
 				FlatClass superFlatClass = superCompleteClass.getFlatClass();
 				if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
 					superFlatClasses.add(superFlatClass);

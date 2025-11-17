@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
@@ -418,7 +417,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	/**
 	 * EObject to CompleteClass mapping for nameless EObjects such as an (?? OCL Constraint) or UML Association.
 	 */
-	private @Nullable Map<@NonNull EObject, @NonNull CompleteClassInternal> esObject2completeClass = null;
+	private @Nullable Map<@NonNull EObject, @NonNull CompleteClass> esObject2completeClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -470,16 +469,16 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	/**
 	 * @since 7.0
 	 */
-	protected @NonNull CompleteClassInternal createCompleteClass() {
-		return (CompleteClassInternal)PivotFactory.eINSTANCE.createCompleteClass();
+	protected @NonNull CompleteClass createCompleteClass() {
+		return PivotFactory.eINSTANCE.createCompleteClass();
 	}
 
 	/**
 	 * @since 7.0
 	 */
 	// XXX protected
-	public @NonNull CompleteClassInternal createCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
-		CompleteClassInternal completeClass = createCompleteClass();
+	public @NonNull CompleteClass createCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
+		CompleteClass completeClass = createCompleteClass();
 		completeClass.setName(name);
 		getOwnedCompleteClasses().add(completeClass);
 		return completeClass;
@@ -615,8 +614,8 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CompleteClassInternal completeClass;
+	public @NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CompleteClass completeClass;
 		String name = asClass.getName();
 		if (name != null) {
 			completeClass = getOwnedCompleteClass(name);
@@ -627,7 +626,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		else {											// UML associations may be unnamed.
 			EObject esObject = asClass.getESObject();
 			assert esObject != null;
-			Map<@NonNull EObject, @NonNull CompleteClassInternal> esObject2completeClass2 = esObject2completeClass;
+			Map<@NonNull EObject, @NonNull CompleteClass> esObject2completeClass2 = esObject2completeClass;
 			if (esObject2completeClass2 == null) {
 				esObject2completeClass = esObject2completeClass2 = new HashMap<>();
 			}
@@ -694,7 +693,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	@Override
-	public CompleteClassInternal getOwnedCompleteClass(String name) {
+	public CompleteClass getOwnedCompleteClass(String name) {
 		return getOwnedCompleteClasses().getOwnedCompleteClass(name);
 	}
 

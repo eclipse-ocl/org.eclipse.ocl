@@ -63,7 +63,6 @@ import com.google.common.collect.Iterables;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Complete Class</b></em>'.
- * @extends org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -75,7 +74,7 @@ import com.google.common.collect.Iterables;
  *
  * @generated
  */
-public class CompleteClassImpl extends NamedElementImpl implements CompleteClass, org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal
+public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 {
 	private static class PartialClasses extends EObjectResolvingEList<Class>
 	{
@@ -461,14 +460,14 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
-	@Override
-	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+/*	@Override
+	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {		// XXX didRemoveClass asymmetry
 		assert !partialClass.eIsProxy();				// XXX
 		if (PARTIAL_CLASSES.isActive()) {
 			PARTIAL_CLASSES.println("Do-didAddClass " + partialClass + " => " + this);
 		}
 		partialClasses.add(partialClass);
-	}
+	} */
 
 	@Override
 	public boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
@@ -618,7 +617,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return getFlatClass().getPrimaryProperty(featureFilter, name);
 	}
 
-	@Override
+//	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses() {
 		FlatClass flatClass = getFlatClass();
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> transform = Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
@@ -787,7 +786,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes'esObject");
 	}
 
-	@Override
+//	@Override
 	public void uninstall() {
 		dispose();
 	}

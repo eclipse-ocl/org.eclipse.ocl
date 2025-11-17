@@ -65,7 +65,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
@@ -1429,7 +1428,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 					}
 				}
 				org.eclipse.ocl.pivot.@NonNull Class unspecializedSuperClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
-				CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(unspecializedSuperClass);
+				CompleteClass superCompleteClass = completeModel.getCompleteClass(unspecializedSuperClass);
 				org.eclipse.ocl.pivot.Class superPivotClass = superCompleteClass.getPrimaryClass();
 				if (superPivotClass instanceof CollectionType) {
 					CollectionType specializedCollection = (CollectionType)specializedClass;

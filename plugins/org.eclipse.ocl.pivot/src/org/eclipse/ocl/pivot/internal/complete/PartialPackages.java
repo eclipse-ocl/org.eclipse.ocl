@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -210,7 +211,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClassInternal completeClass) {
+	public @NonNull AbstractFlatClass getFlatClass(@NonNull CompleteClass completeClass) {
 		String name = PivotUtil.getName(completeClass);
 		AbstractFlatClass completeFlatClass = name2flatClass.get(name);
 		if (completeFlatClass == null) {
@@ -236,7 +237,10 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		return getCompletePackage().getName() + " : " + super.toString();
 	}
 
-	public void uninstalled(@NonNull CompleteClassInternal completeClass) {
+	/**
+	 * @since 7.0
+	 */
+	public void uninstalled(@NonNull CompleteClass completeClass) {
 		//		System.out.println("PartialPackages.uninstalled " + completeClass + " " + NameUtil.debugFullName(completeClass));
 		AbstractFlatClass flatClass = name2flatClass.remove(completeClass.getName());
 //XXX		if (flatClass != null) {

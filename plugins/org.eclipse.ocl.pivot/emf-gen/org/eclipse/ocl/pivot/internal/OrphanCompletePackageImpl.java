@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -95,8 +94,8 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		}
 	}
 
-	private @NonNull Map<org.eclipse.ocl.pivot.Class, WeakReference<CompleteClassInternal>> class2orphanCompleteClass
-				= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<CompleteClassInternal>>();
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, WeakReference<@NonNull CompleteClass>> class2orphanCompleteClass
+				= new WeakHashMap<org.eclipse.ocl.pivot.@NonNull Class, WeakReference<@NonNull CompleteClass>>();
 
 	protected OrphanCompletePackageImpl()
 	{
@@ -121,7 +120,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	 * @since 7.0
 	 */
 	@Override
-	protected @NonNull CompleteClassInternal createCompleteClass() {
+	protected @NonNull CompleteClass createCompleteClass() {
 		return new OrphanCompleteClassImpl();
 	}
 
@@ -129,8 +128,8 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull CompleteClassInternal createCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
-		CompleteClassInternal completeClass = createCompleteClass();
+	public @NonNull CompleteClass createCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
+		CompleteClass completeClass = createCompleteClass();
 		completeClass.setName(name);
 	//	getOwnedCompleteClasses().add(completeClass);		// orphans are not 'owned'
 		return completeClass;
@@ -164,9 +163,9 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	} */
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		WeakReference<CompleteClassInternal> ref = class2orphanCompleteClass.get(asClass);
-		CompleteClassInternal completeClass = ref != null ? ref.get() : null;
+	public @NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		WeakReference<@NonNull CompleteClass> ref = class2orphanCompleteClass.get(asClass);
+		CompleteClass completeClass = ref != null ? ref.get() : null;
 		if (completeClass == null) {
 			String name = asClass.getName();
 			assert name != null;
@@ -178,7 +177,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	}
 
 	@Override
-	public @Nullable CompleteClassInternal getOwnedCompleteClass(String name) {
+	public @Nullable CompleteClass getOwnedCompleteClass(String name) {
 		return null;			// No orphan CompleteClasses
 	}
 } //OrphanCompletePackageImpl

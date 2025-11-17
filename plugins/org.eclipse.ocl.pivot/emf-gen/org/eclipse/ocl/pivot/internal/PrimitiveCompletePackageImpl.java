@@ -12,9 +12,9 @@ package org.eclipse.ocl.pivot.internal;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -67,10 +67,10 @@ public class PrimitiveCompletePackageImpl extends CompletePackageImpl implements
 	}
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(final org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull CompleteClass getCompleteClass(final org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		String name = asClass.getName();
 		assert name != null;
-		CompleteClassInternal completeClass = getOwnedCompleteClass(name);
+		CompleteClass completeClass = getOwnedCompleteClass(name);
 		if (completeClass == null) {
 			completeClass = createCompleteClass(asClass, name);
 		}

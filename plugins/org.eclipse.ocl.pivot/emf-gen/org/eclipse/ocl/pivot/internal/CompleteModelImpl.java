@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.AbstractCompletePackages;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -503,7 +502,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	private Orphanage orphanage = null;
 
-	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteClassInternal> class2completeClass = new WeakHashMap<>();
+	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteClass> class2completeClass = new WeakHashMap<>();
 
 	private boolean autoLoadASmetamodel = true;
 
@@ -567,7 +566,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 1.23
 	 */
 	@Override
-	public @Nullable CompleteClassInternal basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @Nullable CompleteClass basicGetCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)asClass).getStereotype();
 			if (stereotype != null) {
@@ -597,6 +596,29 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return packageURI2completePackage.get(packageURI);
 		/*String completePackageName = getCompleteURI(packageURI);
 		return completePackageId2completePackage.get(completePackageName); */
+	}
+
+	@Override
+	public @Nullable CompletePackage basicGetSharedCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
+			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
+		}
+		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
+			return getOrphanCompletePackage();
+		}
+		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
+			return getOrphanCompletePackage();
+		}
+		else if (asClass instanceof LambdaType) {
+			return getOrphanCompletePackage();
+		}
+		else if (asClass instanceof IterableType) {
+			return getOrphanCompletePackage();
+		}
+		else if (asClass instanceof AnyType) {
+			getClass();
+		}
+		return null;
 	}
 
 	/**
@@ -632,7 +654,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackage;
 	}
 
-	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
+	/**
+	 * @since 7.0
+	 */
+	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClass completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
 		if ((oldCompleteClass != null) && (oldCompleteClass != completeClass)) {
@@ -967,26 +992,30 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	} */
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
+	public @NonNull CompleteClass getCompleteClass(@NonNull Type pivotType) {
 		assert standardLibrary != null;
 		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getClass(pivotType, standardLibrary);
 		return getCompleteClass(asClass);
 	}
 
 	@Override
-	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)asClass).getStereotype();
 			if (stereotype != null) {
 				asClass = stereotype;
 			}
 		}
-		CompleteClassInternal completeClass = basicGetCompleteClass(asClass);
+		CompleteClass completeClass = basicGetCompleteClass(asClass);
 		if (completeClass != null) {
 			return completeClass;
 		}
-		CompletePackage completePackage = getCompletePackage(asClass);
-		return (CompleteClassInternal)completePackage.getCompleteClass(asClass);
+		CompletePackage completePackage = basicGetSharedCompletePackage(asClass);
+		if (completePackage == null) {
+			org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);
+			completePackage = getCompletePackage3(pivotPackage);
+		}
+		return completePackage.getCompleteClass(asClass);
 	}
 
 	/**
@@ -1018,17 +1047,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 	}
 
-	/**
-	 * Return the CompletePackage for the Package copntaining asClass, creating it if necessary.
-	 */
-	private @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+/*	@Override
+	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
 			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
 		}
 		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
 			return getOrphanCompletePackage();
 		}
-		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
+		else if (/ *(asClass instanceof IterableType) &&* / (asClass.getUnspecializedElement() != null)) {
 			return getOrphanCompletePackage();
 		}
 		else if (asClass instanceof LambdaType) {
@@ -1037,9 +1064,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		else if (asClass instanceof IterableType) {
 			return getOrphanCompletePackage();
 		}
+		else if (asClass instanceof AnyType) {
+			getClass();
+		}
 		org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);
 		return getCompletePackage3(pivotPackage);
-	}
+	} */
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
@@ -1532,9 +1562,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			return type;			// FIXME bad cast
 		}
 		org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.@Nullable Class)type;
-		CompleteClassInternal completeClass = getCompleteClass(asClass);
+		CompleteClass completeClass = getCompleteClass(asClass);
 		assert completeClass.getPartialClasses().contains(asClass);		// XXX redundant
-	//	CompleteClassInternal completeClass = completeModel.getCompleteClass(type);
+	//	CompleteClass completeClass = completeModel.getCompleteClass(type);
 	//	assert completeClass.getPartialClasses().contains(type);
 		return completeClass.getPrimaryClass();
 		//		TypeTracker typeTracker = packageManager.findTypeTracker(pivotType);
