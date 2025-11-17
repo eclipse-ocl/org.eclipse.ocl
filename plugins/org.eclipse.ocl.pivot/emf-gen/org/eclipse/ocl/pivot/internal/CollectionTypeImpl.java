@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -683,7 +682,7 @@ implements CollectionType {
 	@Override
 	public void setName(String newName) {
 		if ("Collection".equals(newName)) {
-			System.out.println("setName " + NameUtil.debugSimpleName(this));
+//			System.out.println("setName " + NameUtil.debugSimpleName(this));
 			getClass();
 		}
 		super.setName(newName);
@@ -692,7 +691,7 @@ implements CollectionType {
 	@Override
 	public void setUnspecializedElement(TemplateableElement newUnspecializedElement) {
 		if ("Collection".equals(name)) {
-			System.out.println("setUnspecializedElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newUnspecializedElement) + " " + newUnspecializedElement);
+//			System.out.println("setUnspecializedElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newUnspecializedElement) + " " + newUnspecializedElement);
 			assert newUnspecializedElement.getUnspecializedElement() == null;
 			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature() != null);
 			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().size() == 1);

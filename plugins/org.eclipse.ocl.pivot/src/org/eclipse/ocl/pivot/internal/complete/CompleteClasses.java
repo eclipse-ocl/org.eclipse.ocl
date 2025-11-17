@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -149,6 +150,12 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		//
 		if (partialClass instanceof PrimitiveType) {											// Primary OCLstdlib declaration
 			assert sharedCompletePackage == completeModel.getPrimitiveCompletePackage();
+			CompleteClass completeClass = sharedCompletePackage.getCompleteClass(partialClass);
+			assert completeClass.getPartialClasses().contains(partialClass);			// XXX redundant
+			return;
+		}
+		if (sharedCompletePackage instanceof OrphanCompletePackage) {
+			assert sharedCompletePackage == completeModel.getOrphanCompletePackage();
 			CompleteClass completeClass = sharedCompletePackage.getCompleteClass(partialClass);
 			assert completeClass.getPartialClasses().contains(partialClass);			// XXX redundant
 			return;
