@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -520,6 +521,9 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 			assert this instanceof OrphanCompletePackageImpl;
 		}
 		else if ((partialClass instanceof LambdaType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
+			assert this instanceof OrphanCompletePackageImpl;
+		}
+		else if (partialClass instanceof TupleType) {
 			assert this instanceof OrphanCompletePackageImpl;
 		}
 	//	else if ((partialClass instanceof IterableType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {

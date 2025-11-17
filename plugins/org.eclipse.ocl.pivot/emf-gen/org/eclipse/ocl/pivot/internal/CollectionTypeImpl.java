@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
@@ -693,9 +694,9 @@ implements CollectionType {
 		if ("Collection".equals(name)) {
 			System.out.println("setUnspecializedElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newUnspecializedElement) + " " + newUnspecializedElement);
 			assert newUnspecializedElement.getUnspecializedElement() == null;
-			assert newUnspecializedElement.getOwnedSignature() != null;
-			assert newUnspecializedElement.getOwnedSignature().getOwnedParameters().size() == 1;
-			assert newUnspecializedElement.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
+			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature() != null);
+			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().size() == 1);
+			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER);
 			assert PivotUtil.getUnspecializedTemplateableElement(newUnspecializedElement) == newUnspecializedElement;
 			getClass();
 		}

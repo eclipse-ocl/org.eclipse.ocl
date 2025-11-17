@@ -324,7 +324,7 @@ public class ASSaver
 							moreObjects.add(eTarget);
 							if (localizedETarget instanceof org.eclipse.ocl.pivot.Class) {
 								if (((org.eclipse.ocl.pivot.Class)eTarget).getUnspecializedElement() != null) {
-									((org.eclipse.ocl.pivot.Class)localizedETarget).setUnspecializedElement(dummySpecializedType);
+									((org.eclipse.ocl.pivot.Class)localizedETarget).setUnspecializedElement(dummySpecializedType);	// Defeat any unspecializedElement check
 								}
 								localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localizedETarget);
 							}
