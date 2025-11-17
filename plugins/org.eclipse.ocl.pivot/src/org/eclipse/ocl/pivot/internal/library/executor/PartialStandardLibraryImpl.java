@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
@@ -503,6 +504,15 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public @NonNull NormalizedTemplateParameter createNormalizedTemplateParameter(int index, @NonNull String name) {
+		NormalizedTemplateParameterImpl asTemplateParameter = (NormalizedTemplateParameterImpl)PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
+		asTemplateParameter.setName(name);
+		return asTemplateParameter;
+	}
+
+	/**
 	 * Create an operation. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
@@ -563,24 +573,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 * @since 7.0
 	 */
 	@Deprecated
-	public @NonNull Property createOppositeProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyFlagsAndIndex, /*@NonNull*/ EStructuralFeature eFeature) {
-		assert eFeature != null;
-	//	EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
-	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
-		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
-		asProperty.setName(eFeature.getName());
-	//	asProperty.setType(asType);
-		asProperty.setESObject(eFeature);
-	//	asProperty.setIndex(propertyIndex);
-	//	asProperty.setImplementation(implementation);
-		asClass.getOwnedProperties().add(asProperty);
-		return asProperty;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable PackageId zzpackageId) {
 		return createPackage(ePackage);
 	}
@@ -630,22 +622,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return asProperty;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	public @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex) {
-		assert eFeature != null;
-		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
-		asProperty.setESObject(eFeature);
-		asProperty.setName(eFeature.getName());
-	//	asProperty.setType(asType);
-	//	asProperty.setIndex(propertyIndex);
-	//	asProperty.setImplementation(implementation);
-		asClass.getOwnedProperties().add(asProperty);
-		return asProperty;
-	}
-
 	public @NonNull Resource createResource(@NonNull Model model) {
 		URI uri = URI.createURI(model.getExternalURI() + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 		Resource resource = BuiltInASResourceFactory.INSTANCE.createResource(uri);
@@ -661,17 +637,16 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull TemplateParameter createTemplateParameter(int index, @NonNull String name) {
-	//	ExecutorTypeParameter executorTypeParameter = new ExecutorTypeParameter(index, name);
-		NormalizedTemplateParameterImpl asTemplateParameter = (NormalizedTemplateParameterImpl)PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
-		asTemplateParameter.setName(name);
-	//	asTemplateParameter.setIndex(index);
-//XXX		asTemplateParameter.setTemplateParameterId(IdManager.getTemplateParameterId(index));
-	//	asTemplateParameter.setIndex(index);
-	//	EcoreFlatModel flatModel = getFlatModel();
-	//	FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
-	//	executorTypeParameter.setFlatClass(flatClass);
-		return asTemplateParameter;
+	public @NonNull TemplateParameter createTemplateParameter(@NonNull String name) {
+		return PivotUtil.createTemplateParameter(name);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Deprecated
+	public @NonNull NormalizedTemplateParameter createTemplateParameter(int index, @NonNull String name) {
+		return createNormalizedTemplateParameter(index, name);
 	}
 
 	@Override

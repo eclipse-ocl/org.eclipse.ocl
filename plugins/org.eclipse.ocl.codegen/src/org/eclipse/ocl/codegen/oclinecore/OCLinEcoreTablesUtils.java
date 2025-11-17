@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -542,15 +543,19 @@ public class OCLinEcoreTablesUtils
 				s.append("LIBRARY.getTemplateParameter(");
 				namespace2.accept(this);
 				s.append(", ");
-			}
-			int index = asTemplateParameter.getTemplateParameterId().getIndex();
-			Orphanage orphanage = environmentFactory.getOrphanage();
-			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(orphanage, index);
-			s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
-			s.append(".");
-			s.append(normalizedTemplateParameter.getName());
-			if (namespace2 != null) {
+				int index = asTemplateParameter.getTemplateParameterId().getIndex();
+				Orphanage orphanage = environmentFactory.getOrphanage();
+				NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(orphanage, index);
+				s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+				s.append(".");
+				s.append(normalizedTemplateParameter.getName());
 				s.append(")");
+			}
+			else {
+				s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+				s.append(".");
+				//	s.append(normalizedTemplateParameter.getName());
+				s.append(templateParameter2name.get(asTemplateParameter));
 			}
 			return null;
 		}
@@ -655,6 +660,7 @@ public class OCLinEcoreTablesUtils
 			s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
 			s.append(".");
 			s.append(PivotUtil.getName(asNormalizedTemplateParameter));
+//			s.append(templateParameter2name.get(asNormalizedTemplateParameter));
 			return null;
 		}
 
@@ -697,8 +703,9 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull EmitDeclaredNameVisitor emitDeclaredName;				// emit _ZZZ
 	protected final @NonNull EmitReferencedElementVisitor emitReferencedElement;	// emit XXXTables.YYY._ZZZ
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
-	protected final @NonNull Map<@NonNull ParameterTypes, String> legacyTemplateBindingsNames = new HashMap<>();
-	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
+	protected final @NonNull Map<@NonNull ParameterTypes,@NonNull  String> legacyTemplateBindingsNames = new HashMap<>();
+	protected final @NonNull Map<@NonNull ParameterTypes, @NonNull String> templateBindingsNames = new HashMap<>();
+	protected final @NonNull Map<@NonNull TemplateParameter, @NonNull String> templateParameter2name = new HashMap<>();
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> class2sortedMemberProperties = new HashMap<>();
 
@@ -1223,9 +1230,22 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	protected @NonNull String getTemplateParameterName(@NonNull TemplateParameter asTemplateParameter) {
+	protected @NonNull String getTemplateParameterNameCandidate(@NonNull TemplateParameter asTemplateParameter) {
 		TemplateParameterId asTemplateParameterId = asTemplateParameter.getTemplateParameterId();
-		return "_" + asTemplateParameterId.getIndex() + "_" + asTemplateParameter.getName();
+		TemplateSignature asTemplateSignature = asTemplateParameter.getOwningSignature();
+		TemplateableElement asTemplateableElement = asTemplateSignature.getOwningElement();
+		if (asTemplateableElement instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asTemplateableElement;
+			return "_" + asTemplateParameterId.getIndex() + "_" + asClass.getName() + "_" + asTemplateParameter.getName();
+		}
+		else if (asTemplateableElement instanceof Operation) {
+			Operation asOperation = (Operation)asTemplateableElement;
+			org.eclipse.ocl.pivot.Class asClass = asOperation.getOwningClass();
+			return "_" + asTemplateParameterId.getIndex() + "_" + asClass.getName() + "_" + asOperation.getName() + "_" + asTemplateParameter.getName();
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	/**

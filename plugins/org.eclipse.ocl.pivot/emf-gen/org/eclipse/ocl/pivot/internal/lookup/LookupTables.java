@@ -21,6 +21,7 @@ package org.eclipse.ocl.pivot.internal.lookup;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -99,7 +100,9 @@ public class LookupTables extends AbstractTables
 			LookupTables.init();
 		}
 
-		public static final @NonNull TemplateParameter $$0 = LIBRARY.createTemplateParameter(0, "$$0");
+		public static final @NonNull NormalizedTemplateParameter $$0 = LIBRARY.createNormalizedTemplateParameter(0, "$$0");
+
+		private static final @NonNull TemplateParameter _0_LookupEnvironment_addElements_NE = LIBRARY.createTemplateParameter("_0_LookupEnvironment_addElements_NE");
 
 		static {
 			Init.initEnd();
@@ -182,7 +185,7 @@ public class LookupTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _Collection__NE__ = new ParameterTypes(MODEL.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters.$$0));
+		public static final @NonNull ParameterTypes _Collection__NE__ = new ParameterTypes(MODEL.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._0_LookupEnvironment_addElements_NE));
 		public static final @NonNull ParameterTypes _NamedElement = new ParameterTypes(PivotTables.Types._NamedElement);
 
 		static {
@@ -211,7 +214,7 @@ public class LookupTables extends AbstractTables
 		public static final @NonNull Operation _LookupEnvironment__addElement = LIBRARY.createOperation(Types._LookupEnvironment, "addElement", Parameters._NamedElement, Types._LookupEnvironment,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation(Types._LookupEnvironment, "addElements", Parameters._Collection__NE__, Types._LookupEnvironment,
-			1 | IsRequired, new TemplateParameters(TypeParameters.$$0), null);
+			1 | IsRequired, new TemplateParameters(TypeParameters._0_LookupEnvironment_addElements_NE), null);
 		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation(Types._LookupEnvironment, "getExecutor", ParameterTypes.EMPTY_LIST, Types._Executor,
 			2, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation(Types._LookupEnvironment, "hasFinalResult", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,

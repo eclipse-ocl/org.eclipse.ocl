@@ -1312,19 +1312,33 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static class " + AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
-		if (names.size() > 0) {
+		if (normalizedTemplateParameters.size() > 0) {
 			s.append("\n");
 			for (@NonNull NormalizedTemplateParameter asNormalizedTemplateParameter : normalizedTemplateParameters) {
 				s.append("		public static final ");
-				s.appendClassReference(true, TemplateParameter.class);
+				s.appendClassReference(true, NormalizedTemplateParameter.class);
 				s.append(" ");
 				s.append(asNormalizedTemplateParameter.getName());
 				s.append(" = LIBRARY.create");
-				s.appendClassReference(null, TemplateParameter.class);
+				s.appendClassReference(null, NormalizedTemplateParameter.class);
 				s.append("(");
 				s.append(Integer.toString(asNormalizedTemplateParameter.getIndex()));
 				s.append(", ");
 				s.appendString(PivotUtil.getName(asNormalizedTemplateParameter));
+				s.append(");\n");
+			}
+		}
+		if (names.size() > 0) {
+			s.append("\n");
+			for (@NonNull String name : names) {
+				s.append("		private static final ");
+				s.appendClassReference(true, TemplateParameter.class);
+				s.append(" ");
+				s.append(name);
+				s.append(" = LIBRARY.create");
+				s.appendClassReference(null, TemplateParameter.class);
+				s.append("(");
+				s.appendString(name);
 				s.append(");\n");
 			}
 		}
@@ -1336,10 +1350,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		Orphanage orphanage = environmentFactory.getOrphanage();
 		for (@NonNull TemplateParameter asTemplateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
 			Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter.getTemplateParameterId().getIndex());
-			String name = getTemplateParameterName(asTemplateParameter);
-			if (!name2templateParameter.containsKey(name)) {
-				name2templateParameter.put(name, asTemplateParameter);
+			String baseName = getTemplateParameterNameCandidate(asTemplateParameter);
+			String name = baseName;
+			int disambiguator = 0;
+			while (name2templateParameter.containsKey(name)) {
+				name = baseName + "_" + disambiguator++;
 			}
+			name2templateParameter.put(name, asTemplateParameter);
+			templateParameter2name.put(asTemplateParameter, name);
 		}
 	}
 
