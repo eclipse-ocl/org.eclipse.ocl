@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -634,6 +635,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
+		if ((oldCompleteClass != null) && (oldCompleteClass != completeClass)) {
+			System.out.println("didAddClass " + NameUtil.debugSimpleName(partialClass) + " " + partialClass);
+		}
 		assert (oldCompleteClass == null) || (oldCompleteClass == completeClass);
 	}
 
@@ -1027,7 +1031,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
 			return getOrphanCompletePackage();
 		}
-		else if ((asClass instanceof LambdaType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
+		else if (asClass instanceof LambdaType) {
+			return getOrphanCompletePackage();
+		}
+		else if (asClass instanceof IterableType) {
 			return getOrphanCompletePackage();
 		}
 		org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);

@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
@@ -509,6 +510,25 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		getOwnedCompleteClasses().didAddClass(partialClass);
+		if (partialClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
+			assert this instanceof PrimitiveCompletePackageImpl;
+		}
+		else if (partialClass.eContainer() instanceof Orphanage) {			// XXX
+			assert this instanceof OrphanCompletePackageImpl;
+		}
+		else if (/*(asClass instanceof IterableType) &&*/ (partialClass.getUnspecializedElement() != null)) {
+			assert this instanceof OrphanCompletePackageImpl;
+		}
+		else if ((partialClass instanceof LambdaType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
+			assert this instanceof OrphanCompletePackageImpl;
+		}
+	//	else if ((partialClass instanceof IterableType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
+	//		assert this instanceof OrphanCompletePackageImpl;
+	//	}
+		else {
+			assert !(this instanceof OrphanCompletePackageImpl);
+			assert !(this instanceof PrimitiveCompletePackageImpl);
+		}
 	}
 
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {

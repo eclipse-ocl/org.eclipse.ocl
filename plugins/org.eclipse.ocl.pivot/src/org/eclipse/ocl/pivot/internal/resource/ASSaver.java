@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.AnyTypeImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -285,6 +286,7 @@ public class ASSaver
 	 * @since 7.0
 	 */
 	public void localizeOrphans() {
+		AnyTypeImpl dummySpecializedType = new AnyTypeImpl() {};
 		Model asModel = PivotUtil.getModel(resource);
 		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetLocalOrphanPackage(asModel);
 		Orphanage sharedOrphanage = Orphanage.getOrphanage(resource.getResourceSet());
@@ -321,6 +323,9 @@ public class ASSaver
 							}
 							moreObjects.add(eTarget);
 							if (localizedETarget instanceof org.eclipse.ocl.pivot.Class) {
+								if (((org.eclipse.ocl.pivot.Class)eTarget).getUnspecializedElement() != null) {
+									((org.eclipse.ocl.pivot.Class)localizedETarget).setUnspecializedElement(dummySpecializedType);
+								}
 								localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localizedETarget);
 							}
 							else {//if (eTarget instanceof Operation) {

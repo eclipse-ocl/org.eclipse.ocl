@@ -389,6 +389,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		assert genericType.getUnspecializedElement() == null;
+		assert genericType.getOwnedSignature() != null;
+		assert genericType.getOwnedSignature().getOwnedParameters().size() == 1;
+		assert genericType.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
+		assert PivotUtil.getUnspecializedTemplateableElement(genericType) == genericType;
 		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower, upper);
 		assert collectionTypeManager != null;
 		return collectionTypeManager.getCollectionType(typeArguments);

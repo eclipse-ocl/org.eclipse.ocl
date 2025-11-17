@@ -465,6 +465,10 @@ public class PivotUtil implements PivotConstants
 	public static @NonNull CollectionType createCollectionType(@NonNull CollectionType genericCollectionType, @NonNull Type elementType,
 			boolean isNullFree, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
 		//
+		assert genericCollectionType.getUnspecializedElement() == null;
+		assert genericCollectionType.getOwnedSignature() != null;
+		assert genericCollectionType.getOwnedSignature().getOwnedParameters().size() == 1;
+		assert genericCollectionType.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
 		assert getUnspecializedTemplateableElement(genericCollectionType) == genericCollectionType;
 		List<TemplateParameter> templateParameters = genericCollectionType.getOwnedSignature().getOwnedParameters();
 		TemplateParameter elementParameter = templateParameters.get(0);

@@ -443,4 +443,10 @@ public class TemplateParameterImpl
 		}
 		return this;
 	}
+
+	@Override
+	public void setName(String newName) {
+		assert (this instanceof NormalizedTemplateParameter) == newName.startsWith("$$"); // TODO Auto-generated method stub
+		super.setName(newName);
+	}
 } //TemplateParameterImpl

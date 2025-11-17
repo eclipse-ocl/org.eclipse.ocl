@@ -17,14 +17,17 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -92,6 +95,11 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	}
 
 	@Override
+	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		getCompletePackage(partialClass).didAddClass(partialClass);
+	}
+
+	@Override
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
 		getCompletePackage().didAddNestedPackage(nestedPackage);
 	}
@@ -153,23 +161,50 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	}
 
 	@Override
+	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		AbstractFlatClass completeFlatClass = name2flatClass.remove(partialClass.getName());
+		//		System.out.println("PartialPackage.didRemoveClass " + partialClass);
+		getCompletePackage(partialClass).didRemoveClass(partialClass);
+//XXX		if (completeFlatClass != null) {
+//XXX			completeFlatClass.uninstall();
+//XXX		}
+	}
+
+	@Override
 	public void didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package nestedPackage) {
 		getCompletePackage().didRemoveNestedPackage(nestedPackage);
 	}
 
-	@Override
-	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		getCompletePackage().didAddClass(partialClass);
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull CompleteModel getCompleteModel() {
+		return getCompletePackage().getCompleteModel();
 	}
 
-	@Override
-	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		AbstractFlatClass completeFlatClass = name2flatClass.remove(partialClass.getName());
-		//		System.out.println("PartialPackage.didRemoveClass " + partialClass);
-		getCompletePackage().didRemoveClass(partialClass);
-//XXX		if (completeFlatClass != null) {
-//XXX			completeFlatClass.uninstall();
-//XXX		}
+	@SuppressWarnings("null")
+	public @NonNull CompletePackageImpl getCompletePackage() {
+		return (CompletePackageImpl) owner;
+	}
+
+	private @NonNull CompletePackageImpl getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		CompletePackageImpl owner2 = (CompletePackageImpl)owner;
+		CompleteModel completeModel = owner2.getCompleteModel();
+		if (partialClass instanceof PrimitiveType) {
+			return (CompletePackageImpl)completeModel.getPrimitiveCompletePackage();
+		}
+		else if (partialClass.eContainer() instanceof Orphanage) {
+			return (CompletePackageImpl)completeModel.getOrphanCompletePackage();
+		}
+		else if (partialClass.getUnspecializedElement() != null) {
+			return (CompletePackageImpl)completeModel.getOrphanCompletePackage();
+		}
+		else if (partialClass instanceof LambdaType) {
+			return (CompletePackageImpl)completeModel.getOrphanCompletePackage();
+		}
+		else {
+			return owner2;
+		}
 	}
 
 	/**
@@ -185,18 +220,6 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 			name2flatClass.put(name, completeFlatClass);
 		}
 		return completeFlatClass;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull CompleteModel getCompleteModel() {
-		return getCompletePackage().getCompleteModel();
-	}
-
-	@SuppressWarnings("null")
-	public @NonNull CompletePackageImpl getCompletePackage() {
-		return (CompletePackageImpl) owner;
 	}
 
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getNestedPartialPackages() {
