@@ -690,15 +690,15 @@ implements CollectionType {
 
 	@Override
 	public void setUnspecializedElement(TemplateableElement newUnspecializedElement) {
-		if ("Collection".equals(name)) {
+	//	if ("Collection".equals(name)) {
 //			System.out.println("setUnspecializedElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newUnspecializedElement) + " " + newUnspecializedElement);
-			assert newUnspecializedElement.getUnspecializedElement() == null;
-			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature() != null);
-			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().size() == 1);
-			assert (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER);
-			assert PivotUtil.getUnspecializedTemplateableElement(newUnspecializedElement) == newUnspecializedElement;
-			getClass();
-		}
+			assert (newUnspecializedElement == null) || (newUnspecializedElement.getUnspecializedElement() == null);
+			assert (newUnspecializedElement == null) || (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature() != null);
+			assert (newUnspecializedElement == null) || (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().size() == 1);
+			assert (newUnspecializedElement == null) || (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER);
+			assert (newUnspecializedElement == null) || (PivotUtil.getUnspecializedTemplateableElement(newUnspecializedElement) == newUnspecializedElement);
+	//		getClass();
+	//	}
 		super.setUnspecializedElement(newUnspecializedElement);
 	}
 } //CollectionTypeImpl
