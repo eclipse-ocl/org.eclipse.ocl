@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
@@ -516,18 +517,18 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		else if (partialClass.eContainer() instanceof Orphanage) {			// XXX
 			assert this instanceof OrphanCompletePackageImpl;
 		}
-		else if (/*(asClass instanceof IterableType) &&*/ (partialClass.getUnspecializedElement() != null)) {
+		else if (partialClass.getUnspecializedElement() != null) {
 			assert this instanceof OrphanCompletePackageImpl;
 		}
-		else if ((partialClass instanceof LambdaType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
+		else if (partialClass instanceof LambdaType) {
 			assert this instanceof OrphanCompletePackageImpl;
 		}
 		else if (partialClass instanceof TupleType) {
 			assert this instanceof OrphanCompletePackageImpl;
 		}
-	//	else if ((partialClass instanceof IterableType) /*&& (((LambdaType)asClass).getContextType() != null)*/) {
+		else if (partialClass instanceof WildcardType) {
 	//		assert this instanceof OrphanCompletePackageImpl;
-	//	}
+		}
 		else {
 			assert !(this instanceof OrphanCompletePackageImpl);
 			assert !(this instanceof PrimitiveCompletePackageImpl);
