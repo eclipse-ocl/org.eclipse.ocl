@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -606,15 +605,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
 			return getOrphanCompletePackage();
 		}
-		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
+		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {		// Iterable and other specializations
 			return getOrphanCompletePackage();
 		}
 		else if (asClass instanceof LambdaType) {
 			return getOrphanCompletePackage();
 		}
-		else if (asClass instanceof IterableType) {
-			return getOrphanCompletePackage();
-		}
+	//	else if (asClass instanceof IterableType) {
+	//		return getOrphanCompletePackage();
+	//	}
 		else if (asClass instanceof AnyType) {
 			getClass();
 		}

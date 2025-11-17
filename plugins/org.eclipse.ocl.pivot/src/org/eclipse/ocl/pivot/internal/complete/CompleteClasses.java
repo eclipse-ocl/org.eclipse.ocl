@@ -140,16 +140,20 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			return;				// XXX ignore nameless classes
 		}
 		CompleteModel completeModel = getCompleteModel();
-		CompletePackage completePackage2 = completeModel.basicGetSharedCompletePackage(partialClass);
+		CompletePackage sharedCompletePackage = completeModel.basicGetSharedCompletePackage(partialClass);
+		if (sharedCompletePackage != null) {
+			getClass();		// XXX
+		}
 		//
 		//	If a OCLstdlib / Complete OCL has explicitly declared a PrimitveType.
 		//
 		if (partialClass instanceof PrimitiveType) {											// Primary OCLstdlib declaration
-			CompletePackage completePackage = completeModel.getPrimitiveCompletePackage();
-			CompleteClass completeClass = completePackage.getCompleteClass(partialClass);
+			assert sharedCompletePackage == completeModel.getPrimitiveCompletePackage();
+			CompleteClass completeClass = sharedCompletePackage.getCompleteClass(partialClass);
 			assert completeClass.getPartialClasses().contains(partialClass);			// XXX redundant
 			return;
 		}
+		assert sharedCompletePackage == null;			// XXX investigating
 		//
 		//	Else if a Complete OCL has implicitly declared a PrimitiveType by overlaying a known PrimitiveType.
 		//
