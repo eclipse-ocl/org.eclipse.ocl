@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -43,6 +45,7 @@ import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
@@ -526,8 +529,17 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		else if (partialClass instanceof TupleType) {
 			assert this instanceof OrphanCompletePackageImpl;
 		}
+		else if (partialClass instanceof AnyType) {
+			assert this instanceof PrimitiveCompletePackageImpl;
+		}
+		else if (partialClass instanceof InvalidType) {
+			assert this instanceof PrimitiveCompletePackageImpl;
+		}
+		else if (partialClass instanceof VoidType) {
+			assert this instanceof PrimitiveCompletePackageImpl;
+		}
 		else if (partialClass instanceof WildcardType) {
-	//		assert this instanceof OrphanCompletePackageImpl;
+			assert this instanceof PrimitiveCompletePackageImpl;
 		}
 		else {
 			assert !(this instanceof OrphanCompletePackageImpl);

@@ -18,17 +18,14 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.flat.AbstractFlatClass;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -189,22 +186,12 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	}
 
 	private @NonNull CompletePackageImpl getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		CompletePackageImpl owner2 = (CompletePackageImpl)owner;
-		CompleteModel completeModel = owner2.getCompleteModel();
-		if (partialClass instanceof PrimitiveType) {
-			return (CompletePackageImpl)completeModel.getPrimitiveCompletePackage();
-		}
-		else if (partialClass.eContainer() instanceof Orphanage) {
-			return (CompletePackageImpl)completeModel.getOrphanCompletePackage();
-		}
-		else if (partialClass.getUnspecializedElement() != null) {
-			return (CompletePackageImpl)completeModel.getOrphanCompletePackage();
-		}
-		else if (partialClass instanceof LambdaType) {
-			return (CompletePackageImpl)completeModel.getOrphanCompletePackage();
+		CompletePackage sharedCompletePackage = getCompleteModel().basicGetSharedCompletePackage(partialClass);
+		if (sharedCompletePackage != null) {
+			return (CompletePackageImpl)sharedCompletePackage;
 		}
 		else {
-			return owner2;
+			return (CompletePackageImpl)owner;
 		}
 	}
 

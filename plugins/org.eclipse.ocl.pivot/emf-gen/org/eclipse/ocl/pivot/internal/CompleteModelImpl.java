@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -62,6 +63,8 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -598,7 +601,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @Nullable CompletePackage basicGetSharedCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @Nullable CompletePackage basicGetSharedCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) { // cf CompletePackageImpl.didAddClass
 		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
 			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
 		}
@@ -615,7 +618,16 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	//		return getOrphanCompletePackage();
 	//	}
 		else if (asClass instanceof AnyType) {
-			getClass();
+			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
+		}
+		else if (asClass instanceof InvalidType) {
+			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
+		}
+		else if (asClass instanceof VoidType) {
+			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
+		}
+		else if (asClass instanceof WildcardType) {
+			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
 		}
 		return null;
 	}
