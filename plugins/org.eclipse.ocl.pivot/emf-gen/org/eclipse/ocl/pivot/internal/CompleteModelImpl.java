@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -596,38 +597,24 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			packageURI = substring;
 		}
 		return packageURI2completePackage.get(packageURI);
-		/*String completePackageName = getCompleteURI(packageURI);
-		return completePackageId2completePackage.get(completePackageName); */
 	}
 
 	@Override
 	public @Nullable CompletePackage basicGetSharedCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) { // cf CompletePackageImpl.didAddClass
-		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
-			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
-		}
-		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
+		if (asClass.eContainer() instanceof Orphanage) {			// XXX
 			return getOrphanCompletePackage();
 		}
-		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {		// Iterable and other specializations
+		else if (asClass.getUnspecializedElement() != null) {		// Iterable and other specializations
 			return getOrphanCompletePackage();
 		}
-		else if (asClass instanceof LambdaType) {
+		else if ((asClass instanceof LambdaType) || (asClass instanceof TupleType)) {
 			return getOrphanCompletePackage();
 		}
-	//	else if (asClass instanceof IterableType) {
-	//		return getOrphanCompletePackage();
-	//	}
-		else if (asClass instanceof AnyType) {
+		else if ((asClass instanceof AnyType) || (asClass instanceof InvalidType) || (asClass instanceof PrimitiveType) || (asClass instanceof VoidType) || (asClass instanceof WildcardType)) {
 			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
 		}
-		else if (asClass instanceof InvalidType) {
-			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
-		}
-		else if (asClass instanceof VoidType) {
-			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
-		}
-		else if (asClass instanceof WildcardType) {
-			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
+		else if (asClass instanceof IterableType) {
+			return getPrimitiveCompletePackage();
 		}
 		return null;
 	}
@@ -671,9 +658,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClass completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
-		if ((oldCompleteClass != null) && (oldCompleteClass != completeClass)) {
-			System.out.println("didAddClass " + NameUtil.debugSimpleName(partialClass) + " " + partialClass);
-		}
+	//	if ((oldCompleteClass != null) && (oldCompleteClass != completeClass)) {
+	//		System.out.println("didAddClass " + NameUtil.debugSimpleName(partialClass) + " " + partialClass);
+	//	}
 		assert (oldCompleteClass == null) || (oldCompleteClass == completeClass);
 	}
 
@@ -695,6 +682,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	public void didAddPackage(@NonNull CompletePackage completePackage, org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		CompletePackage old = package2completePackage.put(partialPackage, completePackage);
+	//	System.out.println("didAddPackage1 " + NameUtil.debugSimpleName(partialPackage) + " " + partialPackage);	// XXX
 		assert (old == null) || (old == completePackage);
 	}
 
@@ -712,6 +700,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	//	CompletePackage completePackage = ownedCompletePackages.didAddPackage(asPackage);
 		CompletePackage old1 = package2completePackage.put(asPackage, completePackage);
 		assert (old1 == null) || (old1 == completePackage);
+	//	System.out.println("didAddPackage2 " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
+		assert !"oclstdlib".equals(asPackage.getName());
 		String packageURI = asPackage.getURI();
 		if (packageURI != null) {
 			completePackage.didAddPackageURI(packageURI);
@@ -847,6 +837,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
 		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
+		//	System.out.println("getASmetamodel ");	// XXX
 			try {
 				asMetamodelLoadInProgress = true;
 				if ((asMetamodel == null) && autoLoadASmetamodel && !environmentFactory.isDisposing() && !standardLibrary.isLibraryLoadInProgress()) {
@@ -1035,9 +1026,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public void getCompleteClasses(@NonNull ASResource asResource) {		// XXX bad name for side-effect method
 		// XXX check called just once
 		// XXX pass completePackage
+	//	System.out.println("getCompleteClasses " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());	// XXX
 		for (EObject eObject : asResource.getContents()) {
 			if (eObject instanceof Model) {
 				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages((Model)eObject)) {
+				//	System.out.println("\t" + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
 					getCompleteClasses(asPackage);
 				}
 			}
@@ -1087,6 +1080,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
 			getASmetamodel();
 		}
+	//	System.out.println("getCompletePackage " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
 		CompletePackage aT = package2completePackage.get(asPackage);
 		return ClassUtil.requireNonNull(aT);
 	}
@@ -1111,6 +1105,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * @since 7.0
 	 */
+	@Override
 	public @NonNull CompletePackage getCompletePackage3(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 //		System.out.println("getCompletePackage3 " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
 		assert !asPackage.eIsProxy(); // && (asPackage.eResource() != null); -- happens before inverse added
@@ -1162,6 +1157,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						completePackage = createCompletePackage(completePackageId, asPackage.getNsPrefix(), packageURI);
 					}
 					package2completePackage.put(asPackage, completePackage);
+				//	System.out.println("getCompletePackage3 " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
+					assert !"oclstdlib".equals(asPackage.getName());
 					//		completePackageId2completePackage.put(completePackageName, completePackage);
 					parentCompletePackages.add(completePackage);		//didAddCompletePackage
 				//	didAddPackage(asPackage);
@@ -1525,6 +1522,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull Property getPrimaryProperty(@NonNull Property pivotProperty) {
+	//	System.out.println("getPrimaryProperty " + NameUtil.debugSimpleName(pivotProperty) + " " + pivotProperty);	// XXX
+		if ("oclBadProperty".equals(pivotProperty.getName())) {
+			getClass();		// XXX
+		}
 		if (pivotProperty.eContainer() instanceof TupleType) {		// FIXME Find a better way
 			return pivotProperty;
 		}

@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -514,31 +515,15 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		getOwnedCompleteClasses().didAddClass(partialClass);
-		if (partialClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
-			assert this instanceof PrimitiveCompletePackageImpl;
-		}
-		else if (partialClass.eContainer() instanceof Orphanage) {			// XXX
+		if ((partialClass.eContainer() instanceof Orphanage) || (partialClass.getUnspecializedElement() != null)
+				|| (partialClass instanceof LambdaType) || (partialClass instanceof TupleType)) {
 			assert this instanceof OrphanCompletePackageImpl;
 		}
-		else if (partialClass.getUnspecializedElement() != null) {
-			assert this instanceof OrphanCompletePackageImpl;
-		}
-		else if (partialClass instanceof LambdaType) {
-			assert this instanceof OrphanCompletePackageImpl;
-		}
-		else if (partialClass instanceof TupleType) {
-			assert this instanceof OrphanCompletePackageImpl;
-		}
-		else if (partialClass instanceof AnyType) {
+		else if ((partialClass instanceof AnyType) || (partialClass instanceof InvalidType)
+				|| (partialClass instanceof PrimitiveType) || (partialClass instanceof VoidType) || (partialClass instanceof WildcardType)) {
 			assert this instanceof PrimitiveCompletePackageImpl;
 		}
-		else if (partialClass instanceof InvalidType) {
-			assert this instanceof PrimitiveCompletePackageImpl;
-		}
-		else if (partialClass instanceof VoidType) {
-			assert this instanceof PrimitiveCompletePackageImpl;
-		}
-		else if (partialClass instanceof WildcardType) {
+		else if (partialClass instanceof IterableType) {
 			assert this instanceof PrimitiveCompletePackageImpl;
 		}
 		else {

@@ -224,6 +224,10 @@ public interface CompleteModel extends NamedElement
 	 */
 	@NonNull CompletePackage getCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @NonNull String uri);
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompletePackage getCompletePackage3(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
 	 * @since 7.0
