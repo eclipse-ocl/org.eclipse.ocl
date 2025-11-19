@@ -265,6 +265,18 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static @Nullable Operation basicGetContainingOperation(@Nullable EObject element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Operation) {
+				return (Operation)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static org.eclipse.ocl.pivot.@Nullable Package basicGetContainingPackage(@Nullable EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
@@ -1573,12 +1585,7 @@ public class PivotUtil implements PivotConstants
 	}
 
 	public static @Nullable Operation getContainingOperation(@Nullable EObject element) {
-		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof Operation) {
-				return (Operation)eObject;
-			}
-		}
-		return null;
+		return ClassUtil.requireNonNull(basicGetContainingOperation(element));
 	}
 
 	public static org.eclipse.ocl.pivot.@NonNull Package getContainingPackage(@Nullable EObject element) {

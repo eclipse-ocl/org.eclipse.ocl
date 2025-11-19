@@ -312,8 +312,8 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) { // XXX add EnvironmentFactory
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
+		this.isLoading = true;
 	//	assert PivotUtil.isASURI(uri);				// Disabled since some standalone tests use *.xml
-	//	PivotUtil.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
 	}
 
 	/**
@@ -645,6 +645,12 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		this.isASonly = isASonly;
 	}
 
+/*	@Override
+	protected Notification setLoaded(boolean isLoaded) {
+		PivotUtil.debugPrintln("setLoaded(" + isLoaded + ") " + NameUtil.debugSimpleName(this) + " : " + uri);
+		return super.setLoaded(isLoaded);
+	} */
+
 	/**
 	 * @since 1.5
 	 */
@@ -677,6 +683,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	public boolean setUpdating(boolean isUpdating) {
+	//	PivotUtil.debugPrintln("setUpdating(" + isUpdating + ") " + NameUtil.debugSimpleName(this) + " : " + uri);
 		boolean wasUpdating = this.isUpdating;
 		this.isUpdating = isUpdating;
 		return wasUpdating;

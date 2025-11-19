@@ -17,7 +17,8 @@ package org.eclipse.ocl.pivot;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * The PrimitiveCompletePackage comprises each Primitive CompleteClass.
+ * The PrimitiveCompletePackage comprises each CompleteClass.for which a namespace is meaningless.
+ * That is not only PrimitiveTypes but AnyType, InvalidType, VoidType, WildcardType and unpecialized CollectionType and MapType.
  * It is a root CompletePackage and so has no distinctive parent.
  * All explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.
  * Classes that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage.

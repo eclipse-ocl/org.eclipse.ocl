@@ -378,27 +378,16 @@ public class TemplateParameterImpl
 		return standardLibrary.getFlatClass(lowerBound);
 	}
 
-	private /*@LazyNonNull*/ TemplateParameterId templateParameterId = null;
-
-	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId() {
-		assert (this instanceof NormalizedTemplateParameter) || eContainer() != null;
-		TemplateParameterId templateParameterId2 = templateParameterId;
-		if (templateParameterId2 == null) {
-			synchronized (this) {
-				templateParameterId2 = templateParameterId;
-				if (templateParameterId2 == null) {
-					templateParameterId = templateParameterId2 = computeTemplateParameterId();
-				}
-			}
-		}
-		return templateParameterId2;
-	}
+	/**
+	 * @since 7.0
+	 */
+	protected /*@LazyNonNull*/ TemplateParameterId templateParameterId = null;
 
 	/**
 	 * @since 7.0
 	 */
 	protected @NonNull TemplateParameterId computeTemplateParameterId() {
+		assert (eContainer() != null);
 		TemplateSignature templateSignature1 = getOwningSignature();
 		assert templateSignature1 != null;
 		TemplateableElement templateableElement = templateSignature1.getOwningElement();
@@ -417,6 +406,21 @@ public class TemplateParameterImpl
 		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(this);
 		int index = templateParameterization.indexOf(this);
 		return generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this));
+	}
+
+	@Override
+	public @NonNull TemplateParameterId getTemplateParameterId() {
+		assert !(this instanceof NormalizedTemplateParameter);
+		TemplateParameterId templateParameterId2 = templateParameterId;
+		if (templateParameterId2 == null) {
+			synchronized (this) {
+				templateParameterId2 = templateParameterId;
+				if (templateParameterId2 == null) {
+					templateParameterId = templateParameterId2 = computeTemplateParameterId();
+				}
+			}
+		}
+		return templateParameterId2;
 	}
 
 	@Override

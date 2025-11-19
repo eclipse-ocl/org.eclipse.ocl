@@ -27,7 +27,7 @@ public class EcoreASResourceImpl extends ASResourceImpl
 		super(uri, asResourceFactory);
 		assert !uri.equals(OCLmetamodel.PIVOT_AS_URI) : "Built-in representation should be used for " + OCLmetamodel.PIVOT_AS_URI;
 		assert !uri.equals(OCLstdlib.STDLIB_AS_URI) : "Built-in representation should be used for " + OCLstdlib.STDLIB_AS_URI;
-	//	setSaveable(false);		-- FIXME change to require explicit srtSaveable(true) policy
+	//	setSaveable(false);		-- FIXME change to require explicit setSaveable(true) policy
 	}
 
 	@Override

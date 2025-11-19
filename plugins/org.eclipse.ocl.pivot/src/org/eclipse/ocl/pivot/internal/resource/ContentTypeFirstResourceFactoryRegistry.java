@@ -31,7 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class ContentTypeFirstResourceFactoryRegistry extends ResourceFactoryRegistryImpl
 {
-	public static Resource createResource(@NonNull ResourceSet asResourceSet, @NonNull URI uri, @NonNull String contentType)
+	public static @NonNull Resource createResource(@NonNull ResourceSet asResourceSet, @NonNull URI uri, @NonNull String contentType)
 	{
 		Resource.Factory resourceFactory = null;
 		Map<String, Object> contentTypeToFactoryMap = asResourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap();
@@ -46,7 +46,9 @@ public class ContentTypeFirstResourceFactoryRegistry extends ResourceFactoryRegi
 			return resource;
 		}
 		else {
-			return asResourceSet.createResource(uri, contentType);
+			Resource resource = asResourceSet.createResource(uri, contentType);
+			assert resource != null;
+			return resource;
 		}
 	}
 

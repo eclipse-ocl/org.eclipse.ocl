@@ -786,7 +786,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		throw new UnsupportedOperationException("CompleteClass.esObject not supported, use partial classes'esObject");
 	}
 
-//	@Override
+	//	@Override
 	public void uninstall() {
 		dispose();
 	}

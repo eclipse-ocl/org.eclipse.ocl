@@ -521,7 +521,7 @@ public class Orphanage extends PackageImpl
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
 		orphanModel.getOwnedPackages().add(orphanage);
 		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
-		orphanageResource.getContents().add(orphanModel);
+		orphanageResource.getContents().add(orphanModel);		// and invoke setLoaded()
 		resourceSet.getResources().add(orphanageResource);
 		return orphanage;
 	}

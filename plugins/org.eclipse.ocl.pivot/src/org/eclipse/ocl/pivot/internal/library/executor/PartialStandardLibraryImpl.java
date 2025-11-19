@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -516,7 +517,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 * Create an operation. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
-	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
 		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
@@ -531,24 +532,37 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
 			for (int i = 0; i < typeParameters.parametersSize(); i++) {
 			//	Type type = typeParameters.get(i);		// XXX
-				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
-				asTemplateParameter.setName("_" + n++);
+				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)typeParameters.get(i); //(TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
+		//		asTemplateParameter.setName("_" + n++);
 			//	asTemplateParameter.setType(type);
 			//	asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
 				asTemplateParameters.add(asTemplateParameter);
 			}
 			asOperation.setOwnedSignature(templateSignature);
 		}
-		for (int i = 0; i < parameterTypes.size(); i++) {
-			@NonNull Type parameterType = parameterTypes.get(i);
-			ParameterImpl asParameter = (ParameterImpl)PivotFactory.eINSTANCE.createParameter();
-			asParameter.setName("_" + n++);
-			asParameter.setType(parameterType);
-			asOperation.getOwnedParameters().add(asParameter);
+		if (parameterTypes != null) {
+			for (int i = 0; i < parameterTypes.size(); i++) {
+				@NonNull Type parameterType = parameterTypes.get(i);
+				ParameterImpl asParameter = (ParameterImpl)PivotFactory.eINSTANCE.createParameter();
+				asParameter.setName("_" + n++);
+				asParameter.setType(parameterType);
+				asOperation.getOwnedParameters().add(asParameter);
+			}
 		}
 		setOperationFlagsAndIndex(asOperation, operationFlagsAndIndex);
 		asClass.getOwnedOperations().add(asOperation);
 		return asOperation;
+	}
+
+	public void setParameters(@NonNull Operation asOperation, @NonNull Type @NonNull ... parameterTypes) {
+		List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParametersList(asOperation);
+		int n = asOperation.getOwnedSignature().getOwnedParameters().size();
+		for (@NonNull Type parameterType : parameterTypes) {
+			Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
+			asParameter.setName("_" + n++);
+			asParameter.setType(parameterType);
+			asParameters.add(asParameter);
+		}
 	}
 
 	/**
@@ -625,7 +639,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	public @NonNull Resource createResource(@NonNull Model model) {
 		URI uri = URI.createURI(model.getExternalURI() + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 		Resource resource = BuiltInASResourceFactory.INSTANCE.createResource(uri);
-		resource.getContents().add(model);
+		resource.getContents().add(model);						// and invoke setLoaded()
 		return resource;
 	}
 

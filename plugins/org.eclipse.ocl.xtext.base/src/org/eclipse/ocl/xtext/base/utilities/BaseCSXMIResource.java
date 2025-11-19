@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.ContentTypeFirstResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -127,7 +128,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 						value = asConstraint;
 					}
 					else {
-						Operation asOperation = PivotUtil.getContainingOperation(asVariable);
+						Operation asOperation = PivotUtil.basicGetContainingOperation(asVariable);
 						if (asOperation != null) {
 							value = asOperation;
 						}
@@ -194,11 +195,9 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 		if (asResource != null) {		// This happens for a *.ecore load for an OCLinEcore edit - see Bug 560196
 			return asResource;
 		}
-		@SuppressWarnings("null")@NonNull Resource asResource2 = ContentTypeFirstResourceFactoryRegistry.createResource(asResourceSet, asURI, getASContentType());
-		if (asResource2 instanceof ASResource) {
-			((ASResource)asResource2).setSaveable(false);
-		}
-		return (ASResource) asResource2;
+		ASResourceImpl asResource2 = (ASResourceImpl)ContentTypeFirstResourceFactoryRegistry.createResource(asResourceSet, asURI, getASContentType());
+		asResource2.setSaveable(false);
+		return asResource2;
 	}
 
 	public abstract @NonNull CS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull ASResource asResource);

@@ -260,7 +260,7 @@ public class CGLibrary extends ASResourceImpl
 	private CGLibrary(@NonNull String asURI, @NonNull Model libraryModel) {
 		super(ClassUtil.requireNonNull(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 		assert PivotUtil.isASURI(uri);
-		getContents().add(libraryModel);
+		getContents().add(libraryModel);				// and invoke setLoaded()
 	}
 
 	private static class AbstractLibraryContents extends AbstractContents

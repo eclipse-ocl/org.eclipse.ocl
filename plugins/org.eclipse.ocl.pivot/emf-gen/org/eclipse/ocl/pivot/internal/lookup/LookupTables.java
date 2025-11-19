@@ -102,7 +102,7 @@ public class LookupTables extends AbstractTables
 
 		public static final @NonNull NormalizedTemplateParameter $$0 = LIBRARY.createNormalizedTemplateParameter(0, "$$0");
 
-		private static final @NonNull TemplateParameter _0_LookupEnvironment_addElements_NE = LIBRARY.createTemplateParameter("_0_LookupEnvironment_addElements_NE");
+		private static final @NonNull TemplateParameter _0_LookupEnvironment_addElements_NE = LIBRARY.createTemplateParameter("NE");
 
 		static {
 			Init.initEnd();
@@ -185,7 +185,6 @@ public class LookupTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _Collection__NE__ = new ParameterTypes(MODEL.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._0_LookupEnvironment_addElements_NE));
 		public static final @NonNull ParameterTypes _NamedElement = new ParameterTypes(PivotTables.Types._NamedElement);
 
 		static {
@@ -213,12 +212,20 @@ public class LookupTables extends AbstractTables
 
 		public static final @NonNull Operation _LookupEnvironment__addElement = LIBRARY.createOperation(Types._LookupEnvironment, "addElement", Parameters._NamedElement, Types._LookupEnvironment,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation(Types._LookupEnvironment, "addElements", Parameters._Collection__NE__, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation(Types._LookupEnvironment, "addElements", null, Types._LookupEnvironment,
 			1 | IsRequired, new TemplateParameters(TypeParameters._0_LookupEnvironment_addElements_NE), null);
 		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation(Types._LookupEnvironment, "getExecutor", ParameterTypes.EMPTY_LIST, Types._Executor,
 			2, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation(Types._LookupEnvironment, "hasFinalResult", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		/*
+		 * Deferred initialization for operations with a return type involving a nested specialization
+		 * or a parameter whose type references an Operation TemplateParameter.
+		 */
+		public static void postInit() {
+			LIBRARY.setParameters(_LookupEnvironment__addElements, MODEL.getCollectionType(OCLstdlibTables.Types._Collection, LIBRARY.getTemplateParameter(_LookupEnvironment__addElements, TypeParameters.$$0)));
+		}
 
 		static {
 			Init.initEnd();
@@ -492,6 +499,7 @@ public class LookupTables extends AbstractTables
 				if (--initCount == 0) {
 					initCount = -1;
 					EnumerationLiterals.init();
+					Operations.postInit();
 					LIBRARY.freeze(RESOURCE);
 				}
 			}

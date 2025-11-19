@@ -703,7 +703,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static class " + AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME);
-		List<Operation> nestedSpecializedReturns = new ArrayList<>();
+		List<@NonNull Operation> deferredSetReturnTypes = new ArrayList<>();
+		List<@NonNull Operation> deferredSetParameters = new ArrayList<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
 			Collections.sort(sortedOperations, signatureComparator);
@@ -754,11 +755,18 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					appendParameterTypesName(iteratorTypes);
 					s.append(", ");
 				}
-				appendParameterTypesName(new ParameterTypes(PivotUtil.getOwnedParameters(op)));
+				Iterable<@NonNull Parameter> asParameters = PivotUtil.getOwnedParameters(op);
+				if (usesOperationTemplateParameter(asParameters)) {
+					s.append("null");
+					deferredSetParameters.add(op);
+				}
+				else {
+					appendParameterTypesName(new ParameterTypes(asParameters));
+				}
 				s.append(", ");
 				Type resultType = op.getType();
 				if ((resultType instanceof TemplateableElement) && isNestedSpecialization((TemplateableElement)resultType)) {
-					nestedSpecializedReturns.add(op);
+					deferredSetReturnTypes.add(op);
 					standardLibrary.getOclInvalidType().accept(emitReferencedElement);
 					//	emitReferencedElementVisitor.appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
 				//	OclInemitScopedLiteralVisitor.appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
@@ -793,35 +801,47 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(");\n");
 			}
 		}
-		boolean isFirstOperation = true;
-		for (Operation op : nestedSpecializedReturns) {
-			Type resultType = op.getType();
-			if (isFirstOperation) {
+		boolean hasPostInit = deferredSetReturnTypes.size() + deferredSetParameters.size() > 0;
+		if (hasPostInit) {
+			s.append("\n");
+			s.append("		/*\n");
+			s.append("		 * Deferred initialization for operations with a return type involving a nested specialization\n");
+			s.append("		 * or a parameter whose type references an Operation TemplateParameter.\n");
+			s.append("		 */\n");
+			s.append("		public static void postInit() {");
+			for (Operation op : deferredSetReturnTypes) {
+				Type resultType = op.getType();
 				s.append("\n");
-				s.append("		/*\n");
-				s.append("		 * Deferred initialization for operations with a return type involving a nested specialization.\n");
-				s.append("		 */\n");
-				s.append("		public static void postInit() {\n");
-				isFirstOperation = false;
+				emitReferencedElement.setNamespace(op);
+				s.append("\t\t\t");
+				op.accept(emitDeclaredName);
+				s.append(".setType(");
+				resultType.accept(emitTypeExpression);
+				s.append(");\n");
+				emitReferencedElement.setNamespace(null);
 			}
-			else if (isFirstOperation) {
+			for (Operation op : deferredSetParameters) {
+			//	Type resultType = op.getType();
+			//	if (isFirstOperation) {
+			//		isFirstOperation = false;
+			//	}
 				s.append("\n");
-				isFirstOperation = false;
+				emitReferencedElement.setNamespace(op);
+				s.append("\t\t\tLIBRARY.setParameters(");
+				op.accept(emitDeclaredName);
+				for (Parameter parameter : PivotUtil.getOwnedParameters(op)) {
+					s.append(", ");
+					Type type = parameter.getType();
+					type.accept(emitTypeExpression);
+				}
+				s.append(");\n");
+				emitReferencedElement.setNamespace(null);
 			}
-			emitReferencedElement.setNamespace(op);
-			s.append("\t\t\t");
-			op.accept(emitDeclaredName);
-			s.append(".setType(");
-			resultType.accept(emitTypeExpression);
-			s.append(");\n");
-			emitReferencedElement.setNamespace(null);
-		}
-		if (!isFirstOperation) {
 			s.append("		}\n");
 		}
 		appendInitializationEnd(false);
 		s.append("	}\n");
-		return !isFirstOperation;
+		return hasPostInit;
 	}
 
 	protected void declareParameterLists() {
@@ -829,7 +849,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		Map<@NonNull String, @NonNull LambdaParameter> name2lambdaParameter = new HashMap<>();
 		Set<@NonNull ParameterTypes> allParameterTypes = new HashSet<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
-			for (Operation operation : getOperations(pClass)) {
+			for (@NonNull Operation operation : getOperations(pClass)) {
+				if ("addElements".equals(operation.getName())) {
+					getClass();			// XXX
+				}
 				declareParameterLists_ParameterTypes(name2parameterTypes, name2lambdaParameter, allParameterTypes, PivotUtil.getOwnedParameters(operation));
 				if (operation instanceof Iteration) {
 					declareParameterLists_ParameterTypes(name2parameterTypes, name2lambdaParameter, allParameterTypes, getIteratorsAndAccumulator((Iteration)operation));
@@ -897,6 +920,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	private void declareParameterLists_ParameterTypes(@NonNull Map<@NonNull String, @NonNull ParameterTypes> name2parameterTypes,
 			@NonNull Map<@NonNull String, @NonNull LambdaParameter> name2lambdaParameter,
 			@NonNull Set<@NonNull ParameterTypes> allParameterTypes, @NonNull Iterable<@NonNull Parameter> parameters) {
+		if (usesOperationTemplateParameter(parameters)) {
+			return;					// Cannot pre-declare since operation TemplateParameter is not yet owned.
+		}
 		ParameterTypes parameterTypes = new ParameterTypes(parameters);
 		allParameterTypes.add(parameterTypes);
 		if (parameterTypes.size() > 0) {
@@ -1331,6 +1357,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (names.size() > 0) {
 			s.append("\n");
 			for (@NonNull String name : names) {
+				TemplateParameter templateParameter = name2templateParameter.get(name);
+				assert templateParameter != null;
 				s.append("		private static final ");
 				s.appendClassReference(true, TemplateParameter.class);
 				s.append(" ");
@@ -1338,7 +1366,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(" = LIBRARY.create");
 				s.appendClassReference(null, TemplateParameter.class);
 				s.append("(");
-				s.appendString(name);
+				s.appendString(PivotUtil.getName(templateParameter));
 				s.append(");\n");
 			}
 		}
@@ -1679,5 +1707,33 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s1.append("\n");
 		s1.append(s.toString());
 		return s1.toString();
+	}
+
+	private boolean usesOperationTemplateParameter(@NonNull Iterable<@NonNull Parameter >parameters) {
+		for (@NonNull Parameter parameter : parameters) {
+			if (usesOperationTemplateParameter(PivotUtil.getType(parameter))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean usesOperationTemplateParameter(@NonNull Type type) {
+		if (type instanceof TemplateableElement) {
+			for (@NonNull TemplateBinding templateBinding : PivotUtil.getOwnedBindings((TemplateableElement)type)) {
+				for (@NonNull TemplateParameterSubstitution templateParameterSubstitution : PivotUtil.getOwnedSubstitutions(templateBinding)) {
+					Type actual = PivotUtil.getActual(templateParameterSubstitution);
+					if (actual instanceof TemplateParameter) {
+						if (PivotUtil.basicGetContainingOperation(actual) != null) {
+							return true;
+						}
+					}
+					if (usesOperationTemplateParameter(actual)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

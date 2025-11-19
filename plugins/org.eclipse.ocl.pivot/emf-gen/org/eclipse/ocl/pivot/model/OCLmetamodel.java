@@ -83,7 +83,7 @@ public class OCLmetamodel extends ASResourceImpl
 		assert standardLibraryPackage != null;
 		Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
 		Model model = contents.getModel();
-		resource.getContents().add(model);
+		resource.getContents().add(model);						// and invoke setLoaded()
 		resource.setSaveable(false);
 		@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package pkge = model.getOwnedPackages().get(0);
 		assert pkge.getURI().equals(nsURI);
@@ -5594,6 +5594,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(iv_OperationCallExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload");
 			installComment(iv_OppositePropertyCallExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source cannot be null.");
 			installComment(iv_OppositePropertyCallExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when the source could be null.");
+			installComment(_OrphanCompletePackage, "The OrphanCompletePackage comprises each CompleteClass.for secondary types such as specializations.");
 			installComment(_Package, "A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.\nPackage specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.\nA package is used to group elements, and provides a namespace for the grouped elements.");
 			installComment(pr_Package_URI, "Provides an identifier for the package that can be used for many purposes. A URI is the universally unique identification of the package following the IETF URI specification, RFC 2396 http://www.ietf.org/rfc/rfc2396.txt and it must comply with those syntax rules.");
 			installComment(pr_Package_ownedClasses, "References the packaged elements that are Types.");
@@ -5604,7 +5605,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_Parameter, "A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations.");
 			installComment(pr_Parameter_owningOperation, "The Operation owning this parameter.");
 			installComment(iv_ParameterVariable_HasNoInitializer, "Parameter variable has no initializer.");
-			installComment(_PrimitiveCompletePackage, "The PrimitiveCompletePackage comprises each Primitive CompleteClass.\nIt is a root CompletePackage and so has no distinctive parent.\nAll explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.\nClasses that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage.");
+			installComment(_PrimitiveCompletePackage, "The PrimitiveCompletePackage comprises each CompleteClass.for which a namespace is meaningless.\nThat is not only PrimitiveTypes but AnyType, InvalidType, VoidType, WildcardType and unpecialized CollectionType and MapType. \nIt is a root CompletePackage and so has no distinctive parent.\nAll explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.\nClasses that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage.");
 			installComment(_PrimitiveType, "A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically.");
 			installComment(_Profile, "A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain.");
 			installComment(_ProfileApplication, "A profile application is used to show which profiles have been applied to a package.");

@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.types;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.Type;
 
 /**
  * TemplateParameters provides a list of template parameters. The hashable functionality is not used.
@@ -23,14 +22,14 @@ public class TemplateParameters
 {
 	public static final @NonNull TemplateParameters EMPTY_LIST = new TemplateParameters();
 
-	private final @NonNull Type @NonNull [] templateParameters;
+	private final @NonNull TemplateParameter @NonNull [] templateParameters;
 	private final int hashCode;
 
 	public TemplateParameters(@NonNull TemplateParameter... templateParameters) {
-		this.templateParameters = new @NonNull Type[templateParameters.length];
+		this.templateParameters = new @NonNull TemplateParameter[templateParameters.length];
 		int hash = 0;
 		for (int i = 0; i < templateParameters.length; i++) {
-			Type parameter = templateParameters[i];
+			TemplateParameter parameter = templateParameters[i];
 			hash = 111 * hash + parameter.hashCode();
 			this.templateParameters[i] = parameter;
 		}
@@ -51,8 +50,8 @@ public class TemplateParameters
 			return false;
 		}
 		for (int i = 0; i < iMax; i++) {
-			@NonNull Type thisParameter = this.templateParameters[i];
-			@NonNull Type thatParameter = that.templateParameters[i];
+			@NonNull TemplateParameter thisParameter = this.templateParameters[i];
+			@NonNull TemplateParameter thatParameter = that.templateParameters[i];
 			if (!thisParameter.equals(thatParameter)) {
 				return false;
 			}
@@ -60,7 +59,7 @@ public class TemplateParameters
 		return true;
 	}
 
-	public @NonNull Type get(int i) {
+	public @NonNull TemplateParameter get(int i) {
 		return templateParameters[i];
 	}
 

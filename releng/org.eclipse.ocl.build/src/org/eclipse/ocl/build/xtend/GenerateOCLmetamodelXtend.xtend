@@ -153,7 +153,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					assert standardLibraryPackage != null;
 					Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
 					Model model = contents.getModel();
-					resource.getContents().add(model);
+					resource.getContents().add(model);						// and invoke setLoaded()
 					resource.setSaveable(false);
 					@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package pkge = model.getOwnedPackages().get(0);
 					assert pkge.getURI().equals(nsURI);

@@ -794,6 +794,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="A10J5" name="OrderedSetType" superClasses="#pawWx"/>
     <ownedClasses xmi:id="WaoLl" name="OrphanCompletePackage" superClasses="#+gDEJ">
+      <ownedComments body="The OrphanCompletePackage comprises each CompleteClass.for secondary types such as specializations."/>
       <ownedProperties xmi:id="pwEaB" isImplicit="true" isRequired="true" name="CompleteModel" opposite="#aU0xR" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="3ONqN" name="Package" superClasses="#MzHoc">
@@ -846,7 +847,7 @@
       <ownedProperties xmi:id="0bJBA" isImplicit="true" isRequired="true" name="Operation" opposite="#aQIF3" type="#SI01z"/>
     </ownedClasses>
     <ownedClasses xmi:id="XSQ4c" name="PrimitiveCompletePackage" superClasses="#+gDEJ">
-      <ownedComments body="The PrimitiveCompletePackage comprises each Primitive CompleteClass.&#xA;It is a root CompletePackage and so has no distinctive parent.&#xA;All explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.&#xA;Classes that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage."/>
+      <ownedComments body="The PrimitiveCompletePackage comprises each CompleteClass.for which a namespace is meaningless.&#xA;That is not only PrimitiveTypes but AnyType, InvalidType, VoidType, WildcardType and unpecialized CollectionType and MapType. &#xA;It is a root CompletePackage and so has no distinctive parent.&#xA;All explicit PrimitiveType classes are folded into the PrimitiveCompletePackage.&#xA;Classes that overlays of the OCLstdlib PrimitiveType classes are also folded into the PrimitiveCompletePackage."/>
       <ownedProperties xmi:id="tpHsl" isImplicit="true" isRequired="true" name="CompleteModel" opposite="#b7Oj2" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="mKorp" isAbstract="true" name="PrimitiveLiteralExp" superClasses="#fKWWp"/>

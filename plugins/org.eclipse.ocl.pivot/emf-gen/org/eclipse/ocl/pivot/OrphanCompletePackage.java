@@ -17,6 +17,10 @@ package org.eclipse.ocl.pivot;
  * A representation of the model object '<em><b>Orphan Complete Package</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * The OrphanCompletePackage comprises each CompleteClass.for secondary types such as specializations.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getOrphanCompletePackage()
  * @generated

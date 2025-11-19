@@ -1035,7 +1035,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	protected void resolveDeclarations(@NonNull ASResource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
 		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
-		PivotUtil.refreshList(asResource.getContents(), true, Collections.singletonList(ClassUtil.requireNonNull(pivotModel)));
 		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
 		for (EObject eObject : ecoreContents) {
 			EClass eClass = eObject.eClass();
@@ -1052,8 +1051,8 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 			}
 		}
-
 		PivotUtil.refreshList(pivotModel.getOwnedPackages(), true, newPackages);
+		PivotUtil.refreshList(asResource.getContents(), true, Collections.singletonList(ClassUtil.requireNonNull(pivotModel)));
 		((CompleteModelImpl)completeModel).getCompleteClasses(asResource);					// XXX ?? do we need this so soon only to be trashed later ??
 	}																						// XXX ?? getOclAnyType first to resolve stdlib in timely fashion ??
 
