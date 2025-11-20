@@ -622,7 +622,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	protected @NonNull CompletePackage createCompletePackage2(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
+	protected @NonNull CompletePackage createCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
 		assert !completePackageId2completePackage.containsKey(completePackageId);
 		CompletePackageImpl completePackage = (CompletePackageImpl)PivotFactory.eINSTANCE.createCompletePackage();
 		completePackage.init(completePackageId, prefix, uri);
@@ -1003,8 +1003,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			getASmetamodel();
 		}
 	//	System.out.println("getCompletePackage " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
-		CompletePackage aT = package2completePackage.get(asPackage);
-		return ClassUtil.requireNonNull(aT);
+	//	CompletePackage aT = package2completePackage.get(asPackage);
+	//	return ClassUtil.requireNonNull(aT);
+		return getCompletePackage3(asPackage);
 	}
 
 	/**
@@ -1055,7 +1056,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						assert Objects.equals(packageURI, completePackage.getURI());
 					}
 					else {
-						completePackage = createCompletePackage2(completePackageId, asPackage.getNsPrefix(), packageURI);
+						completePackage = createCompletePackage(completePackageId, asPackage.getNsPrefix(), packageURI);
 					}
 					package2completePackage.put(asPackage, completePackage);
 					assert !"oclstdlib".equals(asPackage.getName());
@@ -1558,11 +1559,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @NonNull CompletePackage initCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
 		CompletePackage completePackage = completePackageId2completePackage.get(completePackageId);
+		//	assert completePackage == null;			// XXX are multiple init's necessary ??
 		if (completePackage == null) {
-			completePackage = createCompletePackage2(completePackageId, prefix, uri);
+			completePackage = createCompletePackage(completePackageId, prefix, uri);
 			getOwnedCompletePackages().add(completePackage);
+			assert completePackage == completePackageId2completePackage.get(completePackageId);
 		}
-		assert completePackage == completePackageId2completePackage.get(completePackageId);
 		return completePackage;
 	}
 
