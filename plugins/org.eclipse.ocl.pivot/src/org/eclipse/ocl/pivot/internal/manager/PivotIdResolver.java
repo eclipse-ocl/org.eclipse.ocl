@@ -165,7 +165,7 @@ public class PivotIdResolver extends AbstractIdResolver
 			String nsURI = ePackage.getNsURI();
 			PackageId packageId = IdManager.getPackageId(ePackage);
 			CompletePackageId completePackageId = IdManager.getCompletePackageId(nsURI); //packageId.toString());		// XXX Ugh! fold
-			CompletePackage completePackage = completeModel.getCompletePackage(completePackageId, ePackage.getNsPrefix(), nsURI);
+			CompletePackage completePackage = completeModel.initCompletePackage(completePackageId, ePackage.getNsPrefix(), nsURI);
 			org.eclipse.ocl.pivot.Class pivotType = completePackage.getMemberType(typeName);
 			if (pivotType != null) {
 				return pivotType;
@@ -250,7 +250,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		}
 	//	org.eclipse.ocl.pivot.Package rootPackage = getStandardLibrary().basicGetCompletePackage(completePackageId);
 		else {
-			completePackage = completeModel.getCompletePackage(completePackageId, null, id.getName());
+			completePackage = completeModel.initCompletePackage(completePackageId, null, id.getName());
 			throw new UnsupportedOperationException();
 		//	Orphanage orphanage = environmentFactory.getOrphanage();
 		//	rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);

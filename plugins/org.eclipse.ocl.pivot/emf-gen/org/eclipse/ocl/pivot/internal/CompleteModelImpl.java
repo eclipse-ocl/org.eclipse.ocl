@@ -1054,23 +1054,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return ClassUtil.requireNonNull(aT);
 	}
 
-	@Override
-	public @NonNull CompletePackage getCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
-		CompletePackage completePackage = completePackageId2completePackage.get(completePackageId);
-		if (completePackage == null) {
-			completePackage = createCompletePackage(completePackageId, prefix, uri);
-	//		completePackageId2completePackage.put(completePackageName, completePackage);
-			getOwnedCompletePackages().add(completePackage);
-		}
-		assert completePackage == completePackageId2completePackage.get(completePackageId);
-	//	assert Objects.equals(prefix, completePackage.getNsPrefix());
-	//	assert Objects.equals(uri, completePackage.getURI());
-	//	completePackage.didAddPackageURI(packageURI);
-	//	CompletePackage old = packageURI2completePackage.put(uri, completePackage);			// XXX remove
-	//	assert (old == null) || (old == completePackage);
-		return completePackage;
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -1648,8 +1631,25 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		partialModels = new PartialModels(this);
 		ownedCompletePackages = new RootCompletePackages(this);
 		// Ensure that the $metamodel$ CompletePackage is ready for partials
-		getCompletePackage(PivotConstants.METAMODEL_ID, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
+		initCompletePackage(PivotConstants.METAMODEL_ID, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 		return this;
+	}
+
+	@Override
+	public @NonNull CompletePackage initCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
+		CompletePackage completePackage = completePackageId2completePackage.get(completePackageId);
+		if (completePackage == null) {
+			completePackage = createCompletePackage(completePackageId, prefix, uri);
+	//		completePackageId2completePackage.put(completePackageName, completePackage);
+			getOwnedCompletePackages().add(completePackage);
+		}
+		assert completePackage == completePackageId2completePackage.get(completePackageId);
+	//	assert Objects.equals(prefix, completePackage.getNsPrefix());
+	//	assert Objects.equals(uri, completePackage.getURI());
+	//	completePackage.didAddPackageURI(packageURI);
+	//	CompletePackage old = packageURI2completePackage.put(uri, completePackage);			// XXX remove
+	//	assert (old == null) || (old == completePackage);
+		return completePackage;
 	}
 
 	/**
@@ -1780,7 +1780,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull CompletePackageId registerCompletePackageContribution(@NonNull String metamodelName, /*@NonNull*/ EPackage ePackage) {
 		assert ePackage != null;
 		CompletePackageId completePackageId = IdManager.getCompletePackageId(metamodelName);
-		CompletePackage completePackage = getCompletePackage(completePackageId, ePackage.getNsPrefix(), metamodelName);
+		CompletePackage completePackage = initCompletePackage(completePackageId, ePackage.getNsPrefix(), metamodelName);
 		String packageURI = ePackage.getNsURI();
 		assert packageURI != null;
 		completePackage.didAddPackageURI(packageURI);										// not "did"
@@ -1825,7 +1825,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		else if (!metaNsURI.equals(asMetamodel.getURI())) {
 		//	completeModel.addPackageURI2completeURI(metaNsURI, PivotConstants.METAMODEL_NAME);
-			getCompletePackage(PivotConstants.METAMODEL_ID, asMetamodel.getNsPrefix(), metaNsURI);
+			initCompletePackage(PivotConstants.METAMODEL_ID, asMetamodel.getNsPrefix(), metaNsURI);
 			//			throw new IllegalMetamodelException(asMetamodel.getNsURI(), metaNsURI);
 		}
 	}

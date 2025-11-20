@@ -218,11 +218,6 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 //	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull CompletePackage getCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @NonNull String uri);
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	/**
 	 * @since 7.0
@@ -341,6 +336,11 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull CompleteStandardLibrary getStandardLibrary();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CompletePackage initCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @NonNull String uri);
 
 	/**
 	 * @since 7.0
