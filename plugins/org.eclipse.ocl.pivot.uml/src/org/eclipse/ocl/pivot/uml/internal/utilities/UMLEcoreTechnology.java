@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DynamicElement;
 import org.eclipse.ocl.pivot.Element;
@@ -31,12 +30,9 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology;
@@ -50,7 +46,6 @@ import org.eclipse.ocl.pivot.uml.internal.library.UMLExtensionProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLStereotypeProperty;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -140,38 +135,6 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			}
 		}
 		return name;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public RootPackageId getMetamodelId(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage eObject2) {
-		CompleteModel completeModel = environmentFactory.getCompleteModel();
-		RootPackageId metamodel = null;
-		if (ClassUtil.basicGetMetamodelAnnotation(eObject2) != null) {
-			metamodel = IdManager.METAMODEL_ID;
-		}
-		else if (eObject2 instanceof UMLPackage) {
-//			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.UML_METAMODEL_NAME);
-//			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.UML_METAMODEL_ID, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
-			CompletePackageId completePackageId = completeModel.registerCompletePackageContribution(PivotUMLConstants.UML_METAMODEL_NAME, UMLPackage.eINSTANCE);		// XXX redundant wrt UML2AS
-			metamodel = IdManager.getRootPackageId(completePackageId.getName());
-		}
-		else if (eObject2 instanceof TypesPackage) {
-//			completeModel.addPackageURI2completeURI(nsUri, PivotUMLConstants.TYPES_METAMODEL_NAME);
-//			metamodel = registerCompletePackageContribution(completeModel, PivotUMLConstants.TYPES_METAMODEL_ID, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
-			CompletePackageId completePackageId = completeModel.registerCompletePackageContribution(PivotUMLConstants.TYPES_METAMODEL_NAME, TypesPackage.eINSTANCE);		// XXX redundant wrt UML2AS
-			metamodel = IdManager.getRootPackageId(completePackageId.getName());
-		}
-		else {
-			String nsURI = eObject2.getNsURI();
-			String sharedNsURI = ((CompleteModelImpl)completeModel).getCompleteURI(nsURI);
-			if ((sharedNsURI != null) && !sharedNsURI.equals(nsURI)) {
-				metamodel = IdManager.getRootPackageId(sharedNsURI);
-			}
-		}
-		return metamodel;
 	}
 
 	@Override

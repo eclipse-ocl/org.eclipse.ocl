@@ -110,7 +110,7 @@ public class ClassUtil
 	/**
 	 * Return the DomainConstants.AS_METAMODEL_ANNOTATION_SOURCE for ePackage or null if none.
 	 */
-	@Deprecated
+	@Deprecated		// Hard to remove since QVTd relies on this to extend metamodel for qvtruntimelibrary.
 	public static @Nullable EAnnotation basicGetMetamodelAnnotation(@NonNull EPackage ePackage) {
 		EAnnotation asMetamodelAnnotation = ePackage.getEAnnotation(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
 		return asMetamodelAnnotation;
@@ -128,7 +128,7 @@ public class ClassUtil
 	}
 
 	/**
-	 * Return the non-null adapterClass if iAdfaptable has an adapterClass adapter.
+	 * Return the non-null adapterClass if iAdaptable has an adapterClass adapter.
 	 *
 	 * This method just delegates to IAdaptable.getAdapter() but avoids the hazard from the unconstrained Class&lt;T&gt; declaration.
 	 *

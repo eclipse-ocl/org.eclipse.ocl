@@ -1211,17 +1211,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackage;
 	}
 
-	@Deprecated	// fold packageURI2completePackage.get() inline
-	public @Nullable String getCompleteURI(@Nullable String packageURI) {
-		CompletePackage completePackage = packageURI2completePackage.get(packageURI);
-		if (completePackage != null) {
-			return completePackage.getURI();
-		}
-		else {
-			return packageURI;
-		}
-	}
-
 	@Override
 	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property) {
 		ExpressionInOCL defaultExpression = null;

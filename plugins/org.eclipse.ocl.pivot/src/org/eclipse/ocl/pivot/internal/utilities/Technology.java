@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.utilities;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteModel;
@@ -60,12 +59,6 @@ public interface Technology
 	@NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property);
 
 	String getExtensionName(@NonNull Element asStereotypedElement);
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated /* ?? not used */
-	PackageId getMetamodelId(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage eObject2);
 
 	/**
 	 * @since 7.0

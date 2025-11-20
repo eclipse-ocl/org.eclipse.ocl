@@ -21,10 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public class EcoreTechnology extends AbstractTechnology
@@ -36,27 +33,6 @@ public class EcoreTechnology extends AbstractTechnology
 	@Override
 	public  @NonNull IdResolver createIdResolver(@NonNull EnvironmentFactory environmentFactory) {
 		return new PivotIdResolver(environmentFactory);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public RootPackageId getMetamodelId(@NonNull EnvironmentFactory environmentFactory, @NonNull EPackage ePackage) {
-		// assert !"http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI()); -- occurs for static profile
-		// assert !"http://www.eclipse.org/uml2/5.0.0/Types".equals(ePackage.getNsURI());
-		RootPackageId metamodel = null;
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-			metamodel = IdManager.METAMODEL_ID;
-		}
-		else {
-			String nsURI = ePackage.getNsURI();
-			String sharedNsURI = ((CompleteModelImpl)environmentFactory.getCompleteModel()).getCompleteURI(nsURI);
-			if ((sharedNsURI != null) && !sharedNsURI.equals(nsURI)) {
-				metamodel = IdManager.getRootPackageId(sharedNsURI);
-			}
-		}
-		return metamodel;
 	}
 
 	@Override
