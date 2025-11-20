@@ -313,7 +313,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			if (ownedSource instanceof TupleLiteralExp){
 				TupleLiteralExp tupleLiteralExp = (TupleLiteralExp)ownedSource;
 				TupleType tupleType = PivotUtil.getType(tupleLiteralExp);
-				Property statusPart = PivotUtil.getStatusTupleTypeStatusPart(tupleType);
+				Property statusPart = PivotUtil.basicGetStatusTupleTypeStatusPart(tupleType);
 				if (statusPart != null){
 					statusAccesses.add(object);
 					return true;
@@ -328,7 +328,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 		@Override
 		public @Nullable Boolean visitTupleLiteralExp(@NonNull TupleLiteralExp object) {
-			Property statusPart = PivotUtil.getStatusTupleTypeStatusPart(PivotUtil.getType(object));
+			Property statusPart = PivotUtil.basicGetStatusTupleTypeStatusPart(PivotUtil.getType(object));
 			if (statusPart != null){
 				return true;
 			}

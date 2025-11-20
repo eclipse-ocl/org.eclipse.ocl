@@ -140,7 +140,7 @@ public class ShadowCache
 		EObject eObject = thisClass.createInstance();
 		for (int i = 0 ; i < iMax; i++) {
 			Property referredProperty = theseProperties[i];
-			Class<?> instanceClass = PivotUtil.getEcoreInstanceClass(referredProperty);
+			Class<?> instanceClass = PivotUtil.basicGetEcoreInstanceClass(referredProperty);
 			Object ecoreValue = idResolver.ecoreValueOf(instanceClass, theseValues[i]);
 			referredProperty.initValue(eObject, ecoreValue);
 		}

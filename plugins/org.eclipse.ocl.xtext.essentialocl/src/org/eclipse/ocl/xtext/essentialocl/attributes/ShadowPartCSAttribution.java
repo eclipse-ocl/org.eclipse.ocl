@@ -39,7 +39,7 @@ public class ShadowPartCSAttribution extends AbstractAttribution
 			ShadowPartCS targetElement = (ShadowPartCS)target;
 			CurlyBracketedClauseCS csCurlyBracketClause = targetElement.getOwningCurlyBracketClause();
 			AbstractNameExpCS csNameExp = csCurlyBracketClause.getOwningNameExp();
-			ShadowExp pivot = PivotUtil.getPivot(ShadowExp.class, csNameExp);
+			ShadowExp pivot = PivotUtil.basicGetPivot(ShadowExp.class, csNameExp);
 			if (pivot != null) {
 				Type type = pivot.getType();
 				if (type instanceof org.eclipse.ocl.pivot.DataType) {

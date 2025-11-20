@@ -152,7 +152,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitConstraint(@NonNull Constraint object) {
-		String stereotype = PivotUtil.getStereotype(object);
+		String stereotype = PivotUtil.getConstraintTypeName(object);
 		if (PivotConstants.BODY_NAME.equals(stereotype)) {
 			context.append("body");
 		}

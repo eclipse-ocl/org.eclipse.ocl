@@ -303,7 +303,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		SpecificationCS ownedSpecification = csElement.getOwnedSpecification();
 		LanguageExpression pivot;
 		if (ownedSpecification != null) {
-			pivot = PivotUtil.getPivot(ExpressionInOCL.class, ownedSpecification);
+			pivot = PivotUtil.basicGetPivot(ExpressionInOCL.class, ownedSpecification);
 		}
 		else {
 			pivot = PivotFactory.eINSTANCE.createExpressionInOCL();
@@ -333,7 +333,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		PrimitiveType behavioralClass = null;
 		if (instanceClass != null) {
-			behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+			behavioralClass = standardLibrary.basicGetBehavioralClass(instanceClass);
 			if (behavioralClass != null) {
 				String behavioralName = behavioralClass.getName();
 				assert behavioralName != null;			// Null name such as UML Association shouldn't happen here.
@@ -456,7 +456,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		context.refreshPivotList(Constraint.class, pivotElement.getOwnedPostconditions(), csElement.getOwnedPostconditions());
 		List<SpecificationCS> csBodyExpressions = csElement.getOwnedBodyExpressions();
 		SpecificationCS csBodyExpression = csBodyExpressions.size() > 0 ? csBodyExpressions.get(0) : null;
-		pivotElement.setBodyExpression(PivotUtil.getPivot(ExpressionInOCL.class, csBodyExpression));
+		pivotElement.setBodyExpression(PivotUtil.basicGetPivot(ExpressionInOCL.class, csBodyExpression));
 		List<String> qualifiers = csElement.getQualifiers();
 		assert qualifiers != null;
 		pivotElement.setIsTransient(ElementUtil.getQualifier(qualifiers, "transient", "!transient", false));
@@ -501,7 +501,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		if (csImports.size() > 0) {
 			List<Import> newImports = new ArrayList<Import>(csImports.size());
 			for (ImportCS csImport : csImports) {
-				Import pivotElement = PivotUtil.getPivot(Import.class, csImport);
+				Import pivotElement = PivotUtil.basicGetPivot(Import.class, csImport);
 				if (pivotElement != null) {
 					pivotElement.setImportedNamespace(csImport.getReferredNamespace());
 				}
@@ -548,7 +548,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		pivotElement.setDefaultValueString(csElement.getDefault());
 		List<SpecificationCS> csDefaultExpressions = csElement.getOwnedDefaultExpressions();
 		SpecificationCS csDefaultExpression = csDefaultExpressions.size() > 0 ? csDefaultExpressions.get(0) : null;
-		pivotElement.setOwnedExpression(PivotUtil.getPivot(ExpressionInOCL.class, csDefaultExpression));
+		pivotElement.setOwnedExpression(PivotUtil.basicGetPivot(ExpressionInOCL.class, csDefaultExpression));
 		return null;
 	}
 
@@ -576,7 +576,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		List<TemplateParameter> newPivotTemplateParameters = new ArrayList<TemplateParameter>();
 		List<TemplateParameterCS> csTemplateParameters = csElement.getOwnedParameters();
 		for (TemplateParameterCS csTemplateParameter : csTemplateParameters) {
-			TemplateParameter pivotTemplateParameter = PivotUtil.getPivot(TemplateParameter.class, csTemplateParameter);
+			TemplateParameter pivotTemplateParameter = PivotUtil.basicGetPivot(TemplateParameter.class, csTemplateParameter);
 			if (pivotTemplateParameter != null) {
 				newPivotTemplateParameters.add(pivotTemplateParameter);
 			}

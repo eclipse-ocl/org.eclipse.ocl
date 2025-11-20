@@ -1209,7 +1209,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				Class<?> instanceClass = eDataType.getInstanceClass();
 				if (instanceClass != null) {
 					try {
-						behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+						behavioralClass = standardLibrary.basicGetBehavioralClass(instanceClass);
 						if (behavioralClass != null) {
 							String behavioralName = behavioralClass.getName();
 							if ((behavioralName == null) || behavioralName.equals(pivotElement.getName())) {

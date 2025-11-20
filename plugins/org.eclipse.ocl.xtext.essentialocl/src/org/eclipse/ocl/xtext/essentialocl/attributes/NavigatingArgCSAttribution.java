@@ -46,7 +46,7 @@ public class NavigatingArgCSAttribution extends AbstractAttribution
 		AbstractNameExpCS targetElement = csRoundBracketedClause.getOwningNameExp();
 		assert targetElement != null;
 		InfixExpCS csNavigationOperator = NavigationUtil.getNavigationInfixExp(targetElement);
-		OCLExpression pivot = PivotUtil.getPivot(OCLExpression.class, targetElement);	// NB QVTr's RelationCallExp is not a CallExp
+		OCLExpression pivot = PivotUtil.basicGetPivot(OCLExpression.class, targetElement);	// NB QVTr's RelationCallExp is not a CallExp
 		if (pivot instanceof LoopExp) {				// FIXME This is null for nested iteration
 			if (role == NavigationRole.EXPRESSION) {
 				for (Variable iterator : ((LoopExp)pivot).getOwnedIterators()) {
@@ -107,7 +107,7 @@ public class NavigatingArgCSAttribution extends AbstractAttribution
 				//
 				if ((csNavigationOperator != null) && PivotUtil.isAggregateNavigationOperator(csNavigationOperator.getName())) {
 					ExpCS csSource = csNavigationOperator.getSource();
-					OCLExpression source = PivotUtil.getPivot(OCLExpression.class, csSource);
+					OCLExpression source = PivotUtil.basicGetPivot(OCLExpression.class, csSource);
 					if (source != null) {
 						Type type = source.getType();
 						Type elementType;

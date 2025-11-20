@@ -218,7 +218,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 		ExpSpecificationCS csStatusSpecification = (ExpSpecificationCS)csElement.getOwnedSpecification();
 		ExpSpecificationCS csMessageSpecification = (ExpSpecificationCS)csElement.getOwnedMessageSpecification();
 		if (csMessageSpecification == null) {
-			ExpressionInOCL asSpecification = PivotUtil.getPivot(ExpressionInOCL.class, csStatusSpecification);
+			ExpressionInOCL asSpecification = PivotUtil.basicGetPivot(ExpressionInOCL.class, csStatusSpecification);
 			if (asSpecification == null) {
 				asSpecification = PivotFactory.eINSTANCE.createExpressionInOCL();
 			}
@@ -270,8 +270,8 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			asTupleLiteralExp.setType(tupleType);
 			asTupleLiteralExp.setIsRequired(true);
 			List<TupleLiteralPart> parts = new ArrayList<TupleLiteralPart>();
-			TupleLiteralPart asStatusPart = PivotUtil.getPivot(TupleLiteralPart.class, csStatusSpecification);
-			TupleLiteralPart asMessagePart = PivotUtil.getPivot(TupleLiteralPart.class, csMessageSpecification);
+			TupleLiteralPart asStatusPart = PivotUtil.basicGetPivot(TupleLiteralPart.class, csStatusSpecification);
+			TupleLiteralPart asMessagePart = PivotUtil.basicGetPivot(TupleLiteralPart.class, csMessageSpecification);
 			if ((asMessagePart != null) && (asStatusPart != null)) {
 				parts.add(asMessagePart);
 				parts.add(asStatusPart);

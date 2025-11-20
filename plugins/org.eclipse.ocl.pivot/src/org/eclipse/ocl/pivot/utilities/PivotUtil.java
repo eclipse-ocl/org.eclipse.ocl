@@ -241,6 +241,94 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static org.eclipse.ocl.pivot.@Nullable Class basicGetBehavioralClass(@NonNull StandardLibrary standardLibrary, @NonNull Class<?> instanceClass) {
+		if (instanceClass == boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (instanceClass == byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == char.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == int.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == BigDecimal.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == BigInteger.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (instanceClass == Byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Character.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == Float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == Integer.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == String.class) {
+			return standardLibrary.getStringType();
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable Constraint basicGetContainingConstraint(@Nullable Element element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Constraint) {
+				return (Constraint)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable ExpressionInOCL basicGetContainingExpressionInOCL(@Nullable Element element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof ExpressionInOCL) {
+				return (ExpressionInOCL)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static @Nullable Model basicGetContainingModel(@NonNull EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Model) {
@@ -301,9 +389,75 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static @Nullable Type basicGetContainingType(@Nullable EObject element) {
+		if (element != null) {
+			EObject eObject = element;
+			while (true) {
+				if (eObject instanceof Type) {
+					return (Type)eObject;
+				}
+				EObject eContainer = eObject.eContainer();
+				if (eContainer == null) {
+					if (eObject instanceof ExpressionInOCL) {
+						return ((ExpressionInOCL)eObject).getOwnedContext().getType();
+					}
+					break;
+				}
+				eObject = eContainer;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Return the Java Class used by Ecore for elements of asProperty, or null if not known.
+	 * @since 7.0
+	 */
+	public static @Nullable Class<?> basicGetEcoreInstanceClass(@Nullable Property asProperty) {
+		Class<?> instanceClass = null;
+		if (asProperty != null) {
+			EObject eTarget = asProperty.getESObject();
+			if (eTarget instanceof EStructuralFeature) {
+				EClassifier eType = ((EStructuralFeature)eTarget).getEType();
+				if (eType != null) {
+					instanceClass = eType.getInstanceClass();
+				}
+			}
+		}
+		return instanceClass;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static @Nullable EnvironmentFactory basicGetEnvironmentFactory(@Nullable Object object) {
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		return environmentFactory;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable LibraryFeature basicGetImplementation(@NonNull Operation localOperation) {
+		LibraryFeature libraryFeature = localOperation.getImplementation();
+		if (libraryFeature != null) {
+			return libraryFeature;
+		}
+		String implementationClassName = localOperation.getImplementationClass();
+		if (implementationClassName != null) {
+			ClassLoader classLoader = localOperation.getClass().getClassLoader();
+			if (classLoader != null) {
+				try {
+					Class<?> theClass = classLoader.loadClass(implementationClassName);
+					if (theClass != null) {
+						Field field = theClass.getField("INSTANCE");
+						return (LibraryFeature) field.get(null);
+					}
+				} catch (Exception e) {
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -322,6 +476,71 @@ public class PivotUtil implements PivotConstants
 			templateParameter = (TemplateParameter) pivotType;
 		}
 		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable Namespace basicGetNamespace(@Nullable EObject element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Model) {
+				return null;
+			}
+			if (eObject instanceof Type) {
+				return (Namespace) eObject;
+			}
+			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
+				return (Namespace) eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static org.eclipse.ocl.pivot.@Nullable Package basicGetPackage(@NonNull EObject object) {
+		for (EObject eObject = object; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
+				return (org.eclipse.ocl.pivot.Package)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable <T extends Element> T basicGetPivot(@NonNull Class<T> pivotClass, @Nullable Pivotable pivotableElement) {
+		if (pivotableElement == null) {
+			return null;
+		}
+		Element pivotElement = pivotableElement.getPivot();
+		if (pivotElement == null) {
+			return null;
+		}
+		return pivotClass.cast(pivotElement);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable Feature basicGetReferredFeature(@NonNull CallExp callExp) {
+		Feature feature = null;
+		if (callExp instanceof LoopExp) {
+			feature = ((LoopExp)callExp).getReferredIteration();
+		}
+		else if (callExp instanceof OperationCallExp) {
+			feature = ((OperationCallExp)callExp).getReferredOperation();
+		}
+		else if (callExp instanceof OppositePropertyCallExp) {
+			Property referredOppositeProperty = ((OppositePropertyCallExp)callExp).getReferredProperty();
+			feature = referredOppositeProperty != null ? referredOppositeProperty.getOpposite() : null;
+		}
+		else if (callExp instanceof PropertyCallExp) {
+			feature = ((PropertyCallExp)callExp).getReferredProperty();
+		}
+		return feature;
 	}
 
 	/**
@@ -356,6 +575,17 @@ public class PivotUtil implements PivotConstants
 		else {
 			return null;
 		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @Nullable Property basicGetStatusTupleTypeStatusPart(@NonNull TupleType tupleType) {
+		Property statusPart = NameUtil.getNameable(tupleType.getOwnedProperties(), STATUS_PART_NAME);
+		if (statusPart == null) {
+			return null;
+		}
+		return statusPart.getTypeId() == TypeId.BOOLEAN ? statusPart : null;
 	}
 
 	/**
@@ -1383,70 +1613,6 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.13
-	 */
-	public static org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull StandardLibrary standardLibrary, @NonNull Class<?> instanceClass) {
-		if (instanceClass == boolean.class) {
-			return standardLibrary.getBooleanType();
-		}
-		if (instanceClass == byte.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == char.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == double.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == float.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == int.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == long.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == short.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == BigDecimal.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == BigInteger.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Boolean.class) {
-			return standardLibrary.getBooleanType();
-		}
-		if (instanceClass == Byte.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Character.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Double.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == Float.class) {
-			return standardLibrary.getRealType();
-		}
-		if (instanceClass == Integer.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Long.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == Short.class) {
-			return standardLibrary.getIntegerType();
-		}
-		if (instanceClass == String.class) {
-			return standardLibrary.getStringType();
-		}
-		return null;
-	}
-
-	/**
 	 * @since 1.7
 	 */
 	@Deprecated /* @deprecated no longer used = behavioralType() now handled within Type::conformsTo */
@@ -1542,6 +1708,33 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * Return the name of the type of a constraint: e.g "invariant" or "body" or "postcondition" etc.
+	 * Historically, in UML 1.x and so OCL 1.x, this was called stereotype.
+	 * It has no relationship with a Stereotype.
+	 *
+	 * @since 7.0
+	 */
+	public static String getConstraintTypeName(@NonNull Constraint object) {
+		EStructuralFeature eContainingFeature = object.eContainingFeature();
+		if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
+			return INVARIANT_NAME;
+		}
+		else if (eContainingFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
+			return BODY_NAME;
+		}
+		else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
+			return POSTCONDITION_NAME;
+		}
+		else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
+			return PRECONDITION_NAME;
+		}
+		else if (eContainingFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
+			return DERIVATION_NAME;
+		}
+		return "";
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClasses(@NonNull TemplateParameter asTemplateParameter) {
@@ -1555,22 +1748,11 @@ public class PivotUtil implements PivotConstants
 		return ClassUtil.nullFree(asTemplateParameter.getConstrainingClasses());
 	}
 
-	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
-		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof Constraint) {
-				return (Constraint)eObject;
-			}
-		}
-		return null;
-	}
-
-	public static @Nullable ExpressionInOCL getContainingExpressionInOCL(@Nullable Element element) {
-		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof ExpressionInOCL) {
-				return (ExpressionInOCL)eObject;
-			}
-		}
-		return null;
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Constraint getContainingConstraint(@Nullable Element element) {
+		return ClassUtil.requireNonNull(basicGetContainingConstraint(element));
 	}
 
 	/**
@@ -1584,7 +1766,7 @@ public class PivotUtil implements PivotConstants
 		return ClassUtil.requireNonNull(basicGetContainingNamespace(element));
 	}
 
-	public static @Nullable Operation getContainingOperation(@Nullable EObject element) {
+	public static @NonNull Operation getContainingOperation(@Nullable EObject element) {
 		return ClassUtil.requireNonNull(basicGetContainingOperation(element));
 	}
 
@@ -1599,24 +1781,11 @@ public class PivotUtil implements PivotConstants
 		return ClassUtil.requireNonNull(basicGetContainingTemplateableElement(element));
 	}
 
-	public static @Nullable Type getContainingType(@Nullable EObject element) {
-		if (element != null) {
-			EObject eObject = element;
-			while (true) {
-				if (eObject instanceof Type) {
-					return (Type)eObject;
-				}
-				EObject eContainer = eObject.eContainer();
-				if (eContainer == null) {
-					if (eObject instanceof ExpressionInOCL) {
-						return ((ExpressionInOCL)eObject).getOwnedContext().getType();
-					}
-					break;
-				}
-				eObject = eContainer;
-			}
-		}
-		return null;
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Type getContainingType(@Nullable EObject element) {
+		return ClassUtil.requireNonNull(basicGetContainingType(element));
 	}
 
 	/**
@@ -1631,23 +1800,6 @@ public class PivotUtil implements PivotConstants
 			}
 		}
 		return depth;
-	}
-
-	/**
-	 * Return the Java Class used by Ecore for elements of asProperty, or null if not known.
-	 */
-	public static @Nullable Class<?> getEcoreInstanceClass(@Nullable Property asProperty) {
-		Class<?> instanceClass = null;
-		if (asProperty != null) {
-			EObject eTarget = asProperty.getESObject();
-			if (eTarget instanceof EStructuralFeature) {
-				EClassifier eType = ((EStructuralFeature)eTarget).getEType();
-				if (eType != null) {
-					instanceClass = eType.getInstanceClass();
-				}
-			}
-		}
-		return instanceClass;
 	}
 
 	/**
@@ -1719,31 +1871,6 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull TemplateParameter getFormal(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
 		return ClassUtil.requireNonNull(templateParameterSubstitution.getFormal());
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @Nullable LibraryFeature getImplementation(@NonNull Operation localOperation) {
-		LibraryFeature libraryFeature = localOperation.getImplementation();
-		if (libraryFeature != null) {
-			return libraryFeature;
-		}
-		String implementationClassName = localOperation.getImplementationClass();
-		if (implementationClassName != null) {
-			ClassLoader classLoader = localOperation.getClass().getClassLoader();
-			if (classLoader != null) {
-				try {
-					Class<?> theClass = classLoader.loadClass(implementationClassName);
-					if (theClass != null) {
-						Field field = theClass.getField("INSTANCE");
-						return (LibraryFeature) field.get(null);
-					}
-				} catch (Exception e) {
-				}
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -1840,21 +1967,6 @@ public class PivotUtil implements PivotConstants
 	public static @NonNull String getName(@NonNull NamedElement namedElement) {
 		assert !(namedElement instanceof org.eclipse.ocl.pivot.Class);		// UML Associations may be nameless and reified as Class
 		return ClassUtil.requireNonNull(namedElement.getName());
-	}
-
-	public static @Nullable Namespace getNamespace(@Nullable EObject element) {
-		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof Model) {
-				return null;
-			}
-			if (eObject instanceof Type) {
-				return (Namespace) eObject;
-			}
-			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-				return (Namespace) eObject;
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -2501,15 +2613,6 @@ public class PivotUtil implements PivotConstants
 		return ClassUtil.requireNonNull(asStereotypeExtender.getOwningStereotype());
 	}
 
-	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {
-		for (EObject eObject = object; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-				return (org.eclipse.ocl.pivot.Package)eObject;
-			}
-		}
-		return null;
-	}
-
 	/**
 	 * @since 1.3
 	 */
@@ -2531,22 +2634,6 @@ public class PivotUtil implements PivotConstants
 		return ClassUtil.nullFree(completePackage.getPartialPackages());
 	}
 
-	public static @Nullable <T extends Element> T getPivot(@NonNull Class<T> pivotClass, @Nullable Pivotable pivotableElement) {
-		if (pivotableElement == null) {
-			return null;
-		}
-		Element pivotElement = pivotableElement.getPivot();
-		if (pivotElement == null) {
-			return null;
-		}
-		if (!pivotClass.isAssignableFrom(pivotElement.getClass())) {
-			throw new ClassCastException(pivotElement.getClass().getName() + " is not assignable to " + pivotClass.getName());
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) pivotElement;
-		return castElement;
-	}
-
 	/**
 	 * @since 1.4
 	 */
@@ -2559,24 +2646,6 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull Iterable<@NonNull Property> getRedefinedProperties(@NonNull Property property) {
 		return ClassUtil.nullFree(property.getRedefinedProperties());
-	}
-
-	public static Feature getReferredFeature(CallExp callExp) {
-		Feature feature = null;
-		if (callExp instanceof LoopExp) {
-			feature = ((LoopExp)callExp).getReferredIteration();
-		}
-		else if (callExp instanceof OperationCallExp) {
-			feature = ((OperationCallExp)callExp).getReferredOperation();
-		}
-		else if (callExp instanceof OppositePropertyCallExp) {
-			Property referredOppositeProperty = ((OppositePropertyCallExp)callExp).getReferredProperty();
-			feature = referredOppositeProperty != null ? referredOppositeProperty.getOpposite() : null;
-		}
-		else if (callExp instanceof PropertyCallExp) {
-			feature = ((PropertyCallExp)callExp).getReferredProperty();
-		}
-		return feature;
 	}
 
 	/**
@@ -2692,41 +2761,6 @@ public class PivotUtil implements PivotConstants
 		return PivotConstantsInternal.UNKNOWN_ROLE;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public static @Nullable Property getStatusTupleTypeStatusPart(@NonNull TupleType tupleType) {
-		Property statusPart = NameUtil.getNameable(tupleType.getOwnedProperties(), STATUS_PART_NAME);
-		if (statusPart == null) {
-			return null;
-		}
-		return statusPart.getTypeId() == TypeId.BOOLEAN ? statusPart : null;
-	}
-
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated /* @deprecated rename to avoid legacy overload of 'stereotype' */
-	public static String getStereotype(@NonNull Constraint object) {
-		EStructuralFeature eContainingFeature = object.eContainingFeature();
-		if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
-			return INVARIANT_NAME;
-		}
-		else if (eContainingFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
-			return BODY_NAME;
-		}
-		else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
-			return POSTCONDITION_NAME;
-		}
-		else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
-			return PRECONDITION_NAME;
-		}
-		else if (eContainingFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
-			return DERIVATION_NAME;
-		}
-		return "";
-	}
 	/**
 	 * @since 7.0
 	 */

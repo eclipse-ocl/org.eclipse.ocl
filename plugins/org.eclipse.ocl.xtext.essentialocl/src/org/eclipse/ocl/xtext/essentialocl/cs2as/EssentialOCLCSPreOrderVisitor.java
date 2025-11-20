@@ -72,7 +72,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			String name = csElement.getName();
 			assert name != null;
 			if (csElementType != null) {
-				Type elementType = PivotUtil.getPivot(Type.class, csElementType);
+				Type elementType = PivotUtil.basicGetPivot(Type.class, csElementType);
 				if (elementType != null) {
 					boolean isNullFree;
 					IntegerValue lowerValue;
@@ -160,8 +160,8 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			if ((csKeyType != null) && (csValueType != null)) {
 				Boolean keysAreNullFree = context.isRequired(csKeyType);
 				Boolean valuesAreNullFree = context.isRequired(csValueType);
-				Type keyType = PivotUtil.getPivot(Type.class, csKeyType);
-				Type valueType = PivotUtil.getPivot(Type.class, csValueType);
+				Type keyType = PivotUtil.basicGetPivot(Type.class, csKeyType);
+				Type valueType = PivotUtil.basicGetPivot(Type.class, csValueType);
 				keyType = context.getNormalizedType(keyType);
 				valueType = context.getNormalizedType(valueType);
 				if ((keyType != null) && (valueType != null)) {

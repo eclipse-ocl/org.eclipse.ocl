@@ -178,7 +178,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 		//		System.out.println("getFirstLine " + eObject.eClass().getName());
 		Element pivotElement = null;
 		if (eObject instanceof Pivotable) {
-			pivotElement = PivotUtil.getPivot(Element.class, (Pivotable)eObject);
+			pivotElement = PivotUtil.basicGetPivot(Element.class, (Pivotable)eObject);
 		}
 		else if (eObject instanceof Element) {
 			pivotElement = (Element)eObject;

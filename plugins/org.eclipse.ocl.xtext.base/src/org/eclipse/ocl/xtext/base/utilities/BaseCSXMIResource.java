@@ -123,7 +123,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 				if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS) {
 					Parameter representedParameter = asVariable.getRepresentedParameter();
 					assert representedParameter != null;
-					Constraint asConstraint = PivotUtil.getContainingConstraint(asVariable);
+					Constraint asConstraint = PivotUtil.basicGetContainingConstraint(asVariable);
 					if (asConstraint != null) {
 						value = asConstraint;
 					}
@@ -137,9 +137,7 @@ public abstract class BaseCSXMIResource extends XMIResourceImpl implements CSRes
 				}
 				else if (eContainingFeature == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT) {
 					assert asVariable.getRepresentedParameter() == null;
-					Constraint asConstraint = PivotUtil.getContainingConstraint(asVariable);
-					assert asConstraint != null;
-					value = asConstraint;
+					value = PivotUtil.getContainingConstraint(asVariable);
 				}
 				else {
 				//	throw new UnsupportedOperationException();		// iterators/accumulator

@@ -59,7 +59,7 @@ public class CompleteOCLCSConstraintLocator extends PivotConstraintLocator
 					EObject eObject = tit.next();
 					if (eObject instanceof ConstraintCS) {
 						ConstraintCS csConstraint = (ConstraintCS)eObject;
-						Constraint asConstraint = PivotUtil.getPivot(Constraint.class, csConstraint);
+						Constraint asConstraint = PivotUtil.basicGetPivot(Constraint.class, csConstraint);
 						if (asConstraint != null) {
 							EObject esObject = getConstrainedESObject(environmentFactory, asConstraint);
 							if (esObject != null) {

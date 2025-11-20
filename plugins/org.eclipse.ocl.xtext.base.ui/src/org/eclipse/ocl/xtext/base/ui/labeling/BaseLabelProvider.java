@@ -446,7 +446,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	public String text(Constraint ele) {
 		StringBuilder s = new StringBuilder();
 		s.append("<");
-		appendString(s, ele != null ? PivotUtil.getStereotype(ele) : "null");
+		appendString(s, ele != null ? PivotUtil.getConstraintTypeName(ele) : "null");
 		s.append("> ");
 		String name = ele != null ? ele.getName() : null;
 		if (name != null) {
@@ -629,7 +629,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 
 	protected String text(OCLExpression ele) {
 		assert ele != null;
-		Namespace namespace = PivotUtil.getNamespace(ele.eContainer());
+		Namespace namespace = PivotUtil.basicGetNamespace(ele.eContainer());
 		if (namespace == null) {
 			return "";
 		}

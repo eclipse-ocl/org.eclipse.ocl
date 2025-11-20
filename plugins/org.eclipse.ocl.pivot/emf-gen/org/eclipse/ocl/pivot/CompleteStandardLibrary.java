@@ -31,6 +31,8 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  */
 public interface CompleteStandardLibrary extends StandardLibrary
 {
+	@Override
+	@Nullable PrimitiveType basicGetBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 	org.eclipse.ocl.pivot.@Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId);
 	/**
 	 * @since 1.17
@@ -55,8 +57,6 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
 	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
-	@Override
-	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 	@NonNull CompleteModel getCompleteModel();
 	@NonNull String getDefaultStandardLibraryURI();
 

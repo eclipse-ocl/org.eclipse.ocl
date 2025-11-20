@@ -49,7 +49,7 @@ public class OperationMatcher extends AbstractOperationMatcher
 		List<@NonNull OCLExpression> asArguments = new ArrayList<>();
 		for (NavigatingArgCS csNavigatingArg : csRoundBracketedClause.getOwnedArguments()) {
 			if (csNavigatingArg.getRole() == NavigationRole.EXPRESSION) {
-				OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csNavigatingArg);
+				OCLExpression asArgument = PivotUtil.basicGetPivot(OCLExpression.class, csNavigatingArg);
 				if (asArgument == null) {
 					return false;
 				}

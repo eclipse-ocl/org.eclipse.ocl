@@ -204,7 +204,7 @@ public class EssentialOCLScoping
 						aSource = (NestedExpCS)eContainer;
 					}
 					else if (eContainer instanceof SpecificationCS) {
-						ExpressionInOCL expression = PivotUtil.getContainingExpressionInOCL(((SpecificationCS)eContainer).getPivot());
+						ExpressionInOCL expression = PivotUtil.basicGetContainingExpressionInOCL(((SpecificationCS)eContainer).getPivot());
 						source = expression!= null ? expression.getOwnedContext() : null;
 						break;
 					}
@@ -214,7 +214,7 @@ public class EssentialOCLScoping
 				}
 				if (source == null) {
 					if ((csSource != null) && (csSource != navigationArgument)) {
-						source = PivotUtil.getPivot(OCLExpression.class, csSource);
+						source = PivotUtil.basicGetPivot(OCLExpression.class, csSource);
 					}
 				}
 				if (source != null) {
@@ -278,7 +278,7 @@ public class EssentialOCLScoping
 			List<@NonNull NavigatingArgCS> arguments = ClassUtil.nullFree(csRoundBracketedClause.getOwnedArguments());
 			StringBuilder s = new StringBuilder();
 			for (@NonNull NavigatingArgCS csArgument : arguments) {
-				TypedElement pivot = PivotUtil.getPivot(TypedElement.class, csArgument);
+				TypedElement pivot = PivotUtil.basicGetPivot(TypedElement.class, csArgument);
 				if ((pivot != null) && !pivot.eIsProxy()) {
 					if (s.length() > 0) {
 						s.append(", ");

@@ -367,7 +367,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(java.lang.@NonNull Class<?> javaClass) {
+	public org.eclipse.ocl.pivot.@Nullable Class basicGetBehavioralClass(java.lang.@NonNull Class<?> javaClass) {
 		assert javaTypeManager != null;
 		return javaTypeManager.getBehavioralClass(javaClass);
 	}

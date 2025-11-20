@@ -701,7 +701,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			append(" ");
 		}
 
-		String stereo = PivotUtil.getStereotype(constraint);
+		String stereo = PivotUtil.getConstraintTypeName(constraint);
 		append(stereo);
 		String name = constraint.getName();
 		if (name != null) {

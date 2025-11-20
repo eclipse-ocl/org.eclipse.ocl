@@ -56,14 +56,14 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			ExpressionInOCL asSpecification = PivotUtil.getPivot(ExpressionInOCL.class, csElement);
+			ExpressionInOCL asSpecification = PivotUtil.basicGetPivot(ExpressionInOCL.class, csElement);
 			if ((asSpecification != null) && (asSpecification.eContainer() != null)) {		// null eContainer is a problem in the parent, no need for another diagnostic
 				context.refreshContextVariable(csElement, asSpecification);
 				ExpCS csExpression = csElement.getOwnedExpression();
 				OCLExpression asExpression = csExpression != null ? context.visitLeft2Right(OCLExpression.class, csExpression) : null;
 				if (asExpression != null) {
 					Type asExpressionType = asExpression.getType();
-					Type asContextType = PivotUtil.getPivot(Type.class, csTypedRef);
+					Type asContextType = PivotUtil.basicGetPivot(Type.class, csTypedRef);
 					CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 					if ((asContextType != null) && !standardLibrary.conformsTo(asExpressionType, asContextType)) {
 						PrimitiveType integerType = standardLibrary.getIntegerType();
@@ -108,7 +108,7 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 
 	@Override
 	public Continuation<?> visitDefOperationCS(@NonNull DefOperationCS csElement) {
-		Operation contextOperation = PivotUtil.getPivot(Operation.class, csElement);
+		Operation contextOperation = PivotUtil.basicGetPivot(Operation.class, csElement);
 		if (contextOperation != null) {
 			context.refreshRequiredType(contextOperation, csElement);		// FIXME type consistency check
 		}
@@ -117,7 +117,7 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 
 	@Override
 	public Continuation<?> visitDefPropertyCS(@NonNull DefPropertyCS csElement) {
-		Property contextProperty = PivotUtil.getPivot(Property.class, csElement);
+		Property contextProperty = PivotUtil.basicGetPivot(Property.class, csElement);
 		if (contextProperty != null) {
 			context.refreshRequiredType(contextProperty, csElement);		// FIXME type consistency check
 		}
@@ -140,7 +140,7 @@ public class CompleteOCLCSPostOrderVisitor extends AbstractCompleteOCLCSPostOrde
 	public Continuation<?> visitOperationContextDeclCS(@NonNull OperationContextDeclCS csElement) {
 		Operation modelOperation = csElement.getReferredOperation();
 		if ((modelOperation != null) && !modelOperation.eIsProxy()) {
-			Operation contextOperation = PivotUtil.getPivot(Operation.class, csElement);
+			Operation contextOperation = PivotUtil.basicGetPivot(Operation.class, csElement);
 			if (contextOperation != null) {
 				PivotUtil.refreshName(contextOperation, ClassUtil.requireNonNull(modelOperation.getName()));
 				helper.setType(contextOperation, modelOperation.getType(), modelOperation.isIsRequired());		// FIXME type consistency check

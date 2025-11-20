@@ -76,7 +76,7 @@ public class CompleteOCLLabelProvider extends EssentialOCLLabelProvider
 	}
 
 	protected String text(CompleteOCLDocumentCS ele) {
-		Model root = PivotUtil.getPivot(Model.class, ele);
+		Model root = PivotUtil.basicGetPivot(Model.class, ele);
 		return root != null ? String.valueOf(root.getName()) : "null";
 	}
 
@@ -204,7 +204,7 @@ public class CompleteOCLLabelProvider extends EssentialOCLLabelProvider
 		assert csElement != null;
 		Element asElement = csElement.getReferredPackage();
 		if (asElement == null) {
-			asElement = PivotUtil.getPivot(Element.class, csElement);
+			asElement = PivotUtil.basicGetPivot(Element.class, csElement);
 		}
 		if (asElement != null) {
 			return String.valueOf(doGetText(asElement));

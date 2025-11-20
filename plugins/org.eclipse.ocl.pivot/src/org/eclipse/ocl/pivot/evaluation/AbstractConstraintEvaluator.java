@@ -98,7 +98,7 @@ public abstract class AbstractConstraintEvaluator<T>
 	}
 
 	protected String getConstraintName() {
-		Constraint constraint = PivotUtil.getContainingConstraint(query);
+		Constraint constraint = PivotUtil.basicGetContainingConstraint(query);
 		if (constraint != null) {
 			return constraint.getName();
 		}
@@ -183,7 +183,7 @@ public abstract class AbstractConstraintEvaluator<T>
 	}
 
 	protected String getConstraintTypeName() {
-		Type type = PivotUtil.getContainingType(query);
+		Type type = PivotUtil.basicGetContainingType(query);
 		if (type != null) {
 			return type.getName();
 		}

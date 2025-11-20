@@ -392,7 +392,7 @@ public class DelegateInstaller
 	}
 
 	protected @Nullable String createExpression(@NonNull OCLExpression bodyExpression, @Nullable URI ecoreURI) {
-		Namespace namespace = PivotUtil.getNamespace(bodyExpression);
+		Namespace namespace = PivotUtil.basicGetNamespace(bodyExpression);
 		PrettyPrintOptions.Global options = PrettyPrinter.createOptions(namespace);
 		options.setBaseURI(ecoreURI);
 		return PrettyPrinter.print(bodyExpression, options);

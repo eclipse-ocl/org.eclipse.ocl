@@ -68,7 +68,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 
 	@Override
 	public Continuation<?> visitLibClassCS(@NonNull LibClassCS csClass) {
-		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csClass);
+		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csClass);
 		if (pivotElement != null) {
 			/*pivotElement.setInstanceClassName(*/converter.resolveJavaClassCS(csClass)/*)*/;
 		}
@@ -77,7 +77,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 
 	@Override
 	public Continuation<?> visitLibCoercionCS(@NonNull LibCoercionCS csCoercion) {
-		Operation pivotCoercion = PivotUtil.getPivot(Operation.class, csCoercion);
+		Operation pivotCoercion = PivotUtil.basicGetPivot(Operation.class, csCoercion);
 		if (pivotCoercion != null) {
 			pivotCoercion.setImplementationClass(converter.resolveJavaClassCS(csCoercion));
 		}
@@ -86,7 +86,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 
 	@Override
 	public Continuation<?> visitLibIterationCS(@NonNull LibIterationCS csIteration) {
-		Iteration pivotIteration = PivotUtil.getPivot(Iteration.class, csIteration);
+		Iteration pivotIteration = PivotUtil.basicGetPivot(Iteration.class, csIteration);
 		if (pivotIteration != null) {
 			pivotIteration.setImplementationClass(converter.resolveJavaClassCS(csIteration));
 		}
@@ -95,7 +95,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 
 	@Override
 	public Continuation<?> visitLibOperationCS(@NonNull LibOperationCS csOperation) {
-		Operation pivotElement = PivotUtil.getPivot(Operation.class, csOperation);
+		Operation pivotElement = PivotUtil.basicGetPivot(Operation.class, csOperation);
 		if (pivotElement != null) {
 			pivotElement.setPrecedence(resolvePrecedence(csOperation));
 			pivotElement.setIsStatic(csOperation.isIsStatic());
@@ -106,7 +106,7 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 
 	@Override
 	public Continuation<?> visitLibPropertyCS(@NonNull LibPropertyCS csProperty) {
-		Property pivotElement = PivotUtil.getPivot(Property.class, csProperty);
+		Property pivotElement = PivotUtil.basicGetPivot(Property.class, csProperty);
 		if (pivotElement != null) {
 			pivotElement.setIsStatic(csProperty.isIsStatic());
 			pivotElement.setImplementationClass(converter.resolveJavaClassCS(csProperty));

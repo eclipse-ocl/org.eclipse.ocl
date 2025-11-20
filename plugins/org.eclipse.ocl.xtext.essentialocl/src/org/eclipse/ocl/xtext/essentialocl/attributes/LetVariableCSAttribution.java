@@ -34,7 +34,7 @@ public class LetVariableCSAttribution extends AbstractAttribution
 				if (csVariable == targetElement) {
 					break;
 				}
-				Variable variable = PivotUtil.getPivot(Variable.class, csVariable);
+				Variable variable = PivotUtil.basicGetPivot(Variable.class, csVariable);
 				if (variable != null) {		// Maybe null while resolving namespaces
 					environmentView.addNamedElement(variable);
 				}

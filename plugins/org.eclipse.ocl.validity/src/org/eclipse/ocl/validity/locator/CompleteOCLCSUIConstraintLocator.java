@@ -134,7 +134,7 @@ public class CompleteOCLCSUIConstraintLocator extends CompleteOCLCSConstraintLoc
 		Constraint asConstraint = null;
 		Object constrainingObject = resultConstrainingNode.getParent().getConstrainingObject();
 		if (constrainingObject instanceof ConstraintCS) {
-			asConstraint = PivotUtil.getPivot(Constraint.class, (ConstraintCS)constrainingObject);
+			asConstraint = PivotUtil.basicGetPivot(Constraint.class, (ConstraintCS)constrainingObject);
 		}
 		else if (constrainingObject instanceof Constraint) {		// Never happens
 			asConstraint = (Constraint)constrainingObject;

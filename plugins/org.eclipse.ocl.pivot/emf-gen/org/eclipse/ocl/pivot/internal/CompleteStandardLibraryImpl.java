@@ -391,6 +391,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	private /*final*/ /*@NonNull*/ EnvironmentFactory environmentFactory;
 
 	@Override
+	public @Nullable PrimitiveType basicGetBehavioralClass(@NonNull Class<?> instanceClass) {
+		return (PrimitiveType)PivotUtil.basicGetBehavioralClass(this, instanceClass);
+	}
+
+	@Override
 	protected @Nullable Type basicGetBehavioralType(@NonNull Type type) {
 		CompleteClass completeClass = completeModel.getCompleteClass(type);
 		Type behavioralType = completeClass.getBehavioralClass();
@@ -637,11 +642,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			bagType2 = bagType = resolveRequiredTemplateableType(BagType.class, TypeId.BAG_NAME, 1);
 		}
 		return bagType2;
-	}
-
-	@Override
-	public @Nullable PrimitiveType getBehavioralClass(@NonNull Class<?> instanceClass) {
-		return (PrimitiveType)PivotUtil.getBehavioralClass(this, instanceClass);
 	}
 
 	@Override

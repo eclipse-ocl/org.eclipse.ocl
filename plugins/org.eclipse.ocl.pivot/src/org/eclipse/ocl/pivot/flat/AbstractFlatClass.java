@@ -652,12 +652,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				}
 			}
 			if (memberOperation != null) {				// Trivial case, there is a member operation
-				libraryFeature = PivotUtil.getImplementation(memberOperation);
+				libraryFeature = PivotUtil.basicGetImplementation(memberOperation);
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
 				Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(derivedFlatClass, apparentOperation);
 				if (bestOverload != null) {
-					libraryFeature = PivotUtil.getImplementation(bestOverload);
+					libraryFeature = PivotUtil.basicGetImplementation(bestOverload);
 				}
 				else {
 					libraryFeature = OclAnyUnsupportedOperation.AMBIGUOUS;
@@ -1219,7 +1219,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				}
 			}
 		}
-		LibraryFeature implementation = PivotUtil.getImplementation(apparentOperation);	// invoke apparent op for null and invalid
+		LibraryFeature implementation = PivotUtil.basicGetImplementation(apparentOperation);	// invoke apparent op for null and invalid
 		if (implementation == null) {
 			implementation = UnsupportedOperation.INSTANCE;
 		}

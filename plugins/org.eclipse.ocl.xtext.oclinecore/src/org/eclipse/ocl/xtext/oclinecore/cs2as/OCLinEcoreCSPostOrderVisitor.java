@@ -30,7 +30,7 @@ public class OCLinEcoreCSPostOrderVisitor extends AbstractOCLinEcoreCSPostOrderV
 	@Override
 	public Continuation<?> visitOCLinEcoreConstraintCS(@NonNull OCLinEcoreConstraintCS csConstraint) {
 		Continuation<?> continuation = super.visitOCLinEcoreConstraintCS(csConstraint);
-		Constraint pivotElement = PivotUtil.getPivot(Constraint.class, csConstraint);
+		Constraint pivotElement = PivotUtil.basicGetPivot(Constraint.class, csConstraint);
 		if (pivotElement != null) {
 			pivotElement.setIsCallable(csConstraint.isIsCallable());
 		}
@@ -39,7 +39,7 @@ public class OCLinEcoreCSPostOrderVisitor extends AbstractOCLinEcoreCSPostOrderV
 
 	@Override
 	public Continuation<?> visitSysMLCS(@NonNull SysMLCS csSysML) {
-		Annotation pivotElement = PivotUtil.getPivot(Annotation.class, csSysML);
+		Annotation pivotElement = PivotUtil.basicGetPivot(Annotation.class, csSysML);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csSysML, pivotElement);
 			context.refreshPivotList(Detail.class, pivotElement.getOwnedDetails(), csSysML.getOwnedDetails());

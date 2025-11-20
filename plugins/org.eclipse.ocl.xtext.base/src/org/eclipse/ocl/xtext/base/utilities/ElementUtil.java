@@ -474,7 +474,7 @@ public class ElementUtil
 		}
 		MultiplicityCS csMultiplicity = csTypeRef.getOwnedMultiplicity();
 		if (csMultiplicity == null) {
-			Type type = PivotUtil.getPivot(Type.class, csTypeRef);
+			Type type = PivotUtil.basicGetPivot(Type.class, csTypeRef);
 			if (type instanceof CollectionType) {
 				return 1;
 			}

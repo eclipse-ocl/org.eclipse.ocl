@@ -55,7 +55,7 @@ public abstract class AbstractImplicitSourceNamedElementIterator<T> extends Unmo
 	 */
 	protected boolean doNext(@NonNull ElementCS csParent, @NonNull ElementCS csChild) {
 		if (csParent instanceof ContextCS) {
-			ExpressionInOCL asContext = PivotUtil.getPivot(ExpressionInOCL.class, (ContextCS)csParent);
+			ExpressionInOCL asContext = PivotUtil.basicGetPivot(ExpressionInOCL.class, (ContextCS)csParent);
 			if (asContext != null) {
 				VariableDeclaration asVariable = asContext.getOwnedContext();
 				if (asVariable != null) {
@@ -65,7 +65,7 @@ public abstract class AbstractImplicitSourceNamedElementIterator<T> extends Unmo
 			return DONE; // no more parents
 		}
 		else if (csParent instanceof ConstraintCS) {
-			Constraint asConstraint = PivotUtil.getPivot(Constraint.class, (ConstraintCS)csParent);
+			Constraint asConstraint = PivotUtil.basicGetPivot(Constraint.class, (ConstraintCS)csParent);
 			if (asConstraint != null) {
 				LanguageExpression asContext = asConstraint.getOwnedSpecification();
 				if (asContext instanceof ExpressionInOCL) {
@@ -87,7 +87,7 @@ public abstract class AbstractImplicitSourceNamedElementIterator<T> extends Unmo
 			}
 		}
 		else if ((csParent instanceof NameExpCS) && (((NameExpCS)csParent).getOwnedRoundBracketedClause() != null)){
-			OCLExpression asCallExp = PivotUtil.getPivot(OCLExpression.class, (NameExpCS)csParent);
+			OCLExpression asCallExp = PivotUtil.basicGetPivot(OCLExpression.class, (NameExpCS)csParent);
 			if (asCallExp instanceof LoopExp) {
 				List<Variable> asIterators = ((LoopExp)asCallExp).getOwnedIterators();
 				if (asIterators.size() == 1) {

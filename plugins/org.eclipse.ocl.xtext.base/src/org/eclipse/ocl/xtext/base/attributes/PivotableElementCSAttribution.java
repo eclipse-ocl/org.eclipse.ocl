@@ -27,7 +27,7 @@ public class PivotableElementCSAttribution extends AbstractAttribution
 
 	@Override
 	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
-		Element pivot = PivotUtil.getPivot(Element.class, (PivotableElementCS)target);
+		Element pivot = PivotUtil.basicGetPivot(Element.class, (PivotableElementCS)target);
 		if ((pivot == null) || (pivot.eResource() == null)  || (pivot instanceof InvalidType)) {
 			return scopeView.getParent();
 		}

@@ -54,7 +54,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 			// a) refreshing an OpaqueExpression that originated from Ecore2AS
 			// b) refreshing an ExpressionInOCL for a simple statusExpression
 			// c) refreshing an ExpressionInOCL+PropertyCallExp of a TupleLiteralExp for statusExpression+messageExpression
-			Constraint asConstraint = PivotUtil.getPivot(Constraint.class, csElement);
+			Constraint asConstraint = PivotUtil.basicGetPivot(Constraint.class, csElement);
 			ExpSpecificationCS csStatusSpecification = (ExpSpecificationCS)csElement.getOwnedSpecification();
 			if ((asConstraint != null) && (csStatusSpecification != null)) {
 				ExpCS csStatusExpression = csStatusSpecification.getOwnedExpression();
@@ -115,7 +115,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 
 		@Override
 		public BasicContinuation<?> execute() {
-			ExpressionInOCL asSpecification = PivotUtil.getPivot(ExpressionInOCL.class, csElement);
+			ExpressionInOCL asSpecification = PivotUtil.basicGetPivot(ExpressionInOCL.class, csElement);
 			if ((asSpecification != null) && (asSpecification.eContainer() != null)) {		// null eContainer is a problem in the parent, no need for another diagnostic
 				context.refreshContextVariable(csElement, asSpecification);
 				ExpCS csExpression = csElement.getOwnedExpression();

@@ -30,7 +30,7 @@ public class LetExpCSAttribution extends AbstractAttribution
 		if (environmentView.accepts(PivotPackage.Literals.VARIABLE)) {
 			LetExpCS targetElement = (LetExpCS)target;
 			for (VariableCS csVariable : targetElement.getOwnedVariables()) {
-				Variable variable = PivotUtil.getPivot(Variable.class, csVariable);
+				Variable variable = PivotUtil.basicGetPivot(Variable.class, csVariable);
 				if (variable != null) {		// Maybe null while resolving namespaces
 					environmentView.addNamedElement(variable);
 				}

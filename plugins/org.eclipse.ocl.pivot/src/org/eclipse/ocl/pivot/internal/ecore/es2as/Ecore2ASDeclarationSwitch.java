@@ -323,7 +323,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		else if (instanceClass != null) {
 			try {
 				CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+				PrimitiveType behavioralClass = standardLibrary.basicGetBehavioralClass(instanceClass);
 				if (behavioralClass == null) {
 					instanceClass.getDeclaredMethod("compareTo", instanceClass);
 				}

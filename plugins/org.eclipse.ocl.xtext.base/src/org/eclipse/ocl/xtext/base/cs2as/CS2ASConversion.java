@@ -575,7 +575,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		assert csElements != null;
 		List<T> newPivotElements = new ArrayList<>();
 		for (ModelElementCS csElement : csElements) {
-			@Nullable T pivotElement = PivotUtil.getPivot(pivotClass, csElement);
+			@Nullable T pivotElement = PivotUtil.basicGetPivot(pivotClass, csElement);
 			if (pivotElement != null) {
 				newPivotElements.add(pivotElement);
 			}
@@ -859,7 +859,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			return false;
 		}
 		for (ParameterCS csParameter : csOperation.getOwnedParameters()) {
-			Parameter pivot = PivotUtil.getPivot(Parameter.class, csParameter);
+			Parameter pivot = PivotUtil.basicGetPivot(Parameter.class, csParameter);
 			if (pivot == null) {
 				return true;
 			}
@@ -1047,7 +1047,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		if (!pivotElements.isEmpty() ||!csElements.isEmpty()) {
 			List<T> newPivotElements = new ArrayList<>();
 			for (PivotableElementCS csElement : csElements) {
-				@Nullable T pivotElement = PivotUtil.getPivot(pivotClass, csElement);
+				@Nullable T pivotElement = PivotUtil.basicGetPivot(pivotClass, csElement);
 				if ((pivotElement == null) && (csElement instanceof ModelElementCS)) {
 					pivotElement = converter.getPivotElement(pivotClass, (ModelElementCS)csElement);
 				}
@@ -1087,7 +1087,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		boolean isRequired = false;
 		if (ownedType != null) {
 			boolean defaultIsRequired = PivotConstants.DEFAULT_IS_REQUIRED;
-			pivotType = PivotUtil.getPivot(Type.class, ownedType);
+			pivotType = PivotUtil.basicGetPivot(Type.class, ownedType);
 			int lower;
 			int upper;		// XXX uniform DEFAULT_AGGREGATE_IS_REQUIRED
 			if (pivotType instanceof LambdaType) {			// The lambda expression is mandatory, for compatibility we propagate the return nullity
@@ -1122,7 +1122,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public void refreshRequiredType(@NonNull TypedElement pivotElement, @NonNull TypedRefCS csTypeRef) {
-		org.eclipse.ocl.pivot.Class type = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csTypeRef);
+		org.eclipse.ocl.pivot.Class type = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csTypeRef);
 		Boolean isRequired = converter.isRequired(csTypeRef);
 		if (isRequired == null) {
 			isRequired = PivotConstants.DEFAULT_IS_REQUIRED;
@@ -1138,7 +1138,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			return;
 		}
-		TemplateSignature pivotTemplateSignature = PivotUtil.getPivot(TemplateSignature.class, csTemplateSignature);
+		TemplateSignature pivotTemplateSignature = PivotUtil.basicGetPivot(TemplateSignature.class, csTemplateSignature);
 		if (pivotTemplateableElement.getOwnedSignature() != pivotTemplateSignature) {
 			pivotTemplateableElement.setOwnedSignature(pivotTemplateSignature);
 		}
@@ -1270,7 +1270,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				templateParameterSubstitution.setActual(Orphanage.getOrphanWildcardType(orphanage));
 			}
 			else {
-				Type pivotActualParameter = PivotUtil.getPivot(Type.class, csActualParameter);
+				Type pivotActualParameter = PivotUtil.basicGetPivot(Type.class, csActualParameter);
 				pivotActualParameter = getNormalizedType(pivotActualParameter);
 				templateParameterSubstitution.setActual(pivotActualParameter);
 			}
@@ -1323,11 +1323,11 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//	Refresh the pivot specialization root
 		//
-		org.eclipse.ocl.pivot.Class specializedPivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csElement);
+		org.eclipse.ocl.pivot.Class specializedPivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csElement);
 		if (specializedPivotElement == null) {
 			if (unspecializedPivotElement instanceof CollectionType) {
 				TemplateParameterSubstitutionCS csTemplateParameterSubstitution = ownedTemplateBinding.getOwnedSubstitutions().get(0);
-				Type templateArgument = PivotUtil.getPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
+				Type templateArgument = PivotUtil.basicGetPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
 				templateArgument = getNormalizedType(templateArgument);
 				boolean isNullFree = PivotConstants.DEFAULT_IS_REQUIRED;
 				IntegerValue lower = PivotConstants.DEFAULT_LOWER_BOUND;
@@ -1343,7 +1343,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			else {
 				List<@NonNull Type> templateArguments = new ArrayList<>();
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : ownedTemplateBinding.getOwnedSubstitutions()) {
-					Type templateArgument = PivotUtil.getPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
+					Type templateArgument = PivotUtil.basicGetPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
 					if (templateArgument != null) {
 
 						if (templateArgument instanceof TemplateParameter) {

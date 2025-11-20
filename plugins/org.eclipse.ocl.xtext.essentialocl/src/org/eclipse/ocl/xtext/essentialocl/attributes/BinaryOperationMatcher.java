@@ -26,7 +26,7 @@ public class BinaryOperationMatcher extends AbstractOperationMatcher
 
 	public BinaryOperationMatcher(@NonNull CS2ASContext cs2asContext, @Nullable Type sourceType, @Nullable ExpCS csArgument) {
 		super(cs2asContext, sourceType);
-		OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csArgument);
+		OCLExpression asArgument = PivotUtil.basicGetPivot(OCLExpression.class, csArgument);
 		this.asArgument = ClassUtil.requireNonNull(asArgument);
 	}
 

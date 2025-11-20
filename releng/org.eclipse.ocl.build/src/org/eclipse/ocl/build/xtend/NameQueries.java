@@ -104,7 +104,7 @@ public class NameQueries
 	} */
 
 	public @NonNull String getEcoreLiteral(@NonNull Constraint constraint) {
-		org.eclipse.ocl.pivot.Class type = (org.eclipse.ocl.pivot.Class)PivotUtil.getContainingType(constraint);
+		org.eclipse.ocl.pivot.Class type = (org.eclipse.ocl.pivot.Class)PivotUtil.basicGetContainingType(constraint);
 		assert type != null;
 		String nsURI = ClassUtil.requireNonNull(type.getOwningPackage().getURI());
 		GenPackage genPackage = genPackageManager.getGenPackage(nsURI);

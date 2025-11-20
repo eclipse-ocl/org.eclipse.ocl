@@ -146,7 +146,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 	@Override
 	public ElementCS visitConstraint(@NonNull Constraint object) {
 		ConstraintCS csElement = context.refreshNamedElement(ConstraintCS.class, BaseCSPackage.Literals.CONSTRAINT_CS, object);
-		Namespace namespace = PivotUtil.getNamespace(object);
+		Namespace namespace = PivotUtil.basicGetNamespace(object);
 		LanguageExpression specification = object.getOwnedSpecification();
 		if ((specification != null) && (namespace != null)) {
 			specification.accept(this);					// Deep search for references

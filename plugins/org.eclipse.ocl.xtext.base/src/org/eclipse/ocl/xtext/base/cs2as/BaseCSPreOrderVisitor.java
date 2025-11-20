@@ -101,7 +101,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csElement);
+			org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csElement);
 			if (pivotElement != null) {
 				List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(pivotElement.getSuperClasses());
 				context.refreshList(org.eclipse.ocl.pivot.Class.class, superClasses, csElement.getOwnedSuperTypes());
@@ -137,12 +137,12 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			Parameter lambdaParameter = PivotUtil.getPivot(Parameter.class, csElement);
+			Parameter lambdaParameter = PivotUtil.basicGetPivot(Parameter.class, csElement);
 			TypedRefCS csContext = csElement.getOwnedContextType();
 			TypedRefCS csResult = csElement.getOwnedType();
 			if ((csContext != null) && (csResult != null)) {
-				Type contextType = PivotUtil.getPivot(Type.class, csContext);
-				Type resultType = PivotUtil.getPivot(Type.class, csResult);
+				Type contextType = PivotUtil.basicGetPivot(Type.class, csContext);
+				Type resultType = PivotUtil.basicGetPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
 					CompleteModel completeModel = context.getCompleteModel();
 					Orphanage orphanage = completeModel.getOrphanage();
@@ -151,7 +151,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						assert csParameter != null;
 						TypedRefCS csParameterType = csParameter.getOwnedType();
 						assert csParameterType != null;
-						Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
+						Type parameterType = PivotUtil.basicGetPivot(Type.class, csParameterType);
 						if (parameterType instanceof TemplateParameter) {
 							parameterType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)parameterType);
 						}
@@ -211,15 +211,15 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			TypedRefCS csContext = csElement.getOwnedContextType();
 			TypedRefCS csResult = csElement.getOwnedResultType();
 			if ((csContext != null) && (csResult != null)) {
-				Type contextType = PivotUtil.getPivot(Type.class, csContext);
-				Type resultType = PivotUtil.getPivot(Type.class, csResult);
+				Type contextType = PivotUtil.basicGetPivot(Type.class, csContext);
+				Type resultType = PivotUtil.basicGetPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
 					CompleteModel completeModel = context.getCompleteModel();
 					Orphanage orphanage = completeModel.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
 						assert csParameterType != null;
-						Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
+						Type parameterType = PivotUtil.basicGetPivot(Type.class, csParameterType);
 						if (parameterType instanceof TemplateParameter) {
 							parameterType = Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)parameterType);
 						}
@@ -269,7 +269,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			Parameter parameter = PivotUtil.getPivot(Parameter.class, csElement);
+			Parameter parameter = PivotUtil.basicGetPivot(Parameter.class, csElement);
 			if (parameter != null) {
 				context.refreshRequiredType(parameter, csElement);
 				TypedRefCS ownedType = csElement.getOwnedType();
@@ -403,7 +403,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				return false;
 			}
 			for (TypedRefCS csExtend : csElement.getOwnedExtends()) {
-				org.eclipse.ocl.pivot.Class asExtend = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csExtend);
+				org.eclipse.ocl.pivot.Class asExtend = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csExtend);
 				if (asExtend == null) {
 					return false;
 				}
@@ -413,12 +413,12 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			TemplateParameter pivotElement = PivotUtil.getPivot(TemplateParameter.class, csElement);
+			TemplateParameter pivotElement = PivotUtil.basicGetPivot(TemplateParameter.class, csElement);
 			if (pivotElement != null) {
 				List<TypedRefCS> csExtends = csElement.getOwnedExtends();
 				List<org.eclipse.ocl.pivot.@NonNull Class> asExtends = new ArrayList<>();
 				for (TypedRefCS csExtend : csExtends) {
-					org.eclipse.ocl.pivot.Class asExtend = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csExtend);
+					org.eclipse.ocl.pivot.Class asExtend = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csExtend);
 					if (asExtend != null) {
 						asExtends.add(asExtend);
 					}
@@ -438,7 +438,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			Type pivotElement = PivotUtil.getPivot(Type.class, csElement);
+			Type pivotElement = PivotUtil.basicGetPivot(Type.class, csElement);
 			if (pivotElement != null) {
 				if (pivotElement instanceof TemplateableElement) {
 					context.refreshTemplateSignature(csElement, (TemplateableElement)pivotElement);
@@ -482,7 +482,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					String partName = csTuplePart.getName();
 					if (partName != null) {
 						TypedRefCS csPartType = csTuplePart.getOwnedType();
-						Type partType = PivotUtil.getPivot(Type.class, csPartType);
+						Type partType = PivotUtil.basicGetPivot(Type.class, csPartType);
 						if (partType != null) {
 							boolean isRequired = context.getConverter().isRequiredWithDefault(csPartType);
 							parts.add(new TuplePart(partName, partType, isRequired));
@@ -532,7 +532,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
-			TypedElement pivotElement = PivotUtil.getPivot(TypedElement.class, csElement);
+			TypedElement pivotElement = PivotUtil.basicGetPivot(TypedElement.class, csElement);
 			if (pivotElement != null) {
 				context.refreshRequiredType(pivotElement, csElement);
 			}
@@ -640,7 +640,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public Continuation<?> visitEnumerationCS(@NonNull EnumerationCS csEnumeration) {
-		org.eclipse.ocl.pivot.Enumeration pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Enumeration.class, csEnumeration);
+		org.eclipse.ocl.pivot.Enumeration pivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Enumeration.class, csEnumeration);
 		if (pivotElement != null) {
 			List<org.eclipse.ocl.pivot.Class> pivotSuperClasses = pivotElement.getSuperClasses();
 			pivotSuperClasses.clear();
@@ -687,7 +687,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public Continuation<?> visitPackageCS(@NonNull PackageCS csPackage) {
-		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getPivot(org.eclipse.ocl.pivot.Package.class, csPackage);
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Package.class, csPackage);
 		if (asPackage != null) {
 			CompleteModel completeModel = context.getStandardLibrary().getCompleteModel();
 		//	completeModel.getCompleteClasses(asPackage);
@@ -722,7 +722,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public Continuation<?> visitStructuredClassCS(@NonNull StructuredClassCS csClass) {
-		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csClass);
+		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csClass);
 		if (pivotElement == null) {
 			return null;
 		}
@@ -756,7 +756,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public Continuation<?> visitTypeParameterCS(@NonNull TypeParameterCS csTypeParameter) {
-		TemplateParameter pivotElement = PivotUtil.getPivot(TemplateParameter.class, csTypeParameter);
+		TemplateParameter pivotElement = PivotUtil.basicGetPivot(TemplateParameter.class, csTypeParameter);
 		if (pivotElement == null) {
 			return null;
 		}
@@ -771,7 +771,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public BasicContinuation<?> visitTypedElementCS(@NonNull TypedElementCS csTypedElement) {
-		TypedElement pivotElement = PivotUtil.getPivot(TypedElement.class, csTypedElement);
+		TypedElement pivotElement = PivotUtil.basicGetPivot(TypedElement.class, csTypedElement);
 		if (pivotElement != null) {
 			return new TypedElementContinuation(context, csTypedElement);
 		}

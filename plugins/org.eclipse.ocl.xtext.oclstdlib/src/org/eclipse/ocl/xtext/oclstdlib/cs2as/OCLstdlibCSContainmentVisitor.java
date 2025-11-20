@@ -209,7 +209,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 						if (coercions == null) {
 							coercions = new ArrayList<Operation>();
 						}
-						coercions.add(PivotUtil.getPivot(Operation.class, csOperation));
+						coercions.add(PivotUtil.basicGetPivot(Operation.class, csOperation));
 					}
 					else {
 						context.addError(csOperation, "Only PrimitiveTypes may have coercions");
@@ -237,7 +237,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 		context.refreshPivotList(Parameter.class, pivotElement.getOwnedIterators(), csElement.getOwnedIterators());
 		ParameterCS csAccumulator = csElement.getOwnedAccumulator();
 		if (csAccumulator != null) {
-			@Nullable Parameter asAccumulator = PivotUtil.getPivot(Parameter.class, csAccumulator);
+			@Nullable Parameter asAccumulator = PivotUtil.basicGetPivot(Parameter.class, csAccumulator);
 			pivotElement.setOwnedAccumulator(asAccumulator);
 		}
 		context.refreshPivotList(Parameter.class, pivotElement.getOwnedParameters(), csElement.getOwnedParameters());
@@ -247,7 +247,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	@Override
 	public Continuation<?> visitLibOperationCS(@NonNull LibOperationCS csElement) {
 		Continuation<?> cont = super.visitLibOperationCS(csElement);
-		Operation pivotElement = PivotUtil.getPivot(Operation.class, csElement);
+		Operation pivotElement = PivotUtil.basicGetPivot(Operation.class, csElement);
 		if (pivotElement != null) {
 			pivotElement.setIsInvalidating(csElement.isIsInvalidating());
 			pivotElement.setIsValidating(csElement.isIsValidating());

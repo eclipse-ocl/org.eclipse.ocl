@@ -49,6 +49,11 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
+	org.eclipse.ocl.pivot.@Nullable Class basicGetBehavioralClass(java.lang.@NonNull Class<?> javaClass);
+
+	/**
+	 * @since 7.0
+	 */
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
 	/**
@@ -111,11 +116,6 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
-
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named

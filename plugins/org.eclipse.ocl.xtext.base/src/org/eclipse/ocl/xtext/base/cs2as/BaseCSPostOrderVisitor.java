@@ -138,7 +138,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public Continuation<?> visitAnnotationCS(@NonNull AnnotationCS csAnnotation) {
-		Annotation pivotElement = PivotUtil.getPivot(Annotation.class, csAnnotation);
+		Annotation pivotElement = PivotUtil.basicGetPivot(Annotation.class, csAnnotation);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csAnnotation, pivotElement);
 			context.refreshPivotList(Detail.class, pivotElement.getOwnedDetails(), csAnnotation.getOwnedDetails());
@@ -168,7 +168,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public Continuation<?> visitClassCS(@NonNull ClassCS csClassifier) {
-		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csClassifier);
+		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csClassifier);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csClassifier, pivotElement);
 			context.refreshPivotList(Constraint.class, pivotElement.getOwnedInvariants(), csClassifier.getOwnedConstraints());
@@ -178,7 +178,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public Continuation<?> visitDetailCS(@NonNull DetailCS csDetail) {
-		Detail pivotElement = PivotUtil.getPivot(Detail.class, csDetail);
+		Detail pivotElement = PivotUtil.basicGetPivot(Detail.class, csDetail);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csDetail, pivotElement);
 			//			refreshPivotList(Detail.class, pivotElement.getOwnedDetail(), csDocumentation.getOwnedDetail());
@@ -192,7 +192,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public Continuation<?> visitDocumentationCS(@NonNull DocumentationCS csDocumentation) {
-		Annotation pivotElement = PivotUtil.getPivot(Annotation.class, csDocumentation);
+		Annotation pivotElement = PivotUtil.basicGetPivot(Annotation.class, csDocumentation);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csDocumentation, pivotElement);
 			context.refreshPivotList(Detail.class, pivotElement.getOwnedDetails(), csDocumentation.getOwnedDetails());
@@ -241,7 +241,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public Continuation<?> visitNamedElementCS(@NonNull NamedElementCS csNamedElement) {
-		NamedElement pivotElement = PivotUtil.getPivot(NamedElement.class, csNamedElement);
+		NamedElement pivotElement = PivotUtil.basicGetPivot(NamedElement.class, csNamedElement);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csNamedElement, pivotElement);
 		}
@@ -250,7 +250,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public Continuation<?> visitOperationCS(@NonNull OperationCS csElement) {
-		Operation pivotOperation = PivotUtil.getPivot(Operation.class, csElement);
+		Operation pivotOperation = PivotUtil.basicGetPivot(Operation.class, csElement);
 		if (pivotOperation != null) {
 			context.refreshList(Type.class, ClassUtil.<Type>nullFree(pivotOperation.getRaisedExceptions()), csElement.getOwnedExceptions());
 			TypedRefCS ownedType = csElement.getOwnedType();
@@ -265,7 +265,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public Continuation<?> visitPackageCS(@NonNull PackageCS csPackage) {
-		org.eclipse.ocl.pivot.Package pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Package.class, csPackage);
+		org.eclipse.ocl.pivot.Package pivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Package.class, csPackage);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csPackage, pivotElement);
 		}
@@ -296,7 +296,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 	@Override
 	public Continuation<?> visitReferenceCS(@NonNull ReferenceCS csReference) {
 		Continuation<?> continuation = super.visitReferenceCS(csReference);
-		Property pivotElement = PivotUtil.getPivot(Property.class, csReference);
+		Property pivotElement = PivotUtil.basicGetPivot(Property.class, csReference);
 		if (pivotElement != null) {
 			Property pivotOpposite = csReference.getReferredOpposite();
 			if ((pivotOpposite != null) && pivotOpposite.eIsProxy()) {
@@ -393,7 +393,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 
 	@Override
 	public BasicContinuation<?> visitTypedElementCS(@NonNull TypedElementCS csTypedElement) {
-		TypedElement pivotElement = PivotUtil.getPivot(TypedElement.class, csTypedElement);
+		TypedElement pivotElement = PivotUtil.basicGetPivot(TypedElement.class, csTypedElement);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csTypedElement, pivotElement);
 		}

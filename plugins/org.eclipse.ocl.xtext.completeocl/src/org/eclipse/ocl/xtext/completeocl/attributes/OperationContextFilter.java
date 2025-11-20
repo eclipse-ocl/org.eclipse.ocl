@@ -51,7 +51,7 @@ public class OperationContextFilter implements ScopeFilter
 		for (int i = 0; i < iMax; i++) {
 			ParameterCS contextParameter = contextParameters.get(i);
 			Parameter candidateParameter = candidateParameters.get(i);
-			Type contextType = PivotUtil.getPivot(Type.class, contextParameter.getOwnedType());
+			Type contextType = PivotUtil.basicGetPivot(Type.class, contextParameter.getOwnedType());
 			Type candidateType = candidateParameter.getType();
 			if (contextType != null) {
 				contextType = completeModel.getPrimaryType(contextType);

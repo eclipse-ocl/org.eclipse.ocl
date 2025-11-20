@@ -499,7 +499,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull GenOperation getGenOperation(@NonNull Constraint constraint) throws GenModelException {
-		org.eclipse.ocl.pivot.Class owningType = (org.eclipse.ocl.pivot.Class)PivotUtil.getContainingType(constraint);
+		org.eclipse.ocl.pivot.Class owningType = (org.eclipse.ocl.pivot.Class)PivotUtil.basicGetContainingType(constraint);
 		if (owningType != null) {
 			GenClass genClass = getGenClass(owningType);
 			for (GenOperation genOperation : genClass.getGenOperations()) {

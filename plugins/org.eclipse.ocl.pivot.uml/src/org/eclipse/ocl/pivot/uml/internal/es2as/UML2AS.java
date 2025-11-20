@@ -1251,7 +1251,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			@SuppressWarnings("null")@NonNull ClassLoader classLoader = ecoreStereotype.getClass().getClassLoader();
 			Class<?> instanceClass = classLoader.loadClass(instanceClassName);
 			if (instanceClass != null) {
-				org.eclipse.ocl.pivot.Class behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+				org.eclipse.ocl.pivot.Class behavioralClass = standardLibrary.basicGetBehavioralClass(instanceClass);
 				if (behavioralClass instanceof PrimitiveType) {
 					return (PrimitiveType)behavioralClass;
 				}

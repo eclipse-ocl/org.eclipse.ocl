@@ -519,7 +519,7 @@ public class PrettyPrinter
 		Mode savedMode = pushMode(Mode.TYPE);
 		try {
 			EnvironmentFactory environmentFactory = options.getGlobalOptions().getEnvironmentFactory();
-			Namespace parent = PivotUtil.getNamespace(element.eContainer());
+			Namespace parent = PivotUtil.basicGetNamespace(element.eContainer());
 			List<PathElement> parentPath = PathElement.getPath(parent, environmentFactory);
 			int iMax = parentPath.size();
 			int i = 0;

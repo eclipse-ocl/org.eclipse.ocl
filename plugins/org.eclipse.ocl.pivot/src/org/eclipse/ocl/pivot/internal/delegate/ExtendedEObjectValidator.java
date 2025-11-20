@@ -264,7 +264,6 @@ public class ExtendedEObjectValidator extends EObjectValidator
 		EObject esObject = asConstraint.getESObject();
 		if (esObject == null) {							// XXX Complete OCL partial class - dynamic delegate is another partial
 			Type asType = PivotUtil.getContainingType(asConstraint);
-			assert asType != null;
 			EClass eClass = (EClass) asType.getESObject();
 			for (EOperation eOperation : eClass.getEOperations()) {
 				assert eOperation != null;

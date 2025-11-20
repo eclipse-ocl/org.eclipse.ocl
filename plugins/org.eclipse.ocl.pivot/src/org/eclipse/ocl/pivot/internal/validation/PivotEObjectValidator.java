@@ -192,7 +192,7 @@ public class PivotEObjectValidator implements EValidator
 		{
 			@Override
 			protected String getObjectLabel() {
-				Type type = PivotUtil.getContainingType(constraint);
+				Type type = PivotUtil.basicGetContainingType(constraint);
 				Type primaryType = type != null ? completeModel.getPrimaryType(type) : null;
 				EObject eTarget = primaryType != null ? primaryType.getESObject() : null;
 				EClassifier eClassifier = eTarget instanceof EClassifier ?  (EClassifier)eTarget : null;

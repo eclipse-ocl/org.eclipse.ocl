@@ -121,7 +121,7 @@ public class CreateDynamicInstanceHandler extends AbstractHandler
 					return null;
 				}
 				StructuredClassCS oclInEcoreClass = (StructuredClassCS) currentModel;
-				return PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, oclInEcoreClass);
+				return PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, oclInEcoreClass);
 			}
 		});
 	}
