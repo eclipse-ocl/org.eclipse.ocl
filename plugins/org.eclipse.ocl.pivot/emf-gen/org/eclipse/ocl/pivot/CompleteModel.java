@@ -213,13 +213,13 @@ public interface CompleteModel extends NamedElement
 	@NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
-	 * Return the CompletePackage for the Package containing asClass, creating it if necessary.
-	 *
 	 * @since 7.0
 	 */
-//	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
+
 	/**
+	 * Return the CompletePackage for the Package containing asClass, creating it if necessary.
+	 *
 	 * @since 7.0
 	 */
 	@NonNull CompletePackage getCompletePackage3(org.eclipse.ocl.pivot.@NonNull Package asPackage);
@@ -338,6 +338,9 @@ public interface CompleteModel extends NamedElement
 	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
+	 * Create and install the CompletePackage placeholder for completePackageId with uri and optional prefix.
+	 * The placeholder initially has no partyial packages.
+	 *
 	 * @since 7.0
 	 */
 	@NonNull CompletePackage initCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @NonNull String uri);

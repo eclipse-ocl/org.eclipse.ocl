@@ -622,30 +622,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	public @Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
-			CompletePackage primitiveCompletePackage = getPrimitiveCompletePackage();			// namespacelessCompletePackage
-			return primitiveCompletePackage.getCompleteClass(asClass);
-		}
-		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		else if (/*(asClass instanceof IterableType) &&*/ (asClass.getUnspecializedElement() != null)) {
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		else if ((asClass instanceof LambdaType) && (((LambdaType)asClass).getContextType() != null)) {
-			CompletePackage orphanCompletePackage = getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass(asClass);
-		}
-		return null;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected @NonNull CompletePackage createCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
+	protected @NonNull CompletePackage createCompletePackage2(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
 		assert !completePackageId2completePackage.containsKey(completePackageId);
 		CompletePackageImpl completePackage = (CompletePackageImpl)PivotFactory.eINSTANCE.createCompletePackage();
 		completePackage.init(completePackageId, prefix, uri);
@@ -1020,30 +997,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackage.getCompleteClass(asClass);
 	}
 
-/*	@Override
-	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
-			return getPrimitiveCompletePackage();			// namespacelessCompletePackage
-		}
-		else if (asClass.eContainer() instanceof Orphanage) {			// XXX
-			return getOrphanCompletePackage();
-		}
-		else if (/ *(asClass instanceof IterableType) &&* / (asClass.getUnspecializedElement() != null)) {
-			return getOrphanCompletePackage();
-		}
-		else if (asClass instanceof LambdaType) {
-			return getOrphanCompletePackage();
-		}
-		else if (asClass instanceof IterableType) {
-			return getOrphanCompletePackage();
-		}
-		else if (asClass instanceof AnyType) {
-			getClass();
-		}
-		org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);
-		return getCompletePackage3(pivotPackage);
-	} */
-
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
@@ -1097,67 +1050,34 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
 						parentCompletePackages = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
 					}
-				//	completePackage.assertSamePackage(asPackage);		// XXX obsolete / rewrite
 					if (Orphanage.isOrphanage(asPackage)) {
 						completePackage = getOrphanCompletePackage();
-						//	assert completePackageName.equals(completePackage.getName());
-					//	assert PivotConstants.ORPHANAGE_NAME.equals(completePackage.getName());
-					//	assert Objects.equals(asPackage.getNsPrefix(), completePackage.getNsPrefix());
 						assert Objects.equals(packageURI, completePackage.getURI());
 					}
 					else {
-						completePackage = createCompletePackage(completePackageId, asPackage.getNsPrefix(), packageURI);
+						completePackage = createCompletePackage2(completePackageId, asPackage.getNsPrefix(), packageURI);
 					}
 					package2completePackage.put(asPackage, completePackage);
-				//	System.out.println("getCompletePackage3 " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
 					assert !"oclstdlib".equals(asPackage.getName());
-					//		completePackageId2completePackage.put(completePackageName, completePackage);
 					parentCompletePackages.add(completePackage);		//didAddCompletePackage
-				//	didAddPackage(asPackage);
 					assert completePackageId2completePackage.get(completePackageId) == completePackage;
-					//	CompletePackage old1 = package2completePackage.put(asPackage, completePackage);
-					//	CompletePackage old2 = completePackageId2completePackage.put(completePackageName, completePackage);
 					assert package2completePackage.get(asPackage) == completePackage;
 					completePackage.getPartialPackages().add(asPackage);
 					packageAdded = true;
-				//	}
 				}
-			//	if (packageURI != null) {
-			//		completePackage.didAddPackageURI(packageURI);
-			//	}
 			}
 		}
-	//	completePackage.getPartialPackages().add(asPackage);
-/*		for (Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull CompletePackage> entry : package2completePackage.entrySet()) {
-			org.eclipse.ocl.pivot.@NonNull Package key = entry.getKey();
-			@NonNull CompletePackage value = entry.getValue();
-			System.out.println("\t " + NameUtil.debugSimpleName(key) + " " + key);	// XXX
-			System.out.println("\t " + NameUtil.debugSimpleName(value) + " " + value);	// XXX
-			PartialPackages partialPackages = (PartialPackages)value.getPartialPackages();
-			for (int i = 0; i < partialPackages.size(); i++) {
-				org.eclipse.ocl.pivot.@NonNull Package pPackage = partialPackages.basicGet(i);
-				System.out.println("\t\t " + NameUtil.debugSimpleName(pPackage) + " " + pPackage);	// XXX
-			}
-		} */
 		if (!packageAdded) {								// Maybe folding an additional package into a CompletePackage found by name/URI.
 			assert !asPackage.eIsProxy();
 			completePackage.getPartialPackages().add(asPackage);						// UML 2.5 recurses for nested packages mapping to a parent
 			completePackage.toString();
 			CompletePackage completePackage2 = package2completePackage.get(asPackage);
-//			System.out.println("assert " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
-//			System.out.println("assert " + NameUtil.debugSimpleName(completePackage) + " " + completePackage);	// XXX
 			assert completePackage2 == completePackage;
 		}
 		if (!(completePackage instanceof PrimitiveCompletePackage)) {
 			assert completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
 			assert package2completePackage.get(asPackage) == completePackage;
-		//	if (packageURI != null) {
-		//		assert packageURI2completePackage.get(packageURI) == completePackage;
-		//	}
 		}
-
-
-	//	assert (asPackage.getURI() == null) || (packageURI2completePackage.get(asPackage.getURI()) == completePackage);		in didAddPackage caller
 		CompletePackage completePackage2 = completePackageId2completePackage.get(completePackage.getCompletePackageId());
 		assert (completePackage2 == completePackage) || (completePackage2 == null);
 		return completePackage;
@@ -1639,16 +1559,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull CompletePackage initCompletePackage(@NonNull CompletePackageId completePackageId, @Nullable String prefix, @Nullable String uri) {
 		CompletePackage completePackage = completePackageId2completePackage.get(completePackageId);
 		if (completePackage == null) {
-			completePackage = createCompletePackage(completePackageId, prefix, uri);
-	//		completePackageId2completePackage.put(completePackageName, completePackage);
+			completePackage = createCompletePackage2(completePackageId, prefix, uri);
 			getOwnedCompletePackages().add(completePackage);
 		}
 		assert completePackage == completePackageId2completePackage.get(completePackageId);
-	//	assert Objects.equals(prefix, completePackage.getNsPrefix());
-	//	assert Objects.equals(uri, completePackage.getURI());
-	//	completePackage.didAddPackageURI(packageURI);
-	//	CompletePackage old = packageURI2completePackage.put(uri, completePackage);			// XXX remove
-	//	assert (old == null) || (old == completePackage);
 		return completePackage;
 	}
 
