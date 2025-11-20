@@ -1020,37 +1020,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return completePackage.getCompleteClass(asClass);
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public void getCompleteClasses(@NonNull ASResource asResource) {		// XXX bad name for side-effect method
-		// XXX check called just once
-		// XXX pass completePackage
-	//	System.out.println("getCompleteClasses " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());	// XXX
-		for (EObject eObject : asResource.getContents()) {
-			if (eObject instanceof Model) {
-				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages((Model)eObject)) {
-				//	System.out.println("\t" + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
-					getCompleteClasses(asPackage);
-				}
-			}
-		}
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public void getCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {				// XXX migrate to lazy first getCompleteClass
-		// XXX check called just once
-		// XXX pass completePackage
-		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
-			getCompleteClass(asClass);
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : PivotUtil.getOwnedPackages(asPackage)) {
-			getCompleteClasses(asNestedPackage);
-		}
-	}
-
 /*	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof PrimitiveType) {					// XXX ?? Any/Invalid/Void too ?? Collection/Lambda/Map/Tuple too
@@ -1681,6 +1650,34 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		// Ensure that the $metamodel$ CompletePackage is ready for partials
 		getCompletePackage(PivotConstants.METAMODEL_ID, OCLstdlibPackage.eINSTANCE.getNsPrefix(), PivotConstants.METAMODEL_NAME);
 		return this;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void installCompleteClasses(@NonNull ASResource asResource) {
+		// XXX check called just once
+		// XXX pass completePackage
+	//	System.out.println("getCompleteClasses " + NameUtil.debugSimpleName(asResource) + " " + asResource.getURI());	// XXX
+		for (EObject eObject : asResource.getContents()) {
+			if (eObject instanceof Model) {
+				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages((Model)eObject)) {
+				//	System.out.println("\t" + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
+					installCompleteClasses(asPackage);
+				}
+			}
+		}
+	}
+
+	private void installCompleteClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {				// XXX migrate to lazy first getCompleteClass
+		// XXX check called just once
+		// XXX pass completePackage
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
+			getCompleteClass(asClass);
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : PivotUtil.getOwnedPackages(asPackage)) {
+			installCompleteClasses(asNestedPackage);
+		}
 	}
 
 	@Override

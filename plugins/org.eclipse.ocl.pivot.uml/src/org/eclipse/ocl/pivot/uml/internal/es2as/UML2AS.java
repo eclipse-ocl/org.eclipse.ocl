@@ -1366,7 +1366,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			}
 		}
 		PivotUtil.refreshList(pivotModel2.getOwnedPackages(), true, rootPackages);
-		((CompleteModelImpl)completeModel).getCompleteClasses(asResource);
+		((CompleteModelImpl)completeModel).installCompleteClasses(asResource);
 		return pivotModel2;
 	}
 

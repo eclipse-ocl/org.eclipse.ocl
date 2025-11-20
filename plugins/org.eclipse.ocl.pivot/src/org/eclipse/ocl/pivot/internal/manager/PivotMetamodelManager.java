@@ -377,7 +377,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		}
 		ASResource asResource = (ASResource) pivotModel.eResource();			// XXX cast
 		if (asResource != null) {												// XXX some test models don't bother with a Resource
-			((CompleteModelImpl)completeModel).getCompleteClasses(asResource);
+			((CompleteModelImpl)completeModel).installCompleteClasses(asResource);
 		}
 		List<org.eclipse.ocl.pivot.Package> ownedPackages = pivotModel.getOwnedPackages();
 		List<Import> ownedImports = pivotModel.getOwnedImports();

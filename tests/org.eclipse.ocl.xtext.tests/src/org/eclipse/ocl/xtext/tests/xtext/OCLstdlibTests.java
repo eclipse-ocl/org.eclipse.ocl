@@ -193,7 +193,7 @@ public class OCLstdlibTests extends XtextTestCase
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		ResourceSet asResourceSet = environmentFactory.getASResourceSet();
 		ASResource asResource = (ASResource) asResourceSet.getResource(libraryURI, true);
-		((CompleteModelImpl)completeModel).getCompleteClasses(asResource);
+		((CompleteModelImpl)completeModel).installCompleteClasses(asResource);
 		BooleanType booleanType = environmentFactory.getStandardLibrary().getBooleanType();
 		CompletePackage completePackage = completeModel.getPrimitiveCompletePackage();
 		CompleteClass completeClass = completePackage.getOwnedCompleteClass(booleanType.getName());
